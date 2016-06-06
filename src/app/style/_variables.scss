@@ -1,0 +1,10 @@
+$base-red: rgb(136, 17, 29);
+$base-gray: rgb(83, 83, 83);
+$gray-light: lighten($base-gray, 20%);
+$base-black: black;
+$base-white: white;
+$heading-dark: $base-red;
+$text-dark: darken($base-gray, 20%);
+$text-dark-icon: darken($base-gray, 20%);
+$text-light: white;
+$lightred: lighten($base-red, 40%);

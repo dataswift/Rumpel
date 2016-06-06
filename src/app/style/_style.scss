@@ -1,0 +1,822 @@
+$icon-font-path: "/assets/fonts/";
+@import "bootstrap";
+@import "variables";
+@import "vunits.mixin";
+
+//html { font-size: calc( 12px + (24 - 12) * ( (100vw - 400px) / ( 800 - 400) )); }
+
+body {
+  //padding-bottom: 50px;
+  font-size: 12px;
+  @media (max-width: $screen-md-max) {
+    font-size: 11px;
+  }
+  @media (max-width: $screen-sm-max) {
+    font-size: 10px;
+  }
+  @media (max-width: $screen-sm-min) {
+    font-size: 12px;
+  }
+  padding-top: 10em;
+  font-family: 'Open Sans Regular', sans-serif;
+}
+
+header {
+  font-size: 1em;
+}
+
+footer {
+  height: 3em;
+  background: $base-red;
+  color: $text-light;
+  padding: 1em;
+}
+
+.container, .container-fluid {
+  font-size: 1em;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: lighter;
+  text-transform: uppercase;
+}
+
+.btn-lightred {
+  border-radius: 0;
+  background: $lightred;
+  color: $text-light;
+  &:hover {
+    color: $text-light;
+  }
+}
+.btn-red {
+  border-radius: 0;
+  background: $base-red;
+  color: $text-light;
+  &:hover {
+    color: $text-light;
+  }
+}
+
+#conversejs {
+  $transition-speed: 500ms;
+  -webkit-transition: all $transition-speed; // Chrome
+  -moz-transition: all $transition-speed; // Mozilla
+  -o-transition: all $transition-speed; // Opera
+  transition: all $transition-speed;
+
+  #toggle-controlbox.toggle-controlbox {
+    display: none;
+    width: 0px;
+    overflow: hidden;
+    padding: 0px;
+  }
+
+  &.bigger {
+    @include vh-polyfill(height, 100, -74px);
+    //@include vu-unit(width, $chat-height-bigger);
+    .bigger {
+      @include vh-polyfill(height, 100, -74px);
+    }
+
+    .chatbox.bigger {
+      .box-flyout {
+        @include vh-polyfill(height, 100, -74px);
+      }
+    }
+  }
+}
+.navbar {
+  &.smaller {
+    font-size: 0.75em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    height: 74px;
+  }
+  background-color: $base-red;
+  min-height: unset;
+  //height: 15vh;
+  //min-height: 70px;
+  height: 122px;
+  $transition-speed: 500ms;
+  -webkit-transition: all $transition-speed; // Chrome
+  -moz-transition: all $transition-speed; // Mozilla
+  -o-transition: all $transition-speed; // Opera
+  transition: all $transition-speed;
+  padding-top: 3em;
+  padding-bottom: 3em;
+  margin: 0;
+  a {
+    color: $base-white;
+  }
+  .navbar-nav {
+    li > a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    font-size: 2.556em;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: lighter;
+    text-transform: capitalize;
+    &.navbar-right {
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      li {
+        border-left: solid 0.05em $base-white;
+        &:first-child {
+          border-left: none;
+        }
+        a:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+  .navbar-header {
+    .navbar-brand {
+      font-size: 4em;
+      font-family: 'Open Sans Condensed', sans-serif;
+      height: 1em;
+    }
+  }
+}
+
+.offer-preview {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+  background-size: 100% 1.2em;
+  .row.multi-element span {
+    @include make-xs-column(3);
+  }
+  .row.multi-element span.smaller {
+    @include make-xs-column(2);
+  }
+}
+
+.content-main {
+  background: $base-black;
+  .menubar-left {
+    min-width: 7em;
+    background: $base-black;
+    color: $base-white;
+    float: left;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: lighter;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      li {
+        text-align: center;
+        width: 7em;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        span {
+          font-size: 2.778em;
+          display: block;
+        }
+
+        a {
+          color: $base-white;
+          text-decoration: none;
+        }
+
+        &.active {
+          background: $base-gray;
+
+        }
+      }
+    }
+  }
+
+  .content-grid {
+    overflow: hidden;
+    background: $base-white;
+    min-height: 95vh;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+  .img-table {
+    height: 3em;
+  }
+
+.rate {
+  width: 6em;
+  a, span.info {
+    display: block;
+    float: left;
+    color: inherit;
+    text-decoration: none;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+}
+
+.title-lightred {
+  font-weight: 500;
+  color: $lightred;
+}
+
+.grid .grid-item .card-content {
+  &.crowns-card {
+    .crowns {
+      font-size: 1em;
+      div {
+        width: 7em;
+      }
+    }
+    .crown-threshold {
+      text-align: right;
+      hr {
+        margin-top: 0.1em;
+        margin-bottom: 0.1em;
+        border: 0;
+        border-bottom: 1px dashed #ccc;
+      }
+      margin-bottom: 1em;
+    }
+
+    h4.bottom {
+      position: absolute;
+      text-align: right;
+      color: inherit;
+      bottom: 0em;
+      right: 0.25em;
+    }
+  }
+}
+
+.grid .grid-item .card-content.news {
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:nth-child(2n+1) {
+      .news-item img {
+        float: right;
+      }
+    }
+  }
+  h3 {
+    font-family: "Open Sans Regular", sans-serif;
+    font-weight: bold;
+    color: inherit;
+    font-size: 2em;
+  }
+  h4 {
+    text-transform: none;
+    font-family: "Open Sans Regular", sans-serif;
+    font-weight: bold;
+    color: $base-red;
+    display: inline;
+    font-size: 1em;
+  }
+  .news-item {
+    display: block;
+    clear: both;
+    padding-bottom: 2em;
+    padding-top: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+    img {
+      float: left;
+      padding-right: 1em;
+    }
+    p {
+      display: inline;
+    }
+    &.dark {
+      color: $text-light;
+      h3, h4, h5 {
+        color: inherit;
+      }
+    }
+    &.red {
+      color: $text-light;
+      h3, h4, h5 {
+        color: inherit;
+      }
+    }
+  }
+
+}
+
+.grid .grid-item .card-content.card-nocontent {
+  span.icon {
+    font-size: 6em;
+    margin: 0;
+    padding-top: 0.66em;
+    display: block;
+    text-align: center;
+  }
+  h2 {
+    color: inherit;
+    margin: 0;
+  }
+}
+
+.grid {
+  background: $base-red;
+  width: 100%;
+  $item-height: 25em;
+  @include make-row();
+  margin-left: 0;
+  margin-right: 0;
+
+  /* clearfix */
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  /* ---- grid-item ---- */
+
+  .grid-item {
+    @include make-xs-column(6);
+    @include make-sm-column(2);
+    @include make-md-column(2);
+    @include make-lg-column(1);
+    height: $item-height;
+    float: left;
+    //background: #D26;
+    color: $text-light;
+    border: 1em solid $text-light;
+    overflow: hidden;
+    padding: 0;
+
+    h1 {
+      div.icon {
+        font-size: 2.333em;
+        margin-right: 0.25em;
+        //width: 2em;
+        float: left;
+      }
+      div.title {
+        overflow: hidden;
+      }
+    }
+    h2 {
+      span.icon {
+        margin-right: 0.25em;
+      }
+    }
+    .card-content {
+      clear: both;
+      h3 {
+        color: inherit;
+        font-weight: 500;
+      }
+      h4 {
+        font-weight: 500;
+      }
+      &.news h4 {
+        color: $lightred;
+        font-weight: bold;
+        font-size: 1em;
+      }
+
+      hr {
+        border-top: 1px solid $gray-light;
+      }
+    }
+
+    &:nth-child(4n) {
+      background: lighten($base-gray, 80%);
+      border: 1em solid lighten($base-gray, 80%);
+    }
+    &:nth-child(4n+1) {
+      background: darken($base-gray, 20%);
+      border: 1em solid darken($base-gray, 20%);
+    }
+    &:nth-child(4n+2) {
+      background: lighten($base-gray, 60%);
+      border: 1em solid lighten($base-gray, 60%);
+    }
+    &:nth-child(4n+3) {
+      background: $base-gray;
+      border: 1em solid $base-gray;
+    }
+    &:nth-child(1) {
+      background: darken($base-gray, 10%);
+      border: 1em solid darken($base-gray, 10%);
+    }
+    &:nth-child(2) {
+      background: lighten($base-gray, 80%);
+      border: 1em solid lighten($base-gray, 80%);
+    }
+    &:nth-child(3) {
+      background: lighten($base-gray, 80%);
+      border: 1em solid lighten($base-gray, 80%);
+    }
+
+    &:nth-child(4n), &:nth-child(4n+2), &:nth-child(2), &:nth-child(3), &.light {
+      color: $text-dark;
+      h1, h2, h3, h4, h5 {
+        color: $base-red;
+      }
+      .card-content.news h4 {
+        color: $base-red;
+      }
+      .icon {
+        color: $text-dark-icon;
+      }
+    }
+
+    &.light {
+      background: lighten($base-gray, 80%);
+      border: 1em solid lighten($base-gray, 80%);
+    }
+    &.dark {
+      background: $base-black;
+    }
+    &.red {
+      background: $base-red;
+    }
+  }
+
+  .grid-item--width1 {
+    @include make-xs-column(2);
+    @include make-sm-column(2);
+    @include make-md-column(2);
+    @include make-lg-column(1);
+  }
+
+  .grid-item--width2 {
+    @include make-xs-column(6);
+    @include make-sm-column(2);
+    @include make-md-column(2);
+    @include make-lg-column(2);
+  }
+  .grid-item--width3 {
+    @include make-xs-column(6);
+    @include make-sm-column(4);
+    @include make-md-column(6);
+    @include make-lg-column(3);
+    &.mdsmaller {
+      @include make-md-column(4);
+      @include make-lg-column(3);
+    }
+  }
+
+  .grid-item--width4 {
+    @include make-xs-column(12);
+    @include make-sm-column(10);
+    @include make-md-column(8);
+    @include make-lg-column(4);
+  }
+  .grid-item--width5 {
+    @include make-xs-column(12);
+    @include make-sm-column(10);
+    @include make-md-column(10);
+    @include make-lg-column(5);
+  }
+  .grid-item--width6 {
+    @include make-xs-column(12);
+    @include make-sm-column(12);
+    @include make-md-column(10);
+    @include make-lg-column(6);
+    &.smsmaller {
+      @include make-sm-column(10);
+      @include make-xs-column(10);
+      @include make-md-column(10);
+      @include make-lg-column(6);
+    }
+  }
+  .grid-item--width7 {
+    @include make-xs-column(12);
+    @include make-sm-column(12);
+    @include make-md-column(10);
+    @include make-lg-column(7);
+    &.smsmaller {
+      @include make-sm-column(10);
+      @include make-md-column(10);
+      @include make-lg-column(7);
+    }
+  }
+  .grid-item--width12 {
+    @include make-xs-column(12);
+    @include make-sm-column(12);
+    @include make-md-column(12);
+    @include make-lg-column(12);
+    &.smsmaller {
+      @include make-sm-column(10);
+      @include make-md-column(12);
+      @include make-lg-column(12);
+    }
+  }
+
+  .grid-item--height2 {
+    height: $item-height*2;
+    @media (max-width: $screen-sm-min) {
+      height: $item-height*4;
+    }
+  }
+  .grid-item--height3 {
+    height: $item-height*3;
+  }
+  .grid-item--height4 {
+    height: $item-height*4;
+  }
+  .grid-item--height5 {
+    height: $item-height*4.5;
+  }
+  .grid-item--height99 {
+    min-height: $item-height;
+    height: auto;
+  }
+
+  .grid-item.narrow-strip {
+    $strip-height: 5em;
+    padding-left: 2em;
+    padding-right: 2em;
+    h2 {
+      text-transform: capitalize;
+    }
+    height: $strip-height;
+    @media (max-width: $screen-md-min) {
+      height: $strip-height*2;
+    }
+    overflow: visible;
+    .nav {
+      background: inherit;
+      font-size: 1em;
+      padding-top: ($strip-height - 1em)/4;
+      padding-right: ($strip-height - 1em)/4;
+
+      .open > a, .open > a:hover {
+        background: $base-gray;
+      }
+      li {
+        //height: $strip-height - 2 * 1em;
+        min-width: 0px;
+        @include make-xs-column(3);
+        @include make-sm-column(2);
+        @include make-md-column(1);
+        @include make-lg-column(1);
+        a {
+          color: inherit;
+          padding: 0;
+          padding-top: ($strip-height - 1em)/4;
+          padding-bottom: ($strip-height - 1em)/4;
+        }
+
+        &.wider {
+          @include make-xs-column(4);
+          @include make-sm-column(3);
+          @include make-md-column(2);
+          @include make-lg-column(2);
+        }
+      }
+      li.submenu {
+        //margin-top: -1em;
+        color: inherit;
+        a:hover {
+          background: inherit;
+        }
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        text-align: left;
+        span {
+          font-size: 1em;
+          font-weight: 100;
+          color: inherit;
+          clear: both;
+        }
+        &.active {
+          background: lighten($base-gray, 20%);
+        }
+      }
+
+      .dropdown {
+        background: $base-gray;
+        //margin-top: -1em;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        a {
+          color: inherit;
+          &.dropdown-toggle {
+            padding: 0;
+            padding-top: ($strip-height - 1em)/4;
+            padding-bottom: ($strip-height - 1em)/4;
+          }
+          &:hover {
+            background: inherit;
+          }
+        }
+        .dropdown-menu {
+          color: inherit;
+          background: $base-gray;
+          li {
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+            display: block;
+            clear: both;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+.statsMetric {
+  h4 {
+    font-family: "Open Sans Regular", sans-serif;
+    font-weight: bold;
+    font-size: 1em;
+    margin: 0;
+    color: $lightred;
+    .first-word {
+      color: $base-white;
+    }
+    @media (max-width: $screen-sm-min) {
+      font-size: .8em;
+    }
+  }
+  span.metricMain {
+    font-size: 3em;
+    font-family: "Open Sans Condensed", sans-serif;
+    padding: 0;
+    margin: 0;
+    @media (max-width: $screen-sm-min) {
+      font-size: 2em;
+    }
+  }
+}
+
+.btn-bottom-more {
+  position: absolute;
+  bottom: 0;
+  margin-left: 15px;
+  margin-right: 15px;
+  width: calc(50% - 2 * 15px);
+  border-radius: 0px;
+}
+.grid .grid-item .card-content.news .btn-bottom-more {
+  color: $base-red;
+}
+
+.absolute-left {
+  left: 0;
+}
+
+.offer-grid {
+  .grid-item {
+    padding: 0;
+    border: none;
+    &:nth-child(n) {
+      border: none;
+      //background: $base-white;
+      color: $text-light;
+      h1, h2, h3, h4, h5 {
+        color: inherit;
+      }
+      .card-content.news h4 {
+        color: inherit;
+      }
+      .icon {
+        color: inherit;
+      }
+    }
+  }
+}
+
+.card-content.offer-card {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding: 2em;
+  h2 {
+    margin: 0;
+    clear: both;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+  height: 100%;
+  border-color: transparent;
+
+  .offer-expires {
+    float: left;
+  }
+
+  .reward {
+    a {
+      color: inherit;
+    }
+    text-align: center;
+    font-size: 1.5em;
+    color: inherit;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
+
+  .corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top: 10em solid white;
+    border-left: 10em solid transparent;
+    width: 0;
+    .icon {
+      color: $text-dark;
+      top: -2.4em;
+      right: 0.1em;
+      font-size: 4em;
+      position: absolute;
+    }
+  }
+
+  .rate {
+    color: inherit;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    bottom: 1em;
+    left: 0;
+    right: 0;
+  }
+}
+
+.grid .grid-item.offer {
+  background-size: cover;
+  background-position: center;
+  border: 0;
+}
+.card-content.offer-card {
+  &.offer-detail-card {
+    background: transparent;
+    padding-top: 5em;
+    padding-left: 2em;
+    padding-right: 2em;
+    @media (min-width: $screen-sm-max) {
+      padding-left: 10em;
+      padding-right: 10em;
+    }
+    .offer-summary {
+      background: lighten($base-gray, 60%);
+      border: dashed 0.2em $base-gray;
+      color: $text-dark;
+      padding: 2em;
+      position: relative;
+      padding-bottom: 5em;
+    }
+
+    .missing-data {
+      padding-top: 1em;
+      font-size: 3em;
+      padding-bottom: 1em;
+      font-family: "Open Sans Condensed", sans-serif;
+      .icon {
+        font-size: 0.8em;
+        color: $base-red;
+      }
+    }
+
+    .claim-message {
+      padding-top: 1em;
+      font-size: 2em;
+      padding-bottom: 1em;
+      font-family: "Open Sans Condensed", sans-serif;
+      text-transform: uppercase;
+      color: $base-red;
+      span {
+        padding-right: 1em;
+      }
+      a {
+        span {
+          color: $text-light;
+        }
+        font-family: "Open Sans", sans-serif;
+      }
+    }
+  }
+}
+
+.panel.panel-hat {
+  border-radius: 0;
+  border: solid 1px lighten($base-gray, 60%);
+  .datapoint-info {
+    .icon {
+      color: $base-red;
+    }
+    .datapoint-name {
+      color: $base-red;
+      font-weight: bold;
+    }
+  }
+  .panel-heading {
+    font-size: 2em;
+    text-transform: uppercase;
+    font-family: "Open Sans Condensed", sans-serif;
+    background: lighten($base-gray, 60%);
+  }
+}
