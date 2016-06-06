@@ -29,6 +29,9 @@ const barrels: string[] = [
   // App specific barrels.
   'app',
   'app/shared',
+  'app/rump-tile-info',
+  'app/rump-header',
+  'app/rump-footer',
   /** @cli-barrel */
 ];
 

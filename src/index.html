@@ -2,30 +2,28 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Rumpel2</title>
+  <title>Rumpel</title>
   <base href="/">
 
   {{#unless environment.production}}
   <script src="/ember-cli-live-reload.js" type="text/javascript"></script>
   {{/unless}}
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <rumpel2-app>Loading...</rumpel2-app>
+  <rumpel>Loading...</rumpel>
 
-  
+
 
     {{#each scripts.polyfills}}<script src="{{.}}"></script>{{/each}}
+    <script src="https://npmcdn.com/packery@2.0/dist/packery.pkgd.min.js"></script>
     <script>
       System.import('system-config.js').then(function () {
         System.import('main');
       }).catch(console.error.bind(console));
     </script>
-
-  
-
-
 
 </body>
 </html>
