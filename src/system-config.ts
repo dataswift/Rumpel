@@ -34,6 +34,8 @@ const barrels: string[] = [
   'app/rump-footer',
   'app/rump-side-menu',
   'app/body-b',
+  'app/+login',
+  'app/login',
   /** @cli-barrel */
 ];
 
