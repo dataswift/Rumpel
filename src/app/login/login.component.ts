@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, ControlGroup, Validators } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   moduleId: module.id,
@@ -7,10 +10,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
+  loginForm: ControlGroup;
 
-  constructor() {}
+  constructor(private _formBuilder: FormBuilder,
+              private _router: Router,
+              private _authService: AuthService) {}
 
-  ngOnInit() {
+  ngOnInit(): any {
+    this.loginForm = this._formBuilder.group({
+      hat: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
 }

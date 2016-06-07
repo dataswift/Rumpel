@@ -1,0 +1,41 @@
+//$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+@import "bootstrap";
+@import "variables";
+
+.component.login {
+  margin-top: 120px;
+  background-size: 50% auto;
+  background-repeat: no-repeat;
+  background-position: center top;
+  label, .message {
+    color: #fff;
+  }
+
+  .glyphicon-ok {
+    color: green;
+  }
+  .glyphicon-remove {
+    color: red;
+  }
+  width: 100%;
+  min-height: 100vh;
+
+  .login_info,
+  #login_box {
+    @include make-sm-column-offset(2);
+    @include make-sm-column(8);
+    @include make-md-column-offset(3);
+    @include make-md-column(6);
+
+    input[type=checkbox] {
+      margin-left: 10px;
+    }
+  }
+
+  .ui.error.message {
+    padding: 10px;
+    background-color: $base-red;
+    border: 1px solid $base-red;
+    border-radius: 4px;
+  }
+}
