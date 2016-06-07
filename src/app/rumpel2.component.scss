@@ -1,1 +1,21 @@
 @import "style";
+
+.content-main {
+  background: $base-black;
+  .menubar-left {
+    min-width: 7em;
+    background: $base-black;
+    color: $base-white;
+    float: left;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: lighter;
+  }
+
+  .content-grid {
+    overflow: hidden;
+    background: $base-white;
+    min-height: 95vh;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

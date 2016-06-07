@@ -156,53 +156,6 @@ h1, h2, h3, h4, h5 {
   }
 }
 
-.content-main {
-  background: $base-black;
-  .menubar-left {
-    min-width: 7em;
-    background: $base-black;
-    color: $base-white;
-    float: left;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-weight: lighter;
-
-    ul {
-      list-style: none;
-      padding: 0;
-      li {
-        text-align: center;
-        width: 7em;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 0.5em;
-        padding-bottom: 0.5em;
-        span {
-          font-size: 2.778em;
-          display: block;
-        }
-
-        a {
-          color: $base-white;
-          text-decoration: none;
-        }
-
-        &.active {
-          background: $base-gray;
-
-        }
-      }
-    }
-  }
-
-  .content-grid {
-    overflow: hidden;
-    background: $base-white;
-    min-height: 95vh;
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
   .img-table {
     height: 3em;
   }

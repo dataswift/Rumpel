@@ -1,0 +1,27 @@
+@import "variables";
+
+ul {
+  list-style: none;
+  padding: 0;
+  li {
+    text-align: center;
+    width: 7em;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    span {
+      font-size: 2.778em;
+      display: block;
+    }
+
+    a {
+      color: $base-white;
+      text-decoration: none;
+    }
+
+    &.active {
+      background: $base-gray;
+    }
+  }
+}

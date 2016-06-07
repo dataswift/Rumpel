@@ -9,25 +9,25 @@ import {
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { RumpTileInfoComponent } from './rump-tile-info.component';
+import { RumpSideMenuComponent } from './rump-side-menu.component';
 
-describe('Component: RumpTileInfo', () => {
+describe('Component: RumpSideMenu', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [RumpTileInfoComponent]);
+  beforeEachProviders(() => [RumpSideMenuComponent]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
-  it('should inject the component', inject([RumpTileInfoComponent],
-      (component: RumpTileInfoComponent) => {
+  it('should inject the component', inject([RumpSideMenuComponent],
+      (component: RumpSideMenuComponent) => {
     expect(component).toBeTruthy();
   }));
 
   it('should create the component', inject([], () => {
-    return builder.createAsync(RumpTileInfoComponentTestController)
+    return builder.createAsync(RumpSideMenuComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(RumpTileInfoComponent));
+        let query = fixture.debugElement.query(By.directive(RumpSideMenuComponent));
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
@@ -37,10 +37,10 @@ describe('Component: RumpTileInfo', () => {
 @Component({
   selector: 'test',
   template: `
-    <app-rump-tile-info></app-rump-tile-info>
+    <app-rump-side-menu></app-rump-side-menu>
   `,
-  directives: [RumpTileInfoComponent]
+  directives: [RumpSideMenuComponent]
 })
-class RumpTileInfoComponentTestController {
+class RumpSideMenuComponentTestController {
 }
 
