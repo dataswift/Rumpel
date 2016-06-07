@@ -5,18 +5,18 @@ import {
   it,
   inject
 } from '@angular/core/testing';
-import { Rumpel2AppComponent } from '../app/rumpel2.component';
+import { RumpelAppComponent } from '../app/rumpel.component';
 
-beforeEachProviders(() => [Rumpel2AppComponent]);
+beforeEachProviders(() => [RumpelAppComponent]);
 
 describe('App: Rumpel2', () => {
   it('should create the app',
-      inject([Rumpel2AppComponent], (app: Rumpel2AppComponent) => {
+      inject([RumpelAppComponent], (app: RumpelAppComponent) => {
     expect(app).toBeTruthy();
   }));
 
   it('should have as title \'rumpel2 works!\'',
-      inject([Rumpel2AppComponent], (app: Rumpel2AppComponent) => {
+      inject([RumpelAppComponent], (app: RumpelAppComponent) => {
     expect(app.title).toEqual('rumpel2 works!');
   }));
 });

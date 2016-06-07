@@ -9,25 +9,25 @@ import {
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { RumpFooterComponent } from './rump-footer.component';
+import { HeaderComponent } from './header.component';
 
-describe('Component: RumpFooter', () => {
+describe('Component: RumpHeader', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [RumpFooterComponent]);
+  beforeEachProviders(() => [HeaderComponent]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
-  it('should inject the component', inject([RumpFooterComponent],
-      (component: RumpFooterComponent) => {
+  it('should inject the component', inject([HeaderComponent],
+      (component: HeaderComponent) => {
     expect(component).toBeTruthy();
   }));
 
   it('should create the component', inject([], () => {
-    return builder.createAsync(RumpFooterComponentTestController)
+    return builder.createAsync(HeaderComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(RumpFooterComponent));
+        let query = fixture.debugElement.query(By.directive(HeaderComponent));
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
@@ -37,10 +37,10 @@ describe('Component: RumpFooter', () => {
 @Component({
   selector: 'test',
   template: `
-    <app-rump-footer></app-rump-footer>
+    <app-rump-header></app-rump-header>
   `,
-  directives: [RumpFooterComponent]
+  directives: [HeaderComponent]
 })
-class RumpFooterComponentTestController {
+class HeaderComponentTestController {
 }
 

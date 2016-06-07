@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0-beta.5",
-    "name": "rumpel2"
+    "name": "rumpel"
   },
   "apps": [
     {
@@ -23,7 +23,7 @@
     }
   },
   "defaults": {
-    "prefix": "app",
+    "prefix": "rump",
     "sourceDir": "src",
     "styleExt": "scss",
     "prefixInterfaces": false

@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   moduleId: module.id,
   selector: 'rump-header',
-  templateUrl: 'rump-header.component.html',
-  styleUrls: ['rump-header.component.css']
+  templateUrl: 'header.component.html',
+  styleUrls: ['header.component.css']
 })
-export class RumpHeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit {
 
   constructor() {}
 
