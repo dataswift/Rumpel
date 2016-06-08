@@ -3,6 +3,7 @@ import { Routes, ROUTER_DIRECTIVES , ROUTER_PROVIDERS} from '@angular/router';
 import { HeaderComponent } from './header/index';
 import { FooterComponent } from './footer/index';
 import { SideMenuComponent } from './side-menu/index';
+import { DashboardComponent } from './dashboard/index';
 import { LoginComponent } from './login';
 
 @Component({
@@ -10,7 +11,7 @@ import { LoginComponent } from './login';
   selector: 'rumpel',
   templateUrl: 'rumpel.component.html',
   styleUrls: ['rumpel.component.css'],
-  directives: [HeaderComponent, FooterComponent, SideMenuComponent, ROUTER_DIRECTIVES],
+  directives: [HeaderComponent, FooterComponent, SideMenuComponent, DashboardComponent, ROUTER_DIRECTIVES],
   providers: [ROUTER_PROVIDERS]
 })
 @Routes([
