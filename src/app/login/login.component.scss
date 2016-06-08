@@ -2,40 +2,42 @@
 @import "bootstrap";
 @import "variables";
 
-.component.login {
-  margin-top: 120px;
-  background-size: 50% auto;
-  background-repeat: no-repeat;
-  background-position: center top;
-  label, .message {
-    color: #fff;
+.component-login {
+  @include make-xs-column-offset(1);
+  @include make-xs-column(10);
+  @include make-sm-column-offset(3);
+  @include make-sm-column(6);
+  @include make-lg-column-offset(4);
+  @include make-lg-column(4);
+
+  padding-top: 1em;
+  padding-bottom: 1em;
+
+  label {
+    color: $lightred;
   }
 
-  .glyphicon-ok {
+  .ss-check {
     color: green;
   }
-  .glyphicon-remove {
+  .ss-plus {
     color: red;
   }
-  width: 100%;
-  min-height: 100vh;
 
-  .login_info,
-  #login_box {
-    @include make-sm-column-offset(2);
-    @include make-sm-column(8);
-    @include make-md-column-offset(3);
-    @include make-md-column(6);
-
-    input[type=checkbox] {
-      margin-left: 10px;
-    }
+  input[type=checkbox] {
+    margin-left: 10px;
   }
 
   .ui.error.message {
+    margin-top: 0.5em;
     padding: 10px;
     background-color: $base-red;
     border: 1px solid $base-red;
     border-radius: 4px;
   }
+
+  .message {
+    color: white;
+  }
 }
+

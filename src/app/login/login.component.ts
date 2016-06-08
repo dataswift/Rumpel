@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: ControlGroup;
+  wrongPassword: Boolean = false;
 
   constructor(private _formBuilder: FormBuilder,
               private _router: Router,
@@ -22,6 +23,15 @@ export class LoginComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  onSubmit(form) {
+    const fv = form.value;
+    if (this._authService.doLogin(fv.hat, fv.username, fv.password)) {
+      this._router.navigate(['/']);
+    } else {
+      this.wrongPassword = true;
+    }
   }
 
 }
