@@ -1,0 +1,28 @@
+<div class="timeline-view">
+  <button class="btn btn-default"><span class="ss-up"></span></button>
+  <ul>
+    <li *ngFor="let item of demoTimeline">
+      <h5>{{item.month | uppercase}} {{item.year}}</h5>
+      <div class="stat-box">
+        <span class="ss-calendar"></span>
+        {{item.entries.events}}
+      </div>
+
+      <div class="stat-box">
+        <span class="ss-location"></span>
+        {{item.entries.locations}}
+      </div>
+
+      <div class="stat-box">
+        <span class="ss-camera"></span>
+        {{item.entries.photos}}
+      </div>
+
+      <div class="stat-box">
+        <span class="ss-replyall"></span>
+        {{item.entries.posts}}
+      </div>
+    </li>
+  </ul>
+  <button class="btn btn-default btn-bottom"><span class="ss-down"></span></button>
+</div>

@@ -1,0 +1,45 @@
+@import "style";
+
+button {
+  width: 100%;
+}
+
+h5 {
+  background-color: #dddddd;
+  padding: 5px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  min-height: 100px;
+}
+
+.stat-box {
+  padding: 5px 10px;
+  margin: 5px 5px;
+  display: inline-block;
+  font-size: 1em;
+  border: 2px solid $base-red;
+  color: $base-red;
+  text-align: center;
+}
+
+.stat-box span {
+  display: block;
+  font-size: 1.5em;
+}
+
+.timeline-view {
+  position: relative;
+  height: 80vh;
+}
+
+.btn-bottom {
+  position: absolute;
+  bottom: 0;
+}
