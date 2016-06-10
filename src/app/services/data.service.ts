@@ -39,7 +39,7 @@ export class DataService {
             message: null,
             start: new Date(event.start),
             end: new Date(event.end),
-            location: null,
+            location: { title: null, address: null, longitude: null, latitude: null },
             photoLink: null
           }
         });
@@ -56,7 +56,7 @@ export class DataService {
             title: null,
             type: 'location',
             message: null,
-            start: new Date(location.timestampMs),
+            start: new Date(parseInt(location.timestampMs)),
             end: null,
             location: {
               title: null,
