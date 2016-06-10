@@ -10,7 +10,7 @@ import { Location } from '../shared/index';
 export class LocationsService {
   locations$: Observable<any>;
   private _locationsObserver: Observer<any>;
-  private _store: { locations: Location[] };
+  private _store: { locations: Array<Location> };
 
   constructor(private _http: Http) {
     this._store = { locations: [] };

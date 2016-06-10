@@ -38,7 +38,7 @@ const barrels: string[] = [
   'app/chron-data',
   'app/timeline-view',
   'app/dataViews',
-  'app/services'
+  'app/services',
   /** @cli-barrel */
 ];
 
