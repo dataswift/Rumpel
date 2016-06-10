@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-12">
+    <h4>Images</h4>
+      <ul>
+        <li *ngFor="let img of images$ | async">
+          <img src="{{img.source}}">
+          <div>Time take: {{img.timestamp | date}}</div>
+        </li>
+      </ul>
+  </div>
+</div>

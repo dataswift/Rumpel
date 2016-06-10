@@ -5,8 +5,8 @@ import { FooterComponent } from './footer/index';
 import { SideMenuComponent } from './side-menu/index';
 import { DashboardComponent } from './dashboard/index';
 import { LoginComponent } from './login';
-import { DataViewComponent } from './data-view';
-import { LocationsComponent, CalendarComponent } from './dataViews';
+//import { DataViewComponent } from './data-view';
+import { LocationsComponent, CalendarComponent, PhotosComponent } from './dataViews';
 
 @Component({
   moduleId: module.id,
@@ -18,9 +18,10 @@ import { LocationsComponent, CalendarComponent } from './dataViews';
 })
 @Routes([
   {path: '/login', component: LoginComponent},
-  {path: '/data-view', component: DataViewComponent},
+  //{path: '/data-view', component: DataViewComponent},
   {path: '/locations', component: LocationsComponent},
-  {path: '/calendar', component: CalendarComponent}
+  {path: '/calendar', component: CalendarComponent},
+  {path: '/photos', component: PhotosComponent}
 ])
 export class RumpelAppComponent {
   title = 'rumpel2 works!';
