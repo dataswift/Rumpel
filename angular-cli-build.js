@@ -11,7 +11,12 @@ module.exports = function(defaults) {
       'es6-shim/es6-shim.js',
       'reflect-metadata/**/*.+(js|js.map)',
       'rxjs/**/*.+(js|js.map)',
-      '@angular/**/*.+(js|js.map)'
+      '@angular/**/*.+(js|js.map)',
+      'moment/moment.js',
+      'leaflet/dist/leaflet.js',
+      'leaflet/dist/images/*.png',
+      'leaflet.markercluster/dist/leaflet.markercluster.js',
+      'leaflet.markercluster/dist/MarkerCluster.*'
     ],
     sassCompiler: {
       includePaths: ['src/app/style'],
