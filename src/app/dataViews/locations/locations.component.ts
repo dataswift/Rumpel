@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocationsService } from '../../services';
 
 declare var L: any;
@@ -9,13 +9,13 @@ declare var L: any;
   templateUrl: 'locations.component.html',
   styleUrls: ['locations.component.css']
 })
-export class LocationsComponent implements OnInit {
-  locations$;
-  map;
-  markers = L.markerClusterGroup();
-  boundingBox = {
-    minLong: 180,
-    maxLong: -180,
+export class LocationsComponent implements OnInit, OnDestroy {
+  private locationSubscription: any;
+  private map;
+  private markers = L.markerClusterGroup();
+  private bbox = {
+    minLng: 180,
+    maxLng: -180,
     minLat: 180,
     maxLat: -180
   };
@@ -23,10 +23,8 @@ export class LocationsComponent implements OnInit {
   constructor(private _locationsSvc: LocationsService) {}
 
   ngOnInit() {
-    this.locations$ = this._locationsSvc.locations$;
-
-    this._locationsSvc.locations$.subscribe(updatedLocations => {
-      this.drawMap(updatedLocations);
+    this.locationSubscription = this._locationsSvc.locations$.subscribe(updatedLocations => {
+      this.updateMap(updatedLocations);
     });
 
     const osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -40,10 +38,30 @@ export class LocationsComponent implements OnInit {
     this._locationsSvc.loadAll();
   }
 
-  drawMap(locations: Array<any>) {
+  ngOnDestroy() {
+    this.locationSubscription.unsubscribe();
+  }
+
+  updateMap(locations: Array<any>) {
+    this.drawMarkers(locations);
+    this.map.fitBounds([
+      [this.bbox.minLat, this.bbox.minLng],
+      [this.bbox.maxLat, this.bbox.maxLng]
+    ]);
+  }
+
+  ajustBoundingBox(lat: number, lng: number) {
+    this.bbox.minLat = Math.min(this.bbox.minLat, lat);
+    this.bbox.maxLat = Math.max(this.bbox.maxLat, lat);
+    this.bbox.minLng = Math.min(this.bbox.minLng, lng);
+    this.bbox.maxLng = Math.max(this.bbox.maxLng, lng);
+  }
+
+  drawMarkers(locations: Array<any>) {
     this.map.removeLayer(this.markers);
     this.markers = L.markerClusterGroup();
     for (let loc of locations) {
+      this.ajustBoundingBox(loc.latitude, loc.longitude);
       let pos = new L.LatLng(loc.latitude, loc.longitude);
       let marker = L.marker(pos);
       this.markers.addLayer(marker);
