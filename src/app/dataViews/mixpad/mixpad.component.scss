@@ -1,0 +1,25 @@
+@import "style";
+
+.mixpad {
+  position: relative;
+}
+
+.mixpad .timeline {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  width: 25vw;
+  top: 0;
+  left: 70vw;
+  z-index: 10;
+}
+
+.mixpad .day-view {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  top: 0;
+  left: 1.5vw;
+  z-index: 20;
+  color: white;
+}
