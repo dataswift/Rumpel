@@ -1,12 +1,19 @@
 <div class="row">
   <div class="col-md-12">
     <h4>Location List</h4>
-      <ul>
-        <li *ngFor="let loc of locations$ | async">
-          <div>Latitude: {{loc.latitude}}</div>
-          <div>Longitude: {{loc.longitude}}</div>
-          <div>Time: {{loc.timestamp | date}}</div>
-        </li>
-      </ul>
+    <div class="row">
+      <div class="col-md-9">
+        <div id="map-view" style="height: 80vh;"></div>
+      </div>
+      <div class="col-md-3">
+        <ul>
+          <li *ngFor="let loc of locations$ | async">
+            <div>Latitude: {{loc.latitude}}</div>
+            <div>Longitude: {{loc.longitude}}</div>
+            <div>Time: {{loc.timestamp | date}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
