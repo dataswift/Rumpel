@@ -9,25 +9,25 @@ import {
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { DashboardComponent } from './dashboard.component';
+import { GridComponent } from './grid.component';
 
 describe('Component: Dashboard', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [DashboardComponent]);
+  beforeEachProviders(() => [GridComponent]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));
 
-  it('should inject the component', inject([DashboardComponent],
-      (component: DashboardComponent) => {
+  it('should inject the component', inject([GridComponent],
+      (component: GridComponent) => {
     expect(component).toBeTruthy();
   }));
 
   it('should create the component', inject([], () => {
-    return builder.createAsync(DashboardComponentTestController)
+    return builder.createAsync(GridComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(DashboardComponent));
+        let query = fixture.debugElement.query(By.directive(GridComponent));
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
@@ -39,8 +39,8 @@ describe('Component: Dashboard', () => {
   template: `
     <rump-dashboard></rump-dashboard>
   `,
-  directives: [DashboardComponent]
+  directives: [GridComponent]
 })
-class DashboardComponentTestController {
+class GridComponentTestController {
 }
 

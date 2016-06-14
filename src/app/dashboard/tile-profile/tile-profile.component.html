@@ -1,0 +1,56 @@
+<div class="tile-header">
+  <span class="tile-logo ss-user"></span>
+  <span class="tile-title">Profile</span>
+  <span class="tile-expand ss-plus"></span>
+</div>
+
+<div class="tile-body">
+  <ul>
+    <li [class.private-entry]="user.name.private">
+      <span class="tile-entry-logo ss-user"></span>
+      <span class="tile-entry-value">{{user.name.value}}</span>
+      <span class="privacy-setting ss-view"
+            [class.privacy-color]="!user.name.private"
+            (click)="togglePrivacy(user.name)"></span>
+    </li>
+    <li [class.private-entry]="user.phone.private">
+      <span class="tile-entry-logo ss-phone"></span>
+      <span class="tile-entry-value">{{user.phone.value}}</span>
+      <span class="privacy-setting ss-view"
+            [class.privacy-color]="!user.phone.private"
+            (click)="togglePrivacy(user.phone)"></span>
+    </li>
+    <li [class.private-entry]="user.mobile.private">
+      <span class="tile-entry-logo ss-cell"></span>
+      <span class="tile-entry-value">{{user.mobile.value}}</span>
+      <span class="privacy-setting ss-view"
+            [class.privacy-color]="!user.mobile.private"
+            (click)="togglePrivacy(user.mobile)"></span>
+    </li>
+    <li [class.private-entry]="user.address.private">
+      <span class="tile-entry-logo ss-home"></span>
+      <span class="tile-entry-value">
+        {{user.address.value.number + ' ' + user.address.value.street + ', ' +
+        user.address.value.city + ' ' + user.address.value.postcode + ', ' +
+        user.address.value.country}}
+      </span>
+      <span class="privacy-setting ss-view"
+                  [class.privacy-color]="!user.address.private"
+                  (click)="togglePrivacy(user.address)"></span>
+    </li>
+    <li [class.private-entry]="user.email.private">
+      <span class="tile-entry-logo ss-mail"></span>
+      <span class="tile-entry-value">{{user.email.value}}</span>
+      <span class="privacy-setting ss-view"
+            [class.privacy-color]="!user.email.private"
+            (click)="togglePrivacy(user.email)"></span>
+    </li>
+    <li [class.private-entry]="user.fbProfile.private">
+      <span class="tile-entry-logo ss-replyall"></span>
+      <span class="tile-entry-value">{{user.fbProfile.value}}</span>
+      <span class="privacy-setting ss-view"
+            [class.privacy-color]="!user.fbProfile.private"
+            (click)="togglePrivacy(user.fbProfile)"></span>
+    </li>
+  </ul>
+</div>

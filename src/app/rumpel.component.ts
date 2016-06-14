@@ -3,7 +3,7 @@ import { Routes, ROUTER_DIRECTIVES , ROUTER_PROVIDERS} from '@angular/router';
 import { HeaderComponent } from './header/index';
 import { FooterComponent } from './footer/index';
 import { SideMenuComponent } from './side-menu/index';
-import { DashboardComponent } from './dashboard/index';
+import { GridComponent } from './dashboard/index';
 import { LoginComponent } from './login';
 //import { DataViewComponent } from './data-view';
 import { LocationsComponent, CalendarComponent, PhotosComponent, MixpadComponent } from './dataViews';
@@ -13,12 +13,11 @@ import { LocationsComponent, CalendarComponent, PhotosComponent, MixpadComponent
   selector: 'rumpel',
   templateUrl: 'rumpel.component.html',
   styleUrls: ['rumpel.component.css'],
-  directives: [HeaderComponent, FooterComponent, SideMenuComponent, DashboardComponent, ROUTER_DIRECTIVES],
+  directives: [HeaderComponent, FooterComponent, SideMenuComponent, GridComponent, ROUTER_DIRECTIVES],
   providers: [ROUTER_PROVIDERS]
 })
 @Routes([
   {path: '/login', component: LoginComponent},
-  //{path: '/data-view', component: DataViewComponent},
   {path: '/locations', component: LocationsComponent},
   {path: '/calendar', component: CalendarComponent},
   {path: '/photos', component: PhotosComponent},

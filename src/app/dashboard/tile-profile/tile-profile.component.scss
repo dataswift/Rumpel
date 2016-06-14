@@ -1,0 +1,42 @@
+.tile-header {
+  background-color: #37474f;
+  padding: 0.5em 0.5em;
+  width: 100%;
+  text-transform: uppercase;
+  font-size: 1.5em;
+}
+
+.tile-body {
+  padding: 0.5em 1em;
+}
+
+.tile-body ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tile-body li {
+  margin: 0.5em 0;
+}
+
+.tile-expand {
+  float: right;
+}
+
+.tile-entry-logo, .privacy-setting {
+  font-size: 1.5em;
+  vertical-align: middle;
+}
+
+.privacy-setting {
+  float: right;
+}
+
+.privacy-color {
+  color: #42B4F5;
+}
+
+.private-entry {
+  color: #555555;
+}
