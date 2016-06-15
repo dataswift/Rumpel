@@ -9,7 +9,7 @@
     <li *ngFor="let dataPoint of data">
       <span class="tile-entry-logo ss-notifications"></span>
       <div class="tile-content">
-        <h5>{{dataPoint.startTime | date}}</h5>
+        <h5>{{dataPoint.startTime | moment}}</h5>
         <p>{{dataPoint.title}}</p>
       </div>
       <span class="item-expand ss-right"></span>

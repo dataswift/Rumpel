@@ -43,8 +43,6 @@ const barrels: string[] = [
   'app/timeline-view',
   'app/dataViews',
   'app/services',
-  'app/tile-profile',
-  'app/tile-generic',
   /** @cli-barrel */
 ];
 

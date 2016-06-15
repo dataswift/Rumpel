@@ -2,10 +2,10 @@
   <div class="col-md-12">
     <h4>Events List</h4>
       <ul>
-        <li *ngFor="let event of events$ | async">
+        <li *ngFor="let event of events">
           <h5>Title: {{event.title}}</h5>
-          <div>Start: {{event.startTime | date}}</div>
-          <div>End: {{event.endTime | date}}</div>
+          <div>Start: {{event.startTime | moment}}</div>
+          <div>End: {{event.endTime | moment}}</div>
         </li>
       </ul>
   </div>

@@ -5,6 +5,7 @@ import { Observer } from 'rxjs/Observer';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 import { Image } from '../shared/index';
+import * as moment from 'moment';
 
 @Injectable()
 export class ImagesService {
@@ -27,7 +28,7 @@ export class ImagesService {
         const newImages: Array<Image> = data.map((image) => {
           let newImage: Image = {
             source: image.path,
-            timestamp: new Date(image.lastUpdated)
+            timestamp: moment(image.lastUpdated)
           };
 
           if (image.location) {
@@ -35,7 +36,7 @@ export class ImagesService {
               latitude: image.location.latitude,
               longitude: image.location.longitude,
               accuracy: null,
-              timestamp: new Date(image.lastUpdated)
+              timestamp: moment(image.lastUpdated)
             };
           }
           return newImage;

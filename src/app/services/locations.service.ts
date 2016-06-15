@@ -7,6 +7,7 @@ import 'rxjs/add/operator/share';
 import { Location } from '../shared/index';
 import { EventsService } from './events.service';
 import { ImagesService } from './images.service';
+import * as moment from 'moment';
 
 @Injectable()
 export class LocationsService {
@@ -52,7 +53,7 @@ export class LocationsService {
             latitude: location.latitudeE7 / 10000000,
             longitude: location.longitudeE7 / 10000,
             accuracy: null,
-            timestamp: new Date(parseInt(location.timestampMs))
+            timestamp: moment(parseInt(location.timestampMs))
           }
         });
         return newLocations;

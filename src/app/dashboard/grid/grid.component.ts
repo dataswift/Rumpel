@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventsService } from '../../services/events.service';
 import { TileProfileComponent } from '../tile-profile/tile-profile.component';
 import { TileGenericComponent } from '../tile-generic/tile-generic.component';
+import * as moment from 'moment';
 
 @Component({
   moduleId: module.id,
@@ -20,9 +21,9 @@ export class GridComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._eventsSub = this._eventsSvc.events$.subscribe(updatedEvents => {
-      const currentTime = new Date().getTime();
+      const now = moment();
       this.events = updatedEvents.filter(event => {
-        return event.startTime.getTime() >= currentTime;
+        return event.startTime.isAfter(now);
       });
     });
 

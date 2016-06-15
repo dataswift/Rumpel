@@ -5,6 +5,7 @@ import { Observer } from 'rxjs/Observer';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 import { Event } from '../shared/index';
+import * as moment from 'moment';
 
 @Injectable()
 export class EventsService {
@@ -27,8 +28,8 @@ export class EventsService {
         const newEvents: Array<Event> = data.map((event) => {
           return {
             title: event.title,
-            startTime: new Date(event.start),
-            endTime: event.end ? new Date(event.end) : null
+            startTime: moment(event.start),
+            endTime: event.end ? moment(event.end) : null
           };
         });
         return newEvents;
