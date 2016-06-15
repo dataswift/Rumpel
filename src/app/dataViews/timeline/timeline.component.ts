@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   moduleId: module.id,
-  selector: 'rump-timeline-view',
-  templateUrl: 'timeline-view.component.html',
-  styleUrls: ['timeline-view.component.css']
+  selector: 'rump-timeline',
+  templateUrl: 'timeline.component.html',
+  styleUrls: ['timeline.component.css']
 })
-export class TimelineViewComponent implements OnInit {
+export class TimelineComponent implements OnInit {
 
   demoTimeline = [
     {

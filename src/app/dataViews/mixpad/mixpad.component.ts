@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MapComponent } from '../map/map.component';
-import { TimelineViewComponent } from '../../timeline-view';
+import { TimelineComponent } from '../timeline/timeline.component';
 import { ViewByDayComponent } from '../view-by-day/view-by-day.component';
 
 @Component({
@@ -8,7 +8,7 @@ import { ViewByDayComponent } from '../view-by-day/view-by-day.component';
   selector: 'rump-mixpad',
   templateUrl: 'mixpad.component.html',
   styleUrls: ['mixpad.component.css'],
-  directives: [MapComponent, TimelineViewComponent, ViewByDayComponent]
+  directives: [MapComponent, TimelineComponent, ViewByDayComponent]
 })
 export class MixpadComponent implements OnInit {
 

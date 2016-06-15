@@ -38,9 +38,6 @@ const barrels: string[] = [
   'app/rump-side-menu',
   'app/login',
   'app/dashboard',
-  'app/data-view',
-  'app/chron-data',
-  'app/timeline-view',
   'app/dataViews',
   'app/services',
   /** @cli-barrel */
