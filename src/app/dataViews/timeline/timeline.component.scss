@@ -13,10 +13,33 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+  color: #dddddd;
 }
 
 li {
-  min-height: 100px;
+  height: 2em;
+  width: 100%;
+  &:after {
+    display: block;
+    clear: both;
+  }
+}
+
+.day-text {
+  float: right;
+  cursor: pointer;
+
+  &:hover {
+    font-size: 1.1em;
+  }
+}
+
+.line {
+  float: right;
+  background-color: #dddddd;
+  width: 35%;
+  height: 30%;
+  margin-left: 1em;
 }
 
 .stat-box {
