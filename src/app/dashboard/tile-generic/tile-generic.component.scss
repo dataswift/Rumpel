@@ -3,7 +3,7 @@
   width: 100%;
   text-transform: uppercase;
   font-size: 1.5em;
-  background-color: #37474F;
+  background-color: #455A64;
 }
 
 .tile-body {
@@ -18,25 +18,31 @@
 
 .tile-body li {
   margin: 0.5em 0;
+  position: relative;
 }
 
 .tile-expand {
   float: right;
 }
 
-.tile-entry-logo, .privacy-setting {
+.tile-entry-logo {
   font-size: 1.5em;
   vertical-align: middle;
+  position: absolute;
 }
 
-.privacy-setting {
+.item-expand {
   float: right;
+  font-size: 2em;
 }
 
-.privacy-color {
-  color: #42B4F5;
+.tile-content {
+  position: relative;
+  display: inline-block;
+  padding-left: 35px;
 }
 
-.private-entry {
-  color: #555555;
+.tile-content h5 {
+  margin: 0;
+  padding: 0;
 }

@@ -44,6 +44,7 @@ const barrels: string[] = [
   'app/dataViews',
   'app/services',
   'app/tile-profile',
+  'app/tile-generic',
   /** @cli-barrel */
 ];
 

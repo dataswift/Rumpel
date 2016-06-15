@@ -1,0 +1,18 @@
+<div class="tile-header">
+  <span class="tile-logo ss-{{iconName}}"></span>
+  <span class="tile-title">{{title}}</span>
+  <span class="tile-expand ss-plus"></span>
+</div>
+
+<div class="tile-body">
+  <ul>
+    <li *ngFor="let dataPoint of data">
+      <span class="tile-entry-logo ss-notifications"></span>
+      <div class="tile-content">
+        <h5>{{dataPoint.startTime | date}}</h5>
+        <p>{{dataPoint.title}}</p>
+      </div>
+      <span class="item-expand ss-right"></span>
+    </li>
+  </ul>
+</div>
