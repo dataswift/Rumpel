@@ -28,7 +28,7 @@ export class EventsService {
         const newEvents: Array<Event> = data.map((event) => {
           return {
             title: event.title,
-            startTime: moment(event.start),
+            timestamp: moment(event.start),
             endTime: event.end ? moment(event.end) : null
           };
         });
