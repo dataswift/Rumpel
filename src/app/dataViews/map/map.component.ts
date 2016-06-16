@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
 declare var L: any;
 
@@ -8,8 +8,10 @@ declare var L: any;
   templateUrl: 'map.component.html',
   styleUrls: ['map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnChanges {
   @Input() locations;
+  @Output() timeSelected = new EventEmitter<any>();
+
   private map;
   private markers = L.markerClusterGroup();
   private bbox = {
@@ -28,7 +30,7 @@ export class MapComponent implements OnInit {
 
     this.map = L.map('map-view').setView([52.105, 55.09], 9);
 
-    L.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 2, maxZoom: 18 }).addTo(this.map);
+    L.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 3, maxZoom: 18 }).addTo(this.map);
   }
 
   ngOnChanges() {
@@ -43,6 +45,11 @@ export class MapComponent implements OnInit {
     ]);
   }
 
+  resetBoundingBox() {
+    this.bbox.minLat = 180; this.bbox.maxLat = -180;
+    this.bbox.minLng = 180; this.bbox.maxLng = -180;
+  }
+
   ajustBoundingBox(lat: number, lng: number) {
       this.bbox.minLat = Math.min(this.bbox.minLat, lat);
       this.bbox.maxLat = Math.max(this.bbox.maxLat, lat);
@@ -53,14 +60,23 @@ export class MapComponent implements OnInit {
   drawMarkers(locations: Array<any>) {
       this.map.removeLayer(this.markers);
       this.markers = L.markerClusterGroup();
+      this.resetBoundingBox();
       for(let loc of locations) {
         this.ajustBoundingBox(loc.latitude, loc.longitude);
         let pos = new L.LatLng(loc.latitude, loc.longitude);
         let marker = L.marker(pos);
+        marker.timestamp = loc.timestamp;
+        let self = this;
+        marker.on('click', (e: any) => {
+          self.onMarkerSelected(e);
+        });
         this.markers.addLayer(marker);
       }
 
     this.map.addLayer(this.markers);
     }
 
+  onMarkerSelected(e: any) {
+    this.timeSelected.emit(e.target.timestamp);
+  }
 }

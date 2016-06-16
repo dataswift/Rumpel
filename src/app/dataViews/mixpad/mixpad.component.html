@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-md-12 mixpad">
     <rump-map class="map"
-              [locations]="locations | filterByTime:selectedTime"></rump-map>
+              [locations]="locations | filterByTime:selectedTime"
+              (timeSelected)="selectedTime = $event"></rump-map>
     <rump-view-by-day class="day-view"
                       [images]="images | filterByTime:selectedTime"
                       [events]="events | filterByTime:selectedTime"

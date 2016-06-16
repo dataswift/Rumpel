@@ -39,8 +39,6 @@ export class MixpadComponent implements OnInit, OnDestroy {
         if (foundDay) continue;
         this.timeline.push(loc.timestamp);
       }
-
-      this.timeline.sort((day1, day2) => day1.isAfter(day2, 'day') ? -1 : 1);
     });
 
     this._eveSub = this._eventsSvc.events$.subscribe(events => {
@@ -51,8 +49,6 @@ export class MixpadComponent implements OnInit, OnDestroy {
         if (foundDay) continue;
         this.timeline.push(eve.timestamp);
       }
-
-      this.timeline.sort((day1, day2) => day1.isAfter(day2, 'day') ? -1 : 1);
     });
 
     this._imgSub = this._imagesSvc.images$.subscribe(images => {
@@ -63,8 +59,6 @@ export class MixpadComponent implements OnInit, OnDestroy {
         if (foundDay) continue;
         this.timeline.push(img.timestamp);
       }
-
-      this.timeline.sort((day1, day2) => day1.isAfter(day2, 'day') ? -1 : 1);
     });
 
     this._imagesSvc.loadAll();
