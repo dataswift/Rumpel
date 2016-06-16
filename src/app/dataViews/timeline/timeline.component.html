@@ -1,7 +1,7 @@
 <div class="timeline-view">
   <button class="btn btn-default"><span class="ss-up"></span></button>
   <ul>
-    <li *ngFor="let day of timeline">
+    <li *ngFor="let day of timeline" (click)="selectTime(day)">
       <div class="line"></div>
       <div class="day-text">{{day | moment: 'Do MMM, YYYY'}}</div>
     </li>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
@@ -11,10 +11,15 @@ import { Moment } from '../../pipes/moment.pipe';
 export class ViewByDayComponent implements OnInit {
   @Input() images: Array<any>;
   @Input() events: Array<any>;
+  @Output() timeSelected = new EventEmitter<any>();
 
   constructor() {}
 
   ngOnInit() {
+  }
+
+  selectTime(day: any) {
+    this.timeSelected.emit(day);
   }
 
 }

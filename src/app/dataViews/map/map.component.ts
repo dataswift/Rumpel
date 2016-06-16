@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { LocationsService } from '../../services';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
 declare var L: any;
 
@@ -9,8 +8,8 @@ declare var L: any;
   templateUrl: 'map.component.html',
   styleUrls: ['map.component.css']
 })
-export class MapComponent implements OnInit, OnDestroy {
-  private locationSubscription: any;
+export class MapComponent implements OnInit {
+  @Input() locations;
   private map;
   private markers = L.markerClusterGroup();
   private bbox = {
@@ -20,13 +19,9 @@ export class MapComponent implements OnInit, OnDestroy {
     maxLat: -180
   };
 
-  constructor(private _locationsSvc: LocationsService) {}
+  constructor() {}
 
   ngOnInit() {
-    this.locationSubscription = this._locationsSvc.locations$.subscribe(updatedLocations => {
-      this.updateMap(updatedLocations);
-    });
-
     const osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const osmAttrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
       ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,';
@@ -34,12 +29,10 @@ export class MapComponent implements OnInit, OnDestroy {
     this.map = L.map('map-view').setView([52.105, 55.09], 9);
 
     L.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 2, maxZoom: 18 }).addTo(this.map);
-
-    this._locationsSvc.loadAll();
   }
 
-  ngOnDestroy() {
-    this.locationSubscription.unsubscribe();
+  ngOnChanges() {
+    if (this.map) this.updateMap(this.locations);
   }
 
   updateMap(locations: Array<any>) {

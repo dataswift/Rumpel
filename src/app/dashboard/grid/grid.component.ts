@@ -23,7 +23,7 @@ export class GridComponent implements OnInit, OnDestroy {
     this._eventsSub = this._eventsSvc.events$.subscribe(updatedEvents => {
       const now = moment();
       this.events = updatedEvents.filter(event => {
-        return event.startTime.isAfter(now);
+        return event.timestamp.isAfter(now);
       });
     });
 

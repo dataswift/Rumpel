@@ -1,9 +1,13 @@
 <div class="row">
   <div class="col-md-12 mixpad">
-    <rump-map class="map"></rump-map>
+    <rump-map class="map"
+              [locations]="locations | filterByTime:selectedTime"></rump-map>
     <rump-view-by-day class="day-view"
                       [images]="images | filterByTime:selectedTime"
-                      [events]="events | filterByTime:selectedTime"></rump-view-by-day>
-    <rump-timeline class="timeline" [timeline]="timeline"></rump-timeline>
+                      [events]="events | filterByTime:selectedTime"
+                      (timeSelected)="selectedTime = $event"></rump-view-by-day>
+    <rump-timeline class="timeline"
+                   [timeline]="timeline"
+                   (timeSelected)="selectedTime = $event"></rump-timeline>
   </div>
 </div>

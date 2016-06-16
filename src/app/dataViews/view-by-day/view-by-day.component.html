@@ -3,7 +3,7 @@
     <h4>Events</h4>
     <hr>
     <ul>
-      <li *ngFor="let eve of events">
+      <li *ngFor="let eve of events" (click)="selectTime(eve.timestamp)">
         <div>{{eve.title}}</div>
       </li>
     </ul>
@@ -12,7 +12,7 @@
     <h4>Photos</h4>
     <hr>
     <ul>
-      <li *ngFor="let img of images">
+      <li *ngFor="let img of images" (click)="selectTime(img.timestamp)">
         <img src="{{img.source}}" style="width: 100px;">
         <div>Time take: {{img.timestamp | moment}}</div>
       </li>
