@@ -17,6 +17,7 @@ import { LocationsComponent, CalendarComponent, PhotosComponent, MixpadComponent
   providers: [ROUTER_PROVIDERS]
 })
 @Routes([
+  {path: '/', component: GridComponent},
   {path: '/login', component: LoginComponent},
   {path: '/locations', component: LocationsComponent},
   {path: '/calendar', component: CalendarComponent},

@@ -11,6 +11,6 @@ describe('FilterByTime Pipe', () => {
   beforeEachProviders(() => [FilterByTime]);
 
   it('should transform the input', inject([FilterByTime], (pipe: FilterByTime) => {
-      expect(pipe.transform(true)).toBe(null);
+      expect(pipe.transform([])).toBe([]);
   }));
 });
