@@ -37,9 +37,9 @@ export class MixpadComponent implements OnInit, OnDestroy {
       this.locations = locations;
 
       for (let loc of locations) {
-        const foundDay = this.timeline.find(day => day.isSame(loc.timestamp, 'day'));
+        const foundDay = this.timeline.find(day => day.isSame(loc.start, 'day'));
         if (foundDay) continue;
-        this.timeline.push(loc.timestamp);
+        this.timeline.push(loc.start);
       }
     });
 
@@ -47,9 +47,9 @@ export class MixpadComponent implements OnInit, OnDestroy {
       this.events = events;
 
       for (let eve of events) {
-        const foundDay = this.timeline.find(day => day.isSame(eve.timestamp, 'day'));
+        const foundDay = this.timeline.find(day => day.isSame(eve.start, 'day'));
         if (foundDay) continue;
-        this.timeline.push(eve.timestamp);
+        this.timeline.push(eve.start);
       }
     });
 
@@ -57,9 +57,9 @@ export class MixpadComponent implements OnInit, OnDestroy {
       this.images = images;
 
       for (let img of images) {
-        const foundDay = this.timeline.find(day => day.isSame(img.timestamp, 'day'));
+        const foundDay = this.timeline.find(day => day.isSame(img.start, 'day'));
         if (foundDay) continue;
-        this.timeline.push(img.timestamp);
+        this.timeline.push(img.start);
       }
     });
 

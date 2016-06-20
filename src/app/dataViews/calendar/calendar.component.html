@@ -1,12 +1,7 @@
 <div class="row">
   <div class="col-md-12">
     <h4>Events List</h4>
-      <ul>
-        <li *ngFor="let event of events">
-          <h5>Title: {{event.title}}</h5>
-          <div>Start: {{event.startTime | moment}}</div>
-          <div>End: {{event.endTime | moment}}</div>
-        </li>
-      </ul>
+    <p-schedule [events]="events"
+                [header]="headerConfig"></p-schedule>
   </div>
 </div>

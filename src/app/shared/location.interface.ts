@@ -5,6 +5,7 @@ export interface Location {
   latitude: number;
   longitude: number;
   accuracy: number;
-  timestamp: any;
+  start: any;
+  end?: any;
   meta?: any;
 }

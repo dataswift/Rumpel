@@ -4,7 +4,7 @@
       <ul>
         <li *ngFor="let img of images$ | async">
           <img src="{{img.source}}">
-          <div>Time take: {{img.timestamp | moment}}</div>
+          <div>Time take: {{img.start | moment}}</div>
         </li>
       </ul>
   </div>

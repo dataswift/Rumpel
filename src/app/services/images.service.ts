@@ -28,7 +28,7 @@ export class ImagesService {
         const newImages: Array<Image> = data.map((image) => {
           let newImage: Image = {
             source: image.path,
-            timestamp: moment(image.lastUpdated)
+            start: moment(image.lastUpdated)
           };
 
           if (image.location) {
@@ -36,7 +36,7 @@ export class ImagesService {
               latitude: image.location.latitude,
               longitude: image.location.longitude,
               accuracy: null,
-              timestamp: moment(image.lastUpdated)
+              start: moment(image.lastUpdated)
             };
           }
           return newImage;

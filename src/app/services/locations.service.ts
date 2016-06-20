@@ -53,7 +53,7 @@ export class LocationsService {
             latitude: location.latitudeE7 / 10000000,
             longitude: location.longitudeE7 / 10000,
             accuracy: null,
-            timestamp: moment(parseInt(location.timestampMs))
+            start: moment(parseInt(location.timestampMs))
           }
         });
         return newLocations;

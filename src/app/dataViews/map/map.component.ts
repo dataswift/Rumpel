@@ -65,7 +65,7 @@ export class MapComponent implements OnInit, OnChanges {
         this.ajustBoundingBox(loc.latitude, loc.longitude);
         let pos = new L.LatLng(loc.latitude, loc.longitude);
         let marker = L.marker(pos);
-        marker.timestamp = loc.timestamp;
+        marker.timestamp = loc.start;
         let self = this;
         marker.on('click', (e: any) => {
           self.onMarkerSelected(e);

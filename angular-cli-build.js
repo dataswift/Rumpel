@@ -16,7 +16,10 @@ module.exports = function(defaults) {
       'leaflet/dist/leaflet.js',
       'leaflet/dist/images/*.png',
       'leaflet.markercluster/dist/leaflet.markercluster.js',
-      'leaflet.markercluster/dist/MarkerCluster.*'
+      'leaflet.markercluster/dist/MarkerCluster.*',
+      'primeui/primeui-ng-all.min.css',
+      'primeng/**/*.js',
+      'primeui/**/*.*'
     ],
     sassCompiler: {
       includePaths: ['src/app/style'],

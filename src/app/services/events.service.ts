@@ -28,8 +28,8 @@ export class EventsService {
         const newEvents: Array<Event> = data.map((event) => {
           return {
             title: event.title,
-            timestamp: moment(event.start),
-            endTime: event.end ? moment(event.end) : null
+            start: moment(event.start),
+            end: event.end ? moment(event.end) : null
           };
         });
         return newEvents;

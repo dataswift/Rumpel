@@ -2,7 +2,7 @@ import { Location } from './location.interface';
 
 export interface Event {
   title: string;
-  timestamp: any;
-  endTime: any;
+  start: any;
+  end: any;
   location?: Location;
 }

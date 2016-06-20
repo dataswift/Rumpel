@@ -7,7 +7,7 @@ export class FilterByTime implements PipeTransform {
 
   transform(values: Array<any>, args?: any): any {
     if (!args) return values;
-    return values.filter(value => value.timestamp.isSame(args, 'day'));
+    return values.filter(value => value.start.isSame(args, 'day'));
   }
 
 }
