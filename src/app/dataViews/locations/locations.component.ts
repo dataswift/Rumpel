@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MapComponent } from '../map/map.component';
+import { LocationsService } from '../../services';
 
 @Component({
   moduleId: module.id,
@@ -9,10 +10,21 @@ import { MapComponent } from '../map/map.component';
   directives: [MapComponent]
 })
 export class LocationsComponent implements OnInit {
+  private _sub: any;
+  public locations: any;
 
-  constructor() { }
+  constructor(private _locationsSvc: LocationsService) { }
 
   ngOnInit() {
+    this._sub = this._locationsSvc.locations$.subscribe(updatedLocations => {
+      this.locations = updatedLocations;
+    });
+
+    this._locationsSvc.loadAll();
+  }
+
+  ngOnDestroy() {
+    this._sub.unsubscribe();
   }
 
 }

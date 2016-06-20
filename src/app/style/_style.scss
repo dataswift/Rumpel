@@ -87,60 +87,6 @@ h1, h2, h3, h4, h5 {
     }
   }
 }
-.navbar {
-  &.smaller {
-    font-size: 0.75em;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    height: 74px;
-  }
-  background-color: $base-red;
-  min-height: unset;
-  //height: 15vh;
-  //min-height: 70px;
-  height: 122px;
-  $transition-speed: 500ms;
-  -webkit-transition: all $transition-speed; // Chrome
-  -moz-transition: all $transition-speed; // Mozilla
-  -o-transition: all $transition-speed; // Opera
-  transition: all $transition-speed;
-  padding-top: 3em;
-  padding-bottom: 3em;
-  margin: 0;
-  a {
-    color: $base-white;
-  }
-  .navbar-nav {
-    li > a {
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-    font-size: 2.556em;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-weight: lighter;
-    text-transform: capitalize;
-    &.navbar-right {
-      padding-left: 0.5em;
-      padding-right: 0.5em;
-      li {
-        border-left: solid 0.05em $base-white;
-        &:first-child {
-          border-left: none;
-        }
-        a:hover {
-          background-color: transparent;
-        }
-      }
-    }
-  }
-  .navbar-header {
-    .navbar-brand {
-      font-size: 4em;
-      font-family: 'Open Sans Condensed', sans-serif;
-      height: 1em;
-    }
-  }
-}
 
 .offer-preview {
   width: 100%;

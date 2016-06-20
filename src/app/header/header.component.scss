@@ -1,0 +1,58 @@
+@import "variables";
+
+.navbar {
+  &.smaller {
+    font-size: 0.75em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    height: 74px;
+  }
+  background-color: $base-black;
+  min-height: unset;
+  //height: 15vh;
+  //min-height: 70px;
+  height: 122px;
+  $transition-speed: 500ms;
+  -webkit-transition: all $transition-speed; // Chrome
+  -moz-transition: all $transition-speed; // Mozilla
+  -o-transition: all $transition-speed; // Opera
+  transition: all $transition-speed;
+  padding-top: 3em;
+  padding-bottom: 3em;
+  margin: 0;
+  border-radius: 0;
+}
+
+.navbar-nav {
+  li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: $text-white;
+  }
+  font-size: 2em;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-weight: lighter;
+  text-transform: capitalize;
+  &.navbar-right {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    li {
+      border-left: solid 0.05em $text-white;
+      &:first-child {
+        border-left: none;
+      }
+      a:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.navbar-header {
+  .navbar-brand {
+    color: $text-white;
+    font-size: 4em;
+    font-family: 'Open Sans Condensed', sans-serif;
+    height: 1em;
+  }
+}

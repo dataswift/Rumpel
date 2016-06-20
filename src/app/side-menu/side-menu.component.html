@@ -1,13 +1,11 @@
 <ul class="center">
-  <li><a href="/"><span class="ss-user"></span>Profile</a></li>
-  <li><a href="/"><span class="ss-tags"></span>Offers</a></li>
-  <li><a href="/"><span class="ss-chats"></span>Messages</a></li>
-  <li><a [routerLink]="['/locations']"><span class="ss-location"></span>Locations</a></li>
-  <li><a href="/"><span class="ss-calendar"></span>Calendar</a></li>
-  <li><a href="/"><span class="ss-replyall"></span>Social</a></li>
-  <li><a href="/"><span class="ss-send"></span>Mail</a></li>
-  <li><a href="/"><span class="ss-partlycloudy"></span>Weather</a></li>
-  <li><a href="/"><span class="ss-camera"></span>Photos</a></li>
-  <li><a href="/"><span class="ss-connection"></span>Plugins</a></li>
-  <li><a href="/"><span class="ss-settings"></span>Settings</a></li>
+  <li *ngFor="let item of menuItems"
+      (click)="onItemSelect(item.display)"
+      [class.selected]="item.display === selectedItem">
+    <a [routerLink]="[item.link]">
+      <span class="ss-{{item.icon}}"></span>
+      {{item.display}}
+    </a>
+  </li>
 </ul>
+

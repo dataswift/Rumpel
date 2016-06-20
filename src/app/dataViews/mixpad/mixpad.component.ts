@@ -19,6 +19,7 @@ export class MixpadComponent implements OnInit, OnDestroy {
   private _eveSub;
   private _imgSub;
   public selectedTime: any;
+  public shownComponents: any;
   public locations;
   public events;
   public images;
@@ -28,6 +29,7 @@ export class MixpadComponent implements OnInit, OnDestroy {
               private _eventsSvc: EventsService,
               private _imagesSvc: ImagesService) {
     this.timeline = [moment()];
+    this.shownComponents = { map: true, events: true, photos: true, timeline: true };
   }
 
   ngOnInit() {
@@ -70,6 +72,10 @@ export class MixpadComponent implements OnInit, OnDestroy {
     this._imgSub.unsubscribe();
     this._eveSub.unsubscribe();
     this._locSub.unsubscribe();
+  }
+
+  onViewReset() {
+    this.selectedTime = null;
   }
 
 }

@@ -1,14 +1,33 @@
 <div class="row">
   <div class="col-md-12 mixpad">
+    <div class="expanded-view-header">
+      <h4>Data mashup view</h4>
+      <span>
+        <input type="checkbox" name="events-view-toggle" [(ngModel)]="shownComponents.events">
+        <label for="event-view-toggle">Events</label>
+      </span>
+      <span>
+        <input type="checkbox" name="events-view-toggle" [(ngModel)]="shownComponents.timeline">
+        <label for="event-view-toggle">Timeline</label>
+      </span>
+      <span>
+        <input type="checkbox" name="events-view-toggle" [(ngModel)]="shownComponents.map">
+        <label for="event-view-toggle">Map</label>
+      </span>
+      <button (click)="onViewReset()">Reset View</button>
+    </div>
     <rump-map class="map"
               [locations]="locations | filterByTime:selectedTime"
-              (timeSelected)="selectedTime = $event"></rump-map>
+              (timeSelected)="selectedTime = $event"
+              [hidden]="!shownComponents.map"></rump-map>
     <rump-view-by-day class="day-view"
                       [images]="images | filterByTime:selectedTime"
                       [events]="events | filterByTime:selectedTime"
-                      (timeSelected)="selectedTime = $event"></rump-view-by-day>
+                      (timeSelected)="selectedTime = $event"
+                      [hidden]="!shownComponents.events"></rump-view-by-day>
     <rump-timeline class="timeline"
                    [timeline]="timeline"
-                   (timeSelected)="selectedTime = $event"></rump-timeline>
+                   (timeSelected)="selectedTime = $event"
+                   [hidden]="!shownComponents.timeline"></rump-timeline>
   </div>
 </div>

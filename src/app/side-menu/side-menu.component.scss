@@ -11,17 +11,21 @@ ul {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     span {
-      font-size: 2.778em;
+      font-size: 2em;
       display: block;
     }
 
     a {
-      color: $base-white;
+      color: $text-white;
       text-decoration: none;
     }
 
-    &.active {
-      background: $base-gray;
+    &.selected {
+      background: $base-grey;
+    }
+
+    &:hover {
+      background-color: $base-grey;
     }
   }
 }
