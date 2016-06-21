@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HatApiService } from './hat-api.service';
 import { JwtHelper } from 'angular2-jwt';
 
 @Injectable()
 export class AuthService {
   private _authenticated: boolean = false;
-  private _token: string;
-  private _hat: string;
   private _jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private _http: Http) {
+  constructor(private _hatApi: HatApiService) {
   }
 
   decodeJwt(jwt: string) {
-    this._token = jwt;
     const jwtData = this._jwtHelper.decodeToken(jwt);
-    this._hat = jwtData['iss'];
+    const hatAddress = jwtData['iss'];
+
+    this._hatApi.validateToken(hatAddress, jwt).subscribe(res => {
+      if (res && res.message === 'Authenticated') this._authenticated = true;
+      else this._authenticated = false;
+    });
   }
 
   isAuthenticated() {
