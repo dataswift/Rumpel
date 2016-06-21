@@ -1,6 +1,6 @@
 {
   "project": {
-    "version": "1.0.0-beta.5",
+    "version": "1.0.0-beta.6",
     "name": "rumpel"
   },
   "apps": [
@@ -26,6 +26,7 @@
     "prefix": "rump",
     "sourceDir": "src",
     "styleExt": "scss",
-    "prefixInterfaces": false
+    "prefixInterfaces": false,
+    "lazyRoutePrefix": "+"
   }
 }

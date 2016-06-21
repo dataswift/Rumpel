@@ -1,9 +1,9 @@
-export class Rumpel2Page {
+export class RumpelPage {
   navigateTo() {
     return browser.get('/');
   }
 
   getParagraphText() {
-    return element(by.css('rumpel2-app h1')).getText();
+    return element(by.css('app-root h1')).getText();
   }
 }

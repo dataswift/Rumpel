@@ -18,7 +18,9 @@
 <body>
   <rumpel>Loading...</rumpel>
 
-    {{#each scripts.polyfills}}<script src="{{.}}"></script>{{/each}}
+    {{#each scripts.polyfills}}
+    <script src="{{.}}"></script>
+    {{/each}}
     <script src="https://npmcdn.com/packery@2.0/dist/packery.pkgd.min.js"></script>
     <script>
       System.import('system-config.js').then(function () {
