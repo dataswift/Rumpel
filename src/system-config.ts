@@ -7,14 +7,16 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
-  'moment': 'vendor/moment/moment.js',
-  'primeng': 'vendor/primeng'
+  'moment': 'vendor/moment',
+  'primeng': 'vendor/primeng',
+  'angular2-jwt': 'vendor/angular2-jwt'
 };
 
 /** User packages configuration. */
 const packages: any = {
-  'moment': { format: 'cjs' },
-  'primeng': { defaultExtension: 'js' }
+  'moment': { format: 'cjs', main: 'moment.js' },
+  'primeng': { defaultExtension: 'js' },
+  'angular2-jwt': { main: 'angular2-jwt.js' }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,10 +42,10 @@ const barrels: string[] = [
   'app/rump-header',
   'app/rump-footer',
   'app/rump-side-menu',
-  'app/login',
   'app/dashboard',
   'app/dataViews',
   'app/services',
+  'app/auth',
   /** @cli-barrel */
 ];
 
