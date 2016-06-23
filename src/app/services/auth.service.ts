@@ -7,17 +7,21 @@ export class AuthService {
   private _authenticated: boolean = false;
   private _jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private _hatApi: HatApiService) {
-  }
+  constructor(private _hatApi: HatApiService) {}
 
   decodeJwt(jwt: string) {
     const jwtData = this._jwtHelper.decodeToken(jwt);
-    const hatAddress = jwtData['iss'];
+    const hatDomain = jwtData['iss'];
 
-    this._hatApi.validateToken(hatAddress, jwt).subscribe(res => {
+    this._hatApi.validateToken(hatDomain, jwt).subscribe(
+      res => {
       if (res && res.message === 'Authenticated') this._authenticated = true;
       else this._authenticated = false;
-    });
+      },
+      err => {
+        this._authenticated = false;
+        console.log("Could not verify with specified HAT");
+      });
   }
 
   isAuthenticated() {
