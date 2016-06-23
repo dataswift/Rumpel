@@ -1,8 +1,11 @@
 import { Location } from './location.interface';
 
-export interface Event {
+export interface Post {
   title: string;
-  description?: string;
+  body: string;
+  type: string;
+  image: string;
+  privacy: string;
   start: any;
   end?: any;
   location?: Location;

@@ -30,13 +30,9 @@ export class HatApiService {
     query.append('name', name);
     query.append('source', source);
 
-    this._http.get(url, { headers: this._headers, search: query })
+    return this._http.get(url, { headers: this._headers, search: query })
       .map(res => res.json().id)
-      .flatMap(tableId => this.getTableValues(tableId))
-      .subscribe(
-        data => console.log(data),
-        err => console.log(`Table for ${name} from ${source} could not be found`)
-      );
+      .flatMap(tableId => this.getTableValues(tableId));
   }
 
   getTableValues(tableId: number) {

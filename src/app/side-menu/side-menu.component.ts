@@ -16,7 +16,7 @@ export class SideMenuComponent implements OnInit {
     { display: 'Messages', icon: 'chats', link: '' },
     { display: 'Locations', icon: 'tags', link: 'locations' },
     { display: 'Calendar', icon: 'calendar', link: 'calendar' },
-    { display: 'Social', icon: 'replyall', link: '' },
+    { display: 'Social', icon: 'replyall', link: 'social' },
     { display: 'Mail', icon: 'send', link: '' },
     { display: 'Weather', icon: 'partlycloudy', link: '' },
     { display: 'Photos', icon: 'camera', link: '' },

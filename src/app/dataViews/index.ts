@@ -5,3 +5,4 @@ export { MixpadComponent } from './mixpad/mixpad.component';
 export { MapComponent } from './map/map.component';
 export { ViewByDayComponent } from './view-by-day/view-by-day.component';
 export { TimelineComponent } from './timeline/timeline.component';
+export { SocialComponent } from './social/social.component';
