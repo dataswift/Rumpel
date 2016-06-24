@@ -11,6 +11,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 export class SideMenuComponent implements OnInit {
   public selectedItem: string;
   public menuItems = [
+    { display: 'Dashboard', icon: 'dashboard', link: '' },
     { display: 'Profile', icon: 'user', link: '' },
     { display: 'Offers', icon: 'tags', link: '' },
     { display: 'Messages', icon: 'chats', link: '' },

@@ -1,0 +1,19 @@
+<div class="tile-header">
+  <span class="tile-logo ss-{{iconName}}"></span>
+  <span class="tile-title">{{title}}</span>
+  <span class="tile-expand ss-plus"></span>
+</div>
+
+<div class="tile-body">
+  <ul>
+    <li *ngFor="let post of feed | contains:'body' | limitMembers">
+      <span class="tile-entry-logo ss-notifications"></span>
+      <div class="tile-content">
+        <h4>{{post.title}}</h4>
+        <p>{{post.body | limitContent:80}}</p>
+        <span>{{post.privacy}}</span><span>{{post.type}}</span>
+      </div>
+      <span class="item-expand ss-right"></span>
+    </li>
+  </ul>
+</div>

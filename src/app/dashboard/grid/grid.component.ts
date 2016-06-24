@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventsService } from '../../services/events.service';
+import { EventsService, SocialService } from '../../services';
 import { TileProfileComponent } from '../tile-profile/tile-profile.component';
 import { TileGenericComponent } from '../tile-generic/tile-generic.component';
+import { TileSocialComponent } from '../tile-social/tile-social.component';
+import { Event, Post } from '../../shared';
 import * as moment from 'moment';
 
 @Component({
@@ -9,29 +11,38 @@ import * as moment from 'moment';
   selector: 'rump-grid',
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.css'],
-  directives: [TileProfileComponent, TileGenericComponent]
+  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent]
 })
 export class GridComponent implements OnInit, OnDestroy {
   private _eventsSub;
-  public events: Array<any>;
+  private _socialSub;
+  public events: Array<Event>;
+  public socialFeed: Array<Post>;
 
-  constructor(private _eventsSvc: EventsService) {
-    this.events = [];
+  constructor(private _eventsSvc: EventsService,
+              private _socialSvc: SocialService) {
   }
 
   ngOnInit() {
+    this.events = [];
+    this.socialFeed = [];
+
     this._eventsSub = this._eventsSvc.events$.subscribe(updatedEvents => {
       const now = moment();
-      this.events = updatedEvents.filter(event => {
-        return event.start.isAfter(now);
-      });
+      this.events = updatedEvents.filter(event => event.start.isAfter(now));
+    });
+
+    this._socialSub = this._socialSvc.socialFeed$.subscribe(posts => {
+      this.socialFeed = posts;
     });
 
     this._eventsSvc.loadAll();
+    this._socialSvc.loadAll();
   }
 
   ngOnDestroy() {
     this._eventsSub.unsubscribe();
+    this._socialSub.unsubscribe();
   }
 
 }

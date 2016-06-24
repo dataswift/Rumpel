@@ -46,6 +46,7 @@ const barrels: string[] = [
   'app/dataViews',
   'app/services',
   'app/auth',
+  'app/pipes',
   /** @cli-barrel */
 ];
 

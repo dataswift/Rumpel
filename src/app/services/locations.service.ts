@@ -51,7 +51,7 @@ export class LocationsService {
         const newLocations: Array<Location> = data.map((location) => {
           return {
             latitude: location.latitudeE7 / 10000000,
-            longitude: location.longitudeE7 / 10000,
+            longitude: location.longitudeE7 / 10000000,
             accuracy: null,
             start: moment(parseInt(location.timestampMs))
           }
