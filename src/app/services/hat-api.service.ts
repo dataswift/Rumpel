@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 const HAT_PORT = 8080;
@@ -24,7 +25,7 @@ export class HatApiService {
     return this._http.get(url, { headers: this._headers }).map(res => res.json());
   }
 
-  getTable(name: string, source: string) {
+  getTable(name: string, source: string): Observable<any> {
     const url = this._baseUrl + '/data/table';
     let query: URLSearchParams = new URLSearchParams();
     query.append('name', name);
@@ -35,7 +36,7 @@ export class HatApiService {
       .flatMap(tableId => this.getTableValues(tableId));
   }
 
-  getTableValues(tableId: number) {
+  getTableValues(tableId: number): Observable<any> {
     const url = this._baseUrl + '/data/table/' + tableId + '/values';
 
     return this._http.get(url, { headers: this._headers })
