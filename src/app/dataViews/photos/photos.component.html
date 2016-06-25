@@ -2,9 +2,8 @@
   <div class="col-md-12">
     <h4>Images</h4>
       <ul>
-        <li *ngFor="let img of images$ | async">
-          <img src="{{img.source}}">
-          <div>Time take: {{img.start | moment}}</div>
+        <li *ngFor="let img of images">
+          <img [src]="img.url">
         </li>
       </ul>
   </div>

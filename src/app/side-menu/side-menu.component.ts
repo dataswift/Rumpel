@@ -20,7 +20,7 @@ export class SideMenuComponent implements OnInit {
     { display: 'Social', icon: 'replyall', link: 'social' },
     { display: 'Mail', icon: 'send', link: '' },
     { display: 'Weather', icon: 'partlycloudy', link: '' },
-    { display: 'Photos', icon: 'camera', link: '' },
+    { display: 'Photos', icon: 'camera', link: 'photos' },
     { display: 'Plugins', icon: 'connection', link: '' },
     { display: 'Settings', icon: 'settings', link: '' }
   ];
