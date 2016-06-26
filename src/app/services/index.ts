@@ -4,3 +4,5 @@ export { EventsService } from './events.service';
 export { ImagesService } from './images.service';
 export { SocialService } from './social.service';;
 export { HatApiService } from './hat-api.service';
+export { MarketSquareService } from './market-square.service';
+export { DataDebitService } from './data-debit.service';

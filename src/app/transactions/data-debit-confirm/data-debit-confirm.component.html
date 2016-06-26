@@ -2,15 +2,18 @@
   <div class="col-md-12">
     <div class="offer">
       <div class="offer-title">
-        <h2 class="text-center">Ultimate Amazon Delivery</h2>
+        <h2 class="text-center">{{offerInfo.offer.title}}</h2>
         <div class="offer-reward text-center">
-          Amazon voucher: 5gpb
+          <a href="{{offerInfo.offer.reward.vendorUrl}}" target="_blank">{{offerInfo.offer.reward.vendor}}</a>
+          {{offerInfo.offer.reward.rewardType | lowercase}}: {{offerInfo.offer.reward.value}}
         </div>
-        <div class="offer-description text-center">Offer description goes here</div>
+        <div class="offer-description text-center">{{offerInfo.offer.description}}</div>
       </div>
       <div class="offer-dialog text-center">
-        <button class="btn btn-rump btn-accept">Accept Offer</button>
-        <button class="btn btn-rump">Decline Offer</button>
+        <button class="btn btn-rump btn-accept"
+                (click)="acceptDataDebit()">Accept Offer</button>
+        <button class="btn btn-rump"
+                (click)="rejectDataDebit()">Decline Offer</button>
       </div>
       <div class="alert-message text-center">
         <span class="icon-alert ss-alert"></span>
@@ -37,13 +40,16 @@
         <div class="panel panel-rump">
           <div class="panel-heading">Terms of Offer</div>
           <div class="panel-body">
-            <h3>£5 voucher to spend at amazon.co.uk</h3>
-            <h5>Description</h5>
-            <p>The best offer you can get</p>
-            <h5>Expiration</h5>
-            <p>It will expire very soon!</p>
-            <h5>Data required</h5>
-            <p>Lorem ipsum</p>
+            <h3>{{offerInfo.offer.title}}</h3>
+            <h5>Contact Information</h5>
+            <p>{{offerInfo.owner.firstName + ' ' + offerInfo.owner.lastName}}</p>
+            <p>E-mail: {{offerInfo.owner.email}}</p>
+            <h5>Validity</h5>
+            <p>The offer is running from {{offerInfo.offer.starts | moment:'Do MMM, YYYY'}} to {{offerInfo.offer.expires | moment:'Do MMM, YYYY'}}.</p>
+            <h5>Data sources required for the offer</h5>
+            <ul>
+              <li *ngFor="let set of offerInfo.offer.dataRequest.definition">{{set.source}}</li>
+            </ul>
           </div>
         </div>
       </div>

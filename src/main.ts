@@ -3,7 +3,7 @@ import { enableProdMode } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { RumpelAppComponent, environment } from './app/';
 import { APP_ROUTER_PROVIDERS } from './app/rumpel.routes';
-import { AuthService, HatApiService, LocationsService, EventsService, ImagesService, SocialService } from './app/services';
+import { AuthService, HatApiService, MarketSquareService, LocationsService, EventsService, ImagesService, SocialService, DataDebitService } from './app/services';
 
 if (environment.production) {
   enableProdMode();
@@ -14,9 +14,11 @@ bootstrap(RumpelAppComponent, [
   HTTP_PROVIDERS,
   AuthService,
   HatApiService,
+  MarketSquareService,
   LocationsService,
   EventsService,
   ImagesService,
-  SocialService
+  SocialService,
+  DataDebitService
 ])
   .catch(err => console.error(err));

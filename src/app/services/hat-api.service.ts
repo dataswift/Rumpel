@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { Observable } from 'rxjs/Rx';
 
 const HAT_PORT = 8080;
 
@@ -42,6 +41,18 @@ export class HatApiService {
     return this._http.get(url, { headers: this._headers })
       .map(res => res.json())
       .map(body => this.transform(body));
+  }
+
+  getDataDebit(uuid: string) {
+    const url = this._baseUrl + '/dataDebit/' + uuid + '/values';
+    return this._http.get(url, { headers: this._headers })
+      .map(res => res.json());
+  }
+
+  updateDataDebit(uuid: string, state: string): Observable<any> {
+    const url = this._baseUrl + '/directDebit/' + uuid + '/' + state;
+
+    return this._http.put(url, {}, { headers: this._headers });
   }
 
   private transform(raw: Array<any>) {
