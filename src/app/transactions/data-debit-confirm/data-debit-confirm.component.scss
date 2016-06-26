@@ -1,0 +1,91 @@
+.offer-title {
+  background-color: #ececec;
+  border: 0.2em dashed #535353;
+  color: #202020;
+  padding: 2em;
+  position: relative;
+  margin-top: 2em;
+  margin-bottom: 2em;
+
+  h2 {
+    margin: 0;
+    clear: both;
+    text-transform: uppercase;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+}
+
+.offer {
+  padding-right: 10em;
+  padding-left: 10em;
+}
+
+.offer-reward {
+  font-size: 1.5em;
+  color: inherit;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.offer-description {
+  font-size: 1em;
+}
+
+.offer-dialog {
+
+}
+
+.text-center {
+  text-align: center;
+}
+
+.btn-rump {
+  border-radius: 0;
+  font-size: 1.5em;
+  margin: 1em 1em;
+  padding: 1em 5em;
+  background-color: #37474F;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.btn-accept {
+  background-color: #91C228;
+}
+
+.alert-message {
+  padding: 1em 0;
+  font-size: 2em;
+  font-family: "Open Sans Condensed", sans-serif;
+}
+
+.icon-alert {
+  color: #88111d;
+  font-size: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}
+
+.panel-rump {
+  border-radius: 0;
+  border: 1px solid #ececec;
+}
+
+.panel.panel-rump .panel-heading {
+  font-size: 1em;
+  text-transform: uppercase;
+  background-color: #ececec;
+}
+
+.panel.panel-rump .panel-body .field {
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
