@@ -45,9 +45,10 @@ const barrels: string[] = [
   'app/dashboard',
   'app/dataViews',
   'app/services',
-  'app/auth',
+  'app/user-mgmt',
   'app/pipes',
   'app/transactions',
+  'app/login',
   /** @cli-barrel */
 ];
 

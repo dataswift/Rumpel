@@ -1,13 +1,14 @@
 import { provideRouter, RouterConfig } from '@angular/router';
 import { TransactionsRoutes } from './transactions/transactions.routes';
 import { ViewsRoutes } from './dataViews/views.routes';
+import { UserMgmtRoutes } from './user-mgmt/user-mgmt.routes';
 
 import { GridComponent } from './dashboard';
-import { AuthComponent } from './auth';
+import { AuthGuard } from './auth.guard';
 
 export const routes: RouterConfig = [
-  { path: '', component: GridComponent },
-  { path: 'authenticate/:jwt', component: AuthComponent },
+  { path: '', component: GridComponent, canActivate: [AuthGuard] },
+  ...UserMgmtRoutes,
   ...ViewsRoutes,
   ...TransactionsRoutes
 ];

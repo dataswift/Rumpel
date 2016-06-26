@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HatApiService } from './hat-api.service';
 import { JwtHelper } from 'angular2-jwt';
+import { Observable, Observer } from 'rxjs/Rx';
 
 @Injectable()
 export class AuthService {
+  public auth$: Observable<any>;
+  private authObserver: Observer<any>;
   private _authenticated: boolean = false;
   private _jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(private _hatApi: HatApiService) {}
+  constructor(private _hatApi: HatApiService) {
+    this.auth$ = new Observable(observer => this.authObserver = observer).share();
+  }
 
   decodeJwt(jwt: string) {
     const jwtData = this._jwtHelper.decodeToken(jwt);
@@ -21,10 +26,11 @@ export class AuthService {
       err => {
         this._authenticated = false;
         console.log("Could not verify with specified HAT");
-      });
+      },
+      () => this.authObserver.next(this._authenticated));
   }
 
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     return this._authenticated;
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AuthService, HatApiService } from '../services';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService, HatApiService } from '../../services';
 
 @Component({
   moduleId: module.id,
@@ -9,27 +9,27 @@ import { AuthService, HatApiService } from '../services';
   styleUrls: ['auth.component.css']
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  private _sub: any;
+  private _subRoute: any;
+  private _subAuth: any;
 
   constructor(private _route: ActivatedRoute,
+              private router: Router,
               private _hat: HatApiService,
               private _authSvc: AuthService) {}
 
   ngOnInit() {
-    this._sub = this._route.params.subscribe(params => {
+    this._subRoute = this._route.params.subscribe(params => {
       let jwtToken = params['jwt'];
       this._authSvc.decodeJwt(jwtToken);
+    });
+
+    this._subAuth = this._authSvc.auth$.subscribe(isAuthorised => {
+      if (isAuthorised) this.router.navigate(['']);
     });
   }
 
   ngOnDestroy() {
-    this._sub.unsubscribe();
+    this._subRoute.unsubscribe();
+    this._subAuth.unsubscribe();
   }
-
-  test(name, source) {
-    this._hat.getTable(name, source);
-  }
-
-
-
 }
