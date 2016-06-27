@@ -12,14 +12,14 @@ export class SideMenuComponent implements OnInit {
   public selectedItem: string;
   public menuItems = [
     { display: 'Dashboard', icon: 'dashboard', link: '' },
-    { display: 'Profile', icon: 'user', link: '' },
+    //{ display: 'Profile', icon: 'user', link: '' },
     { display: 'Offers', icon: 'tags', link: '' },
-    { display: 'Messages', icon: 'chats', link: '' },
+    { display: 'Mashup', icon: 'layergroup', link: 'mixpad' },
+    //{ display: 'Messages', icon: 'chats', link: '' },
     { display: 'Locations', icon: 'tags', link: 'locations' },
     { display: 'Calendar', icon: 'calendar', link: 'calendar' },
     { display: 'Social', icon: 'replyall', link: 'social' },
-    { display: 'Mail', icon: 'send', link: '' },
-    { display: 'Weather', icon: 'partlycloudy', link: '' },
+    //{ display: 'Mail', icon: 'send', link: '' },
     { display: 'Photos', icon: 'camera', link: 'photos' },
     { display: 'Plugins', icon: 'connection', link: '' },
     { display: 'Settings', icon: 'settings', link: '' }

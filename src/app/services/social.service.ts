@@ -25,8 +25,6 @@ export class SocialService {
   loadAll() {
     if (this._dataLoaded) return this._socialObserver.next(this._store.posts);
 
-    console.log('HERE', this._socialObserver);
-
     this._hat.getTable('posts', 'facebook').subscribe(
       data => {
         const newPosts: Array<Post> = data.map((post: any) => {

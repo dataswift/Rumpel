@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._subRoute = this._route.params.subscribe(params => {
       let jwtToken = params['jwt'];
-      this._authSvc.decodeJwt(jwtToken);
+      this._authSvc.authenticate(jwtToken);
     });
 
     this._subAuth = this._authSvc.auth$.subscribe(isAuthorised => {
