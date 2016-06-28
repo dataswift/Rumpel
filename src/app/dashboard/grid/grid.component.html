@@ -1,9 +1,17 @@
 <div class="grid" data-packery='{ "itemSelector": ".grid-item" }'>
   <rump-tile-social class="grid-item grid-item--width3 grid-item--height2"
-                    [feed]="socialFeed" [title]="'Social'" [iconName]="'replyall'"></rump-tile-social>
-  <rump-tile-profile class="grid-item grid-item--width3 grid-item--height1"></rump-tile-profile>
+                    [feed]="socialFeed">
+    <rump-tile-header [title]="'Social'" [iconName]="'replyall'"></rump-tile-header>
+  </rump-tile-social>
+
+  <rump-tile-profile class="grid-item grid-item--width3 grid-item--height1">
+    <rump-tile-header [title]="'Profile'" [iconName]="'user'"></rump-tile-header>
+  </rump-tile-profile>
+
   <rump-tile-generic class="grid-item grid-item--width3 grid-item--height1"
-                     [data]="events" [title]="'Calendar'" [iconName]="'calendar'"></rump-tile-generic>
+                     [data]="events">
+    <rump-tile-header [title]="'Calendar'" [iconName]="'calendar'"></rump-tile-header>
+  </rump-tile-generic>
 
   <div class="grid-item grid-item--width3"></div>
   <div class="grid-item grid-item--width3"></div>

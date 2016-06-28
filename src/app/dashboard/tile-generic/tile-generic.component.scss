@@ -1,13 +1,5 @@
 @import "style";
 
-.tile-header {
-  padding: 0.5em 0.5em;
-  width: 100%;
-  text-transform: uppercase;
-  font-size: 1.5em;
-  background-color: #455A64;
-}
-
 .tile-body {
   padding: 0.5em 1em;
 }
@@ -21,10 +13,6 @@
 .tile-body li {
   margin: 0.5em 0;
   position: relative;
-}
-
-.tile-expand {
-  float: right;
 }
 
 .tile-entry-logo {

@@ -3,6 +3,7 @@ import { EventsService, SocialService } from '../../services';
 import { TileProfileComponent } from '../tile-profile/tile-profile.component';
 import { TileGenericComponent } from '../tile-generic/tile-generic.component';
 import { TileSocialComponent } from '../tile-social/tile-social.component';
+import { TileHeaderComponent } from '../tile-header/tile-header.component';
 import { Event, Post } from '../../shared';
 import * as moment from 'moment';
 
@@ -11,7 +12,7 @@ import * as moment from 'moment';
   selector: 'rump-grid',
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.css'],
-  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent]
+  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileHeaderComponent]
 })
 export class GridComponent implements OnInit, OnDestroy {
   private _eventsSub;
