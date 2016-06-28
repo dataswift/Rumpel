@@ -9,9 +9,7 @@ import { Moment } from '../../pipes/moment.pipe';
   pipes: [Moment]
 })
 export class TileGenericComponent implements OnInit {
-  @Input() title;
   @Input() data;
-  @Input() iconName;
 
   constructor() {}
 

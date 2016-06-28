@@ -1,0 +1,20 @@
+@import "style";
+
+.tile-body {
+  text-align: center;
+
+  .main {
+    div {
+
+      font-size: 3em;
+    }
+
+    span {
+      font-size: 4em;
+    }
+
+    * {
+      display: inline;
+    }
+  }
+}

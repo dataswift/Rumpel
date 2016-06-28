@@ -9,9 +9,7 @@ import { Moment, LimitContentPipe, LimitMembersPipe, ContainsPipe } from '../../
   pipes: [Moment, LimitContentPipe, LimitMembersPipe, ContainsPipe]
 })
 export class TileSocialComponent implements OnInit {
-  @Input() title;
   @Input() feed;
-  @Input() iconName;
 
   constructor() {}
 
