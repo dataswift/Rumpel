@@ -10,11 +10,11 @@ import {
   async, inject
 } from '@angular/core/testing';
 
-import { TileWeatherComponent } from './tile-weather.component';
+import { TileDataOffersComponent } from './tile-data-offers.component';
 
-describe('Component: TileWeather', () => {
+describe('Component: TileDataOffers', () => {
   it('should create an instance', () => {
-    // let component = new TileWeatherComponent();
-    // expect(component).toBeTruthy();
+    let component = new TileDataOffersComponent();
+    expect(component).toBeTruthy();
   });
 });

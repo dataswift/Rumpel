@@ -12,7 +12,7 @@ describe('Weather Service', () => {
   beforeEachProviders(() => [WeatherService]);
 
   it('should ...',
-      inject([WeatherService], (service: WeatherService) => {
+    inject([WeatherService], (service: WeatherService) => {
     expect(service).toBeTruthy();
   }));
 });

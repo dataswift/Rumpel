@@ -1,0 +1,23 @@
+<ng-content></ng-content>
+
+<div class="tile-body">
+  <ul>
+    <li *ngFor="let offer of offers">
+      <div class="tile-content">
+        <h5>{{offer.offer.title}}</h5>
+        <p>{{offer.offer.description | limitContent:80}}</p>
+        <p>Already claimed by {{offer.offer.users}} users. Expires {{offer.offer.expires | moment}}</p>
+      </div>
+      <div class="item-expand meta" *ngIf="offer.offer.rating">
+        <div>
+          <span class="ss-like"></span>
+          {{offer.offer.rating.up}}
+        </div>
+        <div>
+          <span class="ss-dislike"></span>
+          {{offer.offer.rating.down}}
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

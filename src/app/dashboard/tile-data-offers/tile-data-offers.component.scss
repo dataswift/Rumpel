@@ -24,6 +24,13 @@
 .item-expand {
   float: right;
   font-size: 2em;
+
+  div {
+    margin-right: 0.25em;
+    margin-left: 0.25em;
+    display: inline;
+    font-size: .75em;
+  }
 }
 
 .tile-content {
