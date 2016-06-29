@@ -5,3 +5,4 @@ export { TileSocialComponent } from './tile-social/tile-social.component';
 export { TileWeatherComponent } from './tile-weather/tile-weather.component';
 export { TileHeaderComponent } from './tile-header/tile-header.component';
 export { TileDataOffersComponent } from './tile-data-offers/tile-data-offers.component';
+export { TileDataPlugsComponent } from './tile-data-plugs/tile-data-plugs.component';

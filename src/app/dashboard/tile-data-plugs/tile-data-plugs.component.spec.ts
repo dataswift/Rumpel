@@ -10,11 +10,11 @@ import {
   async, inject
 } from '@angular/core/testing';
 
-import { TileDataOffersComponent } from './tile-data-offers.component';
+import { TileDataPlugsComponent } from './tile-data-plugs.component';
 
-describe('Component: TileDataOffers', () => {
+describe('Component: TileDataPlugs', () => {
   it('should create an instance', () => {
-    // let component = new TileDataOffersComponent();
+    // let component = new TileDataPlugsComponent();
     // expect(component).toBeTruthy();
   });
 });

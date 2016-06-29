@@ -1,0 +1,28 @@
+@import "style";
+
+.tile-body {
+  padding: 0.5em 1em;
+}
+
+.tile-body ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tile-body li {
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 0px;
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+
+.col-xs-2, .col-xs-10 {
+  margin: 0;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+}

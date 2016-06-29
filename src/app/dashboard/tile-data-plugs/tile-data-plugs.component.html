@@ -1,0 +1,17 @@
+<ng-content></ng-content>
+
+<div class="tile-body">
+  <ul>
+    <li *ngFor="let plug of plugs">
+      <div class="row">
+        <div class="col-xs-2">
+          <img src="{{plug.illustrationUrl}}" class="img img-responsive">
+        </div>
+        <div class="col-xs-10">
+          <h3>{{plug.name}} plug</h3>
+          <p>{{plug.description}}</p>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
