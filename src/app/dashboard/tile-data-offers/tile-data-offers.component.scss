@@ -21,8 +21,14 @@
   position: absolute;
 }
 
-.item-expand {
-  float: right;
+.col-xs-9 {
+  p {
+    font-size: 0.75em;
+    margin-bottom: 0;
+  }
+}
+
+.col-xs-3 {
   font-size: 2em;
 
   div {

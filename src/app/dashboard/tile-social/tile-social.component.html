@@ -2,14 +2,22 @@
 
 <div class="tile-body">
   <ul>
-    <li *ngFor="let post of feed | contains:'body' | limitMembers">
-      <span class="tile-entry-logo ss-notifications"></span>
-      <div class="tile-content">
-        <h4>{{post.title}}</h4>
-        <p>{{post.body | limitContent:80}}</p>
-        <span>{{post.privacy}}</span><span>{{post.type}}</span>
+    <li *ngFor="let post of feed | contains:'body' | limitMembers:6">
+      <div class="row vertical-align">
+        <div class="col-xs-2">
+          <img src="/icons/facebook.png" class="img img-responsive">
+        </div>
+
+        <div class="col-xs-9">
+          <h4>{{post.title}}</h4>
+          <p>{{post.body | limitContent:80}}</p>
+          <p>{{post.type}} ({{post.privacy}})</p>
+        </div>
+
+        <div class="col-xs-1">
+          <span class="item-expand ss-right"></span>
+        </div>
       </div>
-      <span class="item-expand ss-right"></span>
     </li>
   </ul>
 </div>

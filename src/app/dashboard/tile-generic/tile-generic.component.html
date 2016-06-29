@@ -2,13 +2,21 @@
 
 <div class="tile-body">
   <ul>
-    <li *ngFor="let dataPoint of data">
-      <span class="tile-entry-logo ss-notifications"></span>
-      <div class="tile-content">
-        <h5>{{dataPoint.startTime | moment}}</h5>
-        <p>{{dataPoint.title}}</p>
+    <li *ngFor="let dataPoint of data | limitMembers:4">
+      <div class="row vertical-align">
+        <div class="col-xs-2">
+          <span class="tile-entry-logo ss-notifications"></span>
+        </div>
+
+        <div class="col-xs-9">
+          <h5>{{dataPoint.startTime | moment}}</h5>
+          <p>{{dataPoint.title}}</p>
+        </div>
+
+        <div class="col-xs-1">
+          <span class="item-expand ss-right"></span>
+        </div>
       </div>
-      <span class="item-expand ss-right"></span>
     </li>
   </ul>
 </div>

@@ -16,23 +16,46 @@
 }
 
 .tile-entry-logo {
-  font-size: 1.5em;
-  vertical-align: middle;
-  position: absolute;
-}
-
-.item-expand {
-  float: right;
   font-size: 2em;
 }
 
-.tile-content {
-  position: relative;
-  display: inline-block;
-  padding-left: 35px;
+.item-expand {
+  font-size: 1.5em;
+}
+
+.col-xs-1, .col-xs-2 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.col-xs-1 {
+  padding-right: 0.5em;
+}
+
+.col-xs-2 {
+  padding-left: 1em;
+}
+
+.col-xs-9 {
+  p {
+    font-size: 0.75em;
+    margin-bottom: 0;
+  }
 }
 
 .tile-content h5 {
   margin: 0;
   padding: 0;
+}
+
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-align > .col-xs-1,
+.vertical-align > .col-xs-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

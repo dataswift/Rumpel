@@ -33,8 +33,7 @@ export class GridComponent implements OnInit, OnDestroy {
     this.socialFeed = [];
 
     this._eventsSub = this._eventsSvc.events$.subscribe(updatedEvents => {
-      const now = moment();
-      this.events = updatedEvents.filter(event => event.start.isAfter(now));
+      this.events = updatedEvents;
     });
 
     this._socialSub = this._socialSvc.socialFeed$.subscribe(posts => {

@@ -7,7 +7,6 @@ export class LimitMembersPipe implements PipeTransform {
 
   transform(value: Array<any>, args?: any): any {
 
-    return value.slice(0, 5);
+    return args ? value.slice(0, args) : value.slice(0, 5);
   }
-
 }
