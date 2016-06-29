@@ -10,6 +10,7 @@ declare var L: any;
 })
 export class MapComponent implements OnInit, OnChanges {
   @Input() locations;
+  @Input() mapSize: string;
   @Output() timeSelected = new EventEmitter<any>();
 
   private map;
@@ -28,7 +29,9 @@ export class MapComponent implements OnInit, OnChanges {
     const osmAttrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
       ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,';
 
-    this.map = L.map('map-view').setView([52.105, 55.09], 9);
+    this.map = L.map('map-view').setView([51.5074, 0.1278], 10);
+    let map = this.map;
+    setTimeout(function(){ map.invalidateSize()}, 400);
 
     L.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 3, maxZoom: 18 }).addTo(this.map);
   }

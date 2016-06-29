@@ -18,6 +18,7 @@
     </div>
     <rump-map class="map"
               [locations]="locations | filterByTime:selectedTime"
+              [mapSize]="safeSize"
               (timeSelected)="selectedTime = $event"
               [hidden]="!shownComponents.map"></rump-map>
     <rump-view-by-day class="day-view"

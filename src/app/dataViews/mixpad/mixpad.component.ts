@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DomSanitizationService } from '@angular/platform-browser';
 import { MapComponent } from '../map/map.component';
 import { TimelineComponent } from '../timeline/timeline.component';
 import { ViewByDayComponent } from '../view-by-day/view-by-day.component';
@@ -23,11 +24,13 @@ export class MixpadComponent implements OnInit, OnDestroy {
   public locations;
   public events;
   public images;
+  public safeSize;
   public timeline: Array<any>;
 
   constructor(private _locationsSvc: LocationsService,
               private _eventsSvc: EventsService,
-              private _imagesSvc: ImagesService) {
+              private _imagesSvc: ImagesService,
+              private sanitizer: DomSanitizationService) {
     this.timeline = [moment()];
     this.shownComponents = { map: true, events: true, photos: true, timeline: true };
   }
@@ -66,6 +69,7 @@ export class MixpadComponent implements OnInit, OnDestroy {
     this._imagesSvc.loadAll();
     this._eventsSvc.loadAll();
     this._locationsSvc.loadAll();
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
   }
 
   ngOnDestroy() {

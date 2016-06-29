@@ -7,6 +7,7 @@ import { TileWeatherComponent } from '../tile-weather/tile-weather.component';
 import { TileHeaderComponent } from '../tile-header/tile-header.component';
 import { TileDataOffersComponent } from '../tile-data-offers/tile-data-offers.component';
 import { TileDataPlugsComponent } from '../tile-data-plugs/tile-data-plugs.component';
+import { TileMapComponent } from '../tile-map/tile-map.component';
 import { Event, Post } from '../../shared';
 import * as moment from 'moment';
 
@@ -15,7 +16,7 @@ import * as moment from 'moment';
   selector: 'rump-grid',
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.css'],
-  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent]
+  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent]
 })
 export class GridComponent implements OnInit, OnDestroy {
   private _eventsSub;

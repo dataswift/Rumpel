@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DomSanitizationService } from '@angular/platform-browser';
 import { MapComponent } from '../map/map.component';
 import { LocationsService } from '../../services';
 
@@ -11,9 +12,10 @@ import { LocationsService } from '../../services';
 })
 export class LocationsComponent implements OnInit {
   private _sub: any;
+  public safeSize;
   public locations: any;
 
-  constructor(private _locationsSvc: LocationsService) { }
+  constructor(private _locationsSvc: LocationsService, private sanitizer: DomSanitizationService) { }
 
   ngOnInit() {
     this._sub = this._locationsSvc.locations$.subscribe(updatedLocations => {
@@ -21,6 +23,7 @@ export class LocationsComponent implements OnInit {
     });
 
     this._locationsSvc.loadAll();
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
   }
 
   ngOnDestroy() {
