@@ -1,3 +1,28 @@
-<p>
-  login works!
-</p>
+<div class="row">
+  <div class="col-xs-12 view-body">
+    <div class="view-header">
+      Login
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-6 col-xs-offset-3 view-body">
+    <div class="form-group">
+        <label for="hatAddress">Your personal HAT domain</label>
+        <input type="text" class="form-control rump-input" id="hatAddress"
+            [(ngModel)]="hatDomain"
+            placeholder="hat.hubofallthings.net:8080"
+            aria-describedby="hatAddressStatus">
+        <span id="loginAddressStatus" class="sr-only">(success)</span>
+        <!--<div *ngIf="hat.control.hasError('required')" class="ui error message">
+            HAT is required
+        </div>
+        <div *ngIf="hat.control.hasError('invalidHat')" class="ui error message">
+            HAT address should look like http://hat.hubofallthings.net:12345
+        </div>-->
+    </div>
+
+    <button type="button" class="btn btn-rump" (click)="onSubmit()">Go</button>
+  </div>
+</div>

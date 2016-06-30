@@ -222,7 +222,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .grid {
-  background: $base-red;
+  background: #F3F3F3;
   width: 100%;
   $item-height: 25em;
   @include make-row();

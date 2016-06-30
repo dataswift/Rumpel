@@ -7,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public hatDomain: string;
 
   constructor() {}
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    window.location.href = 'http://' + this.hatDomain;
   }
 
 }

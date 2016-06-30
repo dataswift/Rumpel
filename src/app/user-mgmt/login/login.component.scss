@@ -1,0 +1,56 @@
+@import "style";
+
+.view-header {
+  text-align: center;
+  font-size: 1.75em;
+  padding-left: 0.75em 0;
+  text-transform: uppercase;
+  background-color: #37474F;
+  color: #eeeeee;
+  padding: 10px 10px;
+}
+
+.view-body {
+  text-align: center;
+}
+
+.form-group {
+  margin-top: 30%;
+  text-align: left;
+
+  label {
+    color: #9c9c9c;
+    text-transform: uppercase;
+  }
+}
+
+.btn-rump {
+  border-radius: 0;
+  font-size: 1.5em;
+  margin: 1em 1em;
+  padding: 0.75em 4em;
+  background-color: #37474F;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.rump-input {
+  font-family: 'Open Sans Regular', sans-serif;
+  font-size: 1.5em;
+  height: 3em;
+  border-radius: 0;
+  border: 1px solid #c7c7c7;
+
+  &::-webkit-input-placeholder {
+    font-weight: normal;
+  }
+  &::-moz-placeholder {
+    font-weight: normal;
+  }
+  &:-ms-input-placeholder {
+    font-weight: normal;
+  }
+  &:-moz-placeholder {
+    font-weight: normal;
+  }
+}
