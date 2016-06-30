@@ -7,31 +7,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['tile-profile.component.css']
 })
 export class TileProfileComponent implements OnInit {
-  public user = {
-    name: { value: 'myname@google.com', private: false },
-    phone: { value: '01229 123456', private: true },
-    mobile: { value: '07809 123456', private: true },
-    address: {
-      value: {
-        number: '100',
-        street: 'Smith Lane',
-        city: 'Cambridge',
-        postcode: 'CB98 9UT',
-        country: 'United Kingdom'
-      },
-      private: true
+  public user = [
+    { field: 'name', value: 'myname@google.com', private: false, icon: 'user' },
+    { field: 'phone', value: '01229 123456', private: true, icon: 'phone' },
+    { field: 'mobile', value: '07809 123456', private: true, icon: 'cell' },
+    { field: 'address', value: [
+        { field: 'number', value: '100' },
+        { field: 'street', value: 'Smith Lane' },
+        { field: 'city', value: 'Cambridge' },
+        { field: 'postcode', value: 'CB98 9UT' },
+        { field: 'country', value: 'United Kingdom' }
+      ],
+      private: true, icon: 'home'
     },
-    email: { value: 'myname@gmail.com', private: false },
-    fbProfile: { value: 'facebook.com/username', private: false }
-  };
+    { field: 'email', value: 'myname@gmail.com', private: false, icon: 'mail' },
+    { field: 'fbProfile', value: 'facebook.com/username', private: false, icon: 'replyall' }
+  ];
 
   constructor() {}
 
   ngOnInit() {
   }
 
-  togglePrivacy(item: any) {
-    item.private = !item.private;
+  togglePrivacy(propName: string) {
+    let propToChange = this.user.find(prop => prop.field === propName);
+    propToChange.private = !propToChange.private;
+  }
+
+  isArray(prop: any) {
+    return Array.isArray(prop.value);
   }
 
 }
