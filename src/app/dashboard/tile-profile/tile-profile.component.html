@@ -3,9 +3,9 @@
 <div class="tile-body">
   <ul>
     <li *ngFor="let prop of user" [class.private-entry]="prop.private">
-      <div class="row">
-        <div class="col-xs-1">
-          <span class="tile-entry-logo ss-{{prop.icon}}"></span>
+      <div class="row vertical-align">
+        <div class="col-xs-2">
+          <span class="pre-field ss-{{prop.icon}}"></span>
         </div>
 
         <div class="col-xs-9">
@@ -18,7 +18,7 @@
           <p *ngIf="!isArray(prop)">{{prop.value}}</p>
         </div>
 
-        <div class="col-xs-2">
+        <div class="col-xs-1">
           <span class="privacy-setting ss-view"
             [class.privacy-color]="!prop.private"
             (click)="togglePrivacy(prop.field)"></span>

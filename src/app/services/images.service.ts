@@ -12,7 +12,7 @@ export class ImagesService {
   images$: Observable<any>;
   private _imagesObserver: Observer<any>;
   private _dropboxObserver: Observer<any>;
-  private _authBearer: string = "Bearer Ntiog9K4PcsAAAAAAAAFwdOg_n5yOPaB3xBIwxKUXSASzniWQJ8qO9-YAQQKeB5j"
+  private _authBearer: string = "Bearer Ntiog9K4PcsAAAAAAAAFwpbDzzEsJTTSl_ot1nMF4jjY-kxuKmzhwCk_qaeQ6CnN"
   private _dataLoaded: boolean;
   private _store: { images: Array<Image> };
 

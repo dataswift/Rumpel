@@ -1,14 +1,13 @@
 @import "style";
 
-.expanded-view-header {
-  background-color: #37474F;
-  color: #eeeeee;
-  padding: 10px 10px;
-}
-
-.expanded-view-header button {
+.view-header button {
   background-color: #78909C;
   margin: 0 10px;
+}
+
+.view-body {
+  height: 80vh;
+  position: relative;
 }
 
 .expanded-view-header span {
@@ -23,8 +22,8 @@
   background-color: rgba(0, 0, 0, 0.4);
   position: absolute;
   width: 15vw;
-  top: 7vh;
-  left: 78vw;
+  top: 0;
+  right: 0;
   z-index: 10;
   overflow: auto;
 }

@@ -1,20 +1,24 @@
 <div class="grid" data-packery='{ "itemSelector": ".grid-item" }'>
   <rump-tile-profile class="grid-item grid-item--width3 grid-item--height1">
-    <rump-tile-header [title]="'Profile'" [iconName]="'user'"></rump-tile-header>
+    <rump-tile-header [title]="'Profile'" [iconName]="'user'"
+                      [backColor]="'#263238'"></rump-tile-header>
   </rump-tile-profile>
 
   <rump-tile-generic class="grid-item grid-item--width3 grid-item--height1"
                      [data]="events">
-    <rump-tile-header [title]="'Calendar'" [iconName]="'calendar'"></rump-tile-header>
+    <rump-tile-header [title]="'Calendar'" [iconName]="'calendar'"
+                      [backColor]="'#37474F'"></rump-tile-header>
   </rump-tile-generic>
 
   <rump-tile-data-offers class="grid-item grid-item--width6 grid-item--height1">
-    <rump-tile-header [title]="'Data Offers'" [iconName]="'piggybank'"></rump-tile-header>
+    <rump-tile-header [title]="'Data Offers'" [iconName]="'piggybank'"
+                      [backColor]="'#455A64'"></rump-tile-header>
   </rump-tile-data-offers>
 
   <rump-tile-social class="grid-item grid-item--width3 grid-item--height2"
                     [feed]="socialFeed">
-    <rump-tile-header [title]="'Social'" [iconName]="'replyall'"></rump-tile-header>
+    <rump-tile-header [title]="'Social'" [iconName]="'replyall'"
+                      [backColor]="'#546E7A'"></rump-tile-header>
   </rump-tile-social>
 
   <rump-tile-map class="grid-item grid-item--width6 grid-item--height1"
@@ -22,11 +26,13 @@
   </rump-tile-map>
 
   <rump-tile-weather class="grid-item grid-item--width3 grid-item--height1">
-    <rump-tile-header [title]="'Weather'" [iconName]="'thermometer'"></rump-tile-header>
+    <rump-tile-header [title]="'Weather'" [iconName]="'thermometer'"
+                      [backColor]="'#607D8B'"></rump-tile-header>
   </rump-tile-weather>
 
   <rump-tile-data-plugs class="grid-item grid-item--width3 grid-item--height1">
-    <rump-tile-header [title]="'Data Plugs'" [iconName]="'merge'"></rump-tile-header>
+    <rump-tile-header [title]="'Data Plugs'" [iconName]="'merge'"
+                      [backColor]="'#78909C'"></rump-tile-header>
   </rump-tile-data-plugs>
 
 

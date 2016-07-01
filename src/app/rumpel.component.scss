@@ -20,3 +20,10 @@
     padding-right: 0;
   }
 }
+
+:host /deep/ .view-header {
+  background-color: #37474F;
+  color: #eeeeee;
+  padding: 1em 1em;
+  font-size: 1em;
+}

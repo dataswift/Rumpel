@@ -9,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TileHeaderComponent implements OnInit {
   @Input() title: string;
   @Input() iconName: string;
+  @Input() backColor: string;
 
   constructor() {}
 

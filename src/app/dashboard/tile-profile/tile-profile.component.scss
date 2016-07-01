@@ -10,6 +10,7 @@
 
 .tile-body {
   padding: 0.5em 1em;
+  line-height: default;
 }
 
 .tile-body ul {
@@ -31,22 +32,29 @@
 }
 
 .col-xs-9 {
-  padding: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.col-xs-1,
+.col-xs-2 {
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  text-align: center;
+}
+.vertical-align {
+  display: flex;
+  flex-direction: row;
 }
 
-.tile-expand {
-  float: right;
+.vertical-align > .col-xs-9,
+.vertical-align > .col-xs-1 {
+  display: flex;
+  align-items: center;
 }
 
-.tile-entry-logo, .privacy-setting {
+.pre-field {
   font-size: 1.5em;
-  vertical-align: middle;
 }
-
-.privacy-setting {
-  float: right;
-}
-
 .privacy-color {
   color: #42B4F5;
 }
