@@ -24,8 +24,10 @@
                 (timeSelected)="selectedTime = $event"
                 [hidden]="!shownComponents.map"></rump-map>
       <rump-view-by-day class="day-view"
+                        [day]="selectedTime"
                         [images]="images | filterByTime:selectedTime"
                         [events]="events | filterByTime:selectedTime"
+                        [locations]="locations | filterByTime:selectedTime"
                         (timeSelected)="selectedTime = $event"
                         [hidden]="!shownComponents.events"></rump-view-by-day>
       <rump-timeline class="timeline"

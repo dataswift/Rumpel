@@ -16,57 +16,56 @@ import * as moment from 'moment';
   pipes: [FilterByTime]
 })
 export class MixpadComponent implements OnInit {
-  private _eveSub;
-  private _imgSub;
+  private eventSub;
+  private imgSub;
   public selectedTime: any;
   public shownComponents: any;
   public locations$;
   public events;
   public images;
+  public locations;
   public safeSize;
   public timeline: Array<any>;
 
-  constructor(private _locationsSvc: LocationsService,
-              private _eventsSvc: EventsService,
-              private _imagesSvc: ImagesService,
+  constructor(private locationsSvc: LocationsService,
+              private eventsSvc: EventsService,
+              private imagesSvc: ImagesService,
               private sanitizer: DomSanitizationService) {
     this.timeline = [moment()];
+    this.events = [];
+    this.images = [];
     this.shownComponents = { map: true, events: true, photos: true, timeline: true };
   }
 
   ngOnInit() {
-    this.locations$ = this._locationsSvc.showAll();
+    this.locations$ = this.locationsSvc.showAll().subscribe(
+      locations => {
+        this.locations = locations;
+      }
+    );
 
-      // for (let loc of locations) {
-      //   const foundDay = this.timeline.find(day => day.isSame(loc.start, 'day'));
-      //   if (foundDay) continue;
-      //   this.timeline.push(loc.start);
-      // }
-    // });
+    this.eventSub = this.eventsSvc.showAll().subscribe(
+      events => {
+        for (let event of events) {
+          const dayFound = this.timeline.find(day => day.isSame(event.start, 'day'));
+          if (dayFound) continue;
+          this.timeline.push(event.start);
+        }
 
-    // this._eveSub = this._eventsSvc.events$.subscribe(events => {
-    //   this.events = events;
+        this.events = events;
+      }
+    );
 
-    //   for (let eve of events) {
-    //     const foundDay = this.timeline.find(day => day.isSame(eve.start, 'day'));
-    //     if (foundDay) continue;
-    //     this.timeline.push(eve.start);
-    //   }
-    // });
-
-    // this._imgSub = this._imagesSvc.images$.subscribe(images => {
-    //   this.images = images;
-
+    // this.imgSub = this.imagesSvc.images$.subscribe(images => {
     //   for (let img of images) {
-    //     const foundDay = this.timeline.find(day => day.isSame(img.start, 'day'));
-    //     if (foundDay) continue;
+    //     const dayFound = this.timeline.find(day => day.isSame(img.start, 'day'));
+    //     if (dayFound) continue;
     //     this.timeline.push(img.start);
     //   }
+    //   this.images = images;
     // });
 
-    // this._imagesSvc.loadAll();
-    // this._eventsSvc.loadAll();
-    // this._locationsSvc.loadAll();
+    // this.imagesSvc.loadAll();
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
   }
 

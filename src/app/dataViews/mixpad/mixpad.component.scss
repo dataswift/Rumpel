@@ -10,17 +10,15 @@
   position: relative;
 }
 
-.expanded-view-header span {
-  margin: 0 10px;
-}
-
 .mixpad {
   position: relative;
 }
 
 .mixpad .timeline {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
+  height: auto;
+  max-height: 85vh;
   width: 15vw;
   top: 0;
   right: 0;
@@ -29,12 +27,13 @@
 }
 
 .mixpad .day-view {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
-  width: 40vw;
-  height: 80vh;
-  top: 7vh;
-  left: 1.5vw;
+  width: 60vw;
+  height: auto;
+  max-height: 85vh;
+  top: 0;
+  left: 0;
   z-index: 20;
   color: white;
   overflow: auto;

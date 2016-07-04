@@ -25,7 +25,7 @@ export class ImagesService {
   }
 
   loadAll() {
-    if (this._dataLoaded) return this._imagesObserver.next(this._store.images);
+    if (this._dataLoaded) return Observable.of(this._store.images);
 
     this._hat.getTable('photos', 'dropbox')
       .map(data => data.map(this.imgMap))
