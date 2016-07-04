@@ -3,10 +3,6 @@
     <div class="view-header">
       <h4>Personal Photos</h4>
     </div>
-      <ul>
-        <li *ngFor="let img of images">
-          <img [src]="img.url">
-        </li>
-      </ul>
+    <rump-photo-grid [photoList]="images"></rump-photo-grid>
   </div>
 </div>

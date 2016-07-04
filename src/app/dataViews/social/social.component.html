@@ -3,12 +3,15 @@
     <div class="view-header">
       <h4>Social Feed</h4>
     </div>
-    <ul>
-      <li *ngFor="let post of feed$ | async">
-        <h3>{{post.title}}</h3>
-        <p>{{post.body}}</p>
-
-      </li>
-    </ul>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <ul class="feed">
+          <li *ngFor="let post of feed$ | async" class="post">
+            <h3>{{post.title}}</h3>
+            <p>{{post.body}}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

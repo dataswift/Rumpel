@@ -21,9 +21,19 @@
   }
 }
 
-:host /deep/ .view-header {
-  background-color: #37474F;
-  color: #eeeeee;
-  padding: 1em 1em;
-  font-size: 1em;
+/* More or less global styles */
+
+:host /deep/ {
+  .view-header {
+    background-color: #37474F;
+    color: #eeeeee;
+    padding: 1em 1em;
+    font-size: 1em;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
 }

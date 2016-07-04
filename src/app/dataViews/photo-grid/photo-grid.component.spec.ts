@@ -10,11 +10,11 @@ import {
   async, inject
 } from '@angular/core/testing';
 
-import { TileSocialComponent } from './tile-social.component';
+import { PhotoGridComponent } from './photo-grid.component';
 
-describe('Component: TileSocial', () => {
+describe('Component: PhotoGrid', () => {
   it('should create an instance', () => {
-    // let component = new TileSocialComponent();
-    // expect(component).toBeTruthy();
+    let component = new PhotoGridComponent();
+    expect(component).toBeTruthy();
   });
 });

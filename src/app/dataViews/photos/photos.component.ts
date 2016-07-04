@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizationService } from '@angular/platform-browser';
+import { PhotoGridComponent } from '../photo-grid/photo-grid.component';
 import { ImagesService } from '../../services';
 import { Image } from '../../shared';
 import { Moment } from '../../pipes/moment.pipe';
@@ -9,6 +10,7 @@ import { Moment } from '../../pipes/moment.pipe';
   selector: 'rump-photos',
   templateUrl: 'photos.component.html',
   styleUrls: ['photos.component.css'],
+  directives: [PhotoGridComponent],
   pipes: [Moment]
 })
 export class PhotosComponent implements OnInit {

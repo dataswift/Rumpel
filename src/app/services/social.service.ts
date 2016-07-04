@@ -47,7 +47,8 @@ export class SocialService {
       start: moment(post.created_time),
       type: post.type,
       image: post.full_picture,
-      privacy: post.privacy.description
+      privacy: post.privacy.description,
+      source: 'facebook'
     };
   }
 

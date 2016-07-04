@@ -9,4 +9,5 @@ export interface Post {
   start: any;
   end?: any;
   location?: Location;
+  source: string;
 }
