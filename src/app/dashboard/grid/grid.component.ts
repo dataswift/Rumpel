@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventsService, SocialService } from '../../services';
+import { Component, OnInit } from '@angular/core';
 import { TileProfileComponent } from '../tile-profile/tile-profile.component';
 import { TileGenericComponent } from '../tile-generic/tile-generic.component';
 import { TileSocialComponent } from '../tile-social/tile-social.component';
@@ -18,35 +17,11 @@ import * as moment from 'moment';
   styleUrls: ['grid.component.css'],
   directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent]
 })
-export class GridComponent implements OnInit, OnDestroy {
-  private _eventsSub;
-  private _socialSub;
-  public events: Array<Event>;
-  public socialFeed: Array<Post>;
+export class GridComponent implements OnInit {
 
-  constructor(private _eventsSvc: EventsService,
-              private _socialSvc: SocialService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.events = [];
-    this.socialFeed = [];
-
-    this._eventsSub = this._eventsSvc.events$.subscribe(updatedEvents => {
-      this.events = updatedEvents;
-    });
-
-    this._socialSub = this._socialSvc.socialFeed$.subscribe(posts => {
-      this.socialFeed = posts;
-    });
-
-    this._eventsSvc.loadAll();
-    this._socialSvc.loadAll();
   }
-
-  ngOnDestroy() {
-    this._eventsSub.unsubscribe();
-    this._socialSub.unsubscribe();
-  }
-
 }

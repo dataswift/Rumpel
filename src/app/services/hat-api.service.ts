@@ -30,6 +30,8 @@ export class HatApiService {
     query.append('name', name);
     query.append('source', source);
 
+    console.log('Getting table values: ', name, source);
+
     return this._http.get(url, { headers: this._headers, search: query })
       .map(res => res.json().id)
       .flatMap(tableId => this.getTableValues(tableId));

@@ -2,7 +2,7 @@
 
 <div class="tile-body">
   <ul>
-    <li *ngFor="let dataPoint of data | limitMembers:4">
+    <li *ngFor="let dataPoint of events$ | async | limitMembers:4">
       <div class="row vertical-align">
         <div class="col-xs-2">
           <span class="tile-entry-logo ss-notifications"></span>

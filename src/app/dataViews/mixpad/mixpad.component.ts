@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DomSanitizationService } from '@angular/platform-browser';
 import { MapComponent } from '../map/map.component';
 import { TimelineComponent } from '../timeline/timeline.component';
@@ -15,13 +15,12 @@ import * as moment from 'moment';
   directives: [MapComponent, TimelineComponent, ViewByDayComponent],
   pipes: [FilterByTime]
 })
-export class MixpadComponent implements OnInit, OnDestroy {
-  private _locSub;
+export class MixpadComponent implements OnInit {
   private _eveSub;
   private _imgSub;
   public selectedTime: any;
   public shownComponents: any;
-  public locations;
+  public locations$;
   public events;
   public images;
   public safeSize;
@@ -36,46 +35,39 @@ export class MixpadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._locSub = this._locationsSvc.locations$.subscribe(locations => {
-      this.locations = locations;
+    this.locations$ = this._locationsSvc.showAll();
 
-      for (let loc of locations) {
-        const foundDay = this.timeline.find(day => day.isSame(loc.start, 'day'));
-        if (foundDay) continue;
-        this.timeline.push(loc.start);
-      }
-    });
+      // for (let loc of locations) {
+      //   const foundDay = this.timeline.find(day => day.isSame(loc.start, 'day'));
+      //   if (foundDay) continue;
+      //   this.timeline.push(loc.start);
+      // }
+    // });
 
-    this._eveSub = this._eventsSvc.events$.subscribe(events => {
-      this.events = events;
+    // this._eveSub = this._eventsSvc.events$.subscribe(events => {
+    //   this.events = events;
 
-      for (let eve of events) {
-        const foundDay = this.timeline.find(day => day.isSame(eve.start, 'day'));
-        if (foundDay) continue;
-        this.timeline.push(eve.start);
-      }
-    });
+    //   for (let eve of events) {
+    //     const foundDay = this.timeline.find(day => day.isSame(eve.start, 'day'));
+    //     if (foundDay) continue;
+    //     this.timeline.push(eve.start);
+    //   }
+    // });
 
-    this._imgSub = this._imagesSvc.images$.subscribe(images => {
-      this.images = images;
+    // this._imgSub = this._imagesSvc.images$.subscribe(images => {
+    //   this.images = images;
 
-      for (let img of images) {
-        const foundDay = this.timeline.find(day => day.isSame(img.start, 'day'));
-        if (foundDay) continue;
-        this.timeline.push(img.start);
-      }
-    });
+    //   for (let img of images) {
+    //     const foundDay = this.timeline.find(day => day.isSame(img.start, 'day'));
+    //     if (foundDay) continue;
+    //     this.timeline.push(img.start);
+    //   }
+    // });
 
-    this._imagesSvc.loadAll();
-    this._eventsSvc.loadAll();
-    this._locationsSvc.loadAll();
+    // this._imagesSvc.loadAll();
+    // this._eventsSvc.loadAll();
+    // this._locationsSvc.loadAll();
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
-  }
-
-  ngOnDestroy() {
-    this._imgSub.unsubscribe();
-    this._eveSub.unsubscribe();
-    this._locSub.unsubscribe();
   }
 
   onViewReset() {

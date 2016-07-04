@@ -5,5 +5,5 @@
 </div>
 
 <div class="tile-body">
-  <rump-map [mapSize]="safeSize"></rump-map>
+  <rump-map [locations]="locations$ | async" [mapSize]="safeSize"></rump-map>
 </div>

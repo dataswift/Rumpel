@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DomSanitizationService } from '@angular/platform-browser';
+import { LocationsService } from '../../services';
 import { MapComponent } from '../../dataViews/map/map.component';
 
 @Component({
@@ -12,12 +13,15 @@ import { MapComponent } from '../../dataViews/map/map.component';
 export class TileMapComponent implements OnInit {
   @Input() title;
   @Input() iconName;
+  public locations$;
   public safeSize;
 
-  constructor(private sanitizer: DomSanitizationService) {}
+  constructor(private sanitizer: DomSanitizationService,
+              private locationSvc: LocationsService) {}
 
   ngOnInit() {
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('29em');
+    this.locations$ = this.locationSvc.showAll();
   }
 
 }

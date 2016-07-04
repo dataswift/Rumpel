@@ -13,7 +13,7 @@ import { Schedule } from 'primeng/primeng';
 })
 export class CalendarComponent implements OnInit {
   private _eventsSub;
-  public events;
+  public events$;
   public headerConfig: any;
 
   constructor(private _eventsSvc: EventsService) {}
@@ -25,11 +25,7 @@ export class CalendarComponent implements OnInit {
       right: 'month,agendaWeek,agendaDay'
     };
 
-    this._eventsSub = this._eventsSvc.events$.subscribe(updatedEvents => {
-      this.events = updatedEvents;
-    });
-
-    this._eventsSvc.loadAll();
+    this.events$ = this._eventsSvc.showAll();
   }
 
 }

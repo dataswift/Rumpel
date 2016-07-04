@@ -6,6 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class LimitContentPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
+    if (!value) return value;
     if (value.length > args) {
       return value.substr(0, args) + '...';
     } else {

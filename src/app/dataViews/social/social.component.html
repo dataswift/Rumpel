@@ -4,7 +4,7 @@
       <h4>Social Feed</h4>
     </div>
     <ul>
-      <li *ngFor="let post of feed">
+      <li *ngFor="let post of feed$ | async">
         <h3>{{post.title}}</h3>
         <p>{{post.body}}</p>
 

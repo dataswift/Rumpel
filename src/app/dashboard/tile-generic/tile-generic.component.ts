@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { EventsService } from '../../services';
 import { Moment, LimitMembersPipe } from '../../pipes';
 
 @Component({
@@ -9,11 +10,12 @@ import { Moment, LimitMembersPipe } from '../../pipes';
   pipes: [Moment, LimitMembersPipe]
 })
 export class TileGenericComponent implements OnInit {
-  @Input() data;
+  public events$;
 
-  constructor() {}
+  constructor(private eventsSvc: EventsService) {}
 
   ngOnInit() {
+    this.events$ = this.eventsSvc.showAll();
   }
 
 }

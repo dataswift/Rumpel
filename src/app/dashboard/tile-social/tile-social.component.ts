@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SocialService } from '../../services';
 import { Moment, LimitContentPipe, LimitMembersPipe, ContainsPipe } from '../../pipes';
 
 @Component({
@@ -9,11 +10,12 @@ import { Moment, LimitContentPipe, LimitMembersPipe, ContainsPipe } from '../../
   pipes: [Moment, LimitContentPipe, LimitMembersPipe, ContainsPipe]
 })
 export class TileSocialComponent implements OnInit {
-  @Input() feed;
+  public feed$;
 
-  constructor() {}
+  constructor(private socialSvc: SocialService) {}
 
   ngOnInit() {
+    this.feed$ = this.socialSvc.showAll();
   }
 
 }

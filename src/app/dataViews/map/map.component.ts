@@ -41,6 +41,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   updateMap(locations: Array<any>) {
+    if (locations.length <= 0) return;
     this.drawMarkers(locations);
     this.map.fitBounds([
       [this.bbox.minLat, this.bbox.minLng],
