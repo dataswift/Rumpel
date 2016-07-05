@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HatApiService } from './hat-api.service';
+import { Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
 import { Observable, Observer } from 'rxjs/Rx';
+import { HatApiService } from './hat-api.service';
 
 @Injectable()
 export class AuthService {
   public auth$: Observable<any>;
   private authObserver: Observer<any>;
   private authenticated: boolean;
-  private jwtHelper: JwtHelper = new JwtHelper();
+  private jwtHelper: JwtHelper;
 
-  constructor(private _hatApi: HatApiService) {
+  constructor(private hat: HatApiService, private router: Router) {
     this.auth$ = new Observable(observer => this.authObserver = observer).share();
-
-    const storedToken = localStorage.getItem('hatat');
-    if (storedToken) this.authenticate(storedToken);
+    this.authenticated = false;
+    this.jwtHelper = new JwtHelper();
   }
 
   decodeJwt(jwt: string): string {
@@ -23,9 +23,19 @@ export class AuthService {
     return issuer;
   }
 
+  tryPreviousToken() {
+    const storedToken = localStorage.getItem('hatat');
+
+    if (storedToken && (!this.jwtHelper.isTokenExpired(storedToken))) {
+      this.router.navigate(['users/authenticate/' + storedToken]);
+    } else {
+      this.router.navigate(['users/login']);
+    }
+  }
+
   authenticate(jwt: string) {
     const hatDomain = this.decodeJwt(jwt);
-    this._hatApi.validateToken(hatDomain, jwt).subscribe(
+    this.hat.validateToken(hatDomain, jwt).subscribe(
       res => {
         if (res && res.message === 'Authenticated') {
           this.authenticated = true;
@@ -38,6 +48,7 @@ export class AuthService {
       err => {
         this.authenticated = false;
         console.log("Could not verify with specified HAT");
+        this.authObserver.next(this.authenticated);
       },
       () => {
         if (this.authObserver) this.authObserver.next(this.authenticated);

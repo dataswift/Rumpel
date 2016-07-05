@@ -7,7 +7,7 @@ export const hatModel = {
     ],
     subTables: [
       {
-        name: 'name'
+        name: 'name',
         source: 'rumpel',
         fields: [
           { name: 'title' },

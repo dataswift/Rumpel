@@ -11,6 +11,7 @@ import { AuthService, HatApiService } from '../../services';
 export class AuthComponent implements OnInit, OnDestroy {
   private _subRoute: any;
   private _subAuth: any;
+  public message: string;
 
   constructor(private _route: ActivatedRoute,
               private router: Router,
@@ -18,13 +19,16 @@ export class AuthComponent implements OnInit, OnDestroy {
               private _authSvc: AuthService) {}
 
   ngOnInit() {
+    this.message = 'Authenticating... Please hold.';
+
+    this._subAuth = this._authSvc.auth$.subscribe(isAuthorised => {
+      if (isAuthorised) this.router.navigate([''])
+      else this.message = 'Unfortunately authentication failed. Please contact your system administrator.';
+    });
+
     this._subRoute = this._route.params.subscribe(params => {
       let jwtToken = params['jwt'];
       this._authSvc.authenticate(jwtToken);
-    });
-
-    this._subAuth = this._authSvc.auth$.subscribe(isAuthorised => {
-      if (isAuthorised) this.router.navigate(['']);
     });
   }
 
