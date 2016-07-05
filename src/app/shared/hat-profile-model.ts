@@ -7,7 +7,7 @@ export const hatModel = {
     ],
     subTables: [
       {
-        name: 'name',
+        name: 'personal',
         source: 'rumpel',
         fields: [
           { name: 'title' },
@@ -37,7 +37,7 @@ export const hatModel = {
         name: 'gender',
         source: 'rumpel',
         fields: [
-          { name: 'gender' },
+          { name: 'type' },
           { name: 'private' }
         ]
       }, {
@@ -150,10 +150,11 @@ export const hatModel = {
         name: 'about',
         source: 'rumpel',
         fields: [
+          { name: 'title' },
           { name: 'body' },
           { name: 'private' }
         ]
-      },
+      }
     ]
   }
 };

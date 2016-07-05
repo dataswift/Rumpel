@@ -12,12 +12,16 @@ export class HatApiService {
 
   constructor(private _http: Http) {}
 
-  validateToken(domain: string, token: string) {
+  updateCredentials(domain: string, token: string) {
     this._baseUrl = 'http://' + domain + ':' + HAT_PORT;
     this._token = token;
     this._headers = new Headers();
     this._headers.append('Content-Type', 'application/json');
     this._headers.append('X-Auth-Token', this._token);
+  }
+
+  validateToken(domain: string, token: string) {
+    this.updateCredentials(domain, token);
 
     const url = this._baseUrl + '/users/access_token/validate';
 
@@ -57,6 +61,21 @@ export class HatApiService {
   getModelMapping(tableId: number): Observable<any> {
     return this.getModel(tableId)
       .map(rawModel => this.mapDataSource(rawModel));
+  }
+
+  postModel(model: any): Observable<any> {
+    const url = this._baseUrl + '/data/table';
+
+    return this._http.post(url, model, { headers: this._headers })
+      .map(res => res.json())
+      .map(rawModel => this.mapDataSource(rawModel));
+  }
+
+  postRecord(obj: any, hatIdMapping: any, prefix: string): Observable<any> {
+    const url = this._baseUrl + '/data/record/values';
+    const hatFormattedObj = this.createRecord(obj, hatIdMapping, prefix);
+
+    return this._http.post(url, hatFormattedObj, { headers: this._headers });
   }
 
   getValues(tableId: number): Observable<any> {
@@ -106,7 +125,7 @@ export class HatApiService {
         acc.push({
           value: obj[key],
           field: {
-            id: hatIdMapping[prefix + '_' + key];
+            id: hatIdMapping[prefix + '_' + key],
             name: key
           }
         });
