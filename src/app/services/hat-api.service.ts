@@ -24,6 +24,17 @@ export class HatApiService {
     return this._http.get(url, { headers: this._headers }).map(res => res.json());
   }
 
+  getDataSources(): Observable<any> {
+    const url = this._baseUrl + '/data/sources';
+
+    return this._http.get(url, { headers: this._headers });
+  }
+
+  getAllValuesOf(name: string, source: string): Observable<any> {
+    return this.getTable(name, source)
+      .flatMap(table => this.getValues(table.id));
+  }
+
   getTable(name: string, source: string): Observable<any> {
     const url = this._baseUrl + '/data/table';
     let query: URLSearchParams = new URLSearchParams();
@@ -33,11 +44,22 @@ export class HatApiService {
     console.log('Getting table values: ', name, source);
 
     return this._http.get(url, { headers: this._headers, search: query })
-      .map(res => res.json().id)
-      .flatMap(tableId => this.getTableValues(tableId));
+      .map(res => res.json());
   }
 
-  getTableValues(tableId: number): Observable<any> {
+  getModel(tableId: number): Observable<any> {
+    const url = this._baseUrl + '/data/table/' + tableId;
+
+    return this._http.get(url, { headers: this._headers })
+      .map(res => res.json());
+  }
+
+  getModelMapping(tableId: number): Observable<any> {
+    return this.getModel(tableId)
+      .map(rawModel => this.mapDataSource(rawModel));
+  }
+
+  getValues(tableId: number): Observable<any> {
     const url = this._baseUrl + '/data/table/' + tableId + '/values';
 
     return this._http.get(url, { headers: this._headers })
@@ -55,6 +77,64 @@ export class HatApiService {
     const url = this._baseUrl + '/directDebit/' + uuid + '/' + state;
 
     return this._http.put(url, {}, { headers: this._headers });
+  }
+
+  private createRecord(obj: any, hatIdMapping: any, prefix: string) {
+    if (Array.isArray(obj)) {
+      return obj.map(record => {
+        return {
+          record: { name: new Date() },
+          values: this.createValue(record, hatIdMapping, prefix)
+        }
+      });
+    } else {
+      return [{
+        record: { name: new Date() },
+        values: this.createValue(obj, hatIdMapping, prefix)
+      }]
+    }
+  }
+
+  private createValue(obj: any, hatIdMapping: any, prefix: string = 'default') {
+    var values = [];
+
+    Object.keys(obj).reduce((acc, key) => {
+      if (typeof obj[key] === 'object') {
+        const subTreeValues = this.createValue(obj[key], hatIdMapping, prefix + '_' + key);
+        acc.concat(subTreeValues);
+      } else {
+        acc.push({
+          value: obj[key],
+          field: {
+            id: hatIdMapping[prefix + '_' + key];
+            name: key
+          }
+        });
+      }
+
+      return acc;
+    }, values);
+
+    return values;
+  }
+
+  private mapDataSource(table: any, prefix: string = 'default') {
+    var mapping = {};
+
+    table.fields.reduce((acc, field) => {
+      acc[prefix + '_' + field.name] = field.id;
+      return acc;
+    }, mapping);
+
+    if (table.subTables) {
+      const mappedSubTables = table.subTables.reduce((acc, table) => {
+        const mappedTable = this.mapDataSource(table, prefix + '_' + table.name);
+        Object.assign(acc, mappedTable);
+        return acc;
+      }, mapping);
+    }
+
+    return mapping;
   }
 
   private transform(raw: Array<any>) {

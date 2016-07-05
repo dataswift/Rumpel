@@ -42,7 +42,7 @@ export class LocationsService {
   }
 
   loadFrom(source: string): Observable<any> {
-    return this.hat.getTable('locations', source);
+    return this.hat.getAllValuesOf('locations', source);
   }
 
   locMap(location: any): Location {

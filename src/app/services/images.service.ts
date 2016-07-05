@@ -27,7 +27,7 @@ export class ImagesService {
   loadAll() {
     if (this._dataLoaded) return Observable.of(this._store.images);
 
-    this._hat.getTable('photos', 'dropbox')
+    this._hat.getAllValuesOf('photos', 'dropbox')
       .map(data => data.map(this.imgMap))
       .subscribe((newImages: Array<Image>) => {
         this._dataLoaded = true;

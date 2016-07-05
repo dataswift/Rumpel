@@ -37,7 +37,7 @@ export class SocialService {
   }
 
   loadFrom(source: string): Observable<any> {
-    return this.hat.getTable('posts', source);
+    return this.hat.getAllValuesOf('posts', source);
   }
 
   fbMap(post: any): Post {

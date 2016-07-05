@@ -40,7 +40,7 @@ export class EventsService {
   }
 
   loadFrom(source: string): Observable<any> {
-    return this._hat.getTable('events', source);
+    return this._hat.getAllValuesOf('events', source);
   }
 
   fbMap(event): Event {
