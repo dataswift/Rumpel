@@ -12,10 +12,8 @@ export interface Profile {
     name: string;
     private: boolean;
   };
-  body: {
-    dateOfBirth: string;
-    gender: string;
-    age: string;
+  birth: {
+    date: string;
     private: boolean;
   };
   gender: {
