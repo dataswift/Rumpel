@@ -1,254 +1,330 @@
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
-    <form>
-      <section>
-        <div class="section-title">Personal <span class="ss-view"></span></div>
+    <form #f="ngForm" (submit)="submitForm($event)">
+      <section class="personal">
+        <div class="section-title">Personal</div>
+        <span class="group-privacy-toggle ss-view"></span>
 
         <div class="form-group">
           <label for="title">Title</label>
-          <input type="text" class="form-control rump-input" id="title" name="title"
-              [(ngModel)]="profile.personal.title"
-              aria-describedby="title">
+          <input type="text" class="form-control rump-input rump-md" id="title" name="title"
+                [(ngModel)]="profile.personal.title"
+                aria-describedby="title">
         </div>
 
         <div class="form-group">
           <label for="firstName">First Name</label>
-          <input type="text" class="form-control rump-input" id="firstName" name="firstName"
-              [(ngModel)]="profile.personal.firstName"
-              aria-describedby="firstName">
+          <input type="text" class="form-control rump-input rump-md" id="firstName" name="firstName"
+                [(ngModel)]="profile.personal.first_name"
+                aria-describedby="firstName">
         </div>
 
         <div class="form-group">
           <label for="middleName">Middle Name</label>
-          <input type="text" class="form-control rump-input" id="middleName" name="middleName"
-              [(ngModel)]="profile.personal.middleName"
-              aria-describedby="middleName">
+          <input type="text" class="form-control rump-input rump-md" id="middleName" name="middleName"
+                [(ngModel)]="profile.personal.middle_name"
+                aria-describedby="middleName">
         </div>
 
         <div class="form-group">
           <label for="lastName">Last Name</label>
-          <input type="text" class="form-control rump-input" id="lastName" name="lastName"
-              [(ngModel)]="profile.personal.lastName"
-              aria-describedby="lastName">
+          <input type="text" class="form-control rump-input rump-md" id="lastName" name="lastName"
+                [(ngModel)]="profile.personal.last_name"
+                aria-describedby="lastName">
         </div>
 
         <div class="form-group">
           <label for="preferredName">Preferred Name</label>
-          <input type="text" class="form-control rump-input" id="preferredName" name="preferredName"
-              [(ngModel)]="profile.personal.preferredName"
-              aria-describedby="preferredName">
+          <input type="text" class="form-control rump-input rump-md" id="preferredName" name="preferredName"
+                [(ngModel)]="profile.personal.preferred_name"
+                aria-describedby="preferredName">
         </div>
       </section>
 
-      <section>
-        <div class="section-title">About</div>
+      <section class="other">
+        <div class="section-title">Other</div>
+        <span class="group-privacy-toggle public ss-view"></span>
 
         <div class="form-group">
           <label for="nickname">Nickname</label>
-          <input type="text" class="form-control rump-input" id="nickname" name="nickname"
-              [(ngModel)]="profile.nick.name"
-              aria-describedby="nickname">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="nickname" name="nickname"
+                  [(ngModel)]="profile.nick.name"
+                  aria-describedby="nickname">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="dob">Date of Birth</label>
-          <input type="text" class="form-control rump-input" id="dob" name="dob"
-              [(ngModel)]="profile.birth.date"
-              aria-describedby="dob">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="dob" name="dob"
+                  [(ngModel)]="profile.birth.date"
+                  aria-describedby="dob">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="gender">Gender</label>
-          <input type="text" class="form-control rump-input" id="gender" name="gender"
-              [(ngModel)]="profile.gender.type"
-              aria-describedby="gender">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="gender" name="gender"
+                  [(ngModel)]="profile.gender.type"
+                  aria-describedby="gender">
+            <span class="input-group-btn">
+              <button class="btn public" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="ageGroup">Age Group</label>
-          <input type="text" class="form-control rump-input" id="ageGroup" name="ageGroup"
-              [(ngModel)]="profile.age.group"
-              aria-describedby="ageGroup">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="ageGroup" name="ageGroup"
+                  [(ngModel)]="profile.age.group"
+                  aria-describedby="ageGroup">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
       </section>
 
-      <section>
-        <div class="section-title">Contact <span class="ss-view"></span></div>
+      <section class="contact">
+        <div class="section-title">Contact</div>
+        <span class="group-privacy-toggle ss-view"></span>
+
         <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" class="form-control rump-input" id="email" name="email"
-              [(ngModel)]="profile.email.email"
-              aria-describedby="email">
-          <span class="ss-view"></span>
+          <label for="primaryEmail">Primary Email</label>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="primaryEmail" name="primaryEmail"
+                  [(ngModel)]="profile.primary_email.value"
+                  aria-describedby="primaryEmail">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="alternativeEmail">Alternative Email</label>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="alternativeEmail" name="alternativeEmail"
+                  [(ngModel)]="profile.alternative_email.value"
+                  aria-describedby="alternativeEmail">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="homePhone">Phone Number</label>
-          <input type="text" class="form-control rump-input" id="homePhone" name="homePhone"
-              [(ngModel)]="profile.homePhone.no"
-              aria-describedby="homePhone">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="homePhone" name="homePhone"
+                  [(ngModel)]="profile.home_phone.no"
+                  aria-describedby="homePhone">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="mobile">Mobile Number</label>
-          <input type="text" class="form-control rump-input" id="mobile" name="mobile"
-              [(ngModel)]="profile.mobile.no"
-              aria-describedby="mobile">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="mobile" name="mobile"
+                  [(ngModel)]="profile.mobile.no"
+                  aria-describedby="mobile">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
       </section>
 
-      <section>
+      <section class="address">
         <div class="section-title">Address</div>
+        <span class="group-privacy-toggle ss-view"></span>
 
         <div class="form-group">
           <label for="houseNumber">House/Flat number</label>
-          <input type="text" class="form-control rump-input" id="houseNumber" name="houseNumber"
-              [(ngModel)]="profile.addressDetails.no"
-              aria-describedby="houseNumber">
+          <input type="text" class="form-control rump-input rump-md" id="houseNumber" name="houseNumber"
+                [(ngModel)]="profile.address_details.no"
+                aria-describedby="houseNumber">
         </div>
 
         <div class="form-group">
           <label for="street">Street name</label>
-          <input type="text" class="form-control rump-input" id="street" name="street"
-              [(ngModel)]="profile.addressDetails.street"
-              aria-describedby="street">
+          <input type="text" class="form-control rump-input rump-md" id="street" name="street"
+                [(ngModel)]="profile.address_details.street"
+                aria-describedby="street">
         </div>
 
         <div class="form-group">
           <label for="postcode">Postcode / zip code</label>
-          <input type="text" class="form-control rump-input" id="postcode" name="postcode"
-              [(ngModel)]="profile.addressDetails.postcode"
-              aria-describedby="postcode">
+          <input type="text" class="form-control rump-input rump-md" id="postcode" name="postcode"
+                [(ngModel)]="profile.address_details.postcode"
+                aria-describedby="postcode">
         </div>
 
         <div class="form-group">
           <label for="city">City</label>
-          <input type="text" class="form-control rump-input" id="city" name="city"
-              [(ngModel)]="profile.addressGlobal.city"
-              aria-describedby="city">
+          <input type="text" class="form-control rump-input rump-md" id="city" name="city"
+                [(ngModel)]="profile.address_global.city"
+                aria-describedby="city">
         </div>
 
         <div class="form-group">
           <label for="county">State / County</label>
-          <input type="text" class="form-control rump-input" id="county" name="county"
-              [(ngModel)]="profile.addressGlobal.county"
-              aria-describedby="county">
+          <input type="text" class="form-control rump-input rump-md" id="county" name="county"
+                [(ngModel)]="profile.address_global.county"
+                aria-describedby="county">
         </div>
 
         <div class="form-group">
           <label for="country">Country</label>
-          <input type="text" class="form-control rump-input" id="country" name="country"
-              [(ngModel)]="profile.addressGlobal.country"
-              aria-describedby="country">
+          <input type="text" class="form-control rump-input rump-md" id="country" name="country"
+                [(ngModel)]="profile.address_global.country"
+                aria-describedby="country">
         </div>
       </section>
 
-      <section>
+      <section class="online-profiles">
         <div class="section-title">Online Profiles</div>
+        <span class="group-privacy-toggle ss-view"></span>
 
         <div class="form-group">
           <label for="website">Website</label>
-          <input type="text" class="form-control rump-input" id="website" name="website"
-              [(ngModel)]="profile.website.link"
-              aria-describedby="website">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="website" name="website"
+                  [(ngModel)]="profile.website.link"
+                  aria-describedby="website">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="blog">Blog</label>
-          <input type="text" class="form-control rump-input" id="blog" name="blog"
-              [(ngModel)]="profile.blog.link"
-              aria-describedby="blog">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="blog" name="blog"
+                  [(ngModel)]="profile.blog.link"
+                  aria-describedby="blog">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="facebook">Facebook profile</label>
-          <input type="text" class="form-control rump-input" id="facebook" name="facebook"
-              [(ngModel)]="profile.facebook.link"
-              aria-describedby="facebook">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="facebook" name="facebook"
+                  [(ngModel)]="profile.facebook.link"
+                  aria-describedby="facebook">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="linkedin">LinkedIn profile</label>
-          <input type="text" class="form-control rump-input" id="linkedin" name="linkedin"
-              [(ngModel)]="profile.linkedin.link"
-              aria-describedby="linkedin">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="linkedin" name="linkedin"
+                  [(ngModel)]="profile.linkedin.link"
+                  aria-describedby="linkedin">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="twitter">Twitter</label>
-          <input type="text" class="form-control rump-input" id="twitter" name="twitter"
-              [(ngModel)]="profile.twitter.link"
-              aria-describedby="twitter">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="twitter" name="twitter"
+                  [(ngModel)]="profile.twitter.link"
+                  aria-describedby="twitter">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="google">Google+</label>
-          <input type="text" class="form-control rump-input" id="google" name="google"
-              [(ngModel)]="profile.google.link"
-              aria-describedby="google">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="google" name="google"
+                  [(ngModel)]="profile.google.link"
+                  aria-describedby="google">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="youtube">Youtube channel</label>
-          <input type="text" class="form-control rump-input" id="youtube" name="youtube"
-              [(ngModel)]="profile.youtube.link"
-              aria-describedby="youtube">
-          <span class="ss-view"></span>
+          <div class="input-group">
+            <input type="text" class="form-control rump-input rump-md" id="youtube" name="youtube"
+                [(ngModel)]="profile.youtube.link"
+                aria-describedby="youtube">
+            <span class="input-group-btn">
+              <button class="btn" type="button"><span class="field-privacy-toggle ss-view"></span></button>
+            </span>
+          </div>
         </div>
       </section>
 
-      <section>
-        <div class="section-title">Emergency Contact <span class="ss-view"></span></div>
+      <section class="emergency-contact">
+        <div class="section-title">Emergency Contact</div>
+        <span class="group-privacy-toggle ss-view"></span>
 
         <div class="form-group">
           <label for="emFirstName">First Name</label>
-          <input type="text" class="form-control rump-input" id="emFirstName" name="emFirstName"
-              [(ngModel)]="profile.emergencyContact.firstName"
+          <input type="text" class="form-control rump-input rump-md" id="emFirstName" name="emFirstName"
+              [(ngModel)]="profile.emergency_contact.firstName"
               aria-describedby="emFirstName">
         </div>
 
         <div class="form-group">
-          <label for="emLastName">First Name</label>
-          <input type="text" class="form-control rump-input" id="emLastName" name="emLastName"
-              [(ngModel)]="profile.emergencyContact.lastName"
+          <label for="emLastName">Last Name</label>
+          <input type="text" class="form-control rump-input rump-md" id="emLastName" name="emLastName"
+              [(ngModel)]="profile.emergency_contact.lastName"
               aria-describedby="emLastName">
         </div>
 
         <div class="form-group">
           <label for="emMobile">Mobile number</label>
-          <input type="text" class="form-control rump-input" id="emMobile" name="emMobile"
-              [(ngModel)]="profile.emergencyContact.mobile"
+          <input type="text" class="form-control rump-input rump-md" id="emMobile" name="emMobile"
+              [(ngModel)]="profile.emergency_contact.mobile"
               aria-describedby="emMobile">
         </div>
 
         <div class="form-group">
           <label for="relationship">Relationship</label>
-          <input type="text" class="form-control rump-input" id="relationship" name="relationship"
-              [(ngModel)]="profile.emergencyContact.relationship"
+          <input type="text" class="form-control rump-input rump-md" id="relationship" name="relationship"
+              [(ngModel)]="profile.emergency_contact.relationship"
               aria-describedby="relationship">
         </div>
       </section>
 
-      <section>
-        <div class="section-title">About <span class="ss-view"></span></div>
+      <section class="about">
+        <div class="section-title">About</div>
+        <span class="group-privacy-toggle ss-view"></span>
 
         <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" class="form-control rump-input" id="title" name="title"
+          <label for="aboutTitle">Title</label>
+          <input type="text" class="form-control rump-input rump-md" id="aboutTitle" name="aboutTitle"
               [(ngModel)]="profile.about.title"
-              aria-describedby="title">
+              aria-describedby="aboutTitle">
         </div>
 
         <div class="form-group">
@@ -259,8 +335,8 @@
         </div>
       </section>
 
-      <button type="button">Discard</button>
-      <button type="submit">Save Changes</button>
+      <button type="button" class="btn btn-rump">Discard</button>
+      <button type="submit" class="btn btn-rump">Save Changes</button>
     </form>
   </div>
 </div>

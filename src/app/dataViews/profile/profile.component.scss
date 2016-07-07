@@ -1,0 +1,76 @@
+section {
+  margin: 1em;
+  border: 2px solid #c7c7c7;
+  position: relative;
+}
+
+.section-title {
+  margin: 1em;
+  font-size: 2em;
+  text-transform: uppercase;
+  color: #9c9c9c;
+  border-bottom: 1px solid #c7c7c7;
+}
+
+.group-privacy-toggle {
+  font-size: 2.5em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding-top: 0.25em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-left: 2px solid #c7c7c7;
+  border-top: 2px solid #c7c7c7;
+}
+
+.field-privacy-toggle {
+  font-size: 1.97em;
+  color: #eeeeee;
+}
+
+.public {
+  background-color: #ffffff;
+  color: rgb(1, 134, 117);
+
+  span {
+    color: rgb(1, 134, 117);
+  }
+}
+
+.form-group {
+  margin-bottom: 2em;
+  margin-left: 2em;
+  text-align: left;
+  display: inline-block;
+
+  label {
+    color: #9c9c9c;
+    text-transform: uppercase;
+  }
+
+  input {
+    width: 17em;
+  }
+
+  input[name=title] {
+    width: 5em;
+  }
+}
+
+.about .form-group {
+  display: block;
+
+  textarea {
+    width: 80%;
+  }
+}
+
+.input-group-btn {
+  width: 0;
+  height: 3em;
+
+  button {
+    border-radius: 0;
+  }
+}
