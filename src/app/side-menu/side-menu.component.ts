@@ -12,7 +12,7 @@ export class SideMenuComponent implements OnInit {
   public selectedItem: string;
   public menuItems = [
     { display: 'Dashboard', icon: 'dashboard', link: '' },
-    //{ display: 'Profile', icon: 'user', link: '' },
+    { display: 'Profile', icon: 'user', link: 'profile' },
     { display: 'Offers', icon: 'tags', link: '' },
     { display: 'Mashup', icon: 'layergroup', link: 'mixpad' },
     //{ display: 'Messages', icon: 'chats', link: '' },
