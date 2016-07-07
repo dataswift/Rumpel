@@ -2,10 +2,10 @@ export interface Profile {
   private: boolean;
   personal: {
     title: string;
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    preferredName: string;
+    first_name: string;
+    middle_name: string;
+    last_name: string;
+    preferred_name: string;
     private: boolean;
   };
   nick: {
@@ -24,12 +24,15 @@ export interface Profile {
     group: string;
     private: boolean;
   };
-  email: {
-    email: string;
-    email2: string;
+  primary_email: {
+    value: string;
     private: boolean;
   };
-  homePhone: {
+  alternative_email: {
+    value: string;
+    private: boolean;
+  };
+  home_phone: {
     no: string;
     private: boolean;
   };
@@ -37,13 +40,13 @@ export interface Profile {
     no: string;
     private: boolean;
   };
-  addressDetails: {
+  address_details: {
     no: string;
     street: string;
     postcode: string;
     private: boolean;
   };
-  addressGlobal: {
+  address_global: {
     city: string;
     county: string;
     country: string;
@@ -77,9 +80,9 @@ export interface Profile {
     link: string;
     private: boolean;
   };
-  emergencyContact: {
-    firstName: string;
-    lastName: string;
+  emergency_contact: {
+    first_name: string;
+    last_name: string;
     mobile: string;
     relationship: string;
     private: boolean;

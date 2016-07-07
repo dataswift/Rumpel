@@ -1,6 +1,6 @@
 export const hatModel = {
   profile: {
-    name: 'profile',
+    name: 'profilis',
     source: 'rumpel',
     fields: [
       { name: 'private' }
@@ -25,12 +25,10 @@ export const hatModel = {
           { name: 'private' }
         ]
       }, {
-        name: 'body',
+        name: 'birth',
         source: 'rumpel',
         fields: [
-          { name: 'dob' },
-          { name: 'gender' },
-          { name: 'age' },
+          { name: 'date' },
           { name: 'private' }
         ]
       }, {
@@ -48,11 +46,17 @@ export const hatModel = {
           { name: 'private' }
         ]
       }, {
-        name: 'email',
+        name: 'primary_email',
         source: 'rumpel',
         fields: [
-          { name: 'email' },
-          { name: 'email_2' },
+          { name: 'value' },
+          { name: 'private' }
+        ]
+      }, {
+        name: 'alternative_email',
+        source: 'rumpel',
+        fields: [
+          { name: 'value' },
           { name: 'private' }
         ]
       }, {

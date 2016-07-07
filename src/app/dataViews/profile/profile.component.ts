@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProfileService } from '../../services';
 import { Profile } from '../../shared';
 
@@ -11,7 +12,8 @@ import { Profile } from '../../shared';
 export class ProfileComponent implements OnInit {
   public profile: Profile;
 
-  constructor(private profileSvc: ProfileService) {}
+  constructor(private profileSvc: ProfileService,
+              private router: Router) {}
 
   ngOnInit() {
     this.profileSvc.initializeProfile();
@@ -21,17 +23,18 @@ export class ProfileComponent implements OnInit {
 
     this.profile = {
       private: true,
-      personal: { title: '', firstName: '', middleName: '',
-                  lastName: '', preferredName: '', private: true },
+      personal: { title: '', first_name: '', middle_name: '',
+                  last_name: '', preferred_name: '', private: true },
       nick: { name: '', private: true },
       birth: { date: '', private: true },
       gender: { type: '', private: true },
       age: { group: '', private: true },
-      email: { email: '', email2: '', private: true },
-      homePhone: { no: '', private: true },
+      primary_email: { value: '', private: true },
+      alternative_email: { value: '', private: true },
+      home_phone: { no: '', private: true },
       mobile: { no: '', private: true },
-      addressDetails: { no: '', street: '', postcode: '', private: true },
-      addressGlobal: { city: '', county: '', country: '', private: true },
+      address_details: { no: '', street: '', postcode: '', private: true },
+      address_global: { city: '', county: '', country: '', private: true },
       website: { link: '', private: true },
       blog: { link: '', private: true },
       facebook: { link: '', private: true },
@@ -39,10 +42,24 @@ export class ProfileComponent implements OnInit {
       twitter: { link: '', private: true },
       google: { link: '', private: true },
       youtube: { link: '', private: true },
-      emergencyContact: { firstName: '', lastName: '', mobile: '',
+      emergency_contact: { first_name: '', last_name: '', mobile: '',
                           relationship: '', private: true },
       about: { title: '', body: '', private: true }
     };
+  }
+
+  submitForm(event) {
+    event.preventDefault();
+    this.profileSvc.saveProfile(this.profile).subscribe();
+    this.router.navigate(['']);
+  }
+
+  discardChanges() {
+    this.router.navigate(['']);
+  }
+
+  togglePrivacy(field: string) {
+    this.profile[field].private = this.profile[field].private === 'true' ? 'false' : 'true';
   }
 
 }

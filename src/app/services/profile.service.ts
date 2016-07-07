@@ -17,7 +17,7 @@ export class ProfileService {
     this.hat.getDataSources()
       .map(res => res.json())
       .flatMap(sources => {
-        const profileTable = sources.find(source => source.name === 'profile' && source.source === 'rumpel');
+        const profileTable = sources.find(source => source.name === 'profilis' && source.source === 'rumpel');
 
         if (profileTable) {
           return this.hat.getModelMapping(profileTable.id);
@@ -26,12 +26,23 @@ export class ProfileService {
         }
       })
       .subscribe(hatIdMapping => {
+        console.log(hatIdMapping);
         this.hatIdMapping = hatIdMapping;
       });
   }
 
   getFullProfile() {
-    return this.hat.getAllValuesOf('profile', 'rumpel')
-      .map(profiles => profiles[0]);
+    return this.hat.getAllValuesOf('profilis', 'rumpel')
+      .map(profiles => {
+        const sortedProfiles = profiles.sort((a, b) => {
+          return new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime();
+        });
+
+        return sortedProfiles[0];
+      });
+  }
+
+  saveProfile(profile: Profile) {
+    return this.hat.postRecord(profile, this.hatIdMapping, 'profilis').map(res => res.json());
   }
 }

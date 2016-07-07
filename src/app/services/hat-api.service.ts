@@ -60,7 +60,7 @@ export class HatApiService {
 
   getModelMapping(tableId: number): Observable<any> {
     return this.getModel(tableId)
-      .map(rawModel => this.mapDataSource(rawModel));
+      .map(rawModel => this.mapDataSource(rawModel, rawModel.name));
   }
 
   postModel(model: any): Observable<any> {
@@ -68,12 +68,14 @@ export class HatApiService {
 
     return this._http.post(url, model, { headers: this._headers })
       .map(res => res.json())
-      .map(rawModel => this.mapDataSource(rawModel));
+      .map(rawModel => this.mapDataSource(rawModel, rawModel.name));
   }
 
-  postRecord(obj: any, hatIdMapping: any, prefix: string): Observable<any> {
+  postRecord(obj: any, hatIdMapping: any, prefix: string = 'default'): Observable<any> {
     const url = this._baseUrl + '/data/record/values';
     const hatFormattedObj = this.createRecord(obj, hatIdMapping, prefix);
+
+    console.log(hatFormattedObj);
 
     return this._http.post(url, hatFormattedObj, { headers: this._headers });
   }
@@ -115,15 +117,13 @@ export class HatApiService {
   }
 
   private createValue(obj: any, hatIdMapping: any, prefix: string = 'default') {
-    var values = [];
-
-    Object.keys(obj).reduce((acc, key) => {
+    return Object.keys(obj).reduce((acc, key) => {
       if (typeof obj[key] === 'object') {
         const subTreeValues = this.createValue(obj[key], hatIdMapping, prefix + '_' + key);
-        acc.concat(subTreeValues);
+        acc = acc.concat(subTreeValues);
       } else {
         acc.push({
-          value: obj[key],
+          value: '' + obj[key],
           field: {
             id: hatIdMapping[prefix + '_' + key],
             name: key
@@ -132,9 +132,7 @@ export class HatApiService {
       }
 
       return acc;
-    }, values);
-
-    return values;
+    }, []);
   }
 
   private mapDataSource(table: any, prefix: string = 'default') {
