@@ -1,13 +1,5 @@
 @import "style";
 
-.tile-header {
-  padding: 0.5em 0.5em;
-  width: 100%;
-  text-transform: uppercase;
-  font-size: 1.5em;
-  background-color: #37474F;
-}
-
 .tile-body {
   padding: 0.5em 1em;
   line-height: default;
@@ -25,6 +17,7 @@
 
 .tile-body p {
   margin-bottom: 0;
+  display: block;
 }
 
 .tile-body div p {

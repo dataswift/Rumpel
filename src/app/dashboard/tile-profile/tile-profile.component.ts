@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../../services';
+import { Profile } from '../../shared';
 
 @Component({
   moduleId: module.id,
@@ -7,35 +9,40 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['tile-profile.component.css']
 })
 export class TileProfileComponent implements OnInit {
-  public user = [
-    { field: 'name', value: 'myname@google.com', private: false, icon: 'user' },
-    { field: 'phone', value: '01229 123456', private: true, icon: 'phone' },
-    { field: 'mobile', value: '07809 123456', private: true, icon: 'cell' },
-    { field: 'address', value: [
-        { field: 'number', value: '100' },
-        { field: 'street', value: 'Smith Lane' },
-        { field: 'city', value: 'Cambridge' },
-        { field: 'postcode', value: 'CB98 9UT' },
-        { field: 'country', value: 'United Kingdom' }
-      ],
-      private: true, icon: 'home'
-    },
-    { field: 'email', value: 'myname@gmail.com', private: false, icon: 'mail' },
-    { field: 'fbProfile', value: 'facebook.com/username', private: false, icon: 'replyall' }
-  ];
+  public profile: Profile;
 
-  constructor() {}
+  constructor(private profileSvc: ProfileService) {}
 
   ngOnInit() {
-  }
+    this.profileSvc.getFullProfile().subscribe(profile => {
+      if (profile) this.profile = profile;
+    });
 
-  togglePrivacy(propName: string) {
-    let propToChange = this.user.find(prop => prop.field === propName);
-    propToChange.private = !propToChange.private;
-  }
-
-  isArray(prop: any) {
-    return Array.isArray(prop.value);
+    this.profile = {
+      private: true,
+      personal: { title: '', first_name: '', middle_name: '',
+                  last_name: '', preferred_name: '', private: true },
+      nick: { name: '', private: true },
+      birth: { date: '', private: true },
+      gender: { type: '', private: true },
+      age: { group: '', private: true },
+      primary_email: { value: '', private: true },
+      alternative_email: { value: '', private: true },
+      home_phone: { no: '', private: true },
+      mobile: { no: '', private: true },
+      address_details: { no: '', street: '', postcode: '', private: true },
+      address_global: { city: '', county: '', country: '', private: true },
+      website: { link: '', private: true },
+      blog: { link: '', private: true },
+      facebook: { link: '', private: true },
+      linkedin: { link: '', private: true },
+      twitter: { link: '', private: true },
+      google: { link: '', private: true },
+      youtube: { link: '', private: true },
+      emergency_contact: { first_name: '', last_name: '', mobile: '',
+                          relationship: '', private: true },
+      about: { title: '', body: '', private: true }
+    };
   }
 
 }
