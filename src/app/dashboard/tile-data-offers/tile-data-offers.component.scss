@@ -11,41 +11,53 @@
 }
 
 .tile-body li {
-  margin: 0.5em 0;
-  position: relative;
-}
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 0px;
 
-.tile-entry-logo {
-  font-size: 1.5em;
-  vertical-align: middle;
-  position: absolute;
-}
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+    padding-top: 0;
+    font-size: 1.3em;
+  }
 
-.col-xs-9 {
   p {
-    font-size: 0.75em;
-    margin-bottom: 0;
+    font-size: 0.8em;
+    margin-bottom: 0.4em;
   }
 }
 
-.col-xs-3 {
-  font-size: 2em;
+.col-xs-1, .col-xs-3, .col-xs-8 {
+  margin: 0;
+  margin-top: 0.5em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 
   div {
-    margin-right: 0.25em;
-    margin-left: 0.25em;
     display: inline;
-    font-size: .75em;
+    font-size: 1.25em;
+    margin: 0 0.2em;
+  }
+
+  a {
+    color: #ffffff;
+    text-decoration: none;
+
+    span {
+      font-size: 1.5em;
+    }
   }
 }
 
-.tile-content {
-  position: relative;
-  display: inline-block;
-  padding-left: 35px;
+.vertical-align {
+  display: flex;
+  flex-direction: row;
 }
 
-.tile-content h5 {
-  margin: 0;
-  padding: 0;
+.vertical-align > .col-xs-1
+.vertical-align > .col-xs-3 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

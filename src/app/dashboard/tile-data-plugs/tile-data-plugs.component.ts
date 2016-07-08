@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MarketSquareService, HatApiService } from '../../services';
+import { MarketSquareService, AuthService } from '../../services';
 
 @Component({
   moduleId: module.id,
@@ -9,11 +9,13 @@ import { MarketSquareService, HatApiService } from '../../services';
 })
 export class TileDataPlugsComponent implements OnInit {
   public plugs: Array<any>;
+  public hatDomain: string;
 
-  constructor(private marketSvc: MarketSquareService) {}
+  constructor(private marketSvc: MarketSquareService, private auth: AuthService) {}
 
   ngOnInit() {
     this.marketSvc.getDataPlugs().subscribe(plugs => this.plugs = plugs);
+    this.hatDomain = this.auth.getDomain();
   }
 
 }

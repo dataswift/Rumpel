@@ -3,11 +3,11 @@
 <div class="tile-body">
   <ul>
     <li *ngFor="let offer of offers">
-      <div class="row">
-        <div class="col-xs-9">
+      <div class="row vertical-align">
+        <div class="col-xs-8">
           <h5>{{offer.offer.title}}</h5>
           <p>{{offer.offer.description | limitContent:80}}</p>
-          <p>Already claimed by {{offer.offer.users}} users. Expires {{offer.offer.expires | moment}}</p>
+          <p>Already claimed by {{offer.offer.users}} users. Expires at {{offer.offer.expires | moment}}</p>
         </div>
         <div class="col-xs-3 meta" *ngIf="offer.offer.rating">
           <div>
@@ -18,6 +18,10 @@
             <span class="ss-dislike"></span>
             {{offer.offer.rating.down}}
           </div>
+        </div>
+
+        <div class="col-xs-1">
+          <a href="{{'https://marketsquare.hubofallthings.com/offers/' + offer.offer.uuid}}" target="_blank"><span class="ss-right"></span></a>
         </div>
       </div>
     </li>

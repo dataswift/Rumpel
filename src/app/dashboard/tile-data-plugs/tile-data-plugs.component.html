@@ -3,13 +3,16 @@
 <div class="tile-body">
   <ul>
     <li *ngFor="let plug of plugs">
-      <div class="row">
+      <div class="row vertical-align">
         <div class="col-xs-2">
           <img src="{{plug.illustrationUrl}}" class="img img-responsive">
         </div>
-        <div class="col-xs-10">
+        <div class="col-xs-8">
           <h3>{{plug.name}} plug</h3>
           <p>{{plug.description}}</p>
+        </div>
+        <div class="col-xs-2">
+          <a href="{{plug.url + '?hat=' + hatDomain}}" target="_blank"><span class="ss-right"></span></a>
         </div>
       </div>
     </li>

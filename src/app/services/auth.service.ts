@@ -10,6 +10,7 @@ export class AuthService {
   private authObserver: Observer<any>;
   private authenticated: boolean;
   private jwtHelper: JwtHelper;
+  private hatDomain: string;
 
   constructor(private hat: HatApiService, private router: Router) {
     this.auth$ = new Observable(observer => this.authObserver = observer).share();
@@ -35,6 +36,8 @@ export class AuthService {
 
   authenticate(jwt: string) {
     const hatDomain = this.decodeJwt(jwt);
+    this.hatDomain = hatDomain;
+
     this.hat.validateToken(hatDomain, jwt).subscribe(
       res => {
         if (res && res.message === 'Authenticated') {
@@ -57,6 +60,10 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.authenticated;
+  }
+
+  getDomain(): string {
+    return this.hatDomain;
   }
 
   /* Local Storage placeholders */

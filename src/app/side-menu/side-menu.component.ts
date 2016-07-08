@@ -13,16 +13,16 @@ export class SideMenuComponent implements OnInit {
   public menuItems = [
     { display: 'Dashboard', icon: 'dashboard', link: '' },
     { display: 'Profile', icon: 'user', link: 'profile' },
-    { display: 'Offers', icon: 'tags', link: '' },
+    //{ display: 'Offers', icon: 'tags', link: '' },
     { display: 'Mashup', icon: 'layergroup', link: 'mixpad' },
     //{ display: 'Messages', icon: 'chats', link: '' },
     { display: 'Locations', icon: 'tags', link: 'locations' },
     { display: 'Calendar', icon: 'calendar', link: 'calendar' },
     { display: 'Social', icon: 'replyall', link: 'social' },
     //{ display: 'Mail', icon: 'send', link: '' },
-    { display: 'Photos', icon: 'camera', link: 'photos' },
-    { display: 'Plugins', icon: 'connection', link: '' },
-    { display: 'Settings', icon: 'settings', link: '' }
+    { display: 'Photos', icon: 'camera', link: 'photos' }
+    //{ display: 'Plugins', icon: 'connection', link: '' },
+    //{ display: 'Settings', icon: 'settings', link: '' }
   ];
 
   constructor() {}
