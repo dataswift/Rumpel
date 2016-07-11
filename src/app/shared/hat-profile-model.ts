@@ -1,6 +1,6 @@
 export const hatModel = {
   profile: {
-    name: 'profilis',
+    name: 'profile',
     source: 'rumpel',
     fields: [
       { name: 'private' }

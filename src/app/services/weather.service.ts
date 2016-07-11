@@ -8,7 +8,7 @@ export class WeatherService {
   private token: string;
 
   constructor(private http: Http) {
-    this.baseUrl = 'http://api.wunderground.com/api';
+    this.baseUrl = 'https://api.wunderground.com/api';
     this.token = '648b0984a45bdea3';
   }
 

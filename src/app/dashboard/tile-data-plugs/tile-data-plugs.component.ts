@@ -10,11 +10,13 @@ import { MarketSquareService, AuthService } from '../../services';
 export class TileDataPlugsComponent implements OnInit {
   public plugs: Array<any>;
   public hatDomain: string;
+  public icons: Array<string>;
 
   constructor(private marketSvc: MarketSquareService, private auth: AuthService) {}
 
   ngOnInit() {
     this.marketSvc.getDataPlugs().subscribe(plugs => this.plugs = plugs);
+    this.icons = ['FB-f-Logo__blue_144.png', 'photos-plug.svg', 'calendar-plug.svg', 'rumpel.svg', 'locations-plug.svg'];
     this.hatDomain = this.auth.getDomain();
   }
 
