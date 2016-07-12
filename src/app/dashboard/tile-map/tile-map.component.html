@@ -1,7 +1,9 @@
 <div class="tile-header">
   <span class="tile-logo ss-{{iconName}}"></span>
   <div class="tile-title">{{title}}</div>
-  <span class="tile-expand ss-plus"></span>
+  <button type="button" data-toggle="popover" data-container="body"
+          [attr.data-content]="info" class="info-button"
+          data-placement="auto left"><span class="tile-expand ss-info"></span></button>
 </div>
 
 <div class="tile-body">

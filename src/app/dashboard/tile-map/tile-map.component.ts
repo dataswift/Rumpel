@@ -13,6 +13,7 @@ import { MapComponent } from '../../dataViews/map/map.component';
 export class TileMapComponent implements OnInit {
   @Input() title;
   @Input() iconName;
+  @Input() info;
   public locations$;
   public safeSize;
 

@@ -1,36 +1,43 @@
 <div class="grid" data-packery='{ "itemSelector": ".grid-item" }'>
   <rump-tile-profile class="grid-item grid-item--width3 grid-item--height1">
     <rump-tile-header [title]="'Profile'" [iconName]="'user'"
-                      [backColor]="'#263238'"></rump-tile-header>
+                      [backColor]="'#263238'"
+                      [info]="'HAT personal profile can be created using Rumpel data browser. Privacy settings can be ajusted to display selected information fields on HATs landing page.'"></rump-tile-header>
   </rump-tile-profile>
 
   <rump-tile-generic class="grid-item grid-item--width3 grid-item--height1">
     <rump-tile-header [title]="'Calendar'" [iconName]="'calendar'"
-                      [backColor]="'#37474F'"></rump-tile-header>
+                      [backColor]="'#37474F'"
+                      [info]="'Displays the list of most recent events in the your HAT calendar. To get started with gathering your events enable Social and Calendar data plugs.'"></rump-tile-header>
   </rump-tile-generic>
 
   <rump-tile-data-offers class="grid-item grid-item--width6 grid-item--height1">
     <rump-tile-header [title]="'Data Offers'" [iconName]="'piggybank'"
-                      [backColor]="'#455A64'"></rump-tile-header>
+                      [backColor]="'#455A64'"
+                      [info]="'Check out this section to see all the latest and greatest data offers. Claim any of the offers and start earning today!'"></rump-tile-header>
   </rump-tile-data-offers>
 
   <rump-tile-social class="grid-item grid-item--width3 grid-item--height2">
     <rump-tile-header [title]="'Social'" [iconName]="'replyall'"
-                      [backColor]="'#546E7A'"></rump-tile-header>
+                      [backColor]="'#546E7A'"
+                      [info]="'What happened on the social media recently? See all your recent activity in one convenient place.'"></rump-tile-header>
   </rump-tile-social>
 
   <rump-tile-map class="grid-item grid-item--width6 grid-item--height1"
-                 [title]="'Map'" [iconName]="'merge'">
+                 [title]="'Map'" [iconName]="'merge'"
+                 [info]="'Where have you been recently? Investigate your recent movements on the interactive map (as long as locations plug is running).'">
   </rump-tile-map>
 
   <rump-tile-weather class="grid-item grid-item--width3 grid-item--height1">
     <rump-tile-header [title]="'Weather'" [iconName]="'thermometer'"
-                      [backColor]="'#607D8B'"></rump-tile-header>
+                      [backColor]="'#607D8B'"
+                      [info]="'What is the weather like today? Look at the sky or use this widget ;)'"></rump-tile-header>
   </rump-tile-weather>
 
   <rump-tile-data-plugs class="grid-item grid-item--width3 grid-item--height1">
     <rump-tile-header [title]="'Data Plugs'" [iconName]="'merge'"
-                      [backColor]="'#78909C'"></rump-tile-header>
+                      [backColor]="'#78909C'"
+                      [info]="'List of currently available data plugs. Set up any number of these and watch HAT come alive with all of your personalised data.'"></rump-tile-header>
   </rump-tile-data-plugs>
 
 

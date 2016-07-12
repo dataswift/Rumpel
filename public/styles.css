@@ -1,0 +1,9 @@
+.popover {
+  border-radius: 0;
+  background-color: #B0BEC5;
+}
+
+.popover.left > .arrow,
+.popover.left > .arrow:after {
+  border-left-color: #B0BEC5;
+}
