@@ -1,5 +1,8 @@
 export interface Profile {
-  private: boolean;
+  private: string;
+  fb_profile_photo: {
+    private: boolean
+  };
   personal: {
     title: string;
     first_name: string;

@@ -12,6 +12,10 @@ export class HatApiService {
 
   constructor(private _http: Http) {}
 
+  getUrl() {
+    return this._baseUrl;
+  }
+
   updateCredentials(domain: string, token: string) {
     this._baseUrl = 'http://' + domain + ':' + HAT_PORT;
     this._token = token;
@@ -74,8 +78,6 @@ export class HatApiService {
   postRecord(obj: any, hatIdMapping: any, prefix: string = 'default'): Observable<any> {
     const url = this._baseUrl + '/data/record/values';
     const hatFormattedObj = this.createRecord(obj, hatIdMapping, prefix);
-
-    console.log(hatFormattedObj);
 
     return this._http.post(url, hatFormattedObj, { headers: this._headers });
   }

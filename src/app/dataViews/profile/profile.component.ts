@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfileService } from '../../services';
+import { ProfileService, HatApiService } from '../../services';
 import { Profile } from '../../shared';
 
 @Component({
@@ -10,19 +10,35 @@ import { Profile } from '../../shared';
   styleUrls: ['profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  private hatIdMapping: any;
   public profile: Profile;
+  public profilePhoto: any;
+  public hatUrl: string;
 
   constructor(private profileSvc: ProfileService,
+              private hat: HatApiService,
               private router: Router) {}
 
   ngOnInit() {
-    this.profileSvc.initializeProfile();
-    this.profileSvc.getFullProfile().subscribe(profile => {
-      if (profile) this.profile = profile;
+    this.hatUrl = this.hat.getUrl();
+    this.profilePhoto = {};
+    this.profileSvc.initializeProfile().subscribe(hatIdMapping => {
+      console.log(hatIdMapping);
+      this.hatIdMapping = hatIdMapping;
+
+      this.profileSvc.getFullProfile().subscribe(profile => {
+        if (profile) this.profile = profile;
+      });
+    });
+
+    this.profileSvc.getPicture().subscribe(profilePicture => {
+      if (profilePicture) this.profilePhoto = profilePicture;
+      else this.profilePhoto = { url: 'avatar_placeholder.svg'};
     });
 
     this.profile = {
-      private: true,
+      private: 'true',
+      fb_profile_photo: { private: true },
       personal: { title: '', first_name: '', middle_name: '',
                   last_name: '', preferred_name: '', private: true },
       nick: { name: '', private: true },
@@ -50,12 +66,16 @@ export class ProfileComponent implements OnInit {
 
   submitForm(event) {
     event.preventDefault();
-    this.profileSvc.saveProfile(this.profile).subscribe();
+    this.profileSvc.saveProfile(this.profile, this.hatIdMapping).subscribe();
     this.router.navigate(['']);
   }
 
   discardChanges() {
     this.router.navigate(['']);
+  }
+
+  toggleProfilePrivacy() {
+    this.profile.private = this.profile.private === 'true' ? 'false' : 'true';
   }
 
   togglePrivacy(field: string) {

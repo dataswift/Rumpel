@@ -14,25 +14,22 @@ export class ProfileService {
   }
 
   initializeProfile() {
-    this.hat.getDataSources()
+    return this.hat.getDataSources()
       .map(res => res.json())
       .flatMap(sources => {
-        const profileTable = sources.find(source => source.name === 'profilis' && source.source === 'rumpel');
+        console.log('SRC', sources);
+        const profileTable = sources.find(source => source.name === 'profile' && source.source === 'rumpel');
 
         if (profileTable) {
           return this.hat.getModelMapping(profileTable.id);
         } else {
           return this.hat.postModel(hatModel.profile);
         }
-      })
-      .subscribe(hatIdMapping => {
-        console.log(hatIdMapping);
-        this.hatIdMapping = hatIdMapping;
       });
   }
 
   getFullProfile() {
-    return this.hat.getAllValuesOf('profilis', 'rumpel')
+    return this.hat.getAllValuesOf('profile', 'rumpel')
       .map(profiles => {
         const sortedProfiles = profiles.sort((a, b) => {
           return new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime();
@@ -42,7 +39,18 @@ export class ProfileService {
       });
   }
 
-  saveProfile(profile: Profile) {
-    return this.hat.postRecord(profile, this.hatIdMapping, 'profilis').map(res => res.json());
+  getPicture() {
+    return this.hat.getAllValuesOf('profile_picture', 'facebook')
+      .map(pictures => {
+        const sortedPictures = pictures.sort((a, b) => {
+          return new Date(a.dateCreated).getTime() - new Date(b.dateCreated).getTime();
+        });
+
+        return sortedPictures[0];
+      });
+  }
+
+  saveProfile(profile: Profile, hatIdMapping: any) {
+    return this.hat.postRecord(profile, hatIdMapping, 'profile').map(res => res.json());
   }
 }

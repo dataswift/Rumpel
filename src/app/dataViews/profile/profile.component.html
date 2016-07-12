@@ -1,11 +1,38 @@
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
     <form #f="ngForm" (submit)="submitForm($event)">
+      <section class="picture">
+        <div class="section-title">Profile picture</div>
+
+        <button class="btn-privacy btn-toggle-sec" type="button"
+                [class.public]="profile.fb_profile_photo.private === 'false'"
+                [disabled]="profile.private === 'true'"
+                (click)="togglePrivacy('fb_profile_photo')">
+          <span class="ss-view"></span>
+        </button>
+
+        <div class="row">
+          <div class="col-md-3 img">
+            <img src="{{profilePhoto.url}}" class="img-profile img-circle">
+          </div>
+          <div class="col-md-9 section-body">
+            <p>Currently your profile information is {{profile.private === 'false' ? 'partially public' : 'fully private'}}.</p>
+            <button class="btn btn-rump" type="button"
+                    (click)="toggleProfilePrivacy()">{{profile.private === 'false' ? 'Make it private' : 'Show parts publicly'}}</button>
+            <p>Have a look at it live <a href="{{hatUrl}}">here</a>.</p>
+          </div>
+        </div>
+      </section>
+
       <section class="personal">
         <div class="section-title">Personal</div>
-        <span class="group-privacy-toggle ss-view"
-              [class.public]="profile.personal.private === 'false'"
-              (click)="togglePrivacy('personal')"></span>
+        <button class="btn-privacy btn-toggle-sec" type="button"
+                [class.public]="profile.personal.private === 'false'"
+                [disabled]="profile.private === 'true'"
+                (click)="togglePrivacy('personal')">
+           <span class="ss-view"></span>
+        </button>
+
 
         <div class="form-group">
           <label for="title">Title</label>
@@ -53,8 +80,9 @@
                   [(ngModel)]="profile.nick.name"
                   aria-describedby="nickname">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.nick.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('nick')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -68,8 +96,9 @@
                   [(ngModel)]="profile.birth.date"
                   aria-describedby="dob">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.birth.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('birth')">
               <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -83,8 +112,9 @@
                   [(ngModel)]="profile.gender.type"
                   aria-describedby="gender">
             <span class="input-group-btn">
-              <button class="btn public" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.gender.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('gender')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -98,8 +128,9 @@
                   [(ngModel)]="profile.age.group"
                   aria-describedby="ageGroup">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.age.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('age')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -117,8 +148,9 @@
                   [(ngModel)]="profile.primary_email.value"
                   aria-describedby="primaryEmail">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.primary_email.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('primary_email')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -132,8 +164,9 @@
                   [(ngModel)]="profile.alternative_email.value"
                   aria-describedby="alternativeEmail">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.alternative_email.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('alternative_email')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -147,8 +180,9 @@
                   [(ngModel)]="profile.home_phone.no"
                   aria-describedby="homePhone">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.home_phone.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('home_phone')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -162,8 +196,9 @@
                   [(ngModel)]="profile.mobile.no"
                   aria-describedby="mobile">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.mobile.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('mobile')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -173,9 +208,14 @@
 
       <section class="address">
         <div class="section-title">Address</div>
-        <span class="group-privacy-toggle ss-view"
-              [class.public]="profile.address_details.private === 'false'"
-              (click)="toggleGroupPrivacy('address_details')"></span>
+
+        <button class="btn-privacy btn-toggle-sec" type="button"
+                [class.public]="profile.address_details.private === 'false'"
+                [disabled]="profile.private === 'true'"
+                (click)="toggleGroupPrivacy('address_details')">
+          <span class="ss-view"></span>
+        </button>
+
 
         <div class="form-group">
           <label for="houseNumber">House/Flat number</label>
@@ -230,8 +270,9 @@
                   [(ngModel)]="profile.website.link"
                   aria-describedby="website">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.website.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('website')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -245,8 +286,9 @@
                   [(ngModel)]="profile.blog.link"
                   aria-describedby="blog">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.blog.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('blog')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -260,8 +302,9 @@
                   [(ngModel)]="profile.facebook.link"
                   aria-describedby="facebook">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.facebook.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('facebook')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -275,8 +318,9 @@
                   [(ngModel)]="profile.linkedin.link"
                   aria-describedby="linkedin">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.linkedin.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('linkedin')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -290,8 +334,9 @@
                   [(ngModel)]="profile.twitter.link"
                   aria-describedby="twitter">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.twitter.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('twitter')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -305,8 +350,9 @@
                   [(ngModel)]="profile.google.link"
                   aria-describedby="google">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.google.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('google')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -320,8 +366,9 @@
                 [(ngModel)]="profile.youtube.link"
                 aria-describedby="youtube">
             <span class="input-group-btn">
-              <button class="btn" type="button"
+              <button class="btn btn-addon btn-privacy" type="button"
                       [class.public]="profile.youtube.private === 'false'"
+                      [disabled]="profile.private === 'true'"
                       (click)="togglePrivacy('youtube')">
                 <span class="field-privacy-toggle ss-view"></span></button>
             </span>
@@ -331,9 +378,12 @@
 
       <section class="emergency-contact">
         <div class="section-title">Emergency Contact</div>
-        <span class="group-privacy-toggle ss-view"
-              [class.public]="profile.emergency_contact.private === 'false'"
-              (click)="togglePrivacy('emergency_contact')"></span>
+        <button class="btn-privacy btn-toggle-sec" type="button"
+                [class.public]="profile.emergency_contact.private === 'false'"
+                [disabled]="profile.private === 'true'"
+                (click)="togglePrivacy('emergency_contact')">
+          <span class="ss-view"></span>
+        </button>
 
         <div class="form-group">
           <label for="emFirstName">First Name</label>
@@ -366,9 +416,12 @@
 
       <section class="about">
         <div class="section-title">About</div>
-        <span class="group-privacy-toggle ss-view"
-              [class.public]="profile.about.private === 'false'"
-              (click)="togglePrivacy('about')"></span>
+        <button class="btn-privacy btn-toggle-sec" type="button"
+                [class.public]="profile.about.private === 'false'"
+                [disabled]="profile.private === 'true'"
+                (click)="togglePrivacy('about')">
+          <span class="ss-view"></span>
+        </button>
 
         <div class="form-group">
           <label for="aboutTitle">Title</label>

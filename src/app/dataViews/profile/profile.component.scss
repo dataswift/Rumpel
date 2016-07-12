@@ -12,7 +12,7 @@ section {
   border-bottom: 1px solid #c7c7c7;
 }
 
-.group-privacy-toggle {
+.btn-toggle-sec {
   font-size: 2.5em;
   position: absolute;
   right: 0;
@@ -20,21 +20,32 @@ section {
   padding-top: 0.25em;
   padding-left: 0.5em;
   padding-right: 0.5em;
+  border: none;
   border-left: 2px solid #c7c7c7;
   border-top: 2px solid #c7c7c7;
 }
 
-.field-privacy-toggle {
-  font-size: 1.97em;
-  color: #eeeeee;
-}
-
-.public {
-  background-color: #ffffff;
-  color: rgb(1, 134, 117);
+.btn-addon {
+  height: 3.75em;
 
   span {
-    color: rgb(1, 134, 117);
+    margin-right: 0.75em;
+    margin-left: 0.75em;
+  }
+}
+
+.btn-privacy {
+  background-color: #cccccc;
+  color: #000000;
+
+  &.public {
+    background-color: #03A9F4;
+    color: #455A64;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    color: #eeeeee;
   }
 }
 
@@ -73,4 +84,36 @@ section {
   button {
     border-radius: 0;
   }
+}
+
+.picture > .img,
+.picture > .section-body {
+  display: inline-block;
+}
+
+.img {
+  img {
+    margin: 2em;
+    margin-top: 0;
+  }
+}
+
+.section-body {
+  text-align: center;
+  margin-top: 2em;
+
+  p {
+    font-size: 1.2em;
+    text-transform: uppercase;
+    color: #9c9c9c;
+  }
+}
+
+.img-profile {
+  width: 200px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.img-circle {
+  border-radius: 50%;
 }

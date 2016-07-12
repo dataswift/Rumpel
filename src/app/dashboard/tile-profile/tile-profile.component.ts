@@ -19,7 +19,8 @@ export class TileProfileComponent implements OnInit {
     });
 
     this.profile = {
-      private: true,
+      private: 'true',
+      fb_profile_photo: { private: true },
       personal: { title: '', first_name: '', middle_name: '',
                   last_name: '', preferred_name: '', private: true },
       nick: { name: '', private: true },
