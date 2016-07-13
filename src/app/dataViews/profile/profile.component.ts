@@ -23,7 +23,6 @@ export class ProfileComponent implements OnInit {
     this.hatUrl = this.hat.getUrl();
     this.profilePhoto = {};
     this.profileSvc.initializeProfile().subscribe(hatIdMapping => {
-      console.log(hatIdMapping);
       this.hatIdMapping = hatIdMapping;
 
       this.profileSvc.getFullProfile().subscribe(profile => {
@@ -31,10 +30,12 @@ export class ProfileComponent implements OnInit {
       });
     });
 
-    this.profileSvc.getPicture().subscribe(profilePicture => {
-      if (profilePicture) this.profilePhoto = profilePicture;
-      else this.profilePhoto = { url: 'avatar_placeholder.svg'};
-    });
+    this.profileSvc.getPicture().subscribe(
+      profilePicture => {
+        if (profilePicture) this.profilePhoto = profilePicture;
+      },
+      err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
+    );
 
     this.profile = {
       private: 'true',

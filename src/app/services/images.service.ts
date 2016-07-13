@@ -12,28 +12,28 @@ export class ImagesService {
   images$: Observable<any>;
   private _imagesObserver: Observer<any>;
   private _dropboxObserver: Observer<any>;
-  private _authBearer: string = "Bearer Ntiog9K4PcsAAAAAAAAFwpbDzzEsJTTSl_ot1nMF4jjY-kxuKmzhwCk_qaeQ6CnN"
-  private _dataLoaded: boolean;
+  private _authBearer: string;
   private _store: { images: Array<Image> };
 
   constructor(private _http: Http,
               private _hat: HatApiService) {
-    this._dataLoaded = false;
     this._store = { images: [] };
     this.images$ = new Observable(observer => this._imagesObserver = observer).share();
     this.dropbox$ = new Observable(observer => this._dropboxObserver = observer).share();
   }
 
   loadAll() {
-    if (this._dataLoaded) return Observable.of(this._store.images);
+    if (this._store.images.length > 0) return Observable.of(this._store.images);
 
-    this._hat.getAllValuesOf('photos', 'dropbox')
-      .map(data => data.map(this.imgMap))
-      .subscribe((newImages: Array<Image>) => {
-        this._dataLoaded = true;
-        this._store.images = newImages;
-        this.downloadImages();
-      }, err => console.log('There was an error loading images from HAT', err));
+    Observable.forkJoin(
+      this._hat.getAllValuesOf('photos', 'dropbox')
+        .map(data => data.map(this.imgMap)),
+      this._hat.getAllValuesOf('metadata', 'dropbox_plug')
+    ).subscribe(responses => {
+      this._store.images = responses[0];
+      this._authBearer = "Bearer " + responses[1][0]['access_token'];
+      this.downloadImages();
+    }, err => console.log('There was an error loading images from HAT', err));
   }
 
   imgMap(image) {
