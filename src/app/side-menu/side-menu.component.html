@@ -1,5 +1,5 @@
 <ul class="center">
-  <li *ngFor="let item of menuItems"
+  <li *ngFor="let item of menu"
       (click)="onItemSelect(item.display)"
       [class.selected]="item.display === selectedItem">
     <a [routerLink]="[item.link]">

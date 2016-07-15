@@ -7,3 +7,4 @@ export { HatApiService } from './hat-api.service';
 export { MarketSquareService } from './market-square.service';
 export { DataDebitService } from './data-debit.service';
 export { ProfileService } from './profile.service';
+export { UiStateService } from './ui-state.service';

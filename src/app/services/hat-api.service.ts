@@ -35,7 +35,8 @@ export class HatApiService {
   getDataSources(): Observable<any> {
     const url = this._baseUrl + '/data/sources';
 
-    return this._http.get(url, { headers: this._headers });
+    return this._http.get(url, { headers: this._headers })
+      .map(res => res.json());
   }
 
   getAllValuesOf(name: string, source: string): Observable<any> {

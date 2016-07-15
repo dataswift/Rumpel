@@ -5,7 +5,7 @@
                       [info]="'HAT personal profile can be created using Rumpel data browser. Privacy settings can be ajusted to display selected information fields on HATs landing page.'"></rump-tile-header>
   </rump-tile-profile>
 
-  <rump-tile-generic class="grid-item grid-item--width3 grid-item--height1">
+  <rump-tile-generic class="grid-item grid-item--width3 grid-item--height1" *ngIf="state.dataTypes.includes('events')">
     <rump-tile-header [title]="'Calendar'" [iconName]="'calendar'"
                       [backColor]="'#37474F'"
                       [info]="'Displays the list of most recent events in the your HAT calendar. To get started with gathering your events enable Social and Calendar data plugs.'"></rump-tile-header>
@@ -17,13 +17,13 @@
                       [info]="'Check out this section to see all the latest and greatest data offers. Claim any of the offers and start earning today!'"></rump-tile-header>
   </rump-tile-data-offers>
 
-  <rump-tile-social class="grid-item grid-item--width3 grid-item--height2">
+  <rump-tile-social class="grid-item grid-item--width3 grid-item--height2" *ngIf="state.dataTypes.includes('posts')">
     <rump-tile-header [title]="'Social'" [iconName]="'replyall'"
                       [backColor]="'#546E7A'"
                       [info]="'What happened on the social media recently? See all your recent activity in one convenient place.'"></rump-tile-header>
   </rump-tile-social>
 
-  <rump-tile-map class="grid-item grid-item--width6 grid-item--height1"
+  <rump-tile-map class="grid-item grid-item--width6 grid-item--height1" *ngIf="state.dataTypes.includes('locations')"
                  [title]="'Map'" [iconName]="'merge'"
                  [info]="'Where have you been recently? Investigate your recent movements on the interactive map (as long as locations plug is running).'">
   </rump-tile-map>

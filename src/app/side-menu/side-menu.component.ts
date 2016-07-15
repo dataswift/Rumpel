@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import { UiStateService } from '../services';
 
 @Component({
   moduleId: module.id,
@@ -10,24 +11,28 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 })
 export class SideMenuComponent implements OnInit {
   public selectedItem: string;
-  public menuItems = [
-    { display: 'Dashboard', icon: 'dashboard', link: '' },
-    { display: 'Profile', icon: 'user', link: 'profile' },
-    //{ display: 'Offers', icon: 'tags', link: '' },
-    { display: 'Mashup', icon: 'layergroup', link: 'mixpad' },
-    //{ display: 'Messages', icon: 'chats', link: '' },
-    { display: 'Locations', icon: 'tags', link: 'locations' },
-    { display: 'Calendar', icon: 'calendar', link: 'calendar' },
-    { display: 'Social', icon: 'replyall', link: 'social' },
-    //{ display: 'Mail', icon: 'send', link: '' },
-    { display: 'Photos', icon: 'camera', link: 'photos' }
-    //{ display: 'Plugins', icon: 'connection', link: '' },
-    //{ display: 'Settings', icon: 'settings', link: '' }
-  ];
+  public menu: Array<any>;
 
-  constructor() {}
+  // hack: uiState service needs to be injected befor Auth component,
+  // so that it can subscribe for Auth observable in time.
+
+  constructor(private uiState: UiStateService) {}
 
   ngOnInit() {
+    this.menu = [
+      { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '' },
+      { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile' },
+      //{ display: 'Offers', icon: 'tags', link: '' },
+      { display: 'Mashup', icon: 'layergroup', link: 'mixpad', dataType: '' },
+      //{ display: 'Messages', icon: 'chats', link: '' },
+      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations' },
+      { display: 'Calendar', icon: 'calendar', link: 'events', dataType: 'events' },
+      { display: 'Social', icon: 'replyall', link: 'posts', dataType: 'posts' },
+      //{ display: 'Mail', icon: 'send', link: '' },
+      { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos' }
+      //{ display: 'Plugins', icon: 'connection', link: '' },
+      //{ display: 'Settings', icon: 'settings', link: '' }
+    ];
   }
 
   onItemSelect(itemName: string) {

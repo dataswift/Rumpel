@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
 
 @Injectable()
 export class AuthService {
-  public auth$: Observable<any>;
-  private authObserver: Observer<any>;
+  private auth$: Subject<any>;
   private authenticated: boolean;
   private jwtHelper: JwtHelper;
   private hatDomain: string;
 
   constructor(private hat: HatApiService, private router: Router) {
-    this.auth$ = new Observable(observer => this.authObserver = observer).share();
+    this.auth$ = <Subject<any>>new Subject();
     this.authenticated = false;
     this.jwtHelper = new JwtHelper();
   }
@@ -51,10 +50,10 @@ export class AuthService {
       err => {
         this.authenticated = false;
         console.log("Could not verify with specified HAT");
-        this.authObserver.next(this.authenticated);
+        this.auth$.next(this.authenticated);
       },
       () => {
-        if (this.authObserver) this.authObserver.next(this.authenticated);
+        this.auth$.next(this.authenticated);
       });
   }
 
@@ -64,6 +63,10 @@ export class AuthService {
 
   getDomain(): string {
     return this.hatDomain;
+  }
+
+  getAuth$() {
+    return this.auth$.asObservable();
   }
 
   /* Local Storage placeholders */

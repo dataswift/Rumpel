@@ -4,10 +4,12 @@ import { ViewsRoutes } from './dataViews/views.routes';
 import { UserMgmtRoutes } from './user-mgmt/user-mgmt.routes';
 
 import { GridComponent } from './dashboard';
+import { IssueComponent } from './issue';
 import { AuthGuard } from './auth.guard';
 
 export const routes: RouterConfig = [
   { path: '', component: GridComponent, canActivate: [AuthGuard] },
+  { path: 'issue', component: IssueComponent },
   ...UserMgmtRoutes,
   ...ViewsRoutes,
   ...TransactionsRoutes

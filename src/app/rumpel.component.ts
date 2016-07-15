@@ -3,7 +3,6 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 import { HeaderComponent } from './header/index';
 import { FooterComponent } from './footer/index';
 import { SideMenuComponent } from './side-menu/index';
-//import { DataViewComponent } from './data-view';
 
 @Component({
   moduleId: module.id,

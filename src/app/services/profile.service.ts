@@ -15,7 +15,6 @@ export class ProfileService {
 
   initializeProfile() {
     return this.hat.getDataSources()
-      .map(res => res.json())
       .flatMap(sources => {
         const profileTable = sources.find(source => source.name === 'profile' && source.source === 'rumpel');
 
