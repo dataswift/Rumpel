@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs/Rx';
 
 import { HatApiService } from './hat-api.service';
-import { Event } from '../shared/index';
+import { DataPoint } from '../shared/index';
 import * as moment from 'moment';
 
 @Injectable()
 export class EventsService {
-  private events$: Observable<any>;
-  private eventsObserver: Observer<any>;
-  private store: { events: Array<Event> };
+  private events$: Subject<Array<DataPoint>>;
+  private store: { events: Array<DataPoint> };
 
-  constructor(private _hat: HatApiService) {
+  constructor(private hat: HatApiService) {
     this.store = { events: [] };
-    this.events$ = new Observable(observer => this.eventsObserver = observer).share();
+    this.events$ = <Subject<DataPoint[]>>new Subject();
   }
 
-  showAll(): Observable<any> {
+  getEvents$(): Observable<DataPoint[]> {
     if (this.store.events.length > 0) {
       console.log('Inside events if');
       return Observable.of(this.store.events);
@@ -26,11 +25,12 @@ export class EventsService {
       data => {
         const mergedData = data[0].concat(data[1]);
         this.store.events = mergedData;
-        this.eventsObserver.next(this.store.events);
+        this.events$.next(this.store.events);
       },
       err => console.log(`Events table could not be found.`)
     );
-    return this.events$;
+
+    return this.events$.asObservable();
   }
 
   loadAll(): Observable<any> {
@@ -40,26 +40,47 @@ export class EventsService {
   }
 
   loadFrom(source: string): Observable<any> {
-    return this._hat.getAllValuesOf('events', source);
+    return this.hat.getAllValuesOf('events', source);
   }
 
-  fbMap(event): Event {
-    return {
-      title: event.name,
-      description: event.description,
-      start: moment(event.start_time),
-      end: event.end_time ? moment(event.end_time) : null,
-      source: 'facebook'
+  fbMap(event): DataPoint {
+    let newDataPoint = {
+      timestamp: moment(event.start_time),
+      type: 'event',
+      source: 'facebook',
+      content: {
+        name: event.name,
+        description: event.description,
+        start: moment(event.start_time),
+        end: event.end_time ? moment(event.end_time) : null,
+        rsvp: event.rsvp_status,
+        calendarName: 'facebook'
+      }
     };
+
+    if (event.place && event.place.location) {
+      newDataPoint['location'] = {
+        latitude: parseFloat(event.place.location.latitude),
+        longitude: parseFloat(event.place.location.longitude)
+      };
+    }
+
+    return newDataPoint;
   }
 
-  icalMap(event): Event {
+  icalMap(event): DataPoint {
     return {
-      title: event.summary,
-      description: event.description,
-      start: moment(event.startDate),
-      end: event.endDate ? moment(event.endDate) : null,
-      source: 'ical'
+      timestamp: moment(event.start_time),
+      type: 'event',
+      source: 'calendar',
+      content: {
+        name: event.summary,
+        description: event.description,
+        start: moment(event.start_date),
+        end: event.end_date ? moment(event.end_date) : null,
+        rsvp: 'unknown',
+        calendarName: event.calendar_name
+      }
     };
   }
 }

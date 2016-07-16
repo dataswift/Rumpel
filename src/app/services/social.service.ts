@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs/Rx';
 
 import { HatApiService } from './hat-api.service';
-import { Post } from '../shared/index';
+import { DataPoint } from '../shared';
 import * as moment from 'moment';
 
 @Injectable()
 export class SocialService {
-  private socialFeed$: Observable<any>;
-  private socialObserver: Observer<any>;
-  private store: { posts: Array<Post> };
+  private socialFeed$: Subject<DataPoint[]>;
+  private store: { posts: Array<DataPoint> };
 
   constructor(private hat: HatApiService) {
     this.store = { posts: [] };
-    this.socialFeed$ = new Observable(observer => this.socialObserver = observer).share();
+    this.socialFeed$ = <Subject<DataPoint[]>>new Subject();
   }
 
-  showAll(): Observable<any> {
+  showAll(): Observable<DataPoint[]> {
     if (this.store.posts.length > 0) {
       console.log('Inside social if');
       return Observable.of(this.store.posts);
@@ -25,14 +24,14 @@ export class SocialService {
     this.loadAll().subscribe(
       data => {
         this.store.posts = data;
-        this.socialObserver.next(this.store.posts);
+        this.socialFeed$.next(this.store.posts);
       },
       err => console.log(`Posts table could not be found.`)
     );
-    return this.socialFeed$;
+    return this.socialFeed$.asObservable();
   }
 
-  loadAll(): Observable<Array<Post>> {
+  loadAll(): Observable<DataPoint[]> {
     return this.loadFrom('facebook').map(posts => posts.map(this.fbMap));
   }
 
@@ -40,16 +39,52 @@ export class SocialService {
     return this.hat.getAllValuesOf('posts', source);
   }
 
-  fbMap(post: any): Post {
+  fbMap(post: any): DataPoint {
+    let postContent;
+    switch (post.type) {
+      case "link":
+        postContent = {
+          caption: post.caption,
+          description: post.description,
+          link: post.link,
+          name: post.name,
+          picture: post.picture,
+          fullPicture: post.full_picture
+        };
+        break;
+      case "status":
+        postContent = {
+          message: post.message
+        }
+      case "photo":
+        postContent = {
+          name: post.name,
+          message: post.message,
+          picture: post.picture,
+          fullPicture: post.full_picture
+        }
+      default:
+        postContent = null;
+        break;
+    }
+
     return {
-      title: post.name,
-      body: post.message,
-      start: moment(post.created_time),
-      type: post.type,
-      image: post.full_picture,
-      privacy: post.privacy.description,
-      source: 'facebook'
+      timestamp: moment(post.created_time),
+      type: 'post',
+      source: 'facebook',
+      content: {
+        createdTime: moment(post.created_time),
+        updatedTime: moment(post.updated_time),
+        statusType: post.status_type,
+        type: post.type,
+        privacy: {
+          value: post.privacy.value,
+          description: post.privacy.description
+        },
+        application: post.application.name,
+        story: post.story,
+        content: postContent
+      }
     };
   }
-
 }

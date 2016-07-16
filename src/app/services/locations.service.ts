@@ -1,27 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs/Rx';
 
 import { HatApiService } from './hat-api.service';
-import { Location } from '../shared/index';
-import { EventsService } from './events.service';
-import { ImagesService } from './images.service';
+import { DataPoint } from '../shared';
 import * as moment from 'moment';
 
 @Injectable()
 export class LocationsService {
-  private locations$: Observable<any>;
-  private locationsObserver: Observer<any>;
-  private store: { locations: Array<Location> };
+  private locations$: Subject<DataPoint[]>;
+  private store: { locations: Array<DataPoint> };
 
-  constructor(private hat: HatApiService,
-              private _eventsSvc: EventsService,
-              private _imagesSvc: ImagesService) {
-
+  constructor(private hat: HatApiService) {
     this.store = { locations: [] };
-    this.locations$ = new Observable(observer => this.locationsObserver = observer).share();
+    this.locations$ = <Subject<DataPoint[]>>new Subject();
   }
 
-  showAll(): Observable<any> {
+  showAll(): Observable<DataPoint[]> {
     if (this.store.locations.length > 0) {
       console.log('Inside locations if');
       return Observable.of(this.store.locations);
@@ -30,14 +24,14 @@ export class LocationsService {
     this.loadAll().subscribe(
       data => {
         this.store.locations = data;
-        this.locationsObserver.next(this.store.locations);
+        this.locations$.next(this.store.locations);
       },
       err => console.log(`Locations table could not be found`)
     );
-    return this.locations$;
+    return this.locations$.asObservable();
   }
 
-  loadAll(): Observable<any> {
+  loadAll(): Observable<DataPoint[]> {
     return this.loadFrom('iphone').map(locations => locations.map(this.locMap));
   }
 
@@ -45,14 +39,15 @@ export class LocationsService {
     return this.hat.getAllValuesOf('locations', source);
   }
 
-  locMap(location: any): Location {
+  locMap(location: any): DataPoint {
     return {
-      latitude: location.latitude,
-      longitude: location.longitude,
-      accuracy: null,
-      start: moment(parseInt(location.timestampMs))
+      timestamp: moment(parseInt(location.start)),
+      type: 'location',
+      source: 'iphone',
+      location: {
+        latitude: location.latitude,
+        longitude: location.longitude
+      }
     };
   }
-
-
 }
