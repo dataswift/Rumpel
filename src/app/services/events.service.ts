@@ -25,6 +25,7 @@ export class EventsService {
       data => {
         const mergedData = data[0].concat(data[1]);
         this.store.events = mergedData;
+        console.log(mergedData);
         this.events$.next(this.store.events);
       },
       err => console.log(`Events table could not be found.`)
@@ -60,8 +61,8 @@ export class EventsService {
 
     if (event.place && event.place.location) {
       newDataPoint['location'] = {
-        latitude: parseFloat(event.place.location.latitude),
-        longitude: parseFloat(event.place.location.longitude)
+        latitude: event.place.location.latitude,
+        longitude: event.place.location.longitude
       };
     }
 

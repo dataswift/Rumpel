@@ -2,15 +2,16 @@
 
 <div class="tile-body">
   <ul>
-    <li *ngFor="let dataPoint of events$ | async | limitMembers:4">
+    <li *ngFor="let eve of events$ | async | limitMembers:5">
       <div class="row vertical-align">
         <div class="col-xs-2">
           <span class="tile-entry-logo ss-notifications"></span>
         </div>
 
         <div class="col-xs-9">
-          <h5>{{dataPoint.startTime | moment}}</h5>
-          <p>{{dataPoint.title}}</p>
+          <h5>{{eve.content.name}}</h5>
+          <p>{{eve.timestamp | moment}}</p>
+          <p> From calendar: {{eve.content.calendarName}}</p>
         </div>
 
         <div class="col-xs-1">

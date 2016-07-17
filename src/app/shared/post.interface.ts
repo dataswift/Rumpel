@@ -24,6 +24,7 @@ export interface Post {
   statusType: string;
   type: string;
   privacy: { value: string; description: string };
+  from: string;
   application: string;
   story: string;
   content: Link | Status | Photo;

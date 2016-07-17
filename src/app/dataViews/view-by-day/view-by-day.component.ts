@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { DataPoint } from '../../shared';
 import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
@@ -9,9 +10,8 @@ import { Moment } from '../../pipes/moment.pipe';
   pipes: [Moment]
 })
 export class ViewByDayComponent implements OnInit, OnChanges {
-  @Input() images: Array<any>;
-  @Input() events: Array<any>;
-  @Input() locations: Array<any>;
+  @Input() events: Array<DataPoint>;
+  @Input() locations: Array<DataPoint>;
   @Input() day;
   @Output() timeSelected = new EventEmitter<any>();
 
@@ -23,9 +23,10 @@ export class ViewByDayComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.visibility.img = !this.images.length;
-    this.visibility.eve = !this.events.length;
-    this.visibility.loc = !this.locations;
+    if (this.events && this.locations) {
+      this.visibility.eve = !this.events.length;
+      this.visibility.loc = !this.locations;
+    }
   }
 
   selectTime(day: any) {

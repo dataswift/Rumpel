@@ -6,11 +6,11 @@ import {
   expect, it, xit,
   async, inject
 } from '@angular/core/testing';
-import { ContainsPipe } from './contains.pipe';
+import { DataTypeFilterPipe } from './data-type-filter.pipe';
 
-describe('Pipe: Contains', () => {
+describe('Pipe: DataTypeFilter', () => {
   it('create an instance', () => {
-    let pipe = new ContainsPipe();
+    let pipe = new DataTypeFilterPipe();
     expect(pipe).toBeTruthy();
   });
 });

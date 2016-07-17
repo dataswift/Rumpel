@@ -1,5 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
+import { DataPoint } from '../../shared';
+
 declare var L: any;
 
 @Component({
@@ -9,7 +11,7 @@ declare var L: any;
   styleUrls: ['map.component.css']
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input() locations;
+  @Input() dataPoints: Array<DataPoint>;
   @Input() mapSize: string;
   @Output() timeSelected = new EventEmitter<any>();
 
@@ -37,12 +39,13 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.map) this.updateMap(this.locations);
+    if (this.map) this.updateMap(this.dataPoints);
   }
 
-  updateMap(locations: Array<any>) {
-    if (locations.length <= 0) return;
-    this.drawMarkers(locations);
+  updateMap(dps: Array<DataPoint>) {
+    console.log('map points', dps);
+    if (dps.length <= 0) return;
+    this.drawMarkers(dps);
     this.map.fitBounds([
       [this.bbox.minLat, this.bbox.minLng],
       [this.bbox.maxLat, this.bbox.maxLng]
@@ -61,15 +64,15 @@ export class MapComponent implements OnInit, OnChanges {
       this.bbox.maxLng = Math.max(this.bbox.maxLng, lng);
     }
 
-  drawMarkers(locations: Array<any>) {
+  drawMarkers(dps: Array<DataPoint>) {
       this.map.removeLayer(this.markers);
       this.markers = L.markerClusterGroup();
       this.resetBoundingBox();
-      for(let loc of locations) {
-        this.ajustBoundingBox(loc.latitude, loc.longitude);
-        let pos = new L.LatLng(loc.latitude, loc.longitude);
+      for(let dp of dps) {
+        this.ajustBoundingBox(dp.location.latitude, dp.location.longitude);
+        let pos = new L.LatLng(dp.location.latitude, dp.location.longitude);
         let marker = L.marker(pos);
-        marker.timestamp = loc.start;
+        marker.timestamp = dp.timestamp;
         let self = this;
         marker.on('click', (e: any) => {
           self.onMarkerSelected(e);

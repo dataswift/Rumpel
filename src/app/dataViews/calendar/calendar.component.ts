@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../../services';
-import { Moment } from '../../pipes/moment.pipe';
+import { Moment, ExtractContentPipe } from '../../pipes';
 import { Schedule } from 'primeng/primeng';
 
 @Component({
@@ -8,7 +8,7 @@ import { Schedule } from 'primeng/primeng';
   selector: 'rump-calendar',
   templateUrl: 'calendar.component.html',
   styleUrls: ['calendar.component.css'],
-  pipes: [Moment],
+  pipes: [Moment, ExtractContentPipe],
   directives: [Schedule]
 })
 export class CalendarComponent implements OnInit {
@@ -16,7 +16,7 @@ export class CalendarComponent implements OnInit {
   public events$;
   public headerConfig: any;
 
-  constructor(private _eventsSvc: EventsService) {}
+  constructor(private eventsSvc: EventsService) {}
 
   ngOnInit() {
     this.headerConfig = {
@@ -25,7 +25,7 @@ export class CalendarComponent implements OnInit {
       right: 'month,agendaWeek,agendaDay'
     };
 
-    this.events$ = this._eventsSvc.showAll();
+    this.events$ = this.eventsSvc.getEvents$();
   }
 
 }

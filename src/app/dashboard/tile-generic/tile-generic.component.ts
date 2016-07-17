@@ -15,7 +15,7 @@ export class TileGenericComponent implements OnInit {
   constructor(private eventsSvc: EventsService) {}
 
   ngOnInit() {
-    this.events$ = this.eventsSvc.showAll();
+    this.events$ = this.eventsSvc.getEvents$();
   }
 
 }

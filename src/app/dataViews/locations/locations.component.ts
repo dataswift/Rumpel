@@ -15,10 +15,10 @@ export class LocationsComponent implements OnInit {
   public locations$;
   public safeSize;
 
-  constructor(private _locationsSvc: LocationsService, private sanitizer: DomSanitizationService) { }
+  constructor(private locationsSvc: LocationsService, private sanitizer: DomSanitizationService) { }
 
   ngOnInit() {
-    this.locations$ = this._locationsSvc.showAll();
+    this.locations$ = this.locationsSvc.showAll();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
   }

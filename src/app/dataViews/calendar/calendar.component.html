@@ -4,7 +4,7 @@
       <h4>Events List</h4>
     </div>
 
-    <p-schedule [events]="events$ | async"
+    <p-schedule [events]="events$ | async | extractContent"
                 [header]="headerConfig"></p-schedule>
   </div>
 </div>

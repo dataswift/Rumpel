@@ -2,16 +2,19 @@
 
 <div class="tile-body">
   <ul>
-    <li *ngFor="let post of feed$ | async | contains:'body' | limitMembers:6">
+    <li *ngFor="let post of feed$ | async | limitMembers:6">
       <div class="row vertical-align">
         <div class="col-xs-2">
           <img src="/icons/FB-f-Logo__white_144.png" class="img img-responsive">
         </div>
 
         <div class="col-xs-9">
-          <h4>{{post.title}}</h4>
-          <p>{{post.body | limitContent:80}}</p>
-          <p>{{post.type}} ({{post.privacy}})</p>
+          <h4>{{post.content.story ? post.content.story : post.content.statusType | replaceChars}}</h4>
+          <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:80}}</p>
+          <p>Posted at: {{post.timestamp | moment}}
+             by {{post.content.application ? post.content.application : post.content.from}}</p>
+          <p>Privacy: {{post.content.privacy.value | replaceChars}}</p>
+
         </div>
 
         <div class="col-xs-1">

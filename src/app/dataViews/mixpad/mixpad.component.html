@@ -19,15 +19,14 @@
 
     <div class="view-body">
       <rump-map class="map"
-                [locations]="locations | filterByTime:selectedTime"
+                [dataPoints]="data | timeFilter:selectedTime:'day' | locationFilter:true"
                 [mapSize]="safeSize"
                 (timeSelected)="selectedTime = $event"
                 [hidden]="!shownComponents.map"></rump-map>
       <rump-view-by-day class="day-view"
                         [day]="selectedTime"
-                        [images]="images | filterByTime:selectedTime"
-                        [events]="events | filterByTime:selectedTime"
-                        [locations]="locations | filterByTime:selectedTime"
+                        [events]="data | timeFilter:selectedTime:'day' | dataTypeFilter:'event'"
+                        [locations]="data | timeFilter:selectedTime:'day' | dataTypeFilter:'location'"
                         (timeSelected)="selectedTime = $event"
                         [hidden]="!shownComponents.events"></rump-view-by-day>
       <rump-timeline class="timeline"

@@ -24,6 +24,7 @@ export class SocialService {
     this.loadAll().subscribe(
       data => {
         this.store.posts = data;
+        console.log(data);
         this.socialFeed$.next(this.store.posts);
       },
       err => console.log(`Posts table could not be found.`)
@@ -81,6 +82,7 @@ export class SocialService {
           value: post.privacy.value,
           description: post.privacy.description
         },
+        from: post.from.name,
         application: post.application.name,
         story: post.story,
         content: postContent

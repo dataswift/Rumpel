@@ -24,6 +24,7 @@ export class LocationsService {
     this.loadAll().subscribe(
       data => {
         this.store.locations = data;
+        console.log(data);
         this.locations$.next(this.store.locations);
       },
       err => console.log(`Locations table could not be found`)
