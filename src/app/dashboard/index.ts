@@ -7,3 +7,4 @@ export { TileHeaderComponent } from './tile-header/tile-header.component';
 export { TileDataOffersComponent } from './tile-data-offers/tile-data-offers.component';
 export { TileDataPlugsComponent } from './tile-data-plugs/tile-data-plugs.component';
 export { TileMapComponent } from './tile-map/tile-map.component';
+export { TileInfoComponent } from './tile-info/tile-info.component';
