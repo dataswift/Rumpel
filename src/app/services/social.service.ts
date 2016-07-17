@@ -57,6 +57,7 @@ export class SocialService {
         postContent = {
           message: post.message
         }
+        break;
       case "photo":
         postContent = {
           name: post.name,
@@ -64,6 +65,7 @@ export class SocialService {
           picture: post.picture,
           fullPicture: post.full_picture
         }
+        break;
       default:
         postContent = null;
         break;

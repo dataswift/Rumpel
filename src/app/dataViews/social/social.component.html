@@ -7,8 +7,7 @@
       <div class="col-md-8 col-md-offset-2">
         <ul class="feed">
           <li *ngFor="let post of feed$ | async" class="post">
-            <h3>{{post.title}}</h3>
-            <p>{{post.body}}</p>
+            <rump-fb-post [post]="post"></rump-fb-post>
           </li>
         </ul>
       </div>

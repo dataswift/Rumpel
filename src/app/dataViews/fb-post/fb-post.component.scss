@@ -1,0 +1,55 @@
+
+
+.status-update {
+  padding: 1em;
+  font-size: 2.5em;
+}
+
+.photo-post {
+  padding: 2em;
+  padding-left: 0;
+  font-size: 2em;
+
+  img {
+    max-height: 10em;
+    max-width: 100%;
+  }
+}
+
+.link-post {
+  padding: 2em;
+  padding-right: 0;
+
+  h3 {
+    font-size: 2em;
+  }
+
+  p {
+    font-size: 1.5em;
+  }
+
+  .col-md-8 {
+    border: 1px solid #c7c7c7;
+  }
+
+  img {
+    max-height: 10em;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-align > .col-md-7,
+.vertical-align > .col-md-6,
+.vertical-align > .col-md-5 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

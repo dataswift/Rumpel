@@ -1,0 +1,39 @@
+<h2>{{post.source}} {{post.content.type}} posted at {{post.content.createdTime | moment}}</h2>
+
+<div [ngSwitch]="post.content.type">
+  <div *ngSwitchCase="'status'" class="status-update">
+    <p>{{post.content.content.message ? post.content.content.message : post.content.story}}</p>
+  </div>
+
+  <div *ngSwitchCase="'photo'" class="photo-post">
+    <div class="row vertical-align">
+      <div class="col-md-6">
+        <img src="{{post.content.content.fullPicture}}">
+      </div>
+
+       <div class="col-md-6">
+        <div>
+          <p>{{post.content.content.message}}</p>
+          <p>{{post.content.content.name}}</p>
+        </div>
+       </div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'link'" class="link-post">
+    <div class="row vertical-align">
+      <div class="col-md-7">
+        <a href="{{post.content.content.link}}">
+          <h3>{{post.content.content.name}}</h3>
+          <p>{{post.content.content.description}}</p>
+        </a>
+      </div>
+
+       <div class="col-md-5">
+         <img src="{{post.content.content.fullPicture}}">
+       </div>
+    </div>
+  </div>
+</div>
+
+<div>By {{post.content.application ? post.content.application : post.content.from}}, privacy set to: {{post.content.privacy.value | replaceChars}}</div>
