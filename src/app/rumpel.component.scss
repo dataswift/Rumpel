@@ -3,8 +3,9 @@
 
 .content-main {
   background: $base-black;
+
   .menubar-left {
-    min-width: 7em;
+    min-width: 6em;
     background: $base-black;
     color: $base-white;
     float: left;
@@ -18,6 +19,13 @@
     min-height: 95vh;
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .grid {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+    margin-left: 0;
   }
 }
 

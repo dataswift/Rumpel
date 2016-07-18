@@ -12,6 +12,8 @@ import { Event, Post } from '../../shared';
 import { UiStateService } from '../../services';
 import * as moment from 'moment';
 
+declare var $: any;
+
 @Component({
   moduleId: module.id,
   selector: 'rump-grid',
@@ -36,5 +38,13 @@ export class GridComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  ngAfterViewInit() {
+    $('.grid').packery({
+      // options
+      itemSelector: '.grid-item',
+      percentPosition: true
+    });
   }
 }

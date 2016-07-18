@@ -1,59 +1,24 @@
-@import "style";
-
-$tile-height: 25em;
-
 .grid-item {
-  @include make-xs-column(6);
-  @include make-sm-column(2);
-  @include make-md-column(2);
-  @include make-lg-column(1);
-  height: $tile-height;
   float: left;
   padding: 0;
   margin: 0;
   background-color: #262626;
   color: #ffffff;
   overflow: hidden;
-
-  h1 {
-    div.icon {
-      font-size: 2.333em;
-      margin-right: 0.25em;
-      //width: 2em;
-      float: left;
-    }
-    div.title {
-      overflow: hidden;
-    }
-  }
-  h2 {
-    span.icon {
-      margin-right: 0.25em;
-    }
-  }
-  .card-content {
-    clear: both;
-    h3 {
-      color: inherit;
-      font-weight: 500;
-    }
-    h4 {
-      font-weight: 500;
-    }
-    &.news h4 {
-      color: $lightred;
-      font-weight: bold;
-      font-size: 1em;
-    }
-
-    hr {
-      border-top: 1px solid $gray-light;
-    }
-  }
 }
 
-.grid .grid-item--width3,
-.grid .grid-item--width6 {
-  padding: 0;
-  margin: 0;
+.grid-item-height-1 {
+  height: 25em;
+}
+
+.grid-item-height-2 {
+  height: 50em;
+}
+
+.grid-item-height-3 {
+  height: 75em;
+}
+
+.grid-item-height-4 {
+  height: 100em;
 }
