@@ -212,7 +212,7 @@
         <button class="btn-privacy btn-toggle-sec" type="button"
                 [class.public]="profile.address_details.private === 'false'"
                 [disabled]="profile.private === 'true'"
-                (click)="toggleGroupPrivacy('address_details')">
+                (click)="togglePrivacy('address_details')">
           <span class="ss-view"></span>
         </button>
 

@@ -15,21 +15,23 @@ export class LocationsService {
     this.locations$ = <Subject<DataPoint[]>>new Subject();
   }
 
-  showAll(): Observable<DataPoint[]> {
+  getLocations$() {
+    return this.locations$.asObservable();
+  }
+
+  showAll() {
     if (this.store.locations.length > 0) {
       console.log('Inside locations if');
-      return Observable.of(this.store.locations);
+      this.locations$.next(this.store.locations);
     }
 
     this.loadAll().subscribe(
       data => {
         this.store.locations = data;
-        console.log(data);
         this.locations$.next(this.store.locations);
       },
       err => console.log(`Locations table could not be found`)
     );
-    return this.locations$.asObservable();
   }
 
   loadAll(): Observable<DataPoint[]> {

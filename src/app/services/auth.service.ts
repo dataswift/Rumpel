@@ -23,13 +23,23 @@ export class AuthService {
     return issuer;
   }
 
-  tryPreviousToken() {
-    const storedToken = localStorage.getItem('hatat');
+  isPreviousTokenValid(): boolean {
+    const storedToken = localStorage.getItem('hat-at');
 
     if (storedToken && (!this.jwtHelper.isTokenExpired(storedToken))) {
-      this.router.navigate(['users/authenticate/' + storedToken]);
+      this.hat.updateCredentials(this.decodeJwt(storedToken), storedToken);
+      this.authenticated = true;
+      this.auth$.next(this.authenticated);
+      return true;
+    } else if (storedToken && this.jwtHelper.isTokenExpired(storedToken)) {
+      localStorage.removeItem('hat-at');
+      this.authenticated = false;
+      this.auth$.next(this.authenticated);
+      return false;
     } else {
-      this.router.navigate(['users/login']);
+      this.authenticated = false;
+      this.auth$.next(this.authenticated);
+      return false;
     }
   }
 
@@ -41,10 +51,10 @@ export class AuthService {
       res => {
         if (res && res.message === 'Authenticated') {
           this.authenticated = true;
-          localStorage.setItem('hatat', jwt);
+          localStorage.setItem('hat-at', jwt);
         } else {
           this.authenticated = false;
-          localStorage.removeItem('hatat');
+          localStorage.removeItem('hat-at');
         }
       },
       err => {

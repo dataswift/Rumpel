@@ -22,7 +22,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.message = 'Authenticating... Please hold.';
 
     this._subAuth = this._authSvc.getAuth$().subscribe(isAuthorised => {
-      if (isAuthorised) this.router.navigate([''])
+      if (isAuthorised) this.router.navigate(['']);
       else this.message = 'Unfortunately authentication failed. Please contact your system administrator.';
     });
 

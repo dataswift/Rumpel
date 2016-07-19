@@ -37,7 +37,7 @@ export class MixpadComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.locationsSvc.showAll()
+    this.locationsSvc.getLocations$()
       .merge(this.eventsSvc.getEvents$())
       .subscribe((dataPoints: Array<DataPoint>) => {
 
@@ -49,6 +49,8 @@ export class MixpadComponent implements OnInit {
 
         this.data = dataPoints;
       });
+
+    this.locationsSvc.showAll();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
   }

@@ -27,6 +27,7 @@ export class MapComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit() {
+    this.dataPoints = [];
     const osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const osmAttrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
       ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,';
@@ -39,7 +40,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.map) this.updateMap(this.dataPoints);
+    if (this.map && this.dataPoints.length > 0) this.updateMap(this.dataPoints);
   }
 
   updateMap(dps: Array<DataPoint>) {

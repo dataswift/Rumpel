@@ -12,13 +12,20 @@ import { LocationsService } from '../../services';
   directives: [MapComponent]
 })
 export class LocationsComponent implements OnInit {
-  public locations$;
+  public locations;
   public safeSize;
+  private sub;
 
   constructor(private locationsSvc: LocationsService, private sanitizer: DomSanitizationService) { }
 
   ngOnInit() {
-    this.locations$ = this.locationsSvc.showAll();
+    this.locations = [];
+
+    this.sub = this.locationsSvc.getLocations$().subscribe(locations => {
+      this.locations = locations;
+    });
+
+    this.locationsSvc.showAll();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
   }

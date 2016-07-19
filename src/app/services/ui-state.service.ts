@@ -17,7 +17,8 @@ export class UiStateService {
 
     this.auth.getAuth$()
       .flatMap(authenticated => {
-        if (authenticated) return this.hat.getDataSources()
+        if (authenticated)
+          return this.hat.getDataSources()
       })
       .subscribe(dataSources => {
         for (let dataSource of dataSources) {
@@ -30,7 +31,10 @@ export class UiStateService {
           }
         }
 
-        this.state$.next({ dataSources: this.dataSources, dataTypes: this.dataTypes });
+        let state = { dataSources: this.dataSources, dataTypes: this.dataTypes };
+
+        localStorage.setItem('state', JSON.stringify(state));
+        this.state$.next(state);
     });
   }
 
@@ -39,7 +43,9 @@ export class UiStateService {
   }
 
   getDataTypes() {
-    return this.dataTypes;
+    const stateStr = localStorage.getItem('state');
+    const state = JSON.parse(stateStr);
+    return state.dataTypes;
   }
 
 }

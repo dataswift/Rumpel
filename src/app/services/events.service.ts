@@ -25,7 +25,6 @@ export class EventsService {
       data => {
         const mergedData = data[0].concat(data[1]);
         this.store.events = mergedData;
-        console.log(mergedData);
         this.events$.next(this.store.events);
       },
       err => console.log(`Events table could not be found.`)

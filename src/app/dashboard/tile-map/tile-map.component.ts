@@ -22,7 +22,8 @@ export class TileMapComponent implements OnInit {
 
   ngOnInit() {
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('29em');
-    this.locations$ = this.locationSvc.showAll();
+    this.locations$ = this.locationSvc.getLocations$();
+    this.locationSvc.showAll();
   }
 
 }
