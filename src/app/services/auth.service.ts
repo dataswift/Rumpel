@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { JwtHelper } from 'angular2-jwt';
 import { Subject, Observable } from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
@@ -11,7 +10,7 @@ export class AuthService {
   private jwtHelper: JwtHelper;
   private hatDomain: string;
 
-  constructor(private hat: HatApiService, private router: Router) {
+  constructor(private hat: HatApiService) {
     this.auth$ = <Subject<any>>new Subject();
     this.authenticated = false;
     this.jwtHelper = new JwtHelper();
@@ -31,15 +30,9 @@ export class AuthService {
       this.authenticated = true;
       this.auth$.next(this.authenticated);
       return true;
-    } else if (storedToken && this.jwtHelper.isTokenExpired(storedToken)) {
-      localStorage.removeItem('hat-at');
-      this.authenticated = false;
-      this.auth$.next(this.authenticated);
-      return false;
     } else {
-      this.authenticated = false;
-      this.auth$.next(this.authenticated);
-      return false;
+      if (storedToken) localStorage.removeItem('hat-at');
+      return this.authenticated = false;
     }
   }
 

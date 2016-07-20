@@ -1,8 +1,17 @@
-@import "style";
+.view-header {
+  font-family: 'Open Sans Condensed', sans-serif;
+}
 
 .view-header button {
-  background-color: #78909C;
-  margin: 0 10px;
+  background-color: transparent;
+  padding: 0.75em 2em;
+  margin: 0 1.5em;
+  border: 2px solid #ffffff;
+}
+
+.view-header input {
+  margin-right: 0.5em;
+  margin-left: 1.5em;
 }
 
 .view-body {

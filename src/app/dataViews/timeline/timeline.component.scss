@@ -1,5 +1,3 @@
-@import "style";
-
 button {
   width: 100%;
 }
@@ -47,8 +45,6 @@ li {
   margin: 5px 5px;
   display: inline-block;
   font-size: 1em;
-  border: 2px solid $base-red;
-  color: $base-red;
   text-align: center;
 }
 
