@@ -11,9 +11,13 @@
                       [info]="'Displays the list of most recent events in the your HAT calendar. To get started with gathering your events enable Social and Calendar data plugs.'"></rump-tile-header>
   </rump-tile-generic>
 
-  <rump-tile-info class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"
-                  [link]="'/users/new-user'" [icon]="'ss-info'"
+  <rump-tile-info class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-1-5 grid-item-height-1"
+                  [link]="'/users/new-user'" [icon]="'ss-info'" [bkgColor]="'#B0BEC5'"
                   [infoText]="'New to Rumpel?'"></rump-tile-info>
+
+  <rump-tile-info class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-1-5 grid-item-height-1"
+                  [link]="'/spotlight'" [icon]="'ss-newspaper'" [bkgColor]="'#CFD8DC'"
+                  [infoText]="'Spotlight'"></rump-tile-info>
 
   <rump-tile-data-offers class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1">
     <rump-tile-header [title]="'Data Offers'" [iconName]="'piggybank'"

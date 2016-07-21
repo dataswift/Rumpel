@@ -5,13 +5,13 @@
     font-size: 0.75em;
     padding-top: 2em;
     padding-bottom: 2em;
-    height: 74px;
+    height: 9ems;
   }
   background-color: $base-black;
   min-height: unset;
   //height: 15vh;
   //min-height: 70px;
-  height: 122px;
+  height: 9em;
   $transition-speed: 500ms;
   -webkit-transition: all $transition-speed; // Chrome
   -moz-transition: all $transition-speed; // Mozilla
@@ -25,18 +25,17 @@
 
 .navbar-nav {
   li > a {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 0.5em 0.5em;
     color: #ffffff;
   }
 
   .user-nav > p {
     margin: 0;
-    padding: 10px 15px;
+    padding: 0.5em 0.5em;
     color: #ffffff;
     line-height: 20px;
   }
-  font-size: 2em;
+  font-size: 2.5em;
   font-family: 'Open Sans Condensed', sans-serif;
   font-weight: lighter;
   text-transform: capitalize;
@@ -59,12 +58,11 @@
   .navbar-brand {
     color: $text-white;
     font-size: 4em;
-    font-family: 'Open Sans Condensed', sans-serif;
     height: 1em;
   }
 
   img {
-    height: 1em;
+    height: 1.25em;
   }
 
   a {

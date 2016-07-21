@@ -32,6 +32,8 @@
 /* More or less global styles */
 
 :host /deep/ {
+  font-family: 'Open Sans Condensed', sans-serif;
+
   .view-header {
     background-color: #37474F;
     color: #eeeeee;

@@ -4,18 +4,21 @@
       <section class="picture">
         <div class="section-title">Profile picture</div>
 
-        <button class="btn-privacy btn-toggle-sec" type="button"
-                [class.public]="profile.fb_profile_photo.private === 'false'"
-                [disabled]="profile.private === 'true'"
-                (click)="togglePrivacy('fb_profile_photo')">
-          <span class="ss-view"></span>
-        </button>
+
 
         <div class="row">
-          <div class="col-md-3 img">
-            <img src="{{profilePhoto.url}}" class="img-profile img-circle">
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="img-wrapper">
+              <img src="{{profilePhoto.url}}" class="img-profile img-circle">
+              <button class="btn-privacy btn-toggle-img" type="button"
+                      [class.public]="profile.fb_profile_photo.private === 'false'"
+                      [disabled]="profile.private === 'true'"
+                      (click)="togglePrivacy('fb_profile_photo')">
+                <span class="ss-view"></span>
+              </button>
+            </div>
           </div>
-          <div class="col-md-9 section-body">
+          <div class="col-xs-12 col-sm-12 col-md-9 section-body">
             <p>Currently your profile information is {{profile.private === 'false' ? 'partially public' : 'fully private'}}.</p>
             <button class="btn btn-rump" type="button"
                     (click)="toggleProfilePrivacy()">{{profile.private === 'false' ? 'Make it private' : 'Show parts publicly'}}</button>

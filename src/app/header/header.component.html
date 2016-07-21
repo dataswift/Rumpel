@@ -1,12 +1,12 @@
 <div class="navbar smaller">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" [routerLink]="['']"><img src="icons/rumpel-titled.svg" class="img img-responsive"></a>
+      <a class="navbar-brand" [routerLink]="['']"><img src="icons/rumpel-titled-beta.svg" class="img img-responsive"></a>
     </div>
 
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav navbar-right">
-        <li class="user-nav" style="text-transform: lowercase;"><p>{{user}}</p></li>
+        <li *ngIf="!!user" class="user-nav" style="text-transform: lowercase;"><p>{{user}}</p></li>
         <li *ngIf="!!user" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
         <li><a [routerLink]="['']">About</a></li>
         <li><a [routerLink]="['']">Help</a></li>

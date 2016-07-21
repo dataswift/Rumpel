@@ -86,15 +86,20 @@ section {
   }
 }
 
-.picture > .img,
-.picture > .section-body {
-  display: inline-block;
-}
+.img-wrapper {
+  position: relative;
+  width: 200px;
+  margin: 2em;
+  margin-top: 0;
 
-.img {
-  img {
-    margin: 2em;
-    margin-top: 0;
+  .btn-toggle-img {
+    font-size: 1.5em;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 6px;
+    padding-top: 0.4em;
+    border: none;
   }
 }
 
@@ -115,5 +120,5 @@ section {
 }
 
 .img-circle {
-  border-radius: 50%;
+  border-radius: 6px;
 }

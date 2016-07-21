@@ -22,15 +22,19 @@ export class SideMenuComponent implements OnInit {
     this.menu = [
       { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '' },
       { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile' },
-      //{ display: 'Offers', icon: 'tags', link: '' },
       { display: 'Mashup', icon: 'layergroup', link: 'mixpad', dataType: '' },
       //{ display: 'Messages', icon: 'chats', link: '' },
       { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations' },
       { display: 'Calendar', icon: 'calendar', link: 'events', dataType: 'events' },
       { display: 'Social', icon: 'replyall', link: 'posts', dataType: 'posts' },
       //{ display: 'Mail', icon: 'send', link: '' },
-      { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos' }
-      //{ display: 'Plugins', icon: 'connection', link: '' },
+      { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos' },
+      { display: 'Data Plugs', icon: 'merge', link: '' },
+      { display: 'Offers', icon: 'tags', link: 'https://marketsquare.hubofallthings.com/offers', dataType: null },
+      { display: 'Weather', icon: 'thermometer', link: '', dataType: null },
+      { display: 'Finance', icon: 'bank', link: '', dataType: null },
+      { display: 'Creations (music)', icon: 'guitar', link: '', dataType: null },
+      { display: 'Creations (art)', icon: 'brush', link: '', dataType: null },
       //{ display: 'Settings', icon: 'settings', link: '' }
     ];
   }

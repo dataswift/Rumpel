@@ -2,15 +2,13 @@
   <li *ngFor="let item of menu"
       (click)="onItemSelect(item.display)"
       [class.selected]="item.display === selectedItem">
-    <a [routerLink]="[item.link]">
+    <a [routerLink]="[item.link]" *ngIf="item.link.indexOf('http') === -1">
       <span class="ss-{{item.icon}}"></span>
       {{item.display}}
     </a>
-  </li>
-  <li>
-    <a href="https://marketsquare.hubofallthings.com/offers" target="_blank">
-      <span class="ss-tags"></span>
-      Offers
+    <a [href]="item.link" *ngIf="item.link.indexOf('http') > -1">
+      <span class="ss-{{item.icon}}"></span>
+      {{item.display}}
     </a>
   </li>
 </ul>

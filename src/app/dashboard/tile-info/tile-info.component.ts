@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class TileInfoComponent implements OnInit {
   @Input() link: string;
   @Input() icon: string;
+  @Input() bkgColor: string;
   @Input() infoText: string;
 
   constructor(private router: Router) {}

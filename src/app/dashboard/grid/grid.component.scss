@@ -7,6 +7,12 @@
   overflow: hidden;
 }
 
+@media (min-width: 1200px) {
+  .col-lg-1-5 {
+    width: 12.5%;
+  }
+}
+
 .grid-item-height-1 {
   height: 25em;
 }
