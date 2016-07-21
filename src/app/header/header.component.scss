@@ -27,7 +27,14 @@
   li > a {
     padding-top: 10px;
     padding-bottom: 10px;
-    color: $text-white;
+    color: #ffffff;
+  }
+
+  .user-nav > p {
+    margin: 0;
+    padding: 10px 15px;
+    color: #ffffff;
+    line-height: 20px;
   }
   font-size: 2em;
   font-family: 'Open Sans Condensed', sans-serif;
@@ -37,7 +44,7 @@
     padding-left: 0.5em;
     padding-right: 0.5em;
     li {
-      border-left: solid 0.05em $text-white;
+      border-left: solid 0.05em #ffffff;
       &:first-child {
         border-left: none;
       }

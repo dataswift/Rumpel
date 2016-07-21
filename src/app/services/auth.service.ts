@@ -28,6 +28,7 @@ export class AuthService {
     if (storedToken && (!this.jwtHelper.isTokenExpired(storedToken))) {
       this.hat.updateCredentials(this.decodeJwt(storedToken), storedToken);
       this.authenticated = true;
+      this.hatDomain = this.decodeJwt(storedToken);
       this.auth$.next(this.authenticated);
       return true;
     } else {
@@ -70,6 +71,12 @@ export class AuthService {
 
   getAuth$() {
     return this.auth$.asObservable();
+  }
+
+  signOut() {
+    this.authenticated = false;
+    this.hatDomain = null;
+    localStorage.removeItem('hat-at');
   }
 
   /* Local Storage placeholders */
