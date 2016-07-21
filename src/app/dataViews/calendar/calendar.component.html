@@ -3,8 +3,6 @@
     <div class="view-header">
       <h4>Events List</h4>
     </div>
-
-    <p-schedule [events]="events$ | async | extractContent"
-                [header]="headerConfig"></p-schedule>
+    <div id="calendar" class="calendar"></div>
   </div>
 </div>

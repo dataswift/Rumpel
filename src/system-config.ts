@@ -8,14 +8,12 @@
 /** Map relative paths to URLs. */
 const map: any = {
   'moment': 'vendor/moment',
-  'primeng': 'vendor/primeng',
   'angular2-jwt': 'vendor/angular2-jwt'
 };
 
 /** User packages configuration. */
 const packages: any = {
   'moment': { format: 'cjs', main: 'moment.js' },
-  'primeng': { defaultExtension: 'js' },
   'angular2-jwt': { main: 'angular2-jwt.js' }
 };
 
