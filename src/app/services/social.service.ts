@@ -83,8 +83,8 @@ export class SocialService {
           value: post.privacy.value,
           description: post.privacy.description
         },
-        from: post.from.name,
-        application: post.application.name,
+        from: !!post.from ? post.from.name: null,
+        application: !!post.application ? post.application.name : null,
         story: post.story,
         content: postContent
       }

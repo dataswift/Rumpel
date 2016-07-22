@@ -28,7 +28,7 @@ export class ImagesService {
     Observable.forkJoin(
       this._hat.getAllValuesOf('photos', 'dropbox')
         .map(data => data.map(this.imgMap)),
-      this._hat.getAllValuesOf('metadata', 'dropbox_plug')
+      this._hat.getAllValuesOf('metadata', 'dropbox_data_plug')
     ).subscribe(responses => {
       this._store.images = responses[0];
       this._authBearer = "Bearer " + responses[1][0]['access_token'];
