@@ -1,3 +1,26 @@
+body {
+  font-size: 12px;
+  font-family: 'Open Sans Regular', sans-serif;
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 11px;
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    font-size: 13px;
+  }
+}
+
 .popover {
   border-radius: 0;
   background-color: #B0BEC5;

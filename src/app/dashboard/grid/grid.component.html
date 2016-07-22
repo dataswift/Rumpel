@@ -2,7 +2,7 @@
   <rump-tile-profile class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
     <rump-tile-header [title]="'Profile'" [iconName]="'user'"
                       [backColor]="'#263238'"
-                      [info]="'HAT personal profile can be created using Rumpel data browser. Privacy settings can be ajusted to display selected information fields on HATs landing page.'"></rump-tile-header>
+                      [info]="'You can add to your HAT personal profile and decide what information should be made public or kept private. Public information would be available on your Personal HAT address (PHATA) front page and also by others. If you choose not to have any information public, your PHATA front page would display a pre-set standard private PHATA page.'"></rump-tile-header>
   </rump-tile-profile>
 
   <rump-tile-generic class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
@@ -13,6 +13,7 @@
 
   <rump-tile-info class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-1-5 grid-item-height-1"
                   [link]="'/users/new-user'" [icon]="'ss-info'" [bkgColor]="'#B0BEC5'"
+                  data-toggle="modal" data-target=".bs-example-modal-lg"
                   [infoText]="'New to Rumpel?'"></rump-tile-info>
 
   <rump-tile-info class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-1-5 grid-item-height-1"
@@ -22,7 +23,7 @@
   <rump-tile-data-offers class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1">
     <rump-tile-header [title]="'Data Offers'" [iconName]="'piggybank'"
                       [backColor]="'#455A64'"
-                      [info]="'Check out this section to see all the latest and greatest data offers. Claim any of the offers and start earning today!'"></rump-tile-header>
+                      [info]="'Check out this section to see all the latest data offers. Claim any of the offers and start benefiting from your data.'"></rump-tile-header>
   </rump-tile-data-offers>
 
   <rump-tile-social class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-2">
@@ -33,7 +34,7 @@
 
   <rump-tile-map class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1"
                  [title]="'Map'" [iconName]="'merge'"
-                 [info]="'Where have you been recently? Investigate your recent movements on the interactive map (as long as locations plug is running).'">
+                 [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'">
   </rump-tile-map>
 
   <rump-tile-weather class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
@@ -45,10 +46,32 @@
   <rump-tile-data-plugs class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
     <rump-tile-header [title]="'Data Plugs'" [iconName]="'merge'"
                       [backColor]="'#78909C'"
-                      [info]="'List of currently available data plugs. Set up any number of these and watch HAT come alive with all of your personalised data.'"></rump-tile-header>
+                      [info]="'List of currently available data plugs. Set up your HAT by acquiring data and view it on RUMPEL'"></rump-tile-header>
   </rump-tile-data-plugs>
 
+  <rump-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"
+                    [bkgImage]="'images/finance_bg.png'"
+                    [icon]="'bank'" [title]="'Finance'"></rump-tile-coming-soon>
 
+  <rump-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"
+                    [bkgImage]="'images/music_creations_bg.png'"
+                    [icon]="'guitar'" [title]="'Creations (music)'"></rump-tile-coming-soon>
 
-  <div class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"></div>
+  <rump-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"
+                    [bkgImage]="'images/art_bg.png'"
+                    [icon]="'brush'" [title]="'Creations (art)'"></rump-tile-coming-soon>
+
+  <div class="modal fade new-to-rumpel" tabindex="-1" role="dialog" aria-labelledby="newToRumpel">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

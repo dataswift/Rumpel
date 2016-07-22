@@ -8,3 +8,4 @@ export { TileDataOffersComponent } from './tile-data-offers/tile-data-offers.com
 export { TileDataPlugsComponent } from './tile-data-plugs/tile-data-plugs.component';
 export { TileMapComponent } from './tile-map/tile-map.component';
 export { TileInfoComponent } from './tile-info/tile-info.component';
+export { TileComingSoonComponent } from './tile-coming-soon/tile-coming-soon.component';

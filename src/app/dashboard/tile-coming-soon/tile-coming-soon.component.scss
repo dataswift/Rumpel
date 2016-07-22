@@ -1,0 +1,36 @@
+.coming-soon {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+
+  .filter {
+    background-color: rgba(0, 0, 0, 0.45);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 10;
+    color: #ffffff;
+
+    span {
+      display: block;
+      margin-top: 1em;
+      font-size: 5em;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 3em;
+    }
+
+    p {
+      font-size: 1.5em;
+      text-transform: uppercase;
+    }
+  }
+
+  img {
+    height: 100%;
+  }
+}

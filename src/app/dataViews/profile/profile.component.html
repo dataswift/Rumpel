@@ -21,7 +21,7 @@
           <div class="col-xs-12 col-sm-12 col-md-9 section-body">
             <p>Currently your profile information is {{profile.private === 'false' ? 'partially public' : 'fully private'}}.</p>
             <button class="btn btn-rump" type="button"
-                    (click)="toggleProfilePrivacy()">{{profile.private === 'false' ? 'Make it private' : 'Show parts publicly'}}</button>
+                    (click)="toggleProfilePrivacy()">{{profile.private === 'false' ? 'Click here to make your profile information fully private' : 'Click here to make your profile information partially public'}}</button>
             <p>Have a look at it live <a href="{{hatUrl}}">here</a>.</p>
           </div>
         </div>
