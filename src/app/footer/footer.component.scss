@@ -1,0 +1,30 @@
+.copyright {
+  font-size: 1.3em;
+}
+
+h4 {
+  text-transform: uppercase;
+}
+
+ul {
+  list-style: none;
+  font-size: 1.1em;
+}
+
+a {
+  color: #ffffff;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-align > .copyright {
+  display: flex;
+  align-items: center;
+}
