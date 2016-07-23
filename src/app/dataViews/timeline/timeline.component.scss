@@ -1,64 +1,55 @@
-button {
-  width: 100%;
-}
-
-h5 {
-  background-color: #dddddd;
-  padding: 5px;
-}
-
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  color: #dddddd;
+  color: #ffffff;
 }
 
 li {
-  height: 2em;
+  height: 2.1em;
+  font-size: 1.5em;
   width: 100%;
+
+
   &:after {
     display: block;
     clear: both;
   }
-}
 
-.day-text {
-  float: right;
-  cursor: pointer;
+  .day-text {
+    float: right;
+    cursor: pointer;
+  }
 
-  &:hover {
-    font-size: 1.1em;
+  .line {
+    float: right;
+    background-color: #ffffff;
+    width: 4em;
+    height: 0.5em;
+    margin-top: 0.4em;
+    margin-left: 1em;
   }
 }
 
-.line {
-  float: right;
-  background-color: #dddddd;
-  width: 35%;
-  height: 30%;
-  margin-left: 1em;
+li:hover {
+  font-size: 2em;
+
+  .line {
+    width: 4.25em;
+    height: 0.6em;
+    margin-top: 0.4em;
+    margin-left: 0.5em;
+  }
 }
 
-.stat-box {
-  padding: 5px 10px;
-  margin: 5px 5px;
-  display: inline-block;
-  font-size: 1em;
-  text-align: center;
-}
-
-.stat-box span {
-  display: block;
-  font-size: 1.5em;
-}
-
-.timeline-view {
+.timeline-container {
   position: relative;
   height: 80vh;
 }
 
-.btn-bottom {
-  position: absolute;
-  bottom: 0;
+.timeline-view {
+  height: 90%;
+  margin-top: 4em;
+  margin-bottom: 4em;
+  overflow: scroll;
 }

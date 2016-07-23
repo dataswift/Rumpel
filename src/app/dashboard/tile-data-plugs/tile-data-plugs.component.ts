@@ -15,8 +15,24 @@ export class TileDataPlugsComponent implements OnInit {
   constructor(private marketSvc: MarketSquareService, private auth: AuthService) {}
 
   ngOnInit() {
-    this.marketSvc.getDataPlugs().subscribe(plugs => this.plugs = plugs);
-    this.icons = ['FB-f-Logo__blue_144.png', 'photos-plug.svg', 'calendar-plug.svg', 'rumpel.svg', 'locations-plug.svg'];
+    this.marketSvc.getDataPlugs().subscribe(plugs => {
+      const displayPlugs = plugs.map(plug => {
+        let displayPlug = {
+          name: plug.name,
+          description: plug.description,
+          url: plug.url,
+          icon: plug.name + '-plug'
+        }
+
+        if (plug.name === 'Facebook') displayPlug.icon += '.png';
+        else displayPlug.icon += '.svg';
+
+        return displayPlug;
+      });
+
+      this.plugs = displayPlugs;
+    });
+
     this.hatDomain = this.auth.getDomain();
   }
 

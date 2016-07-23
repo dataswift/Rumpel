@@ -2,10 +2,10 @@
 
 <div class="tile-body">
   <ul>
-    <li *ngFor="let plug of plugs; let i = index">
+    <li *ngFor="let plug of plugs">
       <div class="row vertical-align">
         <div class="col-xs-2">
-          <img src="icons/{{icons[i]}}" class="img img-responsive">
+          <img src="icons/{{plug.icon}}" class="img img-responsive">
         </div>
         <div class="col-xs-8">
           <h3>{{plug.name}} plug</h3>

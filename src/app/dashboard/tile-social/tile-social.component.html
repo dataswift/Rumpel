@@ -4,11 +4,11 @@
   <ul>
     <li *ngFor="let post of feed$ | async | limitMembers:6">
       <div class="row vertical-align">
-        <div class="col-xs-2">
-          <img src="/icons/FB-f-Logo__white_144.png" class="img img-responsive">
+        <div class="col-xs-2 left-column">
+          <img src="/icons/facebook-icon.png" class="img img-responsive">
         </div>
 
-        <div class="col-xs-9">
+        <div class="col-xs-9 center-column">
           <h4>{{post.content.story ? post.content.story : post.content.statusType | replaceChars}}</h4>
           <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:80}}</p>
           <p>Posted at: {{post.timestamp | moment}}
@@ -17,7 +17,7 @@
 
         </div>
 
-        <div class="col-xs-1">
+        <div class="col-xs-1 right-column">
           <span class="item-expand ss-right"></span>
         </div>
       </div>

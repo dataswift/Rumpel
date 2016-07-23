@@ -29,14 +29,15 @@ export class MixpadComponent implements OnInit {
               private eventsSvc: EventsService,
               private imagesSvc: ImagesService,
               private sanitizer: DomSanitizationService) {
+  }
+
+  ngOnInit() {
     let now = moment();
     this.selectedTime = now;
     this.timeline = [now];
     this.data = [];
     this.shownComponents = { map: true, events: true, photos: true, timeline: true };
-  }
 
-  ngOnInit() {
     this.locationsSvc.getLocations$()
       .merge(this.eventsSvc.getEvents$())
       .subscribe((dataPoints: Array<DataPoint>) => {

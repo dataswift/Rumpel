@@ -4,7 +4,7 @@
       <h4>Data mashup view</h4>
       <span>
         <input type="checkbox" name="events-view-toggle" [(ngModel)]="shownComponents.events">
-        <label for="event-view-toggle">Events</label>
+        <label for="event-view-toggle">Day View</label>
       </span>
       <span>
         <input type="checkbox" name="events-view-toggle" [(ngModel)]="shownComponents.timeline">
@@ -23,7 +23,7 @@
                 [mapSize]="safeSize"
                 (timeSelected)="selectedTime = $event"
                 [hidden]="!shownComponents.map"></rump-map>
-      <rump-view-by-day class="day-view"
+      <rump-view-by-day class="day-view" [style.width]="shownComponents.map ? '60%' : '78%'"
                         [day]="selectedTime"
                         [events]="data | timeFilter:selectedTime:'day' | dataTypeFilter:'event'"
                         [locations]="data | timeFilter:selectedTime:'day' | dataTypeFilter:'location'"
