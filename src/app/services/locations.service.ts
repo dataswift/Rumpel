@@ -35,7 +35,9 @@ export class LocationsService {
   }
 
   loadAll(): Observable<DataPoint[]> {
-    return this.loadFrom('iphone').map(locations => locations.map(this.locMap));
+    return this.loadFrom('iphone')
+      .map(locations => locations.map(this.locMap))
+      .map(locations => locations.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1));;
   }
 
   loadFrom(source: string): Observable<any> {

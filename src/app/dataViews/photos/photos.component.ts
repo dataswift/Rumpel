@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizationService } from '@angular/platform-browser';
 import { PhotoGridComponent } from '../photo-grid/photo-grid.component';
 import { ImagesService } from '../../services';
 import { Image } from '../../shared';
@@ -17,14 +16,12 @@ export class PhotosComponent implements OnInit {
   public images: Array<Image>;
   private _sub;
 
-  constructor(private _imageSvc: ImagesService,
-              private _sanitizer: DomSanitizationService) {}
+  constructor(private _imageSvc: ImagesService) {}
 
   ngOnInit() {
     this.images = [];
     this._sub = this._imageSvc.images$.subscribe(image => {
-      image.url = this._sanitizer.bypassSecurityTrustUrl(image.url);
-      this.images.push(image);
+      this.images = this.images.concat(image);
     });
 
     this._imageSvc.loadAll();

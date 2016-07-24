@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable, Observer } from 'rxjs/Rx';
+import { DomSanitizationService } from '@angular/platform-browser';
 
 import { HatApiService } from './hat-api.service';
-import { Image } from '../shared/index';
+import { DataPoint } from '../shared';
 import * as moment from 'moment';
 
 @Injectable()
@@ -13,10 +14,11 @@ export class ImagesService {
   private _imagesObserver: Observer<any>;
   private _dropboxObserver: Observer<any>;
   private _authBearer: string;
-  private _store: { images: Array<Image> };
+  private _store: { images: Array<DataPoint> };
 
   constructor(private _http: Http,
-              private _hat: HatApiService) {
+              private _hat: HatApiService,
+              private sanitizer: DomSanitizationService) {
     this._store = { images: [] };
     this.images$ = new Observable(observer => this._imagesObserver = observer).share();
     this.dropbox$ = new Observable(observer => this._dropboxObserver = observer).share();
@@ -34,13 +36,20 @@ export class ImagesService {
       this._authBearer = "Bearer " + responses[1][0]['access_token'];
       this.downloadImages();
     }, err => console.log('There was an error loading images from HAT', err));
+
+    return this.images$;
   }
 
-  imgMap(image) {
+  imgMap(image): DataPoint {
     return {
-      source: image.path_lower,
-      url: null,
-      start: image.media_info.metadata.time_taken
+      timestamp: image.media_info.metadata.time_taken ? moment(image.media_info.metadata.time_taken) : moment(image.client_modified),
+      type: 'photo',
+      source: 'dropbox',
+      content: {
+        path: image.path_lower,
+        content: null,
+        timestamp: moment(image.media_info.metadata.time_taken)
+      }
     };
   }
 
@@ -52,12 +61,13 @@ export class ImagesService {
   }
 
   downloadThumbnail(image, size = "w128h128") {
-    var dropboxApiArg = `{"path":"${image.source}","size":{".tag":"${size}"}}`;
+    var dropboxApiArg = `{"path":"${image.content.path}","size":{".tag":"${size}"}}`;
 
     var xhr = new XMLHttpRequest()
 
     var decoder = this.base64ArrayBuffer.bind(this);
     var obs = this._imagesObserver;
+    var san = this.sanitizer;
 
     xhr.open("GET", "https://content.dropboxapi.com/2/files/get_thumbnail", true); // method, url, async
     xhr.responseType = 'arraybuffer';
@@ -79,8 +89,8 @@ export class ImagesService {
           config: {}
         };
 
-        image.url = r.data.content;
-        obs.next(image);
+        image.content.content = san.bypassSecurityTrustUrl(r.data.content);
+        obs.next([image]);
       }
     };
 

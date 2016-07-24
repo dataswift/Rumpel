@@ -2,35 +2,17 @@
 <hr>
 
 <div class="view-body">
+  <ul>
+    <li *ngFor="let dp of dataPoints">
+      <div class="row">
+        <div class="col-xs-3 time">
+          {{dp.timestamp | moment:'hh:mm a'}}
+        </div>
 
-  <div [hidden]="visibility.eve">
-    <h4>Events</h4>
-    <hr>
-    <ul>
-      <li *ngFor="let eve of events" (click)="selectTime(eve.timestamp)">
-        <div>{{eve.content.name}}</div>
-      </li>
-    </ul>
-  </div>
-
-  <div [hidden]="visibility.loc">
-    <h4>Locations</h4>
-    <hr>
-    <ul>
-      <li *ngFor="let loc of locations" (click)="selectTime(loc.timestamp)">
-        <div>{{loc.location.latitude}} {{loc.location.longitude}}</div>
-      </li>
-    </ul>
-  </div>
-
-  <div [hidden]="visibility.img">
-    <h4>Photos</h4>
-    <hr>
-    <!-- <ul>
-      <li *ngFor="let img of images" (click)="selectTime(img.start)">
-        <img [src]="img.url" style="width: 100px;">
-        <div>Time taken: {{img.start | moment}}</div>
-      </li>
-    </ul> -->
-  </div>
+        <div class="col-xs-9 action">
+          <rump-data-point [dp]="dp"></rump-data-point>
+        </div>
+      </div>
+    </li>
+  </ul>
 </div>

@@ -32,7 +32,9 @@ export class SocialService {
   }
 
   loadAll(): Observable<DataPoint[]> {
-    return this.loadFrom('facebook').map(posts => posts.map(this.fbMap));
+    return this.loadFrom('facebook')
+      .map(posts => posts.map(this.fbMap))
+      .map(posts => posts.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1));
   }
 
   loadFrom(source: string): Observable<any> {

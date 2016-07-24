@@ -1,4 +1,5 @@
 export interface Image {
-  url: any;
-  start: any;
+  path: string;
+  content: any;
+  timestamp: any;
 }

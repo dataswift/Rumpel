@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { DataPoint } from '../../shared';
+import { DataPointComponent } from '../data-point/data-point.component';
 import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
@@ -7,11 +8,11 @@ import { Moment } from '../../pipes/moment.pipe';
   selector: 'rump-view-by-day',
   templateUrl: 'view-by-day.component.html',
   styleUrls: ['view-by-day.component.css'],
+  directives: [DataPointComponent],
   pipes: [Moment]
 })
 export class ViewByDayComponent implements OnInit, OnChanges {
-  @Input() events: Array<DataPoint>;
-  @Input() locations: Array<DataPoint>;
+  @Input() dataPoints: Array<DataPoint>;
   @Input() day;
   @Output() timeSelected = new EventEmitter<any>();
 
@@ -23,9 +24,9 @@ export class ViewByDayComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    if (this.events && this.locations) {
-      this.visibility.eve = !this.events.length;
-      this.visibility.loc = !this.locations;
+    if (this.dataPoints) {
+      // this.visibility.eve = !this.events.length;
+      // this.visibility.loc = !this.locations;
     }
   }
 

@@ -9,3 +9,4 @@ export { SocialComponent } from './social/social.component';
 export { PhotoGridComponent } from './photo-grid/photo-grid.component';
 export { ProfileComponent } from './profile/profile.component';
 export { FbPostComponent } from './fb-post/fb-post.component';
+export { DataPointComponent } from './data-point/data-point.component';

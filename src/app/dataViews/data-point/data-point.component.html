@@ -1,0 +1,16 @@
+<div [ngSwitch]="dp.type">
+  <div *ngSwitchCase="'post'" class="post">
+    <h4>POST</h4>
+    {{dp.content.application ? dp.content.application : dp.content.from}} posted a {{dp.content.type}} to {{dp.source}}
+  </div>
+
+  <div *ngSwitchCase="'photo'" class="photo">
+    <h4>IMAGE</h4>
+    <img [src]="dp.content.content">
+  </div>
+
+  <div *ngSwitchCase="'event'" class="event">
+    <h4>EVENT</h4>
+    {{dp.content.name}} took place
+  </div>
+</div>

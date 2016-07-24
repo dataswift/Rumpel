@@ -24,7 +24,8 @@ export class EventsService {
     this.loadAll().subscribe(
       data => {
         const mergedData = data[0].concat(data[1]);
-        this.store.events = mergedData;
+        const timeSortedData = mergedData.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1);
+        this.store.events = timeSortedData;
         this.events$.next(this.store.events);
       },
       err => console.log(`Events table could not be found.`)
