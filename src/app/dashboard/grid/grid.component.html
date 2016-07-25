@@ -9,6 +9,13 @@
     <rump-tile-header [title]="'Calendar'" [iconName]="'calendar'"
                       [backColor]="'#37474F'"
                       [info]="'Displays the list of most recent events in the your HAT calendar. To get started with gathering your events enable Social and Calendar data plugs.'"></rump-tile-header>
+    <div class="inactive" *ngIf="state.dataTypes.indexOf('events') === -1">
+      <div class="filter">
+        <span class="ss-calendar"></span>
+        <h2>Calendar</h2>
+        <p>(no data)</p>
+      </div>
+    </div>
   </rump-tile-generic>
 
   <rump-tile-info class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-1-5 grid-item-height-1"
@@ -30,11 +37,26 @@
     <rump-tile-header [title]="'Social'" [iconName]="'replyall'"
                       [backColor]="'#546E7A'"
                       [info]="'What happened on the social media recently? See all your recent activity in one convenient place.'"></rump-tile-header>
+    <div class="inactive" *ngIf="state.dataTypes.indexOf('posts') === -1">
+      <div class="filter">
+        <span class="ss-replyall"></span>
+        <h2>Social</h2>
+        <p>(no data)</p>
+      </div>
+    </div>
   </rump-tile-social>
 
-  <rump-tile-map class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1"
-                 [title]="'Map'" [iconName]="'merge'"
-                 [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'">
+  <rump-tile-map class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1">
+    <rump-tile-header [title]="'Locations'" [iconName]="'merge'"
+                      [backColor]="'#78909C'"
+                      [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'"></rump-tile-header>
+    <div class="inactive" *ngIf="state.dataTypes.indexOf('locations') === -1">
+      <div class="filter">
+        <span class="ss-merge"></span>
+        <h2>Locations</h2>
+        <p>(coming September, 2016)</p>
+      </div>
+    </div>
   </rump-tile-map>
 
   <rump-tile-weather class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
@@ -45,7 +67,7 @@
 
   <rump-tile-data-plugs class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
     <rump-tile-header [title]="'Data Plugs'" [iconName]="'merge'"
-                      [backColor]="'#78909C'"
+                      [backColor]="'#263238'"
                       [info]="'List of currently available data plugs. Set up your HAT by acquiring data and view it on RUMPEL'"></rump-tile-header>
   </rump-tile-data-plugs>
 

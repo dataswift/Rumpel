@@ -11,6 +11,8 @@ import { UiStateService } from '../services';
 })
 export class SideMenuComponent implements OnInit {
   public selectedItem: string;
+  private sub: any;
+  public state: any;
   public menu: Array<any>;
 
   // hack: uiState service needs to be injected befor Auth component,
@@ -19,27 +21,36 @@ export class SideMenuComponent implements OnInit {
   constructor(private uiState: UiStateService) {}
 
   ngOnInit() {
+    this.state = { dataSources: [], dataTypes: [] };
+
     this.menu = [
-      { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '' },
-      { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile' },
-      { display: 'Mashup', icon: 'layergroup', link: 'mixpad', dataType: '' },
-      //{ display: 'Messages', icon: 'chats', link: '' },
-      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations' },
-      { display: 'Calendar', icon: 'calendar', link: 'events', dataType: 'events' },
-      { display: 'Social', icon: 'replyall', link: 'posts', dataType: 'posts' },
-      //{ display: 'Mail', icon: 'send', link: '' },
-      { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos' },
-      { display: 'Data Plugs', icon: 'merge', link: '' },
-      { display: 'Offers', icon: 'tags', link: 'https://marketsquare.hubofallthings.com/offers', dataType: null },
-      { display: 'Weather', icon: 'thermometer', link: '', dataType: null },
-      { display: 'Finance', icon: 'bank', link: '', dataType: null },
-      { display: 'Creations (music)', icon: 'guitar', link: '', dataType: null },
-      { display: 'Creations (art)', icon: 'brush', link: '', dataType: null },
+      { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '', disable: '' },
+      { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
+      { display: 'Mashup', icon: 'layergroup', link: 'mixpad', dataType: '', disable: '' },
+      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'coming September 2016' },
+      { display: 'Calendar', icon: 'calendar', link: 'events', dataType: 'events', disable: 'no data' },
+      { display: 'Social', icon: 'replyall', link: 'posts', dataType: 'posts', disable: 'no data' },
+      { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
+      { display: 'Data Plugs', icon: 'puzzle', link: '', disable: '' },
+      { display: 'Offers', icon: 'tags', link: 'https://marketsquare.hubofallthings.com/offers', dataType: null, disable: '' },
+      { display: 'Weather', icon: 'thermometer', link: '', dataType: null, disable: '' },
+      { display: 'Finance', icon: 'bank', link: '', dataType: null, disable: 'coming soon' },
+      { display: 'Creations (music)', icon: 'guitar', link: '', dataType: null, disable: 'coming soon' },
+      { display: 'Creations (art)', icon: 'brush', link: '', dataType: null, disable: 'coming soon' },
       //{ display: 'Settings', icon: 'settings', link: '' }
     ];
+
+    this.sub = this.uiState.getState$().subscribe(state => {
+      for (let dt of state.dataTypes) {
+        let changeItem = this.menu.find(item => item.dataType === dt);
+        if (changeItem) changeItem.disable = '';
+      }
+    });
   }
 
   onItemSelect(itemName: string) {
     this.selectedItem = itemName;
   }
+
+
 }

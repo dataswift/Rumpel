@@ -10,6 +10,10 @@
       <span class="ss-{{item.icon}}"></span>
       {{item.display}}
     </a>
+
+    <div class="disable" *ngIf="item.disable">
+      <p class="text">{{item.disable}}</p>
+    </div>
   </li>
 </ul>
 

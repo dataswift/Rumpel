@@ -24,11 +24,11 @@ export class TileDataPlugsComponent implements OnInit {
           icon: plug.name + '-plug'
         }
 
-        if (plug.name === 'Facebook') displayPlug.icon += '.png';
+        if (plug.name === 'facebook') displayPlug.icon += '.png';
         else displayPlug.icon += '.svg';
 
         return displayPlug;
-      });
+      }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
 
       this.plugs = displayPlugs;
     });

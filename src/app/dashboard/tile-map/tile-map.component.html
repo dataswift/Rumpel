@@ -1,11 +1,6 @@
-<div class="tile-header">
-  <span class="tile-logo ss-{{iconName}}"></span>
-  <div class="tile-title">{{title}}</div>
-  <button type="button" data-toggle="popover" data-container="body"
-          [attr.data-content]="info" class="info-button"
-          data-placement="auto left"><span class="tile-expand ss-info"></span></button>
-</div>
+<ng-content></ng-content>
 
 <div class="tile-body">
+  <div class="tint"></div>
   <rump-map [dataPoints]="locations$ | async" [mapSize]="safeSize"></rump-map>
 </div>

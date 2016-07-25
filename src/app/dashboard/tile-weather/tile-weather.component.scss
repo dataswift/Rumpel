@@ -1,9 +1,14 @@
 .tile-body {
   text-align: center;
+  font-size: 1.3em;
+
+  .location {
+    font-size: 1.5em;
+    text-transform: uppercase;
+  }
 
   .main {
     div {
-
       font-size: 3em;
     }
 

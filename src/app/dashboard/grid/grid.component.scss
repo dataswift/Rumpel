@@ -28,3 +28,31 @@
 .grid-item-height-4 {
   height: 100em;
 }
+
+.filter {
+    background-color: rgba(0, 0, 0, 0.45);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 6000;
+    color: #ffffff;
+    text-align: center;
+
+    span {
+      display: block;
+      margin-top: 1.5em;
+      font-size: 5em;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 3em;
+    }
+
+    p {
+      font-size: 1.5em;
+      text-transform: uppercase;
+    }
+  }

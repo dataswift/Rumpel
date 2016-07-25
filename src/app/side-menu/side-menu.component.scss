@@ -4,6 +4,7 @@ ul {
   list-style: none;
   padding: 0;
   li {
+    position: relative;
     text-align: center;
     width: 7em;
     margin-left: auto;
@@ -27,5 +28,21 @@ ul {
     &:hover {
       background-color: $base-grey;
     }
+  }
+}
+
+.disable {
+  position: absolute;
+  text-transform: uppercase;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+
+  .text {
+    margin-top: 2em;
   }
 }
