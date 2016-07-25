@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { AuthService } from '../services/auth.service';
   selector: 'rump-header',
   templateUrl: 'header.component.html',
   styleUrls: ['header.component.css'],
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES, MODAL_DIRECTIVES]
 })
 export class HeaderComponent implements OnInit {
   public user: string;

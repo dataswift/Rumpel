@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { UiStateService } from '../services';
 
@@ -10,6 +10,7 @@ import { UiStateService } from '../services';
   directives: [ROUTER_DIRECTIVES]
 })
 export class SideMenuComponent implements OnInit {
+  @Output() navigateModal = new EventEmitter<any>();
   public selectedItem: string;
   private sub: any;
   public state: any;
@@ -27,7 +28,7 @@ export class SideMenuComponent implements OnInit {
       { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '', disable: '' },
       { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
       { display: 'Mashup', icon: 'layergroup', link: 'mixpad', dataType: '', disable: '' },
-      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'coming September 2016' },
+      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'coming 2016' },
       { display: 'Calendar', icon: 'calendar', link: 'events', dataType: 'events', disable: 'no data' },
       { display: 'Social', icon: 'replyall', link: 'posts', dataType: 'posts', disable: 'no data' },
       { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
@@ -51,6 +52,4 @@ export class SideMenuComponent implements OnInit {
   onItemSelect(itemName: string) {
     this.selectedItem = itemName;
   }
-
-
 }

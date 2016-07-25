@@ -1,7 +1,7 @@
 <rump-header></rump-header>
 
 <section class="content-main">
-  <rump-side-menu class="menubar-left"></rump-side-menu>
+  <rump-side-menu class="menubar-left" (navigateModal)="setModalLink($event)"></rump-side-menu>
 
   <div class="content-grid container-fluid">
     <router-outlet></router-outlet>
@@ -11,5 +11,18 @@
 <footer class="footer">
   <rump-footer></rump-footer>
 </footer>
+
+<modal #modal class="modal">
+  <modal-header>
+    <h4>Are you sure?</h4>
+  </modal-header>
+  <modal-body>
+    <p>You are now leaving your private RUMPEL space. Are you sure? (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).</p>
+  </modal-body>
+  <modal-footer>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="modal.dismiss()">Go Back</button>
+    <button type="button" class="btn btn-primary" (click)="navigateTo()">Continue</button>
+  </modal-footer>
+</modal>
 
 

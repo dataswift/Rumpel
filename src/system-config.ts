@@ -8,13 +8,15 @@
 /** Map relative paths to URLs. */
 const map: any = {
   'moment': 'vendor/moment',
-  'angular2-jwt': 'vendor/angular2-jwt'
+  'angular2-jwt': 'vendor/angular2-jwt',
+  'ng2-bs3-modal': 'vendor/ng2-bs3-modal'
 };
 
 /** User packages configuration. */
 const packages: any = {
   'moment': { format: 'cjs', main: 'moment.js' },
-  'angular2-jwt': { main: 'angular2-jwt.js' }
+  'angular2-jwt': { main: 'angular2-jwt.js' },
+  'ng2-bs3-modal': { defaultExtension: 'js', main: 'ng2-bs3-modal.js' }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////

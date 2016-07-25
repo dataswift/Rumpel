@@ -12,7 +12,7 @@
           <p>{{plug.description}}</p>
         </div>
         <div class="col-xs-2">
-          <a href="{{plug.url + '?hat=' + hatDomain}}" target="_blank"><span class="ss-right"></span></a>
+          <button (click)="navigateModal.emit(plug.url + '?hat=' + hatDomain)" type="button"><span class="ss-right"></span></button>
         </div>
       </div>
     </li>

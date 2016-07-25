@@ -6,10 +6,10 @@
       <span class="ss-{{item.icon}}"></span>
       {{item.display}}
     </a>
-    <a [href]="item.link" *ngIf="item.link.indexOf('http') > -1">
+    <button (click)="navigateModal.emit(item.link)" *ngIf="item.link.indexOf('http') > -1" type="button">
       <span class="ss-{{item.icon}}"></span>
       {{item.display}}
-    </a>
+    </button>
 
     <div class="disable" *ngIf="item.disable">
       <p class="text">{{item.disable}}</p>

@@ -28,6 +28,11 @@ ul {
     &:hover {
       background-color: $base-grey;
     }
+
+    button {
+      background-color: transparent;
+      border: none;
+    }
   }
 }
 

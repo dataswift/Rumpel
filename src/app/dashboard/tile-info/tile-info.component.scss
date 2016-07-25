@@ -16,3 +16,23 @@
   font-size: 2.5em;
   text-transform: uppercase;
 }
+
+.modal {
+  font-family: 'Open Sans Condensed', sans-serif;
+
+  h4 {
+    font-size: 3em;
+  }
+
+  p {
+    font-size: 2em;
+  }
+
+  button {
+    font-size: 1.5em;
+  }
+
+  .btn-primary {
+    background-color: #018675;
+  }
+}

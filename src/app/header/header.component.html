@@ -9,7 +9,17 @@
         <li *ngIf="!!user" class="user-nav" style="text-transform: lowercase;"><p>{{user}}</p></li>
         <li *ngIf="!!user" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
         <li><a [routerLink]="['about']">About</a></li>
+        <li class="user-nav" style="cursor: pointer;" (click)="modal.open()"><p>Who Can See This?</p></li>
       </ul>
     </div>
   </div>
 </div>
+
+<modal #modal class="modal">
+  <modal-header [show-close]="true">
+      <h4 class="modal-title">Who can see this page?</h4>
+  </modal-header>
+  <modal-body>
+      <p>This page is only seen by you (or whoever looking over your shoulder). RUMPEL is your PERSONAL hyperdata browser for your HAT data. You should treat this page like you would treat your bank statement online.</p>
+  </modal-body>
+</modal>

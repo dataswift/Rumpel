@@ -1,4 +1,19 @@
-<div class="card-content" (click)="navigate()" [style.background-color]="bkgColor">
+<div class="card-content" (click)="modal.open()" [style.background-color]="bkgColor">
   <span class="card-info {{icon}}"></span>
   <h2 class="card-text">{{infoText}}</h2>
 </div>
+
+<modal #modal class="modal">
+  <modal-header [show-close]="true">
+      <h4 class="modal-title">New to Rumpel?</h4>
+  </modal-header>
+  <modal-body>
+    <p>ACQUIRE data from the Internet through the data plugs</p>
+    <p>ADD more data to your HAT</p>
+    <p>UPLOAD content to your HAT that you might want to view or exchange (2017)</p>
+    <p>VISUALISE mashups of your data</p>
+    <p>CONTROL who gets your data by exchanging it through the HAT data debit system</p>
+    <p>CREATE nudges and prompts based on intelligence from your own data (2017)</p>
+    <p>SEARCH your data by time, text, location, company or person (2017)</p>
+  </modal-body>
+</modal>

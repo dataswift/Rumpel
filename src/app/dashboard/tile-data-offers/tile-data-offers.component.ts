@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MarketSquareService } from '../../services';
 import { LimitContentPipe, Moment } from '../../pipes';
 
@@ -11,6 +11,7 @@ import { LimitContentPipe, Moment } from '../../pipes';
 })
 export class TileDataOffersComponent implements OnInit {
   public offers: any;
+  @Output() navigateModal = new EventEmitter<any>();
 
   constructor(private market: MarketSquareService) {}
 

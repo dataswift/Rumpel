@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { TileProfileComponent } from '../tile-profile/tile-profile.component';
 import { TileGenericComponent } from '../tile-generic/tile-generic.component';
 import { TileSocialComponent } from '../tile-social/tile-social.component';
@@ -11,6 +11,7 @@ import { TileInfoComponent } from '../tile-info/tile-info.component';
 import { TileComingSoonComponent } from '../tile-coming-soon/tile-coming-soon.component';
 import { Event, Post } from '../../shared';
 import { UiStateService } from '../../services';
+import { MODAL_DIRECTIVES, ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
 import * as moment from 'moment';
 
 declare var $: any;
@@ -20,11 +21,13 @@ declare var $: any;
   selector: 'rump-grid',
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.css'],
-  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileInfoComponent, TileComingSoonComponent]
+  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileInfoComponent, TileComingSoonComponent, MODAL_DIRECTIVES]
 })
 export class GridComponent implements OnInit, OnDestroy {
   public state: any;
   private sub: any;
+  @ViewChild('modal') modal: ModalComponent;
+  private link: string;
 
   constructor(private uiState: UiStateService) {
   }
@@ -47,5 +50,14 @@ export class GridComponent implements OnInit, OnDestroy {
       itemSelector: '.grid-item',
       percentPosition: true
     });
+  }
+
+  setModalLink(link: string) {
+    this.link = link;
+    this.modal.open();
+  }
+
+  navigateTo() {
+    window.location.href = this.link;
   }
 }

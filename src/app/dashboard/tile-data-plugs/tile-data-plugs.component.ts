@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MarketSquareService, AuthService } from '../../services';
 
 @Component({
@@ -11,6 +11,7 @@ export class TileDataPlugsComponent implements OnInit {
   public plugs: Array<any>;
   public hatDomain: string;
   public icons: Array<string>;
+  @Output() navigateModal = new EventEmitter<any>();
 
   constructor(private marketSvc: MarketSquareService, private auth: AuthService) {}
 

@@ -21,7 +21,7 @@
         </div>
 
         <div class="col-xs-1">
-          <a href="{{'https://marketsquare.hubofallthings.com/offers/' + offer.offer.uuid}}" target="_blank"><span class="ss-right"></span></a>
+          <button (click)="navigateModal.emit('https://marketsquare.hubofallthings.com/offers/' + offer.offer.uuid)" type="button"><span class="ss-right"></span></button>
         </div>
       </div>
     </li>

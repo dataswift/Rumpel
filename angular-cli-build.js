@@ -17,14 +17,12 @@ module.exports = function(defaults) {
       'fullcalendar/dist/*.+(min.js|min.css)',
       'jquery/dist/*.js',
       'moment/moment.js',
+      'ng2-bs3-modal/**/*.js',
       'leaflet/dist/leaflet.js',
       'leaflet/dist/images/*.png',
       'leaflet.markercluster/dist/leaflet.markercluster.js',
       'leaflet.markercluster/dist/MarkerCluster.*',
-      'packery/dist/*.min.js',
-      'primeui/primeui-ng-all.min.css',
-      'primeng/**/*.js',
-      'primeui/**/*.*'
+      'packery/dist/*.min.js'
     ],
     sassCompiler: {
       includePaths: ['src/app/style'],

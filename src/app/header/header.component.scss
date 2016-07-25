@@ -70,3 +70,24 @@
     padding-left: 1em;
   }
 }
+
+.modal {
+  font-family: 'Open Sans Condensed', sans-serif;
+  z-index: 7000;
+
+  h4 {
+    font-size: 3em;
+  }
+
+  p {
+    font-size: 2em;
+  }
+
+  button {
+    font-size: 1.5em;
+  }
+
+  .btn-primary {
+    background-color: #018675;
+  }
+}
