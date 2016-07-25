@@ -25,6 +25,7 @@ declare var $: any;
 })
 export class GridComponent implements OnInit, OnDestroy {
   public state: any;
+  public showTile = { locations: false, events: false, posts: false }
   private sub: any;
   @ViewChild('modal') modal: ModalComponent;
   private link: string;
@@ -37,6 +38,10 @@ export class GridComponent implements OnInit, OnDestroy {
 
     this.sub = this.uiState.getState$().subscribe(state => {
       this.state = state;
+
+      if (state.dataTypes.indexOf('locations') > -1) this.showTile.locations = true;
+      if (state.dataTypes.indexOf('posts') > -1) this.showTile.posts = true;
+      if (state.dataTypes.indexOf('events') > -1) this.showTile.events = true;
     });
   }
 
