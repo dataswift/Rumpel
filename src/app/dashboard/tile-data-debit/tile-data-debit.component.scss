@@ -1,0 +1,38 @@
+a {
+  font-size: 1.2em;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+h4 {
+  text-transform: uppercase;
+  font-size: 1.5em;
+}
+
+p {
+  margin-bottom: 0.25em;
+  font-size: 1.1em;
+}
+
+.col-xs-2 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  padding-right: 0.25em;
+}
+
+span {
+  font-size: 2em;
+  margin: 0;
+}
+
+.vertical-align {
+  display: flex;
+  flex-direction: row;
+}
+
+.vertical-align > .col-xs-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

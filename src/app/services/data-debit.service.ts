@@ -15,4 +15,8 @@ export class DataDebitService {
     );
   }
 
+  loadAllDataDebits() {
+    return this._hatSvc.getAllDataDebits();
+  }
+
 }

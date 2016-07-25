@@ -9,3 +9,4 @@ export { TileDataPlugsComponent } from './tile-data-plugs/tile-data-plugs.compon
 export { TileMapComponent } from './tile-map/tile-map.component';
 export { TileInfoComponent } from './tile-info/tile-info.component';
 export { TileComingSoonComponent } from './tile-coming-soon/tile-coming-soon.component';
+export { TileDataDebitComponent } from './tile-data-debit/tile-data-debit.component';

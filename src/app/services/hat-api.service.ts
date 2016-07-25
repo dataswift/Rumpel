@@ -17,7 +17,7 @@ export class HatApiService {
   }
 
   updateCredentials(domain: string, token: string) {
-    this._baseUrl = 'http://' + domain + ':' + HAT_PORT;
+    this._baseUrl = 'https://' + domain;
     this._token = token;
     this._headers = new Headers();
     this._headers.append('Content-Type', 'application/json');
@@ -93,6 +93,12 @@ export class HatApiService {
 
   getDataDebit(uuid: string) {
     const url = this._baseUrl + '/dataDebit/' + uuid + '/values';
+    return this._http.get(url, { headers: this._headers })
+      .map(res => res.json());
+  }
+
+  getAllDataDebits() {
+    const url = this._baseUrl + '/dataDebit';
     return this._http.get(url, { headers: this._headers })
       .map(res => res.json());
   }
