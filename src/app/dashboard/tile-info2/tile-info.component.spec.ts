@@ -10,7 +10,7 @@ import {
   async, inject
 } from '@angular/core/testing';
 
-import { TileInfoComponent } from './tile-info.component';
+import { TileInfoComponent2 } from './tile-info.component';
 
 describe('Component: TileInfo', () => {
   it('should create an instance', () => {

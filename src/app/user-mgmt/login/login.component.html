@@ -5,6 +5,8 @@
 
     <p class="subtext">You would need a <a href="https://marketsquare.hubofallthings.com/signup">HAT</a> to use Rumpel. Please enter your personal HAT address.</p>
 
+
+
     <div class="form">
         <div class="form-group">
             <label for="hatAddress">Your personal HAT address</label>
@@ -24,6 +26,17 @@
         <button type="button" class="btn btn-rump" (click)="onSubmit()">Login</button>
     </div>
 
-    <div class="form-context"><a href="https://marketsquare.hubofallthings.com/signup">Sign up</a> for a HAT &nbsp; | &nbsp; <a href="http://www.hatdex.org/what-is-the-hat/">What is the HAT?</a></div>
+    <div class="form-context"><a href="https://marketsquare.hubofallthings.com/signup">Sign up</a> for a HAT &nbsp; | &nbsp; <a href="http://www.hatdex.org/what-is-the-hat/">What is the HAT?</a> &nbsp; | &nbsp; <span (click)="modal.open()">See a Screenshot</span></div>
+
+    <div class="form-context2">You will be taken to your personal HAT page. For security reasons, your HAT password can only be entered at that page.</div>
   </div>
 </div>
+
+<modal #modal class="modal">
+    <modal-header>
+      <h4>Example of a populated Rumpel</h4>
+    </modal-header>
+    <modal-body>
+      <img src="images/rumpel.png" class="img img-responsive">
+    </modal-body>
+</modal>
