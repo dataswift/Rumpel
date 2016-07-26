@@ -1,0 +1,23 @@
+<div class="card-content" (click)="modal.open()" [style.background-color]="bkgColor">
+  <span class="card-info {{icon}}"></span>
+  <h2 class="card-text">{{infoText}}</h2>
+</div>
+
+<modal #modal class="modal">
+  <modal-header [show-close]="true">
+      <h4 class="modal-title">Spotlight</h4>
+  </modal-header>
+  <modal-body style="text-align: center;">
+    <h2>Beta release of HATs, Rumpel™ and MarketSquare™</h2>
+
+    <h5>25th July 2016 by Irene Ng</h5>
+
+    <br>
+    <p>We are pleased to release HATs with Rumpel™ and MarketSquare™ today for testing by the beta community.</p>
+
+    <p>What you need to know about this beta release...</p>
+
+    <br>
+    <p>Read the full post on <a href="http://www.hatdex.org/beta-release-hats-rumpel-marketsquare/" target="_blank">HATDeX blog</a>.</p>
+  </modal-body>
+</modal>

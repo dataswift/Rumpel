@@ -8,6 +8,7 @@ import { TileDataOffersComponent } from '../tile-data-offers/tile-data-offers.co
 import { TileDataPlugsComponent } from '../tile-data-plugs/tile-data-plugs.component';
 import { TileMapComponent } from '../tile-map/tile-map.component';
 import { TileInfoComponent } from '../tile-info/tile-info.component';
+import { TileInfoComponent2 } from '../tile-info2/tile-info.component';
 import { TileComingSoonComponent } from '../tile-coming-soon/tile-coming-soon.component';
 import { TileDataDebitComponent } from '../tile-data-debit/tile-data-debit.component';
 import { Event, Post } from '../../shared';
@@ -22,7 +23,7 @@ declare var $: any;
   selector: 'rump-grid',
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.css'],
-  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileInfoComponent, TileComingSoonComponent, TileDataDebitComponent, MODAL_DIRECTIVES]
+  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileInfoComponent, TileComingSoonComponent, TileDataDebitComponent, TileInfoComponent2, MODAL_DIRECTIVES]
 })
 export class GridComponent implements OnInit, OnDestroy {
   public state: any;
