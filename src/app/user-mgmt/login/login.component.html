@@ -3,9 +3,9 @@
     <img src="icons/rumpel.svg" class="logo">
     <p><span class="highlight">Welcome to Rumpel</span>, the personal hyperdata browser for your HAT data. Rumpel is a service that allows you to <span class="highlight">acquire</span>, <span class="highlight">visualise</span> and <span class="highlight">exchange</span> your HAT data.</p>
 
-    <p class="subtext">You would need a <a href="https://marketsquare.hubofallthings.com/signup">HAT</a> to use Rumpel. Please enter your personal HAT address.</p>
+    <p class="subtext">Rumpel has been released for beta on the 26 Jul 2016. See release notes <a href="http://www.hatdex.org/beta-release-hats-rumpel-marketsquare/" target="_blank">here</a>.</p>
 
-
+    <p class="subtext">You would need a <a href="https://marketsquare.hubofallthings.com/signup" target="_blank">HAT</a> to use Rumpel. Please enter your personal HAT address.</p>
 
     <div class="form">
         <div class="form-group">
@@ -24,11 +24,13 @@
         </div>
 
         <button type="button" class="btn btn-rump" (click)="onSubmit()">Login</button>
+
+        <div class="form-context2">You will be taken to your personal HAT page. For security reasons, your HAT password should only be entered at that page.</div>
     </div>
 
-    <div class="form-context"><a href="https://marketsquare.hubofallthings.com/signup">Sign up</a> for a HAT &nbsp; | &nbsp; <a href="http://www.hatdex.org/what-is-the-hat/">What is the HAT?</a> &nbsp; | &nbsp; <span (click)="modal.open()">See a Screenshot</span></div>
+    <div class="form-context"><a href="https://marketsquare.hubofallthings.com/signup" target="_blank">Sign up</a> for a HAT &nbsp; | &nbsp; <a href="http://www.hatdex.org/what-is-the-hat/" target="_blank">What is the HAT?</a> &nbsp; | &nbsp; <span (click)="modal.open()">See a Screenshot</span></div>
 
-    <div class="form-context2">You will be taken to your personal HAT page. For security reasons, your HAT password can only be entered at that page.</div>
+
   </div>
 </div>
 

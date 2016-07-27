@@ -19,7 +19,7 @@
   p {
     color: #ffffff;
     font-size: 1.8em;
-    margin-top: 2em;
+    margin-top: 1.5em;
 
     &.subtext {
       font-size: 1.4em;
@@ -105,12 +105,13 @@ text-decoration: underline;
   span {
     text-decoration: underline;
     cursor: pointer;
+    font-weight: bold;
   }
 }
 
 .form-context2 {
   color: #ffffff;
-  font-size: 1em;
+  font-size: 1.2em;
   font-family: 'Open Sans', sans-serif;
-  margin-top: 1em;
+  margin-bottom: 1em;
 }
