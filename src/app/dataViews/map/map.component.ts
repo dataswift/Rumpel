@@ -44,7 +44,6 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   updateMap(dps: Array<DataPoint>) {
-    console.log('map points', dps);
     if (dps.length <= 0) return;
     this.drawMarkers(dps);
     this.map.fitBounds([

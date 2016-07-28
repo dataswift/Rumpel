@@ -17,7 +17,10 @@ export class MarketSquareService {
     const url = this.baseUrl + '/offers';
     return this.http.get(url, { headers: this._headers })
         .map(res => res.json())
-        .map(offers => offers.sort((a, b) => b.offer.rating.up - a.offer.rating.up));
+        .map(offers => {
+          const validOffers = offers.filter(offer => offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
+          return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
+        });
   }
 
   getDataPlugs(): Observable<any> {

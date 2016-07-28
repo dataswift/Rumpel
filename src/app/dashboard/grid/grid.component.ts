@@ -45,6 +45,8 @@ export class GridComponent implements OnInit, OnDestroy {
       if (state.dataTypes.indexOf('posts') > -1) this.showTile.posts = true;
       if (state.dataTypes.indexOf('events') > -1) this.showTile.events = true;
     });
+
+    this.uiState.fetchState();
   }
 
   ngOnDestroy() {

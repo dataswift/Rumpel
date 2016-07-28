@@ -6,13 +6,11 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class UiStateService {
   private state$: Subject<any>;
-  private dataSources: Array<string>;
-  private dataTypes: Array<string>;
+  private state: { dataSources: Array<string>; dataTypes: Array<string> };
   private defaultMenu: Array<any>;
 
   constructor(private hat: HatApiService, private auth: AuthService) {
-    this.dataSources = [];
-    this.dataTypes = [];
+    this.state = { dataSources: [], dataTypes: [] }
     this.state$ = <Subject<any>>new Subject();
 
     this.auth.getAuth$()
@@ -22,24 +20,26 @@ export class UiStateService {
       })
       .subscribe(dataSources => {
         for (let dataSource of dataSources) {
-          if (!(~this.dataSources.indexOf(dataSource.source))) {
-            this.dataSources.push(dataSource.source);
+          if (!(~this.state.dataSources.indexOf(dataSource.source))) {
+            this.state.dataSources.push(dataSource.source);
           }
 
-          if (!(~this.dataTypes.indexOf(dataSource.name))) {
-            this.dataTypes.push(dataSource.name);
+          if (!(~this.state.dataTypes.indexOf(dataSource.name))) {
+            this.state.dataTypes.push(dataSource.name);
           }
         }
 
-        let state = { dataSources: this.dataSources, dataTypes: this.dataTypes };
-
-        localStorage.setItem('state', JSON.stringify(state));
-        this.state$.next(state);
+        localStorage.setItem('state', JSON.stringify(this.state));
+        this.state$.next(this.state);
     });
   }
 
   getState$() {
     return this.state$.asObservable();
+  }
+
+  fetchState() {
+    this.state$.next(this.state);
   }
 
   getDataTypes() {

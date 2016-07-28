@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../../services';
 import { Moment } from '../../pipes';
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -26,7 +27,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
     this.viewChoices = 'month,agendaWeek,agendaDay';
     this.defaultView = "agendaWeek";
-    this.defaultDate = '2016-02-16';
+    this.defaultDate = moment().format('YYYY-MM-DD');
     this.firstDay = 1;
     this.height = '85vh';
     this.events = [];
@@ -61,8 +62,6 @@ export class CalendarComponent implements OnInit {
           end: !!dp.content.end ? dp.content.end.format() : null
         };
       });
-
-      console.log('DA DA', this.events);
 
       this.updateCalendar();
     });
