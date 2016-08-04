@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SwitchComponent } from '../../shared/components';
 import { ProfileService, HatApiService } from '../../services';
 import { Profile } from '../../shared';
 
@@ -7,7 +8,8 @@ import { Profile } from '../../shared';
   moduleId: module.id,
   selector: 'rump-profile',
   templateUrl: 'profile.component.html',
-  styleUrls: ['profile.component.css']
+  styleUrls: ['profile.component.css'],
+  directives: [SwitchComponent]
 })
 export class ProfileComponent implements OnInit {
   private hatIdMapping: any;
@@ -81,6 +83,7 @@ export class ProfileComponent implements OnInit {
 
   togglePrivacy(field: string) {
     this.profile[field].private = this.profile[field].private === 'true' ? 'false' : 'true';
+    console.log('Privacy set to ' +  this.profile[field].private + ' for ' + field);
   }
 
 }

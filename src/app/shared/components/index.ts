@@ -1,0 +1,1 @@
+export { SwitchComponent } from './switch/switch.component';

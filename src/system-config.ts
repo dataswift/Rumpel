@@ -52,6 +52,7 @@ const barrels: string[] = [
   'app/profile',
   'app/issue',
   'app/about',
+  'app/shared/components',
   /** @cli-barrel */
 ];
 
