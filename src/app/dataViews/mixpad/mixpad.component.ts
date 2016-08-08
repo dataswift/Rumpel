@@ -44,8 +44,6 @@ export class MixpadComponent implements OnInit {
       .merge(this.imagesSvc.loadAll())
       .subscribe((dataPoints: Array<DataPoint>) => {
 
-        console.log(dataPoints);
-
         for (let dp of dataPoints) {
           const dayFound = this.timeline.find(day => day.isSame(dp.timestamp, 'day'));
           if (dayFound) continue;

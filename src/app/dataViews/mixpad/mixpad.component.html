@@ -22,12 +22,12 @@
                 [dataPoints]="data | timeFilter:selectedTime:'day' | locationFilter:true"
                 [mapSize]="safeSize"
                 (timeSelected)="selectedTime = $event"
-                [hidden]="!shownComponents.map"></rump-map>
+                *ngIf="shownComponents.map"></rump-map>
       <rump-view-by-day class="day-view" [style.width]="shownComponents.map ? '60%' : '78%'"
                         [day]="selectedTime"
                         [dataPoints]="data | timeFilter:selectedTime:'day'"
                         (timeSelected)="selectedTime = $event"
-                        [hidden]="!shownComponents.events"></rump-view-by-day>
+                        *ngIf="shownComponents.events"></rump-view-by-day>
       <rump-timeline class="timeline"
                      [timeline]="timeline"
                      (timeSelected)="selectedTime = $event"

@@ -21,7 +21,7 @@
           </div>
         </section>
 
-        <section class="col-xs-10 col-sm-6 col-md-offset-1 col-md-4 col-lg-offset-1 col-lg-4">
+        <section class="col-xs-10 col-sm-6 col-md-offset-1 col-md-4 col-lg-offset-1 col-lg-4" *ngIf="profilePhoto.url">
           <h3 class="section-title">Profile picture</h3>
 
           <div class="section-body picture">
@@ -443,4 +443,9 @@
       </div>
     </form>
   </div>
+</div>
+
+<div class="ui-message" [hidden]="uiMessageHidden">
+  Your profile information saved.
+  <span class="ss-"></span>
 </div>

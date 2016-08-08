@@ -19,7 +19,7 @@ export class AuthComponent implements OnInit, OnDestroy {
               private _authSvc: AuthService) {}
 
   ngOnInit() {
-    this.message = 'Authenticating... Please hold.';
+    this.message = 'Accessing your HAT data... please hold.';
 
     this._subAuth = this._authSvc.getAuth$().subscribe(isAuthorised => {
       if (isAuthorised) this.router.navigate(['']);

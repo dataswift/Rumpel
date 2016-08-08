@@ -16,12 +16,14 @@ export class ProfileComponent implements OnInit {
   public profile: Profile;
   public profilePhoto: any;
   public hatUrl: string;
+  public uiMessageHidden: boolean;
 
   constructor(private profileSvc: ProfileService,
               private hat: HatApiService,
               private router: Router) {}
 
   ngOnInit() {
+    this.uiMessageHidden = true;
     this.hatUrl = this.hat.getUrl();
     this.profilePhoto = {};
     this.profileSvc.initializeProfile().subscribe(hatIdMapping => {
@@ -69,8 +71,10 @@ export class ProfileComponent implements OnInit {
 
   submitForm(event) {
     event.preventDefault();
-    this.profileSvc.saveProfile(this.profile, this.hatIdMapping).subscribe();
-    this.router.navigate(['']);
+    this.profileSvc.saveProfile(this.profile, this.hatIdMapping).subscribe(savedPosts => {
+      this.uiMessageHidden = false;
+      setTimeout(() => this.uiMessageHidden = true, 5000);
+    });
   }
 
   discardChanges() {
@@ -83,7 +87,6 @@ export class ProfileComponent implements OnInit {
 
   togglePrivacy(field: string) {
     this.profile[field].private = this.profile[field].private === 'true' ? 'false' : 'true';
-    console.log('Privacy set to ' +  this.profile[field].private + ' for ' + field);
   }
 
 }
