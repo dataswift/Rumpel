@@ -1,6 +1,7 @@
 import { bootstrap } from '@angular/platform-browser-dynamic';
 import { enableProdMode } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { disableDeprecatedForms, provideForms} from '@angular/forms';
 import { APP_ROUTER_PROVIDERS } from './app/rumpel.routes';
 import { RumpelAppComponent, environment } from './app/';
@@ -14,6 +15,7 @@ if (environment.production) {
 
 bootstrap(RumpelAppComponent, [
   APP_ROUTER_PROVIDERS,
+  { provide: LocationStrategy, useClass: HashLocationStrategy },
   HTTP_PROVIDERS,
   AuthGuard,
   DataGuard,

@@ -22,7 +22,7 @@ export class TileDataPlugsComponent implements OnInit {
           name: plug.name,
           description: plug.description,
           url: plug.url,
-          icon: plug.name + '-plug'
+          icon: plug.name.toLowerCase() + '-plug'
         }
 
         if (plug.name === 'facebook') displayPlug.icon += '.png';

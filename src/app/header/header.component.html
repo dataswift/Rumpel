@@ -9,7 +9,8 @@
         <li *ngIf="!!user" class="user-nav" style="text-transform: lowercase;"><p>{{user}}</p></li>
         <li *ngIf="!!user" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
         <li><a [routerLink]="['about']">About</a></li>
-        <li class="user-nav" style="cursor: pointer;" (click)="modal.open()"><p>Who Can See This?</p></li>
+        <li class="user-nav" style="cursor: pointer;" (click)="msg = 'whoCanSee'; modal.open()"><p>Who Can See This?</p></li>
+        <li class="user-nav" style="cursor: pointer;" (click)="msg = 'bugReport'; modal.open()"><p>Report a Bug</p></li>
       </ul>
     </div>
   </div>
@@ -17,9 +18,12 @@
 
 <modal #modal class="modal">
   <modal-header [show-close]="true">
-      <h4 class="modal-title">Who can see this page?</h4>
+      <h4 class="modal-title">{{modalMsgs[msg].header}}</h4>
   </modal-header>
   <modal-body>
-      <p>This page is only seen by you (and whoever is looking over your shoulder). Rumpel&trade; is your PERSONAL hyperdata browser for your HAT data. You should treat this page like the way you would treat your bank statement page online.</p>
+      <p>{{modalMsgs[msg].body}}</p>
   </modal-body>
+  <modal-footer *ngIf="modalMsgs[msg].link">
+    <button type="button" class="btn btn-primary" (click)="navigateTo(modalMsgs[msg].link)">{{modalMsgs[msg].footer}}</button>
+  </modal-footer>
 </modal>

@@ -86,7 +86,10 @@ export class HatApiService {
   getValues(tableId: number): Observable<any> {
     const url = this._baseUrl + '/data/table/' + tableId + '/values';
 
-    return this._http.get(url, { headers: this._headers })
+    let query: URLSearchParams = new URLSearchParams();
+    query.append('starttime', '0');
+
+    return this._http.get(url, { headers: this._headers , search: query })
       .map(res => res.json())
       .map(body => this.transform(body));
   }
