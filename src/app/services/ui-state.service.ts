@@ -13,7 +13,7 @@ export class UiStateService {
     this.state = { dataSources: [], dataTypes: [] }
     this.state$ = <Subject<any>>new Subject();
 
-    this.auth.getAuth$()
+    this.auth.auth$
       .flatMap(authenticated => {
         if (authenticated)
           return this.hat.getDataSources()

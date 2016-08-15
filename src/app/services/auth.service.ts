@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
 import { Subject, Observable } from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
+import { RumpelService } from './rumpel.service';
 
 @Injectable()
 export class AuthService {
-  private auth$: Subject<any>;
+  private _auth$: Subject<any>;
+  public auth$: Observable<any>;
   private authenticated: boolean;
   private jwtHelper: JwtHelper;
   private hatDomain: string;
 
   constructor(private hat: HatApiService) {
-    this.auth$ = <Subject<any>>new Subject();
+    this._auth$ = <Subject<any>>new Subject();
+    this.auth$ = this._auth$.asObservable();
     this.authenticated = false;
     this.jwtHelper = new JwtHelper();
   }
@@ -22,18 +25,18 @@ export class AuthService {
     return issuer;
   }
 
+  getSavedToken() {
+    return localStorage.getItem('hat-at');
+  }
+
   isPreviousTokenValid(): boolean {
-    const storedToken = localStorage.getItem('hat-at');
+    const storedToken = this.getSavedToken();
 
     if (storedToken && (!this.jwtHelper.isTokenExpired(storedToken))) {
-      this.hat.updateCredentials(this.decodeJwt(storedToken), storedToken);
-      this.authenticated = true;
-      this.hatDomain = this.decodeJwt(storedToken);
-      this.auth$.next(this.authenticated);
       return true;
     } else {
       if (storedToken) localStorage.removeItem('hat-at');
-      return this.authenticated = false;
+      return false;
     }
   }
 
@@ -54,10 +57,10 @@ export class AuthService {
       err => {
         this.authenticated = false;
         console.log("Could not verify with specified HAT");
-        this.auth$.next(this.authenticated);
+        this._auth$.next(this.authenticated);
       },
       () => {
-        this.auth$.next(this.authenticated);
+        this._auth$.next(this.authenticated);
       });
   }
 
@@ -67,10 +70,6 @@ export class AuthService {
 
   getDomain(): string {
     return this.hatDomain;
-  }
-
-  getAuth$() {
-    return this.auth$.asObservable();
   }
 
   signOut() {

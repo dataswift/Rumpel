@@ -20,7 +20,7 @@ export class RumpelAppComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    console.log("Rumpel is running. Version: 0.0.1");
+    console.log("Rumpel is running. Version: 1.0.0-beta");
   }
 
   setModalLink(link: string) {

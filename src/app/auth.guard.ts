@@ -12,7 +12,9 @@ export class AuthGuard implements CanActivate {
     if (this.authSvc.isAuthenticated()) {
       return true;
     } else if (this.authSvc.isPreviousTokenValid()) {
-      return true;
+      const token = this.authSvc.getSavedToken();
+      this.router.navigate(['/users/authenticate', token]);
+      return false;
     } else {
       this.router.navigate(['/users/login']);
       return false;

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, HatApiService } from '../../services';
+import { AuthService, RumpelService } from '../../services';
 
 @Component({
   moduleId: module.id,
@@ -15,21 +15,33 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(private _route: ActivatedRoute,
               private router: Router,
-              private _hat: HatApiService,
-              private _authSvc: AuthService) {}
+              private authSvc: AuthService,
+              private rumpelSvc: RumpelService) {}
 
   ngOnInit() {
     this.message = 'Accessing your HAT data... please hold.';
 
-    this._subAuth = this._authSvc.getAuth$().subscribe(isAuthorised => {
-      if (isAuthorised) this.router.navigate(['']);
-      else this.message = 'Unfortunately authentication failed. Please contact your system administrator.';
-    });
+    this._subAuth = this.authSvc.auth$
+      .flatMap(
+        isAuthenticated => {
+          if (isAuthenticated) return this.rumpelSvc.loadTableList();
+          else throw new Error('Token validity could not be verified. HAT server might be down.');
+      })
+      .subscribe(
+        state => {
+          this.router.navigate(['']);
+        },
+        err => {
+          this.message = 'Unfortunately authentication failed. Please contact your system administrator.';
+        }
+      );
 
-    this._subRoute = this._route.params.subscribe(params => {
-      let jwtToken = params['jwt'];
-      this._authSvc.authenticate(jwtToken);
-    });
+    this._subRoute = this._route.params.subscribe(
+      params => {
+        let jwtToken = params['jwt'];
+        this.authSvc.authenticate(jwtToken);
+      },
+      err => console.log('Ooops... Something went wrong'));
   }
 
   ngOnDestroy() {

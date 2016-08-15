@@ -39,7 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sub = this.auth.getAuth$().subscribe(isAuthenticated => {
+    this.sub = this.auth.auth$.subscribe(isAuthenticated => {
       if (isAuthenticated) this.user = this.auth.getDomain();
     });
   }

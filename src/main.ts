@@ -7,7 +7,7 @@ import { APP_ROUTER_PROVIDERS } from './app/rumpel.routes';
 import { RumpelAppComponent, environment } from './app/';
 import { AuthGuard } from './app/auth.guard';
 import { DataGuard } from './app/data.guard';
-import { AuthService, HatApiService, MarketSquareService, LocationsService, EventsService, ImagesService, SocialService, DataDebitService, ProfileService, UiStateService } from './app/services';
+import { AuthService, HatApiService, MarketSquareService, LocationsService, EventsService, ImagesService, SocialService, DataDebitService, ProfileService, UiStateService, RumpelService } from './app/services';
 
 if (environment.production) {
   enableProdMode();
@@ -29,6 +29,7 @@ bootstrap(RumpelAppComponent, [
   DataDebitService,
   ProfileService,
   UiStateService,
+  RumpelService,
   disableDeprecatedForms(),
   provideForms()
 ])
