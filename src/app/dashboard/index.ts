@@ -10,3 +10,4 @@ export { TileMapComponent } from './tile-map/tile-map.component';
 export { TileInfoComponent } from './tile-info/tile-info.component';
 export { TileComingSoonComponent } from './tile-coming-soon/tile-coming-soon.component';
 export { TileDataDebitComponent } from './tile-data-debit/tile-data-debit.component';
+export { TileNotesComponent } from './tile-notes/tile-notes.component';

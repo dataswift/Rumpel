@@ -1,0 +1,35 @@
+form {
+  margin: 2em;
+
+  label {
+    display: none;
+    color: #9c9c9c;
+    font-weight: normal;
+    font-size: 1.75em;
+  }
+
+  textarea {
+    display: block;
+    font-family: "Open Sans", sans-serif;
+    background-color: #bbbbbb;
+    font-size: 1.3em;
+    font-weight: 300;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    border-radius: 0;
+    resize: none;
+
+    &:focus {
+      background-color: #ffffff;
+      box-shadow: 0 0 5px rgba(1, 134, 117, 0.3);
+      border-color: rgba(1, 134, 117, 0.1);
+    }
+  }
+}
+
+.btn-status {
+  border-radius: 0;
+  text-transform: uppercase;
+  width: 100%;
+  background-color: #018675;
+}

@@ -45,9 +45,15 @@
     </div>
   </rump-tile-social>
 
+  <rump-tile-notes class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-2">
+    <rump-tile-header [title]="'Notes'" [iconName]="'write'"
+                      [backColor]="'#78909C'"
+                      [info]="''"></rump-tile-header>
+  </rump-tile-notes>
+
   <rump-tile-map class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1">
     <rump-tile-header [title]="'Locations'" [iconName]="'merge'"
-                      [backColor]="'#78909C'"
+                      [backColor]="'#607D8B'"
                       [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'"></rump-tile-header>
     <div class="inactive" *ngIf="!showTile.locations">
       <div class="filter">
@@ -60,19 +66,19 @@
 
   <rump-tile-weather class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
     <rump-tile-header [title]="'Weather'" [iconName]="'thermometer'"
-                      [backColor]="'#607D8B'"
+                      [backColor]="'#263238'"
                       [info]="'What is the weather like today? Look at the sky or use this widget ;)'"></rump-tile-header>
   </rump-tile-weather>
 
   <rump-tile-data-plugs class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1" (navigateModal)="setModalLink($event)">
     <rump-tile-header [title]="'Data Plugs'" [iconName]="'merge'"
-                      [backColor]="'#263238'"
+                      [backColor]="'#37474F'"
                       [info]="'List of currently available data plugs. Set up your HAT by acquiring data and view it on RUMPEL'"></rump-tile-header>
   </rump-tile-data-plugs>
 
   <rump-tile-data-debit class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
     <rump-tile-header [title]="'Data Debits'" [iconName]="'puzzle'"
-                      [backColor]="'#37474F'"
+                      [backColor]="'#455A64'"
                       [info]="'List of data debits created on the HAT.'"></rump-tile-header>
   </rump-tile-data-debit>
 

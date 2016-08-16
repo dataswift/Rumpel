@@ -1,0 +1,9 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm" *ngIf="active">
+  <div class="form-group">
+    <label for="title">New Note</label>
+    <textarea ngModel type="text" class="form-control rump-form-input" id="message" name="message"
+          aria-describedby="message"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-status" name="post-status">Post</button>
+</form>

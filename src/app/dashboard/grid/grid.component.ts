@@ -11,6 +11,7 @@ import { TileInfoComponent } from '../tile-info/tile-info.component';
 import { TileInfoComponent2 } from '../tile-info2/tile-info.component';
 import { TileComingSoonComponent } from '../tile-coming-soon/tile-coming-soon.component';
 import { TileDataDebitComponent } from '../tile-data-debit/tile-data-debit.component';
+import { TileNotesComponent } from '../tile-notes/tile-notes.component';
 import { Event, Post } from '../../shared';
 import { UiStateService } from '../../services';
 import { MODAL_DIRECTIVES, ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
@@ -23,7 +24,20 @@ declare var $: any;
   selector: 'rump-grid',
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.css'],
-  directives: [TileProfileComponent, TileGenericComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileInfoComponent, TileComingSoonComponent, TileDataDebitComponent, TileInfoComponent2, MODAL_DIRECTIVES]
+  directives: [TileProfileComponent,
+               TileGenericComponent,
+               TileSocialComponent,
+               TileWeatherComponent,
+               TileHeaderComponent,
+               TileDataOffersComponent,
+               TileDataPlugsComponent,
+               TileMapComponent,
+               TileInfoComponent,
+               TileComingSoonComponent,
+               TileDataDebitComponent,
+               TileInfoComponent2,
+               TileNotesComponent,
+               MODAL_DIRECTIVES]
 })
 export class GridComponent implements OnInit, OnDestroy {
   public state: any;

@@ -1,0 +1,22 @@
+h4 {
+  font-size: 1.7em;
+}
+
+.content {
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.note {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid white;
+
+  p {
+    font-size: 1.3em;
+  }
+
+  &:last-child {
+    border: none;
+  }
+}
