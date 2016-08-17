@@ -20,7 +20,7 @@ export class HatApiService {
     this._baseUrl = 'https://' + domain;
     this._token = token;
     this._headers = new Headers();
-    this._headers.append('Content-Type', 'application/json');
+    // this._headers.append('Content-Type', 'application/json');
     this._headers.append('X-Auth-Token', this._token);
   }
 

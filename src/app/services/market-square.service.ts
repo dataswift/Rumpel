@@ -10,7 +10,7 @@ export class MarketSquareService {
   constructor(private http: Http) {
     this.baseUrl = 'https://marketsquare.hubofallthings.com/api';
     this._headers = new Headers();
-    this._headers.append('Content-Type', 'application/json');
+    // this._headers.append('Content-Type', 'application/json');
   }
 
   getOffer(): Observable<any> {

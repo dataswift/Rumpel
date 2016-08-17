@@ -1,17 +1,16 @@
-import {
-  beforeEachProviders,
-  it,
-  describe,
-  expect,
-  inject
-} from '@angular/core/testing';
+/* tslint:disable:no-unused-variable */
+
+import { addProviders, async, inject } from '@angular/core/testing';
 import { ImagesService } from './images.service';
 
 describe('Photos Service', () => {
-  beforeEachProviders(() => [ImagesService]);
+  beforeEach(() => {
+    addProviders([ImagesService]);
+  });
 
   it('should ...',
-      inject([ImagesService], (service: ImagesService) => {
-    expect(service).toBeTruthy();
-  }));
+    inject([ImagesService],
+      (service: ImagesService) => {
+        expect(service).toBeTruthy();
+      }));
 });
