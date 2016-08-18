@@ -9,11 +9,11 @@ import { AuthService, RumpelService } from '../../services';
   styleUrls: ['auth.component.css']
 })
 export class AuthComponent implements OnInit, OnDestroy {
-  private _subRoute: any;
+  private subQP: any;
   private _subAuth: any;
   public message: string;
 
-  constructor(private _route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
               private authSvc: AuthService,
               private rumpelSvc: RumpelService) {}
@@ -36,16 +36,18 @@ export class AuthComponent implements OnInit, OnDestroy {
         }
       );
 
-    this._subRoute = this._route.params.subscribe(
-      params => {
-        let jwtToken = params['jwt'];
-        this.authSvc.authenticate(jwtToken);
-      },
-      err => console.log('Ooops... Something went wrong'));
+    this.subQP = this.route.queryParams
+      .map(params => params['token'] || null)
+      .subscribe(
+        jwtToken => {
+          if (jwtToken) this.authSvc.authenticate(jwtToken);
+          else this.message = 'Seems like your link did not have right authentication credentials.'
+        },
+        err => console.log('There has been a problem retrieving query parameters.'));
   }
 
   ngOnDestroy() {
-    this._subRoute.unsubscribe();
+    this.subQP.unsubscribe();
     this._subAuth.unsubscribe();
   }
 }

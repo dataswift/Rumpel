@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    window.location.href = 'http://' + this.hatDomain;
+    window.location.href = 'https://' + this.hatDomain
+    + '/hatlogin?name=Rumpel&redirect=https://rumpel.hubofallthings.com/users/authenticate';
   }
 
 }
