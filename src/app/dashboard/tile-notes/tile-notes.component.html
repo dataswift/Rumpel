@@ -9,6 +9,7 @@
     <li *ngFor="let note of notes" class="note">
       <p>{{note.message}}</p>
       <div class="timestamp">Last Edited {{note.updated_time | moment}}</div>
+      <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div>
     </li>
   </ul>
 </div>

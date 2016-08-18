@@ -5,6 +5,7 @@ export const NotesHatModel = {
     { name: "message" },
     { name: "created_time" },
     { name: "updated_time" },
+    { name: "public_until" },
     { name: "private" }
   ],
   subTables: [
@@ -14,6 +15,11 @@ export const NotesHatModel = {
       fields: [
         { name: "latitude" },
         { name: "longitude" },
+        { name: "accuracy" },
+        { name: "altitude" },
+        { name: "altitude_accuracy" },
+        { name: "heading" },
+        { name: "speed" },
         { name: "private" }
       ]
     },

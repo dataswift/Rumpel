@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizationService } from '@angular/platform-browser';
-import { Location } from '../../shared';
+import { Location } from '../../shared/interfaces';
 import { MapComponent } from '../map/map.component';
 import { LocationsService } from '../../services';
 

@@ -95,12 +95,22 @@ export class RumpelService {
   }
 
   private mapNotes(note: any): Note {
-    return {
+    let newNote = {
       message: note.message,
       created_time: moment(note.created_time),
       updated_time: moment(note.updated_time),
       private: note.private === 'true'
     };
+
+    if (note.location) {
+      newNote['location'] = {
+        latitude: note.location.latitude,
+        longitude: note.location.longitude,
+        accuracy: note.location.accuracy
+      }
+    }
+
+    return newNote;
   }
 
   private setupTable(name: string) {

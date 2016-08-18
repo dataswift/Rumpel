@@ -1,6 +1,6 @@
 import { Event } from './event.interface';
 import { Image } from './image.interface';
-import { Location } from './location.interface';
+import { Location } from './interfaces';
 import { Post } from './post.interface';
 
 export interface DataPoint {

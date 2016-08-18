@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Note } from '../../../shared/interfaces';
-import { RumpelService } from '../../../services';
+import { Note, Location } from '../../../shared/interfaces';
+import { RumpelService, LocationsService } from '../../../services';
 
 import * as moment from 'moment';
 
@@ -14,12 +14,21 @@ import * as moment from 'moment';
 export class NotesInputComponent implements OnInit {
   // Temporary workaround until Angular ships form reset feature
   public active: boolean;
-  public note: Note;
+  public reportLocation: boolean;
+  private currentLocation: Location;
 
-  constructor(private rumpelSvc: RumpelService) {}
+  constructor(private rumpelSvc: RumpelService,
+              private locationsSvc: LocationsService) {}
 
   ngOnInit() {
     this.active = true;
+    this.reportLocation = false;
+  }
+
+  changeLocationSetting() {
+    this.reportLocation = !this.reportLocation;
+
+    this.locationsSvc.getCurrentDeviceLocation((here: Location) => this.currentLocation = here);
   }
 
   onSubmit(form: NgForm) {
@@ -27,8 +36,12 @@ export class NotesInputComponent implements OnInit {
       message: form.value.message,
       created_time: moment().format(),
       updated_time: moment().format(),
-      private: true
+      private: form.value.private === true
     };
+
+    if (this.reportLocation) {
+      note['location'] = this.currentLocation;
+    }
 
     this.rumpelSvc.postNote(note);
     this.active = false;

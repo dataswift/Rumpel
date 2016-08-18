@@ -3,6 +3,7 @@ import { Subject, Observable } from 'rxjs/Rx';
 
 import { HatApiService } from './hat-api.service';
 import { DataPoint } from '../shared';
+import { Location } from '../shared/interfaces';
 import * as moment from 'moment';
 
 @Injectable()
@@ -40,18 +41,31 @@ export class LocationsService {
       .map(locations => locations.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1));;
   }
 
-  loadFrom(source: string): Observable<any> {
+  getCurrentDeviceLocation(callback) {
+    navigator.geolocation.getCurrentPosition(location => {
+      let here: Location = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        accuracy: location.coords.accuracy
+      };
+
+      return callback(here);
+    });
+  }
+
+  private loadFrom(source: string): Observable<any> {
     return this.hat.getAllValuesOf('locations', source);
   }
 
-  locMap(location: any): DataPoint {
+  private locMap(location: any): DataPoint {
     return {
       timestamp: moment(parseInt(location.start)),
       type: 'location',
       source: 'iphone',
       location: {
         latitude: location.latitude,
-        longitude: location.longitude
+        longitude: location.longitude,
+        accuracy: null
       }
     };
   }

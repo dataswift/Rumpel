@@ -2,10 +2,12 @@ form {
   margin: 2em;
 
   label {
-    display: none;
-    color: #9c9c9c;
     font-weight: normal;
-    font-size: 1.75em;
+    font-size: 1.4em;
+  }
+
+  .hidden {
+    display: none;
   }
 
   textarea {
