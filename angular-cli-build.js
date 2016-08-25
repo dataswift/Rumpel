@@ -17,7 +17,7 @@ module.exports = function(defaults) {
       'fullcalendar/dist/*.+(min.js|min.css)',
       'jquery/dist/*.js',
       'moment/moment.js',
-      'ng2-bs3-modal/**/*.js',
+      'angular2-modal/**/*.js',
       'leaflet/dist/leaflet.js',
       'leaflet/dist/images/*.png',
       'leaflet.markercluster/dist/leaflet.markercluster.js',

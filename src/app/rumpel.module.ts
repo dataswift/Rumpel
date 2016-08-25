@@ -9,19 +9,21 @@ import { RouterModule } from '@angular/router';
 import { routing, rumpelRoutingProviders } from './rumpel.routing';
 import { AuthGuard } from './auth.guard';
 import { AuthService, HatApiService, MarketSquareService, LocationsService, EventsService, ImagesService, SocialService, DataDebitService, ProfileService, UiStateService, RumpelService } from './services';
-import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 @NgModule({
   declarations: [
-    RumpelAppComponent,
-    MODAL_DIRECTIVES
+    RumpelAppComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     HttpModule,
     FormsModule,
-    routing
+    routing,
+    ModalModule.forRoot(),
+    BootstrapModalModule
   ],
   bootstrap: [RumpelAppComponent],
   providers: [

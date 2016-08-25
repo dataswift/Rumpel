@@ -1,32 +1,4 @@
-<div class="card-content" (click)="modal.open()" [style.background-color]="bkgColor">
+<div class="card-content" (click)="showContent()" [style.background-color]="bkgColor">
   <span class="card-info {{icon}}"></span>
   <h2 class="card-text">{{infoText}}</h2>
 </div>
-
-<modal #modal class="modal">
-  <modal-header [show-close]="true">
-      <h4 class="modal-title">Spotlight</h4>
-  </modal-header>
-  <modal-body style="text-align: center;">
-    <h2>HATDeX Business Solutions</h2>
-
-    <h5>3rd August 2016 by Irene Ng</h5>
-
-    <br>
-    <p>Organisations store and use a lot of personal data. This is necessary, because providing customers with services will inevitably result in the creation of the data. However, this comes with risks as well, because they would need to secure it and ensure it is private. These risks are not only costly, they also result in reputational risk if they don’t manage it well.</p>
-
-    <br>
-    <p>Read the full post on <a href="http://www.hatdex.org/hatdex-business-solutions/" target="_blank">HATDeX blog</a>.</p>
-    <!-- <h2>Beta release of HATs, Rumpel&trade; and MarketSquare&trade;</h2>
-
-    <h5>25th July 2016 by Irene Ng</h5>
-
-    <br>
-    <p>We are pleased to release HATs with Rumpel&trade; and MarketSquare&trade; today for testing by the beta community.</p>
-
-    <p>What you need to know about this beta release...</p>
-
-    <br>
-    <p>Read the full post on <a href="http://www.hatdex.org/beta-release-hats-rumpel-marketsquare/" target="_blank">HATDeX blog</a>.</p> -->
-  </modal-body>
-</modal>

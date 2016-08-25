@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
+
 import { AuthService } from '../services/auth.service';
+
 
 @Component({
   moduleId: module.id,
   selector: 'rump-header',
   templateUrl: 'header.component.html',
   styleUrls: ['header.component.css'],
-  directives: [ROUTER_DIRECTIVES, MODAL_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES]
 })
 export class HeaderComponent implements OnInit {
   public user: string;
@@ -16,24 +19,36 @@ export class HeaderComponent implements OnInit {
   public msg: string;
   private sub: any;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(private auth: AuthService, private router: Router,
+              private overlay: Overlay,
+              private vcRef: ViewContainerRef,
+              public modal: Modal) {
+    overlay.defaultViewContainer = vcRef;
     this.msg = 'whoCanSee';
     this.modalMsgs = {
       whoCanSee: {
         header: 'Who can see this page?',
-        body: `This page is only seen by you (and whoever is looking over your shoulder).
+        body: `<p>This page is only seen by you (and whoever is looking over your shoulder).
                Rumpel is your PERSONAL hyperdata browser for your HAT data.
-               You should treat this page like the way you would treat your bank statement page online.`,
-        footer: '',
-        link: ''
+               You should treat this page like the way you would treat your bank statement page online.</p>`,
+        footer: ''
       },
       bugReport: {
         header: 'Report A Bug',
-        body: `There are 2 ways to report bugs. Post them at the community forum here or
-               just drop us a note in the chatroom at Marketsquare.
-               There is already a room called feedback and bug report and you can talk to us there!`,
-        footer: 'Go To Forum',
-        link: 'http://forum.hatcommunity.org/c/hat-users'
+        body: `
+               <p>There are 2 ways to report bugs. Post them at the
+               community forum or just drop us a note in the chatroom at Marketsquare.
+               There is already a room called feedback and bug report and you can talk to us there!</p>
+               <div class="row">
+                 <div class="col-xs-offset-2 col-xs-3">
+                   <a href="http://forum.hatcommunity.org/c/hat-users" target="_blank" class="link-button">Go To Forum</a>
+                 </div>
+                 <div class="col-xs-offset-2 col-xs-4">
+                   <a href="https://marketsquare.hubofallthings.com" target="_blank" class="link-button">Chat To Us</a>
+                 </div>
+               </div>
+               `,
+        footer: 'Go To Forum'
       }
     }
   }
@@ -42,6 +57,15 @@ export class HeaderComponent implements OnInit {
     this.sub = this.auth.auth$.subscribe(isAuthenticated => {
       if (isAuthenticated) this.user = this.auth.getDomain();
     });
+  }
+
+  showModal() {
+    this.modal.alert()
+      .size('md')
+      .showClose(false)
+      .title(this.modalMsgs[this.msg].header)
+      .body(this.modalMsgs[this.msg].body)
+      .open();
   }
 
   signOut() {

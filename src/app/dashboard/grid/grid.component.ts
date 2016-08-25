@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { TileProfileComponent } from '../tile-profile/tile-profile.component';
 import { TileGenericComponent } from '../tile-generic/tile-generic.component';
 import { TileSocialComponent } from '../tile-social/tile-social.component';
@@ -14,7 +14,8 @@ import { TileDataDebitComponent } from '../tile-data-debit/tile-data-debit.compo
 import { TileNotesComponent } from '../tile-notes/tile-notes.component';
 import { Event, Post } from '../../shared';
 import { UiStateService } from '../../services';
-import { MODAL_DIRECTIVES, ModalComponent } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 import * as moment from 'moment';
 
 declare var $: any;
@@ -37,16 +38,19 @@ declare var $: any;
                TileDataDebitComponent,
                TileInfoComponent2,
                TileNotesComponent,
-               MODAL_DIRECTIVES]
+  ]
 })
 export class GridComponent implements OnInit, OnDestroy {
   public state: any;
   public showTile = { locations: false, events: false, posts: false }
   private sub: any;
-  @ViewChild('modal') modal: ModalComponent;
   private link: string;
 
-  constructor(private uiState: UiStateService) {
+  constructor(private uiState: UiStateService,
+              private overlay: Overlay,
+              private vcRef: ViewContainerRef,
+              public modal: Modal) {
+    overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit() {
@@ -76,8 +80,16 @@ export class GridComponent implements OnInit, OnDestroy {
   }
 
   setModalLink(link: string) {
+    console.log(this.modal);
     this.link = link;
-    this.modal.open();
+    this.modal.confirm()
+      .size('lg')
+      .showClose(true)
+      .title('Are you sure?')
+      .body('<p>You are now leaving your private Rumpel space. Are you sure? (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).</p>')
+      .okBtn('Continue')
+      .cancelBtn('Get Me Back')
+      .open();
   }
 
   navigateTo() {

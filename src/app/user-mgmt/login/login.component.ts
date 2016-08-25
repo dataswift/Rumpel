@@ -1,19 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { MODAL_DIRECTIVES } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
   moduleId: module.id,
   selector: 'rump-login',
   templateUrl: 'login.component.html',
-  styleUrls: ['login.component.css'],
-  directives: [MODAL_DIRECTIVES]
+  styleUrls: ['login.component.css']
 })
 export class LoginComponent implements OnInit {
   public hatDomain: string;
 
-  constructor() {}
+  constructor(private overlay: Overlay,
+              private vcRef: ViewContainerRef,
+              public modal: Modal) {
+    overlay.defaultViewContainer = vcRef;
+  }
 
   ngOnInit() {
+  }
+
+  showScreenshot() {
+    this.modal.alert()
+      .size('lg')
+      .showClose(true)
+      .title('Example of a populated Rumpel')
+      .body(`<img src="images/rumpel.png" class="img img-responsive">`)
+      .open();
   }
 
   onSubmit() {
