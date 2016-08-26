@@ -2,10 +2,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MarketSquareService, AuthService } from '../../services';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-data-plugs',
   templateUrl: 'tile-data-plugs.component.html',
-  styleUrls: ['tile-data-plugs.component.css']
+  styleUrls: ['tile-data-plugs.component.scss']
 })
 export class TileDataPlugsComponent implements OnInit {
   public plugs: Array<any>;

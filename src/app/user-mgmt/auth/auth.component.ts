@@ -3,10 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, RumpelService } from '../../services';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-auth',
   templateUrl: 'auth.component.html',
-  styleUrls: ['auth.component.css']
+  styleUrls: ['auth.component.scss']
 })
 export class AuthComponent implements OnInit, OnDestroy {
   private subQP: any;

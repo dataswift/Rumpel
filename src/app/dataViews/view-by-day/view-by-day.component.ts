@@ -4,10 +4,9 @@ import { DataPointComponent } from '../data-point/data-point.component';
 import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-view-by-day',
   templateUrl: 'view-by-day.component.html',
-  styleUrls: ['view-by-day.component.css'],
+  styleUrls: ['view-by-day.component.scss'],
   directives: [DataPointComponent],
   pipes: [Moment]
 })

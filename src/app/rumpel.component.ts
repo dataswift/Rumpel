@@ -7,10 +7,9 @@ import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
-  moduleId: module.id,
   selector: 'rumpel',
   templateUrl: 'rumpel.component.html',
-  styleUrls: ['rumpel.component.css'],
+  styleUrls: ['rumpel.component.scss'],
   directives: [HeaderComponent, FooterComponent, SideMenuComponent, ROUTER_DIRECTIVES]
 })
 export class RumpelAppComponent implements OnInit {

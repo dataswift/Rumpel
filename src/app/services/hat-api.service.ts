@@ -20,7 +20,8 @@ export class HatApiService {
     this._baseUrl = 'https://' + domain;
     this._token = token;
     this._headers = new Headers();
-    // this._headers.append('Content-Type', 'application/json');
+    this._headers.append('Content-Type', 'application/json');
+    // this._headers.append('Accept', 'application/json');
     this._headers.append('X-Auth-Token', this._token);
   }
 
@@ -29,13 +30,13 @@ export class HatApiService {
 
     const url = this._baseUrl + '/users/access_token/validate';
 
-    return this._http.get(url, { headers: this._headers }).map(res => res.json());
+    return this._http.get(url, { headers: this._headers, body: '' }).map(res => res.json());
   }
 
   getDataSources(): Observable<any> {
     const url = this._baseUrl + '/data/sources';
 
-    return this._http.get(url, { headers: this._headers })
+    return this._http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json());
   }
 
@@ -52,14 +53,14 @@ export class HatApiService {
 
     console.log('Getting table values: ', name, source);
 
-    return this._http.get(url, { headers: this._headers, search: query })
+    return this._http.get(url, { headers: this._headers, search: query, body: '' })
       .map(res => res.json());
   }
 
   getModel(tableId: number): Observable<any> {
     const url = this._baseUrl + '/data/table/' + tableId;
 
-    return this._http.get(url, { headers: this._headers })
+    return this._http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json());
   }
 
@@ -89,20 +90,20 @@ export class HatApiService {
     let query: URLSearchParams = new URLSearchParams();
     query.append('starttime', '0');
 
-    return this._http.get(url, { headers: this._headers , search: query })
+    return this._http.get(url, { headers: this._headers , search: query, body: '' })
       .map(res => res.json())
       .map(body => this.transform(body));
   }
 
   getDataDebit(uuid: string) {
     const url = this._baseUrl + '/dataDebit/' + uuid + '/values';
-    return this._http.get(url, { headers: this._headers })
+    return this._http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json());
   }
 
   getAllDataDebits() {
     const url = this._baseUrl + '/dataDebit';
-    return this._http.get(url, { headers: this._headers })
+    return this._http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json());
   }
 

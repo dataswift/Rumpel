@@ -7,10 +7,9 @@ import { AuthService } from '../services/auth.service';
 
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-header',
   templateUrl: 'header.component.html',
-  styleUrls: ['header.component.css'],
+  styleUrls: ['header.component.scss'],
   directives: [ROUTER_DIRECTIVES]
 })
 export class HeaderComponent implements OnInit {

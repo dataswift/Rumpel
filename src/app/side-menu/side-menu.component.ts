@@ -3,10 +3,9 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 import { UiStateService } from '../services';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-side-menu',
   templateUrl: 'side-menu.component.html',
-  styleUrls: ['side-menu.component.css'],
+  styleUrls: ['side-menu.component.scss'],
   directives: [ROUTER_DIRECTIVES]
 })
 export class SideMenuComponent implements OnInit {

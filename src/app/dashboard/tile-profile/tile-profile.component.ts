@@ -3,10 +3,9 @@ import { ProfileService } from '../../services';
 import { Profile } from '../../shared';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-profile',
   templateUrl: 'tile-profile.component.html',
-  styleUrls: ['tile-profile.component.css']
+  styleUrls: ['tile-profile.component.scss']
 })
 export class TileProfileComponent implements OnInit {
   public profile: Profile;

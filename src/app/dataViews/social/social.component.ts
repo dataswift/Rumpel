@@ -4,10 +4,9 @@ import { SocialService } from '../../services';
 import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-social',
   templateUrl: 'social.component.html',
-  styleUrls: ['social.component.css'],
+  styleUrls: ['social.component.scss'],
   directives: [FbPostComponent]
 })
 export class SocialComponent implements OnInit {

@@ -3,10 +3,9 @@ import { Component, OnInit, Input } from '@angular/core';
 declare let $: any;
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-header',
   templateUrl: 'tile-header.component.html',
-  styleUrls: ['tile-header.component.css']
+  styleUrls: ['tile-header.component.scss']
 })
 export class TileHeaderComponent implements OnInit {
   @Input() title: string;

@@ -9,10 +9,9 @@ import { DataPoint } from '../../shared';
 import * as moment from 'moment';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-mixpad',
   templateUrl: 'mixpad.component.html',
-  styleUrls: ['mixpad.component.css'],
+  styleUrls: ['mixpad.component.scss'],
   directives: [MapComponent, TimelineComponent, ViewByDayComponent],
   pipes: [TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe]
 })

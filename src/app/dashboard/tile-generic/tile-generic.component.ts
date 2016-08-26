@@ -3,10 +3,9 @@ import { EventsService } from '../../services';
 import { Moment, LimitMembersPipe } from '../../pipes';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-generic',
   templateUrl: 'tile-generic.component.html',
-  styleUrls: ['tile-generic.component.css'],
+  styleUrls: ['tile-generic.component.scss'],
   pipes: [Moment, LimitMembersPipe]
 })
 export class TileGenericComponent implements OnInit {
@@ -16,6 +15,7 @@ export class TileGenericComponent implements OnInit {
 
   ngOnInit() {
     this.events$ = this.eventsSvc.getEvents$();
+    // this.eventsSvc.showAll();
   }
 
 }

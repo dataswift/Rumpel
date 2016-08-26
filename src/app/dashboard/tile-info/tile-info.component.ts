@@ -4,10 +4,9 @@ import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-info',
   templateUrl: 'tile-info.component.html',
-  styleUrls: ['tile-info.component.css']
+  styleUrls: ['tile-info.component.scss']
 })
 export class TileInfoComponent implements OnInit {
   @Input() link: string;

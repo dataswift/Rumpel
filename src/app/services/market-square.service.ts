@@ -10,12 +10,12 @@ export class MarketSquareService {
   constructor(private http: Http) {
     this.baseUrl = 'https://marketsquare.hubofallthings.com/api';
     this._headers = new Headers();
-    // this._headers.append('Content-Type', 'application/json');
+    this._headers.append('Content-Type', 'application/json');
   }
 
   getOffer(): Observable<any> {
     const url = this.baseUrl + '/offers';
-    return this.http.get(url, { headers: this._headers })
+    return this.http.get(url, { headers: this._headers, body: '' })
         .map(res => res.json())
         .map(offers => {
           const validOffers = offers.filter(offer => offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
@@ -25,7 +25,7 @@ export class MarketSquareService {
 
   getDataPlugs(): Observable<any> {
     const url = this.baseUrl + '/dataplugs';
-    return this.http.get(url, { headers: this._headers })
+    return this.http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json());
   }
 

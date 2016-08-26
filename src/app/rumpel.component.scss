@@ -1,12 +1,10 @@
-@import "variables";
-
 .content-main {
-  background: $base-black;
+  background: rgb(1, 1, 1);
 
   .menubar-left {
     min-width: 6em;
-    background: $base-black;
-    color: $base-white;
+    background: rgb(1, 1, 1);
+    color: white;
     float: left;
     font-family: 'Open Sans Condensed', sans-serif;
     font-weight: lighter;

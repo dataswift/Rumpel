@@ -1,10 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-switch',
   templateUrl: 'switch.component.html',
-  styleUrls: ['switch.component.css']
+  styleUrls: ['switch.component.scss']
 })
 export class SwitchComponent implements OnInit {
   @Input() id: string;

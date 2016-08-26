@@ -21,10 +21,9 @@ import * as moment from 'moment';
 declare var $: any;
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-grid',
   templateUrl: 'grid.component.html',
-  styleUrls: ['grid.component.css'],
+  styleUrls: ['grid.component.scss'],
   directives: [TileProfileComponent,
                TileGenericComponent,
                TileSocialComponent,

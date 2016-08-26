@@ -4,10 +4,9 @@ import { DataDebitService } from '../../services';
 import { Moment } from '../../pipes';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-data-debit',
   templateUrl: 'tile-data-debit.component.html',
-  styleUrls: ['tile-data-debit.component.css'],
+  styleUrls: ['tile-data-debit.component.scss'],
   directives: [ROUTER_DIRECTIVES],
   pipes: [Moment]
 })

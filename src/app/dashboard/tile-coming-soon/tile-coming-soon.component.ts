@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-coming-soon',
   templateUrl: 'tile-coming-soon.component.html',
-  styleUrls: ['tile-coming-soon.component.css']
+  styleUrls: ['tile-coming-soon.component.scss']
 })
 export class TileComingSoonComponent implements OnInit {
   @Input() bkgImage: string;

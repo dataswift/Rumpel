@@ -4,10 +4,9 @@ import { DataDebitService, HatApiService } from '../../services';
 import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-data-debit-confirm',
   templateUrl: 'data-debit-confirm.component.html',
-  styleUrls: ['data-debit-confirm.component.css'],
+  styleUrls: ['data-debit-confirm.component.scss'],
   pipes: [Moment]
 })
 export class DataDebitConfirmComponent implements OnInit {

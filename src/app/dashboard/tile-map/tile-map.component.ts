@@ -4,10 +4,9 @@ import { LocationsService } from '../../services';
 import { MapComponent } from '../../dataViews/map/map.component';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-map',
   templateUrl: 'tile-map.component.html',
-  styleUrls: ['tile-map.component.css'],
+  styleUrls: ['tile-map.component.scss'],
   directives: [MapComponent]
 })
 export class TileMapComponent implements OnInit {

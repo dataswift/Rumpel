@@ -5,10 +5,9 @@ import { DataPoint } from '../../shared';
 declare var L: any;
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-map',
   templateUrl: 'map.component.html',
-  styleUrls: ['map.component.css']
+  styleUrls: ['map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
   @Input() dataPoints: Array<DataPoint>;

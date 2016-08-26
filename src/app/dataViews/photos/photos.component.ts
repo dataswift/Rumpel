@@ -5,10 +5,9 @@ import { Image } from '../../shared';
 import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-photos',
   templateUrl: 'photos.component.html',
-  styleUrls: ['photos.component.css'],
+  styleUrls: ['photos.component.scss'],
   directives: [PhotoGridComponent],
   pipes: [Moment]
 })

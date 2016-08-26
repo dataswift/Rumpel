@@ -6,10 +6,9 @@ import * as moment from 'moment';
 declare var $: any;
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-calendar',
   templateUrl: 'calendar.component.html',
-  styleUrls: ['calendar.component.css'],
+  styleUrls: ['calendar.component.scss'],
   pipes: [Moment],
 })
 export class CalendarComponent implements OnInit {

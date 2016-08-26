@@ -5,10 +5,9 @@ import { MapComponent } from '../map/map.component';
 import { LocationsService } from '../../services';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-locations',
   templateUrl: 'locations.component.html',
-  styleUrls: ['locations.component.css'],
+  styleUrls: ['locations.component.scss'],
   directives: [MapComponent]
 })
 export class LocationsComponent implements OnInit {

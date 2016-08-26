@@ -1,5 +1,3 @@
-@import "variables";
-
 ul {
   list-style: none;
   padding: 0;
@@ -17,16 +15,16 @@ ul {
     }
 
     a {
-      color: $text-white;
+      color: white;
       text-decoration: none;
     }
 
     &.selected {
-      background: $base-grey;
+      background: #262626;
     }
 
     &:hover {
-      background-color: $base-grey;
+      background-color: #262626;
     }
 
     button {

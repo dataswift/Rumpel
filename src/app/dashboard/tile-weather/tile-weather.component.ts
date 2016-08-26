@@ -3,10 +3,9 @@ import { WeatherService } from '../../services/weather.service';
 import * as moment from 'moment';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-tile-weather',
   templateUrl: 'tile-weather.component.html',
-  styleUrls: ['tile-weather.component.css'],
+  styleUrls: ['tile-weather.component.scss'],
   providers: [WeatherService]
 })
 export class TileWeatherComponent implements OnInit {

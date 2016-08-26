@@ -2,10 +2,9 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angu
 import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-timeline',
   templateUrl: 'timeline.component.html',
-  styleUrls: ['timeline.component.css'],
+  styleUrls: ['timeline.component.scss'],
   pipes: [Moment]
 })
 export class TimelineComponent implements OnInit, OnChanges {

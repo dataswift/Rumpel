@@ -6,10 +6,9 @@ import { RumpelService, LocationsService } from '../../../services';
 import * as moment from 'moment';
 
 @Component({
-  moduleId: module.id,
   selector: 'rump-notes-input',
   templateUrl: 'notes-input.component.html',
-  styleUrls: ['notes-input.component.css']
+  styleUrls: ['notes-input.component.scss']
 })
 export class NotesInputComponent implements OnInit {
   // Temporary workaround until Angular ships form reset feature
