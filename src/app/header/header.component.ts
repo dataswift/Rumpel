@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
         footer: ''
       },
       bugReport: {
-        header: 'Report A Bug',
+        header: 'Report An Issue',
         body: `
                <p>There are 2 ways to report bugs. Post them at the
                community forum or just drop us a note in the chatroom at Marketsquare.

@@ -3,7 +3,8 @@ import { AuthComponent, LoginComponent } from './index';
 
 export const userMgmtRoutes: Routes = [
   { path: 'users/login', component: LoginComponent },
-  { path: 'users/authenticate', component: AuthComponent }
+  { path: 'users/authenticate', component: AuthComponent },
+  { path: 'users/authenticate/:jwt', component: AuthComponent }
 ];
 
 // export const userMgmtRouting = RouterModule.forChild(userMgmtRoutes);

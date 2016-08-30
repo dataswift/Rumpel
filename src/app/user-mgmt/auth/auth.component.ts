@@ -9,6 +9,7 @@ import { AuthService, RumpelService } from '../../services';
 })
 export class AuthComponent implements OnInit, OnDestroy {
   private subQP: any;
+  private subPP: any;
   private _subAuth: any;
   public message: string;
 
@@ -40,13 +41,19 @@ export class AuthComponent implements OnInit, OnDestroy {
       .subscribe(
         jwtToken => {
           if (jwtToken) this.authSvc.authenticate(jwtToken);
-          else this.message = 'Seems like your link did not have right authentication credentials.'
+          // else this.message = 'Seems like your link did not have right authentication credentials.'
         },
         err => console.log('There has been a problem retrieving query parameters.'));
+
+    this.subPP = this.route.params.subscribe(params => {
+      let jwtToken = params['jwt'];
+      if (jwtToken) this.authSvc.authenticate(jwtToken);
+    });
   }
 
   ngOnDestroy() {
     this.subQP.unsubscribe();
+    this.subPP.unsubscribe();
     this._subAuth.unsubscribe();
   }
 }

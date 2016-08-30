@@ -15,29 +15,34 @@ export class EventsService {
     this.events$ = <Subject<DataPoint[]>>new Subject();
   }
 
-  getEvents$(): Observable<DataPoint[]> {
+  getEvents$() {
+    return this.events$.asObservable();
+  }
+
+  showAll() {
     if (this.store.events.length > 0) {
       console.log('Inside events if');
-      return Observable.of(this.store.events);
+      return this.events$.next(this.store.events);
     }
 
     this.loadAll().subscribe(
-      data => {
-        const mergedData = data[0].concat(data[1]);
-        const timeSortedData = mergedData.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1);
+      dataArray => {
+        const data = dataArray[0].concat(dataArray[1]);
+        const timeSortedData = data.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1);
         this.store.events = timeSortedData;
         this.events$.next(this.store.events);
       },
       err => console.log(`Events table could not be found.`)
     );
-
-    return this.events$.asObservable();
   }
 
   loadAll(): Observable<any> {
     return Observable.forkJoin(
-      this.loadFrom('facebook').map(events => events.map(this.fbMap)),
-      this.loadFrom('ical').map(events => events.map(this.icalMap)));
+      this.loadFrom('ical')
+        .map(events => events.map(this.icalMap)),
+      this.loadFrom('facebook')
+        .map(events => events.map(this.fbMap))
+      );
   }
 
   loadFrom(source: string): Observable<any> {
@@ -71,16 +76,16 @@ export class EventsService {
 
   icalMap(event): DataPoint {
     return {
-      timestamp: moment(event.start_time),
+      timestamp: moment(event.startDate),
       type: 'event',
       source: 'calendar',
       content: {
         name: event.summary,
         description: event.description,
-        start: moment(event.start_date),
-        end: event.end_date ? moment(event.end_date) : null,
+        start: moment(event.startDate),
+        end: event.end_date ? moment(event.endDate) : null,
         rsvp: 'unknown',
-        calendarName: event.calendar_name
+        calendarName: event.calendarName
       }
     };
   }

@@ -42,7 +42,13 @@ export class HatApiService {
 
   getAllValuesOf(name: string, source: string): Observable<any> {
     return this.getTable(name, source)
-      .flatMap(table => this.getValues(table.id));
+      .flatMap(table => {
+        if (table === "Not Found") {
+          return Observable.of([]);
+        } else {
+          return this.getValues(table.id);
+        }
+      });
   }
 
   getTable(name: string, source: string): Observable<any> {
@@ -54,7 +60,10 @@ export class HatApiService {
     console.log('Getting table values: ', name, source);
 
     return this._http.get(url, { headers: this._headers, search: query, body: '' })
-      .map(res => res.json());
+      .map(res => res.json())
+      .catch(e => {
+        if (e.status === 404) return Observable.of("Not Found");
+      });
   }
 
   getModel(tableId: number): Observable<any> {

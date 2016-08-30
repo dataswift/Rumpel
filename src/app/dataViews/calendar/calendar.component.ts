@@ -64,9 +64,13 @@ export class CalendarComponent implements OnInit {
 
       this.updateCalendar();
     });
+
+    this.eventsSvc.showAll();
+
   }
 
   private updateCalendar() {
+    $('#calendar').fullCalendar('removeEvents');
     $('#calendar').fullCalendar('addEventSource', this.events);
   }
 

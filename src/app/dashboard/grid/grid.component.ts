@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { TileProfileComponent } from '../tile-profile/tile-profile.component';
-import { TileGenericComponent } from '../tile-generic/tile-generic.component';
+import { TileCalendarComponent } from '../tile-calendar/tile-calendar.component';
 import { TileSocialComponent } from '../tile-social/tile-social.component';
 import { TileWeatherComponent } from '../tile-weather/tile-weather.component';
 import { TileHeaderComponent } from '../tile-header/tile-header.component';
@@ -25,7 +25,7 @@ declare var $: any;
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.scss'],
   directives: [TileProfileComponent,
-               TileGenericComponent,
+               TileCalendarComponent,
                TileSocialComponent,
                TileWeatherComponent,
                TileHeaderComponent,
