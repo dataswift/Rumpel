@@ -22,18 +22,23 @@
 }
 
 .navbar-nav {
+  li {
+    margin-top: 0.4em;
+  }
+
   li > a {
-    padding: 0.5em 0.5em;
+    margin: 0;
+    padding: 0.3em 0.5em;
     color: #ffffff;
   }
 
   .user-nav > p {
     margin: 0;
-    padding: 0.5em 0.5em;
+    padding: 0.3em 0.5em;
     color: #ffffff;
     line-height: 20px;
   }
-  font-size: 2.5em;
+  font-size: 2.2em;
   font-family: 'Open Sans Condensed', sans-serif;
   font-weight: lighter;
   text-transform: capitalize;

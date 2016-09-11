@@ -48,13 +48,13 @@ export class HatApiService {
       .map(res => res.json());
   }
 
-  getAllValuesOf(name: string, source: string): Observable<any> {
+  getAllValuesOf(name: string, source: string, startTime?: string): Observable<any> {
     return this.getTable(name, source)
       .flatMap(table => {
         if (table === "Not Found") {
           return Observable.of([]);
         } else {
-          return this.getValues(table.id);
+          return this.getValues(table.id, startTime);
         }
       });
   }
@@ -101,11 +101,11 @@ export class HatApiService {
     return this._http.post(url, hatFormattedObj, { headers: this._headers });
   }
 
-  getValues(tableId: number): Observable<any> {
+  getValues(tableId: number, startTime: string = '0'): Observable<any> {
     const url = this._baseUrl + '/data/table/' + tableId + '/values';
 
     let query: URLSearchParams = new URLSearchParams();
-    query.append('starttime', '0');
+    query.append('starttime', startTime);
 
     return this._http.get(url, { headers: this._headers , search: query, body: '' })
       .map(res => res.json())

@@ -8,9 +8,10 @@
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="!!user" class="user-nav" style="text-transform: lowercase;"><p>{{user}}</p></li>
         <li *ngIf="!!user" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
-        <li><a [routerLink]="['about']">About</a></li>
+        <li><a href="http://www.hatdex.org/rumpel-platform/" target="_blank" style="cursor: pointer;">New to Rumpel</a></li>
+        <li><a [href]="msLink ? msLink : 'https://marketsquare.hubofallthings.com'"
+               target="_blank" style="cursor: pointer;">MarketSquare</a></li>
         <li class="user-nav" style="cursor: pointer;" (click)="msg = 'whoCanSee'; showModal()"><p>Who Can See This?</p></li>
-        <li class="user-nav" style="cursor: pointer;" (click)="msg = 'bugReport'; showModal()"><p>Report An Issue</p></li>
       </ul>
     </div>
   </div>

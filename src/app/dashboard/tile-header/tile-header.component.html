@@ -1,7 +1,8 @@
-<div class="tile-header" [style.background-color]="backColor">
+<div class="tile-header" [style.background-color]="backColor" (click)="navigateTo(title.toLowerCase())" style="cursor: pointer">
   <span class="tile-logo ss-{{iconName}}"></span>
   <div class="tile-title">{{title}}</div>
   <button type="button" data-toggle="popover" data-container="body"
           [attr.data-content]="info" class="info-button"
+          data-trigger="focus"
           data-placement="auto left"><span class="tile-expand ss-info"></span></button>
 </div>

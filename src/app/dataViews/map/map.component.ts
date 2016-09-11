@@ -57,27 +57,28 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ajustBoundingBox(lat: number, lng: number) {
-      this.bbox.minLat = Math.min(this.bbox.minLat, lat);
-      this.bbox.maxLat = Math.max(this.bbox.maxLat, lat);
-      this.bbox.minLng = Math.min(this.bbox.minLng, lng);
-      this.bbox.maxLng = Math.max(this.bbox.maxLng, lng);
-    }
+    this.bbox.minLat = Math.min(this.bbox.minLat, lat);
+    this.bbox.maxLat = Math.max(this.bbox.maxLat, lat);
+    this.bbox.minLng = Math.min(this.bbox.minLng, lng);
+    this.bbox.maxLng = Math.max(this.bbox.maxLng, lng);
+  }
+
 
   drawMarkers(dps: Array<DataPoint>) {
-      this.map.removeLayer(this.markers);
-      this.markers = L.markerClusterGroup();
-      this.resetBoundingBox();
-      for(let dp of dps) {
-        this.ajustBoundingBox(dp.location.latitude, dp.location.longitude);
-        let pos = new L.LatLng(dp.location.latitude, dp.location.longitude);
-        let marker = L.marker(pos);
-        marker.timestamp = dp.timestamp;
-        let self = this;
-        marker.on('click', (e: any) => {
-          self.onMarkerSelected(e);
-        });
-        this.markers.addLayer(marker);
-      }
+    this.map.removeLayer(this.markers);
+    this.markers = L.markerClusterGroup();
+    this.resetBoundingBox();
+    for(let dp of dps) {
+      this.ajustBoundingBox(dp.location.latitude, dp.location.longitude);
+      let pos = new L.LatLng(dp.location.latitude, dp.location.longitude);
+      let marker = L.marker(pos);
+      marker.timestamp = dp.timestamp;
+      let self = this;
+      marker.on('click', (e: any) => {
+        self.onMarkerSelected(e);
+      });
+      this.markers.addLayer(marker);
+    }
 
     this.map.addLayer(this.markers);
     }

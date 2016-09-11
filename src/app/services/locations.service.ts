@@ -54,12 +54,14 @@ export class LocationsService {
   }
 
   private loadFrom(source: string): Observable<any> {
-    return this.hat.getAllValuesOf('locations', source);
+    let startTime = moment().subtract(7, 'days').format('X');
+
+    return this.hat.getAllValuesOf('locations', source, startTime);
   }
 
   private locMap(location: any): DataPoint {
     return {
-      timestamp: moment(parseInt(location.start)),
+      timestamp: moment(location.timestamp),
       type: 'location',
       source: 'iphone',
       location: {

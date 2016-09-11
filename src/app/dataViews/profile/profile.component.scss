@@ -26,7 +26,7 @@ section {
 }
 
 .settings, .picture {
-  height: 22em;
+  height: 24em;
 }
 
 .picture {
@@ -35,8 +35,8 @@ section {
 
 .settings {
   .profile-privacy-switch{
-    margin-left: 1.5em;
-    margin-top: 1.5em;
+    margin-left: 0.75em;
+    margin-top: 0.75em;
 
     * {
       float: left;
@@ -55,12 +55,27 @@ section {
   }
 
   .info {
-    padding-top: 2em;
+    padding-top: 1em;
+    padding-left: 0.75em;
+    padding-right: 0.75em;
     clear: both;
 
     p {
-      font-size: 1.5em;
+      font-size: 1.7em;
     }
+  }
+}
+
+.intro {
+  .section-body {
+    div {
+      margin-right: 0.75em;
+      margin-left: 0.75em;
+    }
+  }
+
+  p {
+    font-size: 1.7em;
   }
 }
 
@@ -74,11 +89,12 @@ form {
   margin-right: 2em;
 
   &.field-switch {
-    margin-top: 0.25em;
-    font-size: 8px;
+    margin-top: 0.4em;
+    font-size: 7px;
   }
 
   &.group-switch {
+    margin-top: 0.4em;
     font-size: 14px;
   }
 }
@@ -128,7 +144,7 @@ form {
   label {
     color: #9c9c9c;
     font-weight: normal;
-    font-size: 1.75em;
+    font-size: 1.3em;
   }
 
   textarea,
@@ -136,10 +152,8 @@ form {
     display: block;
     font-family: "Open Sans", sans-serif;
     background-color: #f3f3f3;
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: 300;
-    padding-top: 1em;
-    padding-bottom: 1em;
     border-radius: 0;
 
     &:focus {
@@ -147,6 +161,16 @@ form {
       box-shadow: 0 0 5px rgba(1, 134, 117, 0.5);
       border-color: rgba(1, 134, 117, 0.3);
     }
+  }
+
+  input[type=text] {
+    height: 2.4em;
+    padding-top: 0.5em;
+  }
+
+  textarea {
+    padding-top: 1em;
+    padding-bottom: 1em;
   }
 
   input[name=title] {

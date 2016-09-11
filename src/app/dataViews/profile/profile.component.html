@@ -2,6 +2,16 @@
   <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
     <form #f="ngForm" (submit)="submitForm($event)">
       <div class="row" style="margin: 0;">
+        <section class="intro">
+          <div class="section-body">
+            <div>
+              <p>Update your profile information and customise your personal HAT address (PHATA) page - your public facing personal web page online (yourhatname.hubofallthings.net).</p>
+
+              <p>Learn more <a href="http://www.hatdex.org/phata/" target="_blank">about PHATA</a>.</p>
+            </div>
+          </div>
+        </section>
+
         <section class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
           <h3 class="section-title">Profile Settings</h3>
 
@@ -11,12 +21,13 @@
               <rump-switch class="main-switch" [id]="'profile-privacy'"
                      [isChecked]="profile.private === 'false'"
                      (onSwitch)="toggleProfilePrivacy()"></rump-switch>
-              <span>Public</span>
+              <span>Shared</span>
             </div>
 
             <div class="info">
-              <p>By setting your profile to 'public', you can choose which parts of your data to be viewable. Please remember to SAVE your settings below.</p>
-              <p>You can see how the public would view your HAT by going to your personal HAT address (PHATA) page <a href="{{hatUrl}}/profile">here</a>.</p>
+              <p>By setting your profile to 'SHARED', you can choose which parts of your data to be shown on your PHATA page and viewable publicly. Please remember to SAVE your settings below.</p>
+
+              <p>You can see how the public would view your HAT by going to your PHATA page <a href="{{hatUrl}}/profile" target="_blank">here</a>.</p>
             </div>
           </div>
         </section>

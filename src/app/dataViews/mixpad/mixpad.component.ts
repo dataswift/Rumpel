@@ -41,6 +41,7 @@ export class MixpadComponent implements OnInit {
     this.socialSvc.showAll()
       .merge(this.eventsSvc.getEvents$())
       .merge(this.imagesSvc.loadAll())
+      .merge(this.locationsSvc.getLocations$())
       .subscribe((dataPoints: Array<DataPoint>) => {
 
         for (let dp of dataPoints) {

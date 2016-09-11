@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 declare let $: any;
 
@@ -13,12 +14,18 @@ export class TileHeaderComponent implements OnInit {
   @Input() backColor: string;
   @Input() info: string;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    $(function () {
-      $('[data-toggle="popover"]').popover();
+    $('[data-toggle="popover"]').click(function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      $(this).popover("show");
     });
+  }
+
+  navigateTo(pageName: string) {
+    this.router.navigate([pageName]);
   }
 
 }

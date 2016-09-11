@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizationService } from '@angular/platform-browser';
 import { Location } from '../../shared/interfaces';
 import { MapComponent } from '../map/map.component';
@@ -10,7 +10,7 @@ import { LocationsService } from '../../services';
   styleUrls: ['locations.component.scss'],
   directives: [MapComponent]
 })
-export class LocationsComponent implements OnInit {
+export class LocationsComponent implements OnInit, OnDestroy {
   public locations;
   public safeSize;
   private sub;
@@ -27,5 +27,9 @@ export class LocationsComponent implements OnInit {
     this.locationsSvc.showAll();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

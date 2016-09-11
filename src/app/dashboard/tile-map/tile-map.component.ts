@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DomSanitizationService } from '@angular/platform-browser';
 import { LocationsService } from '../../services';
 import { MapComponent } from '../../dataViews/map/map.component';
@@ -9,20 +9,28 @@ import { MapComponent } from '../../dataViews/map/map.component';
   styleUrls: ['tile-map.component.scss'],
   directives: [MapComponent]
 })
-export class TileMapComponent implements OnInit {
+export class TileMapComponent implements OnInit, OnDestroy {
   @Input() title;
   @Input() iconName;
   @Input() info;
-  public locations$;
+  public locations;
+  private sub;
   public safeSize;
 
   constructor(private sanitizer: DomSanitizationService,
               private locationSvc: LocationsService) {}
 
   ngOnInit() {
+    this.locations = [];
+
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('29em');
-    this.locations$ = this.locationSvc.getLocations$();
+    this.sub = this.locationSvc.getLocations$().subscribe(locations => {
+      this.locations = locations;
+    });
     this.locationSvc.showAll();
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }

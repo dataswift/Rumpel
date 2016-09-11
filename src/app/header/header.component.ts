@@ -3,7 +3,7 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
-import { AuthService } from '../services/auth.service';
+import { AuthService, HatApiService } from '../services';
 
 
 @Component({
@@ -17,11 +17,12 @@ export class HeaderComponent implements OnInit {
   public modalMsgs: any;
   public msg: string;
   private sub: any;
+  public msLink: string;
 
   constructor(private auth: AuthService, private router: Router,
               private overlay: Overlay,
               private vcRef: ViewContainerRef,
-              public modal: Modal) {
+              public modal: Modal  ) {
     overlay.defaultViewContainer = vcRef;
     this.msg = 'whoCanSee';
     this.modalMsgs = {
@@ -54,7 +55,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.sub = this.auth.auth$.subscribe(isAuthenticated => {
-      if (isAuthenticated) this.user = this.auth.getDomain();
+      if (isAuthenticated) {
+        this.user = this.auth.getDomain();
+        this.msLink = `https://${this.user}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
+      }
     });
   }
 

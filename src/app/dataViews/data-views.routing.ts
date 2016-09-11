@@ -4,9 +4,9 @@ import { SocialComponent, LocationsComponent, CalendarComponent, PhotosComponent
 
 export const dataViewsRoutes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'posts', component: SocialComponent, canActivate: [AuthGuard] },
+  { path: 'social', component: SocialComponent, canActivate: [AuthGuard] },
   { path: 'locations', component: LocationsComponent, canActivate: [AuthGuard] },
-  { path: 'events', component: CalendarComponent, canActivate: [AuthGuard] },
+  { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] },
   { path: 'photos', component: PhotosComponent, canActivate: [AuthGuard] },
   { path: 'mixpad', component: MixpadComponent, canActivate: [AuthGuard] }
 ];
