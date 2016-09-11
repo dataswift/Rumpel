@@ -10,10 +10,15 @@ export class DataDebitService {
               private _marketSvc: MarketSquareService) {}
 
   loadOffer(uuid: string): Observable<any> {
+    console.log('UUID', uuid);
     return Observable.forkJoin(
       this._marketSvc.getOffer()
-        .map((marketOffers: Array<any>) => marketOffers.find(offerItem => offerItem.offer.uuid === uuid))
+        .map(marketOffers => marketOffers.find(offerItem => offerItem.offer.uuid === uuid))
     );
+  }
+
+  loadDataDebit(uuid: string) {
+    return this._hatSvc.getDataDebit(uuid);
   }
 
   loadAllDataDebits() {

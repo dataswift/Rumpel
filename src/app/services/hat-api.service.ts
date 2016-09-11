@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
+import { DataDebit } from '../shared/interfaces';
+import * as moment from 'moment';
 
 const HAT_PORT = 8080;
 
 @Injectable()
 export class HatApiService {
   private _token: string;
+  private _domain: string;
   private _baseUrl: string;
   private _headers: Headers;
 
@@ -16,8 +19,13 @@ export class HatApiService {
     return this._baseUrl;
   }
 
+  getDomain() {
+    return this._domain;
+  }
+
   updateCredentials(domain: string, token: string) {
     this._baseUrl = 'https://' + domain;
+    this._domain = domain;
     this._token = token;
     this._headers = new Headers();
     this._headers.append('Content-Type', 'application/json');
@@ -101,13 +109,14 @@ export class HatApiService {
 
     return this._http.get(url, { headers: this._headers , search: query, body: '' })
       .map(res => res.json())
-      .map(body => this.transform(body));
+      .map(body => this.transformRecord(body));
   }
 
   getDataDebit(uuid: string) {
-    const url = this._baseUrl + '/dataDebit/' + uuid + '/values';
+    const url = this._baseUrl + '/dataDebit/' + uuid + '/values?limit=0&starttime=0';
     return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json());
+      .map(res => res.json())
+      .map(debit => this.transformDataDebit(debit));
   }
 
   getAllDataDebits() {
@@ -176,7 +185,40 @@ export class HatApiService {
     return mapping;
   }
 
-  private transform(raw: Array<any>) {
+  private transformDataDebit(rawDebit) {
+    let dataGroups = rawDebit.bundleContextless.dataGroups;
+
+    let dataGroupsNames = Object.keys(dataGroups);
+
+    let mappedDataGroups = dataGroupsNames.map(groupName => {
+      return {
+        name: groupName,
+        data: dataGroups[groupName].map(group => {
+          return {
+            name: group.name,
+            data: this.transformRecord(group.data)
+          }
+        })
+      }
+    });
+
+    let processedDebit: DataDebit = {
+      dateCreated: moment(rawDebit.dateCreated),
+      startDate: moment(rawDebit.startDate),
+      endDate: moment(rawDebit.endDate),
+      lastUpdated: moment(rawDebit.lastUpdated),
+      name: rawDebit.name,
+      price: rawDebit.price,
+      rolling: rawDebit.rolling,
+      sell: rawDebit.sell,
+      key: rawDebit.key,
+      dataToShare: mappedDataGroups
+    };
+
+    return processedDebit;
+  }
+
+  private transformRecord(raw: Array<any>) {
     return raw.map((record) => {
       return this.processNode(record.tables[0]);
     });

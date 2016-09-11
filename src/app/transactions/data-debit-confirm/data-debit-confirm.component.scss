@@ -29,7 +29,7 @@
 }
 
 .offer-description {
-  font-size: 1em;
+  font-size: 1.5em;
 }
 
 .offer-dialog {
@@ -48,6 +48,7 @@
   background-color: #37474F;
   text-transform: uppercase;
   color: #ffffff;
+  cursor: pointer;
 }
 
 .btn-accept {
@@ -73,7 +74,7 @@
 }
 
 .panel.panel-rump .panel-heading {
-  font-size: 1em;
+  font-size: 1.5em;
   text-transform: uppercase;
   background-color: #ececec;
 }
@@ -85,7 +86,18 @@
 }
 
 ul {
+  font-family: "Open Sans Regular", sans-serif;
   list-style: none;
-  padding: 0;
-  margin: 0;
+
+  li {
+    padding-bottom: 0.25em;
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.ss-puzzle {
+  color: #018675;
 }

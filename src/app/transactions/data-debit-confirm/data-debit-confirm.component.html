@@ -1,13 +1,13 @@
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-xs-10 col-xs-offset-1">
     <div class="offer">
       <div class="offer-title">
-        <h2 class="text-center">{{offerInfo.offer.title}}</h2>
+        <h2 class="text-center">{{dataDebit?.name}}</h2>
         <div class="offer-reward text-center">
-          <a href="{{offerInfo.offer.reward.vendorUrl}}" target="_blank">{{offerInfo.offer.reward.vendor}}</a>
-          {{offerInfo.offer.reward.rewardType | lowercase}}: {{offerInfo.offer.reward.value}}
+          Price: {{dataDebit?.price}}
         </div>
-        <div class="offer-description text-center">{{offerInfo.offer.description}}</div>
+        <div class="offer-description text-center">
+          Valid until: {{dataDebit?.endDate | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</div>
       </div>
       <div class="offer-dialog text-center">
         <button class="btn btn-rump btn-accept"
@@ -17,26 +17,31 @@
       </div>
       <div class="alert-message text-center">
         <span class="icon-alert ss-alert"></span>
-        You're almost there, you need to retrieve one or more data sources to qualify for this offer.
+        Last chance to review the data being released before accepting offer.
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 debit-review">
-        <div class="panel panel-rump">
-          <div class="panel-heading">Facebook</div>
+    <div class="row" *ngIf="dataDebit">
+      <div class="col-xs-6 col-xs-offset-3 debit-review">
+        <div class="panel panel-rump" *ngFor="let source of dataDebit.dataToShare">
+          <div class="panel-heading">{{source.name.charAt(0).toUpperCase() + source.name.slice(1)}}</div>
           <div class="panel-body">
-            <ul>
-              <li class="data-debit-unit">
-                <span class="table">Events</span><span class="field">id</span>Facebook event ID.
-              </li>
-              <li class="data-debit-unit">
-                <span class="table">Events</span><span class="field">Start Time</span>Event starting time.
-              </li>
-            </ul>
+            <section *ngFor="let table of source.data">
+              <h4>{{table.name.charAt(0).toUpperCase() + table.name.slice(1)}}</h4>
+
+              <ul *ngFor="let field of table.data[0] | withObject">
+                <li class="data-debit-unit">
+                  <div class="row">
+                    <div class="col-xs-1 center"><span class="ss-puzzle"></span></div>
+                    <div class="col-xs-2 field">{{field.key}}</div>
+                    <div class="col-xs-9">{{field.value}}</div>
+                  </div>
+                </li>
+              </ul>
+            </section>
           </div>
         </div>
       </div>
-      <div class="col-md-6 offer-terms">
+     <!--  <div class="col-md-6 offer-terms">
         <div class="panel panel-rump">
           <div class="panel-heading">Terms of Offer</div>
           <div class="panel-body">
@@ -52,7 +57,7 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
