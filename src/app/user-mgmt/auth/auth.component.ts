@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, RumpelService } from '../../services';
+import { AuthService, RumpelService, MarketSquareService } from '../../services';
 
 @Component({
   selector: 'rump-auth',
@@ -16,7 +16,8 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute,
               private router: Router,
               private authSvc: AuthService,
-              private rumpelSvc: RumpelService) {}
+              private rumpelSvc: RumpelService,
+              private msSvc: MarketSquareService) {}
 
   ngOnInit() {
     this.message = 'Accessing your HAT data... please hold.';
@@ -24,8 +25,12 @@ export class AuthComponent implements OnInit, OnDestroy {
     this._subAuth = this.authSvc.auth$
       .flatMap(
         isAuthenticated => {
-          if (isAuthenticated) return this.rumpelSvc.loadTableList();
-          else throw new Error('Token validity could not be verified. HAT server might be down.');
+          if (isAuthenticated) {
+            this.msSvc.connectHAT();
+            return this.rumpelSvc.loadTableList();
+          } else {
+            throw new Error('Token validity could not be verified. HAT server might be down.');
+          }
       })
       .subscribe(
         state => {
