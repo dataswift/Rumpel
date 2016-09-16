@@ -13,7 +13,7 @@
           <p>End date: {{debit.endDate | moment}}</p>
         </div>
         <div class="col-xs-2">
-          <a [routerLink]="['dataDebit', debit.key, 'confirm']" *ngIf="debit.enabled === false"><span class="ss-right"></span></a>
+          <a [routerLink]="['dataDebit', debit.key, 'confirm']"><span class="ss-right"></span></a>
         </div>
       </div>
     </li>

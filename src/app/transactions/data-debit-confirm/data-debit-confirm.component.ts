@@ -54,7 +54,9 @@ export class DataDebitConfirmComponent implements OnInit {
 
     this._route.queryParams.subscribe(params => {
       if (this.authSvc.isAuthenticated() === true) {
-        return;
+        return this._ddSvc.loadDataDebit(this.uuid).subscribe(debitInfo => {
+          this.dataDebit = debitInfo;
+        });
       } else {
         let jwtToken = params['token'] || null;
         return this.authSvc.authenticate(jwtToken);

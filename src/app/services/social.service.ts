@@ -43,28 +43,28 @@ export class SocialService {
 
   fbMap(post: any): DataPoint {
     let postContent;
-    switch (post.type) {
+    switch (post.posts.type) {
       case "link":
         postContent = {
-          caption: post.caption,
-          description: post.description,
-          link: post.link,
-          name: post.name,
-          picture: post.picture,
-          fullPicture: post.full_picture
+          caption: post.posts.caption,
+          description: post.posts.description,
+          link: post.posts.link,
+          name: post.posts.name,
+          picture: post.posts.picture,
+          fullPicture: post.posts.full_picture
         };
         break;
       case "status":
         postContent = {
-          message: post.message
+          message: post.posts.message
         }
         break;
       case "photo":
         postContent = {
-          name: post.name,
-          message: post.message,
-          picture: post.picture,
-          fullPicture: post.full_picture
+          name: post.posts.name,
+          message: post.posts.message,
+          picture: post.posts.picture,
+          fullPicture: post.posts.full_picture
         }
         break;
       default:
@@ -73,21 +73,21 @@ export class SocialService {
     }
 
     return {
-      timestamp: moment(post.created_time),
+      timestamp: moment(post.posts.created_time),
       type: 'post',
       source: 'facebook',
       content: {
-        createdTime: moment(post.created_time),
-        updatedTime: moment(post.updated_time),
-        statusType: post.status_type,
-        type: post.type,
+        createdTime: moment(post.posts.created_time),
+        updatedTime: moment(post.posts.updated_time),
+        statusType: post.posts.status_type,
+        type: post.posts.type,
         privacy: {
-          value: post.privacy.value,
-          description: post.privacy.description
+          value: post.posts.privacy.value,
+          description: post.posts.privacy.description
         },
-        from: !!post.from ? post.from.name: null,
-        application: !!post.application ? post.application.name : null,
-        story: post.story,
+        from: !!post.posts.from ? post.posts.from.name: null,
+        application: !!post.posts.application ? post.posts.application.name : null,
+        story: post.posts.story,
         content: postContent
       }
     };

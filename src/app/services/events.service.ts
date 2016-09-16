@@ -51,23 +51,23 @@ export class EventsService {
 
   fbMap(event): DataPoint {
     let newDataPoint = {
-      timestamp: moment(event.start_time),
+      timestamp: moment(event.events.start_time),
       type: 'event',
       source: 'facebook',
       content: {
-        name: event.name,
-        description: event.description,
-        start: moment(event.start_time),
-        end: event.end_time ? moment(event.end_time) : null,
-        rsvp: event.rsvp_status,
+        name: event.events.name,
+        description: event.events.description,
+        start: moment(event.events.start_time),
+        end: event.events.end_time ? moment(event.events.end_time) : null,
+        rsvp: event.events.rsvp_status,
         calendarName: 'facebook'
       }
     };
 
-    if (event.place && event.place.location) {
+    if (event.events.place && event.events.place.location) {
       newDataPoint['location'] = {
-        latitude: event.place.location.latitude,
-        longitude: event.place.location.longitude
+        latitude: event.events.place.location.latitude,
+        longitude: event.events.place.location.longitude
       };
     }
 
@@ -76,16 +76,16 @@ export class EventsService {
 
   icalMap(event): DataPoint {
     return {
-      timestamp: moment(event.startDate),
+      timestamp: moment(event.events.startDate),
       type: 'event',
       source: 'calendar',
       content: {
-        name: event.summary,
-        description: event.description,
-        start: moment(event.startDate),
-        end: event.end_date ? moment(event.endDate) : null,
+        name: event.events.summary,
+        description: event.events.description,
+        start: moment(event.events.startDate),
+        end: event.end_date ? moment(event.events.endDate) : null,
         rsvp: 'unknown',
-        calendarName: event.calendarName
+        calendarName: event.events.calendarName
       }
     };
   }

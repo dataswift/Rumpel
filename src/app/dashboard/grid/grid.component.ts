@@ -79,7 +79,6 @@ export class GridComponent implements OnInit, OnDestroy {
   }
 
   setModalLink(link: string) {
-    console.log(this.modal);
     this.link = link;
     this.modal.confirm()
       .size('lg')
@@ -88,7 +87,16 @@ export class GridComponent implements OnInit, OnDestroy {
       .body('<p>You are now leaving your private Rumpel space. Are you sure? (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).</p>')
       .okBtn('Continue')
       .cancelBtn('Get Me Back')
-      .open();
+      .open()
+      .then(resultPromise => {
+        resultPromise.result.then(
+          result => {
+          if (result === true) return this.navigateTo();
+          },
+          error => {
+            console.log('Navigation out of Rumpel was cancelled.');
+          });
+      });
   }
 
   navigateTo() {

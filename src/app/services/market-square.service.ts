@@ -8,8 +8,11 @@ export class MarketSquareService {
   private baseUrl: string;
   private market: { id: string; accessToken: string };
   private _headers: Headers;
+  public notifications: Array<any>;
+  private applicationToken: string;
 
   constructor(private http: Http, private hat: HatApiService) {
+    this.applicationToken = '';
     this.baseUrl = 'https://marketsquare.hubofallthings.com/api';
     this.market = {
       id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
@@ -22,16 +25,40 @@ export class MarketSquareService {
   getOffer(): Observable<any> {
     const url = this.baseUrl + '/offers';
     return this.http.get(url, { headers: this._headers, body: '' })
-        .map(res => res.json())
-        .map(offers => {
-          const validOffers = offers.filter(offer => offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
-          return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
-        });
+      .map(res => res.json())
+      .map(offers => {
+        const validOffers = offers.filter(offer => offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
+        return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
+      });
   }
 
   getDataPlugs(): Observable<any> {
     const url = this.baseUrl + '/dataplugs';
     return this.http.get(url, { headers: this._headers, body: '' })
+      .map(res => res.json());
+  }
+
+  setApplicationToken(token: string) {
+    this.applicationToken = token;
+  }
+
+  getNotifications() {
+    const url = this.baseUrl + '/notices';
+
+    let headers = new Headers();
+    headers.append('X-Auth-Token', this.applicationToken);
+
+    return this.http.get(url, { headers: headers, body: '' })
+      .map(res => res.json());
+  }
+
+  markAsRead(notificationID: number) {
+    const url = this.baseUrl + '/notices/' + notificationID + '/read';
+
+    let headers = new Headers();
+    headers.append('X-Auth-Token', this.applicationToken);
+
+    return this.http.put(url, {}, { headers: headers })
       .map(res => res.json());
   }
 

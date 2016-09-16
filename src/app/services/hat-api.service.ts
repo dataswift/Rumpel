@@ -41,6 +41,17 @@ export class HatApiService {
     return this._http.get(url, { headers: this._headers, body: '' }).map(res => res.json());
   }
 
+  getMStoken() {
+    const url = this._baseUrl + '/users/application_token';
+
+    let query: URLSearchParams = new URLSearchParams();
+    query.append('name', 'MarketSquare');
+    query.append('resource', 'https://marketsquare.hubofallthings.com');
+
+    return this._http.get(url, { headers: this._headers, search: query, body: '' })
+      .map(res => res.json());
+  }
+
   getDataSources(): Observable<any> {
     const url = this._baseUrl + '/data/sources';
 
@@ -54,7 +65,11 @@ export class HatApiService {
         if (table === "Not Found") {
           return Observable.of([]);
         } else {
-          return this.getValues(table.id, startTime);
+          if (name === 'profile' || name === 'photos' || name === 'metadata' || name === 'profile_picture') {
+            return this.getValues(table.id, startTime, false);
+          } else {
+            return this.getValues(table.id, startTime, true);
+          }
         }
       });
   }
@@ -101,15 +116,23 @@ export class HatApiService {
     return this._http.post(url, hatFormattedObj, { headers: this._headers });
   }
 
-  getValues(tableId: number, startTime: string = '0'): Observable<any> {
+  getValues(tableId: number, startTime: string = '0', pretty: boolean = false): Observable<any> {
     const url = this._baseUrl + '/data/table/' + tableId + '/values';
 
     let query: URLSearchParams = new URLSearchParams();
     query.append('starttime', startTime);
+    if (pretty) {
+      query.append('pretty', pretty.toString());
+    }
 
-    return this._http.get(url, { headers: this._headers , search: query, body: '' })
-      .map(res => res.json())
-      .map(body => this.transformRecord(body));
+    let requestObservable = this._http.get(url, { headers: this._headers , search: query, body: '' })
+      .map(res => res.json());
+
+    if (pretty) {
+      return requestObservable;
+    } else {
+      return requestObservable.map(table => this.transformRecord(table));
+    }
   }
 
   getDataDebit(uuid: string) {
@@ -126,7 +149,7 @@ export class HatApiService {
   }
 
   updateDataDebit(uuid: string, state: string): Observable<any> {
-    const url = this._baseUrl + '/directDebit/' + uuid + '/' + state;
+    const url = this._baseUrl + '/dataDebit/' + uuid + '/' + state;
 
     return this._http.put(url, {}, { headers: this._headers });
   }

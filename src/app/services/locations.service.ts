@@ -10,10 +10,14 @@ import * as moment from 'moment';
 export class LocationsService {
   private locations$: Subject<DataPoint[]>;
   private store: { locations: Array<DataPoint> };
+  private timeSpan: number;
+  private decrementInterval: number;
 
   constructor(private hat: HatApiService) {
     this.store = { locations: [] };
     this.locations$ = <Subject<DataPoint[]>>new Subject();
+    this.timeSpan = 6;
+    this.decrementInterval = 0.5;
   }
 
   getLocations$() {
@@ -28,10 +32,21 @@ export class LocationsService {
 
     this.loadAll().subscribe(
       data => {
+        if (data.length === 0) {
+          setTimeout(() => {
+            this.timeSpan += 6;
+            return this.showAll();
+          }, 50);
+          return;
+        }
         this.store.locations = data;
         this.locations$.next(this.store.locations);
       },
-      err => console.log(`Locations table could not be found`)
+      err => {
+        console.log(`Locations table could not be found`);
+        this.timeSpan -= this.decrementInterval;
+        this.showAll();
+      }
     );
   }
 
@@ -54,19 +69,19 @@ export class LocationsService {
   }
 
   private loadFrom(source: string): Observable<any> {
-    let startTime = moment().subtract(7, 'days').format('X');
+    let startTime = moment().subtract(this.timeSpan, 'hours').format('X');
 
     return this.hat.getAllValuesOf('locations', source, startTime);
   }
 
   private locMap(location: any): DataPoint {
     return {
-      timestamp: moment(location.timestamp),
+      timestamp: moment(location.locations.timestamp),
       type: 'location',
       source: 'iphone',
       location: {
-        latitude: location.latitude,
-        longitude: location.longitude,
+        latitude: location.locations.latitude,
+        longitude: location.locations.longitude,
         accuracy: null
       }
     };
