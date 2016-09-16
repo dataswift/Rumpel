@@ -1,4 +1,11 @@
 <ul class="center">
+  <li>
+    <button (click)="showNotifications($event)" [hidden]="notifications.length === 0">
+      <span class="ss-notice"></span>
+      Notifications
+      <div class="new-notifications" *ngIf="unreadNotifications !== 0">{{unreadNotifications}}</div>
+    </button>
+  </li>
   <li *ngFor="let item of menu"
       (click)="onItemSelect(item.display)"
       [class.selected]="item.display === selectedItem">
@@ -16,4 +23,15 @@
     </div>
   </li>
 </ul>
+
+<div class="notifications-banner" *ngIf="notificationsVisible" outside-click (clickOutside)="hideNotifications($event)">
+  <div class="row vertical-align">
+    <div class="col-xs-1" (click)="previousNotification()"><span class="ss-left" *ngIf="notifications.length > 1"></span></div>
+    <div class="col-xs-10">
+      <p>{{notifications[selectedNotification].notice.message}}</p>
+      <h5>Released {{notifications[selectedNotification].notice.dateCreated | moment}}</h5>
+    </div>
+    <div class="col-xs-1" (click)="nextNotification()" style="text-align: right;"><span class="ss-right" *ngIf="notifications.length > 1"></span></div>
+  </div>
+</div>
 
