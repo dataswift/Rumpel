@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { DomSanitizationService } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { LocationsService } from '../../services';
-import { MapComponent } from '../../dataViews/map/map.component';
 
 @Component({
   selector: 'rump-tile-map',
   templateUrl: 'tile-map.component.html',
-  styleUrls: ['tile-map.component.scss'],
-  directives: [MapComponent]
+  styleUrls: ['tile-map.component.scss']
 })
 export class TileMapComponent implements OnInit, OnDestroy {
   @Input() title;
@@ -17,7 +15,7 @@ export class TileMapComponent implements OnInit, OnDestroy {
   private sub;
   public safeSize;
 
-  constructor(private sanitizer: DomSanitizationService,
+  constructor(private sanitizer: DomSanitizer,
               private locationSvc: LocationsService) {}
 
   ngOnInit() {

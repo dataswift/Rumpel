@@ -1,14 +1,10 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { DataPoint } from '../../shared';
-import { DataPointComponent } from '../data-point/data-point.component';
-import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
   selector: 'rump-view-by-day',
   templateUrl: 'view-by-day.component.html',
-  styleUrls: ['view-by-day.component.scss'],
-  directives: [DataPointComponent],
-  pipes: [Moment]
+  styleUrls: ['view-by-day.component.scss']
 })
 export class ViewByDayComponent implements OnInit, OnChanges {
   @Input() dataPoints: Array<DataPoint>;

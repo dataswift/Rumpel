@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
@@ -9,8 +9,7 @@ import { AuthService, HatApiService } from '../services';
 @Component({
   selector: 'rump-header',
   templateUrl: 'header.component.html',
-  styleUrls: ['header.component.scss'],
-  directives: [ROUTER_DIRECTIVES]
+  styleUrls: ['header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   public user: string;

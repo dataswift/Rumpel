@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable, Observer } from 'rxjs/Rx';
-import { DomSanitizationService } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { HatApiService } from './hat-api.service';
 import { DataPoint } from '../shared';
@@ -18,7 +18,7 @@ export class ImagesService {
 
   constructor(private _http: Http,
               private _hat: HatApiService,
-              private sanitizer: DomSanitizationService) {
+              private sanitizer: DomSanitizer) {
     this._store = { images: [] };
     this.images$ = new Observable(observer => this._imagesObserver = observer).share();
     this.dropbox$ = new Observable(observer => this._dropboxObserver = observer).share();

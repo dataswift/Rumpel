@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 import { DataDebitService } from '../../services';
-import { Moment } from '../../pipes';
 
 @Component({
   selector: 'rump-tile-data-debit',
   templateUrl: 'tile-data-debit.component.html',
-  styleUrls: ['tile-data-debit.component.scss'],
-  directives: [ROUTER_DIRECTIVES],
-  pipes: [Moment]
+  styleUrls: ['tile-data-debit.component.scss']
 })
 export class TileDataDebitComponent implements OnInit {
   public debits: Array<any>;

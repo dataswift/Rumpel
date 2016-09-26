@@ -1,3 +1,2 @@
-export * from './environments/environment';
-export * from './rumpel.component';
-export * from './rumpel.module';
+export * from './app.component';
+export * from './app.module';

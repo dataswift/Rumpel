@@ -1,9 +1,12 @@
+import './polyfills.ts';
+
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { enableProdMode } from '@angular/core';
-import { RumpelModule, environment } from './app/';
+import { environment } from './environments/environment';
+import { AppRootModule } from './app/';
 
 if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(RumpelModule);
+platformBrowserDynamic().bootstrapModule(AppRootModule);

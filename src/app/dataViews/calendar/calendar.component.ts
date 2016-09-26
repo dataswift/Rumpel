@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../../services';
-import { Moment } from '../../pipes';
 import * as moment from 'moment';
 
 declare var $: any;
@@ -8,8 +7,7 @@ declare var $: any;
 @Component({
   selector: 'rump-calendar',
   templateUrl: 'calendar.component.html',
-  styleUrls: ['calendar.component.scss'],
-  pipes: [Moment],
+  styleUrls: ['calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
   private sub;

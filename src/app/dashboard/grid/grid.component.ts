@@ -1,17 +1,4 @@
 import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { TileProfileComponent } from '../tile-profile/tile-profile.component';
-import { TileCalendarComponent } from '../tile-calendar/tile-calendar.component';
-import { TileSocialComponent } from '../tile-social/tile-social.component';
-import { TileWeatherComponent } from '../tile-weather/tile-weather.component';
-import { TileHeaderComponent } from '../tile-header/tile-header.component';
-import { TileDataOffersComponent } from '../tile-data-offers/tile-data-offers.component';
-import { TileDataPlugsComponent } from '../tile-data-plugs/tile-data-plugs.component';
-import { TileMapComponent } from '../tile-map/tile-map.component';
-import { TileInfoComponent } from '../tile-info/tile-info.component';
-import { TileInfoComponent2 } from '../tile-info2/tile-info.component';
-import { TileComingSoonComponent } from '../tile-coming-soon/tile-coming-soon.component';
-import { TileDataDebitComponent } from '../tile-data-debit/tile-data-debit.component';
-import { TileNotesComponent } from '../tile-notes/tile-notes.component';
 import { Event, Post } from '../../shared';
 import { UiStateService } from '../../services';
 import { Overlay } from 'angular2-modal';
@@ -23,21 +10,7 @@ declare var $: any;
 @Component({
   selector: 'rump-grid',
   templateUrl: 'grid.component.html',
-  styleUrls: ['grid.component.scss'],
-  directives: [TileProfileComponent,
-               TileCalendarComponent,
-               TileSocialComponent,
-               TileWeatherComponent,
-               TileHeaderComponent,
-               TileDataOffersComponent,
-               TileDataPlugsComponent,
-               TileMapComponent,
-               TileInfoComponent,
-               TileComingSoonComponent,
-               TileDataDebitComponent,
-               TileInfoComponent2,
-               TileNotesComponent,
-  ]
+  styleUrls: ['grid.component.scss']
 })
 export class GridComponent implements OnInit, OnDestroy {
   public state: any;

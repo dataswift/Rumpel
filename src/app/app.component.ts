@@ -1,18 +1,14 @@
 import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-import { HeaderComponent } from './header/index';
-import { FooterComponent } from './footer/index';
-import { SideMenuComponent } from './side-menu/index';
+import { Router } from '@angular/router';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
   selector: 'rumpel',
-  templateUrl: 'rumpel.component.html',
-  styleUrls: ['rumpel.component.scss'],
-  directives: [HeaderComponent, FooterComponent, SideMenuComponent, ROUTER_DIRECTIVES]
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss']
 })
-export class RumpelAppComponent implements OnInit {
+export class AppRootComponent implements OnInit {
   private link: string;
 
   constructor(private router: Router,

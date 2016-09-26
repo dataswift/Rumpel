@@ -1,15 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 import { UiStateService, AuthService, MarketSquareService, HatApiService } from '../services';
-import { OutsideClick } from '../shared/outside-click.directive';
-import { Moment } from '../pipes';
 
 @Component({
   selector: 'rump-side-menu',
   templateUrl: 'side-menu.component.html',
-  styleUrls: ['side-menu.component.scss'],
-  directives: [ROUTER_DIRECTIVES, OutsideClick],
-  pipes: [Moment],
+  styleUrls: ['side-menu.component.scss']
 })
 export class SideMenuComponent implements OnInit {
   @Output() navigateModal = new EventEmitter<any>();

@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService, DataDebitService, HatApiService } from '../../services';
 import { DataDebit } from '../../shared/interfaces';
-import { Moment, WithObjectPipe } from '../../pipes';
 
 @Component({
   selector: 'rump-data-debit-confirm',
   templateUrl: 'data-debit-confirm.component.html',
-  styleUrls: ['data-debit-confirm.component.scss'],
-  pipes: [Moment, WithObjectPipe]
+  styleUrls: ['data-debit-confirm.component.scss']
 })
 export class DataDebitConfirmComponent implements OnInit {
   public offerInfo;

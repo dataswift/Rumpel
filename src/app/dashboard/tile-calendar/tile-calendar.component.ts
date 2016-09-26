@@ -1,12 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventsService } from '../../services';
-import { Moment, LimitMembersPipe } from '../../pipes';
 
 @Component({
   selector: 'rump-tile-calendar',
   templateUrl: 'tile-calendar.component.html',
-  styleUrls: ['tile-calendar.component.scss'],
-  pipes: [Moment, LimitMembersPipe]
+  styleUrls: ['tile-calendar.component.scss']
 })
 export class TileCalendarComponent implements OnInit, OnDestroy {
   public events;

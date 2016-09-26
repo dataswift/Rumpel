@@ -1,19 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizationService } from '@angular/platform-browser';
-import { MapComponent } from '../map/map.component';
-import { TimelineComponent } from '../timeline/timeline.component';
-import { ViewByDayComponent } from '../view-by-day/view-by-day.component';
+import { DomSanitizer } from '@angular/platform-browser';
 import { EventsService, LocationsService, ImagesService, SocialService } from '../../services';
-import { TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe } from '../../pipes';
 import { DataPoint } from '../../shared';
 import * as moment from 'moment';
 
 @Component({
   selector: 'rump-mixpad',
   templateUrl: 'mixpad.component.html',
-  styleUrls: ['mixpad.component.scss'],
-  directives: [MapComponent, TimelineComponent, ViewByDayComponent],
-  pipes: [TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe]
+  styleUrls: ['mixpad.component.scss']
 })
 export class MixpadComponent implements OnInit {
   private eventSub;
@@ -28,7 +22,7 @@ export class MixpadComponent implements OnInit {
               private eventsSvc: EventsService,
               private imagesSvc: ImagesService,
               private socialSvc: SocialService,
-              private sanitizer: DomSanitizationService) {
+              private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {

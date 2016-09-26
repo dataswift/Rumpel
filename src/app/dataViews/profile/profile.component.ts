@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SwitchComponent } from '../../shared/components';
 import { ProfileService, HatApiService } from '../../services';
 import { Profile } from '../../shared';
 
 @Component({
   selector: 'rump-profile',
   templateUrl: 'profile.component.html',
-  styleUrls: ['profile.component.scss'],
-  directives: [SwitchComponent]
+  styleUrls: ['profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
   private hatIdMapping: any;

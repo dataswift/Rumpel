@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       .size('lg')
       .showClose(true)
       .title('Example of a populated Rumpel')
-      .body(`<img src="images/rumpel.png" class="img img-responsive">`)
+      .body(`<img src="assets/images/rumpel.png" class="img img-responsive">`)
       .open();
   }
 

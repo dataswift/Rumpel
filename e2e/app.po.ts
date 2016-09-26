@@ -1,4 +1,6 @@
-export class RumpelPage {
+import { browser, element, by } from 'protractor/globals';
+
+export class RumpelMigrationPage {
   navigateTo() {
     return browser.get('/');
   }

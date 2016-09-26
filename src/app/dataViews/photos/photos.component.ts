@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotoGridComponent } from '../photo-grid/photo-grid.component';
 import { ImagesService } from '../../services';
 import { Image } from '../../shared';
-import { Moment } from '../../pipes/moment.pipe';
 
 @Component({
   selector: 'rump-photos',
   templateUrl: 'photos.component.html',
-  styleUrls: ['photos.component.scss'],
-  directives: [PhotoGridComponent],
-  pipes: [Moment]
+  styleUrls: ['photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
   public images: Array<Image>;
