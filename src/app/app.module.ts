@@ -23,7 +23,6 @@ import { DataPointComponent, FbPostComponent, PhotoGridComponent, ViewByDayCompo
 import { LoginComponent, AuthComponent } from './user-mgmt';
 import { AuthService, HatApiService, MarketSquareService, LocationsService, EventsService, ImagesService, SocialService, DataDebitService, ProfileService, UiStateService, RumpelService } from './services';
 
-
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 

@@ -28,7 +28,7 @@
   <div class="row vertical-align">
     <div class="col-xs-1" (click)="previousNotification()"><span class="ss-left" *ngIf="notifications.length > 1"></span></div>
     <div class="col-xs-10">
-      <p>{{notifications[selectedNotification].notice.message}}</p>
+      <div class="notification-message" [innerHTML]="notifications[selectedNotification].notice.message"></div>
       <h5>Released {{notifications[selectedNotification].notice.dateCreated | moment}}</h5>
     </div>
     <div class="col-xs-1" (click)="nextNotification()" style="text-align: right;"><span class="ss-right" *ngIf="notifications.length > 1"></span></div>

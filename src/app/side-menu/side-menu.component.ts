@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { UiStateService, AuthService, MarketSquareService, HatApiService } from '../services';
+import * as marked from 'marked';
 
 @Component({
   selector: 'rump-side-menu',
@@ -17,6 +18,7 @@ export class SideMenuComponent implements OnInit {
   public selectedNotification: number;
   public unreadNotifications: number;
   public notificationsVisible: boolean;
+  private md: any;
 
   // hack: uiState service needs to be injected befor Auth component,
   // so that it can subscribe for Auth observable in time.
@@ -32,6 +34,8 @@ export class SideMenuComponent implements OnInit {
     this.selectedNotification = 0;
     this.unreadNotifications = 0;
     this.notificationsVisible = false;
+
+    this.md = marked.setOptions({});
 
     this.menu = [
       { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '', disable: '' },
@@ -57,7 +61,10 @@ export class SideMenuComponent implements OnInit {
           this.marketSvc.setApplicationToken(ms.accessToken);
 
           this.subNotifs = this.marketSvc.getNotifications().subscribe(notifications => {
-            this.notifications = notifications;
+            this.notifications = notifications.map(notification => {
+              notification.notice.message = this.md.parse(notification.notice.message);
+              return notification;
+            });
 
             for (let not of notifications) {
               if (!not.read) {
@@ -68,8 +75,6 @@ export class SideMenuComponent implements OnInit {
         });
       }
     });
-
-
 
     this.sub = this.uiState.getState$().subscribe(state => {
       for (let dt of state.dataTypes) {
@@ -107,7 +112,9 @@ export class SideMenuComponent implements OnInit {
     if (!notification.read) {
       setTimeout(() => {
         this.marketSvc.markAsRead(notification.notice.id).subscribe(returnValue => {
-          this.unreadNotifications--;
+          if (this.unreadNotifications > 0) {
+            this.unreadNotifications--;
+          }
         });
       }, 1000);
     }
