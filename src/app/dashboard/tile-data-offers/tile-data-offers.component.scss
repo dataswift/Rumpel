@@ -1,5 +1,8 @@
 .tile-body {
-  padding: 0.5em 1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  height: 19em;
+  overflow: scroll;
 }
 
 .tile-body ul {
@@ -31,6 +34,10 @@
     border: none;
     font-size: 2em;
   }
+}
+
+.row {
+  margin-left: 1em;
 }
 
 .col-xs-1, .col-xs-3, .col-xs-8 {

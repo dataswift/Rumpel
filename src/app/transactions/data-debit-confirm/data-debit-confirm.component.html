@@ -21,22 +21,15 @@
       </div>
     </div>
     <div class="row" *ngIf="dataDebit">
-      <div class="col-xs-6 col-xs-offset-3 debit-review">
+      <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 debit-review">
         <div class="panel panel-rump" *ngFor="let source of dataDebit.dataToShare">
           <div class="panel-heading">{{source.name.charAt(0).toUpperCase() + source.name.slice(1)}}</div>
           <div class="panel-body">
             <section *ngFor="let table of source.data">
               <h4>{{table.name.charAt(0).toUpperCase() + table.name.slice(1)}}</h4>
 
-              <ul *ngFor="let field of table.data[0] | withObject">
-                <li class="data-debit-unit">
-                  <div class="row">
-                    <div class="col-xs-1 center"><span class="ss-puzzle"></span></div>
-                    <div class="col-xs-2 field">{{field.key}}</div>
-                    <div class="col-xs-9">{{field.value}}</div>
-                  </div>
-                </li>
-              </ul>
+              <tree-view [treeNodes]="table.data[0] | withObject"
+                         [offset]="0"></tree-view>
             </section>
           </div>
         </div>
