@@ -1,4 +1,3 @@
-export { Moment } from './moment.pipe';
 export { LimitContentPipe } from './limit-content.pipe';
 export { TimeFilterPipe } from './time-filter.pipe';
 export { LocationFilterPipe } from './location-filter.pipe';

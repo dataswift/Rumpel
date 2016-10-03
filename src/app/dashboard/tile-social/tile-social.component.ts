@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialService } from '../../services';
-import { Moment, LimitContentPipe, LimitMembersPipe, ReplaceCharsPipe } from '../../pipes';
 
 @Component({
   selector: 'rump-tile-social',

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UiStateService, AuthService, MarketSquareService, HatApiService } from '../services';
+import { UiStateService, AuthService, MarketSquareService, HatApiService } from '../../services';
 import * as marked from 'marked';
 
 @Component({
@@ -64,7 +64,7 @@ export class SideMenuComponent implements OnInit {
             this.notifications = notifications.map(notification => {
               notification.notice.message = this.md.parse(notification.notice.message);
               return notification;
-            });
+            }).sort((a, b) => a.received > b.received ? -1 : 1);
 
             for (let not of notifications) {
               if (!not.read) {

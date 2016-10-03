@@ -20,7 +20,7 @@ export class TileDataPlugsComponent implements OnInit {
         let displayPlug = {
           name: plug.name,
           description: plug.description,
-          url: plug.name.toLowerCase() === 'facebook' ? plug.url.replace('/dataplug', '/hat/login') : plug.url,
+          url: plug.url.replace('/dataplug', '/hat/login'),
           icon: plug.name.toLowerCase() + '-plug'
         }
 

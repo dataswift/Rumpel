@@ -2,23 +2,21 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRootComponent } from './app.component';
 
+import { LayoutModule } from './layout/layout.module';
+import { NotablesModule } from './notables/notables.module';
+import { SharedModule } from './shared/shared.module';
+
 import { HttpModule } from '@angular/http';
-import { LocationStrategy, HashLocationStrategy, CommonModule } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { routing, appRoutingProviders } from './app.routing';
 import { AuthGuard } from './auth.guard';
 
-import { HeaderComponent } from './header';
-import { FooterComponent } from './footer';
-import { SideMenuComponent } from './side-menu';
 import { GridComponent } from './dashboard';
-import { AboutComponent } from './about';
 import { DataDebitConfirmComponent } from './transactions';
-import { Moment, WithObjectPipe, TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe, ReplaceCharsPipe, LimitMembersPipe, LimitContentPipe } from './pipes';
-import { OutsideClick } from './shared/outside-click.directive';
-import { SwitchComponent, NotesInputComponent, TreeViewComponent } from './shared/components';
-import { TileProfileComponent, TileCalendarComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileInfoComponent, TileComingSoonComponent, TileDataDebitComponent, TileNotesComponent } from './dashboard';
+import { WithObjectPipe, TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe, ReplaceCharsPipe, LimitMembersPipe, LimitContentPipe } from './pipes';
+import { SwitchComponent, TreeViewComponent } from './shared/components';
+import { TileProfileComponent, TileCalendarComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileInfoComponent, TileComingSoonComponent, TileDataDebitComponent } from './dashboard';
 import { DataPointComponent, FbPostComponent, PhotoGridComponent, ViewByDayComponent, TimelineComponent, MapComponent, ProfileComponent, SocialComponent, LocationsComponent, CalendarComponent, PhotosComponent, MixpadComponent } from './dataViews';
 import { LoginComponent, AuthComponent } from './user-mgmt';
 import { AuthService, HatApiService, MarketSquareService, LocationsService, EventsService, ImagesService, SocialService, DataDebitService, ProfileService, UiStateService, RumpelService } from './services';
@@ -29,11 +27,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 @NgModule({
   declarations: [
     AppRootComponent,
-    HeaderComponent,
-    FooterComponent,
-    SideMenuComponent,
     GridComponent,
-    AboutComponent,
     LoginComponent,
     AuthComponent,
     DataPointComponent,
@@ -50,7 +44,6 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     CalendarComponent,
     LocationsComponent,
     SocialComponent,
-    NotesInputComponent,
     DataDebitConfirmComponent,
     TileProfileComponent,
     TileCalendarComponent,
@@ -63,11 +56,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     TileInfoComponent,
     TileComingSoonComponent,
     TileDataDebitComponent,
-    TileNotesComponent,
 
-    OutsideClick,
-
-    Moment,
     WithObjectPipe,
     TimeFilterPipe,
     LocationFilterPipe,
@@ -78,13 +67,14 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
   ],
   imports: [
     BrowserModule,
-    CommonModule,
+    SharedModule,
     HttpModule,
     FormsModule,
-    RouterModule,
     routing,
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    LayoutModule,
+    NotablesModule
   ],
   bootstrap: [AppRootComponent],
   providers: [

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
-import { AuthService, HatApiService } from '../services';
+import { AuthService, HatApiService } from '../../services';
 
 
 @Component({

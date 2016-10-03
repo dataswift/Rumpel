@@ -6,5 +6,5 @@ export interface Location {
   altitude_accuracy?: number;
   heading?: number;
   speed?: number;
-  private?: boolean;
+  shared?: Array<string>;
 }

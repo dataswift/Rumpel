@@ -4,11 +4,11 @@ import { By }           from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { addProviders, async, inject } from '@angular/core/testing';
 
-import { TileInfoComponent2 } from './tile-info.component';
+import { TileNotablesComponent } from './tile-notables.component';
 
-describe('Component: TileInfo', () => {
+describe('Component: TileNotables', () => {
   it('should create an instance', () => {
-    // let component = new TileInfoComponent();
+    // let component = new TileNotesComponent();
     // expect(component).toBeTruthy();
   });
 });

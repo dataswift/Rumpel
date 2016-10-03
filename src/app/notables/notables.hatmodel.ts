@@ -1,16 +1,17 @@
-export const NotesHatModel = {
-  name: "notes",
+export const NotablesHatModel = {
+  name: "notablesss",
   source: "rumpel",
   fields: [
     { name: "message" },
+    { name: "type" },
     { name: "created_time" },
     { name: "updated_time" },
     { name: "public_until" },
-    { name: "private" }
+    { name: "shared" }
   ],
   subTables: [
     {
-      name: "location",
+      name: "locations",
       source: "rumpel",
       fields: [
         { name: "latitude" },
@@ -20,11 +21,11 @@ export const NotesHatModel = {
         { name: "altitude_accuracy" },
         { name: "heading" },
         { name: "speed" },
-        { name: "private" }
+        { name: "shared" }
       ]
     },
     {
-      name: "photo",
+      name: "photos",
       source: "rumpel",
       fields: [
         { name: "link" },

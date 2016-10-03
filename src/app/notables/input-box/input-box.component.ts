@@ -1,22 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Note, Location } from '../../../shared/interfaces';
-import { RumpelService, LocationsService } from '../../../services';
+import { Notable, Location } from '../../shared/interfaces';
+import { LocationsService } from '../../services';
+import { NotablesService } from '../notables.service';
 
 import * as moment from 'moment';
 
 @Component({
-  selector: 'rump-notes-input',
-  templateUrl: 'notes-input.component.html',
-  styleUrls: ['notes-input.component.scss']
+  selector: 'rump-input-box',
+  templateUrl: 'input-box.component.html',
+  styleUrls: ['input-box.component.scss']
 })
-export class NotesInputComponent implements OnInit {
+export class InputBoxComponent implements OnInit {
   // Temporary workaround until Angular ships form reset feature
   public active: boolean;
   public reportLocation: boolean;
   private currentLocation: Location;
 
-  constructor(private rumpelSvc: RumpelService,
+  constructor(private notableSvc: NotablesService,
               private locationsSvc: LocationsService) {}
 
   ngOnInit() {
@@ -31,18 +32,18 @@ export class NotesInputComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    let note: Note = {
+    let note: Notable = {
       message: form.value.message,
       created_time: moment().format(),
       updated_time: moment().format(),
-      private: form.value.private === true
+      shared: [form.value.private]
     };
 
     if (this.reportLocation) {
       note['location'] = this.currentLocation;
     }
 
-    this.rumpelSvc.postNote(note);
+    this.notableSvc.postNotable(note);
     this.active = false;
     setTimeout(() => this.active = true, 0);
   }

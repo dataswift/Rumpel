@@ -1,12 +1,12 @@
 <ng-content></ng-content>
 
-<rump-notes-input></rump-notes-input>
+<rump-input-box></rump-input-box>
 
 <div class="content">
   <h4>Previous Notes</h4>
 
   <ul class="note-list">
-    <li *ngFor="let note of notes" class="note">
+    <li *ngFor="let note of notables" class="note">
       <p>{{note.message}}</p>
       <div class="timestamp">Last Edited {{note.updated_time | moment}}</div>
       <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div>
