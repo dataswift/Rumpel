@@ -36,7 +36,7 @@ export class NotablesService {
   }
 
   verifyTableExists() {
-    return this.hat.getTable('notablesss', 'rumpel')
+    return this.hat.getTable('notables', 'rumpel')
       .flatMap(table => {
         if (table === "Not Found") {
           return this.hat.postModel(NotablesHatModel);
@@ -50,6 +50,7 @@ export class NotablesService {
   getRecentNotables() {
     if (this.store.tableId) {
       return this.hat.getValues(this.store.tableId, '1475255673', true)
+        .map(notables => notables.map(notable => notable.notables))
         .subscribe(notables => {
           this.store.notables = notables;
 
@@ -61,8 +62,9 @@ export class NotablesService {
     }
   }
 
-  postNotable(data: Notable) {
-    this.hat.postRecord(data, this.store.idMapping, 'notable')
+  postNotable(data) {
+    data.shared = data.shared.join(",");
+    this.hat.postRecord(data, this.store.idMapping, 'notables')
       .subscribe(record => {
         this.store.notables.unshift(data);
 

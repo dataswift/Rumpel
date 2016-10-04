@@ -5,7 +5,7 @@ body {
   font-family: 'Open Sans Regular', sans-serif;
 }
 
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
   body {
     font-size: 11px;
   }
@@ -21,7 +21,7 @@ body {
   body {
     font-size: 13px;
   }
-}
+}*/
 
 .popover {
   border-radius: 0;

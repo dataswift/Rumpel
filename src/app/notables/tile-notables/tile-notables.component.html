@@ -1,15 +1,24 @@
 <ng-content></ng-content>
 
-<rump-input-box></rump-input-box>
+<rump-input-box [profilePhoto]="profilePhoto"></rump-input-box>
 
 <div class="content">
-  <h4>Previous Notes</h4>
+  <ul class="note-list" *ngIf="notables.length > 0">
+    <li *ngFor="let notable of notables" class="notable">
+      <div class="item-header">
+        <img src="{{profilePhoto.url}}" class="img-profile img-circle">
+        <div class="notable-type">
+          <span class="ss-newspaper"></span>
+        </div>
+        <div class="header-content">
+          <h5>Some random guy</h5>
+          <span>Logged {{notable.created_time | moment}}</span>
+          <span>{{notable.shared === '' ? 'PRIVATE' : 'SHARED'}}</span>
+        </div>
+      </div>
 
-  <ul class="note-list">
-    <li *ngFor="let note of notables" class="note">
-      <p>{{note.message}}</p>
-      <div class="timestamp">Last Edited {{note.updated_time | moment}}</div>
-      <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div>
+      <p>{{notable.message}}</p>
+      <!-- <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div> -->
     </li>
   </ul>
 </div>

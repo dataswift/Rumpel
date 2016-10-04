@@ -1,6 +1,8 @@
-form {
-  margin: 2em;
+.input-box {
+  background-color: #018675;
+}
 
+form {
   label {
     font-weight: normal;
     font-size: 1.4em;
@@ -10,28 +12,100 @@ form {
     display: none;
   }
 
+  .small-notable {
+    margin-top: 1.1em;
+    margin-bottom: 1em;
+    margin-right: 1em;
+  }
+
   textarea {
     display: block;
-    font-family: "Open Sans", sans-serif;
-    background-color: #bbbbbb;
-    font-size: 1.3em;
+    color: black;
+    border: none;
+    width: 100%;
+    font-family: "Open Sans Regular", sans-serif;
+    height: 2em;
+    font-size: 1em;
     font-weight: 300;
-    padding-top: 0.5em;
-    padding-bottom: 1em;
+    transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -o-transition: all 1s;
+    padding: 0.25em 0.5em;
     border-radius: 0;
     resize: none;
 
+    &.expanded {
+      height: 6em;
+    }
+
     &:focus {
-      background-color: #ffffff;
-      box-shadow: 0 0 5px rgba(1, 134, 117, 0.3);
-      border-color: rgba(1, 134, 117, 0.1);
+      outline: none;
     }
   }
 }
 
+.options-bar {
+  padding-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-right: 1em;
+}
+
+.btn-options {
+  background-color: transparent;
+  border: none;
+  font-size: 1.75em;
+  padding-top: 0.3em;
+  padding-left: 0.3em;
+
+  &:hover {
+    color: red;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
 .btn-status {
+  font-family: "Open Sans Condensed", sans-serif;
+  background-color: transparent;
   border-radius: 0;
-  text-transform: uppercase;
-  width: 100%;
-  background-color: #018675;
+  border: 2px solid white;
+  font-weight: bold;
+  float: right;
+}
+
+.input-area {
+  position: relative;
+}
+
+.privacy-toggle {
+  position: absolute;
+  bottom: 0;
+  right: 2em;
+  font-size: 7px;
+}
+
+.arrow-down {
+  width: 0;
+  height: 0;
+  float: right;
+  margin-right: 2.75em;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+
+  border-top: 10px solid #ffffff;
+}
+
+.img-profile {
+  height: 5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+}
+
+.img-circle {
+  border-radius: 50%;
 }

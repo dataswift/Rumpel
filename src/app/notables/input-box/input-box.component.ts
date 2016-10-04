@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Notable, Location } from '../../shared/interfaces';
 import { LocationsService } from '../../services';
@@ -12,9 +12,14 @@ import * as moment from 'moment';
   styleUrls: ['input-box.component.scss']
 })
 export class InputBoxComponent implements OnInit {
+  @Input() profilePhoto: any;
+
   // Temporary workaround until Angular ships form reset feature
   public active: boolean;
   public reportLocation: boolean;
+  public expanded: boolean;
+  public inputExpanded: boolean;
+  public shared: boolean;
   private currentLocation: Location;
 
   constructor(private notableSvc: NotablesService,
@@ -23,6 +28,9 @@ export class InputBoxComponent implements OnInit {
   ngOnInit() {
     this.active = true;
     this.reportLocation = false;
+    this.expanded = false;
+    this.inputExpanded = false;
+    this.shared = false;
   }
 
   changeLocationSetting() {
@@ -31,12 +39,17 @@ export class InputBoxComponent implements OnInit {
     this.locationsSvc.getCurrentDeviceLocation((here: Location) => this.currentLocation = here);
   }
 
+  expandView(event) {
+    this.inputExpanded = true;
+    setTimeout(() => this.expanded = true, 1000);
+  }
+
   onSubmit(form: NgForm) {
     let note: Notable = {
       message: form.value.message,
       created_time: moment().format(),
       updated_time: moment().format(),
-      shared: [form.value.private]
+      shared: []
     };
 
     if (this.reportLocation) {

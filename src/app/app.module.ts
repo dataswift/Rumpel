@@ -14,9 +14,8 @@ import { AuthGuard } from './auth.guard';
 
 import { GridComponent } from './dashboard';
 import { DataDebitConfirmComponent } from './transactions';
-import { WithObjectPipe, TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe, ReplaceCharsPipe, LimitMembersPipe, LimitContentPipe } from './pipes';
-import { SwitchComponent, TreeViewComponent } from './shared/components';
-import { TileProfileComponent, TileCalendarComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileInfoComponent, TileComingSoonComponent, TileDataDebitComponent } from './dashboard';
+import { TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe, ReplaceCharsPipe, LimitMembersPipe, LimitContentPipe } from './pipes';
+import { TileProfileComponent, TileCalendarComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileMapComponent, TileComingSoonComponent, TileDataDebitComponent } from './dashboard';
 import { DataPointComponent, FbPostComponent, PhotoGridComponent, ViewByDayComponent, TimelineComponent, MapComponent, ProfileComponent, SocialComponent, LocationsComponent, CalendarComponent, PhotosComponent, MixpadComponent } from './dataViews';
 import { LoginComponent, AuthComponent } from './user-mgmt';
 import { AuthService, HatApiService, MarketSquareService, LocationsService, EventsService, ImagesService, SocialService, DataDebitService, ProfileService, UiStateService, RumpelService } from './services';
@@ -32,11 +31,9 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     AuthComponent,
     DataPointComponent,
     FbPostComponent,
-    SwitchComponent,
     PhotoGridComponent,
     ViewByDayComponent,
     TimelineComponent,
-    TreeViewComponent,
     MapComponent,
     MixpadComponent,
     ProfileComponent,
@@ -53,11 +50,9 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     TileDataOffersComponent,
     TileDataPlugsComponent,
     TileMapComponent,
-    TileInfoComponent,
     TileComingSoonComponent,
     TileDataDebitComponent,
 
-    WithObjectPipe,
     TimeFilterPipe,
     LocationFilterPipe,
     DataTypeFilterPipe,

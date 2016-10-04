@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Node } from '../shared/interfaces';
+import { Node } from '../interfaces';
 
 @Pipe({
   name: 'withObject'

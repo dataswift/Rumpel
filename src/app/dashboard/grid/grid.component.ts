@@ -14,7 +14,8 @@ declare var $: any;
 })
 export class GridComponent implements OnInit, OnDestroy {
   public state: any;
-  public showTile = { locations: false, events: false, posts: false }
+  public showTile = { locations: false, events: false, posts: false };
+  public tileHeights: { notables: number; profile: number };
   private sub: any;
   private link: string;
 
@@ -27,6 +28,8 @@ export class GridComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.state = { dataSources: [], dataTypes: [] };
+
+    this.tileHeights = { notables: 2, profile: 1 };
 
     this.sub = this.uiState.getState$().subscribe(state => {
       this.state = state;

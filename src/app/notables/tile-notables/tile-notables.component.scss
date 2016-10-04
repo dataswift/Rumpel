@@ -1,22 +1,52 @@
-h4 {
-  font-size: 1.7em;
-}
+.notable {
+  font-family: "Open Sans Regular", sans-serif;
+  font-weight: 300;
+  padding: 1em;
 
-.content {
-  margin-left: 2em;
-  margin-right: 2em;
-}
+  &:nth-child(2n+1) {
+    background-color: #393939;
+  }
 
-.note {
-  padding-top: 1em;
-  padding-bottom: 1em;
-  border-bottom: 1px solid white;
+  &:nth-child(2n) {
+    background-color: #262626;
+  }
 
   p {
-    font-size: 1.3em;
+    margin: 1em;
+    margin-top: 1.5em;
+    font-size: 1em;
+  }
+}
+
+.item-header {
+  .header-content {
+    padding-top: 0.5em;
+
+    h5 {
+      font-size: 1.3em;
+      margin-top: 0;
+      margin-bottom: 0.25em;
+    }
+
+    span {
+      font-size: 1em;
+    }
   }
 
-  &:last-child {
-    border: none;
+  .notable-type {
+    float: right;
+    margin-top: 0.1em;
+    font-size: 3em;
   }
+}
+
+.img-profile {
+  float: left;
+  margin-left: 0.5em;
+  margin-right: 1em;
+  height: 4em;
+}
+
+.img-circle {
+  border-radius: 50%;
 }

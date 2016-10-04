@@ -7,8 +7,6 @@ import { TileNotablesComponent } from './tile-notables/tile-notables.component';
 import { InputBoxComponent } from './input-box/input-box.component';
 import { NotablesService } from './notables.service';
 
-
-
 @NgModule({
   imports: [ SharedModule, FormsModule ],
   declarations: [ TileNotablesComponent, InputBoxComponent ],

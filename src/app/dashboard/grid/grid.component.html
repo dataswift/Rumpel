@@ -1,5 +1,11 @@
 <div class="grid">
-  <rump-tile-profile class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
+  <rump-tile-notables class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-{{tileHeights.notables}}">
+    <rump-tile-header [title]="'Notables'" [iconName]="'write'"
+                      [backColor]="'#78909C'"
+                      [info]="''"></rump-tile-header>
+  </rump-tile-notables>
+
+  <rump-tile-profile class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-{{tileHeights.profile}}">
     <rump-tile-header [title]="'Profile'" [iconName]="'user'"
                       [backColor]="'#263238'"
                       [info]="'You can add to your HAT personal profile and decide what information should be made public or kept private. Public information would be available on your Personal HAT address (PHATA) front page and also by others. If you choose not to have any information public, your PHATA front page would display a pre-set standard private PHATA page.'"></rump-tile-header>
@@ -36,12 +42,6 @@
       </div>
     </div>
   </rump-tile-social>
-
-  <rump-tile-notables class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-2">
-    <rump-tile-header [title]="'Notes'" [iconName]="'write'"
-                      [backColor]="'#78909C'"
-                      [info]="''"></rump-tile-header>
-  </rump-tile-notables>
 
   <rump-tile-map class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1">
     <rump-tile-header [title]="'Locations'" [iconName]="'merge'"
