@@ -4,6 +4,7 @@ import { HatApiService } from '../services/hat-api.service';
 
 import { NotablesHatModel } from './notables.hatmodel';
 import { Notable } from '../shared/interfaces';
+import * as marked from 'marked';
 
 @Injectable()
 export class NotablesService {
@@ -12,7 +13,9 @@ export class NotablesService {
     idMapping: any;
     tableId: number;
   };
+  private tableVerified: boolean;
   private failedAttempts: number;
+  private md: any;
 
   private _notables$: Subject<Notable[]>;
   public notables$: Observable<Notable[]>;
@@ -24,19 +27,26 @@ export class NotablesService {
       tableId: null
     };
 
+    this.tableVerified = false;
     this.failedAttempts = 0;
+    this.md = marked.setOptions({});
 
     this._notables$ = <Subject<Notable[]>>new Subject();
     this.notables$ = this._notables$.asObservable();
 
     this.verifyTableExists().subscribe(idMapping => {
       // TODO: service currently does not retrieve table ID when the HAT model is posted for the first time
+      this.tableVerified = true;
       this.store.idMapping = idMapping;
     });
   }
 
   verifyTableExists() {
-    return this.hat.getTable('notables', 'rumpel')
+    if (this.tableVerified) {
+      return Observable.of(this.store.idMapping);
+    }
+
+    return this.hat.getTable('notables2', 'rumpel')
       .flatMap(table => {
         if (table === "Not Found") {
           return this.hat.postModel(NotablesHatModel);
@@ -48,9 +58,18 @@ export class NotablesService {
   }
 
   getRecentNotables() {
-    if (this.store.tableId) {
-      return this.hat.getValues(this.store.tableId, '1475255673', true)
-        .map(notables => notables.map(notable => notable.notables))
+    if (this.store.notables.length > 0) {
+      this.pushToStream();
+    } else if (this.store.tableId) {
+      this.hat.getValues(this.store.tableId, '1475255673', true)
+        .map(notables => {
+          return notables.map(notable => {
+            let note = new Notable(notable['notables2']);
+            note.message = this.md.parse(note.message);
+
+            return note;
+          });
+        })
         .subscribe(notables => {
           this.store.notables = notables;
 
@@ -64,7 +83,7 @@ export class NotablesService {
 
   postNotable(data) {
     data.shared = data.shared.join(",");
-    this.hat.postRecord(data, this.store.idMapping, 'notables')
+    this.hat.postRecord(data, this.store.idMapping, 'notables2')
       .subscribe(record => {
         this.store.notables.unshift(data);
 

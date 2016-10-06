@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Notable, Location } from '../../shared/interfaces';
-import { LocationsService } from '../../services';
+import { LocationsService, HatApiService } from '../../services';
 import { NotablesService } from '../notables.service';
 
 import * as moment from 'moment';
@@ -12,7 +12,7 @@ import * as moment from 'moment';
   styleUrls: ['input-box.component.scss']
 })
 export class InputBoxComponent implements OnInit {
-  @Input() profilePhoto: any;
+  @Input() userPhotoUrl: string;
 
   // Temporary workaround until Angular ships form reset feature
   public active: boolean;
@@ -20,23 +20,45 @@ export class InputBoxComponent implements OnInit {
   public expanded: boolean;
   public inputExpanded: boolean;
   public shared: boolean;
-  private currentLocation: Location;
+  public currentNotable: Notable;
 
   constructor(private notableSvc: NotablesService,
-              private locationsSvc: LocationsService) {}
+              private locationsSvc: LocationsService,
+              private hatSvc: HatApiService) {}
 
   ngOnInit() {
     this.active = true;
-    this.reportLocation = false;
     this.expanded = false;
     this.inputExpanded = false;
+
+    this.currentNotable = new Notable();
+
+    this.reportLocation = false;
     this.shared = false;
   }
 
-  changeLocationSetting() {
-    this.reportLocation = !this.reportLocation;
+  togglePrivacy() {
+    if (this.shared) {
+      this.currentNotable.stopSharingOn('marketsquare');
+      this.shared = false;
+    } else {
+      this.currentNotable.shareOn('marketsquare');
+      this.shared = true;
+    }
+  }
 
-    this.locationsSvc.getCurrentDeviceLocation((here: Location) => this.currentLocation = here);
+  toggleLocation() {
+    if (this.currentNotable.location998) {
+      this.currentNotable.location998 = null;
+      this.reportLocation = false;
+    } else {
+      this.locationsSvc.getCurrentDeviceLocation((here: Location) => {
+        console.log(here);
+        this.currentNotable.location998 = here;
+      });
+      this.reportLocation = true;
+    }
+
   }
 
   expandView(event) {
@@ -45,20 +67,25 @@ export class InputBoxComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    let note: Notable = {
-      message: form.value.message,
-      created_time: moment().format(),
-      updated_time: moment().format(),
-      shared: []
-    };
-
-    if (this.reportLocation) {
-      note['location'] = this.currentLocation;
+    let author = {
+      phata: this.hatSvc.getDomain(),
+      photo_url: this.userPhotoUrl || ''
     }
 
-    this.notableSvc.postNotable(note);
+    this.currentNotable.prepareToPost(form.value.message, author);
+
+    this.notableSvc.postNotable(this.currentNotable);
+
+    this.resetForm();
+  }
+
+  resetForm() {
     this.active = false;
     setTimeout(() => this.active = true, 0);
+
+    this.currentNotable = new Notable();
+    this.shared = false;
+    this.reportLocation = false;
   }
 
 }

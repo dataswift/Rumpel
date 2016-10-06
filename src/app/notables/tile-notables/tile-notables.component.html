@@ -1,23 +1,30 @@
 <ng-content></ng-content>
 
-<rump-input-box [profilePhoto]="profilePhoto"></rump-input-box>
+<rump-input-box [userPhotoUrl]="profilePhoto?.url">
+  <rump-profile-photo [userPhotoUrl]="profilePhoto?.url">
+  </rump-profile-photo>
+</rump-input-box>
 
 <div class="content">
   <ul class="note-list" *ngIf="notables.length > 0">
     <li *ngFor="let notable of notables" class="notable">
       <div class="item-header">
-        <img src="{{profilePhoto.url}}" class="img-profile img-circle">
+        <rump-profile-photo class="user-photo"
+                            [userPhotoUrl]="notable.author998 ? notable.author998['photo_url'] : ''">
+        </rump-profile-photo>
         <div class="notable-type">
-          <span class="ss-newspaper"></span>
+          <span class="ss-maplocation" *ngIf="notable.location998"></span>
+          <span class="ss-{{iconMap[notable.type]}}"></span>
         </div>
         <div class="header-content">
-          <h5>Some random guy</h5>
+          <h5>{{notable.author998 ? notable.author998.phata : ''}}</h5>
           <span>Logged {{notable.created_time | moment}}</span>
-          <span>{{notable.shared === '' ? 'PRIVATE' : 'SHARED'}}</span>
+          &nbsp;&#9679;&nbsp;
+          <span>{{notable.isShared() ? 'PRIVATE' : 'SHARED'}}</span>
         </div>
       </div>
 
-      <p>{{notable.message}}</p>
+      <div class="notable-content" [innerHTML]="notable.message"></div>
       <!-- <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div> -->
     </li>
   </ul>

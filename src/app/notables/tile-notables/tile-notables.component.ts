@@ -11,6 +11,7 @@ import { NotablesService } from '../notables.service';
 export class TileNotablesComponent implements OnInit {
   public notables: Array<Notable>;
   public profilePhoto: any;
+  public iconMap: any;
   private sub: any;
 
   constructor(private notablesSvc: NotablesService,
@@ -19,6 +20,12 @@ export class TileNotablesComponent implements OnInit {
   ngOnInit() {
     this.notables =[];
     this.profilePhoto = {};
+
+    this.iconMap = {
+      note: 'ellipsischat',
+      list: 'list',
+      blog: 'write'
+    };
 
     this.notablesSvc.notables$.subscribe(notables => {
       this.notables = notables;

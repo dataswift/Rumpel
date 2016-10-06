@@ -2,6 +2,8 @@
   font-family: "Open Sans Regular", sans-serif;
   font-weight: 300;
   padding: 1em;
+  max-height: 11em;
+  overflow: hidden;
 
   &:nth-child(2n+1) {
     background-color: #393939;
@@ -11,7 +13,8 @@
     background-color: #262626;
   }
 
-  p {
+  .notable-content {
+    clear: both;
     margin: 1em;
     margin-top: 1.5em;
     font-size: 1em;
@@ -19,8 +22,14 @@
 }
 
 .item-header {
+  .user-photo {
+    float: left;
+    font-size: 0.75em;
+    margin-right: 0.5em;
+  }
+
   .header-content {
-    padding-top: 0.5em;
+    padding-top: 1em;
 
     h5 {
       font-size: 1.3em;
@@ -35,18 +44,7 @@
 
   .notable-type {
     float: right;
-    margin-top: 0.1em;
-    font-size: 3em;
+    margin-top: 0.4em;
+    font-size: 2em;
   }
-}
-
-.img-profile {
-  float: left;
-  margin-left: 0.5em;
-  margin-right: 1em;
-  height: 4em;
-}
-
-.img-circle {
-  border-radius: 50%;
 }

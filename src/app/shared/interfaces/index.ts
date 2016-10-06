@@ -1,4 +1,4 @@
-export { Notable } from './notable.interface';
+export { Notable } from './notable.class';
 export { HatTable } from './hat-table.interface';
 export { Location } from './location.interface';
 export { DataDebit } from './data-debit.interface';

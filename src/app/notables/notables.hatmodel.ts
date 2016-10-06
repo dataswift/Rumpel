@@ -1,5 +1,5 @@
 export const NotablesHatModel = {
-  name: "notables",
+  name: "notables2",
   source: "rumpel",
   fields: [
     { name: "message" },
@@ -11,9 +11,10 @@ export const NotablesHatModel = {
   ],
   subTables: [
     {
-      name: "author",
+      name: "author998",
       source: "rumpel",
       fields: [
+        { name: "id" },
         { name: "name" },
         { name: "nick" },
         { name: "phata" },
@@ -21,7 +22,7 @@ export const NotablesHatModel = {
       ]
     },
     {
-      name: "locations",
+      name: "location998",
       source: "rumpel",
       fields: [
         { name: "latitude" },
@@ -35,12 +36,13 @@ export const NotablesHatModel = {
       ]
     },
     {
-      name: "photos",
+      name: "photo998",
       source: "rumpel",
       fields: [
         { name: "link" },
         { name: "source" },
-        { name: "caption" }
+        { name: "caption" },
+        { name: "shared" }
       ]
     }
   ]
