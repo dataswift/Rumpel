@@ -1,0 +1,5 @@
+<div class="default-photo"
+     *ngIf="!userPhotoUrl">
+  <span class="ss-user"></span>
+</div>
+<img *ngIf="userPhotoUrl" src="{{userPhotoUrl}}" class="user-photo circle">

@@ -1,0 +1,23 @@
+.default-photo,
+.user-photo {
+  height: 5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.default-photo {
+  opacity: 0.3;
+
+  span {
+    font-size: 5em;
+  }
+}
+
+.user-photo {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+
+  &.circle {
+    border-radius: 50%;
+  }
+}
