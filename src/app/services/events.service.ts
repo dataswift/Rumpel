@@ -36,13 +36,13 @@ export class EventsService {
     );
   }
 
-  loadAll(): Observable<any> {
+  private loadAll(): Observable<any> {
     return Observable.forkJoin(
       this.loadFrom('ical')
         .map(events => events.map(this.icalMap)),
       this.loadFrom('facebook')
         .map(events => events.map(this.fbMap))
-      );
+    );
   }
 
   loadFrom(source: string): Observable<any> {
@@ -51,23 +51,23 @@ export class EventsService {
 
   fbMap(event): DataPoint {
     let newDataPoint = {
-      timestamp: moment(event.events.start_time),
+      timestamp: moment(event.data.events.start_time),
       type: 'event',
       source: 'facebook',
       content: {
-        name: event.events.name,
-        description: event.events.description,
-        start: moment(event.events.start_time),
-        end: event.events.end_time ? moment(event.events.end_time) : null,
-        rsvp: event.events.rsvp_status,
+        name: event.data.events.name,
+        description: event.data.events.description,
+        start: moment(event.data.events.start_time),
+        end: event.data.events.end_time ? moment(event.data.events.end_time) : null,
+        rsvp: event.data.events.rsvp_status,
         calendarName: 'facebook'
       }
     };
 
-    if (event.events.place && event.events.place.location) {
+    if (event.data.events.place && event.data.events.place.location) {
       newDataPoint['location'] = {
-        latitude: event.events.place.location.latitude,
-        longitude: event.events.place.location.longitude
+        latitude: event.data.events.place.location.latitude,
+        longitude: event.data.events.place.location.longitude
       };
     }
 
@@ -76,16 +76,16 @@ export class EventsService {
 
   icalMap(event): DataPoint {
     return {
-      timestamp: moment(event.events.startDate),
+      timestamp: moment(event.data.events.startDate),
       type: 'event',
       source: 'calendar',
       content: {
-        name: event.events.summary,
-        description: event.events.description,
-        start: moment(event.events.startDate),
-        end: event.end_date ? moment(event.events.endDate) : null,
+        name: event.data.events.summary,
+        description: event.data.events.description,
+        start: moment(event.data.events.startDate),
+        end: event.data.events.endDate ? moment(event.data.events.endDate) : null,
         rsvp: 'unknown',
-        calendarName: event.events.calendarName
+        calendarName: event.data.events.calendarName
       }
     };
   }

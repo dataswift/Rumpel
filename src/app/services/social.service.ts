@@ -43,28 +43,28 @@ export class SocialService {
 
   fbMap(post: any): DataPoint {
     let postContent;
-    switch (post.posts.type) {
+    switch (post.data.posts.type) {
       case "link":
         postContent = {
-          caption: post.posts.caption,
-          description: post.posts.description,
-          link: post.posts.link,
-          name: post.posts.name,
-          picture: post.posts.picture,
-          fullPicture: post.posts.full_picture
+          caption: post.data.posts.caption,
+          description: post.data.posts.description,
+          link: post.data.posts.link,
+          name: post.data.posts.name,
+          picture: post.data.posts.picture,
+          fullPicture: post.data.posts.full_picture
         };
         break;
       case "status":
         postContent = {
-          message: post.posts.message
+          message: post.data.posts.message
         }
         break;
       case "photo":
         postContent = {
-          name: post.posts.name,
-          message: post.posts.message,
-          picture: post.posts.picture,
-          fullPicture: post.posts.full_picture
+          name: post.data.posts.name,
+          message: post.data.posts.message,
+          picture: post.data.posts.picture,
+          fullPicture: post.data.posts.full_picture
         }
         break;
       default:
@@ -73,21 +73,21 @@ export class SocialService {
     }
 
     return {
-      timestamp: moment(post.posts.created_time),
+      timestamp: moment(post.data.posts.created_time),
       type: 'post',
       source: 'facebook',
       content: {
-        createdTime: moment(post.posts.created_time),
-        updatedTime: moment(post.posts.updated_time),
-        statusType: post.posts.status_type,
-        type: post.posts.type,
+        createdTime: moment(post.data.posts.created_time),
+        updatedTime: moment(post.data.posts.updated_time),
+        statusType: post.data.posts.status_type,
+        type: post.data.posts.type,
         privacy: {
-          value: post.posts.privacy.value,
-          description: post.posts.privacy.description
+          value: post.data.posts.privacy.value,
+          description: post.data.posts.privacy.description
         },
-        from: !!post.posts.from ? post.posts.from.name: null,
-        application: !!post.posts.application ? post.posts.application.name : null,
-        story: post.posts.story,
+        from: !!post.data.posts.from ? post.data.posts.from.name: null,
+        application: !!post.data.posts.application ? post.data.posts.application.name : null,
+        story: post.data.posts.story,
         content: postContent
       }
     };

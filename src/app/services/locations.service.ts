@@ -12,12 +12,14 @@ export class LocationsService {
   private store: { locations: Array<DataPoint> };
   private timeSpan: number;
   private decrementInterval: number;
+  private failedAttempts: number;
 
   constructor(private hat: HatApiService) {
     this.store = { locations: [] };
     this.locations$ = <Subject<DataPoint[]>>new Subject();
     this.timeSpan = 6;
     this.decrementInterval = 0.5;
+    this.failedAttempts = 0;
   }
 
   getLocations$() {
@@ -34,8 +36,11 @@ export class LocationsService {
       data => {
         if (data.length === 0) {
           setTimeout(() => {
-            this.timeSpan += 6;
-            return this.showAll();
+            this.failedAttempts++;
+            if (this.failedAttempts < 20) {
+              this.timeSpan += 6;
+              return this.showAll();
+            }
           }, 50);
           return;
         }
@@ -76,12 +81,12 @@ export class LocationsService {
 
   private locMap(location: any): DataPoint {
     return {
-      timestamp: moment(location.locations.timestamp),
+      timestamp: moment(location.data.locations.timestamp),
       type: 'location',
       source: 'iphone',
       location: {
-        latitude: location.locations.latitude,
-        longitude: location.locations.longitude,
+        latitude: location.data.locations.latitude,
+        longitude: location.data.locations.longitude,
         accuracy: null
       }
     };
