@@ -46,10 +46,10 @@ export class NotablesService {
       return Observable.of(this.store.idMapping);
     }
 
-    return this.hat.getTable('notables2', 'rumpel')
+    return this.hat.getTable('notables', 'rumpel')
       .flatMap(table => {
         if (table === "Not Found") {
-          return this.hat.postModel(NotablesHatModel);
+          return this.hat.postModel(NotablesHatModel.model);
         } else {
           this.store.tableId = table.id;
           return this.hat.getModelMapping(table.id);
@@ -64,7 +64,7 @@ export class NotablesService {
       this.hat.getValues(this.store.tableId, '1475255673', true)
         .map(notables => {
           return notables.map(notable => {
-            let note = new Notable(notable['notables2']);
+            let note = new Notable(notable.data['notables']);
             note.message = this.md.parse(note.message);
 
             return note;
@@ -83,7 +83,7 @@ export class NotablesService {
 
   postNotable(data) {
     data.shared = data.shared.join(",");
-    this.hat.postRecord(data, this.store.idMapping, 'notables2')
+    this.hat.postRecord(data, this.store.idMapping, 'notables')
       .subscribe(record => {
         this.store.notables.unshift(data);
 

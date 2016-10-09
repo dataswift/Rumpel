@@ -10,17 +10,17 @@
     <li *ngFor="let notable of notables" class="notable">
       <div class="item-header">
         <rump-profile-photo class="user-photo"
-                            [userPhotoUrl]="notable.author998 ? notable.author998['photo_url'] : ''">
+                            [userPhotoUrl]="notable.author ? notable.author['photo_url'] : ''">
         </rump-profile-photo>
         <div class="notable-type">
-          <span class="ss-maplocation" *ngIf="notable.location998"></span>
+          <span class="ss-maplocation" *ngIf="notable.location"></span>
           <span class="ss-{{iconMap[notable.type]}}"></span>
         </div>
         <div class="header-content">
-          <h5>{{notable.author998 ? notable.author998.phata : ''}}</h5>
+          <h5>{{notable.author ? notable.author.phata : ''}}</h5>
           <span>Logged {{notable.created_time | moment}}</span>
           &nbsp;&#9679;&nbsp;
-          <span>{{notable.isShared() ? 'PRIVATE' : 'SHARED'}}</span>
+          <span>{{notable.isShared() ? 'SHARED' : 'PRIVATE'}}</span>
         </div>
       </div>
 

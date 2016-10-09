@@ -27,6 +27,8 @@
           <span class="ss-location ss-glyphish-filled"></span>
         </button>
         <button type="button" class="btn btn-options"
+                [class.on]="expires"
+                (click)="toggleExpiration()"
                 *ngIf="shared">
           <span class="ss-calendar ss-glyphish-filled"></span>
         </button>

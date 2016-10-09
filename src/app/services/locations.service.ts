@@ -58,19 +58,23 @@ export class LocationsService {
   loadAll(): Observable<DataPoint[]> {
     return this.loadFrom('iphone')
       .map(locations => locations.map(this.locMap))
-      .map(locations => locations.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1));;
+      .map(locations => locations.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1));
   }
 
   getCurrentDeviceLocation(callback) {
-    navigator.geolocation.getCurrentPosition(location => {
-      let here: Location = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        accuracy: location.coords.accuracy
-      };
+    navigator.geolocation.getCurrentPosition(
+      location => {
+        let here: Location = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          accuracy: location.coords.accuracy
+        };
 
-      return callback(here);
-    });
+        return callback(null, here);
+      },
+      err => {
+        return callback(err);
+      });
   }
 
   private loadFrom(source: string): Observable<any> {

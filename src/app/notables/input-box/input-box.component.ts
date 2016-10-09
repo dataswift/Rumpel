@@ -16,31 +16,38 @@ export class InputBoxComponent implements OnInit {
 
   // Temporary workaround until Angular ships form reset feature
   public active: boolean;
-  public reportLocation: boolean;
   public expanded: boolean;
   public inputExpanded: boolean;
-  public shared: boolean;
   public currentNotable: Notable;
+
+  public reportLocation: boolean;
+  public shared: boolean;
+  public expires: boolean;
+
 
   constructor(private notableSvc: NotablesService,
               private locationsSvc: LocationsService,
               private hatSvc: HatApiService) {}
 
   ngOnInit() {
-    this.active = true;
-    this.expanded = false;
-    this.inputExpanded = false;
+    this.resetForm();
+  }
 
-    this.currentNotable = new Notable();
-
-    this.reportLocation = false;
-    this.shared = false;
+  toggleExpiration() {
+    if (this.expires) {
+      this.expires = false;
+      this.currentNotable.setExpirationDate(0);
+    } else {
+      this.expires = true;
+      this.currentNotable.setExpirationDate(7);
+    }
   }
 
   togglePrivacy() {
     if (this.shared) {
       this.currentNotable.stopSharingOn('marketsquare');
       this.shared = false;
+      this.expires = false;
     } else {
       this.currentNotable.shareOn('marketsquare');
       this.shared = true;
@@ -48,15 +55,17 @@ export class InputBoxComponent implements OnInit {
   }
 
   toggleLocation() {
-    if (this.currentNotable.location998) {
-      this.currentNotable.location998 = null;
+    if (this.currentNotable.location) {
+      this.currentNotable.location = null;
       this.reportLocation = false;
     } else {
-      this.locationsSvc.getCurrentDeviceLocation((here: Location) => {
-        console.log(here);
-        this.currentNotable.location998 = here;
+      this.locationsSvc.getCurrentDeviceLocation((err, here: Location) => {
+        if (err) {
+          return this.reportLocation = false;
+        }
+        this.currentNotable.location = here;
+        this.reportLocation = true;
       });
-      this.reportLocation = true;
     }
 
   }
@@ -79,13 +88,18 @@ export class InputBoxComponent implements OnInit {
     this.resetForm();
   }
 
-  resetForm() {
+  private resetForm() {
     this.active = false;
     setTimeout(() => this.active = true, 0);
 
     this.currentNotable = new Notable();
+
     this.shared = false;
     this.reportLocation = false;
+    this.expires = false;
+
+    this.expanded = false;
+    this.inputExpanded = false;
   }
 
 }

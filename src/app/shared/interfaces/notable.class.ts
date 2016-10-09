@@ -6,10 +6,10 @@ export class Notable {
   public type: string;
   private created_time: any;
   private updated_time: any;
-  public public_until: number;
-  public shared: Array<string>;
+  private public_until: string;
+  private shared: Array<string>;
 
-  public author998: {
+  public author: {
     id?: string;
     name?: string;
     nick?: string;
@@ -17,7 +17,7 @@ export class Notable {
     photo_url: string;
   };
 
-  public location998: Location;
+  public location: Location;
   public photo: {
     link: string;
     source: string;
@@ -30,12 +30,12 @@ export class Notable {
       this.type = options.type;
       this.created_time = moment(options.created_time);
       this.updated_time = moment(options.updated_time);
-      this.public_until = options.public_until;
+      this.public_until = options.public_until || '';
       this.shared = options.shared ? options.shared.split(",") : [];
 
-      this.location998 = options.location998;
+      this.location = options.location;
 
-      this.author998 = options.author998;
+      this.author = options.author;
 
       this.photo = options.photo;
     } else {
@@ -43,17 +43,21 @@ export class Notable {
       this.type = 'note';
       this.created_time = null;
       this.updated_time = null;
-      this.public_until = 0;
+      this.public_until = '';
       this.shared = [];
     }
   }
 
-  isShared() {
+  isShared(): boolean {
     return this.shared.length > 0;
   }
 
   shareOn(serviceName: string) {
     this.shared.push(serviceName);
+
+    if (this.public_until === '') {
+      this.setExpirationDate(0);
+    }
   }
 
   stopSharingOn(serviceName: string) {
@@ -62,6 +66,22 @@ export class Notable {
     if (index > -1) {
       this.shared.splice(index, 1);
     }
+
+    if (!this.isShared()) {
+      this.setExpirationDate(null);
+    }
+  }
+
+  isExpired(): boolean {
+    return this.public_until.length > 1;
+  }
+
+  setExpirationDate(days: number) {
+    if (days === null) {
+      this.public_until = '';
+    } else {
+      this.public_until = days === 0 ? '0' : moment().add(days, "days").format("X");
+    }
   }
 
   prepareToPost(message: string, author: any) {
@@ -69,6 +89,6 @@ export class Notable {
     this.created_time = this.created_time || moment().format();
     this.updated_time = moment().format();
 
-    this.author998 = author;
+    this.author = author;
   }
 }

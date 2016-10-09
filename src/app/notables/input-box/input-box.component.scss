@@ -71,6 +71,7 @@ form {
 
   &:focus {
     outline: none;
+    color: white;
   }
 }
 
@@ -81,6 +82,11 @@ form {
   border: 2px solid white;
   font-weight: bold;
   float: right;
+
+  &:hover {
+    color: white;
+    opacity: 0.7;
+  }
 }
 
 .input-area {
