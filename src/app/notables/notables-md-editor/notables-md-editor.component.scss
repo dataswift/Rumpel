@@ -1,0 +1,89 @@
+
+.editor-header {
+  font-family: "Open Sans Condensed", sans-serif;
+
+  h3 {
+    font-size: 2em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+  }
+
+  .notes-tab {
+    background-color: #018675;
+    color: white;
+    padding: 0.5em 1.5em;
+    margin-right: 0.5em;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    display: inline-block;
+    opacity: 0.3;
+    cursor: pointer;
+
+    &.active {
+      opacity: 1.0;
+    }
+
+    span {
+      margin-right: 0.5em;
+    }
+  }
+}
+
+.editor-wrapper {
+  position: relative;
+
+  .privacy-options {
+    position: absolute;
+    bottom: 0.5em;
+    right: 5em;
+    font-size: 8px;
+    z-index: 2;
+  }
+}
+
+.options-bar {
+  position: relative;
+  background-color: #018675;
+  padding: 1.5em 1em;
+  padding-bottom: 1em;
+
+  .btn {
+    background-color: transparent;
+    color: white;
+  }
+
+  .btn-options {
+    opacity: 0.3;
+    font-size: 1.75em;
+
+    &.on {
+      opacity: 1.0;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .btn-modify {
+    font-family: "Open Sans Condensed", sans-serif;
+    font-weight: bold;
+    float: right;
+    padding: 0.5em 1em;
+    margin: 0 0.5em;
+    border: 2px solid white;
+    border-radius: 0;
+  }
+
+  .arrow-down {
+    width: 0;
+    height: 0;
+    top: 0;
+    right: 5em;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+
+    border-top: 10px solid #ffffff;
+  }
+}

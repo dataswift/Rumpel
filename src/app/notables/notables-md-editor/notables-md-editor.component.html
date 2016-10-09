@@ -1,0 +1,29 @@
+<div class="editor-header">
+  <h3>New Notable</h3>
+  <div class="notes-tab" [class.active]="currentNotable.type === 'note'" (click)="switchType('note')"><span class="ss-ellipsischat ss-glyphish-filled"></span>Note</div>
+  <div class="notes-tab" [class.active]="currentNotable.type ==='list'" (click)="switchType('list')"><span class="ss-list ss-glyphish-filled"></span>List</div>
+  <div class="notes-tab" [class.active]="currentNotable.type === 'blog'" (click)="switchType('blog')"><span class="ss-write ss-glyphish-filled"></span>Blog</div>
+</div>
+
+<div class="editor-wrapper">
+  <textarea #editor></textarea>
+
+  <rump-switch class="privacy-options"
+               [isChecked]="shared"
+               (onSwitch)="togglePrivacy()"></rump-switch>
+</div>
+
+<div class="options-bar">
+  <div class="arrow-down"></div>
+  <button type="button" class="btn btn-options"
+          [class.on]="reportLocation"
+          (click)="toggleLocation()">
+    <span class="ss-location ss-glyphish-filled"></span>
+  </button>
+  <button type="button" class="btn btn-options"
+          [class.on]="expires"
+          (click)="toggleExpiration()">
+    <span class="ss-calendar ss-glyphish-filled"></span>
+  </button>
+  <button type="submit" class="btn btn-modify" name="post-status" (click)="submit()">{{shared ? 'Share Notable' : 'Log Privately'}}</button>
+</div>

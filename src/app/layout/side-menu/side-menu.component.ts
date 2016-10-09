@@ -39,6 +39,7 @@ export class SideMenuComponent implements OnInit {
 
     this.menu = [
       { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '', disable: '' },
+      { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
       { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
       { display: 'Mashup', icon: 'layergroup', link: 'mixpad', dataType: '', disable: '' },
       { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'coming 2016' },

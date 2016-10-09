@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="view-header">
+      <h4>Notables</h4>
+    </div>
+  </div>
+</div>
+
+<div class="row notables-view">
+  <div class="col-md-10 col-md-offset-1">
+    <rump-notables-md-editor [userPhotoUrl]="profilePhoto?.url"></rump-notables-md-editor>
+
+    <div class="filter-header">
+      <span>{{filter ? filter + ' only' : 'Shows everything'}}</span>
+      <div class="filter" [class.on]="filter === ''" (click)="filterBy('')"><span class="ss-index ss-glyphish-filled"></span>All</div>
+      <div class="filter" [class.on]="filter === 'list'" (click)="filterBy('list')"><span class="ss-list ss-glyphish-filled"></span>Lists</div>
+      <div class="filter" [class.on]="filter === 'note'" (click)="filterBy('note')"><span class="ss-ellipsischat ss-glyphish-filled"></span>Notes</div>
+      <div class="filter" [class.on]="filter === 'blog'" (click)="filterBy('blog')"><span class="ss-write ss-glyphish-filled"></span>Blogs</div>
+      <div class="filter">Filter by:</div>
+    </div>
+
+    <ul>
+      <li *ngFor="let notable of notables | filterBy:'type':filter" class="notable-item">
+        <div class="notable-controls">
+          <div class="controls-item">Edit<span class="ss-compose"></span></div>
+          <div class="controls-item">Delete<span class="ss-trash"></span></div>
+        </div>
+
+        <div class="notable-type"><span class="ss-{{iconMap[notable.type]}} ss-glyphish-filled"></span>{{notable.type}}</div>
+        <div class="notable-header">
+          <rump-profile-photo class="user-photo"
+                              [userPhotoUrl]="notable.author['photo_url']"></rump-profile-photo>
+          <div class="header-content">
+            <h5>{{notable.author.phata}}</h5>
+            <span>Logged {{notable.created_time | moment}}</span>
+            <span>{{notable.isShared() ? 'SHARED, Expires ' : 'PRIVATE'}}</span>
+            <span *ngIf="notable.isShared()">{{notable.public_until === '0' ? ' never' : notable.public_until | relativeTime }}</span>
+          </div>
+        </div>
+        <div class="notable-content" [innerHTML]="notable.message"></div>
+      </li>
+    </ul>
+  </div>
+</div>

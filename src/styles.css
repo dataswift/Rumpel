@@ -32,3 +32,23 @@ body {
 .popover.left > .arrow:after {
   border-left-color: #B0BEC5;
 }
+
+.editor-toolbar {
+  border-radius: 0;
+  border: none;
+  background-color: #393939;
+}
+
+.editor-toolbar .fa {
+  color: white !important;
+  border-radius: 0;
+}
+
+.editor-toolbar .fa:hover {
+  background-color: transparent;
+}
+
+.CodeMirror {
+  border: none;
+  border-radius: 0;
+}
