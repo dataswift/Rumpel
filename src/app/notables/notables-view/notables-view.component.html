@@ -22,8 +22,8 @@
     <ul>
       <li *ngFor="let notable of notables | filterBy:'type':filter" class="notable-item">
         <div class="notable-controls">
-          <div class="controls-item">Edit<span class="ss-compose"></span></div>
-          <div class="controls-item">Delete<span class="ss-trash"></span></div>
+          <div class="controls-item" (click)="editNotable(notable)">Edit<span class="ss-compose"></span></div>
+          <div class="controls-item" (click)="deleteNotable(notable.id)">Delete<span class="ss-trash"></span></div>
         </div>
 
         <div class="notable-type"><span class="ss-{{iconMap[notable.type]}} ss-glyphish-filled"></span>{{notable.type}}</div>
@@ -37,7 +37,7 @@
             <span *ngIf="notable.isShared()">{{notable.public_until === '0' ? ' never' : notable.public_until | relativeTime }}</span>
           </div>
         </div>
-        <div class="notable-content" [innerHTML]="notable.message"></div>
+        <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>
       </li>
     </ul>
   </div>

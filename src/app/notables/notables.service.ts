@@ -15,10 +15,12 @@ export class NotablesService {
   };
   private tableVerified: boolean;
   private failedAttempts: number;
-  private md: any;
 
   private _notables$: Subject<Notable[]>;
   public notables$: Observable<Notable[]>;
+
+  private _editedNotable$: Subject<Notable>;
+  public editedNotable$: Observable<Notable>;
 
   constructor(private hat: HatApiService) {
     this.store = {
@@ -29,10 +31,12 @@ export class NotablesService {
 
     this.tableVerified = false;
     this.failedAttempts = 0;
-    this.md = marked.setOptions({});
 
     this._notables$ = <Subject<Notable[]>>new Subject();
     this.notables$ = this._notables$.asObservable();
+
+    this._editedNotable$ = <Subject<Notable>>new Subject();
+    this.editedNotable$ = this._editedNotable$.asObservable();
 
     this.verifyTableExists().subscribe(idMapping => {
       // TODO: service currently does not retrieve table ID when the HAT model is posted for the first time
@@ -61,13 +65,10 @@ export class NotablesService {
     if (this.store.notables.length > 0) {
       this.pushToStream();
     } else if (this.store.tableId) {
-      this.hat.getValues(this.store.tableId, '1475255673', true)
+      this.hat.getValuesWithLimit(this.store.tableId)
         .map(notables => {
           return notables.map(notable => {
-            let note = new Notable(notable.data['notables']);
-            note.message = this.md.parse(note.message);
-
-            return note;
+            return new Notable(notable.data['notables'], notable.id);
           });
         })
         .subscribe(notables => {
@@ -75,20 +76,61 @@ export class NotablesService {
 
           this.pushToStream();
         });
-    } else if (this.failedAttempts <= 5) {
+    } else if (this.failedAttempts <= 10) {
       this.failedAttempts++;
-      return Observable.timer(50).subscribe(() => this.getRecentNotables());
+      return Observable.timer(75).subscribe(() => this.getRecentNotables());
     }
+  }
+
+  updateNotable(data) {
+    data.shared = data.shared.join(",");
+
+    this.hat.deleteRecord(data.id)
+        .flatMap(responseMessage => {
+          if (responseMessage.message.indexOf("deleted") > -1) {
+            let foundNoteIndex = this.store.notables.findIndex(note => note.id === data.id);
+
+            if (foundNoteIndex > -1) {
+              this.store.notables.splice(foundNoteIndex, 1);
+            }
+          }
+
+          delete data.id;
+
+          return this.hat.postRecord(data, this.store.idMapping, 'notables');
+        })
+        .subscribe(record => {
+          this.store.notables.unshift(new Notable(data));
+
+          this.pushToStream();
+        });
   }
 
   postNotable(data) {
     data.shared = data.shared.join(",");
     this.hat.postRecord(data, this.store.idMapping, 'notables')
       .subscribe(record => {
-        this.store.notables.unshift(data);
+        this.store.notables.unshift(new Notable(data));
 
         this.pushToStream();
       });
+  }
+
+  editNotable(notable: Notable) {
+    this._editedNotable$.next(notable);
+  }
+
+  deleteNotable(id: number) {
+    this.hat.deleteRecord(id).subscribe(responseMessage => {
+      if (responseMessage.message.indexOf("deleted") > -1) {
+        let foundNoteIndex = this.store.notables.findIndex(note => note.id === id);
+        if (foundNoteIndex > -1) {
+          this.store.notables.splice(foundNoteIndex, 1);
+
+          this.pushToStream();
+        }
+      }
+    });
   }
 
   private pushToStream() {

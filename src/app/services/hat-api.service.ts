@@ -80,8 +80,6 @@ export class HatApiService {
     query.append('name', name);
     query.append('source', source);
 
-    console.log('Getting table values: ', name, source);
-
     return this._http.get(url, { headers: this._headers, search: query, body: '' })
       .map(res => res.json())
       .catch(e => {
@@ -116,6 +114,13 @@ export class HatApiService {
     return this._http.post(url, hatFormattedObj, { headers: this._headers });
   }
 
+  deleteRecord(id: number) {
+    const url = this._baseUrl + '/data/record/' + id;
+
+    return this._http.delete(url, { headers: this._headers })
+      .map(res => res.json());
+  }
+
   getValues(tableId: number, startTime: string = '0', pretty: boolean = false): Observable<any> {
     const url = this._baseUrl + '/data/table/' + tableId + '/values';
 
@@ -133,6 +138,18 @@ export class HatApiService {
     } else {
       return requestObservable.map(table => this.transformRecord(table));
     }
+  }
+
+  getValuesWithLimit(tableId: number): Observable<any> {
+    const url = this._baseUrl + '/data/table/' + tableId + '/values';
+
+    let query: URLSearchParams = new URLSearchParams();
+    query.append('pretty', 'true');
+    query.append('limit', '50');
+    query.append('starttime', '0');
+
+    return this._http.get(url, { headers: this._headers , search: query, body: '' })
+        .map(res => res.json());
   }
 
   getDataDebit(uuid: string) {

@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div class="notable-content" [innerHTML]="notable.message"></div>
+      <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>
       <!-- <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div> -->
     </li>
   </ul>

@@ -2,6 +2,7 @@ import { Location } from './location.interface';
 import * as moment from 'moment';
 
 export class Notable {
+  public id: number;
   public message: string;
   public type: string;
   private created_time: any;
@@ -24,7 +25,11 @@ export class Notable {
     caption: string;
   };
 
-  constructor(options: any = null) {
+  constructor(options: any = null, id: number = null) {
+    if (id) {
+      this.id = id;
+    }
+
     if (options) {
       this.message = options.message;
       this.type = options.type;
@@ -33,11 +38,17 @@ export class Notable {
       this.public_until = options.public_until || '';
       this.shared = options.shared ? options.shared.split(",") : [];
 
-      this.location = options.location;
+      if (options.location) {
+        this.location = options.location;
+      }
 
-      this.author = options.author;
+      if (options.author) {
+        this.author = options.author;
+      }
 
-      this.photo = options.photo;
+      if (options.photo) {
+        this.photo = options.photo;
+      }
     } else {
       this.message = '';
       this.type = 'note';
@@ -86,7 +97,7 @@ export class Notable {
 
   prepareToPost(message: string, author: any) {
     this.message = message;
-    this.created_time = this.created_time || moment().format();
+    this.created_time = this.created_time ? this.created_time.format() : moment().format();
     this.updated_time = moment().format();
 
     this.author = author;

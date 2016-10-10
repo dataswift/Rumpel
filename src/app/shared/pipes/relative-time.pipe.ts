@@ -7,7 +7,6 @@ import * as moment from 'moment';
 export class RelativeTimePipe implements PipeTransform {
 
   transform(value: string): any {
-    console.log(value);
     return moment.unix(parseInt(value, 10)).fromNow();
   }
 

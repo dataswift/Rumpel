@@ -28,6 +28,13 @@ export class NotablesMdEditorComponent implements OnInit {
       status: false
     });
 
+    this.currentNotable = new Notable();
+
+    this.notablesSvc.editedNotable$.subscribe(notable => {
+      this.currentNotable = notable;
+      this.resetForm();
+    });
+
     this.resetForm();
   }
 
@@ -75,23 +82,27 @@ export class NotablesMdEditorComponent implements OnInit {
     let author = {
       phata: this.hatSvc.getDomain(),
       photo_url: this.userPhotoUrl || ''
-    }
+    };
 
     this.currentNotable.prepareToPost(this.mde.value(), author);
 
-    this.notablesSvc.postNotable(this.currentNotable);
+    if (this.currentNotable.id) {
+      this.notablesSvc.updateNotable(this.currentNotable);
+    } else {
+      this.notablesSvc.postNotable(this.currentNotable);
+    }
+
+    this.currentNotable = new Notable();
 
     this.resetForm();
   }
 
   private resetForm() {
-    this.currentNotable = new Notable();
-
     this.shared = this.currentNotable.isShared();
     this.expires = this.currentNotable.isExpired();
     this.reportLocation = !!this.currentNotable.location;
 
-    this.mde.value('');
+    this.mde.value(this.currentNotable.message);
   }
 
 }

@@ -4,12 +4,16 @@ import { RouterModule } from '@angular/router';
 
 import { SwitchComponent, TreeViewComponent, ProfilePhotoComponent } from './components';
 import { OutsideClick } from './directives';
-import { MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe } from './pipes';
+import { MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe } from './pipes';
 
 @NgModule({
   imports: [ CommonModule ],
-  declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, OutsideClick, SwitchComponent, TreeViewComponent, ProfilePhotoComponent ],
-  exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe,
+
+  declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
+                  OutsideClick,
+                  SwitchComponent, TreeViewComponent, ProfilePhotoComponent ],
+
+  exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              SwitchComponent, TreeViewComponent, ProfilePhotoComponent,
              OutsideClick,
              CommonModule, RouterModule ]

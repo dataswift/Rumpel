@@ -44,4 +44,12 @@ export class NotablesViewComponent implements OnInit {
     this.filter = category;
   }
 
+  editNotable(notable: Notable) {
+    this.notablesSvc.editNotable(notable);
+  }
+
+  deleteNotable(id: number) {
+    this.notablesSvc.deleteNotable(id);
+  }
+
 }
