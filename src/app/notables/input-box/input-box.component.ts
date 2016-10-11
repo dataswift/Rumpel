@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Notable, Location } from '../../shared/interfaces';
-import { LocationsService, HatApiService } from '../../services';
+import { HatApiService } from '../../services';
+import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
-
-import * as moment from 'moment';
 
 @Component({
   selector: 'rump-input-box',

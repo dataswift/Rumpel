@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { LocationsService, HatApiService } from '../../services';
+import { HatApiService } from '../../services';
+import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Notable, Location } from '../../shared/interfaces';
 import * as SimpleMDE from 'simplemde';

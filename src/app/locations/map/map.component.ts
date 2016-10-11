@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
-import { DataPoint } from '../../shared';
+import { DataPoint } from '../../shared/data-point.interface';
 
 declare var L: any;
 

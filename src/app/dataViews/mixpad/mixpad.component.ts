@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { EventsService, LocationsService, ImagesService, SocialService } from '../../services';
+import { EventsService, ImagesService, SocialService } from '../../services';
+import { LocationsService } from '../../locations/locations.service';
 import { DataPoint } from '../../shared';
 import * as moment from 'moment';
 
@@ -32,10 +33,10 @@ export class MixpadComponent implements OnInit {
     this.data = [];
     this.shownComponents = { map: false, events: true, photos: true, timeline: true };
 
-    this.socialSvc.showAll()
+    this.socialSvc.socialFeed$
       .merge(this.eventsSvc.getEvents$())
       .merge(this.imagesSvc.loadAll())
-      .merge(this.locationsSvc.getLocations$())
+      .merge(this.locationsSvc.locations$)
       .subscribe((dataPoints: Array<DataPoint>) => {
 
         for (let dp of dataPoints) {
@@ -49,7 +50,8 @@ export class MixpadComponent implements OnInit {
         this.data = this.data.concat(dataPoints);
       });
 
-    this.locationsSvc.showAll();
+    this.socialSvc.getRecentPosts();
+    this.locationsSvc.getRecentLocations();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Location } from '../../shared/interfaces';
-import { LocationsService } from '../../services';
+import { DataPoint } from '../../shared/data-point.interface';
+import { LocationsService } from '../locations.service';
 
 @Component({
   selector: 'rump-locations',
@@ -9,20 +9,21 @@ import { LocationsService } from '../../services';
   styleUrls: ['locations.component.scss']
 })
 export class LocationsComponent implements OnInit, OnDestroy {
-  public locations;
+  public locations: Array<DataPoint>;
   public safeSize;
   private sub;
 
-  constructor(private locationsSvc: LocationsService, private sanitizer: DomSanitizer) { }
+  constructor(private locationsSvc: LocationsService,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.locations = [];
 
-    this.sub = this.locationsSvc.getLocations$().subscribe(locations => {
+    this.sub = this.locationsSvc.locations$.subscribe(locations => {
       this.locations = locations;
     });
 
-    this.locationsSvc.showAll();
+    this.locationsSvc.getRecentLocations();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
   }

@@ -140,13 +140,17 @@ export class HatApiService {
     }
   }
 
-  getValuesWithLimit(tableId: number): Observable<any> {
+  getValuesWithLimit(tableId: number, limit: number = 50, endtime: string = null): Observable<any> {
     const url = this._baseUrl + '/data/table/' + tableId + '/values';
 
     let query: URLSearchParams = new URLSearchParams();
     query.append('pretty', 'true');
-    query.append('limit', '50');
+    query.append('limit', limit.toString());
     query.append('starttime', '0');
+
+    if (endtime) {
+      query.append('endtime', endtime);
+    }
 
     return this._http.get(url, { headers: this._headers , search: query, body: '' })
         .map(res => res.json());

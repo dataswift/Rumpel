@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LocationsService } from '../../services';
+import { DataPoint } from '../../shared/data-point.interface';
+import { LocationsService } from '../locations.service';
 
 @Component({
   selector: 'rump-tile-map',
@@ -9,9 +10,8 @@ import { LocationsService } from '../../services';
 })
 export class TileMapComponent implements OnInit, OnDestroy {
   @Input() title;
-  @Input() iconName;
   @Input() info;
-  public locations;
+  public locations: Array<DataPoint>;
   private sub;
   public safeSize;
 
@@ -22,10 +22,11 @@ export class TileMapComponent implements OnInit, OnDestroy {
     this.locations = [];
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('29em');
-    this.sub = this.locationSvc.getLocations$().subscribe(locations => {
+    this.sub = this.locationSvc.locations$.subscribe(locations => {
       this.locations = locations;
     });
-    this.locationSvc.showAll();
+
+    this.locationSvc.getRecentLocations();
   }
 
   ngOnDestroy() {
