@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, RumpelService, MarketSquareService } from '../../services';
+import { AuthService, RumpelService } from '../../services';
+import { MarketSquareService } from '../../market-square/market-square.service';
 
 @Component({
   selector: 'rump-auth',

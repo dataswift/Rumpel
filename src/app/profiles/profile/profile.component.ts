@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfileService, HatApiService } from '../../services';
-import { Profile } from '../../shared';
+import { HatApiService } from '../../services';
+import { ProfilesService } from '../profiles.service';
+import { Profile } from '../../shared/profile.interface';
 
 @Component({
   selector: 'rump-profile',
@@ -15,7 +16,7 @@ export class ProfileComponent implements OnInit {
   public hatUrl: string;
   public uiMessageHidden: boolean;
 
-  constructor(private profileSvc: ProfileService,
+  constructor(private profilesSvc: ProfilesService,
               private hat: HatApiService,
               private router: Router) {}
 
@@ -23,15 +24,15 @@ export class ProfileComponent implements OnInit {
     this.uiMessageHidden = true;
     this.hatUrl = this.hat.getUrl();
     this.profilePhoto = {};
-    this.profileSvc.initializeProfile().subscribe(hatIdMapping => {
+    this.profilesSvc.initializeProfile().subscribe(hatIdMapping => {
       this.hatIdMapping = hatIdMapping;
 
-      this.profileSvc.getFullProfile().subscribe(profile => {
+      this.profilesSvc.getFullProfile().subscribe(profile => {
         if (profile) this.profile = profile;
       });
     });
 
-    this.profileSvc.getPicture().subscribe(
+    this.profilesSvc.getPicture().subscribe(
       profilePicture => {
         if (profilePicture) this.profilePhoto = profilePicture;
       },
@@ -68,7 +69,7 @@ export class ProfileComponent implements OnInit {
 
   submitForm(event) {
     event.preventDefault();
-    this.profileSvc.saveProfile(this.profile, this.hatIdMapping).subscribe(savedPosts => {
+    this.profilesSvc.saveProfile(this.profile, this.hatIdMapping).subscribe(savedPosts => {
       this.uiMessageHidden = false;
       setTimeout(() => this.uiMessageHidden = true, 5000);
     });

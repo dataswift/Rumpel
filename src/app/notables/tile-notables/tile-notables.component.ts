@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Notable } from '../../shared/interfaces';
-import { ProfileService } from '../../services';
+import { ProfilesService } from '../../profiles/profiles.service';
 import { NotablesService } from '../notables.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class TileNotablesComponent implements OnInit {
   private sub: any;
 
   constructor(private notablesSvc: NotablesService,
-              private profileSvc: ProfileService) {}
+              private profilesSvc: ProfilesService) {}
 
   ngOnInit() {
     this.notables =[];
@@ -31,7 +31,7 @@ export class TileNotablesComponent implements OnInit {
       this.notables = notables;
     });
 
-    this.profileSvc.getPicture().subscribe(picture => {
+    this.profilesSvc.getPicture().subscribe(picture => {
       this.profilePhoto = picture;
     });
 

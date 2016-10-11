@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { addProviders, async, inject } from '@angular/core/testing';
-import { ProfileService } from './profile.service';
+import { ProfilesService } from './profiles.service';
 
 describe('Profile Service', () => {
   beforeEach(() => {
-    addProviders([ProfileService]);
+    addProviders([ProfilesService]);
   });
 
   it('should ...',
-    inject([ProfileService],
-      (service: ProfileService) => {
+    inject([ProfilesService],
+      (service: ProfilesService) => {
         expect(service).toBeTruthy();
       }));
 });

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { MarketSquareService } from '../../services';
+import { MarketSquareService } from '../market-square.service';
 
 @Component({
   selector: 'rump-tile-data-offers',

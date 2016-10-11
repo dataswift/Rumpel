@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from '../../services';
-import { Profile } from '../../shared';
+import { ProfilesService } from '../profiles.service';
+import { Profile } from '../../shared/profile.interface';
 
 @Component({
   selector: 'rump-tile-profile',
@@ -10,10 +10,10 @@ import { Profile } from '../../shared';
 export class TileProfileComponent implements OnInit {
   public profile: Profile;
 
-  constructor(private profileSvc: ProfileService) {}
+  constructor(private profilesSvc: ProfilesService) {}
 
   ngOnInit() {
-    this.profileSvc.getFullProfile().subscribe(profile => {
+    this.profilesSvc.getFullProfile().subscribe(profile => {
       if (profile) this.profile = profile;
     });
 

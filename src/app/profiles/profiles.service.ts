@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HatApiService } from './hat-api.service';
-import { AuthService } from './auth.service';
-import { Profile } from '../shared';
-import { hatModel } from '../shared/hat-profile-model';
+import { HatApiService } from '../services/hat-api.service';
+import { AuthService } from '../services/auth.service';
+import { Profile } from '../shared/profile.interface';
+import { ProfileHatModel } from './profile.hatmodel';
 
 @Injectable()
-export class ProfileService {
+export class ProfilesService {
   public profile: Profile;
   private hatIdMapping;
 
@@ -21,7 +21,7 @@ export class ProfileService {
         if (profileTable) {
           return this.hat.getModelMapping(profileTable.id);
         } else {
-          return this.hat.postModel(hatModel.profile);
+          return this.hat.postModel(ProfileHatModel.model);
         }
       });
   }

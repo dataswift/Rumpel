@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UiStateService, AuthService, MarketSquareService, HatApiService } from '../../services';
+import { UiStateService, AuthService, HatApiService } from '../../services';
+import { MarketSquareService } from '../../market-square/market-square.service';
 import * as marked from 'marked';
 
 @Component({
@@ -20,7 +21,7 @@ export class SideMenuComponent implements OnInit {
   public notificationsVisible: boolean;
   private md: any;
 
-  // hack: uiState service needs to be injected befor Auth component,
+  // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
 
   constructor(private uiState: UiStateService,

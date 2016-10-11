@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotablesService } from '../notables.service';
-import { ProfileService } from '../../services';
+import { ProfilesService } from '../../profiles/profiles.service';
 import { Notable } from '../../shared/interfaces';
-
-import * as moment from 'moment';
 
 @Component({
   selector: 'rump-notables-view',
@@ -17,7 +15,7 @@ export class NotablesViewComponent implements OnInit {
   public filter: string;
 
   constructor(private notablesSvc: NotablesService,
-              private profileSvc: ProfileService) { }
+              private profilesSvc: ProfilesService) { }
 
   ngOnInit() {
     this.filter = '';
@@ -33,7 +31,7 @@ export class NotablesViewComponent implements OnInit {
       this.notables = notables;
     });
 
-    this.profileSvc.getPicture().subscribe(picture => {
+    this.profilesSvc.getPicture().subscribe(picture => {
       this.profilePhoto = picture;
     });
 

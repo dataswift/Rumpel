@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HatApiService } from './hat-api.service';
-import { MarketSquareService } from './market-square.service';
+import { MarketSquareService } from '../market-square/market-square.service';
 import { Observable, Observer } from 'rxjs/Rx';
 
 @Injectable()

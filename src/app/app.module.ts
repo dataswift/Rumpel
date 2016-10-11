@@ -4,9 +4,11 @@ import { AppRootComponent } from './app.component';
 
 import { LayoutModule } from './layout/layout.module';
 import { NotablesModule } from './notables/notables.module';
+import { ProfilesModule } from './profiles/profiles.module';
 import { SharedModule } from './shared/shared.module';
 import { LocationsModule } from './locations/locations.module';
 import { SocialModule } from './social/social.module';
+import { MarketSquareModule } from './market-square/market-square.module';
 
 import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -17,10 +19,10 @@ import { AuthGuard } from './auth.guard';
 import { GridComponent } from './dashboard';
 import { DataDebitConfirmComponent } from './transactions';
 import { TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe, LimitMembersPipe } from './pipes';
-import { TileProfileComponent, TileCalendarComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileComingSoonComponent, TileDataDebitComponent } from './dashboard';
-import { DataPointComponent, PhotoGridComponent, ViewByDayComponent, TimelineComponent, ProfileComponent, CalendarComponent, PhotosComponent, MixpadComponent } from './dataViews';
+import { TileCalendarComponent, TileWeatherComponent, TileHeaderComponent, TileComingSoonComponent, TileDataDebitComponent } from './dashboard';
+import { DataPointComponent, PhotoGridComponent, ViewByDayComponent, TimelineComponent, CalendarComponent, PhotosComponent, MixpadComponent } from './dataViews';
 import { LoginComponent, AuthComponent } from './user-mgmt';
-import { AuthService, HatApiService, MarketSquareService, EventsService, ImagesService, DataDebitService, ProfileService, UiStateService, RumpelService } from './services';
+import { AuthService, HatApiService, EventsService, ImagesService, DataDebitService, UiStateService, RumpelService } from './services';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -36,16 +38,12 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     ViewByDayComponent,
     TimelineComponent,
     MixpadComponent,
-    ProfileComponent,
     PhotosComponent,
     CalendarComponent,
     DataDebitConfirmComponent,
-    TileProfileComponent,
     TileCalendarComponent,
     TileWeatherComponent,
     TileHeaderComponent,
-    TileDataOffersComponent,
-    TileDataPlugsComponent,
     TileComingSoonComponent,
     TileDataDebitComponent,
 
@@ -65,7 +63,9 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     BootstrapModalModule,
     LayoutModule,
     SocialModule,
-    NotablesModule
+    MarketSquareModule,
+    NotablesModule,
+    ProfilesModule
   ],
   bootstrap: [AppRootComponent],
   providers: [
@@ -74,11 +74,9 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     AuthGuard,
     AuthService,
     HatApiService,
-    MarketSquareService,
     EventsService,
     ImagesService,
     DataDebitService,
-    ProfileService,
     UiStateService,
     RumpelService
   ]

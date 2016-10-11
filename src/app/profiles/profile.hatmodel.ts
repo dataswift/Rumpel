@@ -1,5 +1,8 @@
-export const hatModel = {
-  profile: {
+export const ProfileHatModel = {
+  metadata: {
+    version: "1.0.0"
+  },
+  model: {
     name: "profile",
     source: "rumpel",
     fields: [

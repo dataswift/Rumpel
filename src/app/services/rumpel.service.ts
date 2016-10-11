@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs/Rx';
 import { HatTable } from '../shared/interfaces';
 import { HatApiService } from './hat-api.service';
-import { MarketSquareService } from './market-square.service';
+import { MarketSquareService } from '../market-square/market-square.service';
 
 import * as moment from 'moment';
 
