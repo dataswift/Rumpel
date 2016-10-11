@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialService } from '../../services';
+import { SocialService } from '../social.service';
 
 @Component({
   selector: 'rump-tile-social',
@@ -7,12 +7,18 @@ import { SocialService } from '../../services';
   styleUrls: ['tile-social.component.scss']
 })
 export class TileSocialComponent implements OnInit {
-  public feed$;
+  public posts;
 
   constructor(private socialSvc: SocialService) {}
 
   ngOnInit() {
-    this.feed$ = this.socialSvc.showAll();
+    this.posts = [];
+
+    this.socialSvc.socialFeed$.subscribe(posts => {
+      this.posts = posts;
+    });
+
+    this.socialSvc.getRecentPosts();
   }
 
 }

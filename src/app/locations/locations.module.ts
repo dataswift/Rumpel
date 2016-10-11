@@ -6,7 +6,7 @@ import { LocationsComponent } from './locations/locations.component';
 import { MapComponent } from './map/map.component';
 import { TileMapComponent } from './tile-map/tile-map.component';
 
-import { LocationsService} from './locations.service';
+import { LocationsService } from './locations.service';
 
 @NgModule({
     imports: [ routing ],

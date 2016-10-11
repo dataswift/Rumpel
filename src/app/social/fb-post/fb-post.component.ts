@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataPoint } from '../../shared';
+import { DataPoint } from '../../shared/data-point.interface';
 
 @Component({
   selector: 'rump-fb-post',

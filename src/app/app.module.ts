@@ -6,6 +6,7 @@ import { LayoutModule } from './layout/layout.module';
 import { NotablesModule } from './notables/notables.module';
 import { SharedModule } from './shared/shared.module';
 import { LocationsModule } from './locations/locations.module';
+import { SocialModule } from './social/social.module';
 
 import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -15,11 +16,11 @@ import { AuthGuard } from './auth.guard';
 
 import { GridComponent } from './dashboard';
 import { DataDebitConfirmComponent } from './transactions';
-import { TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe, ReplaceCharsPipe, LimitMembersPipe, LimitContentPipe } from './pipes';
-import { TileProfileComponent, TileCalendarComponent, TileSocialComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileComingSoonComponent, TileDataDebitComponent } from './dashboard';
-import { DataPointComponent, FbPostComponent, PhotoGridComponent, ViewByDayComponent, TimelineComponent, ProfileComponent, SocialComponent, CalendarComponent, PhotosComponent, MixpadComponent } from './dataViews';
+import { TimeFilterPipe, LocationFilterPipe, DataTypeFilterPipe, LimitMembersPipe } from './pipes';
+import { TileProfileComponent, TileCalendarComponent, TileWeatherComponent, TileHeaderComponent, TileDataOffersComponent, TileDataPlugsComponent, TileComingSoonComponent, TileDataDebitComponent } from './dashboard';
+import { DataPointComponent, PhotoGridComponent, ViewByDayComponent, TimelineComponent, ProfileComponent, CalendarComponent, PhotosComponent, MixpadComponent } from './dataViews';
 import { LoginComponent, AuthComponent } from './user-mgmt';
-import { AuthService, HatApiService, MarketSquareService, EventsService, ImagesService, SocialService, DataDebitService, ProfileService, UiStateService, RumpelService } from './services';
+import { AuthService, HatApiService, MarketSquareService, EventsService, ImagesService, DataDebitService, ProfileService, UiStateService, RumpelService } from './services';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -31,7 +32,6 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     LoginComponent,
     AuthComponent,
     DataPointComponent,
-    FbPostComponent,
     PhotoGridComponent,
     ViewByDayComponent,
     TimelineComponent,
@@ -39,11 +39,9 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     ProfileComponent,
     PhotosComponent,
     CalendarComponent,
-    SocialComponent,
     DataDebitConfirmComponent,
     TileProfileComponent,
     TileCalendarComponent,
-    TileSocialComponent,
     TileWeatherComponent,
     TileHeaderComponent,
     TileDataOffersComponent,
@@ -54,9 +52,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     TimeFilterPipe,
     LocationFilterPipe,
     DataTypeFilterPipe,
-    ReplaceCharsPipe,
-    LimitMembersPipe,
-    LimitContentPipe
+    LimitMembersPipe
   ],
   imports: [
     BrowserModule,
@@ -68,6 +64,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     ModalModule.forRoot(),
     BootstrapModalModule,
     LayoutModule,
+    SocialModule,
     NotablesModule
   ],
   bootstrap: [AppRootComponent],
@@ -80,7 +77,6 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     MarketSquareService,
     EventsService,
     ImagesService,
-    SocialService,
     DataDebitService,
     ProfileService,
     UiStateService,

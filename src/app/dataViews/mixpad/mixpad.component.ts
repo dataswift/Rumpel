@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { EventsService, ImagesService, SocialService } from '../../services';
+import { EventsService, ImagesService } from '../../services';
+import { SocialService } from '../../social/social.service';
 import { LocationsService } from '../../locations/locations.service';
 import { DataPoint } from '../../shared';
 import * as moment from 'moment';
@@ -59,5 +60,4 @@ export class MixpadComponent implements OnInit {
   onViewReset() {
     this.selectedTime = null;
   }
-
 }
