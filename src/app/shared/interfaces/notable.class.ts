@@ -4,13 +4,14 @@ import * as moment from 'moment';
 export class Notable {
   public id: number;
   public message: string;
-  public type: string;
+  public kind: string;
   private created_time: any;
   private updated_time: any;
+  private shared: boolean;
   private public_until: string;
-  private shared: Array<string>;
+  private shared_on: any;
 
-  public author: {
+  public authorv1: {
     id?: string;
     name?: string;
     nick?: string;
@@ -18,8 +19,8 @@ export class Notable {
     photo_url: string;
   };
 
-  public location: Location;
-  public photo: {
+  public locationv1: Location;
+  public photov1: {
     link: string;
     source: string;
     caption: string;
@@ -32,66 +33,69 @@ export class Notable {
 
     if (options) {
       this.message = options.message;
-      this.type = options.type;
+      this.kind = options.kind;
       this.created_time = moment(options.created_time);
       this.updated_time = moment(options.updated_time);
       this.public_until = options.public_until || '';
-      this.shared = options.shared ? options.shared.split(",") : [];
+      this.shared = options.shared === 'true';
+      this.shared_on = options.shared_on ? options.shared_on.split(",") : [];
 
-      if (options.location) {
-        this.location = options.location;
+      if (options.locationv1) {
+        this.locationv1 = options.locationv1;
       }
 
-      if (options.author) {
-        this.author = options.author;
+      if (options.authorv1) {
+        this.authorv1 = options.authorv1;
       }
 
-      if (options.photo) {
-        this.photo = options.photo;
+      if (options.photov1) {
+        this.photov1 = options.photov1;
       }
     } else {
       this.message = '';
-      this.type = 'note';
+      this.kind = 'note';
       this.created_time = null;
       this.updated_time = null;
       this.public_until = '';
-      this.shared = [];
+      this.shared = false;
+      this.shared_on = [];
     }
   }
 
   isShared(): boolean {
-    return this.shared.length > 0;
+    return this.shared;
+  }
+
+  share() {
+    this.shared = true;
+  }
+
+  makePrivate() {
+    this.shared = false;
+    this.public_until = '';
   }
 
   shareOn(serviceName: string) {
-    this.shared.push(serviceName);
-
-    if (this.public_until === '') {
-      this.setExpirationDate(0);
-    }
+    this.shared_on.push(serviceName);
   }
 
   stopSharingOn(serviceName: string) {
-    let index = this.shared.indexOf(serviceName);
+    let index = this.shared_on.indexOf(serviceName);
 
     if (index > -1) {
-      this.shared.splice(index, 1);
-    }
-
-    if (!this.isShared()) {
-      this.setExpirationDate(null);
+      this.shared_on.splice(index, 1);
     }
   }
 
   isExpired(): boolean {
-    return this.public_until.length > 1;
+    return this.public_until !== '';
   }
 
   setExpirationDate(days: number) {
-    if (days === null) {
+    if (days === 0) {
       this.public_until = '';
     } else {
-      this.public_until = days === 0 ? '0' : moment().add(days, "days").format("X");
+      this.public_until = moment().add(days, "days").format();
     }
   }
 
@@ -100,6 +104,6 @@ export class Notable {
     this.created_time = this.created_time ? this.created_time.format() : moment().format();
     this.updated_time = moment().format();
 
-    this.author = author;
+    this.authorv1 = author;
   }
 }

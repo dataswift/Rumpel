@@ -44,25 +44,25 @@ export class InputBoxComponent implements OnInit {
 
   togglePrivacy() {
     if (this.shared) {
-      this.currentNotable.stopSharingOn('marketsquare');
+      this.currentNotable.makePrivate();
       this.shared = false;
       this.expires = false;
     } else {
-      this.currentNotable.shareOn('marketsquare');
+      this.currentNotable.share();
       this.shared = true;
     }
   }
 
   toggleLocation() {
-    if (this.currentNotable.location) {
-      this.currentNotable.location = null;
+    if (this.currentNotable.locationv1) {
+      this.currentNotable.locationv1 = null;
       this.reportLocation = false;
     } else {
       this.locationsSvc.getCurrentDeviceLocation((err, here: Location) => {
         if (err) {
           return this.reportLocation = false;
         }
-        this.currentNotable.location = here;
+        this.currentNotable.locationv1 = here;
         this.reportLocation = true;
       });
     }

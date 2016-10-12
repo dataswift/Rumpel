@@ -1,21 +1,22 @@
 export const NotablesHatModel = {
   metadata: {
-    version: "1.0.0"
+    version: "1.1.0"
   },
   model: {
-    name: "notables",
+    name: "notablesv1",
     source: "rumpel",
     fields: [
       { name: "message" },
-      { name: "type" },
+      { name: "kind" },
       { name: "created_time" },
       { name: "updated_time" },
       { name: "public_until" },
-      { name: "shared" }
+      { name: "shared" },
+      { name: "shared_on" }
     ],
     subTables: [
       {
-        name: "author",
+        name: "authorv1",
         source: "rumpel",
         fields: [
           { name: "id" },
@@ -26,7 +27,7 @@ export const NotablesHatModel = {
         ]
       },
       {
-        name: "location",
+        name: "locationv1",
         source: "rumpel",
         fields: [
           { name: "latitude" },
@@ -40,7 +41,7 @@ export const NotablesHatModel = {
         ]
       },
       {
-        name: "photo",
+        name: "photov1",
         source: "rumpel",
         fields: [
           { name: "link" },

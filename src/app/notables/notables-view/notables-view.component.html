@@ -20,21 +20,21 @@
     </div>
 
     <ul>
-      <li *ngFor="let notable of notables | filterBy:'type':filter" class="notable-item">
+      <li *ngFor="let notable of notables | filterBy:'kind':filter" class="notable-item placeholder">
         <div class="notable-controls">
           <div class="controls-item" (click)="editNotable(notable)">Edit<span class="ss-compose"></span></div>
-          <div class="controls-item" (click)="deleteNotable(notable.id)">Delete<span class="ss-trash"></span></div>
+          <div class="controls-item" (click)="deleteNotable($event, notable.id)">Delete<span class="ss-trash"></span></div>
         </div>
 
-        <div class="notable-type"><span class="ss-{{iconMap[notable.type]}} ss-glyphish-filled"></span>{{notable.type}}</div>
+        <div class="notable-type"><span class="ss-{{iconMap[notable.type]}} ss-glyphish-filled"></span>{{notable.kind}}</div>
         <div class="notable-header">
           <rump-profile-photo class="user-photo"
-                              [userPhotoUrl]="notable.author['photo_url']"></rump-profile-photo>
+                              [userPhotoUrl]="notable.authorv1['photo_url']"></rump-profile-photo>
           <div class="header-content">
-            <h5>{{notable.author.phata}}</h5>
+            <h5>{{notable.authorv1.phata}}</h5>
             <span>Logged {{notable.created_time | moment}}</span>
-            <span>{{notable.isShared() ? 'SHARED, Expires ' : 'PRIVATE'}}</span>
-            <span *ngIf="notable.isShared()">{{notable.public_until === '0' ? ' never' : notable.public_until | relativeTime }}</span>
+            <span>{{notable.isShared() ? 'SHARED ' : 'PRIVATE'}}</span>
+            <span *ngIf="notable.isShared()">{{notable.public_until === '' ? ' forever' : notable.public_until | relativeTime }}</span>
           </div>
         </div>
         <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>

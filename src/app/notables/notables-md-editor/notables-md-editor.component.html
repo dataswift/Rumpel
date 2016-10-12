@@ -1,8 +1,8 @@
 <div class="editor-header">
   <h3>New Notable</h3>
-  <div class="notes-tab" [class.active]="currentNotable.type === 'note'" (click)="switchType('note')"><span class="ss-ellipsischat ss-glyphish-filled"></span>Note</div>
-  <div class="notes-tab" [class.active]="currentNotable.type ==='list'" (click)="switchType('list')"><span class="ss-list ss-glyphish-filled"></span>List</div>
-  <div class="notes-tab" [class.active]="currentNotable.type === 'blog'" (click)="switchType('blog')"><span class="ss-write ss-glyphish-filled"></span>Blog</div>
+  <div class="notes-tab" [class.active]="currentNotable.kind === 'note'" (click)="switchType('note')"><span class="ss-ellipsischat ss-glyphish-filled"></span>Note</div>
+  <div class="notes-tab" [class.active]="currentNotable.kind ==='list'" (click)="switchType('list')"><span class="ss-list ss-glyphish-filled"></span>List</div>
+  <div class="notes-tab" [class.active]="currentNotable.kind === 'blog'" (click)="switchType('blog')"><span class="ss-write ss-glyphish-filled"></span>Blog</div>
 </div>
 
 <div class="editor-wrapper">

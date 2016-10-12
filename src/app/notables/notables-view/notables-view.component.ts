@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { Notable } from '../../shared/interfaces';
+import set = Reflect.set;
 
 @Component({
   selector: 'rump-notables-view',
@@ -44,10 +45,12 @@ export class NotablesViewComponent implements OnInit {
 
   editNotable(notable: Notable) {
     this.notablesSvc.editNotable(notable);
+    window.scrollTo(0, 100);
   }
 
-  deleteNotable(id: number) {
-    this.notablesSvc.deleteNotable(id);
+  deleteNotable(event, id: number) {
+    event.target.parentNode.parentNode.className += " removed-item";
+    setTimeout(() => this.notablesSvc.deleteNotable(id), 900);
   }
 
 }

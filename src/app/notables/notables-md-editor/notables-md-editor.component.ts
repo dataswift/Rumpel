@@ -40,7 +40,7 @@ export class NotablesMdEditorComponent implements OnInit {
   }
 
   switchType(typeName: string) {
-    this.currentNotable.type = typeName;
+    this.currentNotable.kind = typeName;
   }
 
   toggleExpiration() {
@@ -55,25 +55,25 @@ export class NotablesMdEditorComponent implements OnInit {
 
   togglePrivacy() {
     if (this.shared) {
-      this.currentNotable.stopSharingOn('marketsquare');
+      this.currentNotable.makePrivate();
       this.shared = false;
       this.expires = false;
     } else {
-      this.currentNotable.shareOn('marketsquare');
+      this.currentNotable.share();
       this.shared = true;
     }
   }
 
   toggleLocation() {
     if (this.reportLocation) {
-      this.currentNotable.location = null;
+      this.currentNotable.locationv1 = null;
       this.reportLocation = false;
     } else {
       this.locationSvc.getCurrentDeviceLocation((err, here: Location) => {
         if (err) {
           return this.reportLocation = false;
         }
-        this.currentNotable.location = here;
+        this.currentNotable.locationv1 = here;
         this.reportLocation = true;
       });
     }
@@ -101,7 +101,7 @@ export class NotablesMdEditorComponent implements OnInit {
   private resetForm() {
     this.shared = this.currentNotable.isShared();
     this.expires = this.currentNotable.isExpired();
-    this.reportLocation = !!this.currentNotable.location;
+    this.reportLocation = !!this.currentNotable.locationv1;
 
     this.mde.value(this.currentNotable.message);
   }

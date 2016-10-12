@@ -111,7 +111,8 @@ export class HatApiService {
     const url = this._baseUrl + '/data/record/values';
     const hatFormattedObj = this.createRecord(obj, hatIdMapping, prefix);
 
-    return this._http.post(url, hatFormattedObj, { headers: this._headers });
+    return this._http.post(url, hatFormattedObj, { headers: this._headers })
+        .map(res => res.json());
   }
 
   deleteRecord(id: number) {

@@ -1,5 +1,11 @@
 .notables-view {
   font-family: "Open Sans Regular", sans-serif;
+  //@include make-row();
+  //
+  //@media only screen and (min-device-width: $screen-md-min) {
+  //  padding-left: 10em;
+  //  padding-right: 10em;
+  //}
 }
 
 .notable-header {
@@ -122,4 +128,30 @@
 
 .img-circle {
   border-radius: 50%;
+}
+
+li.removed-item {
+  animation: removed-item-animation .8s cubic-bezier(.65,-0.02,.72,.29);
+}
+
+@keyframes removed-item-animation {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateX(50px);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateX(-800px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(-800px);
+  }
 }

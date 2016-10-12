@@ -4,7 +4,6 @@ import { HatApiService } from '../services/hat-api.service';
 
 import { NotablesHatModel } from './notables.hatmodel';
 import { Notable } from '../shared/interfaces';
-import * as marked from 'marked';
 
 @Injectable()
 export class NotablesService {
@@ -50,7 +49,7 @@ export class NotablesService {
       return Observable.of(this.store.idMapping);
     }
 
-    return this.hat.getTable('notables', 'rumpel')
+    return this.hat.getTable('notablesv1', 'rumpel')
       .flatMap(table => {
         if (table === "Not Found") {
           return this.hat.postModel(NotablesHatModel.model);
@@ -68,7 +67,7 @@ export class NotablesService {
       this.hat.getValuesWithLimit(this.store.tableId)
         .map(notables => {
           return notables.map(notable => {
-            return new Notable(notable.data['notables'], notable.id);
+            return new Notable(notable.data['notablesv1'], notable.id);
           });
         })
         .subscribe(notables => {
@@ -83,7 +82,7 @@ export class NotablesService {
   }
 
   updateNotable(data) {
-    data.shared = data.shared.join(",");
+    data.shared_on = data.shared_on.join(",");
 
     this.hat.deleteRecord(data.id)
         .flatMap(responseMessage => {
@@ -97,20 +96,20 @@ export class NotablesService {
 
           delete data.id;
 
-          return this.hat.postRecord(data, this.store.idMapping, 'notables');
+          return this.hat.postRecord(data, this.store.idMapping, 'notablesv1');
         })
-        .subscribe(record => {
-          this.store.notables.unshift(new Notable(data));
+        .subscribe(recordArray => {
+          this.store.notables.unshift(new Notable(data, recordArray[0].record.id));
 
           this.pushToStream();
         });
   }
 
   postNotable(data) {
-    data.shared = data.shared.join(",");
-    this.hat.postRecord(data, this.store.idMapping, 'notables')
-      .subscribe(record => {
-        this.store.notables.unshift(new Notable(data));
+    data.shared_on = data.shared_on.join(",");
+    this.hat.postRecord(data, this.store.idMapping, 'notablesv1')
+      .subscribe(recordArray => {
+        this.store.notables.unshift(new Notable(data, recordArray[0].record.id));
 
         this.pushToStream();
       });
