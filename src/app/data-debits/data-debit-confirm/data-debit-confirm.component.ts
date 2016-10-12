@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, DataDebitService, HatApiService } from '../../services';
+import { AuthService, HatApiService } from '../../services';
+import { DataDebitService } from '../data-debits.service';
 import { DataDebit } from '../../shared/interfaces';
 
 @Component({

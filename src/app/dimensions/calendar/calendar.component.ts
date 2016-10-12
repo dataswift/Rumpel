@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from '../../services';
+import { EventsService } from '../events.service';
 import * as moment from 'moment';
 
 declare var $: any;

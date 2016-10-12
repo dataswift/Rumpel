@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { addProviders, async, inject } from '@angular/core/testing';
-import { DataDebitService } from './data-debit.service';
+import { DataDebitService } from './data-debits.service';
 
 describe('DataDebit Service', () => {
   beforeEach(() => {

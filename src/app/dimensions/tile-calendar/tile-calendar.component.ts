@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventsService } from '../../services';
+import { EventsService } from '../events.service';
 
 @Component({
   selector: 'rump-tile-calendar',

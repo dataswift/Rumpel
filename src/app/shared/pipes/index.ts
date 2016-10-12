@@ -4,4 +4,5 @@ export { WithObjectPipe } from './with-object.pipe';
 export { LimitContentPipe } from './limit-content.pipe';
 export { ReplaceCharsPipe } from './replace-chars.pipe';
 export { RelativeTimePipe } from './relative-time.pipe';
+export { LimitMembersPipe } from './limit-members.pipe';
 export { MarkdownToHtmlPipe } from './markdown-to-html.pipe';

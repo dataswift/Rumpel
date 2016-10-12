@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs/Rx';
 
-import { HatApiService } from './hat-api.service';
+import { HatApiService } from '../services/hat-api.service';
 import { DataPoint } from '../shared/index';
 import * as moment from 'moment';
 

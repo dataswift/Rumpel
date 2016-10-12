@@ -6,7 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ReplaceCharsPipe implements PipeTransform {
 
   transform(str: string, args?: any): string {
-    return str.replace(/_/g, " ");
+    if (str) {
+      return str.replace(/_/g, " ");
+    } else {
+      return str;
+    }
   }
 
 }

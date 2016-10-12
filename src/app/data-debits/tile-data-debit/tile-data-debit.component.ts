@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataDebitService } from '../../services';
+import { DataDebitService } from '../data-debits.service';
 
 @Component({
   selector: 'rump-tile-data-debit',
