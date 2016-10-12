@@ -9,9 +9,11 @@ import { DimensionsModule } from './dimensions/dimensions.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { SharedModule } from './shared/shared.module';
 import { LocationsModule } from './locations/locations.module';
+import { PhotosModule } from './photos/photos.module';
 import { SocialModule } from './social/social.module';
 import { MarketSquareModule } from './market-square/market-square.module';
 import { DataDebitsModule } from './data-debits/data-debits.module';
+import { WeatherModule } from './weather/weather.module';
 
 import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -19,12 +21,10 @@ import { FormsModule } from '@angular/forms';
 import { routing, appRoutingProviders } from './app.routing';
 import { AuthGuard } from './auth.guard';
 
-import { GridComponent } from './dashboard';
 import { DataTypeFilterPipe } from './pipes';
-import { TileWeatherComponent, TileHeaderComponent, TileComingSoonComponent } from './dashboard';
-import { PhotoGridComponent, PhotosComponent } from './dataViews';
 import { LoginComponent, AuthComponent } from './user-mgmt';
-import { AuthService, HatApiService, ImagesService, UiStateService, RumpelService } from './services';
+import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard'
+import { AuthService, HatApiService, UiStateService, RumpelService } from './services';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -32,15 +32,11 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 @NgModule({
   declarations: [
     AppRootComponent,
-    GridComponent,
     LoginComponent,
     AuthComponent,
-    PhotoGridComponent,
-    PhotosComponent,
-    TileWeatherComponent,
+    GridComponent,
     TileHeaderComponent,
     TileComingSoonComponent,
-
     DataTypeFilterPipe
   ],
   imports: [
@@ -48,6 +44,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     SharedModule,
     LocationsModule,
     HttpModule,
+    PhotosModule,
     FormsModule,
     routing,
     ModalModule.forRoot(),
@@ -59,7 +56,8 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     MashupsModule,
     NotablesModule,
     DimensionsModule,
-    ProfilesModule
+    ProfilesModule,
+    WeatherModule
   ],
   bootstrap: [AppRootComponent],
   providers: [
@@ -68,7 +66,6 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     AuthGuard,
     AuthService,
     HatApiService,
-    ImagesService,
     UiStateService,
     RumpelService
   ]

@@ -1,12 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { WeatherService } from '../../services/weather.service';
+import { Component, OnInit } from '@angular/core';
+import { WeatherService } from '../weather.service';
 import * as moment from 'moment';
 
 @Component({
   selector: 'rump-tile-weather',
   templateUrl: 'tile-weather.component.html',
-  styleUrls: ['tile-weather.component.scss'],
-  providers: [WeatherService]
+  styleUrls: ['tile-weather.component.scss']
 })
 export class TileWeatherComponent implements OnInit {
   public icon: string;

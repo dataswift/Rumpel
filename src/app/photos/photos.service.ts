@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable, Observer } from 'rxjs/Rx';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { HatApiService } from './hat-api.service';
+import { HatApiService } from '../services/hat-api.service';
 import { DataPoint } from '../shared';
 import * as moment from 'moment';
 
 @Injectable()
-export class ImagesService {
+export class PhotosService {
   dropbox$: Observable<any>;
   images$: Observable<any>;
   private _imagesObserver: Observer<any>;
@@ -16,8 +15,7 @@ export class ImagesService {
   private _authBearer: string;
   private _store: { images: Array<DataPoint> };
 
-  constructor(private _http: Http,
-              private _hat: HatApiService,
+  constructor(private _hat: HatApiService,
               private sanitizer: DomSanitizer) {
     this._store = { images: [] };
     this.images$ = new Observable(observer => this._imagesObserver = observer).share();

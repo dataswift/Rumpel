@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ImagesService } from '../../services';
+import { PhotosService } from '../../photos/photos.service';
 import { EventsService } from '../../dimensions/events.service';
 import { SocialService } from '../../social/social.service';
 import { LocationsService } from '../../locations/locations.service';
@@ -23,7 +23,7 @@ export class MixpadComponent implements OnInit {
 
   constructor(private locationsSvc: LocationsService,
               private eventsSvc: EventsService,
-              private imagesSvc: ImagesService,
+              private photosSvc: PhotosService,
               private socialSvc: SocialService,
               private sanitizer: DomSanitizer) {
   }
@@ -37,7 +37,7 @@ export class MixpadComponent implements OnInit {
 
     this.socialSvc.socialFeed$
       .merge(this.eventsSvc.getEvents$())
-      .merge(this.imagesSvc.loadAll())
+      .merge(this.photosSvc.loadAll())
       .merge(this.locationsSvc.locations$)
       .subscribe((dataPoints: Array<DataPoint>) => {
 
