@@ -252,6 +252,7 @@ export class HatApiService {
       startDate: moment(rawDebit.startDate),
       endDate: moment(rawDebit.endDate),
       lastUpdated: moment(rawDebit.lastUpdated),
+      enabled: rawDebit.enabled,
       name: rawDebit.name,
       price: rawDebit.price,
       rolling: rawDebit.rolling,

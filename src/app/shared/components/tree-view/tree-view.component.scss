@@ -14,7 +14,7 @@ ul {
 }
 
 .ss-puzzle {
-  color: #018675;
+  color: #009688;
   line-height: inherit;
 }
 
@@ -25,4 +25,8 @@ ul {
 .position-icon {
   padding-top: 0.2em;
   text-align: right;
+}
+
+.node-value {
+  word-break: break-all;
 }

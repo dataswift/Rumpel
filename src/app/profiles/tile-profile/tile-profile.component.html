@@ -1,99 +1,101 @@
 <ng-content></ng-content>
 
-<div class="tile-body">
-  <ul>
-    <li class="row vertical-align">
-      <div class="col-xs-2">
-        <span class="pre-field ss-user"></span>
-      </div>
-
-      <div class="col-xs-9">
-        <p>{{profile.personal.title}} {{profile.personal.first_name}} {{profile.personal.last_name}}</p>
-      </div>
-
-      <div class="col-xs-1">
-        <span class="privacy-setting ss-view"
-          [class.privacy-color]="profile.personal.private === 'false'"></span>
-      </div>
-    </li>
-
-    <li class="row vertical-align">
-      <div class="col-xs-2">
-        <span class="pre-field ss-smartphone"></span>
-      </div>
-
-      <div class="col-xs-9">
-        <p>{{profile.mobile.no}}</p>
-      </div>
-
-      <div class="col-xs-1">
-        <span class="privacy-setting ss-view"
-          [class.privacy-color]="profile.mobile.private === 'false'"></span>
-      </div>
-    </li>
-
-    <li class="row vertical-align">
-      <div class="col-xs-2">
-        <span class="pre-field ss-mail"></span>
-      </div>
-
-      <div class="col-xs-9">
-        <p>{{profile.primary_email.value}}</p>
-      </div>
-
-      <div class="col-xs-1">
-        <span class="privacy-setting ss-view"
-          [class.privacy-color]="profile.primary_email.private === 'false'"></span>
-      </div>
-    </li>
-
-    <li class="row vertical-align">
-      <div class="col-xs-2">
-        <span class="pre-field ss-home"></span>
-      </div>
-
-      <div class="col-xs-9">
-        <div>
-          <p>{{profile.address_details.no}} {{profile.address_details.street}}</p>
-          <p>{{profile.address_global.city}} {{profile.address_details.postcode}}</p>
-          <p>{{profile.address_global.country}}</p>
+<div class="scroll-mask">
+  <div class="tile-body">
+    <ul>
+      <li class="row vertical-align">
+        <div class="col-xs-2">
+          <span class="pre-field ss-user"></span>
         </div>
-      </div>
 
-      <div class="col-xs-1">
-        <span class="privacy-setting ss-view"
-          [class.privacy-color]="profile.address_details.private === 'false'"></span>
-      </div>
-    </li>
+        <div class="col-xs-9">
+          <p>{{profile.personal.title}} {{profile.personal.first_name}} {{profile.personal.last_name}}</p>
+        </div>
 
-    <li class="row vertical-align">
-      <div class="col-xs-2">
-        <span class="pre-field ss-at"></span>
-      </div>
+        <div class="col-xs-1">
+          <span class="privacy-setting ss-view"
+            [class.privacy-color]="profile.personal.private === 'false'"></span>
+        </div>
+      </li>
 
-      <div class="col-xs-9">
-        <p>{{profile.website.link}}</p>
-      </div>
+      <li class="row vertical-align">
+        <div class="col-xs-2">
+          <span class="pre-field ss-smartphone"></span>
+        </div>
 
-      <div class="col-xs-1">
-        <span class="privacy-setting ss-view"
-          [class.privacy-color]="profile.website.private === 'false'"></span>
-      </div>
-    </li>
+        <div class="col-xs-9">
+          <p>{{profile.mobile.no}}</p>
+        </div>
 
-    <li class="row vertical-align">
-      <div class="col-xs-2">
-        <span class="pre-field ss-replyall"></span>
-      </div>
+        <div class="col-xs-1">
+          <span class="privacy-setting ss-view"
+            [class.privacy-color]="profile.mobile.private === 'false'"></span>
+        </div>
+      </li>
 
-      <div class="col-xs-9">
-        <p>{{profile.facebook.link}}</p>
-      </div>
+      <li class="row vertical-align">
+        <div class="col-xs-2">
+          <span class="pre-field ss-mail"></span>
+        </div>
 
-      <div class="col-xs-1">
-        <span class="privacy-setting ss-view"
-          [class.privacy-color]="profile.facebook.private === 'false'"></span>
-      </div>
-    </li>
-  </ul>
+        <div class="col-xs-9">
+          <p>{{profile.primary_email.value}}</p>
+        </div>
+
+        <div class="col-xs-1">
+          <span class="privacy-setting ss-view"
+            [class.privacy-color]="profile.primary_email.private === 'false'"></span>
+        </div>
+      </li>
+
+      <li class="row vertical-align">
+        <div class="col-xs-2">
+          <span class="pre-field ss-home"></span>
+        </div>
+
+        <div class="col-xs-9">
+          <div>
+            <p>{{profile.address_details.no}} {{profile.address_details.street}}</p>
+            <p>{{profile.address_global.city}} {{profile.address_details.postcode}}</p>
+            <p>{{profile.address_global.country}}</p>
+          </div>
+        </div>
+
+        <div class="col-xs-1">
+          <span class="privacy-setting ss-view"
+            [class.privacy-color]="profile.address_details.private === 'false'"></span>
+        </div>
+      </li>
+
+      <li class="row vertical-align">
+        <div class="col-xs-2">
+          <span class="pre-field ss-at"></span>
+        </div>
+
+        <div class="col-xs-9">
+          <p>{{profile.website.link}}</p>
+        </div>
+
+        <div class="col-xs-1">
+          <span class="privacy-setting ss-view"
+            [class.privacy-color]="profile.website.private === 'false'"></span>
+        </div>
+      </li>
+
+      <li class="row vertical-align">
+        <div class="col-xs-2">
+          <span class="pre-field ss-replyall"></span>
+        </div>
+
+        <div class="col-xs-9">
+          <p>{{profile.facebook.link}}</p>
+        </div>
+
+        <div class="col-xs-1">
+          <span class="privacy-setting ss-view"
+            [class.privacy-color]="profile.facebook.private === 'false'"></span>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -12,7 +12,7 @@ import { AuthService, HatApiService } from '../../services';
   styleUrls: ['header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  public user: string;
+  public hatDomain: string;
   public modalMsgs: any;
   public msg: string;
   private sub: any;
@@ -55,8 +55,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.sub = this.auth.auth$.subscribe(isAuthenticated => {
       if (isAuthenticated) {
-        this.user = this.auth.getDomain();
-        this.msLink = `https://${this.user}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
+        this.hatDomain = this.auth.getDomain();
+        this.msLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
       }
     });
   }
@@ -71,7 +71,7 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut() {
-    this.user = null;
+    this.hatDomain = null;
     this.auth.signOut();
     this.router.navigate(['/users/login']);
   }

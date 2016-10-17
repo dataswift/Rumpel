@@ -1,21 +1,23 @@
 <ng-content></ng-content>
 
-<div class="tile-body">
-  <ul>
-    <li *ngFor="let debit of debits">
-      <div class="row vertical-align">
-        <div class="col-xs-2">
-          <span class="ss-puzzle"></span>
+<div class="scroll-mask">
+  <div class="tile-body">
+    <ul>
+      <li *ngFor="let debit of debits">
+        <div class="row vertical-align">
+          <div class="col-xs-2">
+            <span class="ss-puzzle"></span>
+          </div>
+          <div class="col-xs-8">
+            <h4>{{debit.bundleContextless.name}}</h4>
+            <p>Kind: {{debit.kind}}</p>
+            <p>End date: {{debit.endDate | moment}}</p>
+          </div>
+          <div class="col-xs-2">
+            <a [routerLink]="['dataDebit', debit.key, 'confirm']"><span class="ss-right"></span></a>
+          </div>
         </div>
-        <div class="col-xs-8">
-          <h4>{{debit.bundleContextless.name}}</h4>
-          <p>Kind: {{debit.kind}}</p>
-          <p>End date: {{debit.endDate | moment}}</p>
-        </div>
-        <div class="col-xs-2">
-          <a [routerLink]="['dataDebit', debit.key, 'confirm']"><span class="ss-right"></span></a>
-        </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </div>

@@ -2,7 +2,14 @@
 
 body {
   font-size: 12px;
-  font-family: 'Open Sans Regular', sans-serif;
+  font-family: "Open Sans Regular", sans-serif;
+  min-width: 480px;
+}
+
+h1, h2, h3, h4, h5, h6,
+.tile-header,
+.section-title {
+  font-family: "Open Sans Condensed", sans-serif;
 }
 
 /*@media (min-width: 768px) {

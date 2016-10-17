@@ -5,6 +5,7 @@ export interface DataDebit {
   lastUpdated: any;
   startDate: any;
   endDate: any;
+  enabled: boolean;
   name: string;
   price: number;
   rolling: boolean;

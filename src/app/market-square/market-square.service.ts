@@ -3,6 +3,8 @@ import { Http, Headers, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { HatApiService } from '../services/hat-api.service';
 
+import * as moment from 'moment';
+
 @Injectable()
 export class MarketSquareService {
   private baseUrl: string;
@@ -27,7 +29,10 @@ export class MarketSquareService {
     return this.http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json())
       .map(offers => {
-        const validOffers = offers.filter(offer => offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
+        const validOffers = offers.filter(offer => {
+          return moment(offer.offer.expires).isAfter() &&
+            (offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
+        });
         return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
       });
   }

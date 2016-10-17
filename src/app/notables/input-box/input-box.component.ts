@@ -100,5 +100,4 @@ export class InputBoxComponent implements OnInit {
     this.expanded = false;
     this.inputExpanded = false;
   }
-
 }

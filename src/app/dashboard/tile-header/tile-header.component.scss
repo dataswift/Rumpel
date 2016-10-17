@@ -19,3 +19,15 @@
   float: right;
   color: #ffffff;
 }
+
+.info-button,
+.tile-expand {
+  &:focus {
+    outline: none;
+    text-decoration: none;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}

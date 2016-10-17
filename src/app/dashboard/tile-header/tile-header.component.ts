@@ -17,15 +17,16 @@ export class TileHeaderComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {
-    $('[data-toggle="popover"]').click(function(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      $(this).popover("show");
-    });
   }
 
-  navigateTo(pageName: string) {
-    this.router.navigate([pageName]);
+  showPopover(event) {
+    $(event.target.parentNode).popover("show");
+  }
+
+  navigateTo(pageName: string, event) {
+    if (!event.target.className.includes("tile-expand")) {
+      this.router.navigate([pageName]);
+    }
   }
 
 }

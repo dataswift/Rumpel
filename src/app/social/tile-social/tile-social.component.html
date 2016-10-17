@@ -1,26 +1,28 @@
 <ng-content></ng-content>
 
-<div class="tile-body">
-  <ul>
-    <li *ngFor="let post of posts">
-      <div class="row vertical-align">
-        <div class="col-xs-2 left-column">
-          <img src="assets/icons/facebook-icon.png" class="img img-responsive">
-        </div>
+<div class="scroll-mask">
+  <div class="tile-body">
+    <ul>
+      <li *ngFor="let post of posts">
+        <div class="row vertical-align">
+          <div class="col-xs-2 left-column">
+            <img src="assets/icons/facebook-icon.png" class="img img-responsive">
+          </div>
 
-        <div class="col-xs-9 center-column">
-          <h4>{{post.content.story ? post.content.story : post.content.statusType | replaceChars}}</h4>
-          <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:80}}</p>
-          <p>Posted at: {{post.timestamp | moment}}
-             by {{post.content.application ? post.content.application : post.content.from}}</p>
-          <p>Privacy: {{post.content.privacy.value | replaceChars}}</p>
+          <div class="col-xs-9 center-column">
+            <h4>{{post.content.story ? post.content.story : post.content.statusType | replaceChars}}</h4>
+            <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:80}}</p>
+            <p>Posted at: {{post.timestamp | moment}}
+               by {{post.content.application ? post.content.application : post.content.from}}</p>
+            <p>Privacy: {{post.content.privacy.value | replaceChars}}</p>
 
-        </div>
+          </div>
 
-        <div class="col-xs-1 right-column">
-          <span class="item-expand ss-right"></span>
+          <div class="col-xs-1 right-column">
+            <span class="item-expand ss-right"></span>
+          </div>
         </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </div>

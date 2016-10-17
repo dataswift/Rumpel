@@ -37,12 +37,10 @@
 /* More or less global styles */
 
 :host /deep/ {
-  font-family: 'Open Sans Condensed', sans-serif;
-
   .view-header {
     background-color: #37474F;
     color: #eeeeee;
-    padding: 1em 1em;
+    padding: 1em;
     font-size: 1em;
   }
 
@@ -124,6 +122,6 @@
   }
 
   .btn-primary {
-    background-color: #018675;
+    background-color: #009688;
   }
 }

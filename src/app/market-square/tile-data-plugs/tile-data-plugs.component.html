@@ -1,20 +1,22 @@
 <ng-content></ng-content>
 
-<div class="tile-body">
-  <ul>
-    <li *ngFor="let plug of plugs">
-      <div class="row vertical-align">
-        <div class="col-xs-2">
-          <img src="assets/icons/{{plug.icon}}" class="img img-responsive">
+<div class="scroll-mask">
+  <div class="tile-body">
+    <ul>
+      <li *ngFor="let plug of plugs">
+        <div class="row vertical-align">
+          <div class="col-xs-2">
+            <img src="assets/icons/{{plug.icon}}" class="img img-responsive">
+          </div>
+          <div class="col-xs-8">
+            <h3>{{plug.name}} plug</h3>
+            <p>{{plug.description}}</p>
+          </div>
+          <div class="col-xs-2">
+            <button (click)="navigateModal.emit(plug.url + '?hat=' + hatDomain)" type="button"><span class="ss-right"></span></button>
+          </div>
         </div>
-        <div class="col-xs-8">
-          <h3>{{plug.name}} plug</h3>
-          <p>{{plug.description}}</p>
-        </div>
-        <div class="col-xs-2">
-          <button (click)="navigateModal.emit(plug.url + '?hat=' + hatDomain)" type="button"><span class="ss-right"></span></button>
-        </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </div>

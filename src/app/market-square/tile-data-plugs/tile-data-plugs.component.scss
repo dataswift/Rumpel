@@ -1,5 +1,5 @@
-.tile-body {
-  padding: 0.5em 1em;
+.scroll-mask {
+  border-width: 0.5em 1em;
 }
 
 .tile-body ul {
@@ -34,8 +34,8 @@
 
 .col-xs-2, .col-xs-8 {
   margin: 0;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 15px;
+  padding-right: 0;
 
   a {
     color: #ffffff;

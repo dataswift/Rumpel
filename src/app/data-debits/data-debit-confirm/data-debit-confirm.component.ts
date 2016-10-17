@@ -14,6 +14,7 @@ export class DataDebitConfirmComponent implements OnInit {
   public dataDebit: DataDebit;
   private token: string;
   private uuid: string;
+  public ddConfirmed: boolean;
 
   constructor(private _route: ActivatedRoute,
               private _ddSvc: DataDebitService,
@@ -22,6 +23,7 @@ export class DataDebitConfirmComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit() {
+    this.ddConfirmed = false;
     this.offerInfo = {
       offer: {
         title: '',
@@ -43,6 +45,7 @@ export class DataDebitConfirmComponent implements OnInit {
       // });
 
       this._ddSvc.loadDataDebit(this.uuid).subscribe(debitInfo => {
+        this.ddConfirmed = debitInfo.enabled;
         this.dataDebit = debitInfo;
       });
     });
@@ -54,6 +57,7 @@ export class DataDebitConfirmComponent implements OnInit {
     this._route.queryParams.subscribe(params => {
       if (this.authSvc.isAuthenticated() === true) {
         return this._ddSvc.loadDataDebit(this.uuid).subscribe(debitInfo => {
+          this.ddConfirmed = debitInfo.enabled;
           this.dataDebit = debitInfo;
         });
       } else {
@@ -68,7 +72,8 @@ export class DataDebitConfirmComponent implements OnInit {
   }
 
   rejectDataDebit() {
-    this._hat.updateDataDebit(this.uuid, 'disable').subscribe(res => this.router.navigate(['']));
+    this.router.navigate(['']);
+    // this._hat.updateDataDebit(this.uuid, 'disable').subscribe(res => this.router.navigate(['']));
   }
 
 }

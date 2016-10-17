@@ -66,6 +66,10 @@
   font-size: 1em;
   padding-left: 0.5em;
   padding-right: 0.5em;
+
+  &.accepted {
+    color: #009688;
+  }
 }
 
 .panel-rump {

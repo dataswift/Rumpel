@@ -9,15 +9,21 @@
         <div class="offer-description text-center">
           Valid until: {{dataDebit?.endDate | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</div>
       </div>
-      <div class="offer-dialog text-center">
+      <div class="offer-dialog text-center" *ngIf="!ddConfirmed">
         <button class="btn btn-rump btn-accept"
                 (click)="acceptDataDebit()">Accept Offer</button>
         <button class="btn btn-rump"
-                (click)="rejectDataDebit()">Decline Offer</button>
+                (click)="rejectDataDebit()">Cancel</button>
       </div>
       <div class="alert-message text-center">
-        <span class="icon-alert ss-alert"></span>
-        Last chance to review the data being released before accepting offer.
+        <div class="message" *ngIf="!ddConfirmed">
+          <span class="icon-alert ss-alert ss-glyphish-filled"></span>
+          Last chance to review the data being released before accepting offer.
+        </div>
+        <div class="message" *ngIf="ddConfirmed">
+          <span class="icon-alert accepted ss-info ss-glyphish-filled"></span>
+          This data debit has already been confirmed. The information that was transferred can be reviewed below.
+        </div>
       </div>
     </div>
     <div class="row" *ngIf="dataDebit">

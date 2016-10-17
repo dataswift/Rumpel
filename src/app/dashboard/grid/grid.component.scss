@@ -1,3 +1,21 @@
+:host /deep/ {
+  .scroll-mask {
+    border: solid #262626;
+    border-width: 0.5em 1em;
+    height: 21em;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .tile-body {
+    width: 107%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 7%;
+  }
+}
+
 .grid-item {
   float: left;
   padding: 0;
@@ -36,7 +54,7 @@
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 100;
+  z-index: 1002;
   color: #ffffff;
   text-align: center;
 
@@ -74,6 +92,6 @@
   }
 
   .btn-primary {
-    background-color: #018675;
+    background-color: #009688;
   }
 }

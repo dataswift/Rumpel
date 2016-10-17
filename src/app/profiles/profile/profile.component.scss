@@ -26,7 +26,7 @@ section {
 }
 
 .settings, .picture {
-  height: 24em;
+  height: 20em;
 }
 
 .picture {
@@ -44,6 +44,7 @@ section {
 
     span {
       font-size: 2.5em;
+      font-family: "Open Sans Condensed", sans-serif;
       text-transform: uppercase;
     }
 
@@ -61,7 +62,7 @@ section {
     clear: both;
 
     p {
-      font-size: 1.7em;
+      font-size: 1.2em;
     }
   }
 }
@@ -75,7 +76,7 @@ section {
   }
 
   p {
-    font-size: 1.7em;
+    font-size: 1.2em;
   }
 }
 

@@ -1,29 +1,31 @@
 <ng-content></ng-content>
 
-<div class="tile-body">
-  <ul>
-    <li *ngFor="let offer of offers">
-      <div class="row vertical-align">
-        <div class="col-xs-8">
-          <h5>{{offer.offer.title}}</h5>
-          <p>{{offer.offer.description | limitContent:80}}</p>
-          <p>Already claimed by {{offer.offer.users}} users. Expires at {{offer.offer.expires | moment}}</p>
-        </div>
-        <div class="col-xs-3 meta" *ngIf="offer.offer.rating">
-          <div>
-            <span class="ss-like"></span>
-            {{offer.offer.rating.up}}
+<div class="scroll-mask">
+  <div class="tile-body">
+    <ul>
+      <li *ngFor="let offer of offers">
+        <div class="row vertical-align">
+          <div class="col-xs-9">
+            <h5>{{offer.offer.title}}</h5>
+            <p>{{offer.offer.description | limitContent:300}}</p>
+            <p>Already claimed by {{offer.offer.users}} users. Expires at {{offer.offer.expires | moment}}</p>
           </div>
-          <div>
-            <span class="ss-dislike"></span>
-            {{offer.offer.rating.down}}
+          <div class="col-xs-2 meta" *ngIf="offer.offer.rating">
+            <div>
+              <span class="ss-like"></span>
+              {{offer.offer.rating.up}}
+            </div>
+            <div>
+              <span class="ss-dislike"></span>
+              {{offer.offer.rating.down}}
+            </div>
           </div>
-        </div>
 
-        <div class="col-xs-1">
-          <button (click)="navigateModal.emit('https://marketsquare.hubofallthings.com/offers/' + offer.offer.uuid)" type="button"><span class="ss-right"></span></button>
+          <div class="col-xs-1">
+            <button (click)="navigateModal.emit('https://marketsquare.hubofallthings.com/offers/' + offer.offer.uuid)" type="button"><span class="ss-right"></span></button>
+          </div>
         </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
+  </div>
 </div>
