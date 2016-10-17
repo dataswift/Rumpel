@@ -1,23 +1,31 @@
 <ng-content></ng-content>
 
-<div class="tile-body">
-  <ul>
-    <li *ngFor="let eve of events | limitMembers:5">
-      <div class="row vertical-align">
-        <div class="col-xs-2">
-          <span class="tile-entry-logo ss-notifications"></span>
-        </div>
+<div class="scroll-mask">
+  <div class="empty-tile-title" *ngIf="upcomingEventsExist === false">
+    No Upcoming Events
+  </div>
+  <div class="tile-body" *ngIf="upcomingEventsExist === true">
+    <div class="day-view" *ngFor="let day of events">
+    <h3>{{day.relativeTime}}</h3>
+      <ul>
+        <li *ngFor="let eve of day.events">
+          <div class="row vertical-align">
+            <div class="col-xs-2 event-time">
+              <p>{{eve.timestamp | moment:'hh:mm A'}}</p>
+            </div>
 
-        <div class="col-xs-9">
-          <h5>{{eve.content.name}}</h5>
-          <p>{{eve.timestamp | moment}}</p>
-          <p> From calendar: {{eve.content.calendarName}}</p>
-        </div>
+            <div class="col-xs-9">
+              <h4>{{eve.content.name}}</h4>
+              <p class="event-description" *ngIf="eve.content.description">{{eve.content.description | limitContent:140}}</p>
+              <p>From: {{eve.content.calendarName}}</p>
+            </div>
 
-        <div class="col-xs-1">
-          <span class="item-expand ss-right"></span>
-        </div>
-      </div>
-    </li>
-  </ul>
+            <div class="col-xs-1">
+              <span class="item-expand ss-right"></span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

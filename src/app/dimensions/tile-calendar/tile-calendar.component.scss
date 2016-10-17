@@ -1,5 +1,17 @@
-.tile-body {
-  padding: 0.5em 1em;
+.scroll-mask {
+  position: relative;
+
+  .empty-tile-title {
+    position: absolute;
+    top: 50%;
+    margin-top: -1.25em;
+    width: 100%;
+    text-align: center;
+    font-size: 2.5em;
+    font-family: "Open Sans Condensed", sans-serif;
+    text-transform: uppercase;
+
+  }
 }
 
 .tile-body ul {
@@ -31,18 +43,34 @@
 }
 
 .col-xs-2 {
-  padding-left: 0.5em;
+  padding-left: 15px;
 }
 
 .col-xs-9 {
   p {
     font-size: 1em;
-    margin-bottom: 0;
+    margin-bottom: 0.5em;
   }
 }
 
-.tile-content h5 {
+.event-time {
+  font-family: "Open Sans Condensed", sans-serif;
+  font-size: 1.5em;
+}
+
+.tile-body h3 {
+  text-transform: uppercase;
+  background-color: #393939;
   margin: 0;
+  font-size: 1.75em;
+  padding: 0.5em 0.5em;
+}
+
+.tile-body h4 {
+  text-transform: uppercase;
+  font-size: 1.4em;
+  margin: 0;
+  margin-bottom: 0.5em;
   padding: 0;
 }
 
