@@ -19,6 +19,7 @@ interface Status {
 }
 
 export interface Post {
+  id: string;
   createdTime: any;
   updatedTime: any;
   statusType: string;

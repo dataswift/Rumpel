@@ -5,8 +5,16 @@
     </div>
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
+        <div class="filter-header">
+          <span>{{filter ? filter + ' only' : 'Shows all posts'}}</span>
+          <div class="filter" [class.on]="filter === ''" (click)="filterBy('')"><span class="ss-index ss-glyphish-filled"></span>All</div>
+          <div class="filter" [class.on]="filter === 'facebook'" (click)="filterBy('facebook')"><span class="ss-list ss-glyphish-filled"></span>Facebook</div>
+          <div class="filter">Filter by:</div>
+        </div>
+
         <ul class="feed">
           <li *ngFor="let post of posts" class="post">
+            <a id="{{post.content.id}}"></a>
             <rump-fb-post [post]="post"></rump-fb-post>
           </li>
         </ul>

@@ -9,8 +9,6 @@ const appRoutes: Routes = [
   ...userMgmtRoutes
 ];
 
-export const appRoutingProviders: any[] = [
-
-];
+export const appRoutingProviders: any[] = [];
 
 export const routing = RouterModule.forRoot(appRoutes);

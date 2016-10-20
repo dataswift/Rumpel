@@ -1,9 +1,33 @@
 .feed {
   .post {
-    border: 1px solid #c7c7c7;
-    background-color: #ffffff;
-    margin: 1em 0;
+    margin: 0;
     padding: 0 1em;
-    font-family: 'Open Sans Condensed', sans-serif;
+    border-top: 3px solid #515151;
+    margin-bottom: 2em;
+    position: relative;
+  }
+}
+
+.filter-header {
+  font-family: "Open Sans Condensed", sans-serif;
+  font-size: 2em;
+  margin-top: 2em;
+  padding: 0.5em 1em;
+
+  .filter {
+    float: right;
+    font-size: 0.75em;
+    margin-top: 0.2em;
+    margin-left: 1em;
+    cursor: pointer;
+
+    span {
+      margin-top: 0.1em;
+      margin-right: 0.5em;
+    }
+
+    &.on {
+      color: #009688;
+    }
   }
 }

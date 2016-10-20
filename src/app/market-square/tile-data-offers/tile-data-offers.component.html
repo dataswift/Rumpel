@@ -10,13 +10,11 @@
             <p>{{offer.offer.description | limitContent:300}}</p>
             <p>Already claimed by {{offer.offer.users}} users. Expires at {{offer.offer.expires | moment}}</p>
           </div>
-          <div class="col-xs-2 meta" *ngIf="offer.offer.rating">
-            <div>
-              <span class="ss-like"></span>
+          <div class="col-xs-2" *ngIf="offer.offer.rating">
+            <div class="user-votes">
+              <span class="ss-like ss-glyphish-filled"></span>
               {{offer.offer.rating.up}}
-            </div>
-            <div>
-              <span class="ss-dislike"></span>
+              <span class="ss-dislike ss-glyphish-filled"></span>
               {{offer.offer.rating.down}}
             </div>
           </div>

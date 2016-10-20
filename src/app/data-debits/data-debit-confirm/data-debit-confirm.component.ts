@@ -45,7 +45,7 @@ export class DataDebitConfirmComponent implements OnInit {
       // });
 
       this._ddSvc.loadDataDebit(this.uuid).subscribe(debitInfo => {
-        this.ddConfirmed = debitInfo.enabled;
+        this.ddConfirmed = debitInfo.enabled || false;
         this.dataDebit = debitInfo;
       });
     });

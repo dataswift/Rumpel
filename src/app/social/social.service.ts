@@ -111,6 +111,7 @@ export class SocialService {
       type: 'post',
       source: 'facebook',
       content: {
+        id: post.data.posts.id.split("_")[1],
         createdTime: moment(post.data.posts.created_time),
         updatedTime: moment(post.data.posts.updated_time),
         statusType: post.data.posts.status_type,

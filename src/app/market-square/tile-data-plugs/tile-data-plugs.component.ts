@@ -21,7 +21,7 @@ export class TileDataPlugsComponent implements OnInit {
         let displayPlug = {
           name: plug.name,
           description: plug.description,
-          url: plug.url.replace('/dataplug', '/hat/login'),
+          url: plug.url.replace('/dataplug', '/hat/authenticate'),
           icon: plug.name.toLowerCase() + '-plug'
         }
 
@@ -35,6 +35,11 @@ export class TileDataPlugsComponent implements OnInit {
     });
 
     this.hatDomain = this.auth.getDomain();
+  }
+
+  generatePlugLoginUrl(plug: any) {
+    let loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
+    return `https://${this.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`;
   }
 
 }

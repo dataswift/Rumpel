@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 import { SocialService } from '../social.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { SocialService } from '../social.service';
 export class TileSocialComponent implements OnInit {
   public posts;
 
-  constructor(private socialSvc: SocialService) {}
+  constructor(private socialSvc: SocialService,
+              private router: Router) {}
 
   ngOnInit() {
     this.posts = [];
@@ -21,4 +23,12 @@ export class TileSocialComponent implements OnInit {
     this.socialSvc.getRecentPosts();
   }
 
+  navigateToFullPost(id: string) {
+    let navigationExtras: NavigationExtras = {
+      fragment: id,
+      preserveFragment: false
+    };
+
+    this.router.navigate(['social'], navigationExtras);
+  }
 }
