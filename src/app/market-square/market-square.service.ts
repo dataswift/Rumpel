@@ -24,7 +24,7 @@ export class MarketSquareService {
     this._headers.append('Content-Type', 'application/json');
   }
 
-  getOffer(): Observable<any> {
+  getOffers(): Observable<any> {
     const url = this.baseUrl + '/offers';
     return this.http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json())
@@ -34,6 +34,34 @@ export class MarketSquareService {
             (offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
         });
         return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
+      });
+  }
+
+  getOffer(id: string) {
+    const url = this.baseUrl + '/offer/' + id + '/userClaim';
+    return this.hat.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
+      .flatMap(accessToken => {
+        let headers = new Headers();
+        headers.append('X-Auth-Token', accessToken);
+
+        return this.http.get(url, { headers: headers, body: '' })
+          .map(res => res.json());
+      })
+      .catch(err => {
+        return Observable.of({ error: "Offer not found." });
+      });
+  }
+
+  claimOffer(id: string) {
+    const url = this.baseUrl + '/offer/' + id + '/claim';
+
+    return this.hat.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
+      .flatMap(accessToken => {
+        let headers = new Headers();
+        headers.append('X-Auth-Token', accessToken);
+
+        return this.http.get(url, { headers: headers, body: '' })
+          .map(res => res.json())
       });
   }
 

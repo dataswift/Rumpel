@@ -11,10 +11,13 @@
   <rump-switch class="privacy-options"
                [isChecked]="shared"
                (onSwitch)="togglePrivacy()"></rump-switch>
+
+  <rump-share-belt *ngIf="shared" class="sharing-belt" (serviceToggled)="updateShareOptions($event)"></rump-share-belt>
 </div>
 
 <div class="options-bar">
-  <div class="arrow-down"></div>
+  <div class="arrow-down" [class.sharing-on]="shared"></div>
+
   <button type="button" class="btn btn-options"
           [class.on]="reportLocation"
           (click)="toggleLocation()">

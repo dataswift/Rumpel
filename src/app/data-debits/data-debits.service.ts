@@ -12,7 +12,7 @@ export class DataDebitService {
   loadOffer(uuid: string): Observable<any> {
     console.log('UUID', uuid);
     return Observable.forkJoin(
-      this._marketSvc.getOffer()
+      this._marketSvc.getOffers()
         .map(marketOffers => marketOffers.find(offerItem => offerItem.offer.uuid === uuid))
     );
   }

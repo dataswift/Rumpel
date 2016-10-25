@@ -1,0 +1,19 @@
+<div class="belt">
+  <ul *ngIf="notablesState.notablesOfferClaimed">
+    <li *ngFor="let service of services" (click)="toggleSharing(service)">
+      <img src="{{service.logoUrl}}"
+           class="img img-responsive share-service"
+           [class.on]="service.shared">
+    </li>
+  </ul>
+
+  <div class="error-message" *ngIf="showError">
+    <span class="ss-alert"></span>
+    <span class="error-text">Please renew your Facebook access token to enable share.</span>
+  </div>
+
+  <div *ngIf="!notablesState.notablesOfferClaimed">
+    Notables data offer needs to be claimed in order to share this notable on other services.
+    <span class="claim" (click)="claimNotablesOffer()">Claim it.</span>
+  </div>
+</div>

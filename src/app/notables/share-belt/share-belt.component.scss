@@ -1,0 +1,49 @@
+.belt {
+  width: 100%;
+  background-color: #DBDBDB;
+  height: 4em;
+
+  ul {
+    display: inline-block;
+    margin-top: 1em;
+    margin-left: 1em;
+  }
+
+  li {
+    display: inline;
+    margin: 1em;
+
+    .share-service {
+      display: inline;
+      max-height: 2em;
+      border-radius: 50%;
+      opacity: 0.3;
+
+      &.on {
+        opacity: 1.0;
+      }
+    }
+  }
+
+  div {
+    max-height: 4em;
+    vertical-align: bottom;
+    font-size: 1.2em;
+
+    .claim {
+      text-decoration: underline;
+      color: blue;
+      cursor: pointer;
+    }
+  }
+}
+
+.error-message {
+  display: inline-block;
+  margin-left: 1em;
+
+  .ss-alert {
+    color: #ff0000;
+    margin-right: 0.5em;
+  }
+}

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs/Rx';
+import { BehaviorSubject, Subject, Observable } from 'rxjs/Rx';
 import { HatApiService } from '../services/hat-api.service';
+import { DataPlugService } from '../services/data-plug.service';
+import { MarketSquareService } from '../market-square/market-square.service';
 
 import { NotablesHatModel } from './notables.hatmodel';
 import { Notable } from '../shared/interfaces';
+
+import * as moment from 'moment';
 
 @Injectable()
 export class NotablesService {
@@ -15,13 +19,24 @@ export class NotablesService {
   private tableVerified: boolean;
   private failedAttempts: number;
 
+  public notablesState: {
+    allowedActions?: { canPost: boolean, canExpire: boolean };
+    notablesOfferClaimed?: boolean;
+  };
+
   private _notables$: Subject<Notable[]>;
   public notables$: Observable<Notable[]>;
 
   private _editedNotable$: Subject<Notable>;
   public editedNotable$: Observable<Notable>;
 
-  constructor(private hat: HatApiService) {
+  private _notablesMeta$: Subject<any>;
+  public notablesMeta$: Observable<any>;
+
+  constructor(private hat: HatApiService,
+              private market: MarketSquareService,
+              private dataPlug: DataPlugService) {
+
     this.store = {
       notables: [],
       idMapping: {},
@@ -31,16 +46,41 @@ export class NotablesService {
     this.tableVerified = false;
     this.failedAttempts = 0;
 
+    this.notablesState = {
+      allowedActions: { canPost: false, canExpire: false },
+      notablesOfferClaimed: false
+    };
+
     this._notables$ = <Subject<Notable[]>>new Subject();
     this.notables$ = this._notables$.asObservable();
 
     this._editedNotable$ = <Subject<Notable>>new Subject();
     this.editedNotable$ = this._editedNotable$.asObservable();
 
+    this._notablesMeta$ = <BehaviorSubject<any>>new BehaviorSubject(this.notablesState);
+    this.notablesMeta$ = this._notablesMeta$.asObservable();
+
     this.verifyTableExists().subscribe(idMapping => {
       // TODO: service currently does not retrieve table ID when the HAT model is posted for the first time
       this.tableVerified = true;
       this.store.idMapping = idMapping;
+    });
+
+    this.market.getOffer('32dde42f-5df9-4841-8257-5639db222e41')
+      .subscribe(offerInfo => {
+        this.notablesState.notablesOfferClaimed = !offerInfo.error;
+        this._notablesMeta$.next(this.notablesState);
+      });
+
+    this.dataPlug.getFacebookTokenInfo().subscribe(tokenInfo => {
+      if (!tokenInfo.error) {
+        this.notablesState.allowedActions = {
+          canPost: tokenInfo.canPost && moment(tokenInfo.expires).isAfter(),
+          canExpire: moment(tokenInfo.expires).subtract(7, 'days').isAfter()
+        };
+
+        this._notablesMeta$.next(this.notablesState);
+      }
     });
   }
 
@@ -130,6 +170,10 @@ export class NotablesService {
         }
       }
     });
+  }
+
+  claimNotablesOffer() {
+    return this.market.claimOffer('32dde42f-5df9-4841-8257-5639db222e41');
   }
 
   private pushToStream() {

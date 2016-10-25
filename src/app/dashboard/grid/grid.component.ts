@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { Event, Post } from '../../shared';
 import { UiStateService } from '../../services';
 import { Overlay } from 'angular2-modal';
@@ -12,7 +12,7 @@ declare var $: any;
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.scss']
 })
-export class GridComponent implements OnInit, OnDestroy {
+export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   public state: any;
   public showTile = { locations: false, events: false, posts: false };
   public tileHeights: { notables: number; profile: number };

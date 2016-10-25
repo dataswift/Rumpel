@@ -41,15 +41,15 @@ export class HatApiService {
     return this._http.get(url, { headers: this._headers, body: '' }).map(res => res.json());
   }
 
-  getMStoken() {
+  getApplicationToken(name: string, resource: string) {
     const url = this._baseUrl + '/users/application_token';
 
     let query: URLSearchParams = new URLSearchParams();
-    query.append('name', 'MarketSquare');
-    query.append('resource', 'https://marketsquare.hubofallthings.com');
+    query.append('name', name);
+    query.append('resource', resource);
 
     return this._http.get(url, { headers: this._headers, search: query, body: '' })
-      .map(res => res.json());
+      .map(res => res.json().accessToken);
   }
 
   getDataSources(): Observable<any> {

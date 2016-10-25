@@ -58,23 +58,23 @@ export class SideMenuComponent implements OnInit {
 
     this.authSvc.auth$.subscribe(isAuthenticated => {
       if (isAuthenticated) {
-        this.hat.getMStoken().subscribe(ms => {
+        this.hat.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
+          .subscribe(accessToken => {
+            this.marketSvc.setApplicationToken(accessToken);
 
-          this.marketSvc.setApplicationToken(ms.accessToken);
+            this.subNotifs = this.marketSvc.getNotifications().subscribe(notifications => {
+              this.notifications = notifications.map(notification => {
+                notification.notice.message = this.md.parse(notification.notice.message);
+                return notification;
+              }).sort((a, b) => a.received > b.received ? -1 : 1);
 
-          this.subNotifs = this.marketSvc.getNotifications().subscribe(notifications => {
-            this.notifications = notifications.map(notification => {
-              notification.notice.message = this.md.parse(notification.notice.message);
-              return notification;
-            }).sort((a, b) => a.received > b.received ? -1 : 1);
-
-            for (let not of notifications) {
-              if (!not.read) {
-                this.unreadNotifications++;
+              for (let not of notifications) {
+                if (!not.read) {
+                  this.unreadNotifications++;
+                }
               }
-            }
+            });
           });
-        });
       }
     });
 

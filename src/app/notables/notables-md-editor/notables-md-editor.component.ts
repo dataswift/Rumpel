@@ -79,6 +79,14 @@ export class NotablesMdEditorComponent implements OnInit {
     }
   }
 
+  updateShareOptions(event) {
+    if (event.action === 'SHARE') {
+      this.currentNotable.shareOn(event.service);
+    } else if (event.action === 'STOP') {
+      this.currentNotable.stopSharingOn(event.service);
+    }
+  }
+
   submit() {
     let author = {
       phata: this.hatSvc.getDomain(),
