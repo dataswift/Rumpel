@@ -19,6 +19,7 @@ export class SideMenuComponent implements OnInit {
   public selectedNotification: number;
   public unreadNotifications: number;
   public notificationsVisible: boolean;
+  private comingSoonMenu: Array<any>;
   private md: any;
 
   // hack: uiState service needs to be injected before Auth component,
@@ -43,17 +44,19 @@ export class SideMenuComponent implements OnInit {
       { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
       { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
       { display: 'Mashup', icon: 'layergroup', link: 'mixpad', dataType: '', disable: '' },
-      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'coming 2016' },
+      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'no data' },
       { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
       { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts', disable: 'no data' },
       { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
       { display: 'Data Plugs', icon: 'puzzle', link: '', disable: '' },
-      { display: 'Offers', icon: 'tags', link: 'https://marketsquare.hubofallthings.com/offers', dataType: null, disable: '' },
-      { display: 'Weather', icon: 'thermometer', link: '', dataType: null, disable: '' },
-      { display: 'Finance', icon: 'bank', link: '', dataType: null, disable: 'coming soon' },
-      { display: 'Creations (music)', icon: 'guitar', link: '', dataType: null, disable: 'coming soon' },
-      { display: 'Creations (art)', icon: 'brush', link: '', dataType: null, disable: 'coming soon' },
-      //{ display: 'Settings', icon: 'settings', link: '' }
+      { display: 'Offers', icon: 'tags', link: 'https://marketsquare.hubofallthings.com/offers', dataType: null, disable: '' }
+    ];
+
+    this.comingSoonMenu = [
+      { display: 'Weather', icon: 'thermometer', link: '' },
+      { display: 'Finance', icon: 'bank', link: '' },
+      { display: 'Creations (music)', icon: 'guitar', link: '' },
+      { display: 'Creations (art)', icon: 'brush', link: '' }
     ];
 
     this.authSvc.auth$.subscribe(isAuthenticated => {

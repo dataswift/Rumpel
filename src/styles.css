@@ -59,3 +59,22 @@ h1, h2, h3, h4, h5, h6,
   border: none;
   border-radius: 0;
 }
+
+.customIntroTooltip {
+  background-color: #009688;
+  color: white;
+}
+
+.customIntroTooltip .inline-link {
+  color: #cacaca;
+  text-decoration: underline;
+}
+
+.customIntroTooltip .inline-link:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.customIntroHighlight {
+  background-color: #009688;
+}

@@ -1,25 +1,40 @@
-<ul class="center">
-  <li>
+<ul class="center" id="intro-step1">
+  <li id="intro-step2">
     <button (click)="showNotifications($event)" [hidden]="notifications.length === 0">
       <span class="ss-notice"></span>
       Notifications
       <div class="new-notifications" *ngIf="unreadNotifications !== 0">{{unreadNotifications}}</div>
     </button>
   </li>
-  <li *ngFor="let item of menu"
+  <li *ngFor="let item of menu; let i = index"
       (click)="onItemSelect(item.display)"
       [class.selected]="item.display === selectedItem">
-    <a [routerLink]="[item.link]" *ngIf="item.link.indexOf('http') === -1">
-      <span class="ss-{{item.icon}}"></span>
-      {{item.display}}
-    </a>
-    <button (click)="navigateModal.emit(item.link)" *ngIf="item.link.indexOf('http') > -1" type="button">
-      <span class="ss-{{item.icon}}"></span>
-      {{item.display}}
-    </button>
+    <div class="wrapper" id="intro-step{{i + 3}}">
+      <a [routerLink]="[item.link]" *ngIf="item.link.indexOf('http') === -1">
+        <span class="ss-{{item.icon}}"></span>
+        {{item.display}}
+      </a>
+      <button (click)="navigateModal.emit(item.link)" *ngIf="item.link.indexOf('http') > -1" type="button">
+        <span class="ss-{{item.icon}}"></span>
+        {{item.display}}
+      </button>
+    </div>
 
     <div class="disable" *ngIf="item.disable">
       <p class="text">{{item.disable}}</p>
+    </div>
+  </li>
+</ul>
+
+<ul class="center" id="intro-step13">
+  <li *ngFor="let item of comingSoonMenu">
+    <a href="#">
+      <span class="ss-{{item.icon}}"></span>
+      {{item.display}}
+    </a>
+
+    <div class="disable">
+      <p class="text">coming soon</p>
     </div>
   </li>
 </ul>

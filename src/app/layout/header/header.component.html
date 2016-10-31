@@ -10,7 +10,7 @@
           <a href="https://{{hatDomain}}/profile" target="_blank">{{hatDomain}}</a>
         </li>
         <li *ngIf="!!hatDomain" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
-        <li class="user-nav hidden-xs"><a href="http://www.hatdex.org/rumpel-platform/" target="_blank" style="cursor: pointer;">New to Rumpel</a></li>
+        <li *ngIf="!!hatDomain" class="user-nav hidden-xs"><p style="cursor: pointer;" (click)="startIntro()">New to Rumpel</p></li>
         <li class="user-nav hidden-xs hidden-sm"><a [href]="msLink ? msLink : 'https://marketsquare.hubofallthings.com'"
                target="_blank" style="cursor: pointer;">MarketSquare</a></li>
         <li class="user-nav hidden-xs" style="cursor: pointer;" (click)="msg = 'whoCanSee'; showModal()"><p>Who Can See This?</p></li>

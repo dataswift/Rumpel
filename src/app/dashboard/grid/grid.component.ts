@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { Event, Post } from '../../shared';
+import { Event, Post } from '../../shared/interfaces';
 import { UiStateService } from '../../services';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
