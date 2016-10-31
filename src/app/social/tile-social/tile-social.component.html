@@ -1,18 +1,18 @@
 <ng-content></ng-content>
 
-<div class="scroll-mask">
+<div class="scroll-mask" id="intro-step17">
   <div class="tile-body">
     <ul>
-      <li *ngFor="let post of posts" (click)="navigateToFullPost(post.content.id)">
+      <li *ngFor="let post of posts" (click)="navigateToFullPost(post.id)">
         <div class="row vertical-align">
           <div class="col-xs-2 left-column">
             <img src="assets/icons/facebook-icon.png" class="img img-responsive">
           </div>
 
           <div class="col-xs-9 center-column">
-            <h4>{{post.content.story ? post.content.story : post.content.statusType | replaceChars}}</h4>
-            <p *ngIf="post.content.type === 'status' || post.content.type === 'photo'">{{post.content.content.message | limitContent:140}}</p>
-            <p>Posted {{post.timestamp | moment}}</p>
+            <h4>{{post.story ? post.story : post.statusType | replaceChars}}</h4>
+            <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:140}}</p>
+            <p>Posted {{post.createdTime | moment}}</p>
           </div>
 
           <div class="col-xs-1 right-column">

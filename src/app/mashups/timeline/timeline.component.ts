@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'rump-timeline',
@@ -6,7 +7,7 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angu
   styleUrls: ['timeline.component.scss']
 })
 export class TimelineComponent implements OnInit, OnChanges {
-  @Input() timeline: Array<any>;
+  @Input() timeline: Array<Moment>;
   @Output() timeSelected = new EventEmitter<any>();
 
   constructor() {}

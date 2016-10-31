@@ -4,7 +4,7 @@ import { PhotosService } from '../../photos/photos.service';
 import { EventsService } from '../../dimensions/events.service';
 import { SocialService } from '../../social/social.service';
 import { LocationsService } from '../../locations/locations.service';
-import { DataPoint } from '../../shared';
+import { Post, Event, Photo, Location } from '../../shared/interfaces';
 import * as moment from 'moment';
 
 @Component({
@@ -15,7 +15,10 @@ import * as moment from 'moment';
 export class MixpadComponent implements OnInit {
   private eventSub;
   private imgSub;
-  public data: Array<DataPoint>;
+  private posts: Array<Post> = [];
+  private events: Array<Event> = [];
+  private locations: Array<Location> = [];
+  private photos: Array<Photo> = [];
   public selectedTime: any;
   public shownComponents: any;
   public safeSize;
@@ -32,30 +35,47 @@ export class MixpadComponent implements OnInit {
     let now = moment();
     this.selectedTime = now;
     this.timeline = [now];
-    this.data = [];
     this.shownComponents = { map: false, events: true, photos: true, timeline: true };
 
-    this.socialSvc.socialFeed$
-      .merge(this.eventsSvc.getEvents$())
-      .merge(this.photosSvc.loadAll())
-      .merge(this.locationsSvc.locations$)
-      .subscribe((dataPoints: Array<DataPoint>) => {
+    this.eventsSvc.getEvents$().subscribe(events => {
+      this.addDatesToTimeline(events, 'start');
+      this.events = events;
+    });
 
-        for (let dp of dataPoints) {
-          const dayFound = this.timeline.find(day => day.isSame(dp.timestamp, 'day'));
-          if (dayFound) continue;
-          this.timeline.push(dp.timestamp);
-        }
+    this.photosSvc.loadAll().subscribe(photos => {
+      this.addDatesToTimeline(photos, 'timestamp');
+      this.photos = photos;
+    });
 
-        this.timeline = this.timeline.sort((a, b) => a.isAfter(b) ? -1 : 1)
+    this.socialSvc.socialFeed$.subscribe(posts => {
+      this.addDatesToTimeline(posts, 'createdTime');
+      this.posts = posts;
+    });
 
-        this.data = this.data.concat(dataPoints);
-      });
+    this.locationsSvc.locations$.subscribe(locations => {
+      this.addDatesToTimeline(locations, 'timestamp');
+      this.locations = locations;
+    });
 
     this.socialSvc.getRecentPosts();
     this.locationsSvc.getRecentLocations();
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('73em');
+  }
+
+  addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
+    console.log(dataPoints);
+    for (let dp of dataPoints) {
+      const dayFound = this.timeline.find(day => day.isSame(dp[timeField], 'day'));
+      if (dayFound) continue;
+      this.timeline.push(dp[timeField]);
+    }
+
+    this.timeline = this.timeline.sort((a, b) => a.isAfter(b) ? -1 : 1);
+  }
+
+  selectTime(event) {
+    this.selectedTime = event;
   }
 
   onViewReset() {

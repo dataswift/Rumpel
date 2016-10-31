@@ -1,32 +1,32 @@
 <div class="post-type">
     <img src="assets/icons/facebook-icon.png" class="img img-responsive source-img">
-    <span>{{post.source}} {{post.content.type}}</span>
+    <span>facebook {{post.type}}</span>
 </div>
 
 <div class="post-header">
     <img src="assets/icons/facebook-plug.png" class="img img-responsive source-header">
     <div class="header-content">
-        <h3>{{post.content.application ? post.content.application : post.content.from}}</h3>
-        <span>Posted on {{post.content.createdTime | moment}},</span>
-        <span>privacy set to {{post.content.privacy.value | replaceChars}}</span>
+        <h3>{{post.application ? post.application : post.from}}</h3>
+        <span>Posted on {{post.createdTime | moment}},</span>
+        <span>privacy set to {{post.privacy.value | replaceChars}}</span>
     </div>
 </div>
 
-<div [ngSwitch]="post.content.type">
+<div [ngSwitch]="post.type">
   <div *ngSwitchCase="'status'" class="status-update">
-    <p>{{post.content.content.message ? post.content.content.message : post.content.story}}</p>
+    <p>{{post.content.message ? post.content.message : post.story}}</p>
   </div>
 
   <div *ngSwitchCase="'photo'" class="photo-post">
     <div class="row">
       <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 post-picture">
-        <img src="{{post.content.content.fullPicture}}">
+        <img src="{{post.content.fullPicture}}">
       </div>
 
        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
         <div>
-          <p>{{post.content.content.message}}</p>
-          <p>{{post.content.content.name}}</p>
+          <p>{{post.content.message}}</p>
+          <p>{{post.content.name}}</p>
         </div>
        </div>
     </div>
@@ -35,14 +35,14 @@
   <div *ngSwitchCase="'link'" class="link-post">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 post-picture">
-            <img src="{{post.content.content.fullPicture}}">
+            <img src="{{post.content.fullPicture}}">
         </div>
 
       <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
-        <a href="{{post.content.content.link}}" class="post-link">
+        <a href="{{post.content.link}}" class="post-link">
           <div>
-            <h4>{{post.content.content.name}}</h4>
-            <p>{{post.content.content.description}}</p>
+            <h4>{{post.content.name}}</h4>
+            <p>{{post.content.description}}</p>
           </div>
         </a>
       </div>

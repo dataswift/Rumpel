@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '../social.service';
+import { Post } from '../../shared/interfaces';
 
 @Component({
   selector: 'rump-social',
@@ -8,8 +9,8 @@ import { SocialService } from '../social.service';
   styleUrls: ['social.component.scss']
 })
 export class SocialComponent implements OnInit, OnDestroy {
-  public posts;
-  private filter;
+  public posts: Array<Post>;
+  private filter: string;
   private postId: string;
   private svcSub: any;
 

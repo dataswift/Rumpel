@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../events.service';
+import { Event } from '../../shared/interfaces';
 import * as moment from 'moment';
 
 declare var $: any;
@@ -11,7 +12,7 @@ declare var $: any;
 })
 export class CalendarComponent implements OnInit {
   private sub;
-  private events;
+  private events: any;
   private header: any;
   private viewChoices: string;
   private defaultView: string;
@@ -26,7 +27,7 @@ export class CalendarComponent implements OnInit {
     this.defaultView = "agendaWeek";
     this.defaultDate = moment().format('YYYY-MM-DD');
     this.firstDay = 1;
-    this.height = '85vh';
+    this.height = '70em';
     this.events = [];
     this.header = {
       left: 'prev,next,today',
@@ -51,12 +52,12 @@ export class CalendarComponent implements OnInit {
       height: this.height
     });
 
-    this.sub = this.eventsSvc.getEvents$().subscribe((events: any)  => {
+    this.sub = this.eventsSvc.getEvents$().subscribe((events: Array<Event>)  => {
       this.events = events.map(dp => {
         return {
-          title: dp.content.name,
-          start: dp.content.start.format(),
-          end: !!dp.content.end ? dp.content.end.format() : null
+          title: dp.name,
+          start: dp.start.format(),
+          end: !!dp.end ? dp.end.format() : null
         };
       });
 

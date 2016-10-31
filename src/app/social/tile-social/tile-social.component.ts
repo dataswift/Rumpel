@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { SocialService } from '../social.service';
+import { Post } from '../../shared/interfaces';
 
 @Component({
   selector: 'rump-tile-social',
@@ -8,7 +9,7 @@ import { SocialService } from '../social.service';
   styleUrls: ['tile-social.component.scss']
 })
 export class TileSocialComponent implements OnInit {
-  public posts;
+  public posts: Array<Post>;
 
   constructor(private socialSvc: SocialService,
               private router: Router) {}

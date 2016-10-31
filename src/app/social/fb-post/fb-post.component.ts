@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DataPoint } from '../../shared/data-point.interface';
+import { Post } from '../../shared/interfaces';
 
 @Component({
   selector: 'rump-fb-post',
@@ -7,7 +7,7 @@ import { DataPoint } from '../../shared/data-point.interface';
   styleUrls: ['fb-post.component.scss']
 })
 export class FbPostComponent implements OnInit {
-  @Input() post: DataPoint;
+  @Input() post: Post;
 
   constructor() {}
 
