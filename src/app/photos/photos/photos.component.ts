@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotosService } from '../photos.service';
-import { Image } from '../../shared';
+import { Photo } from '../../shared/interfaces';
 
 @Component({
   selector: 'rump-photos',
@@ -8,7 +8,7 @@ import { Image } from '../../shared';
   styleUrls: ['photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
-  public images: Array<Image>;
+  public images: Array<Photo>;
   private _sub;
 
   constructor(private _photosSvc: PhotosService) {}
@@ -16,7 +16,7 @@ export class PhotosComponent implements OnInit {
   ngOnInit() {
     this.images = [];
     this._sub = this._photosSvc.images$.subscribe(image => {
-      this.images = this.images.concat(image);
+      this.images.push(image);
     });
 
     this._photosSvc.loadAll();

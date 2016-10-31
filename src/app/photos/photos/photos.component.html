@@ -3,6 +3,17 @@
     <div class="view-header">
       <h4>Personal Photos</h4>
     </div>
-    <rump-photo-grid [photoList]="images"></rump-photo-grid>
+    <div class="view-body">
+      <ul class="photos">
+        <li *ngFor="let photo of images" class="photo-box">
+          <h5>{{photo.name}}</h5>
+          <img [src]="photo.src" class="img img-responsive">
+          <div class="photo-description">
+            <div><span class="ss-folder ss-glyphish-filled"></span>{{photo.displayPath}}</div>
+            <div><span class="ss-clock ss-glyphish-filled"></span>{{photo.timestamp | moment}}</div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

@@ -3,7 +3,7 @@ import { Observable, Observer } from 'rxjs/Rx';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { HatApiService } from '../services/hat-api.service';
-import { DataPoint } from '../shared';
+import { Photo } from '../shared/interfaces';
 import * as moment from 'moment';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class PhotosService {
   private _imagesObserver: Observer<any>;
   private _dropboxObserver: Observer<any>;
   private _authBearer: string;
-  private _store: { images: Array<DataPoint> };
+  private _store: { images: Array<Photo> };
 
   constructor(private _hat: HatApiService,
               private sanitizer: DomSanitizer) {
@@ -30,25 +30,33 @@ export class PhotosService {
         .map(data => data.map(this.imgMap)),
       this._hat.getAllValuesOf('metadata', 'dropbox_data_plug')
     ).subscribe(responses => {
-      this._store.images = responses[0];
-      this._authBearer = "Bearer " + responses[1][0]['access_token'];
-      this.downloadImages();
+      if (responses[1] && responses[1][0] && responses[1][0]['access_token']) {
+        this._store.images = responses[0];
+        this._authBearer = "Bearer " + responses[1][0]['access_token'];
+        this.downloadImages();
+      }
     }, err => console.log('There was an error loading images from HAT', err));
 
     return this.images$;
   }
 
-  imgMap(image): DataPoint {
-    return {
-      timestamp: image.media_info.metadata.time_taken ? moment(image.media_info.metadata.time_taken) : moment(image.client_modified),
-      type: 'photo',
-      source: 'dropbox',
-      content: {
-        path: image.path_lower,
-        content: null,
-        timestamp: moment(image.media_info.metadata.time_taken)
-      }
+  imgMap(image): Photo {
+    let photo: Photo = {
+      name: image.name.substring(0, image.name.lastIndexOf(".")),
+      kind: image.name.substring(image.name.lastIndexOf(".") + 1),
+      path: image.path_lower,
+      displayPath: image.path_display.substring(0, image.path_display.lastIndexOf("/") + 1),
+      size: image.size,
+      timestamp: null
     };
+
+    if (image.media_info && image.media_info.metadata.time_taken) {
+      photo['timestamp'] = moment(image.media_info.metadata.time_taken);
+    } else {
+      photo['timestamp'] = moment(image.client_modified);
+    }
+
+    return photo;
   }
 
   downloadImages() {
@@ -59,7 +67,7 @@ export class PhotosService {
   }
 
   downloadThumbnail(image, size = "w128h128") {
-    var dropboxApiArg = `{"path":"${image.content.path}","size":{".tag":"${size}"}}`;
+    var dropboxApiArg = `{"path":"${image.path}","size":{".tag":"${size}"}}`;
 
     var xhr = new XMLHttpRequest()
 
@@ -87,8 +95,8 @@ export class PhotosService {
           config: {}
         };
 
-        image.content.content = san.bypassSecurityTrustUrl(r.data.content);
-        obs.next([image]);
+        image.src = san.bypassSecurityTrustUrl(r.data.content);
+        obs.next(image);
       }
     };
 
@@ -100,27 +108,27 @@ export class PhotosService {
   }
 
   base64ArrayBuffer(arrayBuffer) {
-    var base64 = ''
-    var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+    var base64 = '';
+    var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
-    var bytes = new Uint8Array(arrayBuffer)
-    var byteLength = bytes.byteLength
-    var byteRemainder = byteLength % 3
-    var mainLength = byteLength - byteRemainder
+    var bytes = new Uint8Array(arrayBuffer);
+    var byteLength = bytes.byteLength;
+    var byteRemainder = byteLength % 3;
+    var mainLength = byteLength - byteRemainder;
 
-    var a, b, c, d
-    var chunk
+    var a, b, c, d;
+    var chunk;
 
     // Main loop deals with bytes in chunks of 3
     for (var i = 0; i < mainLength; i = i + 3) {
       // Combine the three bytes into a single integer
-      chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2]
+      chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
 
       // Use bitmasks to extract 6-bit segments from the triplet
-      a = (chunk & 16515072) >> 18 // 16515072 = (2^6 - 1) << 18
-      b = (chunk & 258048) >> 12 // 258048   = (2^6 - 1) << 12
-      c = (chunk & 4032) >> 6 // 4032     = (2^6 - 1) << 6
-      d = chunk & 63 // 63       = 2^6 - 1
+      a = (chunk & 16515072) >> 18; // 16515072 = (2^6 - 1) << 18
+      b = (chunk & 258048) >> 12; // 258048   = (2^6 - 1) << 12
+      c = (chunk & 4032) >> 6; // 4032     = (2^6 - 1) << 6
+      d = chunk & 63; // 63       = 2^6 - 1
 
       // Convert the raw binary segments to the appropriate ASCII encoding
       base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d]
@@ -128,26 +136,26 @@ export class PhotosService {
 
     // Deal with the remaining bytes and padding
     if (byteRemainder == 1) {
-      chunk = bytes[mainLength]
+      chunk = bytes[mainLength];
 
-      a = (chunk & 252) >> 2 // 252 = (2^6 - 1) << 2
+      a = (chunk & 252) >> 2; // 252 = (2^6 - 1) << 2
 
       // Set the 4 least significant bits to zero
-      b = (chunk & 3) << 4 // 3   = 2^2 - 1
+      b = (chunk & 3) << 4; // 3   = 2^2 - 1
 
       base64 += encodings[a] + encodings[b] + '=='
     } else if (byteRemainder == 2) {
-      chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1]
+      chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1];
 
-      a = (chunk & 64512) >> 10 // 64512 = (2^6 - 1) << 10
-      b = (chunk & 1008) >> 4 // 1008  = (2^6 - 1) << 4
+      a = (chunk & 64512) >> 10; // 64512 = (2^6 - 1) << 10
+      b = (chunk & 1008) >> 4; // 1008  = (2^6 - 1) << 4
 
       // Set the 2 least significant bits to zero
-      c = (chunk & 15) << 2 // 15    = 2^4 - 1
+      c = (chunk & 15) << 2; // 15    = 2^4 - 1
 
       base64 += encodings[a] + encodings[b] + encodings[c] + '='
     }
 
-    return base64
+    return base64;
   }
 }
