@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DataPoint } from '../../shared/data-point.interface';
+import { Location } from '../../shared/interfaces';
 import { LocationsService } from '../locations.service';
 
 @Component({
@@ -9,8 +9,9 @@ import { LocationsService } from '../locations.service';
   styleUrls: ['locations.component.scss']
 })
 export class LocationsComponent implements OnInit, OnDestroy {
-  public locations: Array<DataPoint>;
+  public locations: Array<Location>;
   public safeSize;
+  private selectedTime: string;
   private sub;
 
   constructor(private locationsSvc: LocationsService,
@@ -18,6 +19,7 @@ export class LocationsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.locations = [];
+    this.selectedTime = 'all';
 
     this.sub = this.locationsSvc.locations$.subscribe(locations => {
       this.locations = locations;
@@ -25,10 +27,14 @@ export class LocationsComponent implements OnInit, OnDestroy {
 
     this.locationsSvc.getRecentLocations();
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('85vh');
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('73em');
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  selectLocationTime(event) {
+    this.selectedTime = event.target.value;
   }
 }

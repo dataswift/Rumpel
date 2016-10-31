@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { DataPoint } from '../../shared/data-point.interface';
+import { Location } from '../../shared/interfaces';
 import { LocationsService } from '../locations.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { LocationsService } from '../locations.service';
 export class TileMapComponent implements OnInit, OnDestroy {
   @Input() title;
   @Input() info;
-  public locations: Array<DataPoint>;
+  public locations: Array<Location>;
   private sub;
   public safeSize;
 

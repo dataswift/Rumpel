@@ -6,3 +6,4 @@ export { ReplaceCharsPipe } from './replace-chars.pipe';
 export { RelativeTimePipe } from './relative-time.pipe';
 export { LimitMembersPipe } from './limit-members.pipe';
 export { MarkdownToHtmlPipe } from './markdown-to-html.pipe';
+export { RelativeTimesFilterPipe } from './relative-times-filter.pipe';

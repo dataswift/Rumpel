@@ -2,18 +2,22 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs/Rx';
 
 import { HatApiService } from '../services/hat-api.service';
-import { DataPoint } from '../shared/data-point.interface';
-import { Location } from '../shared/interfaces/location.interface';
+import { Location } from '../shared/interfaces';
 
 import * as moment from 'moment';
 
+declare var L: any;
+
 @Injectable()
 export class LocationsService {
-  private _locations$: Subject<DataPoint[]>;
-  public locations$: Observable<DataPoint[]>;
+  private _locations$: Subject<Location[]>;
+  public locations$: Observable<Location[]>;
+
+  public map: any;
+  public baseMaps: any;
 
   private store: {
-    locations: Array<DataPoint>;
+    locations: Array<Location>;
     tableId: number;
   };
   private tableVerified: boolean;
@@ -21,6 +25,11 @@ export class LocationsService {
   private oldestRecordTimestamp: string;
 
   constructor(private hat: HatApiService) {
+    this.baseMaps = {
+      OpenStreetMap: new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+      })
+    };
     this.store = {
       locations: [],
       tableId: null
@@ -29,7 +38,7 @@ export class LocationsService {
     this.failedAttempts = 0;
     this.oldestRecordTimestamp = null;
 
-    this._locations$ = <Subject<DataPoint[]>>new Subject();
+    this._locations$ = <Subject<Location[]>>new Subject();
     this.locations$ = this._locations$.asObservable();
 
     this.verifyTable();
@@ -42,11 +51,11 @@ export class LocationsService {
       this.hat.getValuesWithLimit(this.store.tableId, 500)
           .map(locations => {
             if (locations.length > 0) {
-              this.oldestRecordTimestamp = moment(locations[locations.length - 1].dateCreated).format("X");
+              this.oldestRecordTimestamp = moment(locations[locations.length - 1].lastUpdated).format("X");
             }
             return locations.map(this.locMap);
           })
-          .map(locations => locations.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
+          .map((locations: Array<Location>) => locations.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
           .subscribe(locations => {
             this.store.locations = locations;
 
@@ -66,11 +75,11 @@ export class LocationsService {
       this.hat.getValuesWithLimit(this.store.tableId, 500, this.oldestRecordTimestamp)
           .map(locations => {
             if (locations.length > 0) {
-              this.oldestRecordTimestamp = moment(locations[locations.length - 1].dateCreated).format("X");
+              this.oldestRecordTimestamp = moment(locations[locations.length - 1].lastUpdated).format("X");
             }
             return locations.map(this.locMap);
           })
-          .map(locations => locations.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
+          .map((locations: Array<Location>) => locations.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
           .subscribe(locations => {
             this.store.locations = this.store.locations.concat(locations);
 
@@ -115,16 +124,12 @@ export class LocationsService {
         });
   }
 
-  private locMap(location: any): DataPoint {
+  private locMap(location: any): Location {
     return {
-      timestamp: moment(location.data.locations.timestamp),
-      type: 'location',
-      source: 'iphone',
-      location: {
-        latitude: location.data.locations.latitude,
-        longitude: location.data.locations.longitude,
-        accuracy: null
-      }
+      latitude: location.data.locations.latitude,
+      longitude: location.data.locations.longitude,
+      accuracy: null,
+      timestamp: moment(location.data.locations.timestamp)
     };
   }
 }

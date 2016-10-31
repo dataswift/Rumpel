@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
-import { DataPoint } from '../../shared/data-point.interface';
+import { Location } from '../../shared/interfaces';
 
 declare var L: any;
 
@@ -10,8 +10,9 @@ declare var L: any;
   styleUrls: ['map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input() dataPoints: Array<DataPoint>;
+  @Input() dataPoints: Array<Location>;
   @Input() mapSize: string;
+  @Input() enableMapControls: boolean;
   @Output() timeSelected = new EventEmitter<any>();
 
   private map;
@@ -23,28 +24,46 @@ export class MapComponent implements OnInit, OnChanges {
     maxLat: -180
   };
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
-    this.dataPoints = [];
+  }
+
+  constructMap() {
     const osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     const osmAttrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
       ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,';
 
-    this.map = L.map('map-view', { zoomControl: false }).setView([51.5074, 0.1278], 10);
+    this.map = L.map('map-view', {
+      zoomControl: this.enableMapControls,
+      scrollWheelZoom: false
+    })
+      .setView([51.5074, 0.1278], 10);
+
+    this.map.once('focus', () => map.scrollWheelZoom.enable());
     let map = this.map;
-    setTimeout(function(){ map.invalidateSize()}, 400);
+    // WHY
+    setTimeout(() => {
+      map.invalidateSize();
+      this.updateMap(this.dataPoints);
+    }, 400);
 
     L.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 3, maxZoom: 18 }).addTo(this.map);
   }
 
   ngOnChanges() {
-    if (this.map && this.dataPoints.length > 0) this.updateMap(this.dataPoints);
+    if (this.map) {
+      this.updateMap(this.dataPoints);
+    } else {
+      this.constructMap();
+    }
   }
 
-  updateMap(dps: Array<DataPoint>) {
-    if (dps.length <= 0) return;
-    this.drawMarkers(dps);
+  updateMap(locations: Array<Location>) {
+    if (locations.length <= 0) return;
+    if (!this.map) return;
+    this.drawMarkers(locations);
     this.map.fitBounds([
       [this.bbox.minLat, this.bbox.minLng],
       [this.bbox.maxLat, this.bbox.maxLng]
@@ -56,7 +75,7 @@ export class MapComponent implements OnInit, OnChanges {
     this.bbox.minLng = 180; this.bbox.maxLng = -180;
   }
 
-  ajustBoundingBox(lat: number, lng: number) {
+  adjustBoundingBox(lat: number, lng: number) {
     this.bbox.minLat = Math.min(this.bbox.minLat, lat);
     this.bbox.maxLat = Math.max(this.bbox.maxLat, lat);
     this.bbox.minLng = Math.min(this.bbox.minLng, lng);
@@ -64,21 +83,26 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
 
-  drawMarkers(dps: Array<DataPoint>) {
+  drawMarkers(locations: Array<Location>) {
     this.map.removeLayer(this.markers);
     this.markers = L.markerClusterGroup();
     this.resetBoundingBox();
-    for(let dp of dps) {
-      this.ajustBoundingBox(dp.location.latitude, dp.location.longitude);
-      let pos = new L.LatLng(dp.location.latitude, dp.location.longitude);
+    //var pointlist = [];
+    for(let loc of locations) {
+      this.adjustBoundingBox(loc.latitude, loc.longitude);
+      let pos = new L.LatLng(loc.latitude, loc.longitude);
       let marker = L.marker(pos);
-      marker.timestamp = dp.timestamp;
+      marker.timestamp = loc.timestamp;
       let self = this;
       marker.on('click', (e: any) => {
         self.onMarkerSelected(e);
       });
+      //pointlist.push(pos);
       this.markers.addLayer(marker);
     }
+
+    // var routePolyline = new L.Polyline(pointlist, {color: 'red', weight: 3, oapcity: 0.8, smoothFactor: 10});
+    // routePolyline.addTo(this.map);
 
     this.map.addLayer(this.markers);
     }

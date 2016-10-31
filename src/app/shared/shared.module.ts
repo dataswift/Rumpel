@@ -5,18 +5,18 @@ import { RouterModule } from '@angular/router';
 import { SwitchComponent, TreeViewComponent, ProfilePhotoComponent } from './components';
 import { OutsideClick } from './directives';
 import { MomentPipe, FilterByPipe, WithObjectPipe, LimitContentPipe, ReplaceCharsPipe, RelativeTimePipe,
-         MarkdownToHtmlPipe, LimitMembersPipe } from './pipes';
+         MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe } from './pipes';
 
 @NgModule({
   imports: [ CommonModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
-                  ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe,
+                  ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
                   OutsideClick,
                   SwitchComponent, TreeViewComponent, ProfilePhotoComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
-             ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe,
+             ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              SwitchComponent, TreeViewComponent, ProfilePhotoComponent,
              OutsideClick,
              CommonModule, RouterModule ]

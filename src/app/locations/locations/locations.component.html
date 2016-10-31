@@ -2,7 +2,18 @@
   <div class="col-md-12">
     <div class="view-header">
       <h4>Locations</h4>
+      <span>(open your RumpelLite app to synchronise your latest location data)</span>
     </div>
-    <rump-map [dataPoints]="locations" [mapSize]="safeSize"></rump-map>
+    <div class="map-wrapper">
+      <rump-map [dataPoints]="locations | relativeTimesFilter:selectedTime" [mapSize]="safeSize"
+                [enableMapControls]="true">
+        <div class="controls-overlay" (click)="selectLocationTime($event)">
+          <button type="button" class="btn-overlay" value="today" [class.selected]="selectedTime === 'today'">Today</button>
+          <button type="button" class="btn-overlay" value="yesterday" [class.selected]="selectedTime === 'yesterday'">Yesterday</button>
+          <button type="button" class="btn-overlay" value="last week" [class.selected]="selectedTime === 'last week'">Last Week</button>
+          <button type="button" class="btn-overlay" value="all" [class.selected]="selectedTime === 'all'">All</button>
+        </div>
+      </rump-map>
+    </div>
   </div>
 </div>
