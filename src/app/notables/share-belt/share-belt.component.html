@@ -9,7 +9,11 @@
 
   <div class="error-message" *ngIf="showError">
     <span class="ss-alert"></span>
-    <span class="error-text">Please renew your Facebook access token to enable share.</span>
+    <span class="error-text">
+      Please renew your Facebook access token to enable share.
+      <a href="https://{{hatDomain}}/hatlogin?name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate"
+         target="_blank">Go to data plug</a>.
+    </span>
   </div>
 
   <div *ngIf="!notablesState.notablesOfferClaimed">

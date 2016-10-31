@@ -1,31 +1,33 @@
 <ng-content></ng-content>
 
-<rump-input-box [userPhotoUrl]="profilePhoto?.url">
-  <rump-profile-photo [userPhotoUrl]="profilePhoto?.url">
-  </rump-profile-photo>
-</rump-input-box>
+<div class="scroll-mask" id="intro-step14">
+  <rump-input-box [userPhotoUrl]="profilePhoto?.url">
+    <rump-profile-photo [userPhotoUrl]="profilePhoto?.url">
+    </rump-profile-photo>
+  </rump-input-box>
 
-<div class="content">
-  <ul class="note-list" *ngIf="notables.length > 0">
-    <li *ngFor="let notable of notables" class="notable">
-      <div class="item-header">
-        <rump-profile-photo class="user-photo"
-                            [userPhotoUrl]="notable.authorv1 ? notable.authorv1['photo_url'] : ''">
-        </rump-profile-photo>
-        <div class="notable-type">
-          <span class="ss-maplocation" *ngIf="notable.location"></span>
-          <span class="ss-{{iconMap[notable.kind]}}"></span>
+  <div class="content tile-body">
+    <ul class="note-list" *ngIf="notables.length > 0">
+      <li *ngFor="let notable of notables" class="notable">
+        <div class="item-header">
+          <rump-profile-photo class="user-photo"
+                              [userPhotoUrl]="notable.authorv1 ? notable.authorv1['photo_url'] : ''">
+          </rump-profile-photo>
+          <div class="notable-type">
+            <span class="ss-maplocation" *ngIf="notable.location"></span>
+            <span class="ss-{{iconMap[notable.kind]}}"></span>
+          </div>
+          <div class="header-content">
+            <h5>{{notable.authorv1 ? notable.authorv1.phata : ''}}</h5>
+            <span>Logged {{notable.created_time | moment}}</span>
+            &nbsp;&#9679;&nbsp;
+            <span>{{notable.isShared() ? 'SHARED' : 'PRIVATE'}}</span>
+          </div>
         </div>
-        <div class="header-content">
-          <h5>{{notable.authorv1 ? notable.authorv1.phata : ''}}</h5>
-          <span>Logged {{notable.created_time | moment}}</span>
-          &nbsp;&#9679;&nbsp;
-          <span>{{notable.isShared() ? 'SHARED' : 'PRIVATE'}}</span>
-        </div>
-      </div>
 
-      <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>
-      <!-- <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div> -->
-    </li>
-  </ul>
+        <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>
+        <!-- <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div> -->
+      </li>
+    </ul>
+  </div>
 </div>

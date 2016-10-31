@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NotablesService } from '../notables.service';
@@ -9,10 +9,12 @@ import { NotablesService } from '../notables.service';
   styleUrls: ['./share-belt.component.scss']
 })
 export class ShareBeltComponent implements OnInit {
+  @Input() hatDomain: string;
   private services: any[];
   private notablesState: {
     notablesOfferClaimed: boolean;
     allowedActions: { canPost: boolean; canExpire: boolean };
+    phata: string;
   };
   private showError: boolean;
 
