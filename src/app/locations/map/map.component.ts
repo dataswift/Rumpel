@@ -61,13 +61,15 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   updateMap(locations: Array<Location>) {
-    if (locations.length <= 0) return;
-    if (!this.map) return;
-    this.drawMarkers(locations);
-    this.map.fitBounds([
-      [this.bbox.minLat, this.bbox.minLng],
-      [this.bbox.maxLat, this.bbox.maxLng]
-    ]);
+    if(this.map) {
+      this.drawMarkers(locations);
+      if (locations.length > 0) {
+        this.map.fitBounds([
+          [this.bbox.minLat, this.bbox.minLng],
+          [this.bbox.maxLat, this.bbox.maxLng]
+        ]);
+      }
+    }
   }
 
   resetBoundingBox() {
