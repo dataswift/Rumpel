@@ -15,11 +15,11 @@ export class PhotosComponent implements OnInit {
 
   ngOnInit() {
     this.images = [];
-    this._sub = this._photosSvc.images$.subscribe(image => {
-      this.images.push(image);
+    this._sub = this._photosSvc.photos$.subscribe(images => {
+      this.images = images;
     });
 
-    this._photosSvc.loadAll();
+    this._photosSvc.getRecentPhotos();
   }
 
 }

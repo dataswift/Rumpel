@@ -42,7 +42,7 @@ export class MixpadComponent implements OnInit {
       this.events = events;
     });
 
-    this.photosSvc.loadAll().subscribe(photos => {
+    this.photosSvc.photos$.subscribe(photos => {
       this.addDatesToTimeline(photos, 'timestamp');
       this.photos = photos;
     });
@@ -59,6 +59,7 @@ export class MixpadComponent implements OnInit {
 
     this.socialSvc.getRecentPosts();
     this.locationsSvc.getRecentLocations();
+    this.photosSvc.getRecentPhotos();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('73em');
   }

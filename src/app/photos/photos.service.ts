@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs/Rx';
+import { Subject, Observable } from 'rxjs/Rx';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Http, Headers, ResponseContentType } from '@angular/http';
 
 import { HatApiService } from '../services/hat-api.service';
 import { Photo } from '../shared/interfaces';
@@ -8,106 +9,121 @@ import * as moment from 'moment';
 
 @Injectable()
 export class PhotosService {
-  dropbox$: Observable<any>;
-  images$: Observable<any>;
-  private _imagesObserver: Observer<any>;
-  private _dropboxObserver: Observer<any>;
+  private _photos$: Subject<Photo[]>;
+  public photos$: Observable<Photo[]>;
+
+  private tableVerified: boolean;
+  private failedAttempts: number;
   private _authBearer: string;
-  private _store: { images: Array<Photo> };
+  private _store: { photos: Array<Photo>; sourcelessPhotos: Array<Photo>; tableId: number; };
 
   constructor(private _hat: HatApiService,
-              private sanitizer: DomSanitizer) {
-    this._store = { images: [] };
-    this.images$ = new Observable(observer => this._imagesObserver = observer).share();
-    this.dropbox$ = new Observable(observer => this._dropboxObserver = observer).share();
+              private sanitizer: DomSanitizer,
+              private http: Http) {
+    this._store = { photos: [], sourcelessPhotos: [], tableId: null };
+
+    this._photos$ = <Subject<Photo[]>>new Subject();
+    this.photos$ = this._photos$.asObservable();
+
+    this._authBearer = '';
+    this.tableVerified = false;
+    this.failedAttempts = 0;
+
+    this.verifyTable();
   }
 
-  loadAll() {
-    if (this._store.images.length > 0) return Observable.of(this._store.images);
+  getRecentPhotos() {
+    if (this._store.photos.length > 0) {
+      this.pushToStream();
+    } else if (this._store.tableId) {
+      this._hat.getValuesWithLimit(this._store.tableId)
+        .map(photos => photos.map(this.imgMap))
+        .map((photos: Array<Photo>) => photos.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
+        .subscribe(photos => {
+          this._store.sourcelessPhotos = photos;
 
-    Observable.forkJoin(
-      this._hat.getAllValuesOf('photos', 'dropbox')
-        .map(data => data.map(this.imgMap)),
-      this._hat.getAllValuesOf('metadata', 'dropbox_data_plug')
-    ).subscribe(responses => {
-      if (responses[1] && responses[1][0] && responses[1][0]['access_token']) {
-        this._store.images = responses[0];
-        this._authBearer = "Bearer " + responses[1][0]['access_token'];
-        this.downloadImages();
-      }
-    }, err => console.log('There was an error loading images from HAT', err));
-
-    return this.images$;
+          return this.loadPhotoSources();
+        });
+    } else if (this.failedAttempts <= 10) {
+      this.failedAttempts++;
+      return Observable.timer(75).subscribe(() => this.getRecentPhotos());
+    }
   }
 
-  imgMap(image): Photo {
+  private loadPhotoSources() {
+    if (this._authBearer) {
+      let photo = this._store.sourcelessPhotos.shift();
+      this.downloadPhotoData(photo, "w640h480").subscribe(srcArrayBuffer => {
+        let base64String = "data: image/jpg;base64," + this.base64ArrayBuffer(srcArrayBuffer);
+        photo.src = this.sanitizer.bypassSecurityTrustUrl(base64String);
+
+        this._store.photos.push(photo);
+        this.pushToStream();
+
+        if (this._store.sourcelessPhotos.length > 0) {
+          this.loadPhotoSources();
+        }
+      });
+    } else {
+      return this.loadDropboxAccessToken();
+    }
+  }
+
+  private imgMap(image): Photo {
     let photo: Photo = {
-      name: image.name.substring(0, image.name.lastIndexOf(".")),
-      kind: image.name.substring(image.name.lastIndexOf(".") + 1),
-      path: image.path_lower,
-      displayPath: image.path_display.substring(0, image.path_display.lastIndexOf("/") + 1),
-      size: image.size,
+      name: image.data.photos.name.substring(0, image.data.photos.name.lastIndexOf(".")),
+      kind: image.data.photos.name.substring(image.data.photos.name.lastIndexOf(".") + 1),
+      path: image.data.photos.path_lower,
+      displayPath: image.data.photos.path_display.substring(0, image.data.photos.path_display.lastIndexOf("/") + 1),
+      size: image.data.photos.size,
       timestamp: null
     };
 
-    if (image.media_info && image.media_info.metadata.time_taken) {
-      photo['timestamp'] = moment(image.media_info.metadata.time_taken);
+    if (image.data.photos.media_info && image.data.photos.media_info.metadata.time_taken) {
+      photo['timestamp'] = moment(image.data.photos.media_info.metadata.time_taken);
     } else {
-      photo['timestamp'] = moment(image.client_modified);
+      photo['timestamp'] = moment(image.data.photos.client_modified);
     }
 
     return photo;
   }
 
-  downloadImages() {
-    let boundDownload = this.downloadThumbnail.bind(this);
-    this._store.images.forEach((image) => {
-      boundDownload(image, 'w640h480');
+  private loadDropboxAccessToken() {
+    this._hat.getAllValuesOf('metadata', 'dropbox_data_plug')
+      .subscribe(metadataRecords => {
+        if (metadataRecords.length > 0) {
+          this._authBearer = "Bearer " + metadataRecords[0]['access_token'];
+          return this.loadPhotoSources();
+        }
+      });
+  }
+
+  private downloadPhotoData(photo: Photo, size: string = 'w128h128'): Observable<ArrayBuffer> {
+    let url = 'https://content.dropboxapi.com/2/files/get_thumbnail';
+    let headers = new Headers();
+    headers.append('Authorization', this._authBearer);
+    headers.append('Dropbox-API-Arg', `{"path":"${photo.path}","size":{".tag":"${size}"}}`);
+
+    return this.http.get(url, { headers: headers, responseType: ResponseContentType.ArrayBuffer })
+      .map(res => res.arrayBuffer());
+  }
+
+  private verifyTable() {
+    this._hat.getTable('photos', 'dropbox').subscribe(table => {
+      if (table === "Not Found") {
+        this.tableVerified = false;
+      } else if (table.id) {
+        this._store.tableId = table.id;
+        this.tableVerified = true;
+      }
     });
   }
 
-  downloadThumbnail(image, size = "w128h128") {
-    var dropboxApiArg = `{"path":"${image.path}","size":{".tag":"${size}"}}`;
-
-    var xhr = new XMLHttpRequest()
-
-    var decoder = this.base64ArrayBuffer.bind(this);
-    var obs = this._imagesObserver;
-    var san = this.sanitizer;
-
-    xhr.open("GET", "https://content.dropboxapi.com/2/files/get_thumbnail", true); // method, url, async
-    xhr.responseType = 'arraybuffer';
-    xhr.setRequestHeader("Authorization", this._authBearer);
-    xhr.setRequestHeader('Dropbox-API-Arg', dropboxApiArg);
-
-    xhr.onreadystatechange = function(e) {
-      if (xhr.readyState == 4) {
-        // Construct a response object similar to a regular $http call
-        //
-        // data – {string|Object} – The response body transformed with the transform functions.
-        // status – {number} – HTTP status code of the response.
-        // headers – {function([headerName])} – Header getter function.
-        // config – {Object} – The configuration object that was used to generate the request.
-        var r = {
-          data: { path: image.source, content: 'data: image/jpg;base64,' + decoder(xhr.response) },
-          status: xhr.status,
-          headers: xhr.getResponseHeader,
-          config: {}
-        };
-
-        image.src = san.bypassSecurityTrustUrl(r.data.content);
-        obs.next(image);
-      }
-    };
-
-    // This is only available in XHR2, provide multipart fallback
-    // if necessary
-    xhr.send();
-
-    return obs;
+  private pushToStream() {
+    return this._photos$.next(this._store.photos);
   }
 
-  base64ArrayBuffer(arrayBuffer) {
+  private base64ArrayBuffer(arrayBuffer) {
     var base64 = '';
     var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
