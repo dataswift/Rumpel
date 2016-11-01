@@ -11,13 +11,13 @@
         <li *ngFor="let eve of day.events">
           <div class="row vertical-align">
             <div class="col-xs-2 event-time">
-              <p>{{eve.timestamp | moment:'hh:mm A'}}</p>
+              <p>{{eve.start | moment:'hh:mm A'}}</p>
             </div>
 
             <div class="col-xs-9">
-              <h4>{{eve.content.name}}</h4>
-              <p class="event-description" *ngIf="eve.content.description">{{eve.content.description | limitContent:140}}</p>
-              <p>From: {{eve.content.calendarName}}</p>
+              <h4>{{eve.name}}</h4>
+              <p class="event-description" *ngIf="eve.description">{{eve.description | limitContent:140}}</p>
+              <p>From: {{eve.calendarName}}</p>
             </div>
 
             <div class="col-xs-1">
