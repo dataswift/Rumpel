@@ -1,55 +1,117 @@
+$text-color: white;
+$active-color: #009688;
+
+h1, h2, h3, h4, h5 {
+  color: $text-color;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 2.3em;
+  text-align: right;
+}
 ul {
   list-style: none;
   margin: 0;
   padding: 0;
-  color: #ffffff;
+  color: $text-color;
+  clear: both;
+}
+ul.timeline-scroll {
+  margin-left: 3.5em;
+  margin-right: -2em;
+  margin-left: -4em;
 }
 
-li {
-  height: 2.1em;
-  font-size: 1.5em;
-  width: 100%;
+.timeline-scroll .timeline-month {
+  li {
+    height: 1.9em;
+    font-size: 1.1em;
+    width: 100%;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
 
+    &:after {
+      display: block;
+      clear: both;
+    }
 
-  &:after {
-    display: block;
-    clear: both;
+    .day-text {
+      float: right;
+      cursor: pointer;
+    }
+
+    .line {
+      float: right;
+      background-color: $text-color;
+      width: 3em;
+      height: 0.3em;
+      margin-top: 0.6em;
+      margin-left: 1em;
+    }
   }
 
-  .day-text {
-    float: right;
-    cursor: pointer;
+  li.active, li:hover {
+    font-size: 1.6em;
+    background-color: rgba(0, 0, 0, 1);
+    
+    .line {
+      width: 1.75em;
+      height: 0.6em;
+      margin-top: 0.4em;
+      margin-left: 0.5em;
+      background-color: $active-color;
+    }
   }
 
-  .line {
-    float: right;
-    background-color: #ffffff;
-    width: 4em;
-    height: 0.5em;
-    margin-top: 0.4em;
-    margin-left: 1em;
-  }
-}
-
-li:hover {
-  font-size: 2em;
-
-  .line {
-    width: 4.25em;
-    height: 0.6em;
-    margin-top: 0.4em;
-    margin-left: 0.5em;
+  li.active {
+    color: $active-color;
   }
 }
 
 .timeline-container {
   position: relative;
-  height: 80vh;
+  height: 73em;
+  padding-left: 1em;
+  width: 20em;
 }
 
 .timeline-view {
+  margin-top: 0em;
+  margin-bottom: 1em;
+  margin-right: 2em;
   height: 90%;
-  margin-top: 4em;
-  margin-bottom: 4em;
+}
+
+.timeline-scroll {
+  height: 86%;
   overflow: scroll;
+
+  h3 {
+    text-align: right;
+    font-size: 1.8em;
+    margin-right: 3em;
+  }
+
+  .timeline-month {
+    clear: both;
+  }
+}
+
+.btn.btn-ghostly {
+  background: transparent;
+  border: 1px solid $text-color;
+  border-radius: 0;
+  text-align: center;
+  color: $text-color;
+  width: 11.5em;
+  float: right;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.scroll-down {
+  position: absolute;
+  bottom: 2em;
+  right: 1em;
 }

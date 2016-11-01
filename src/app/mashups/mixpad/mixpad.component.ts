@@ -35,7 +35,7 @@ export class MixpadComponent implements OnInit {
     let now = moment();
     this.selectedTime = now;
     this.timeline = [now];
-    this.shownComponents = { map: false, events: true, photos: true, timeline: true };
+    this.shownComponents = { map: true, events: false, photos: true, timeline: true };
 
     this.eventsSvc.getEvents$().subscribe(events => {
       this.addDatesToTimeline(events, 'start');
