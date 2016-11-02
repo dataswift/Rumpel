@@ -13,7 +13,7 @@ export class TileDataOffersComponent implements OnInit {
   constructor(private market: MarketSquareService) {}
 
   ngOnInit() {
-    this.market.getOffers().subscribe(offers => this.offers = offers);
+    this.market.getValidOffers().subscribe(offers => this.offers = offers);
   }
 
 }

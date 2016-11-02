@@ -9,10 +9,16 @@
 
   h2 {
     margin: 0;
+    display: inline-block;
     clear: both;
     text-transform: uppercase;
     padding-top: 1em;
     padding-bottom: 1em;
+  }
+
+  .creator-info {
+    margin-left: 0.5em;
+    font-size: 1.2em;
   }
 }
 
@@ -22,22 +28,56 @@
 }
 
 .offer-reward {
-  font-size: 1.5em;
+  font-size: 1.3em;
   color: inherit;
   font-weight: bold;
   margin-bottom: 1em;
+
+  * {
+    display: inline-block;
+  }
+
+  h3 {
+    padding-top: 0.5em;
+    text-transform: uppercase;
+  }
+
+  div {
+    margin-left: 1em;
+    border: 2px dashed #009688;
+    padding: 0.5em 1em;
+  }
+
 }
 
 .offer-description {
-  font-size: 1.5em;
-}
-
-.offer-dialog {
-
+  font-size: 1.2em;
+  margin-top: 1em;
 }
 
 .text-center {
   text-align: center;
+}
+
+.offer-dialog {
+  margin-bottom: 2em;
+
+  .message {
+    font-size: 1.5em;
+    font-family: "Open Sans Condensed", sans-serif;
+
+    .icon-alert {
+      color: #88111d;
+      display: inline-block;
+      vertical-align: top;
+      font-size: 1.4em;
+      margin-right: 0.5em;
+
+      &.accepted {
+        color: #009688;
+      }
+    }
+  }
 }
 
 .btn-rump {
@@ -55,23 +95,6 @@
   background-color: #91C228;
 }
 
-.alert-message {
-  padding: 1em 0;
-  font-size: 2em;
-  font-family: "Open Sans Condensed", sans-serif;
-}
-
-.icon-alert {
-  color: #88111d;
-  font-size: 1em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-
-  &.accepted {
-    color: #009688;
-  }
-}
-
 .panel-rump {
   border-radius: 0;
   border: 1px solid #ececec;
@@ -87,4 +110,68 @@
   padding-left: 0.4em;
   padding-right: 0.4em;
   font-weight: bold;
+}
+
+.progress-wrapper {
+  position: relative;
+  margin: auto;
+  margin-top: 1em;
+  width: 30em;
+
+  .claims, .left {
+    position: absolute;
+    top: 0;
+  }
+
+  .claims {
+    left: 0;
+  }
+
+  .left {
+    right: 0;
+  }
+}
+
+progress {
+  -webkit-appearance: none;
+  appearance: none;
+
+  width: 30em;
+  height: 2em;
+  margin-top: 1.5em;
+
+  &::-moz-progress-bar {
+    background-color: #009688;
+  }
+
+  &::-ms-fill {
+    background-color: #009688;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  }
+
+  &::-webkit-progress-bar {
+    background-color: #eeeeee;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  }
+
+  &::-webkit-progress-value {
+    background-color: #009688;
+    border-radius: 2px;
+    -webkit-animation: width .5s ease-in;
+  }
+}
+
+/* Fallback styling */
+.progress-bar {
+  background-color: #eeeeee;
+  height: 2em;
+  border-radius: 2px;
+
+  .progress-value {
+    background-color: #009688;
+    display: block;
+    height: 2em;
+    border-radius: 2px;
+  }
 }
