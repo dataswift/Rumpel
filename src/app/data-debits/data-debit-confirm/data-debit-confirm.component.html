@@ -1,62 +1,113 @@
-<div class="row">
+<div class="row" *ngIf="offer">
   <div class="col-xs-10 col-xs-offset-1">
     <div class="offer">
       <div class="offer-title">
-        <h2 class="text-center">{{dataDebit?.name}}</h2>
-        <div class="offer-reward text-center">
-          Price: {{dataDebit?.price}}
+        <div class="text-center">
+          <h2>{{offer.offer.title}}</h2>
+          <span class="creator-info">from {{offer.owner.firstName}} {{offer.owner.lastName}}</span>
         </div>
+        <p>{{offer.offer.description}}</p>
+
+        <div class="offer-reward text-center" [ngSwitch]="offer.offer.reward.rewardType">
+          <h3>Reward</h3>
+          <div *ngSwitchCase="'Cash'">
+            Cash: {{offer.offer.reward.value / 100}} {{offer.offer.reward.currency}}
+          </div>
+
+          <div *ngSwitchCase="'Voucher'">
+            <a [href]="offer.offer.reward.vendorUrl" target="_blank">{{offer.offer.reward.vendor}}</a>
+            voucher: {{offer.offer.reward.value}}
+          </div>
+
+          <div *ngSwitchCase="'Service'">
+            Service of <a [href]="offer.offer.reward.vendorUrl"  target="_blank">{{offer.offer.reward.vendor}}</a>
+          </div>
+        </div>
+
         <div class="offer-description text-center">
-          Valid until: {{dataDebit?.endDate | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</div>
+          <p>Start date: {{offer.offer.starts | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
+          <p>End date: {{offer.offer.expires | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
+        </div>
+
+        <div class="progress-wrapper">
+          <progress max="{{offer.offer.dataRequest.minUsers}}" value="{{offer.offer.users}}">
+            <div class="progress-bar" role="presentation">
+              <span class="progress-value" [style.width]="offer.offer.users"></span>
+            </div>
+          </progress>
+          <span class="claims">{{offer.offer.users}}
+            out of {{offer.offer.dataRequest.minUsers}} reached
+          </span>
+        </div>
       </div>
-      <div class="offer-dialog text-center" *ngIf="!ddConfirmed">
+    </div>
+  </div>
+</div>
+
+<div class="row offer-dialog">
+  <div class="text-center" [ngSwitch]="status">
+    <div class="message" *ngIf="confirmMessage" style="margin-bottom: 1.5em;">
+      Confirmation: You have accepted the data offer and a data debit has been created on your HAT. You can manage all your HAT data exchanges at the data debit section of Rumpel.
+    </div>
+    <div *ngSwitchCase="'pending'">
+      <div class="offer-dialog">
         <button class="btn btn-rump btn-accept"
                 (click)="acceptDataDebit()">Accept Offer</button>
         <button class="btn btn-rump"
                 (click)="rejectDataDebit()">Cancel</button>
       </div>
-      <div class="alert-message text-center">
-        <div class="message" *ngIf="!ddConfirmed">
-          <span class="icon-alert ss-alert ss-glyphish-filled"></span>
-          Last chance to review the data being released before accepting offer.
-        </div>
-        <div class="message" *ngIf="ddConfirmed">
-          <span class="icon-alert accepted ss-info ss-glyphish-filled"></span>
-          This data debit has already been confirmed. The information that was transferred can be reviewed below.
-        </div>
+      <div class="message">
+        <span class="icon-alert ss-alert ss-glyphish-filled"></span>
+        Last chance to review the data being released before accepting offer.
       </div>
     </div>
-    <div class="row" *ngIf="dataDebit">
-      <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 debit-review">
-        <div class="panel panel-rump" *ngFor="let source of dataDebit.dataToShare">
-          <div class="panel-heading">{{source.name.charAt(0).toUpperCase() + source.name.slice(1)}}</div>
-          <div class="panel-body">
-            <section *ngFor="let table of source.data">
-              <h4>{{table.name.charAt(0).toUpperCase() + table.name.slice(1)}}</h4>
-
-              <tree-view [treeNodes]="table.data[0] | withObject"
-                         [offset]="0"></tree-view>
-            </section>
-          </div>
-        </div>
+    <div class="message" *ngSwitchCase="'accepted'">
+      <span class="icon-alert accepted ss-info ss-glyphish-filled"></span>
+      This data debit has already been confirmed. The information that was transferred can be reviewed below.
+    </div>
+    <div *ngSwitchCase="'satisfied'">
+      <button class="btn btn-rump"
+              (click)="navigateToRewardClaim()">Collect your reward</button>
+      <div class="message">
+        <span class="icon-alert accepted ss-currency ss-glyphish-filled"></span>
+        Enough people have claimed the offer to collect the reward!
       </div>
-     <!--  <div class="col-md-6 offer-terms">
-        <div class="panel panel-rump">
-          <div class="panel-heading">Terms of Offer</div>
-          <div class="panel-body">
-            <h3>{{offerInfo.offer.title}}</h3>
-            <h5>Contact Information</h5>
-            <p>{{offerInfo.owner.firstName + ' ' + offerInfo.owner.lastName}}</p>
-            <p>E-mail: {{offerInfo.owner.email}}</p>
-            <h5>Validity</h5>
-            <p>The offer is running from {{offerInfo.offer.starts | moment:'Do MMM, YYYY'}} to {{offerInfo.offer.expires | moment:'Do MMM, YYYY'}}.</p>
-            <h5>Data sources required for the offer</h5>
-            <ul>
-              <li *ngFor="let set of offerInfo.offer.dataRequest.definition">{{set.source}}</li>
-            </ul>
-          </div>
-        </div>
-      </div> -->
+    </div>
+    <div *ngSwitchDefault>
+      <div class="message">Loading... Please wait.</div>
     </div>
   </div>
 </div>
+
+<div class="row" *ngIf="dataDebit">
+  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1 debit-review">
+    <div class="panel panel-rump" *ngFor="let source of dataDebit.dataToShare">
+      <div class="panel-heading">{{source.name.charAt(0).toUpperCase() + source.name.slice(1)}}</div>
+      <div class="panel-body">
+        <section *ngFor="let table of source.data">
+          <h4>{{table.name.charAt(0).toUpperCase() + table.name.slice(1)}}</h4>
+
+          <tree-view [treeNodes]="table.data[0] | withObject"
+                     [offset]="0"></tree-view>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+ <!--  <div class="col-md-6 offer-terms">
+    <div class="panel panel-rump">
+      <div class="panel-heading">Terms of Offer</div>
+      <div class="panel-body">
+        <h3>{{offerInfo.offer.title}}</h3>
+        <h5>Contact Information</h5>
+        <p>{{offerInfo.owner.firstName + ' ' + offerInfo.owner.lastName}}</p>
+        <p>E-mail: {{offerInfo.owner.email}}</p>
+        <h5>Validity</h5>
+        <p>The offer is running from {{offerInfo.offer.starts | moment:'Do MMM, YYYY'}} to {{offerInfo.offer.expires | moment:'Do MMM, YYYY'}}.</p>
+        <h5>Data sources required for the offer</h5>
+        <ul>
+          <li *ngFor="let set of offerInfo.offer.dataRequest.definition">{{set.source}}</li>
+        </ul>
+      </div>
+    </div>
+  </div> -->

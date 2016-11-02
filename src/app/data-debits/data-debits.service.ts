@@ -9,12 +9,8 @@ export class DataDebitService {
   constructor(private _hatSvc: HatApiService,
               private _marketSvc: MarketSquareService) {}
 
-  loadOffer(uuid: string): Observable<any> {
-    console.log('UUID', uuid);
-    return Observable.forkJoin(
-      this._marketSvc.getOffers()
-        .map(marketOffers => marketOffers.find(offerItem => offerItem.offer.uuid === uuid))
-    );
+  getDataOffer(dataDebitId: string, forceReload: boolean): Observable<any> {
+    return Observable.forkJoin(this._marketSvc.getAllOffers(forceReload), this._marketSvc.getOfferIdByDataDebitId(dataDebitId));
   }
 
   loadDataDebit(uuid: string) {

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+// import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService, HatApiService } from '../../services';
 import { DataDebitService } from '../data-debits.service';
 import { DataDebit } from '../../shared/interfaces';
+import { isUndefined } from "util";
 
 @Component({
   selector: 'rump-data-debit-confirm',
@@ -10,11 +12,14 @@ import { DataDebit } from '../../shared/interfaces';
   styleUrls: ['data-debit-confirm.component.scss']
 })
 export class DataDebitConfirmComponent implements OnInit {
-  public offerInfo;
-  public dataDebit: DataDebit;
+  private offer: any;
+  private status: any;
+  private dataDebit: DataDebit;
   private token: string;
   private uuid: string;
-  public ddConfirmed: boolean;
+  private ddConfirmed: boolean;
+  private offerSatisfied: boolean;
+  private confirmMessage: boolean;
 
   constructor(private _route: ActivatedRoute,
               private _ddSvc: DataDebitService,
@@ -23,8 +28,8 @@ export class DataDebitConfirmComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit() {
-    this.ddConfirmed = false;
-    this.offerInfo = {
+    this.status = '';
+    this.offer = {
       offer: {
         title: '',
         description: '',
@@ -39,15 +44,8 @@ export class DataDebitConfirmComponent implements OnInit {
     this.authSvc.auth$.subscribe(isAuthenticated => {
       if (isAuthenticated === false) return;
 
-      // this._ddSvc.loadOffer(this.uuid).subscribe(info => {
-      //   console.log('LOADED OFFER', info);
-      //   this.offerInfo = info[0];
-      // });
-
-      this._ddSvc.loadDataDebit(this.uuid).subscribe(debitInfo => {
-        this.ddConfirmed = debitInfo.enabled || false;
-        this.dataDebit = debitInfo;
-      });
+      this.updateDataDebitInformation();
+      this.updateOfferInformation(false);
     });
 
     this._route.params.subscribe(params => {
@@ -56,10 +54,8 @@ export class DataDebitConfirmComponent implements OnInit {
 
     this._route.queryParams.subscribe(params => {
       if (this.authSvc.isAuthenticated() === true) {
-        return this._ddSvc.loadDataDebit(this.uuid).subscribe(debitInfo => {
-          this.ddConfirmed = debitInfo.enabled;
-          this.dataDebit = debitInfo;
-        });
+        this.updateDataDebitInformation();
+        this.updateOfferInformation(false);
       } else {
         let jwtToken = params['token'] || null;
         return this.authSvc.authenticate(jwtToken);
@@ -68,7 +64,11 @@ export class DataDebitConfirmComponent implements OnInit {
   }
 
   acceptDataDebit() {
-    this._hat.updateDataDebit(this.uuid, 'enable').subscribe(res => this.router.navigate(['']));
+    this._hat.updateDataDebit(this.uuid, 'enable').subscribe(res => {
+      this.confirmMessage = true;
+      this.ddConfirmed = true;
+      this.updateOfferInformation(true);
+    });
   }
 
   rejectDataDebit() {
@@ -76,4 +76,40 @@ export class DataDebitConfirmComponent implements OnInit {
     // this._hat.updateDataDebit(this.uuid, 'disable').subscribe(res => this.router.navigate(['']));
   }
 
+  navigateToRewardClaim() {
+    window.location.href = 'https://marketsquare.hubofallthings.com/offers/' + this.offer.offer.uuid;
+  }
+
+  // getBackgroundPicture() {
+  //   return this.sanitizer.bypassSecurityTrustStyle('url(' + this.offer.offer.illustrationUrl + ')');
+  // }
+
+  private updateOfferInformation(forceReload: boolean) {
+    this._ddSvc.getDataOffer(this.uuid, forceReload).subscribe(results => {
+      let offer = results[0].filter(offer => offer.offer.uuid === results[1])[0];
+      this.offerSatisfied = offer.offer.status === 'satisfied' ? true : false;
+      this.offer = offer;
+      this.updateStatus();
+    });
+  }
+
+  private updateDataDebitInformation() {
+    this._ddSvc.loadDataDebit(this.uuid).subscribe(debitInfo => {
+      this.ddConfirmed = debitInfo.enabled || false;
+      this.dataDebit = debitInfo;
+      this.updateStatus();
+    });
+  }
+
+  private updateStatus() {
+    if (isUndefined(this.ddConfirmed) || isUndefined(this.offerSatisfied)) {
+      return;
+    } else if (this.ddConfirmed === false) {
+      this.status = 'pending';
+    } else if (this.offerSatisfied === false) {
+      this.status = 'accepted';
+    } else if (this.offerSatisfied === true) {
+      this.status = 'satisfied';
+    }
+  }
 }

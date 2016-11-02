@@ -9,11 +9,13 @@ import * as moment from 'moment';
 export class MarketSquareService {
   private baseUrl: string;
   private market: { id: string; accessToken: string };
+  private offersStore: Array<any>;
   private _headers: Headers;
   public notifications: Array<any>;
   private applicationToken: string;
 
   constructor(private http: Http, private hat: HatApiService) {
+    this.offersStore = [];
     this.applicationToken = '';
     this.baseUrl = 'https://marketsquare.hubofallthings.com/api';
     this.market = {
@@ -24,16 +26,46 @@ export class MarketSquareService {
     this._headers.append('Content-Type', 'application/json');
   }
 
-  getOffers(): Observable<any> {
-    const url = this.baseUrl + '/offers';
-    return this.http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json())
+  getValidOffers(): Observable<any> {
+    return this.getAllOffers()
       .map(offers => {
         const validOffers = offers.filter(offer => {
           return moment(offer.offer.expires).isAfter() &&
             (offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
         });
         return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
+      });
+  }
+
+  getAllOffers(forceReload: boolean = false): Observable<any> {
+    if (this.offersStore.length > 0 && forceReload === false) {
+      return Observable.of(this.offersStore);
+    }
+
+    const url = this.baseUrl + '/offers';
+    return this.http.get(url, { headers: this._headers, body: '' })
+      .map(res => {
+        this.offersStore = res.json();
+        return this.offersStore;
+      })
+  }
+
+  getOfferIdByDataDebitId(dataDebitId: string): Observable<string> {
+    const url = this.baseUrl + '/offer';
+
+    return this.hat.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
+      .flatMap(accessToken => {
+        let headers = new Headers();
+        headers.append('X-Auth-Token', accessToken)
+
+        let query = new URLSearchParams();
+        query.append('dataDebitId', dataDebitId);
+
+        return this.http.get(url, { headers: headers, search: query, body: '' })
+          .map(res => res.json().offerId);
+      })
+      .catch(err => {
+        return Observable.of("Offer not found.");
       });
   }
 
