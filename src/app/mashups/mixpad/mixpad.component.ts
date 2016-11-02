@@ -4,8 +4,15 @@ import { PhotosService } from '../../photos/photos.service';
 import { EventsService } from '../../dimensions/events.service';
 import { SocialService } from '../../social/social.service';
 import { LocationsService } from '../../locations/locations.service';
-import { Post, Event, Photo, Location } from '../../shared/interfaces';
+//import { Post, Event, Photo, Location } from '../../shared/interfaces';
 import * as moment from 'moment';
+import Moment = moment.Moment;
+import {Photo} from "../../shared/interfaces/photo.interface";
+import {Post} from "../../shared/interfaces/post.interface";
+import {Event} from "../../shared/interfaces/event.interface";
+import {Location} from "../../shared/interfaces/location.interface";
+import {NotablesService} from "../../notables/notables.service";
+import {Notable} from "../../shared/interfaces/notable.class";
 
 @Component({
   selector: 'rump-mixpad',
@@ -19,15 +26,17 @@ export class MixpadComponent implements OnInit {
   private events: Array<Event> = [];
   private locations: Array<Location> = [];
   private photos: Array<Photo> = [];
-  public selectedTime: any;
-  public shownComponents: any;
+  private notables: Array<Notable> = [];
+  public selectedTime: Moment;
+  public shownComponents: { [key:string]:boolean };
   public safeSize;
-  public timeline: Array<any>;
+  public timeline: Array<Moment>;
 
   constructor(private locationsSvc: LocationsService,
               private eventsSvc: EventsService,
               private photosSvc: PhotosService,
               private socialSvc: SocialService,
+              private notablesSvc: NotablesService,
               private sanitizer: DomSanitizer) {
   }
 
@@ -35,11 +44,11 @@ export class MixpadComponent implements OnInit {
     let now = moment();
     this.selectedTime = now;
     this.timeline = [now];
-    this.shownComponents = { map: true, events: false, photos: true, timeline: true };
+    this.shownComponents = { map: true, events: true, photos: true, timeline: true };
 
     this.eventsSvc.getEvents$().subscribe(events => {
       this.addDatesToTimeline(events, 'start');
-      this.events = events;
+      this.events = events.sort((a, b) => a.start.isBefore(b.start) ? -1 : 1);
     });
 
     this.photosSvc.photos$.subscribe(photos => {
@@ -57,22 +66,32 @@ export class MixpadComponent implements OnInit {
       this.locations = locations;
     });
 
+    this.notablesSvc.notables$.subscribe(notables => {
+      this.addDatesToTimeline(notables, 'created_time');
+      this.notables = notables;
+    });
+
     this.socialSvc.getRecentPosts();
     this.locationsSvc.getRecentLocations();
     this.photosSvc.getRecentPhotos();
+    this.eventsSvc.showAll();
+    this.notablesSvc.getRecentNotables();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('73em');
   }
 
   addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
-    console.log(dataPoints);
+    //console.log(dataPoints);
+    let newTimeline: Array<Moment> = this.timeline.slice();
     for (let dp of dataPoints) {
-      const dayFound = this.timeline.find(day => day.isSame(dp[timeField], 'day'));
-      if (dayFound) continue;
-      this.timeline.push(dp[timeField]);
+      let timestamp = dp[timeField];
+      const dayFound = newTimeline.find(day => day.isSame(timestamp, 'day'));
+      if (!dayFound) {
+        newTimeline.push(timestamp);
+      }
     }
 
-    this.timeline = this.timeline.sort((a, b) => a.isAfter(b) ? -1 : 1);
+    this.timeline = newTimeline.sort((a, b) => a.isAfter(b) ? -1 : 1);
   }
 
   selectTime(event) {

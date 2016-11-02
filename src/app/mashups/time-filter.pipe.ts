@@ -5,9 +5,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimeFilterPipe implements PipeTransform {
 
-  transform(dataPoints: Array<any>, time: any, unit: string): Array<any> {
+  transform(dataPoints: Array<any>, time: any, unit: string, field: string = "timestamp"): Array<any> {
     if (!time) return Array<any>();
-    return dataPoints.filter(dp => dp.timestamp.isSame(time, unit));
+    try {
+      var filtered = dataPoints.filter(dp => dp[field].isSame(time, unit));
+    } catch (e) {
+      console.error("Error while filtering data", dataPoints, e);
+      var filtered = Array<any>();
+    }
+    return filtered;
   }
 
 }

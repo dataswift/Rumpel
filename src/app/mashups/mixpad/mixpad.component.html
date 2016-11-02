@@ -18,13 +18,24 @@
     </div>
 
     <div class="view-body">
+      <rump-activitylist class="activitylist"
+                         [timeSelected]="selectedTime"
+                         [componentHeight]="safeSize"
+                         [componentWidth]="shownComponents.map ? '40%' : '80%'"
+                         [events]="events | timeFilter:selectedTime:'day':'start'"
+                         [posts]="posts | timeFilter:selectedTime:'day':'createdTime'"
+                         [photos]="photos | timeFilter:selectedTime:'day':'timestamp'"
+                         [notables]="notables | timeFilter:selectedTime:'day':'created_time'"
+                         *ngIf="shownComponents.events"></rump-activitylist>
       <rump-map class="map"
                 [dataPoints]="locations | timeFilter:selectedTime:'day'"
-                [mapSize]="safeSize"
+                [mapHeight]="safeSize"
+                [mapWidth]="shownComponents.events ? '60%' : '100%'"
                 (timeSelected)="selectTime($event)"
                 *ngIf="shownComponents.map"></rump-map>
       <rump-timeline class="timeline"
                      [timeline]="timeline"
+                     [selectedTime]="selectedTime"
                      (timeSelected)="selectTime($event)"
                      [hidden]="!shownComponents.timeline"></rump-timeline>
     </div>

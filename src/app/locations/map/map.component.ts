@@ -11,7 +11,8 @@ declare var L: any;
 })
 export class MapComponent implements OnInit, OnChanges {
   @Input() dataPoints: Array<Location>;
-  @Input() mapSize: string;
+  @Input() mapHeight: string;
+  @Input() mapWidth: string;
   @Input() enableMapControls: boolean;
   @Output() timeSelected = new EventEmitter<any>();
 
@@ -64,6 +65,7 @@ export class MapComponent implements OnInit, OnChanges {
     if(this.map) {
       this.drawMarkers(locations);
       if (locations.length > 0) {
+        this.map.invalidateSize();
         this.map.fitBounds([
           [this.bbox.minLat, this.bbox.minLng],
           [this.bbox.maxLat, this.bbox.maxLng]

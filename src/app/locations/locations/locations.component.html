@@ -5,7 +5,7 @@
       <span>(open your RumpelLite app to synchronise your latest location data)</span>
     </div>
     <div class="map-wrapper">
-      <rump-map [dataPoints]="locations | relativeTimesFilter:selectedTime" [mapSize]="safeSize"
+      <rump-map [dataPoints]="locations | relativeTimesFilter:selectedTime" [mapHeight]="safeSize"
                 [enableMapControls]="true">
         <div class="controls-overlay" (click)="selectLocationTime($event)">
           <button type="button" class="btn-overlay" value="today" [class.selected]="selectedTime === 'today'">Today</button>

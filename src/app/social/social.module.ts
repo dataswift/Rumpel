@@ -13,6 +13,6 @@ import { SocialService } from './social.service';
     imports: [ SharedModule, routing ],
     declarations: [ SocialComponent, TileSocialComponent, FbPostComponent ],
     providers: [ SocialService ],
-    exports: [ TileSocialComponent ]
+    exports: [ TileSocialComponent, FbPostComponent ]
 })
 export class SocialModule {}

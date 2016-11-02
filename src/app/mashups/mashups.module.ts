@@ -9,10 +9,17 @@ import { MixpadComponent } from './mixpad/mixpad.component';
 import { TimelineComponent } from './timeline/timeline.component';
 
 import { TimeFilterPipe } from './time-filter.pipe';
+import { ActivitylistComponent } from "./activitylist/activitylist.component";
+import {SocialModule} from "../social/social.module";
 
 @NgModule({
-    imports: [ SharedModule, LocationsModule, FormsModule, routing ],
-    declarations: [ MixpadComponent, TimelineComponent,
-                    TimeFilterPipe ]
+  imports: [SharedModule, LocationsModule, FormsModule, SocialModule, routing],
+  declarations: [
+    MixpadComponent,
+    TimelineComponent,
+    ActivitylistComponent,
+    TimeFilterPipe]
 })
-export class MashupsModule {}
+
+export class MashupsModule {
+}
