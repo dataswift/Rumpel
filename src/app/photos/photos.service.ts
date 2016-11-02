@@ -4,26 +4,29 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Http, Headers, ResponseContentType } from '@angular/http';
 
 import { HatApiService } from '../services/hat-api.service';
-import { Photo } from '../shared/interfaces';
+//import { Photo } from '../shared/interfaces/';
 import * as moment from 'moment';
+import * as PouchDB from 'pouchdb';
+import {Photo} from "../shared/interfaces/index";
 
 @Injectable()
 export class PhotosService {
-  private _photos$: Subject<Photo[]>;
-  public photos$: Observable<Photo[]>;
+  private _photos$:Subject<Photo[]>;
+  private tableVerified:boolean;
+  private failedAttempts:number;
+  private _authBearer:string;
+  private _tableId$:Subject<number>;
+  private _store:{ photos: Array<Photo>; sourcelessPhotos: Array<Photo>; tableId: number; };
+  private photoDb:any;
 
-  private tableVerified: boolean;
-  private failedAttempts: number;
-  private _authBearer: string;
-  private _store: { photos: Array<Photo>; sourcelessPhotos: Array<Photo>; tableId: number; };
+  constructor(private _hat:HatApiService,
+              private sanitizer:DomSanitizer,
+              private http:Http) {
+    this._store = {photos: [], sourcelessPhotos: [], tableId: null};
+    this.photoDb = new PouchDB('dropboxPhotos');
 
-  constructor(private _hat: HatApiService,
-              private sanitizer: DomSanitizer,
-              private http: Http) {
-    this._store = { photos: [], sourcelessPhotos: [], tableId: null };
-
-    this._photos$ = <Subject<Photo[]>>new Subject();
-    this.photos$ = this._photos$.asObservable();
+    this._photos$ = <Subject<Photo[]>> new Subject();
+    this._tableId$ = <Subject<number>> new Subject();
 
     this._authBearer = '';
     this.tableVerified = false;
@@ -32,45 +35,57 @@ export class PhotosService {
     this.verifyTable();
   }
 
-  getRecentPhotos() {
-    if (this._store.photos.length > 0) {
-      this.pushToStream();
-    } else if (this._store.tableId) {
-      this._hat.getValuesWithLimit(this._store.tableId)
-        .map(photos => photos.map(this.imgMap))
-        .map((photos: Array<Photo>) => photos.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
-        .subscribe(photos => {
-          this._store.sourcelessPhotos = photos;
-
-          return this.loadPhotoSources();
-        });
-    } else if (this.failedAttempts <= 10) {
-      this.failedAttempts++;
-      return Observable.timer(75).subscribe(() => this.getRecentPhotos());
-    }
+  get photos$() {
+    return this._photos$.asObservable();
   }
 
-  private loadPhotoSources() {
-    if (this._authBearer) {
-      let photo = this._store.sourcelessPhotos.shift();
-      this.downloadPhotoData(photo, "w640h480").subscribe(srcArrayBuffer => {
-        let base64String = "data: image/jpg;base64," + this.base64ArrayBuffer(srcArrayBuffer);
-        photo.src = this.sanitizer.bypassSecurityTrustUrl(base64String);
+  private get tableId$() {
+    return this._tableId$.asObservable();
+  }
 
-        this._store.photos.push(photo);
-        this.pushToStream();
-
-        if (this._store.sourcelessPhotos.length > 0) {
-          this.loadPhotoSources();
-        }
+  getRecentPhotos():void {
+    this.publishPhotos();
+    this.tableId$
+      .flatMap(tableId => this._hat.getValuesWithLimit(tableId))
+      .map(photoData => photoData.map(this.imgMap))
+      .map(photos => photos.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
+      .subscribe(photos => {
+        this._store.sourcelessPhotos = photos;
+        this.loadDropboxAccessToken()
+          .forEach(token => console.log("Loaded token", token))
+          .then(() => {
+            this.loadPhotoSources();
+          });
       });
-    } else {
-      return this.loadDropboxAccessToken();
+  }
+
+  private loadPhotoSources():void {
+    let photo = this._store.sourcelessPhotos.shift();
+
+    this.photoDb.get(photo.path, {attachments: true})
+      .then(savedPhoto => {
+        console.log("photo in db:", savedPhoto);
+        photo.src = this.sanitizer.bypassSecurityTrustUrl("data: image/jpg;base64," + savedPhoto._attachments[photo.path].data);
+        this._store.photos.push(photo);
+      }, () => {
+        this.downloadPhotoData(photo, "w640h480").subscribe(srcArrayBuffer => {
+          let base64String = this.base64ArrayBuffer(srcArrayBuffer);
+
+          this.photoDb.putAttachment(photo.path, photo.path, base64String, 'image/jpg').then(() => {
+            photo.src = this.sanitizer.bypassSecurityTrustUrl("data: image/jpg;base64," + base64String);
+            this._store.photos.push(photo);
+            this.publishPhotos();
+          });
+        });
+      });
+
+    if (this._store.sourcelessPhotos.length > 0) {
+      this.loadPhotoSources();
     }
   }
 
-  private imgMap(image): Photo {
-    let photo: Photo = {
+  private imgMap(image):Photo {
+    let photo:Photo = {
       name: image.data.photos.name.substring(0, image.data.photos.name.lastIndexOf(".")),
       kind: image.data.photos.name.substring(image.data.photos.name.lastIndexOf(".") + 1),
       path: image.data.photos.path_lower,
@@ -88,42 +103,53 @@ export class PhotosService {
     return photo;
   }
 
-  private loadDropboxAccessToken() {
-    this._hat.getAllValuesOf('metadata', 'dropbox_data_plug')
-      .subscribe(metadataRecords => {
-        if (metadataRecords.length > 0) {
-          this._authBearer = "Bearer " + metadataRecords[0]['access_token'];
-          return this.loadPhotoSources();
-        }
-      });
+  private loadDropboxAccessToken():Observable<string> {
+    if (this._authBearer) {
+      return Observable.of(this._authBearer);
+    } else {
+      return this._hat.getAllValuesOf('metadata', 'dropbox_data_plug')
+        .map(metadataRecords => {
+          if (metadataRecords.length > 0) {
+            this._authBearer = "Bearer " + metadataRecords[0]['access_token'];
+            return this._authBearer;
+          }
+        });
+    }
   }
 
-  private downloadPhotoData(photo: Photo, size: string = 'w128h128'): Observable<ArrayBuffer> {
+  private downloadPhotoData(photo:Photo, size:string = 'w128h128'):Observable<ArrayBuffer> {
     let url = 'https://content.dropboxapi.com/2/files/get_thumbnail';
     let headers = new Headers();
     headers.append('Authorization', this._authBearer);
     headers.append('Dropbox-API-Arg', `{"path":"${photo.path}","size":{".tag":"${size}"}}`);
 
-    return this.http.get(url, { headers: headers, responseType: ResponseContentType.ArrayBuffer })
+    return this.http.get(url, {headers: headers, responseType: ResponseContentType.ArrayBuffer})
       .map(res => res.arrayBuffer());
   }
 
-  private verifyTable() {
-    this._hat.getTable('photos', 'dropbox').subscribe(table => {
-      if (table === "Not Found") {
-        this.tableVerified = false;
-      } else if (table.id) {
-        this._store.tableId = table.id;
-        this.tableVerified = true;
-      }
-    });
+  private verifyTable():void {
+    if (this._store.tableId) {
+      this._tableId$.next(this._store.tableId);
+    } else {
+      this._hat.getTable('photos', 'dropbox').subscribe(table => {
+        if (table === "Not Found") {
+          this.tableVerified = false;
+        } else if (table.id) {
+          console.log("Got back table", table);
+          this._store.tableId = table.id;
+          this.tableVerified = true;
+          this._tableId$.next(this._store.tableId);
+        }
+      });
+    }
+
   }
 
-  private pushToStream() {
+  private publishPhotos():void {
     return this._photos$.next(this._store.photos);
   }
 
-  private base64ArrayBuffer(arrayBuffer) {
+  private base64ArrayBuffer(arrayBuffer):string {
     var base64 = '';
     var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
