@@ -85,9 +85,10 @@ export class MixpadComponent implements OnInit {
     //console.log(dataPoints);
     let timestamps: Array<Moment> = _.sortedUniqBy(
       dataPoints.map(dp => dp[timeField]).sort((a, b) => a.isAfter(b) ? -1 : 1),
-      date => date.startOf('day').format());
+      date => date.startOf('day').unix());
 
-    this.timeline = _.unionBy(this.timeline, timestamps, date => date.startOf('day').format()).sort((a, b) => a.isAfter(b) ? -1 : 1);
+    this.timeline = _.unionBy(this.timeline, timestamps, date => date.startOf('day').unix())
+      .sort((a, b) => a.isAfter(b) ? -1 : 1);
 
     // for (let dp of dataPoints) {
     //   let timestamp = dp[timeField];
