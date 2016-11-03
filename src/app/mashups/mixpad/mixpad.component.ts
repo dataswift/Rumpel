@@ -7,6 +7,7 @@ import { LocationsService } from '../../locations/locations.service';
 //import { Post, Event, Photo, Location } from '../../shared/interfaces';
 import * as moment from 'moment';
 import Moment = moment.Moment;
+import * as _ from "lodash";
 import {Photo} from "../../shared/interfaces/photo.interface";
 import {Post} from "../../shared/interfaces/post.interface";
 import {Event} from "../../shared/interfaces/event.interface";
@@ -82,16 +83,21 @@ export class MixpadComponent implements OnInit {
 
   addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
     //console.log(dataPoints);
-    let newTimeline: Array<Moment> = this.timeline.slice();
-    for (let dp of dataPoints) {
-      let timestamp = dp[timeField];
-      const dayFound = newTimeline.find(day => day.isSame(timestamp, 'day'));
-      if (!dayFound) {
-        newTimeline.push(timestamp);
-      }
-    }
+    let timestamps: Array<Moment> = _.sortedUniqBy(
+      dataPoints.map(dp => dp[timeField]).sort((a, b) => a.isAfter(b) ? -1 : 1),
+      date => date.startOf('day').format());
 
-    this.timeline = newTimeline.sort((a, b) => a.isAfter(b) ? -1 : 1);
+    this.timeline = _.unionBy(this.timeline, timestamps, date => date.startOf('day').format()).sort((a, b) => a.isAfter(b) ? -1 : 1);
+
+    // for (let dp of dataPoints) {
+    //   let timestamp = dp[timeField];
+    //   const dayFound = newTimeline.find(day => day.isSame(timestamp, 'day'));
+    //   if (!dayFound) {
+    //     newTimeline.push(timestamp);
+    //   }
+    // }
+
+    // this.timeline = _.sortedUniqBy(newTimeline.sort((a, b) => a.isAfter(b) ? -1 : 1), date => date.startOf('day').format());
   }
 
   selectTime(event) {

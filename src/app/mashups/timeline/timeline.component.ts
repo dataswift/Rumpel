@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChange} from '@angular/core';
 import { ElementRef, ViewChild } from '@angular/core'
 import { Moment } from 'moment';
 
@@ -22,28 +22,32 @@ export class TimelineComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
 
-  ngOnChanges() {
-    //this.timeline.sort((day1, day2) => day1.isAfter(day2, 'day') ? -1 : 1);
-    if (this.timeline && this.timeline.length > 0 && !this.selectedTime) {
-      this.selected = this.timeline[0]
-    } else if (this.selectedTime) {
-      this.selected = this.selectedTime;
-    }
+  ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
 
-    let grouped = this.timeline.reduce( function (acc, item) {
-      let month = item.format("MMMM, YYYY");
-      if ( month in acc ) {
-        acc[month].push(item);
-      }
-      else {
-        acc[month] = new Array<Moment>(item);
-      }
-      return acc;
-    }, {} );
+    for (let propName in changes) {
+      if (propName === 'timeline') {
+        if (this.timeline && this.timeline.length > 0 && !this.selectedTime) {
+          this.selected = this.timeline[0]
+        } else if (this.selectedTime) {
+          this.selected = this.selectedTime;
+        }
 
-    this.timelineGrouped = [];
-    for (let month in grouped) {
-      this.timelineGrouped.push([month, grouped[month]])
+        let grouped = this.timeline.reduce(function (acc, item) {
+          let month = item.format("MMMM, YYYY");
+          if (month in acc) {
+            acc[month].push(item);
+          }
+          else {
+            acc[month] = new Array<Moment>(item);
+          }
+          return acc;
+        }, {});
+
+        this.timelineGrouped = [];
+        for (let month in grouped) {
+          this.timelineGrouped.push([month, grouped[month]])
+        }
+      }
     }
   }
 

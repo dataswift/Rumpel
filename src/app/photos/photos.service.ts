@@ -64,7 +64,6 @@ export class PhotosService {
 
     this.photoDb.get(photo.path, {attachments: true})
       .then(savedPhoto => {
-        console.log("photo in db:", savedPhoto);
         photo.src = this.sanitizer.bypassSecurityTrustUrl("data: image/jpg;base64," + savedPhoto._attachments[photo.path].data);
         this._store.photos.push(photo);
       }, () => {
