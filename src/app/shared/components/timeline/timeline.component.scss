@@ -6,7 +6,7 @@ h1, h2, h3, h4, h5 {
   text-transform: uppercase;
 }
 
-h2 {
+h3 {
   font-size: 2.3em;
   text-align: right;
 }
@@ -71,7 +71,7 @@ ul.timeline-scroll {
 
 .timeline-container {
   position: relative;
-  height: 73em;
+  height: 100vh;
   padding-left: 1em;
   width: 20em;
 }
@@ -80,14 +80,13 @@ ul.timeline-scroll {
   margin-top: 0em;
   margin-bottom: 1em;
   margin-right: 2em;
-  height: 90%;
 }
 
 .timeline-scroll {
-  height: 86%;
+  height: 75vh;
   overflow: scroll;
 
-  h3 {
+  h4 {
     text-align: right;
     font-size: 1.8em;
     margin-right: 3em;

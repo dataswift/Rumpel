@@ -1,10 +1,20 @@
 .view-body {
   min-height: 70em;
+  position: relative;
+}
+
+.timeline {
+  height: 100vh;
+
+  &.fixed-right {
+    position: fixed;
+  }
 }
 
 .photos {
   list-style: none;
   margin: 2em;
+  margin-top: 0;
 
   -webkit-column-count: 5;
   -webkit-column-gap:   2em;

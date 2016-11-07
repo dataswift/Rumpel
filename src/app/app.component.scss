@@ -37,11 +37,72 @@
 /* More or less global styles */
 
 :host /deep/ {
+  button.btn-view-header {
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    border: 2px solid #ffffff;
+    outline: none;
+    float: left;
+
+    label {
+      font-weight: normal;
+      margin-bottom: 0;
+      cursor: pointer;
+      padding: 0.75em 2em;
+    }
+
+    &.empty {
+      padding: 0.75em 2em;
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &.selected {
+      background-color: white;
+      color: #37474F;
+      border: 2px solid #CFD8DC;
+    }
+  }
+
   .view-header {
+    min-height: 5em;
     background-color: #37474F;
     color: #eeeeee;
     padding: 1em;
     font-size: 1em;
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    h2 {
+      text-transform: uppercase;
+      display: inline-block;
+      font-size: 1.75em;
+      margin: 0.4em 0;
+    }
+
+    .inline-btn-group {
+      float: right;
+    }
+
+    .view-controls {
+      margin-left: 3em;
+    }
+  }
+
+  .timeline {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    height: 73em;
+    top: 0;
+    right: 0;
+    z-index: 5550;
+    overflow: auto;
   }
 
   .btn-rump {

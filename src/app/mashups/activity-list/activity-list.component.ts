@@ -6,11 +6,11 @@ import {Photo} from "../../shared/interfaces/photo.interface";
 import {Notable} from "../../shared/interfaces/notable.class";
 
 @Component({
-  selector: 'rump-activitylist',
-  templateUrl: 'activitylist.component.html',
-  styleUrls: ['activitylist.component.scss']
+  selector: 'rump-activity-list',
+  templateUrl: 'activity-list.component.html',
+  styleUrls: ['activity-list.component.scss']
 })
-export class ActivitylistComponent implements OnInit, OnChanges {
+export class ActivityListComponent implements OnInit, OnChanges {
   @Input() componentHeight: string;
   @Input() componentWidth: string;
   @Input() posts: Array<Post>;

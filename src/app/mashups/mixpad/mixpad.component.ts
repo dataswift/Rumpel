@@ -4,16 +4,12 @@ import { PhotosService } from '../../photos/photos.service';
 import { EventsService } from '../../dimensions/events.service';
 import { SocialService } from '../../social/social.service';
 import { LocationsService } from '../../locations/locations.service';
-//import { Post, Event, Photo, Location } from '../../shared/interfaces';
+import { Post, Event, Photo, Location } from '../../shared/interfaces/index';
+import { ExpandedTime } from '../../shared/interfaces/index';
 import * as moment from 'moment';
-import Moment = moment.Moment;
-import * as _ from "lodash";
-import {Photo} from "../../shared/interfaces/photo.interface";
-import {Post} from "../../shared/interfaces/post.interface";
-import {Event} from "../../shared/interfaces/event.interface";
-import {Location} from "../../shared/interfaces/location.interface";
-import {NotablesService} from "../../notables/notables.service";
-import {Notable} from "../../shared/interfaces/notable.class";
+import { sortedUniqBy, unionBy } from 'lodash';
+import { NotablesService } from "../../notables/notables.service";
+import { Notable } from "../../shared/interfaces/notable.class";
 
 @Component({
   selector: 'rump-mixpad',
@@ -28,10 +24,10 @@ export class MixpadComponent implements OnInit {
   private locations: Array<Location> = [];
   private photos: Array<Photo> = [];
   private notables: Array<Notable> = [];
-  public selectedTime: Moment;
+  public selectedTime: ExpandedTime;
   public shownComponents: { [key:string]:boolean };
   public safeSize;
-  public timeline: Array<Moment>;
+  public timeline: Array<ExpandedTime>;
 
   constructor(private locationsSvc: LocationsService,
               private eventsSvc: EventsService,
@@ -43,8 +39,8 @@ export class MixpadComponent implements OnInit {
 
   ngOnInit() {
     let now = moment();
-    this.selectedTime = now;
-    this.timeline = [now];
+    this.selectedTime = new ExpandedTime(now);
+    this.timeline = [new ExpandedTime(now)];
     this.shownComponents = { map: true, events: true, photos: true, timeline: true };
 
     this.eventsSvc.getEvents$().subscribe(events => {
@@ -83,12 +79,11 @@ export class MixpadComponent implements OnInit {
 
   addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
     //console.log(dataPoints);
-    let timestamps: Array<Moment> = _.sortedUniqBy(
-      dataPoints.map(dp => dp[timeField]).sort((a, b) => a.isAfter(b) ? -1 : 1),
-      date => date.startOf('day').unix());
+    let timestamps: Array<ExpandedTime> = sortedUniqBy(
+      dataPoints.map(dp => new ExpandedTime(dp[timeField])).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
+      'unixDayStart');
 
-    this.timeline = _.unionBy(this.timeline, timestamps, date => date.startOf('day').unix())
-      .sort((a, b) => a.isAfter(b) ? -1 : 1);
+    this.timeline = unionBy(this.timeline, timestamps, 'unixDayStart').sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1);
 
     // for (let dp of dataPoints) {
     //   let timestamp = dp[timeField];
@@ -103,6 +98,26 @@ export class MixpadComponent implements OnInit {
 
   selectTime(event) {
     this.selectedTime = event;
+  }
+
+  selectControlsTime(relativeTime: string) {
+    switch (relativeTime) {
+      case 'today':
+        this.selectedTime = new ExpandedTime(moment());
+        break;
+      case 'yesterday':
+        this.selectedTime = new ExpandedTime(moment().subtract(1, 'days'));
+        break;
+    }
+  }
+
+  isSelectedTime(relativeTime: string): boolean {
+    switch (relativeTime) {
+      case 'today':
+        return this.selectedTime.unixDayStart === moment().startOf('day').unix();
+      case 'yesterday':
+        return this.selectedTime.unixDayStart === moment().subtract(1, 'days').startOf('day').unix();
+    }
   }
 
   onViewReset() {

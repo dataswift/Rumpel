@@ -6,19 +6,15 @@ import { LocationsModule } from '../locations/locations.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { MixpadComponent } from './mixpad/mixpad.component';
-import { TimelineComponent } from './timeline/timeline.component';
 
-import { TimeFilterPipe } from './time-filter.pipe';
-import { ActivitylistComponent } from "./activitylist/activitylist.component";
-import {SocialModule} from "../social/social.module";
+import { ActivityListComponent } from './activity-list/activity-list.component';
+import { SocialModule } from '../social/social.module';
 
 @NgModule({
-  imports: [SharedModule, LocationsModule, FormsModule, SocialModule, routing],
+  imports: [ SharedModule, LocationsModule, FormsModule, SocialModule, routing ],
   declarations: [
     MixpadComponent,
-    TimelineComponent,
-    ActivitylistComponent,
-    TimeFilterPipe]
+    ActivityListComponent]
 })
 
 export class MashupsModule {

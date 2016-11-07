@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs/Rx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Http, Headers, ResponseContentType } from '@angular/http';
-
 import { HatApiService } from '../services/hat-api.service';
-//import { Photo } from '../shared/interfaces/';
 import * as moment from 'moment';
 import * as PouchDB from 'pouchdb';
-import {Photo} from "../shared/interfaces/index";
+import { Photo } from "../shared/interfaces/index";
 
 @Injectable()
 export class PhotosService {
@@ -16,13 +14,13 @@ export class PhotosService {
   private failedAttempts:number;
   private _authBearer:string;
   private _tableId$:Subject<number>;
-  private _store:{ photos: Array<Photo>; sourcelessPhotos: Array<Photo>; tableId: number; };
-  private photoDb:any;
+  private _store: { photos: Array<Photo>; sourcelessPhotos: Array<Photo>; tableId: number; };
+  private photoDb: any;
 
   constructor(private _hat:HatApiService,
               private sanitizer:DomSanitizer,
               private http:Http) {
-    this._store = {photos: [], sourcelessPhotos: [], tableId: null};
+    this._store = { photos: [], sourcelessPhotos: [], tableId: null };
     this.photoDb = new PouchDB('dropboxPhotos');
 
     this._photos$ = <Subject<Photo[]>> new Subject();
@@ -48,11 +46,11 @@ export class PhotosService {
     this.tableId$
       .flatMap(tableId => this._hat.getValuesWithLimit(tableId))
       .map(photoData => photoData.map(this.imgMap))
-      .map(photos => photos.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
-      .subscribe(photos => {
-        this._store.sourcelessPhotos = photos;
+      .map(sourcelessPhotos => sourcelessPhotos.sort((a, b) => a.timestamp.isAfter(b.timestamp) ? -1 : 1))
+      .subscribe(sourcelessPhotos => {
+        this._store.sourcelessPhotos = sourcelessPhotos;
         this.loadDropboxAccessToken()
-          .forEach(token => console.log("Loaded token", token))
+          .forEach(token => console.log("Loaded Dropbox token"))
           .then(() => {
             this.loadPhotoSources();
           });
@@ -66,6 +64,7 @@ export class PhotosService {
       .then(savedPhoto => {
         photo.src = this.sanitizer.bypassSecurityTrustUrl("data: image/jpg;base64," + savedPhoto._attachments[photo.path].data);
         this._store.photos.push(photo);
+        this.publishPhotos();
       }, () => {
         this.downloadPhotoData(photo, "w640h480").subscribe(srcArrayBuffer => {
           let base64String = this.base64ArrayBuffer(srcArrayBuffer);
@@ -134,7 +133,6 @@ export class PhotosService {
         if (table === "Not Found") {
           this.tableVerified = false;
         } else if (table.id) {
-          console.log("Got back table", table);
           this._store.tableId = table.id;
           this.tableVerified = true;
           this._tableId$.next(this._store.tableId);

@@ -1,14 +1,14 @@
 <div class="timeline-container">
   <div class="timeline-view">
-    <h2>Activity Timeline</h2>
+    <h3>Activity Timeline</h3>
     <button class="btn btn-ghostly scroll-up" (click)="scrollUp()"><span class="ss-up"></span></button>
     <ul class="timeline-scroll" #timelineScroll>
       <li *ngFor="let month of timelineGrouped">
-        <h3 class="day-text">{{month[0] | moment: 'MMMM, YYYY'}}</h3>
+        <h4 class="day-text">{{month[0]}}</h4>
         <ul class="timeline-month">
-          <li *ngFor="let day of month[1]" (click)="selectTime(day)" [class.active]="day === selected">
+          <li *ngFor="let day of month[1]" (click)="selectTime(day)" [class.active]="day.unixDayStart === selected.unixDayStart">
             <div class="line"></div>
-            <div class="day-text">{{day | moment: 'dddd Do'}}</div>
+            <div class="day-text">{{day.timestamp | moment: 'dddd Do'}}</div>
           </li>
         </ul>
       </li>

@@ -1,5 +1,6 @@
 export { MomentPipe } from './moment.pipe';
 export { FilterByPipe } from './filter-by.pipe';
+export { TimeFilterPipe } from './time-filter.pipe';
 export { WithObjectPipe } from './with-object.pipe';
 export { LimitContentPipe } from './limit-content.pipe';
 export { ReplaceCharsPipe } from './replace-chars.pipe';

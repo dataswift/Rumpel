@@ -1,49 +1,19 @@
-.view-header button {
-  background-color: transparent;
-  padding: 0.75em 2em;
-  margin: 0 1.5em;
-  border: 2px solid #ffffff;
-}
-
-.view-header input {
-  margin-right: 0.5em;
-  margin-left: 1.5em;
-}
-
 .view-body {
   height: 73em;
   position: relative;
 }
 
-.mixpad {
-  position: relative;
-}
-
-.mixpad .timeline {
-  background-color: rgba(0, 0, 0, 0.7);
-  position: absolute;
-  height: 73em;
-  //max-height: 85vh;
-  //width: 22%;
-  top: 0;
-  right: 0;
-  z-index: 5550;
-  overflow: auto;
+.timeline.fixed-right {
+  position: fixed;
 }
 
 .mixpad .day-view {
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
   height: 73em;
-  //height: 85vh;
-  //max-height: 85vh;
   top: 0;
   left: 0;
   z-index: 5551;
   color: white;
   overflow: auto;
-}
-
-h4 {
-  display: inline;
 }
