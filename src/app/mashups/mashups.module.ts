@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { routing } from './mashups.routing';
+import { MashupsRoutingModule } from './mashups-routing.module';
 import { LocationsModule } from '../locations/locations.module';
 import { SharedModule } from '../shared/shared.module';
 
@@ -11,7 +11,7 @@ import { ActivityListComponent } from './activity-list/activity-list.component';
 import { SocialModule } from '../social/social.module';
 
 @NgModule({
-  imports: [ SharedModule, LocationsModule, FormsModule, SocialModule, routing ],
+  imports: [ SharedModule, LocationsModule, FormsModule, SocialModule, MashupsRoutingModule ],
   declarations: [
     MixpadComponent,
     ActivityListComponent]

@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth.guard';
-import { CalendarComponent } from './calendar/calendar.component';
+import { LocationsComponent } from './locations/locations.component';
 
 @NgModule({
     imports: [
       RouterModule.forChild([
-        { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] }
+        { path: 'locations', component: LocationsComponent, canActivate: [AuthGuard] }
       ])
     ],
     exports: [
       RouterModule
     ]
 })
-export class DimensionsRoutingModule {}
+export class LocationsRoutingModule {}

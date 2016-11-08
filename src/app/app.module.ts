@@ -18,7 +18,7 @@ import { WeatherModule } from './weather/weather.module';
 import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { routing, appRoutingProviders } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
 
 import { DataTypeFilterPipe } from './pipes';
@@ -46,7 +46,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     HttpModule,
     PhotosModule,
     FormsModule,
-    routing,
+    AppRoutingModule,
     ModalModule.forRoot(),
     BootstrapModalModule,
     LayoutModule,
@@ -61,7 +61,6 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
   ],
   bootstrap: [AppRootComponent],
   providers: [
-    appRoutingProviders,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     AuthGuard,
     AuthService,

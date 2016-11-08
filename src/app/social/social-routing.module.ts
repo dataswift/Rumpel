@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+
 import { AuthGuard } from '../auth.guard';
-import { CalendarComponent } from './calendar/calendar.component';
+import { SocialComponent } from './social/social.component';
 
 @NgModule({
     imports: [
       RouterModule.forChild([
-        { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] }
+        { path: 'social', component: SocialComponent, canActivate: [AuthGuard] }
       ])
     ],
     exports: [
       RouterModule
     ]
 })
-export class DimensionsRoutingModule {}
+export class SocialRoutingModule {}
+
