@@ -11,10 +11,10 @@ export class MarketSquareService {
   private market: { id: string; accessToken: string };
   private offersStore: Array<any>;
   private _headers: Headers;
-  public notifications: Array<any>;
   private applicationToken: string;
 
-  constructor(private http: Http, private hat: HatApiService) {
+  constructor(private http: Http,
+              private hat: HatApiService) {
     this.offersStore = [];
     this.applicationToken = '';
     this.baseUrl = 'https://marketsquare.hubofallthings.com/api';
@@ -131,8 +131,7 @@ export class MarketSquareService {
    * Registers Rumpel as an active data plug with MarketSquare
    */
 
-  connectHAT() {
-    const hatDomain = this.hat.getDomain();
+  connectHAT(hatDomain: string) {
     const url = this.baseUrl + '/dataplugs/' + this.market.id + '/connect';
 
     let headers = new Headers();

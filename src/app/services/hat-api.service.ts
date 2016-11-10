@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { DataDebit } from '../shared/interfaces';
+import { Observable, Subscription } from 'rxjs/Rx';
+import { DataDebit, User } from '../shared/interfaces/index';
 import * as moment from 'moment';
-
-const HAT_PORT = 8080;
 
 @Injectable()
 export class HatApiService {
@@ -12,33 +10,33 @@ export class HatApiService {
   private _domain: string;
   private _baseUrl: string;
   private _headers: Headers;
+  private _userSub: Subscription;
 
   constructor(private _http: Http) {}
 
-  getUrl() {
-    return this._baseUrl;
-  }
-
-  getDomain() {
+  get hatDomain() {
     return this._domain;
   }
 
-  updateCredentials(domain: string, token: string) {
-    this._baseUrl = 'https://' + domain;
-    this._domain = domain;
-    this._token = token;
-    this._headers = new Headers();
-    this._headers.append('Content-Type', 'application/json');
-    // this._headers.append('Accept', 'application/json');
-    this._headers.append('X-Auth-Token', this._token);
+  setUserSubscription(user$: Observable<User>) {
+    this._userSub = user$.subscribe((user: User) => {
+      this._baseUrl = 'https://' + user.iss;
+      this._domain = user.iss;
+      this._token = user.token;
+
+      this._headers = new Headers();
+      this._headers.append("Content-Type", "application/json");
+      this._headers.append("X-Auth-Token", user.token);
+    });
   }
 
   validateToken(domain: string, token: string) {
-    this.updateCredentials(domain, token);
+    const url = `https://${domain}/users/access_token/validate`;
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("X-Auth-Token", token);
 
-    const url = this._baseUrl + '/users/access_token/validate';
-
-    return this._http.get(url, { headers: this._headers, body: '' }).map(res => res.json());
+    return this._http.get(url, { headers: headers, body: '' }).map(res => res.json());
   }
 
   getApplicationToken(name: string, resource: string) {

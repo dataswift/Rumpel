@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MarketSquareService } from '../market-square.service';
-import { AuthService } from '../../services/auth.service';
+import { HatApiService } from '../../services/index';
 
 @Component({
   selector: 'rump-tile-data-plugs',
@@ -13,7 +13,7 @@ export class TileDataPlugsComponent implements OnInit {
   public icons: Array<string>;
   @Output() navigateModal = new EventEmitter<any>();
 
-  constructor(private marketSvc: MarketSquareService, private auth: AuthService) {}
+  constructor(private marketSvc: MarketSquareService, private hatSvc: HatApiService) {}
 
   ngOnInit() {
     this.marketSvc.getDataPlugs().subscribe(plugs => {
@@ -34,7 +34,7 @@ export class TileDataPlugsComponent implements OnInit {
       this.plugs = displayPlugs;
     });
 
-    this.hatDomain = this.auth.getDomain();
+    //this.hatDomain = this.hatSvc.hatDomain;
   }
 
   generatePlugLoginUrl(plug: any) {

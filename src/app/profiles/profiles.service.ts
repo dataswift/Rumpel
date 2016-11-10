@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HatApiService } from '../services/hat-api.service';
-import { AuthService } from '../services/auth.service';
 import { Profile } from '../shared/profile.interface';
 import { ProfileHatModel } from './profile.hatmodel';
 
 @Injectable()
 export class ProfilesService {
   public profile: Profile;
-  private hatIdMapping;
 
-  constructor(private hat: HatApiService,
-              private auth: AuthService) {
+  constructor(private hat: HatApiService) {
   }
 
   initializeProfile() {

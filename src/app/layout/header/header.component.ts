@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
-import { AuthService, HatApiService } from '../../services';
+import { UserService } from '../../services/index';
+import { User } from '../../shared/interfaces/index';
 
 declare var introJs: any;
 
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
   public msLink: string;
   private intro: any;
 
-  constructor(private auth: AuthService, private router: Router,
+  constructor(private user: UserService, private router: Router,
               private overlay: Overlay,
               private vcRef: ViewContainerRef,
               public modal: Modal  ) {
@@ -170,9 +171,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sub = this.auth.auth$.subscribe(isAuthenticated => {
-      if (isAuthenticated) {
-        this.hatDomain = this.auth.getDomain();
+    this.msLink = 'https://marketsquare.hubofallthings.com';
+    this.sub = this.user.user$.subscribe((user: User) => {
+      if (user.authenticated) {
+        this.hatDomain = user.iss;
         this.msLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
       }
     });
@@ -189,7 +191,8 @@ export class HeaderComponent implements OnInit {
 
   signOut() {
     this.hatDomain = null;
-    this.auth.signOut();
+    this.msLink = 'https://marketsquare.hubofallthings.com';
+    this.user.logout();
     this.router.navigate(['/users/login']);
   }
 

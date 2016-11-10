@@ -14,7 +14,6 @@ export class NotablesMdEditorComponent implements OnInit {
   @Input() userPhotoUrl: string;
   @ViewChild('editor') textarea: ElementRef;
   private mde: any;
-  private hatDomain: string;
   public shared: boolean;
   public expires: boolean;
   public reportLocation: boolean;
@@ -30,7 +29,6 @@ export class NotablesMdEditorComponent implements OnInit {
       status: false
     });
 
-    this.hatDomain = this.hatSvc.getDomain();
     this.currentNotable = new Notable();
 
     this.notablesSvc.editedNotable$.subscribe(notable => {
@@ -91,7 +89,7 @@ export class NotablesMdEditorComponent implements OnInit {
 
   submit() {
     let author = {
-      phata: this.hatDomain,
+      phata: this.hatSvc.hatDomain,
       photo_url: this.userPhotoUrl || ''
     };
 

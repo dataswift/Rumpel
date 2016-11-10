@@ -22,9 +22,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
 
 import { DataTypeFilterPipe } from './pipes';
-import { LoginComponent, AuthComponent } from './user-mgmt';
+import { LoginComponent } from './user-mgmt';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard'
-import { AuthService, HatApiService, UiStateService, RumpelService, DataPlugService } from './services';
+import { HatApiService, UiStateService, RumpelService, DataPlugService, UserService } from './services';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -33,7 +33,6 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
   declarations: [
     AppRootComponent,
     LoginComponent,
-    AuthComponent,
     GridComponent,
     TileHeaderComponent,
     TileComingSoonComponent,
@@ -63,7 +62,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     AuthGuard,
-    AuthService,
+    UserService,
     HatApiService,
     UiStateService,
     RumpelService,

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { UiStateService, AuthService, HatApiService } from '../../services';
+import { UiStateService, UserService, HatApiService } from '../../services';
 import { MarketSquareService } from '../../market-square/market-square.service';
+import { User } from '../../shared/interfaces/index';
 import * as marked from 'marked';
 
 @Component({
@@ -26,7 +27,7 @@ export class SideMenuComponent implements OnInit {
   // so that it can subscribe for Auth observable in time.
 
   constructor(private uiState: UiStateService,
-              private authSvc: AuthService,
+              private userSvc: UserService,
               private hat: HatApiService,
               private marketSvc: MarketSquareService) {}
 
@@ -59,8 +60,8 @@ export class SideMenuComponent implements OnInit {
       { display: 'Creations (art)', icon: 'brush', link: '' }
     ];
 
-    this.authSvc.auth$.subscribe(isAuthenticated => {
-      if (isAuthenticated) {
+    this.userSvc.user$.subscribe((user: User) => {
+      if (user.authenticated) {
         this.hat.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
           .subscribe(accessToken => {
             this.marketSvc.setApplicationToken(accessToken);

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs/Rx';
 // import { DomSanitizer } from '@angular/platform-browser';
-import { AuthService, HatApiService } from '../../services';
+import { UserService, HatApiService } from '../../services/index';
 import { DataDebitService } from '../data-debits.service';
-import { DataDebit } from '../../shared/interfaces';
+import { DataDebit, User } from '../../shared/interfaces/index';
 import { isUndefined } from "util";
 
 @Component({
@@ -11,9 +12,10 @@ import { isUndefined } from "util";
   templateUrl: 'data-debit-confirm.component.html',
   styleUrls: ['data-debit-confirm.component.scss']
 })
-export class DataDebitConfirmComponent implements OnInit {
+export class DataDebitConfirmComponent implements OnInit, OnDestroy {
   private offer: any;
   private status: any;
+  private userSub: Subscription;
   private dataDebit: DataDebit;
   private token: string;
   private uuid: string;
@@ -24,11 +26,12 @@ export class DataDebitConfirmComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
               private _ddSvc: DataDebitService,
               private _hat: HatApiService,
-              private authSvc: AuthService,
+              private _userSvc: UserService,
               private router: Router) {}
 
   ngOnInit() {
     this.status = '';
+    this.uuid = this._route.snapshot.params['uuid'];
     this.offer = {
       offer: {
         title: '',
@@ -41,26 +44,18 @@ export class DataDebitConfirmComponent implements OnInit {
       owner: { firstName: '', lastName: '', email: '' }
     };
 
-    this.authSvc.auth$.subscribe(isAuthenticated => {
-      if (isAuthenticated === false) return;
-
-      this.updateDataDebitInformation();
-      this.updateOfferInformation(false);
-    });
-
-    this._route.params.subscribe(params => {
-      this.uuid = params['uuid'] || null;
-    });
-
-    this._route.queryParams.subscribe(params => {
-      if (this.authSvc.isAuthenticated() === true) {
+    this.userSub = this._userSvc.user$.subscribe((user: User) => {
+      if (user.authenticated === true) {
         this.updateDataDebitInformation();
         this.updateOfferInformation(false);
-      } else {
-        let jwtToken = params['token'] || null;
-        return this.authSvc.authenticate(jwtToken);
       }
     });
+
+    this._userSvc.isAuthenticated();
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
   }
 
   acceptDataDebit() {

@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.uiMessageHidden = true;
-    this.hatUrl = this.hat.getUrl();
+    this.hatUrl = 'https://' + this.hat.hatDomain;
     this.profilePhoto = {};
     this.profilesSvc.initializeProfile().subscribe(hatIdMapping => {
       this.hatIdMapping = hatIdMapping;

@@ -23,7 +23,6 @@ export class InputBoxComponent implements OnInit {
   public shared: boolean;
   public expires: boolean;
 
-
   constructor(private notableSvc: NotablesService,
               private locationsSvc: LocationsService,
               private hatSvc: HatApiService) {}
@@ -76,9 +75,9 @@ export class InputBoxComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     let author = {
-      phata: this.hatSvc.getDomain(),
+      phata: this.hatSvc.hatDomain,
       photo_url: this.userPhotoUrl || ''
-    }
+    };
 
     this.currentNotable.prepareToPost(form.value.message, author);
 

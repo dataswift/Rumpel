@@ -11,7 +11,7 @@
         </li>
         <li *ngIf="!!hatDomain" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
         <li *ngIf="!!hatDomain" class="user-nav hidden-xs"><p style="cursor: pointer;" (click)="startIntro()">New to Rumpel</p></li>
-        <li class="user-nav hidden-xs hidden-sm"><a [href]="msLink ? msLink : 'https://marketsquare.hubofallthings.com'"
+        <li class="user-nav hidden-xs hidden-sm"><a [href]="msLink"
                target="_blank" style="cursor: pointer;">MarketSquare</a></li>
         <li class="user-nav hidden-xs" style="cursor: pointer;" (click)="msg = 'whoCanSee'; showModal()"><p>Who Can See This?</p></li>
       </ul>
