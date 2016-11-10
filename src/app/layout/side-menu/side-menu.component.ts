@@ -44,7 +44,7 @@ export class SideMenuComponent implements OnInit {
       { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '', disable: '' },
       { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
       { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
-      { display: 'Mashups', icon: 'layergroup', link: 'mixpad', dataType: '', disable: '' },
+      { display: 'Mashups', icon: 'layergroup', link: 'mashups/myday', dataType: '', disable: '' },
       { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'no data' },
       { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
       { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts', disable: 'no data' },
