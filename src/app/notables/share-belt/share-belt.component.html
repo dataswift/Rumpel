@@ -1,5 +1,5 @@
 <div class="belt">
-  <ul *ngIf="notablesState.notablesOfferClaimed">
+  <ul *ngIf="notablesState.notablesOfferClaimed && notablesState.dataDebit.confirmed">
     <li *ngFor="let service of services" (click)="toggleSharing(service)">
       <img src="{{service.logoUrl}}"
            class="img img-responsive share-service"
@@ -7,17 +7,26 @@
     </li>
   </ul>
 
+  <div class="message" *ngIf="displayMessage">
+    {{displayMessage}}
+  </div>
+
+  <div class="message" *ngIf="!notablesState.notablesOfferClaimed">
+    Notables data offer needs to be claimed in order to share this notable on other services.
+    <span class="claim" (click)="claimNotablesOffer()">Claim it.</span>
+  </div>
+
+  <div class="message" *ngIf="notablesState.notablesOfferClaimed && (!notablesState.dataDebit.confirmed) && (!displayMessage)">
+    To share your notable, please accept data offer from MarketSquare.
+    <span class="claim" (click)="confirmNotablesDataDebit()">Accept it here</span>.
+  </div>
+
   <div class="error-message" *ngIf="showError">
     <span class="ss-alert"></span>
     <span class="error-text">
-      Please renew your Facebook access token to enable share.
+      Please renew your Facebook access token to enable sharing.
       <a href="https://{{hatDomain}}/hatlogin?name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate"
          target="_blank">Go to data plug</a>.
     </span>
-  </div>
-
-  <div *ngIf="!notablesState.notablesOfferClaimed">
-    Notables data offer needs to be claimed in order to share this notable on other services.
-    <span class="claim" (click)="claimNotablesOffer()">Claim it.</span>
   </div>
 </div>

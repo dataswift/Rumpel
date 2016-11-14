@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { NotablesService } from '../notables.service';
+import { HatApiService } from '../../services/hat-api.service';
 
 @Component({
   selector: 'rump-share-belt',
@@ -13,14 +14,17 @@ export class ShareBeltComponent implements OnInit {
   private services: any[];
   private notablesState: {
     notablesOfferClaimed: boolean;
+    dataDebit: { confirmed: boolean; id: string };
     allowedActions: { canPost: boolean; canExpire: boolean };
     phata: string;
   };
   private showError: boolean;
+  private displayMessage: string;
 
   @Output() serviceToggled: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private notablesSvc: NotablesService,
+              private _hatSvc: HatApiService,
               private router: Router) { }
 
   ngOnInit() {
@@ -58,8 +62,17 @@ export class ShareBeltComponent implements OnInit {
   }
 
   claimNotablesOffer() {
+    this.notablesState.notablesOfferClaimed = true;
+    this.displayMessage = "Processing... please wait.";
     this.notablesSvc.claimNotablesOffer().subscribe(resBody => {
-      this.router.navigate(['dataDebit', resBody.dataDebitId, 'confirm']);
+      this.notablesState.dataDebit.id = resBody.dataDebitId;
+      this.router.navigate(['/dataDebit', this.notablesState.dataDebit.id, 'confirm']);
+    });
+  }
+
+  confirmNotablesDataDebit() {
+    this._hatSvc.updateDataDebit(this.notablesState.dataDebit.id, 'enable').subscribe(res => {
+      this.notablesState.dataDebit.confirmed = true;
     });
   }
 }

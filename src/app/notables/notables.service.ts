@@ -22,6 +22,7 @@ export class NotablesService {
   public notablesState: {
     allowedActions?: { canPost: boolean, canExpire: boolean };
     notablesOfferClaimed?: boolean;
+    dataDebit?: { confirmed: boolean; id: string };
   };
 
   private _notables$: Subject<Notable[]>;
@@ -30,7 +31,7 @@ export class NotablesService {
   private _editedNotable$: Subject<Notable>;
   public editedNotable$: Observable<Notable>;
 
-  private _notablesMeta$: Subject<any>;
+  private _notablesMeta$: BehaviorSubject<any>;
   public notablesMeta$: Observable<any>;
 
   constructor(private hat: HatApiService,
@@ -69,6 +70,7 @@ export class NotablesService {
     this.market.getOffer('32dde42f-5df9-4841-8257-5639db222e41')
       .subscribe(offerInfo => {
         this.notablesState.notablesOfferClaimed = !offerInfo.error;
+        this.notablesState.dataDebit = { confirmed: offerInfo.confirmed, id: offerInfo.dataDebitId };
         this._notablesMeta$.next(this.notablesState);
       });
 
