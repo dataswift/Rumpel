@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRootComponent } from './app.component';
 
+import { APP_CONFIG, AppConfig } from './app.config';
+
 import { LayoutModule } from './layout/layout.module';
 import { MashupsModule } from './mashups/mashups.module';
 import { NotablesModule } from './notables/notables.module';
@@ -62,6 +64,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
   bootstrap: [AppRootComponent],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: APP_CONFIG, useValue: AppConfig },
     AuthGuard,
     AuthService,
     HatApiService,

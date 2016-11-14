@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, Inject } from '@angular/core';
+import { APP_CONFIG, IAppConfig } from '../../app.config';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
@@ -9,14 +10,21 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 })
 export class LoginComponent implements OnInit {
   public hatDomain: string;
+  private redirectUrl: string = 'https://rumpel.hubofallthings.com/users/authenticate';
 
-  constructor(private overlay: Overlay,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private overlay: Overlay,
               private vcRef: ViewContainerRef,
               public modal: Modal) {
     overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit() {
+    // if (this.route.snapshot.queryParams['redirect']) {
+    //   this.redirectUrl += this.route.snapshot.queryParams['redirect'];
+    // } else {
+    //   this.redirectUrl += 'dashboard';
+    // }
   }
 
   showScreenshot() {
@@ -29,8 +37,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    window.location.href = 'https://' + this.hatDomain
-    + '/hatlogin?name=Rumpel&redirect=https://rumpel.hubofallthings.com/users/authenticate';
+    window.location.href = `https://${this.hatDomain}/hatlogin?name=Rumpel&redirect=${this.redirectUrl}`;
   }
 
 }

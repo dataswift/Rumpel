@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewContainerRef, Inject } from '@angular/core';
+import { APP_CONFIG, IAppConfig } from './app.config';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 
@@ -11,7 +11,7 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 export class AppRootComponent implements OnInit {
   private link: string;
 
-  constructor(private router: Router,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private overlay: Overlay,
               private vcRef: ViewContainerRef,
               public modal: Modal ) {
@@ -19,7 +19,7 @@ export class AppRootComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("Rumpel is running. Version: 1.0.0-beta");
+    console.log(`Rumpel is running. Version: ${this.config.version}`);
   }
 
   setModalLink(link: string) {
