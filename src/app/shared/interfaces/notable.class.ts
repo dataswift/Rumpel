@@ -37,7 +37,7 @@ export class Notable {
       this.created_time = moment(options.created_time);
       this.updated_time = moment(options.updated_time);
       this.public_until = options.public_until || '';
-      this.shared = options.shared === 'true';
+      this.shared = options.shared === 'true' || options.shared === true;
       this.shared_on = options.shared_on ? options.shared_on.split(",") : [];
 
       if (options.locationv1) {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import { Notable } from '../../shared/interfaces';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { NotablesService } from '../notables.service';
@@ -10,7 +11,7 @@ import { NotablesService } from '../notables.service';
 })
 export class TileNotablesComponent implements OnInit {
   public notables: Array<Notable>;
-  public profilePhoto: any;
+  private profile: { photo: { url: string; shared: boolean; }; };
   public iconMap: any;
   private sub: any;
 
@@ -19,7 +20,6 @@ export class TileNotablesComponent implements OnInit {
 
   ngOnInit() {
     this.notables =[];
-    this.profilePhoto = {};
 
     this.iconMap = {
       note: 'ellipsischat',
@@ -31,8 +31,16 @@ export class TileNotablesComponent implements OnInit {
       this.notables = notables;
     });
 
-    this.profilesSvc.getPicture().subscribe(picture => {
-      this.profilePhoto = picture;
+    Observable.forkJoin(
+      this.profilesSvc.getPicture(),
+      this.profilesSvc.getFullProfile()
+    ).subscribe(results => {
+      this.profile = {
+        photo: {
+          url: results[0].url,
+          shared: results[1] ? results[1].fb_profile_photo.private === 'false' : false
+        }
+      };
     });
 
     this.notablesSvc.getRecentNotables();

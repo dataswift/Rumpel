@@ -64,12 +64,10 @@
   }
 
   .notable-controls {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    height: 2em;
 
     div {
-      display: inline;
+      float: right;
     }
 
     .controls-item {
@@ -78,7 +76,7 @@
       border-right: 2px solid #515151;
       cursor: pointer;
 
-      &:last-child {
+      &:first-child {
         border: none;
         padding-right: 0;
       }

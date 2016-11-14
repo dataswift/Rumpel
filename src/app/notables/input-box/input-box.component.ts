@@ -11,7 +11,7 @@ import { NotablesService } from '../notables.service';
   styleUrls: ['input-box.component.scss']
 })
 export class InputBoxComponent implements OnInit {
-  @Input() userPhotoUrl: string;
+  @Input() profile: { photo: { url: string; shared: boolean; }; };
 
   // Temporary workaround until Angular ships form reset feature
   public active: boolean;
@@ -75,9 +75,10 @@ export class InputBoxComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    let author = {
-      phata: this.hatSvc.getDomain(),
-      photo_url: this.userPhotoUrl || ''
+    let author = { phata: this.hatSvc.getDomain() };
+
+    if (this.profile.photo.shared) {
+      author['photo_url'] = this.profile.photo.url;
     }
 
     this.currentNotable.prepareToPost(form.value.message, author);

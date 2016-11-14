@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { Notable } from '../../shared/interfaces';
@@ -11,7 +12,7 @@ import set = Reflect.set;
 })
 export class NotablesViewComponent implements OnInit {
   public notables: Array<Notable>;
-  public profilePhoto: any;
+  private profile: { photo: { url: string; shared: boolean; }; };
   public iconMap: any;
   public filter: string;
 
@@ -32,8 +33,16 @@ export class NotablesViewComponent implements OnInit {
       this.notables = notables;
     });
 
-    this.profilesSvc.getPicture().subscribe(picture => {
-      this.profilePhoto = picture;
+    Observable.forkJoin(
+      this.profilesSvc.getPicture(),
+      this.profilesSvc.getFullProfile()
+    ).subscribe(results => {
+      this.profile = {
+        photo: {
+          url: results[0].url,
+          shared: results[1] ? results[1].fb_profile_photo.private === 'false' : false
+        }
+      };
     });
 
     this.notablesSvc.getRecentNotables();

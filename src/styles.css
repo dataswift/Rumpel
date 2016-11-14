@@ -40,10 +40,16 @@ h1, h2, h3, h4, h5, h6,
   border-left-color: #B0BEC5;
 }
 
+.editor-toolbar.fullscreen,
 .editor-toolbar {
   border-radius: 0;
   border: none;
   background-color: #393939;
+}
+
+.editor-toolbar.disabled-for-preview a:not(.no-disable) {
+  background-color: #393939;
+  opacity: 1;
 }
 
 .editor-toolbar .fa {
@@ -51,8 +57,9 @@ h1, h2, h3, h4, h5, h6,
   border-radius: 0;
 }
 
-.editor-toolbar .fa:hover {
-  background-color: transparent;
+.editor-toolbar .fa:hover,
+.editor-toolbar a.active {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .CodeMirror {

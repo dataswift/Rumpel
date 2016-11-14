@@ -1,10 +1,16 @@
 <ul class="center" id="intro-step1">
-  <li id="intro-step2">
-    <button (click)="showNotifications($event)" [hidden]="notifications.length === 0">
-      <span class="ss-notice"></span>
-      Notifications
-      <div class="new-notifications" *ngIf="unreadNotifications !== 0">{{unreadNotifications}}</div>
-    </button>
+  <li>
+    <div class="wrapper" id="intro-step2">
+      <button (click)="showNotifications($event)" type="button">
+        <span class="ss-notice"></span>
+        Notifications
+        <span class="new-notifications" *ngIf="unreadNotifications !== 0">{{unreadNotifications}}</span>
+      </button>
+    </div>
+
+    <div class="disable" *ngIf="notifications.length === 0">
+      <p class="text">no data</p>
+    </div>
   </li>
   <li *ngFor="let item of menu; let i = index"
       (click)="onItemSelect(item.display)"

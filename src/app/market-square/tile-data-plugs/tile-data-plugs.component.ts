@@ -23,7 +23,7 @@ export class TileDataPlugsComponent implements OnInit {
           description: plug.description,
           url: plug.url.replace('/dataplug', '/hat/authenticate'),
           icon: plug.name.toLowerCase() + '-plug'
-        }
+        };
 
         if (plug.name === 'facebook') displayPlug.icon += '.png';
         else displayPlug.icon += '.svg';
@@ -39,6 +39,7 @@ export class TileDataPlugsComponent implements OnInit {
 
   generatePlugLoginUrl(plug: any) {
     let loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
+    if (plug.name === 'location') return plug.url;
     return `https://${this.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`;
   }
 

@@ -9,7 +9,8 @@ import { AuthGuard } from './auth.guard';
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: '', component: GridComponent, canActivate: [AuthGuard] },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: GridComponent, canActivate: [AuthGuard] },
       { path: 'about', component: AboutComponent },
       ...userMgmtRoutes
     ])

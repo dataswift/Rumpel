@@ -49,6 +49,6 @@ export class ProfilesService {
   }
 
   saveProfile(profile: Profile, hatIdMapping: any) {
-    return this.hat.postRecord(profile, hatIdMapping, 'profile').map(res => res.json());
+    return this.hat.postRecord(profile, hatIdMapping, 'profile');
   }
 }

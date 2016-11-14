@@ -11,7 +11,7 @@ import * as SimpleMDE from 'simplemde';
   styleUrls: ['./notables-md-editor.component.scss']
 })
 export class NotablesMdEditorComponent implements OnInit {
-  @Input() userPhotoUrl: string;
+  @Input() profile: { photo: { url: string; shared: boolean; }; };
   @ViewChild('editor') textarea: ElementRef;
   private mde: any;
   private hatDomain: string;
@@ -90,10 +90,11 @@ export class NotablesMdEditorComponent implements OnInit {
   }
 
   submit() {
-    let author = {
-      phata: this.hatDomain,
-      photo_url: this.userPhotoUrl || ''
-    };
+    let author = { phata: this.hatDomain };
+
+    if (this.profile.photo.shared) {
+      author['photo_url'] = this.profile.photo.url;
+    }
 
     this.currentNotable.prepareToPost(this.mde.value(), author);
 

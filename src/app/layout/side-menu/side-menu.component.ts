@@ -40,7 +40,7 @@ export class SideMenuComponent implements OnInit {
     this.md = marked.setOptions({});
 
     this.menu = [
-      { display: 'Dashboard', icon: 'dashboard', link: '', dataType: '', disable: '' },
+      { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '' },
       { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
       { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
       { display: 'Mashups', icon: 'layergroup', link: 'mixpad', dataType: '', disable: '' },

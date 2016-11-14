@@ -451,11 +451,10 @@
       <div class="buttons">
         <button type="button" class="btn btn-rump" (click)="discardChanges()">Discard</button>
         <button type="submit" class="btn btn-rump">Save Changes</button>
+        <div class="ui-message" [hidden]="uiMessageHidden">
+          Profile information saved.
+        </div>
       </div>
     </form>
   </div>
-</div>
-
-<div class="ui-message" [hidden]="uiMessageHidden">
-  Profile information saved.
 </div>

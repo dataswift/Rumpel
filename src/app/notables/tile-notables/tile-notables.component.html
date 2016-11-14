@@ -1,8 +1,8 @@
 <ng-content></ng-content>
 
 <div class="scroll-mask" id="intro-step14">
-  <rump-input-box [userPhotoUrl]="profilePhoto?.url">
-    <rump-profile-photo [userPhotoUrl]="profilePhoto?.url">
+  <rump-input-box [profile]="profile">
+    <rump-profile-photo [userPhotoUrl]="profile?.photo.url">
     </rump-profile-photo>
   </rump-input-box>
 
