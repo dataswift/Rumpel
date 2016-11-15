@@ -1,7 +1,9 @@
 <rump-header></rump-header>
 
 <section class="content-main">
-  <rump-side-menu class="menubar-left" (navigateModal)="setModalLink($event)"></rump-side-menu>
+  <rump-side-menu class="menubar-left"
+                  (navigateModal)="setModalLink($event)"
+                  (clickNotifications)="show()"></rump-side-menu>
 
   <div class="content-grid container-fluid">
     <router-outlet></router-outlet>
@@ -11,3 +13,7 @@
 <footer class="footer">
   <rump-footer></rump-footer>
 </footer>
+
+<div class="notifications-wrapper" outside-click (clickOutside)="hide($event)">
+  <rump-notification-centre *ngIf="showNotifications"></rump-notification-centre>
+</div>

@@ -39,7 +39,7 @@ export class NotablesViewComponent implements OnInit {
     ).subscribe(results => {
       this.profile = {
         photo: {
-          url: results[0].url,
+          url: results[0] ? results[0].url : '',
           shared: results[1] ? results[1].fb_profile_photo.private === 'false' : false
         }
       };

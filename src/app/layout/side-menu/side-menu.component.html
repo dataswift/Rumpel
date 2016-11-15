@@ -1,14 +1,14 @@
 <ul class="center" id="intro-step1">
   <li>
     <div class="wrapper" id="intro-step2">
-      <button (click)="showNotifications($event)" type="button">
+      <button (click)="showNotificationsCentre()" type="button">
         <span class="ss-notice"></span>
         Notifications
-        <span class="new-notifications" *ngIf="unreadNotifications !== 0">{{unreadNotifications}}</span>
+        <span class="new-notifications" *ngIf="unreadNotifications > 0">{{unreadNotifications}}</span>
       </button>
     </div>
 
-    <div class="disable" *ngIf="notifications.length === 0">
+    <div class="disable" *ngIf="totalNotifications === 0">
       <p class="text">no data</p>
     </div>
   </li>
@@ -44,15 +44,3 @@
     </div>
   </li>
 </ul>
-
-<div class="notifications-banner" *ngIf="notificationsVisible" outside-click (clickOutside)="hideNotifications($event)">
-  <div class="row vertical-align">
-    <div class="col-xs-1" (click)="previousNotification()"><span class="ss-left" *ngIf="notifications.length > 1"></span></div>
-    <div class="col-xs-10">
-      <div class="notification-message" [innerHTML]="notifications[selectedNotification].notice.message"></div>
-      <h5>Released {{notifications[selectedNotification].notice.dateCreated | moment}}</h5>
-    </div>
-    <div class="col-xs-1" (click)="nextNotification()" style="text-align: right;"><span class="ss-right" *ngIf="notifications.length > 1"></span></div>
-  </div>
-</div>
-

@@ -7,3 +7,4 @@ export { Location } from './location.interface';
 export { DataDebit } from './data-debit.interface';
 export { Node } from './node.class';
 export { ExpandedTime } from './expanded-time.class';
+export { ExternalNotification } from './external-notification.interface';

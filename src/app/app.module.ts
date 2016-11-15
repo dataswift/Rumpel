@@ -26,7 +26,7 @@ import { AuthGuard } from './auth.guard';
 import { DataTypeFilterPipe } from './pipes';
 import { LoginComponent, AuthComponent } from './user-mgmt';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard'
-import { AuthService, HatApiService, UiStateService, RumpelService, DataPlugService } from './services';
+import { AuthService, HatApiService, UiStateService, RumpelService, DataPlugService, NotificationsService } from './services';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -70,7 +70,8 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     HatApiService,
     UiStateService,
     RumpelService,
-    DataPlugService
+    DataPlugService,
+    NotificationsService
   ]
 })
 export class AppRootModule {}

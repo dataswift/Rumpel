@@ -10,6 +10,11 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
 })
 export class AppRootComponent implements OnInit {
   private link: string;
+  private showNotifications: boolean;
+
+  // Had to use auxiliary variable canHide to control notification centre visibility.
+  // Outside-click directive produces an error when applied onto dynamically inserted DOM element
+  private canHide: boolean;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private overlay: Overlay,
@@ -20,6 +25,9 @@ export class AppRootComponent implements OnInit {
 
   ngOnInit() {
     console.log(`Rumpel is running. Version: ${this.config.version}`);
+
+    this.showNotifications = false;
+    this.canHide = false;
   }
 
   setModalLink(link: string) {
@@ -36,5 +44,19 @@ export class AppRootComponent implements OnInit {
 
   navigateTo() {
     window.location.href = this.link;
+  }
+
+  show() {
+    this.showNotifications = true;
+
+    setTimeout(() => this.canHide = true, 100);
+    setTimeout(() => this.showNotifications = false, 10000);
+  }
+
+  hide(event) {
+    if (this.canHide === true) {
+      this.showNotifications = false;
+      this.canHide = false;
+    }
   }
 }

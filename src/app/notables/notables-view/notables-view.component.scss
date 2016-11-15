@@ -153,3 +153,9 @@ li.removed-item {
     transform: translateX(-800px);
   }
 }
+
+.notable-item .notable-content /deep/ {
+  p {
+    font-size: 1.5em;
+  }
+}

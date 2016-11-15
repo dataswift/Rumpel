@@ -1,0 +1,10 @@
+<div class="notifications-banner">
+  <div class="row vertical-align">
+    <div class="col-xs-1" (click)="previousNote()"><span class="ss-left" *ngIf="totalNotifications > 1"></span></div>
+    <div class="col-xs-10" (click)="markAsRead()">
+      <div class="notification-message" [innerHTML]="notification.notice.message | markdownToHtml"></div>
+      <h5>Released {{notification.notice.dateCreated | moment}}</h5>
+    </div>
+    <div class="col-xs-1" (click)="nextNote()" style="text-align: right;"><span class="ss-right" *ngIf="totalNotifications > 1"></span></div>
+  </div>
+</div>
