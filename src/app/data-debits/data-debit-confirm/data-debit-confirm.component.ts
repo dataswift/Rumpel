@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService, HatApiService } from '../../services';
 import { DataDebitService } from '../data-debits.service';
 import { DataDebit } from '../../shared/interfaces';
+import { APP_CONFIG, IAppConfig } from '../../app.config';
 import { isUndefined } from "util";
 
 @Component({
@@ -20,8 +20,11 @@ export class DataDebitConfirmComponent implements OnInit {
   private ddConfirmed: boolean;
   private offerSatisfied: boolean;
   private confirmMessage: boolean;
+  private facebookShareLink: string;
+  private twitterShareLink: string;
 
-  constructor(private _route: ActivatedRoute,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private _route: ActivatedRoute,
               private _ddSvc: DataDebitService,
               private _hat: HatApiService,
               private authSvc: AuthService,
@@ -86,7 +89,12 @@ export class DataDebitConfirmComponent implements OnInit {
 
   private updateOfferInformation(forceReload: boolean) {
     this._ddSvc.getDataOffer(this.uuid, forceReload).subscribe(results => {
-      let offer = results[0].filter(offer => offer.offer.uuid === results[1])[0];
+      console.log(results);
+      let offer = results[0].find(offer => offer.offer.uuid === results[1]);
+      this.facebookShareLink = this.config.facebook.shareUrl +
+        'https://marketsquare.hubofallthings.com/offers/' + results[1];
+      this.twitterShareLink = this.config.twitter.shareUrl +
+        'https://marketsquare.hubofallthings.com/offers/' + results[1];
       this.offerSatisfied = offer.offer.status === 'satisfied' ? true : false;
       this.offer = offer;
       this.updateStatus();

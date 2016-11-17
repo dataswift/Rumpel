@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HatApiService } from '../../services';
 import { ProfilesService } from '../profiles.service';
-import { Profile } from '../../shared/profile.interface';
+import { Profile } from '../../shared/interfaces/profile.interface';
 
 @Component({
   selector: 'rump-profile',
@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
     this.profilesSvc.initializeProfile().subscribe(hatIdMapping => {
       this.hatIdMapping = hatIdMapping;
 
-      this.profilesSvc.getFullProfile().subscribe(profile => {
+      this.profilesSvc.getFullProfile().subscribe((profile: Profile) => {
         if (profile) this.profile = profile;
       });
     });
@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
     );
 
     this.profile = {
-      private: 'true',
+      private: true,
       fb_profile_photo: { private: true },
       personal: { title: '', first_name: '', middle_name: '',
                   last_name: '', preferred_name: '', private: true },
@@ -71,6 +71,10 @@ export class ProfileComponent implements OnInit {
     event.preventDefault();
     this.profilesSvc.saveProfile(this.profile, this.hatIdMapping).subscribe(savedPosts => {
       this.uiMessageHidden = false;
+      this.profilesSvc.getFullProfile().subscribe((profile: Profile) => {
+        console.log(profile);
+        if (profile) this.profile = profile;
+      });
       setTimeout(() => this.uiMessageHidden = true, 5000);
     });
   }
@@ -80,11 +84,11 @@ export class ProfileComponent implements OnInit {
   }
 
   toggleProfilePrivacy() {
-    this.profile.private = this.profile.private === 'true' ? 'false' : 'true';
+    this.profile.private = !this.profile.private;
   }
 
   togglePrivacy(field: string) {
-    this.profile[field].private = this.profile[field].private === 'true' ? 'false' : 'true';
+    this.profile[field].private = !this.profile[field].private;
   }
 
 }

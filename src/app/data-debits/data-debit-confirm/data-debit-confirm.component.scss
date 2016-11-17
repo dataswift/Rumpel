@@ -22,11 +22,6 @@
   }
 }
 
-.offer {
-  padding-right: 10em;
-  padding-left: 10em;
-}
-
 .offer-reward {
   font-size: 1.3em;
   color: inherit;
@@ -174,4 +169,46 @@ progress {
     height: 2em;
     border-radius: 2px;
   }
+}
+
+.share-buttons {
+  margin-top: 1.5em;
+
+  h3 {
+    vertical-align: bottom;
+  }
+
+  .share-text {
+    display: inline-block;
+    text-transform: uppercase;
+    margin-right: 1em;
+  }
+}
+
+.btn-third-party {
+  font-family: "Open Sans Condensed", sans-serif;
+  font-size: 1.5em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 2px;
+
+  &:hover {
+    color: white;
+  }
+
+  img {
+    max-height: 1.5em;
+    padding-right: 0.5em;
+    vertical-align: bottom;
+  }
+}
+
+.btn-facebook {
+  background-color: #3b5998;
+}
+
+.btn-twitter {
+  background-color: #1DA1F2;
 }

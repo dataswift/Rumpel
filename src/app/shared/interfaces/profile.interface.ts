@@ -1,5 +1,5 @@
 export interface Profile {
-  private: string;
+  private: boolean;
   fb_profile_photo: {
     private: boolean
   };

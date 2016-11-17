@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../profiles.service';
-import { Profile } from '../../shared/profile.interface';
+import { Profile } from '../../shared/interfaces/profile.interface';
 
 @Component({
   selector: 'rump-tile-profile',
@@ -18,7 +18,7 @@ export class TileProfileComponent implements OnInit {
     });
 
     this.profile = {
-      private: 'true',
+      private: true,
       fb_profile_photo: { private: true },
       personal: { title: '', first_name: '', middle_name: '',
                   last_name: '', preferred_name: '', private: true },

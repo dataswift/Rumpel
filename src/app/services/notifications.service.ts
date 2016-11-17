@@ -36,11 +36,7 @@ export class NotificationsService {
         this.hatdexNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
         this.totalNotifications = notifications.length;
 
-        for (let notification of notifications) {
-          if (!notification.read) {
-            this.unreadNotifications++;
-          }
-        }
+        this.unreadNotifications = this.countUnread();
 
         this.publishStats();
         this.publishNotification();
@@ -71,13 +67,25 @@ export class NotificationsService {
   markAsRead(notification: ExternalNotification) {
     if (!notification.read) {
       this._marketSvc.markAsRead(notification.notice.id).subscribe((readNotification: ExternalNotification) => {
-        if (this.unreadNotifications > 0) {
-          this.unreadNotifications--;
-        }
+        let foundNotificationIndex = this.hatdexNotifications.findIndex(note => note.notice.id === readNotification.notice.id);
+        this.hatdexNotifications[foundNotificationIndex] = readNotification;
+
+        this.unreadNotifications = this.countUnread();
 
         this.publishStats();
       });
     }
+  }
+
+  private countUnread(): number {
+    let unreadCount = 0;
+    for (let notification of this.hatdexNotifications) {
+      if (!notification.read) {
+        unreadCount++;
+      }
+    }
+
+    return unreadCount;
   }
 
   private publishNotification() {

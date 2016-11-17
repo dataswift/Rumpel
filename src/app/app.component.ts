@@ -32,14 +32,23 @@ export class AppRootComponent implements OnInit {
 
   setModalLink(link: string) {
     this.link = link;
-    this.modal.alert()
+    this.modal.confirm()
       .size('lg')
       .showClose(true)
       .title('Are you sure?')
-      .body(`<p>You are now leaving your private Rumpel space. Are you sure? (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).</p>
-        <button type="button" class="btn btn-default">Go Back</button>
-        <button type="button" class="btn btn-primary" (click)="navigateTo()">Continue</button>`)
-      .open();
+      .body('<p>You are now leaving your private Rumpel space. Are you sure? (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).</p>')
+      .okBtn('Continue')
+      .cancelBtn('Get Me Back')
+      .open()
+      .then(resultPromise => {
+        resultPromise.result.then(
+          result => {
+            if (result === true) return this.navigateTo();
+          },
+          error => {
+            console.log('Navigation out of Rumpel was cancelled.');
+          });
+      });
   }
 
   navigateTo() {

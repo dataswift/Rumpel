@@ -45,8 +45,7 @@ export class SideMenuComponent implements OnInit {
       { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
       { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts', disable: 'no data' },
       { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
-      { display: 'Data Plugs', icon: 'puzzle', link: '', disable: '' },
-      { display: 'Offers', icon: 'tags', link: 'https://marketsquare.hubofallthings.com/offers', dataType: null, disable: '' }
+      { display: 'Data Plugs', icon: 'puzzle', link: '', disable: '' }
     ];
 
     this.comingSoonMenu = [
