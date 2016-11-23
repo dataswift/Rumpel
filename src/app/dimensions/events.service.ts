@@ -3,6 +3,7 @@ import { Subject, Observable } from 'rxjs/Rx';
 
 import { HatApiService } from '../services/hat-api.service';
 import { Event } from '../shared/interfaces';
+import { uniqBy } from 'lodash';
 import * as moment from 'moment';
 
 @Injectable()
@@ -41,7 +42,10 @@ export class EventsService {
       this.loadFrom('ical')
         .map(events => events.map(this.icalMap)),
       this.loadFrom('facebook')
-        .map(events => events.map(this.fbMap))
+        .map(events => {
+          let rumpEvents = events.map(this.fbMap);
+          return uniqBy(rumpEvents, "id");
+        })
     );
   }
 
@@ -51,6 +55,7 @@ export class EventsService {
 
   fbMap(event): Event {
     let newDataPoint = {
+      id: event.data.events.id,
       name: event.data.events.name,
       description: event.data.events.description,
       start: moment(event.data.events.start_time),

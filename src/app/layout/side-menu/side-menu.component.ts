@@ -68,6 +68,6 @@ export class SideMenuComponent implements OnInit {
   }
 
   showNotificationsCentre() {
-    this.clickNotifications.emit("Show notifications.");
+    this.clickNotifications.emit(`Show notifications.`);
   }
 }

@@ -59,7 +59,10 @@ export class AppRootComponent implements OnInit {
     this.showNotifications = true;
 
     setTimeout(() => this.canHide = true, 100);
-    setTimeout(() => this.showNotifications = false, 10000);
+    setTimeout(() => {
+      this.canHide = false;
+      this.showNotifications = false;
+    }, 10000);
   }
 
   hide(event) {
