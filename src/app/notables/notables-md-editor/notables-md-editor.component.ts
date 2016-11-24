@@ -16,6 +16,7 @@ export class NotablesMdEditorComponent implements OnInit {
   private mde: any;
   private hatDomain: string;
   public shared: boolean;
+  private editMode: boolean = false;
   public expires: boolean;
   public reportLocation: boolean;
   public currentNotable: Notable;
@@ -35,6 +36,7 @@ export class NotablesMdEditorComponent implements OnInit {
 
     this.notablesSvc.editedNotable$.subscribe(notable => {
       this.currentNotable = notable;
+      if (this.currentNotable.id) this.editMode = true;
       this.resetForm();
     });
 
@@ -89,6 +91,11 @@ export class NotablesMdEditorComponent implements OnInit {
     }
   }
 
+  discardChanges() {
+    this.currentNotable = new Notable();
+    this.resetForm();
+  }
+
   submit() {
     let author = { phata: this.hatDomain };
 
@@ -99,6 +106,7 @@ export class NotablesMdEditorComponent implements OnInit {
     this.currentNotable.prepareToPost(this.mde.value(), author);
 
     if (this.currentNotable.id) {
+      this.editMode = false;
       this.notablesSvc.updateNotable(this.currentNotable);
     } else {
       this.notablesSvc.postNotable(this.currentNotable);
