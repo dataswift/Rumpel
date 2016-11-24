@@ -1,10 +1,10 @@
-import { RumpelMigrationPage } from './app.po';
+import { RumpelPage } from './app.po';
 
-describe('rumpel-migration App', function() {
-  let page: RumpelMigrationPage;
+describe('rumpel App', function() {
+  let page: RumpelPage;
 
   beforeEach(() => {
-    page = new RumpelMigrationPage();
+    page = new RumpelPage();
   });
 
   it('should display message saying app works', () => {
