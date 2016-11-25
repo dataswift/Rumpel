@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, Observable } from 'rxjs/Rx';
+import { BehaviorSubject, Subject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from '../services/hat-api.service';
 import { DataPlugService } from '../services/data-plug.service';
 import { MarketSquareService } from '../market-square/market-square.service';
@@ -8,6 +8,7 @@ import { NotablesHatModel } from './notables.hatmodel';
 import { Notable } from '../shared/interfaces';
 
 import * as moment from 'moment';
+import { Moment } from 'moment';
 
 @Injectable()
 export class NotablesService {
@@ -22,13 +23,13 @@ export class NotablesService {
   public notablesState: {
     allowedActions?: { canPost: boolean, canExpire: boolean };
     notablesOfferClaimed?: boolean;
-    dataDebit?: { confirmed: boolean; id: string };
+    dataDebit?: { confirmed: boolean; id: string; dateCreated: Moment; };
   };
 
   private _notables$: Subject<Notable[]>;
   public notables$: Observable<Notable[]>;
 
-  private _editedNotable$: Subject<Notable>;
+  private _editedNotable$: ReplaySubject<Notable>;
   public editedNotable$: Observable<Notable>;
 
   private _notablesMeta$: BehaviorSubject<any>;
@@ -55,7 +56,7 @@ export class NotablesService {
     this._notables$ = <Subject<Notable[]>>new Subject();
     this.notables$ = this._notables$.asObservable();
 
-    this._editedNotable$ = <Subject<Notable>>new Subject();
+    this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject();
     this.editedNotable$ = this._editedNotable$.asObservable();
 
     this._notablesMeta$ = <BehaviorSubject<any>>new BehaviorSubject(this.notablesState);
@@ -70,7 +71,11 @@ export class NotablesService {
     this.market.getOffer('32dde42f-5df9-4841-8257-5639db222e41')
       .subscribe(offerInfo => {
         this.notablesState.notablesOfferClaimed = !offerInfo.error;
-        this.notablesState.dataDebit = { confirmed: offerInfo.confirmed, id: offerInfo.dataDebitId };
+        this.notablesState.dataDebit = {
+          confirmed: offerInfo.confirmed,
+          id: offerInfo.dataDebitId,
+          dateCreated: moment(offerInfo.dateCreated)
+        };
         this._notablesMeta$.next(this.notablesState);
       });
 
@@ -176,6 +181,11 @@ export class NotablesService {
 
   claimNotablesOffer() {
     return this.market.claimOffer('32dde42f-5df9-4841-8257-5639db222e41');
+  }
+
+  updateDataDebitInfo(update: { id: string; confirmed: boolean; dateCreated: Moment; }) {
+    this.notablesState.dataDebit = update;
+    this._notablesMeta$.next(this.notablesState);
   }
 
   private pushToStream() {

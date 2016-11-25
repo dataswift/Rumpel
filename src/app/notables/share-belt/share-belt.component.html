@@ -1,11 +1,14 @@
 <div class="belt">
-  <ul *ngIf="notablesState.notablesOfferClaimed && notablesState.dataDebit.confirmed">
-    <li *ngFor="let service of services" (click)="toggleSharing(service)">
-      <img src="{{service.logoUrl}}"
-           class="img img-responsive share-service"
-           [class.on]="service.shared">
-    </li>
-  </ul>
+  <div class="content">
+    <p>Share with...</p>
+    <ul *ngIf="notablesState.notablesOfferClaimed && notablesState.dataDebit.confirmed">
+      <li *ngFor="let service of services" (click)="toggleSharing(service)">
+        <img src="{{service.logoUrl}}"
+             class="img img-responsive share-service"
+             [class.on]="service.shared">
+      </li>
+    </ul>
+  </div>
 
   <div class="message" *ngIf="displayMessage">
     {{displayMessage}}
@@ -19,6 +22,13 @@
   <div class="message" *ngIf="notablesState.notablesOfferClaimed && (!notablesState.dataDebit.confirmed) && (!displayMessage)">
     To share your notable, please accept data offer from MarketSquare.
     <span class="claim" (click)="confirmNotablesDataDebit()">Accept it here</span>.
+  </div>
+
+  <div class="error-message" *ngIf="parentError">
+    <span class="ss-alert"></span>
+    <span class="error-text">
+      {{parentError}}
+    </span>
   </div>
 
   <div class="error-message" *ngIf="showError">

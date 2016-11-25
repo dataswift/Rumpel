@@ -21,7 +21,15 @@
 
     <ul>
       <li *ngFor="let notable of notables | filterBy:'kind':filter" class="notable-item placeholder">
-        <div class="notable-type"><span class="ss-{{iconMap[notable.type]}} ss-glyphish-filled"></span>{{notable.kind}}</div>
+        <div class="additional-info">
+          <ul class="shared-list">
+            <li *ngFor="let service of notable.shared_on" class="shared-item">
+              <img src="{{ASSET_MAP[service]}}" class="shared-icon">
+            </li>
+          </ul>
+          <div class="notable-type"><span class="ss-{{iconMap[notable.type]}} ss-glyphish-filled"></span>{{notable.kind}}</div>
+        </div>
+
         <div class="notable-header">
           <rump-profile-photo class="user-photo"
                               [userPhotoUrl]="notable.authorv1['photo_url']"></rump-profile-photo>

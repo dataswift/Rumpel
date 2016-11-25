@@ -13,6 +13,11 @@ import set = Reflect.set;
   styleUrls: ['./notables-view.component.scss']
 })
 export class NotablesViewComponent implements OnInit {
+  private ASSET_MAP = {
+    "marketsquare": "assets/icons/marketsquare-icon.png",
+    "facebook": "assets/icons/facebook-plug.png"
+  };
+
   public notables: Array<Notable>;
   private profile: { photo: { url: string; shared: boolean; }; };
   public iconMap: any;

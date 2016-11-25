@@ -9,7 +9,7 @@ export class Notable {
   private updated_time: any;
   private shared: boolean;
   private public_until: string;
-  private shared_on: any;
+  public shared_on: any;
 
   public authorv1: {
     id?: string;
@@ -72,6 +72,7 @@ export class Notable {
 
   makePrivate() {
     this.shared = false;
+    this.shared_on = [];
     this.public_until = '';
   }
 

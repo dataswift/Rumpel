@@ -10,6 +10,7 @@
         <div class="input-area">
           <textarea ngModel type="text" id="message" name="message"
                 aria-describedby="message" placeholder="What's going on?"
+                [(ngModel)]="message"
                 [class.expanded]="inputExpanded"
                 (focus)="expandView($event)"></textarea>
           <div class="arrow-down" *ngIf="expanded"></div>

@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 
 import { NotablesService } from '../notables.service';
 import { HatApiService } from '../../services/hat-api.service';
+import { Notable } from "../../shared/interfaces/notable.class";
+
+import * as moment from 'moment';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'rump-share-belt',
@@ -11,10 +15,12 @@ import { HatApiService } from '../../services/hat-api.service';
 })
 export class ShareBeltComponent implements OnInit {
   @Input() hatDomain: string;
+  @Input() currentNotable: Notable;
+  @Input() parentError: string;
   private services: any[];
   private notablesState: {
     notablesOfferClaimed: boolean;
-    dataDebit: { confirmed: boolean; id: string };
+    dataDebit: { confirmed: boolean; id: string; dateCreated: Moment; };
     allowedActions: { canPost: boolean; canExpire: boolean };
     phata: string;
   };
@@ -34,12 +40,12 @@ export class ShareBeltComponent implements OnInit {
       {
         name: 'marketsquare',
         logoUrl: 'assets/icons/marketsquare-icon.png',
-        shared: false
+        shared: this.currentNotable.shared_on.indexOf('marketsquare') > -1
       },
       {
         name: 'facebook',
         logoUrl: 'assets/icons/facebook-plug.png',
-        shared: false
+        shared: this.currentNotable.shared_on.indexOf('facebook') > -1
       }
     ];
 
@@ -66,13 +72,23 @@ export class ShareBeltComponent implements OnInit {
     this.displayMessage = "Processing... please wait.";
     this.notablesSvc.claimNotablesOffer().subscribe(resBody => {
       this.notablesState.dataDebit.id = resBody.dataDebitId;
-      this.router.navigate(['/dataDebit', this.notablesState.dataDebit.id, 'confirm']);
+      // this.router.navigate(['/dataDebit', this.notablesState.dataDebit.id, 'confirm']);
+      this.confirmNotablesDataDebit();
     });
   }
 
   confirmNotablesDataDebit() {
     this._hatSvc.updateDataDebit(this.notablesState.dataDebit.id, 'enable').subscribe(res => {
-      this.notablesState.dataDebit.confirmed = true;
+      let response = res.json();
+      let update = {
+        id: response.key,
+        confirmed: response.enabled,
+        dateCreated: moment(response.dateCreated)
+      }
+
+      this.notablesSvc.updateDataDebitInfo(update);
+
+      this.displayMessage = "";
     });
   }
 }

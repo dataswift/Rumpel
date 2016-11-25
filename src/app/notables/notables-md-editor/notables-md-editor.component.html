@@ -14,6 +14,8 @@
 
   <rump-share-belt *ngIf="shared" class="sharing-belt"
                    [hatDomain]="hatSvc.getDomain()"
+                   [currentNotable]="currentNotable"
+                   [parentError]="cannotPostMessage"
                    (serviceToggled)="updateShareOptions($event)"></rump-share-belt>
 </div>
 
@@ -34,6 +36,6 @@
   <div class="action-buttons">
     <button *ngIf="!editMode" type="submit" class="btn btn-modify" (click)="submit()">{{shared ? 'Share Notable' : 'Log Privately'}}</button>
     <button *ngIf="editMode" type="submit" class="btn btn-modify" (click)="submit()">{{shared ? 'Save as Shared' : 'Save Privately'}}</button>
-    <button type="button" class="btn btn-modify" (click)="discardChanges()">Discard changes</button>
+    <button type="button" class="btn btn-modify" (click)="discardChanges()">Cancel</button>
   </div>
 </div>

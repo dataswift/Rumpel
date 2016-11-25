@@ -4,6 +4,7 @@ import { Notable, Location } from '../../shared/interfaces';
 import { HatApiService } from '../../services';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'rump-input-box',
@@ -22,11 +23,12 @@ export class InputBoxComponent implements OnInit {
   public reportLocation: boolean;
   public shared: boolean;
   public expires: boolean;
-
+  private message: string;
 
   constructor(private notableSvc: NotablesService,
               private locationsSvc: LocationsService,
-              private hatSvc: HatApiService) {}
+              private hatSvc: HatApiService,
+              private router: Router) {}
 
   ngOnInit() {
     this.resetForm();
@@ -50,6 +52,9 @@ export class InputBoxComponent implements OnInit {
     } else {
       this.currentNotable.share();
       this.shared = true;
+      this.currentNotable.message = this.message;
+      this.notableSvc.editNotable(this.currentNotable);
+      this.router.navigate(['notables']);
     }
   }
 
@@ -75,6 +80,8 @@ export class InputBoxComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    if (!form.value.message) { return; }
+
     let author = { phata: this.hatSvc.getDomain() };
 
     if (this.profile.photo.shared) {

@@ -1,21 +1,26 @@
 .belt {
   width: 100%;
-  background-color: #DBDBDB;
-  height: 4em;
+  background-color: #dbdbdb;
+  height: 5em;
 
-  ul {
+  .content {
     display: inline-block;
-    margin-top: 1em;
+    margin-top: 0.25em;
     margin-left: 1em;
+
+    p {
+      font-size: 0.9em;
+      margin-bottom: 0.25em;
+    }
   }
 
   li {
     display: inline;
-    margin: 1em;
+    margin: 0.5em 0.75em;
 
     .share-service {
       display: inline;
-      max-height: 2em;
+      max-height: 1.5em;
       border-radius: 50%;
       opacity: 0.3;
 
