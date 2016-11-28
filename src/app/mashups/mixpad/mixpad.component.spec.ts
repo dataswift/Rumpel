@@ -1,14 +1,28 @@
 /* tslint:disable:no-unused-variable */
-
-import { By }           from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { addProviders, async, inject } from '@angular/core/testing';
 
 import { MixpadComponent } from './mixpad.component';
 
-describe('Component: Mixpad', () => {
-  it('should create an instance', () => {
-    // let component = new MixpadComponent();
-    // expect(component).toBeTruthy();
+describe('MixpadComponent', () => {
+  let component: MixpadComponent;
+  let fixture: ComponentFixture<MixpadComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ MixpadComponent ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(MixpadComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });

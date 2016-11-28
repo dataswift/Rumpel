@@ -3,7 +3,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RelativeTimePipe } from './relative-time.pipe';
 
-describe('Pipe: RelativeTime', () => {
+describe('RelativeTimePipe', () => {
   it('create an instance', () => {
     let pipe = new RelativeTimePipe();
     expect(pipe).toBeTruthy();

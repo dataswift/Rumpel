@@ -1,9 +1,9 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 import { OutsideClick } from './outside-click.directive';
 
-describe('Directive: OutsideClick', () => {
+describe('OutsideClick', () => {
   it('should create an instance', () => {
     let directive = new OutsideClick();
     expect(directive).toBeTruthy();

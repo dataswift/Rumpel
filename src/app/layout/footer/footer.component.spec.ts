@@ -1,14 +1,28 @@
 /* tslint:disable:no-unused-variable */
-
-import { By }           from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { addProviders, async, inject } from '@angular/core/testing';
 
 import { FooterComponent } from './footer.component';
 
-describe('Component: RumpFooter', () => {
-  it('should create an instance', () => {
-    let component = new FooterComponent();
+describe('FooterComponent', () => {
+  let component: FooterComponent;
+  let fixture: ComponentFixture<FooterComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ FooterComponent ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(FooterComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

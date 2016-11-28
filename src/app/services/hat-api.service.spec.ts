@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { HatApiService } from './hat-api.service';
 
-describe('HatApi Service', () => {
+describe('HatApiService', () => {
   beforeEach(() => {
-    addProviders([HatApiService]);
+    TestBed.configureTestingModule({
+      providers: [HatApiService]
+    });
   });
 
-  it('should ...',
-    inject([HatApiService],
-      (service: HatApiService) => {
-        expect(service).toBeTruthy();
-      }));
+  it('should ...', inject([HatApiService], (service: HatApiService) => {
+    expect(service).toBeTruthy();
+  }));
 });

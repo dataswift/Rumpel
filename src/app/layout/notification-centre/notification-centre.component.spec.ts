@@ -1,11 +1,28 @@
 /* tslint:disable:no-unused-variable */
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
-import { TestBed, async } from '@angular/core/testing';
 import { NotificationCentreComponent } from './notification-centre.component';
 
-describe('Component: NotificationCentre', () => {
-  it('should create an instance', () => {
-    let component = new NotificationCentreComponent();
+describe('NotificationCentreComponent', () => {
+  let component: NotificationCentreComponent;
+  let fixture: ComponentFixture<NotificationCentreComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ NotificationCentreComponent ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(NotificationCentreComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

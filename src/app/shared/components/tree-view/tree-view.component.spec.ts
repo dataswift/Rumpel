@@ -1,11 +1,28 @@
 /* tslint:disable:no-unused-variable */
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
-import { TestBed, async } from '@angular/core/testing';
 import { TreeViewComponent } from './tree-view.component';
 
-describe('Component: TreeView', () => {
-  it('should create an instance', () => {
-    let component = new TreeViewComponent();
+describe('TreeViewComponent', () => {
+  let component: TreeViewComponent;
+  let fixture: ComponentFixture<TreeViewComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ TreeViewComponent ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TreeViewComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

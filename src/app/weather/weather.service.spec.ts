@@ -1,16 +1,26 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
+import { MockBackend } from '@angular/http/testing';
+import { BaseRequestOptions, Http, XHRBackend } from '@angular/http';
 import { WeatherService } from './weather.service';
 
-describe('Weather Service', () => {
-  beforeEach(() => {
-    addProviders([WeatherService]);
-  });
+describe('WeatherService', () => {
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        BaseRequestOptions,
+        MockBackend,
+        WeatherService,
+        {
+          deps: [MockBackend, BaseRequestOptions],
+          provide: Http,
+          useFactory: (backend: XHRBackend, defaultOptions: BaseRequestOptions) => new Http(backend, defaultOptions)
+        }]
+    });
+  }));
 
-  it('should ...',
-    inject([WeatherService],
-      (service: WeatherService) => {
-        expect(service).toBeTruthy();
-      }));
+  it('should exist', inject([WeatherService], (service: WeatherService) => {
+    expect(service).toBeTruthy();
+  }));
 });

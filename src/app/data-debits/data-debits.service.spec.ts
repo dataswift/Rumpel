@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { DataDebitService } from './data-debits.service';
 
-describe('DataDebit Service', () => {
+describe('DataDebitService', () => {
   beforeEach(() => {
-    addProviders([DataDebitService]);
+    TestBed.configureTestingModule({
+      providers: [DataDebitService]
+    });
   });
 
-  it('should ...',
-    inject([DataDebitService],
-      (service: DataDebitService) => {
-        expect(service).toBeTruthy();
-      }));
+  it('should ...', inject([DataDebitService], (service: DataDebitService) => {
+    expect(service).toBeTruthy();
+  }));
 });

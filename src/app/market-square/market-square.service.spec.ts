@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
-import { addProviders, async, inject } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { MarketSquareService } from './market-square.service';
 
-describe('MarketSquare Service', () => {
+describe('MarketSquareService', () => {
   beforeEach(() => {
-    addProviders([MarketSquareService]);
+    TestBed.configureTestingModule({
+      providers: [MarketSquareService]
+    });
   });
 
-  it('should ...',
-    inject([MarketSquareService],
-      (service: MarketSquareService) => {
-        expect(service).toBeTruthy();
-      }));
+  it('should ...', inject([MarketSquareService], (service: MarketSquareService) => {
+    expect(service).toBeTruthy();
+  }));
 });

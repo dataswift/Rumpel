@@ -1,14 +1,28 @@
 /* tslint:disable:no-unused-variable */
-
-import { By }           from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { addProviders, async, inject } from '@angular/core/testing';
 
-import { ActivityListComponent } from './activity-list.component.ts';
+import { ActivityListComponent } from './activity-list.component';
 
-describe('Component: TimelineView', () => {
-  it('should create an instance', () => {
-    let component = new ActivityListComponent();
+describe('ActivityListComponent', () => {
+  let component: ActivityListComponent;
+  let fixture: ComponentFixture<ActivityListComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ActivityListComponent ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ActivityListComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

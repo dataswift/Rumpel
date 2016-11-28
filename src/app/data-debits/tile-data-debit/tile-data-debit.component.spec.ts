@@ -1,14 +1,28 @@
 /* tslint:disable:no-unused-variable */
-
-import { By }           from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { addProviders, async, inject } from '@angular/core/testing';
 
 import { TileDataDebitComponent } from './tile-data-debit.component';
 
-describe('Component: TileDataDebit', () => {
-  it('should create an instance', () => {
-    // let component = new TileDataDebitComponent();
-    // expect(component).toBeTruthy();
+describe('TileDataDebitComponent', () => {
+  let component: TileDataDebitComponent;
+  let fixture: ComponentFixture<TileDataDebitComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ TileDataDebitComponent ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TileDataDebitComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });

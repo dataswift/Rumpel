@@ -1,14 +1,28 @@
 /* tslint:disable:no-unused-variable */
-
-import { By }           from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { addProviders, async, inject } from '@angular/core/testing';
 
 import { TileComingSoonComponent } from './tile-coming-soon.component';
 
-describe('Component: TileComingSoon', () => {
-  it('should create an instance', () => {
-    let component = new TileComingSoonComponent();
+describe('TileComingSoonComponent', () => {
+  let component: TileComingSoonComponent;
+  let fixture: ComponentFixture<TileComingSoonComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ TileComingSoonComponent ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TileComingSoonComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

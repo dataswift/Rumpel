@@ -1,11 +1,28 @@
 /* tslint:disable:no-unused-variable */
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
-import { TestBed, async } from '@angular/core/testing';
 import { NotablesMdEditorComponent } from './notables-md-editor.component';
 
-describe('Component: NotablesMdEditor', () => {
-  it('should create an instance', () => {
-    let component = new NotablesMdEditorComponent();
+describe('NotablesMdEditorComponent', () => {
+  let component: NotablesMdEditorComponent;
+  let fixture: ComponentFixture<NotablesMdEditorComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ NotablesMdEditorComponent ]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(NotablesMdEditorComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

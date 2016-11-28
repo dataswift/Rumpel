@@ -1,14 +1,52 @@
 /* tslint:disable:no-unused-variable */
-
-import { By }           from '@angular/platform-browser';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { addProviders, async, inject } from '@angular/core/testing';
 
 import { TileWeatherComponent } from './tile-weather.component';
+import { WeatherService } from '../weather.service';
+import { Observable } from "rxjs";
 
-describe('Component: TileWeather', () => {
-  it('should create an instance', () => {
-    // let component = new TileWeatherComponent();
-    // expect(component).toBeTruthy();
+class MockWeatherService {
+  getCurrentWeather() {
+    return Observable.of({
+      "display_location": {
+        "full": "San Francisco, CA",
+        "city": "San Francisco",
+        "state": "CA",
+        "state_name": "California",
+        "country": "US",
+        "country_iso3166": "US",
+        "zip": "94102",
+        "magic": "1",
+        "wmo": "99999",
+        "latitude": "37.77999878",
+        "longitude": "-122.41999817",
+        "elevation": "60.0"
+      }
+    });
+  }
+}
+
+describe('TileWeatherComponent', () => {
+  let component: TileWeatherComponent;
+  let fixture: ComponentFixture<TileWeatherComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ TileWeatherComponent ],
+      providers: [{ provide: WeatherService, useClass: MockWeatherService }]
+    })
+      .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TileWeatherComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 });
