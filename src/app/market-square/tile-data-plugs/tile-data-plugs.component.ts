@@ -1,6 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DialogBoxComponent } from '../../layout/dialog-box/dialog-box.component';
 import { MarketSquareService } from '../market-square.service';
 import { AuthService } from '../../services/auth.service';
+import { DialogService } from '../../layout/dialog.service';
 
 @Component({
   selector: 'rump-tile-data-plugs',
@@ -11,9 +13,10 @@ export class TileDataPlugsComponent implements OnInit {
   public plugs: Array<any>;
   public hatDomain: string;
   public icons: Array<string>;
-  @Output() navigateModal = new EventEmitter<any>();
 
-  constructor(private marketSvc: MarketSquareService, private auth: AuthService) {}
+  constructor(private marketSvc: MarketSquareService,
+              private dialogSvc: DialogService,
+              private auth: AuthService) {}
 
   ngOnInit() {
     this.marketSvc.getDataPlugs().subscribe(plugs => {
@@ -37,10 +40,16 @@ export class TileDataPlugsComponent implements OnInit {
     this.hatDomain = this.auth.getDomain();
   }
 
-  generatePlugLoginUrl(plug: any) {
+  displayConfirmDialog(plug: any) {
     let loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
     if (plug.name === 'location') return plug.url;
-    return `https://${this.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`;
+
+    this.dialogSvc.createDialog(DialogBoxComponent, {
+      buttons: [{
+        title: "Continue",
+        link: `https://${this.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`
+      }]
+    });
   }
 
 }

@@ -4,6 +4,8 @@ import { AppRootComponent } from './app.component';
 
 import { APP_CONFIG, AppConfig } from './app.config';
 
+import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
+
 import { LayoutModule } from './layout/layout.module';
 import { MashupsModule } from './mashups/mashups.module';
 import { NotablesModule } from './notables/notables.module';
@@ -39,7 +41,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     GridComponent,
     TileHeaderComponent,
     TileComingSoonComponent,
-    DataTypeFilterPipe
+    DataTypeFilterPipe,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     ProfilesModule,
     WeatherModule
   ],
-  bootstrap: [AppRootComponent],
+  bootstrap: [ AppRootComponent ],
+  entryComponents: [ DialogBoxComponent ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: AppConfig },

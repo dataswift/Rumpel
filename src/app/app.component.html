@@ -2,7 +2,6 @@
 
 <section class="content-main">
   <rump-side-menu class="menubar-left"
-                  (navigateModal)="setModalLink($event)"
                   (clickNotifications)="show()"></rump-side-menu>
 
   <div class="content-grid container-fluid">
@@ -17,3 +16,5 @@
 <div class="notifications-wrapper" outside-click (clickOutside)="hide($event)">
   <rump-notification-centre *ngIf="showNotifications"></rump-notification-centre>
 </div>
+
+<div rumpDialogAnchor></div>

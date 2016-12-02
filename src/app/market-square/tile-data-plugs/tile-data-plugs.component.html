@@ -3,7 +3,7 @@
 <div class="scroll-mask" id="intro-step18">
   <div class="tile-body">
     <ul>
-      <li *ngFor="let plug of plugs" (click)="navigateModal.emit(generatePlugLoginUrl(plug))">
+      <li *ngFor="let plug of plugs" (click)="displayConfirmDialog(plug)">
         <div class="row vertical-align">
           <div class="col-xs-2">
             <img src="assets/icons/{{plug.icon}}" class="img img-responsive">

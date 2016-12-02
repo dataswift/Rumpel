@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewContainerRef, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from './app.config';
-import { Overlay } from 'angular2-modal';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
   selector: 'rumpel',
@@ -9,50 +7,19 @@ import { Modal } from 'angular2-modal/plugins/bootstrap';
   styleUrls: ['app.component.scss']
 })
 export class AppRootComponent implements OnInit {
-  private link: string;
   private showNotifications: boolean;
 
   // Had to use auxiliary variable canHide to control notification centre visibility.
   // Outside-click directive produces an error when applied onto dynamically inserted DOM element
   private canHide: boolean;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-              private overlay: Overlay,
-              private vcRef: ViewContainerRef,
-              public modal: Modal ) {
-    overlay.defaultViewContainer = vcRef;
-  }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig) { }
 
   ngOnInit() {
     console.log(`Rumpel is running. Version: ${this.config.version}`);
 
     this.showNotifications = false;
     this.canHide = false;
-  }
-
-  setModalLink(link: string) {
-    this.link = link;
-    this.modal.confirm()
-      .size('lg')
-      .showClose(true)
-      .title('Are you sure?')
-      .body('<p>You are now leaving your private Rumpel space. Are you sure? (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).</p>')
-      .okBtn('Continue')
-      .cancelBtn('Get Me Back')
-      .open()
-      .then(resultPromise => {
-        resultPromise.result.then(
-          result => {
-            if (result === true) return this.navigateTo();
-          },
-          error => {
-            console.log('Navigation out of Rumpel was cancelled.');
-          });
-      });
-  }
-
-  navigateTo() {
-    window.location.href = this.link;
   }
 
   show() {

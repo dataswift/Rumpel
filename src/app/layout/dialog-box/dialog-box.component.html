@@ -1,0 +1,20 @@
+<div class="rump-modal">
+  <div class="rump-modal-content">
+    <div class="rump-modal-header">
+      <h3>Title</h3>
+    </div>
+    <div class="rump-modal-body">
+      <p>{{message}}</p>
+    </div>
+    <div class="rump-modal-footer">
+      <button type="button" class="btn" (click)="closeModal()">Cancel</button>
+      <button type="button" class="btn accept" (click)="closeModal()" *ngFor="let button of buttons">
+        <a [href]="button.link" target="_blank">{{button.title}}</a>
+      </button>
+    </div>
+
+    <div class="close-modal" (click)="closeModal()">x</div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay"></div>

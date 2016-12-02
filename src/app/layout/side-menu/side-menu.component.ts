@@ -1,5 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UiStateService, AuthService, NotificationsService } from '../../services';
+import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
+import { DialogService } from '../dialog.service';
 
 @Component({
   selector: 'rump-side-menu',
@@ -7,7 +9,6 @@ import { UiStateService, AuthService, NotificationsService } from '../../service
   styleUrls: ['side-menu.component.scss']
 })
 export class SideMenuComponent implements OnInit {
-  @Output() navigateModal = new EventEmitter<any>();
   @Output() clickNotifications = new EventEmitter<string>();
   public selectedItem: string;
   private sub: any;
@@ -22,6 +23,7 @@ export class SideMenuComponent implements OnInit {
 
   constructor(private uiState: UiStateService,
               private _authSvc: AuthService,
+              private _dialogSvc: DialogService,
               private _notificationsSvc: NotificationsService) {}
 
   ngOnInit() {
@@ -69,5 +71,14 @@ export class SideMenuComponent implements OnInit {
 
   showNotificationsCentre() {
     this.clickNotifications.emit(`Show notifications.`);
+  }
+
+  displayConfirmDialog() {
+    this._dialogSvc.createDialog(DialogBoxComponent, {
+      buttons: [{
+        title: "Continue",
+        link: "https://marketsquare.hubofallthings.com/offers"
+      }]
+    })
   }
 }
