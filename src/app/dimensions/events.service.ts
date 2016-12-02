@@ -6,6 +6,8 @@ import { Event } from '../shared/interfaces';
 import { uniqBy } from 'lodash';
 import * as moment from 'moment';
 
+const DATE_REGEX = /^(\d{4})-(\d{1,2})-(\d{1,2})$/;
+
 @Injectable()
 export class EventsService {
   private events$: Subject<Array<Event>>;
@@ -28,7 +30,7 @@ export class EventsService {
 
     this.loadAll().subscribe(
       dataArray => {
-        const data = dataArray[0].concat(dataArray[1]);
+        const data = dataArray[0].concat(dataArray[1]).concat(dataArray[2]);
         const timeSortedData = data.sort((a, b) => a.start.isAfter(b.start) ? -1 : 1);
         this.store.events = timeSortedData;
         this.events$.next(this.store.events);
@@ -45,6 +47,11 @@ export class EventsService {
         .map(events => {
           let rumpEvents = events.map(this.fbMap);
           return uniqBy(rumpEvents, "id");
+        }),
+      this.loadFrom('google')
+        .map(events => {
+          let rumpEvents = events.map(this.googleMap);
+          return uniqBy(rumpEvents, "id");
         })
     );
   }
@@ -53,14 +60,14 @@ export class EventsService {
     return this.hat.getAllValuesOf('events', source);
   }
 
-  fbMap(event): Event {
+  private fbMap(event): Event {
     let newDataPoint = {
       id: event.data.events.id,
-      name: event.data.events.name,
+      title: event.data.events.name,
       description: event.data.events.description,
       start: moment(event.data.events.start_time),
       end: event.data.events.end_time ? moment(event.data.events.end_time) : null,
-      rsvp: event.data.events.rsvp_status,
+      allDay: false,
       calendarName: 'facebook'
     };
 
@@ -74,14 +81,27 @@ export class EventsService {
     return newDataPoint;
   }
 
-  icalMap(event): Event {
+  private icalMap(event): Event {
     return {
-      name: event.data.events.summary,
+      title: event.data.events.summary,
       description: event.data.events.description,
       start: moment(event.data.events.startDate),
       end: event.data.events.endDate ? moment(event.data.events.endDate) : null,
-      rsvp: 'unknown',
+      allDay: false,
       calendarName: event.data.events.calendarName
+    };
+  }
+
+  private googleMap(event): Event {
+    return {
+      id: event.data.events.id,
+      calendarName: 'google',
+      title: event.data.events.summary,
+      description: event.data.events.description,
+      start: moment(event.data.events.start.dateTime || event.data.events.start.date),
+      end: event.data.events.end ? moment(event.data.events.end.dateTime || event.data.events.end.date) : null,
+      allDay: event.data.events.end && event.data.events.end.date ? true : false,
+      link: event.data.events.htmlLink
     };
   }
 }

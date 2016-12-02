@@ -55,9 +55,12 @@ export class CalendarComponent implements OnInit {
     this.sub = this.eventsSvc.getEvents$().subscribe((events: Array<Event>)  => {
       this.events = events.map(dp => {
         return {
-          title: dp.name,
+          id: dp.id,
+          title: dp.title,
           start: dp.start.format(),
-          end: !!dp.end ? dp.end.format() : null
+          end: !!dp.end ? dp.end.format() : null,
+          allDay: dp.allDay,
+          url: dp.link
         };
       });
 
