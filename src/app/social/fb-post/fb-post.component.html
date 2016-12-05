@@ -7,14 +7,28 @@
     <img src="assets/icons/facebook-plug.png" class="img img-responsive source-header">
     <div class="header-content">
         <h3>{{post.application ? post.application : post.from}}</h3>
-        <span>Posted on {{post.createdTime | moment}},</span>
-        <span>privacy set to {{post.privacy.value | replaceChars}}</span>
+        <span>{{post.type === 'music.listens' ? "Listened" : "Posted"}} on {{post.createdTime | moment}},</span>
+        <span *ngIf="post.privacy">privacy set to {{post.privacy.value | replaceChars}}</span>
     </div>
 </div>
 
 <div [ngSwitch]="post.type">
   <div *ngSwitchCase="'status'" class="status-update">
     <p>{{post.content.message ? post.content.message : post.story}}</p>
+  </div>
+
+  <div *ngSwitchCase="'music.listens'" class="music-listen">
+    <p>You've listened to
+      <a href="{{post.data.song.url}}" target="_blank">{{post.data.song.title}}</a>
+      <span *ngIf="post.data.musician">
+        by <a href="{{post.data.musician.url}}" target="_blank">{{post.data.musician.title}}</a>
+      </span>
+      <span *ngIf="post.data.playlist">
+        from the
+        <a href="{{post.data.playlist.url}}" target="_blank">{{post.data.playlist.title}}</a>
+        playlist
+      </span>.
+    </p>
   </div>
 
   <div *ngSwitchCase="'photo'" class="photo-post">

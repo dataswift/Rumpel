@@ -15,7 +15,6 @@ export class SocialService {
     posts: Array<Post>;
     tableId: number;
   };
-  private tableVerified: boolean;
   private failedAttempts: number;
 
   constructor(private hat: HatApiService) {
@@ -23,7 +22,6 @@ export class SocialService {
       posts: [],
       tableId: null
     };
-    this.tableVerified = false;
     this.failedAttempts = 0;
 
     this._socialFeed$ = <Subject<Post[]>>new Subject();
@@ -37,11 +35,10 @@ export class SocialService {
       this.pushToStream();
     } else if (this.store.tableId) {
       this.hat.getValuesWithLimit(this.store.tableId)
-        .map((posts: Array<Post>) => {
-          let rumpPosts = posts.map(this.fbMap);
+        .map((rawPosts: any[]) => {
+          let rumpPosts = rawPosts.map(this.fbMap);
           return uniqBy(rumpPosts, "id");
         })
-        .map((posts: Array<Post>) => posts.sort((a, b) => a.createdTime.isAfter(b.createdTime) ? -1 : 1))
         .subscribe(posts => {
           this.store.posts = posts;
 
@@ -109,10 +106,9 @@ export class SocialService {
     this.hat.getTable('posts', 'facebook')
       .subscribe(table => {
         if (table === "Not Found") {
-          this.tableVerified = false;
+          console.log("Facebook posts table was not found.");
         } else if (table.id) {
           this.store.tableId = table.id;
-          this.tableVerified = true;
         }
       });
   }

@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '../social.service';
-import { Post } from '../../shared/interfaces';
+import { Post, MusicListen } from '../../shared/interfaces';
+import { Subscription } from "rxjs";
+import {MediaService} from "../../services/media.service";
 
 @Component({
   selector: 'rump-social',
@@ -9,41 +11,58 @@ import { Post } from '../../shared/interfaces';
   styleUrls: ['social.component.scss']
 })
 export class SocialComponent implements OnInit, OnDestroy {
-  public posts: Array<Post>;
+  private posts: Array<any>;
   private filter: string;
-  private postId: string;
-  private svcSub: any;
+  private svcSub: Subscription;
+  private musicSub: Subscription;
 
   constructor(private socialSvc: SocialService,
+              private mediaSvc: MediaService,
               private route: ActivatedRoute) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.posts = [];
     this.filter = '';
 
-    this.route.fragment.subscribe(postId => {
-      this.postId = postId;
+    this.svcSub = this.socialSvc.socialFeed$.subscribe((posts: Post[]) => {
+      this.posts = this.posts.concat(posts);
+
+      this.sortPostsByDate();
+      this.scrollToPost();
     });
 
-    this.svcSub = this.socialSvc.socialFeed$.subscribe(posts => {
-      this.posts = posts;
+    this.musicSub = this.mediaSvc.musicListens$.subscribe((listens: MusicListen[]) => {
+      this.posts = this.posts.concat(listens);
 
-      setTimeout(() => {
-        if (this.postId && this.postId.length > 0) {
-          var element = document.getElementById(this.postId);
-          element.scrollIntoView();
-        }
-      }, 5);
+      this.sortPostsByDate();
+      this.scrollToPost();
     });
 
     this.socialSvc.getRecentPosts();
+    this.mediaSvc.getRecentMusicListens();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.svcSub.unsubscribe();
+    this.musicSub.unsubscribe();
   }
 
-  filterBy(source: string) {
+  filterBy(source: string): void {
     this.filter = source;
+  }
+
+  private sortPostsByDate(): void {
+    this.posts = this.posts.sort((a, b) => a.createdTime.isAfter(b.createdTime) ? -1 : 1);
+  }
+
+  private scrollToPost(): void {
+    const fragmentFound = this.route.snapshot.fragment;
+
+    if (fragmentFound) {
+      setTimeout(() => {
+        var element = document.getElementById(fragmentFound);
+        element.scrollIntoView();
+      }, 5);
+    }
   }
 }

@@ -1,35 +1,58 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { SocialService } from '../social.service';
-import { Post } from '../../shared/interfaces';
+import { Post, MusicListen } from '../../shared/interfaces';
+import { MediaService } from "../../services/media.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'rump-tile-social',
   templateUrl: 'tile-social.component.html',
   styleUrls: ['tile-social.component.scss']
 })
-export class TileSocialComponent implements OnInit {
-  public posts: Array<Post>;
+export class TileSocialComponent implements OnInit, OnDestroy {
+  private posts: Array<Post|MusicListen>;
+  private postsSub: Subscription;
+  private musicSub: Subscription;
 
   constructor(private socialSvc: SocialService,
+              private mediaSvc: MediaService,
               private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.posts = [];
 
-    this.socialSvc.socialFeed$.subscribe(posts => {
-      this.posts = posts;
+    this.postsSub = this.socialSvc.socialFeed$.subscribe((posts: Post[]) => {
+      this.posts = this.posts.concat(posts);
+
+      this.sortPostsByDate();
     });
 
+    this.musicSub = this.mediaSvc.musicListens$.subscribe((listens: MusicListen[]) => {
+      this.posts = this.posts.concat(listens);
+
+      this.sortPostsByDate();
+    });
+
+    this.mediaSvc.getRecentMusicListens();
     this.socialSvc.getRecentPosts();
   }
 
-  navigateToFullPost(id: string) {
+  ngOnDestroy(): void {
+    this.postsSub.unsubscribe();
+    this.musicSub.unsubscribe();
+  }
+
+  navigateToFullPost(id: string): void {
     let navigationExtras: NavigationExtras = {
       fragment: id,
       preserveFragment: false
     };
 
     this.router.navigate(['social'], navigationExtras);
+  }
+
+  private sortPostsByDate(): void {
+    this.posts = this.posts.sort((a, b) => a.createdTime.isAfter(b.createdTime) ? -1 : 1);
   }
 }

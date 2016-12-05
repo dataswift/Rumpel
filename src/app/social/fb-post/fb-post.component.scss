@@ -1,5 +1,7 @@
 .post-header {
   .header-content {
+    min-height: 3em;
+
     h3 {
       font-size: 1.4em;
       margin: 0;
@@ -44,6 +46,17 @@
 .status-update {
   padding: 1em;
   font-size: 1.2em;
+}
+
+.music-listen {
+  padding: 1em;
+  font-size: 1.2em;
+
+  a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #909090;
+  }
 }
 
 .photo-post {

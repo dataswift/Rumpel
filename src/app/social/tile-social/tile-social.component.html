@@ -9,10 +9,19 @@
             <img src="assets/icons/facebook-icon.png" class="img img-responsive">
           </div>
 
-          <div class="col-xs-9 center-column">
+          <div class="col-xs-9 center-column" *ngIf="post.type !== 'music.listens'">
             <h4>{{post.story ? post.story : post.statusType | replaceChars}}</h4>
             <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:140}}</p>
             <p>Posted {{post.createdTime | moment}}</p>
+          </div>
+
+          <div class="col-xs-9 center-column" *ngIf="post.type === 'music.listens'">
+            <h4>Music Listen</h4>
+            <p>Played {{post.data.song.title}}
+              <span *ngIf="post.data.musician">by {{post.data.musician.title}}</span>
+              <span *ngIf="post.data.playlist">from the {{post.data.playlist.title}} playlist</span>.
+            </p>
+            <p>On {{post.createdTime | moment}}</p>
           </div>
 
           <div class="col-xs-1 right-column">

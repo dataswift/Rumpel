@@ -4,3 +4,4 @@ export { UiStateService } from './ui-state.service';
 export { RumpelService } from './rumpel.service';
 export { DataPlugService } from './data-plug.service';
 export { NotificationsService } from './notifications.service';
+export { MediaService } from './media.service';
