@@ -47,7 +47,7 @@ export class NotablesViewComponent implements OnInit {
 
     Observable.forkJoin(
       this.profilesSvc.getPicture(),
-      this.profilesSvc.getFullProfile()
+      this.profilesSvc.data$
     ).subscribe(results => {
       this.profile = {
         photo: {
@@ -57,6 +57,7 @@ export class NotablesViewComponent implements OnInit {
       };
     });
 
+    this.profilesSvc.getRecentData();
     this.notablesSvc.getRecentNotables();
   }
 

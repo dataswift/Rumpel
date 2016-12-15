@@ -13,8 +13,10 @@ export class TileProfileComponent implements OnInit {
   constructor(private profilesSvc: ProfilesService) {}
 
   ngOnInit() {
-    this.profilesSvc.getFullProfile().subscribe(profile => {
-      if (profile) this.profile = profile;
+    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+      if (profileSnapshots.length > 0) {
+        this.profile = profileSnapshots[0];
+      }
     });
 
     this.profile = {
@@ -43,6 +45,8 @@ export class TileProfileComponent implements OnInit {
                           relationship: '', private: true },
       about: { title: '', body: '', private: true }
     };
+
+    this.profilesSvc.getRecentData();
   }
 
 }

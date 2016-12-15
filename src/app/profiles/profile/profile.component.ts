@@ -10,7 +10,6 @@ import { Profile } from '../../shared/interfaces/profile.interface';
   styleUrls: ['profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  private hatIdMapping: any;
   public profile: Profile;
   public profilePhoto: any;
   public hatUrl: string;
@@ -24,12 +23,10 @@ export class ProfileComponent implements OnInit {
     this.uiMessageHidden = true;
     this.hatUrl = this.hat.getUrl();
     this.profilePhoto = {};
-    this.profilesSvc.initializeProfile().subscribe(hatIdMapping => {
-      this.hatIdMapping = hatIdMapping;
-
-      this.profilesSvc.getFullProfile().subscribe((profile: Profile) => {
-        if (profile) this.profile = profile;
-      });
+    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+      if (profileSnapshots.length > 0) {
+        this.profile = profileSnapshots[0];
+      }
     });
 
     this.profilesSvc.getPicture().subscribe(
@@ -65,18 +62,16 @@ export class ProfileComponent implements OnInit {
                           relationship: '', private: true },
       about: { title: '', body: '', private: true }
     };
+
+    this.profilesSvc.getRecentData();
   }
 
   submitForm(event) {
     event.preventDefault();
-    this.profilesSvc.saveProfile(this.profile, this.hatIdMapping).subscribe(savedPosts => {
-      this.uiMessageHidden = false;
-      this.profilesSvc.getFullProfile().subscribe((profile: Profile) => {
-        console.log(profile);
-        if (profile) this.profile = profile;
-      });
-      setTimeout(() => this.uiMessageHidden = true, 5000);
-    });
+    this.profilesSvc.postData(this.profile, 'profile');
+    // TODO: UI messages should be initialized from the service
+    this.uiMessageHidden = false;
+    setTimeout(() => this.uiMessageHidden = true, 5000);
   }
 
   discardChanges() {

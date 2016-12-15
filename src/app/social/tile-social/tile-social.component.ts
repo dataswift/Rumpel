@@ -28,13 +28,13 @@ export class TileSocialComponent implements OnInit, OnDestroy {
       this.sortPostsByDate();
     });
 
-    this.musicSub = this.mediaSvc.musicListens$.subscribe((listens: MusicListen[]) => {
+    this.musicSub = this.mediaSvc.data$.subscribe((listens: MusicListen[]) => {
       this.posts = this.posts.concat(listens);
 
       this.sortPostsByDate();
     });
 
-    this.mediaSvc.getRecentMusicListens();
+    this.mediaSvc.getRecentData();
     this.socialSvc.getRecentPosts();
   }
 

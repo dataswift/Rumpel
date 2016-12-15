@@ -31,7 +31,7 @@ export class SocialComponent implements OnInit, OnDestroy {
       this.scrollToPost();
     });
 
-    this.musicSub = this.mediaSvc.musicListens$.subscribe((listens: MusicListen[]) => {
+    this.musicSub = this.mediaSvc.data$.subscribe((listens: MusicListen[]) => {
       this.posts = this.posts.concat(listens);
 
       this.sortPostsByDate();
@@ -39,7 +39,7 @@ export class SocialComponent implements OnInit, OnDestroy {
     });
 
     this.socialSvc.getRecentPosts();
-    this.mediaSvc.getRecentMusicListens();
+    this.mediaSvc.getRecentData();
   }
 
   ngOnDestroy(): void {

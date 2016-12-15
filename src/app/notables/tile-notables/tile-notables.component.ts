@@ -33,7 +33,7 @@ export class TileNotablesComponent implements OnInit {
 
     Observable.forkJoin(
       this.profilesSvc.getPicture(),
-      this.profilesSvc.getFullProfile()
+      this.profilesSvc.data$
     ).subscribe(results => {
       this.profile = {
         photo: {
@@ -43,6 +43,7 @@ export class TileNotablesComponent implements OnInit {
       };
     });
 
+    this.profilesSvc.getRecentData();
     this.notablesSvc.getRecentNotables();
   }
 
