@@ -7,6 +7,7 @@ export interface IAppConfig {
   market: { url: string; id: string; accessToken: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
+  notables: { marketSquareOfferId: string };
 }
 
 export const AppConfig: IAppConfig = {
@@ -21,5 +22,8 @@ export const AppConfig: IAppConfig = {
   },
   twitter: {
     shareUrl: 'https://twitter.com/intent/tweet?url='
+  },
+  notables: {
+    marketSquareOfferId: '32dde42f-5df9-4841-8257-5639db222e41'
   }
 };

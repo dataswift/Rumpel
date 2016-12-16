@@ -6,6 +6,7 @@ import { APP_CONFIG, IAppConfig } from '../app.config';
 import { HatApiService } from '../services/hat-api.service';
 
 import * as moment from 'moment';
+import {MSUserClaim} from "../shared/interfaces/MSUserClaim.interface";
 
 @Injectable()
 export class MarketSquareService {
@@ -64,18 +65,27 @@ export class MarketSquareService {
       });
   }
 
-  getOffer(id: string) {
+  getOffer(id: string): Observable<MSUserClaim> {
     const url = this.config.market.url + '/offer/' + id + '/userClaim';
     return this.getMarketSquareApplicationToken()
-      .flatMap(headers => this.http.get(url, { headers: headers, body: '' }).map(res => res.json()))
-      .catch(err => Observable.of({ error: "Offer not found." }));
+      .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
+      .map(res => res.json()))
+      .catch(res => {
+        console.log("Failed to get offer information", res);
+        return Observable.of({});
+      })
   }
 
   claimOffer(id: string) {
     const url = this.config.market.url + '/offer/' + id + '/claim';
 
     return this.getMarketSquareApplicationToken()
-      .flatMap(headers => this.http.get(url, { headers: headers, body: '' }).map(res => res.json()));
+      .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
+      .map(res => res.json()))
+      .catch(res => {
+        console.log("Failed to claim data offer on user's behalf", res);
+        return Observable.of({});
+      });
   }
 
   getDataPlugs(): Observable<any> {

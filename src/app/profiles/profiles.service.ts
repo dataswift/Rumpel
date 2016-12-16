@@ -11,7 +11,7 @@ export class ProfilesService extends BaseRumpelDataService<Profile> {
               private auth: AuthService) {
     super(hat);
 
-    this.ensureTableExists('profile', 'rumpel', ProfileHatModel.model)
+    this.ensureTableExists('profile', 'rumpel', ProfileHatModel.model);
   }
 
   getPicture() {

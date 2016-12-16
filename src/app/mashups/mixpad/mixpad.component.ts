@@ -63,7 +63,7 @@ export class MixpadComponent implements OnInit {
       this.locations = locations;
     });
 
-    this.notablesSvc.notables$.subscribe(notables => {
+    this.notablesSvc.data$.subscribe(notables => {
       this.addDatesToTimeline(notables, 'created_time');
       this.notables = notables;
     });
@@ -72,7 +72,7 @@ export class MixpadComponent implements OnInit {
     this.locationsSvc.getRecentLocations();
     this.photosSvc.getRecentPhotos();
     this.eventsSvc.showAll();
-    this.notablesSvc.getRecentNotables();
+    this.notablesSvc.getRecentData();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('73em');
   }

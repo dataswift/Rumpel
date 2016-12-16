@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewContainerRef} from '@angular/core';
-import { Observable } from 'rxjs/Rx';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
-import { Notable } from '../../shared/interfaces';
+import { Notable, Profile } from '../../shared/interfaces';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import set = Reflect.set;
@@ -41,24 +40,29 @@ export class NotablesViewComponent implements OnInit {
       blog: 'write'
     };
 
-    this.notablesSvc.notables$.subscribe(notables => {
+    this.notablesSvc.data$.subscribe((notables: Notable[]) => {
       this.notables = notables;
     });
 
-    Observable.forkJoin(
-      this.profilesSvc.getPicture(),
-      this.profilesSvc.data$
-    ).subscribe(results => {
-      this.profile = {
-        photo: {
-          url: results[0] ? results[0].url : '',
-          shared: results[1] ? results[1].fb_profile_photo.private === 'false' : false
-        }
-      };
+    this.profile = {
+      photo: { url: "", shared: false }
+    };
+
+    this.profilesSvc.getPicture().subscribe(result => {
+      if (result && result.url) {
+        this.profile.photo.url = result.url;
+      }
+    });
+
+    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+      let latestSnapshot = profileSnapshots[0];
+      if (latestSnapshot && latestSnapshot.fb_profile_photo) {
+        this.profile.photo.shared = !latestSnapshot.fb_profile_photo.private;
+      }
     });
 
     this.profilesSvc.getRecentData();
-    this.notablesSvc.getRecentNotables();
+    this.notablesSvc.getRecentData();
   }
 
   filterBy(category: string) {

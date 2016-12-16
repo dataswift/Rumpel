@@ -157,6 +157,12 @@ export class HatApiService {
         .map(res => res.json());
   }
 
+  getSlimDataDebit(uuid: string): Observable<DataDebit> {
+    const url = this._baseUrl + '/dataDebit/' + uuid;
+    return this._http.get(url, { headers: this._headers, body: '' })
+      .map(res => res.json())
+  }
+
   getDataDebit(uuid: string) {
     const url = this._baseUrl + '/dataDebit/' + uuid + '/values?limit=0&starttime=0';
     return this._http.get(url, { headers: this._headers, body: '' })

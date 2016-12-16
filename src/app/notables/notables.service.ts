@@ -1,33 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Subject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from '../services/hat-api.service';
 import { DataPlugService } from '../services/data-plug.service';
 import { MarketSquareService } from '../market-square/market-square.service';
 
+import { APP_CONFIG, IAppConfig } from '../app.config'
 import { NotablesHatModel } from './notables.hatmodel';
-import { Notable } from '../shared/interfaces';
+import { Notable, MSUserClaim, DataDebit } from '../shared/interfaces';
 
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
 
 @Injectable()
-export class NotablesService {
-  private store: {
-    notables: Array<Notable>;
-    idMapping: any;
-    tableId: number;
-  };
-  private tableVerified: boolean;
-  private failedAttempts: number;
-
+export class NotablesService extends BaseRumpelDataService<Notable> {
   public notablesState: {
     allowedActions?: { canPost: boolean, canExpire: boolean };
     notablesOfferClaimed?: boolean;
     dataDebit?: { confirmed: boolean; id: string; dateCreated: Moment; };
   };
-
-  private _notables$: Subject<Notable[]>;
-  public notables$: Observable<Notable[]>;
 
   private _editedNotable$: ReplaySubject<Notable>;
   public editedNotable$: Observable<Notable>;
@@ -35,26 +26,17 @@ export class NotablesService {
   private _notablesMeta$: BehaviorSubject<any>;
   public notablesMeta$: Observable<any>;
 
-  constructor(private hat: HatApiService,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              hat: HatApiService,
               private market: MarketSquareService,
               private dataPlug: DataPlugService) {
-
-    this.store = {
-      notables: [],
-      idMapping: {},
-      tableId: null
-    };
-
-    this.tableVerified = false;
-    this.failedAttempts = 0;
+    super(hat);
 
     this.notablesState = {
       allowedActions: { canPost: false, canExpire: false },
-      notablesOfferClaimed: false
+      notablesOfferClaimed: false,
+      dataDebit: { confirmed: false, id: "", dateCreated: moment() }
     };
-
-    this._notables$ = <Subject<Notable[]>>new Subject();
-    this.notables$ = this._notables$.asObservable();
 
     this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject();
     this.editedNotable$ = this._editedNotable$.asObservable();
@@ -62,22 +44,9 @@ export class NotablesService {
     this._notablesMeta$ = <BehaviorSubject<any>>new BehaviorSubject(this.notablesState);
     this.notablesMeta$ = this._notablesMeta$.asObservable();
 
-    this.verifyTableExists().subscribe(idMapping => {
-      // TODO: service currently does not retrieve table ID when the HAT model is posted for the first time
-      this.tableVerified = true;
-      this.store.idMapping = idMapping;
-    });
+    this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
 
-    this.market.getOffer('32dde42f-5df9-4841-8257-5639db222e41')
-      .subscribe(offerInfo => {
-        this.notablesState.notablesOfferClaimed = !offerInfo.error;
-        this.notablesState.dataDebit = {
-          confirmed: offerInfo.confirmed,
-          id: offerInfo.dataDebitId,
-          dateCreated: moment(offerInfo.dateCreated)
-        };
-        this._notablesMeta$.next(this.notablesState);
-      });
+    this.updateNotablesState();
 
     this.dataPlug.getFacebookTokenInfo().subscribe(tokenInfo => {
       if (!tokenInfo.error) {
@@ -91,41 +60,42 @@ export class NotablesService {
     });
   }
 
-  verifyTableExists() {
-    if (this.tableVerified) {
-      return Observable.of(this.store.idMapping);
-    }
-
-    return this.hat.getTable('notablesv1', 'rumpel')
-      .flatMap(table => {
-        if (table === "Not Found") {
-          return this.hat.postModel(NotablesHatModel.model);
+  updateNotablesState(): void {
+    this.getUserClaim()
+      .subscribe((offerInfo: MSUserClaim) => {
+        if (offerInfo.dataDebitId) {
+          this.notablesState.notablesOfferClaimed = true;
+          this.notablesState.dataDebit = {
+            id: offerInfo.dataDebitId,
+            confirmed: offerInfo.confirmed,
+            dateCreated: moment(offerInfo.dateCreated)
+          };
         } else {
-          this.store.tableId = table.id;
-          return this.hat.getModelMapping(table.id);
+          this.notablesState.notablesOfferClaimed = false;
         }
+
+        this._notablesMeta$.next(this.notablesState);
       });
+
   }
 
-  getRecentNotables() {
-    if (this.store.notables.length > 0) {
-      this.pushToStream();
-    } else if (this.store.tableId) {
-      this.hat.getValuesWithLimit(this.store.tableId)
-        .map(notables => {
-          return notables.map(notable => {
-            return new Notable(notable.data['notablesv1'], notable.id);
-          });
-        })
-        .subscribe(notables => {
-          this.store.notables = notables;
-
-          this.pushToStream();
-        });
-    } else if (this.failedAttempts <= 10) {
-      this.failedAttempts++;
-      return Observable.timer(75).subscribe(() => this.getRecentNotables());
-    }
+  private getUserClaim(): Observable<MSUserClaim> {
+    return this.market.getOffer(this.config.notables.marketSquareOfferId)
+      .flatMap((offerInfo: MSUserClaim)  => {
+        if (offerInfo.confirmed) {
+          return Observable.of(offerInfo);
+          // If the MaketSquare reports offer as unconfirmed, check its status on the HAT
+          // For the initial 30 mins after offer confirmation MarketSquare can report it as unconfirmed
+        } else if (offerInfo.dataDebitId) {
+          return this.hat.getSlimDataDebit(offerInfo.dataDebitId)
+            .map((ddInfo: DataDebit) => {
+              offerInfo.confirmed = ddInfo.enabled;
+              return offerInfo;
+            });
+        } else {
+          return Observable.of({});
+        }
+      });
   }
 
   updateNotable(data) {
@@ -134,10 +104,10 @@ export class NotablesService {
     this.hat.deleteRecord(data.id)
         .flatMap(responseMessage => {
           if (responseMessage.message.indexOf("deleted") > -1) {
-            let foundNoteIndex = this.store.notables.findIndex(note => note.id === data.id);
+            let foundNoteIndex = this.store.data.findIndex(note => note.id === data.id);
 
             if (foundNoteIndex > -1) {
-              this.store.notables.splice(foundNoteIndex, 1);
+              this.store.data.splice(foundNoteIndex, 1);
             }
           }
 
@@ -146,7 +116,7 @@ export class NotablesService {
           return this.hat.postRecord(data, this.store.idMapping, 'notablesv1');
         })
         .subscribe(recordArray => {
-          this.store.notables.unshift(new Notable(data, recordArray[0].record.id));
+          this.store.data.unshift(new Notable(data, recordArray[0].record.id));
 
           this.pushToStream();
         });
@@ -156,7 +126,7 @@ export class NotablesService {
     data.shared_on = data.shared_on.join(",");
     this.hat.postRecord(data, this.store.idMapping, 'notablesv1')
       .subscribe(recordArray => {
-        this.store.notables.unshift(new Notable(data, recordArray[0].record.id));
+        this.store.data.unshift(new Notable(data, recordArray[0].record.id));
 
         this.pushToStream();
       });
@@ -169,9 +139,9 @@ export class NotablesService {
   deleteNotable(id: number) {
     this.hat.deleteRecord(id).subscribe(responseMessage => {
       if (responseMessage.message.indexOf("deleted") > -1) {
-        let foundNoteIndex = this.store.notables.findIndex(note => note.id === id);
+        let foundNoteIndex = this.store.data.findIndex(note => note.id === id);
         if (foundNoteIndex > -1) {
-          this.store.notables.splice(foundNoteIndex, 1);
+          this.store.data.splice(foundNoteIndex, 1);
 
           this.pushToStream();
         }
@@ -179,16 +149,14 @@ export class NotablesService {
     });
   }
 
-  claimNotablesOffer() {
-    return this.market.claimOffer('32dde42f-5df9-4841-8257-5639db222e41');
+  mapData(rawNotable: any): Notable {
+    return new Notable(rawNotable.data["notablesv1"], rawNotable.id);
   }
 
-  updateDataDebitInfo(update: { id: string; confirmed: boolean; dateCreated: Moment; }) {
-    this.notablesState.dataDebit = update;
-    this._notablesMeta$.next(this.notablesState);
-  }
-
-  private pushToStream() {
-    this._notables$.next(this.store.notables);
+  setupNotablesService(): Observable<DataDebit> {
+    return this.market.claimOffer(this.config.notables.marketSquareOfferId)
+      .flatMap((offerInfo: MSUserClaim) => {
+        return this.hat.updateDataDebit(offerInfo.dataDebitId, 'enable')
+      });
   }
 }

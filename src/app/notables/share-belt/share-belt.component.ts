@@ -20,6 +20,7 @@ export class ShareBeltComponent implements OnInit {
   private services: any[];
   private notablesState: {
     notablesOfferClaimed: boolean;
+    userMessage: string;
     dataDebit: { confirmed: boolean; id: string; dateCreated: Moment; };
     allowedActions: { canPost: boolean; canExpire: boolean };
     phata: string;
@@ -29,9 +30,7 @@ export class ShareBeltComponent implements OnInit {
 
   @Output() serviceToggled: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private notablesSvc: NotablesService,
-              private _hatSvc: HatApiService,
-              private router: Router) { }
+  constructor(private notablesSvc: NotablesService) { }
 
   ngOnInit() {
     this.showError = false;
@@ -51,6 +50,7 @@ export class ShareBeltComponent implements OnInit {
 
     this.notablesSvc.notablesMeta$.subscribe(notablesState => {
       this.notablesState = notablesState;
+      this.displayMessage = "";
     });
   }
 
@@ -67,28 +67,15 @@ export class ShareBeltComponent implements OnInit {
 
   }
 
-  claimNotablesOffer() {
-    this.notablesState.notablesOfferClaimed = true;
+  claimNotablesOffer(): void {
     this.displayMessage = "Processing... please wait.";
-    this.notablesSvc.claimNotablesOffer().subscribe(resBody => {
-      this.notablesState.dataDebit.id = resBody.dataDebitId;
-      // this.router.navigate(['/dataDebit', this.notablesState.dataDebit.id, 'confirm']);
-      this.confirmNotablesDataDebit();
+    this.notablesSvc.setupNotablesService().subscribe(res => {
+      this.notablesState.notablesOfferClaimed = true;
+      this.notablesSvc.updateNotablesState();
     });
   }
 
-  confirmNotablesDataDebit() {
-    this._hatSvc.updateDataDebit(this.notablesState.dataDebit.id, 'enable').subscribe(res => {
-      let response = res.json();
-      let update = {
-        id: response.key,
-        confirmed: response.enabled,
-        dateCreated: moment(response.dateCreated)
-      }
-
-      this.notablesSvc.updateDataDebitInfo(update);
-
-      this.displayMessage = "";
-    });
+  confirmNotablesDataDebit(): void {
+    this.displayMessage = "Confirming the data debit";
   }
 }
