@@ -10,6 +10,7 @@ import { Notable, MSUserClaim, DataDebit } from '../shared/interfaces';
 
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import { cloneDeep } from 'lodash';
 import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
 
 @Injectable()
@@ -98,25 +99,26 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
       });
   }
 
-  updateNotable(data) {
-    data.shared_on = data.shared_on.join(",");
+  updateNotable(notable: Notable): void {
+    var editedNotable = cloneDeep(notable);
+    editedNotable.shared_on = editedNotable.shared_on.join(",");
 
-    this.hat.deleteRecord(data.id)
+    this.hat.deleteRecord(editedNotable.id)
         .flatMap(responseMessage => {
           if (responseMessage.message.indexOf("deleted") > -1) {
-            let foundNoteIndex = this.store.data.findIndex(note => note.id === data.id);
+            let foundNoteIndex = this.store.data.findIndex(note => note.id === editedNotable.id);
 
             if (foundNoteIndex > -1) {
               this.store.data.splice(foundNoteIndex, 1);
             }
           }
 
-          delete data.id;
+          delete editedNotable.id;
 
-          return this.hat.postRecord(data, this.store.idMapping, 'notablesv1');
+          return this.hat.postRecord(editedNotable, this.store.idMapping, 'notablesv1');
         })
         .subscribe(recordArray => {
-          this.store.data.unshift(new Notable(data, recordArray[0].record.id));
+          this.store.data.unshift(new Notable(editedNotable, recordArray[0].record.id));
 
           this.pushToStream();
         });
