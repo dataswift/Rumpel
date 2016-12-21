@@ -21,7 +21,7 @@
             <h5>{{notable.authorv1 ? notable.authorv1.phata : ''}}</h5>
             <span>Logged {{notable.created_time | moment}}</span>
             &nbsp;&#9679;&nbsp;
-            <span>{{notable.isShared() ? 'SHARED' : 'PRIVATE'}}</span>
+            <span>{{notable.isShared ? 'SHARED' : 'PRIVATE'}}</span>
           </div>
         </div>
 

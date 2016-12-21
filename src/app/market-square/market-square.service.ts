@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import {Http, Headers, URLSearchParams, Response} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { JwtHelper } from 'angular2-jwt';
 import { APP_CONFIG, IAppConfig } from '../app.config';
@@ -131,6 +131,22 @@ export class MarketSquareService {
           return headers;
         });
     }
+  }
+
+  tickle(): void {
+    const hatDomain = this.hat.getDomain();
+    const url = this.config.market.url + "/bulletin/tickle";
+
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let query = new URLSearchParams();
+    query.append('phata', hatDomain);
+
+    this.http.get(url, { headers: headers, search: query, body: '' })
+      .subscribe((res: Response) => {
+        console.log("MarketSquare tickled", res);
+      });
   }
 
   /*

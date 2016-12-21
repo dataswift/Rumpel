@@ -1,15 +1,16 @@
 import { Location } from './location.interface';
+import { Moment } from 'moment';
 import * as moment from 'moment';
 
 export class Notable {
   public id: number;
   public message: string;
   public kind: string;
-  private created_time: any;
-  private updated_time: any;
+  private created_time: Moment;
+  private updated_time: Moment;
   private shared: boolean;
-  private public_until: string;
-  public shared_on: any;
+  private public_until: Moment;
+  public shared_on: Array<string>;
 
   public authorv1: {
     id?: string;
@@ -36,8 +37,8 @@ export class Notable {
       this.kind = options.kind;
       this.created_time = moment(options.created_time);
       this.updated_time = moment(options.updated_time);
-      this.public_until = options.public_until || '';
-      this.shared = options.shared === 'true' || options.shared === true;
+      this.public_until = options.public_until ? moment(options.public_until) : null;
+      this.shared = options.shared === "true" || options.shared === true;
       this.shared_on = options.shared_on ? options.shared_on.split(",") : [];
 
       if (options.locationv1) {
@@ -54,57 +55,45 @@ export class Notable {
     } else {
       this.message = '';
       this.kind = 'note';
-      this.created_time = null;
-      this.updated_time = null;
-      this.public_until = '';
+      this.created_time = moment();
+      this.updated_time = moment();
+      this.public_until = null;
       this.shared = false;
       this.shared_on = [];
     }
   }
 
-  isShared(): boolean {
+  get isShared(): boolean {
     return this.shared;
   }
 
-  share() {
-    this.shared = true;
+  toggleSharing() {
+    this.shared = !this.shared;
   }
 
-  makePrivate() {
-    this.shared = false;
-    this.shared_on = [];
-    this.public_until = '';
+  addShareDestination(destination: string) {
+    this.shared_on.push(destination);
   }
 
-  shareOn(serviceName: string) {
-    this.shared_on.push(serviceName);
-  }
-
-  stopSharingOn(serviceName: string) {
-    let index = this.shared_on.indexOf(serviceName);
+  removeShareDestination(destination: string) {
+    let index = this.shared_on.indexOf(destination);
 
     if (index > -1) {
       this.shared_on.splice(index, 1);
     }
   }
 
-  isExpired(): boolean {
-    return this.public_until !== '';
-  }
-
   setExpirationDate(days: number) {
     if (days === 0) {
-      this.public_until = '';
+      this.public_until = null;
     } else {
-      this.public_until = moment().add(days, "days").format();
+      this.public_until = moment().add(days, "days");
     }
   }
 
   prepareToPost(message: string, author: any) {
     this.message = message;
-    this.created_time = this.created_time ? this.created_time.format() : moment().format();
-    this.updated_time = moment().format();
-
+    this.updated_time = moment();
     this.authorv1 = author;
   }
 }

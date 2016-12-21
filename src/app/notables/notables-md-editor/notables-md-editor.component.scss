@@ -80,6 +80,10 @@
     margin: 0 0.5em;
     border: 2px solid white;
     border-radius: 0;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .arrow-down {
@@ -101,4 +105,16 @@
 
 .action-buttons {
   float: right;
+}
+
+.share-for-bubble {
+  border: 1px solid #ffffff;
+  border-radius: 1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+
+  &.selected {
+    background-color: white;
+    color: #009688;
+  }
 }

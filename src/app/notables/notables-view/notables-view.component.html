@@ -22,7 +22,7 @@
     <ul>
       <li *ngFor="let notable of notables | filterBy:'kind':filter" class="notable-item placeholder">
         <div class="additional-info">
-          <ul class="shared-list">
+          <ul class="shared-list" *ngIf="notable.isShared">
             <li *ngFor="let service of notable.shared_on" class="shared-item">
               <img src="{{ASSET_MAP[service]}}" class="shared-icon">
             </li>
@@ -36,8 +36,10 @@
           <div class="header-content">
             <h5>{{notable.authorv1.phata}}</h5>
             <span>Logged {{notable.created_time | moment}}</span>
-            <span>{{notable.isShared() ? 'SHARED ' : 'PRIVATE'}}</span>
-            <span *ngIf="notable.isShared()">{{notable.public_until === '' ? ' forever' : ', expires ' + (notable.public_until | relativeTime) }}</span>
+            <span *ngIf="!notable.isShared">PRIVATE</span>
+            <span *ngIf="notable.isShared">
+              SHARED{{notable.public_until === null ? ' forever' : notable.public_until.isBefore() ? ', expired' : ', expires ' + (notable.public_until | relativeTime) }}
+            </span>
           </div>
         </div>
         <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>

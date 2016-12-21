@@ -46,11 +46,11 @@ export class InputBoxComponent implements OnInit {
 
   togglePrivacy() {
     if (this.shared) {
-      this.currentNotable.makePrivate();
+      this.currentNotable.toggleSharing();
       this.shared = false;
       this.expires = false;
     } else {
-      this.currentNotable.share();
+      this.currentNotable.toggleSharing();
       this.shared = true;
       this.currentNotable.message = this.message;
       this.notableSvc.editNotable(this.currentNotable);

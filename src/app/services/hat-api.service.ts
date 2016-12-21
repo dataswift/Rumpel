@@ -182,6 +182,20 @@ export class HatApiService {
     return this._http.put(url, {}, { headers: this._headers });
   }
 
+  static stringify(value: any): string {
+    if (typeof value === 'string') {
+      return value;
+    } else if (value === null) {
+      return "";
+    } else if (moment.isMoment(value)) {
+      return value.format();
+    } else if (Array.isArray(value)) {
+      return value.join(",");
+    } else {
+      return "" + value;
+    }
+  }
+
   private createRecord(obj: any, hatIdMapping: any, prefix: string) {
     if (Array.isArray(obj)) {
       return obj.map(record => {
@@ -200,12 +214,12 @@ export class HatApiService {
 
   private createValue(obj: any, hatIdMapping: any, prefix: string = 'default') {
     return Object.keys(obj).reduce((acc, key) => {
-      if (typeof obj[key] === 'object') {
+      if (typeof obj[key] === 'object' && obj[key] !== null && !moment.isMoment(obj[key]) && !Array.isArray(obj[key])) {
         const subTreeValues = this.createValue(obj[key], hatIdMapping, prefix + '_' + key);
         acc = acc.concat(subTreeValues);
       } else {
         acc.push({
-          value: '' + obj[key],
+          value: HatApiService.stringify(obj[key]),
           field: {
             id: hatIdMapping[prefix + '_' + key],
             name: key

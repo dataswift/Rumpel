@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
-import { BehaviorSubject, Subject, Observable, ReplaySubject } from 'rxjs/Rx';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from '../services/hat-api.service';
 import { DataPlugService } from '../services/data-plug.service';
 import { MarketSquareService } from '../market-square/market-square.service';
@@ -10,7 +10,6 @@ import { Notable, MSUserClaim, DataDebit } from '../shared/interfaces';
 
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { cloneDeep } from 'lodash';
 import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
 
 @Injectable()
@@ -100,38 +99,36 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
   }
 
   updateNotable(notable: Notable): void {
-    var editedNotable = cloneDeep(notable);
-    editedNotable.shared_on = editedNotable.shared_on.join(",");
+    this.hat.deleteRecord(notable.id)
+      .subscribe(responseMessage => {
+        if (responseMessage.message.indexOf("deleted") > -1) {
+          let foundNoteIndex = this.store.data.findIndex(note => note.id === notable.id);
 
-    this.hat.deleteRecord(editedNotable.id)
-        .flatMap(responseMessage => {
-          if (responseMessage.message.indexOf("deleted") > -1) {
-            let foundNoteIndex = this.store.data.findIndex(note => note.id === editedNotable.id);
-
-            if (foundNoteIndex > -1) {
-              this.store.data.splice(foundNoteIndex, 1);
-            }
+          if (foundNoteIndex > -1) {
+            this.store.data.splice(foundNoteIndex, 1);
           }
+        }
 
-          delete editedNotable.id;
+        delete notable.id;
 
-          return this.hat.postRecord(editedNotable, this.store.idMapping, 'notablesv1');
-        })
-        .subscribe(recordArray => {
-          this.store.data.unshift(new Notable(editedNotable, recordArray[0].record.id));
-
-          this.pushToStream();
-        });
+        this.postNotable(notable);
+      });
   }
 
-  postNotable(data) {
-    data.shared_on = data.shared_on.join(",");
+  postNotable(data): void {
     this.hat.postRecord(data, this.store.idMapping, 'notablesv1')
-      .subscribe(recordArray => {
-        this.store.data.unshift(new Notable(data, recordArray[0].record.id));
+      .flatMap(recordArray => this.getFirstNotable())
+      .subscribe((notables: Notable[]) => {
+        this.market.tickle();
+        this.store.data.unshift(notables[0]);
 
         this.pushToStream();
       });
+  }
+
+  getFirstNotable(): Observable<any> {
+    return this.hat.getValuesWithLimit(this.store.tableId, 1)
+      .map(rawNotable => rawNotable.map(this.mapData));
   }
 
   editNotable(notable: Notable) {
@@ -145,6 +142,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
         if (foundNoteIndex > -1) {
           this.store.data.splice(foundNoteIndex, 1);
 
+          this.market.tickle();
           this.pushToStream();
         }
       }
