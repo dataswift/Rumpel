@@ -1,5 +1,5 @@
 <div class="switch">
   <input id="toggle-{{id}}" class="cmn-toggle cmn-toggle-round-flat" type="checkbox"
-         [checked]="isChecked" (click)="toggleSwitch()" [disabled]="disabled">
+         [checked]="isChecked" (click)="toggleSwitch($event)" [disabled]="disabled">
   <label htmlFor="toggle-{{id}}"></label>
 </div>

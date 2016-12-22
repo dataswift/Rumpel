@@ -135,7 +135,7 @@ export class MarketSquareService {
 
   tickle(): void {
     const hatDomain = this.hat.getDomain();
-    const url = this.config.market.url + "/bulletin/tickle";
+    const url = "https://notables.hubofallthings.com/api/bulletin/tickle";
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -145,7 +145,11 @@ export class MarketSquareService {
 
     this.http.get(url, { headers: headers, search: query, body: '' })
       .subscribe((res: Response) => {
-        console.log("MarketSquare tickled", res);
+        if (res.status === 200) {
+          console.log("Notables service tickled.");
+        } else {
+          console.log("Failed to tickle notables service.");
+        }
       });
   }
 

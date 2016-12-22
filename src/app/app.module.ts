@@ -32,6 +32,7 @@ import { AuthService, HatApiService, UiStateService, RumpelService, DataPlugServ
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+import {ConfirmBoxComponent} from "./layout/confirm-box/confirm-box.component";
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
     WeatherModule
   ],
   bootstrap: [ AppRootComponent ],
-  entryComponents: [ DialogBoxComponent ],
+  entryComponents: [ DialogBoxComponent, ConfirmBoxComponent ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: AppConfig },

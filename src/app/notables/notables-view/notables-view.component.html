@@ -44,7 +44,7 @@
         </div>
         <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>
         <div class="notable-controls">
-          <div class="controls-item" (click)="deleteNotable($event, notable.id)">Delete<span class="ss-trash"></span></div>
+          <div class="controls-item" (click)="deleteNotable($event, notable)">Delete<span class="ss-trash"></span></div>
           <div class="controls-item" (click)="editNotable(notable)">Edit<span class="ss-compose"></span></div>
         </div>
       </li>

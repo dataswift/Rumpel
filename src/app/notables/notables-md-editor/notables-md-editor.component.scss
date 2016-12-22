@@ -81,6 +81,12 @@
     border: 2px solid white;
     border-radius: 0;
 
+    &.expiration-time {
+      border: none;
+      padding-right: 0;
+      padding-left: 0;
+    }
+
     &:focus {
       outline: none;
     }

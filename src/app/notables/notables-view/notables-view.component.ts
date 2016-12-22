@@ -1,10 +1,9 @@
-import {Component, OnInit, ViewContainerRef} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { Notable, Profile } from '../../shared/interfaces';
-import { Overlay } from 'angular2-modal';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
-import set = Reflect.set;
+import {DialogService} from "../../layout/dialog.service";
+import {ConfirmBoxComponent} from "../../layout/confirm-box/confirm-box.component";
 
 @Component({
   selector: 'rump-notables-view',
@@ -24,11 +23,7 @@ export class NotablesViewComponent implements OnInit {
 
   constructor(private notablesSvc: NotablesService,
               private profilesSvc: ProfilesService,
-              private overlay: Overlay,
-              private vcRef: ViewContainerRef,
-              public modal: Modal) {
-    overlay.defaultViewContainer = vcRef;
-  }
+              private dialogSvc: DialogService) { }
 
   ngOnInit() {
     this.filter = '';
@@ -74,31 +69,20 @@ export class NotablesViewComponent implements OnInit {
     window.scrollTo(0, 100);
   }
 
-  deleteNotable(event, id: number) {
-    this.createConfirmModal().then(resultPromise => {
-      resultPromise.result.then(
-        result => {
-          if (result === true) {
-            event.target.parentNode.parentNode.className += " removed-item";
-            setTimeout(() => this.notablesSvc.deleteNotable(id), 900);
-          }
-        },
-        error => {
-          console.log('Deleting notable was cancelled.');
-        });
-    });
-
-  }
-
-  private createConfirmModal() {
-    return this.modal.confirm()
-      .size('md')
-      .showClose(true)
-      .title('Are you sure?')
-      .body('Deleting a note will not delete where it has been shared. To delete where it has been shared, make the note private.')
-      .okBtn('DELETE')
-      .cancelBtn('Cancel')
-      .open();
+  deleteNotable(event, notable: Notable) {
+    if (notable.isShared) {
+      this.dialogSvc.createDialog(ConfirmBoxComponent, {
+        message: `Deleting a note that has already been shared will not delete it at the destination. 
+          To remove a note from the external site, first make it private. You may then choose to delete it.`,
+        accept: () => {
+          event.target.parentNode.parentNode.className += " removed-item";
+          setTimeout(() => this.notablesSvc.deleteNotable(notable.id), 900);
+        }
+      });
+    } else {
+      event.target.parentNode.parentNode.className += " removed-item";
+      setTimeout(() => this.notablesSvc.deleteNotable(notable.id), 900);
+    }
   }
 
 }

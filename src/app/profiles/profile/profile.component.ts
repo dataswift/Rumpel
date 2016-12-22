@@ -79,11 +79,13 @@ export class ProfileComponent implements OnInit {
   }
 
   toggleProfilePrivacy() {
-    this.profile.private = !this.profile.private;
+    // A bit of a hack to force Angular change detection
+    setTimeout(() => this.profile.private = !this.profile.private);
   }
 
   togglePrivacy(field: string) {
-    this.profile[field].private = !this.profile[field].private;
+    // A bit of a hack to force Angular change detection
+    setTimeout(() => this.profile[field].private = !this.profile[field].private);
   }
 
 }

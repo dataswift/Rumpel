@@ -29,15 +29,16 @@
   </button>
 
   <div class="action-buttons">
+    <div class="btn btn-modify expiration-time" *ngIf="currentNotable.isShared">
+      <span class="share-for-bubble" [class.selected]="expires === 0" (click)="setExpiration($event, 0)">forever</span>
+      <span class="share-for-bubble" [class.selected]="expires === 1" (click)="setExpiration($event, 1)">1</span>
+      <span class="share-for-bubble" [class.selected]="expires === 7" (click)="setExpiration($event, 7)">7</span>
+      <span class="share-for-bubble" [class.selected]="expires === 14" (click)="setExpiration($event, 14)">14</span>
+      <span class="share-for-bubble" [class.selected]="expires === 30" (click)="setExpiration($event, 30)">30</span>
+      Days
+    </div>
     <button type="submit" class="btn btn-modify" (click)="submit()">
-      <span *ngIf="currentNotable.isShared">Share Notable
-        <span class="share-for-bubble" [class.selected]="expires === 0" (click)="setExpiration($event, 0)">forever</span>
-        <span class="share-for-bubble" [class.selected]="expires === 1" (click)="setExpiration($event, 1)">1</span>
-        <span class="share-for-bubble" [class.selected]="expires === 7" (click)="setExpiration($event, 7)">7</span>
-        <span class="share-for-bubble" [class.selected]="expires === 14" (click)="setExpiration($event, 14)">14</span>
-        <span class="share-for-bubble" [class.selected]="expires === 30" (click)="setExpiration($event, 30)">30</span>
-        Days
-      </span>
+      <span *ngIf="currentNotable.isShared">{{editMode ? "Save Notable" : "Share Notable" }}</span>
       <span *ngIf="!currentNotable.isShared">Save Privately</span>
     </button>
     <button type="button" class="btn btn-modify" (click)="discardChanges()">Cancel</button>

@@ -4,8 +4,8 @@ import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Notable, Location } from '../../shared/interfaces';
 import * as SimpleMDE from 'simplemde';
-import * as moment from 'moment';
-import { Moment } from 'moment';
+import {DialogService} from "../../layout/dialog.service";
+import {ConfirmBoxComponent} from "../../layout/confirm-box/confirm-box.component";
 
 @Component({
   selector: 'rump-notables-md-editor',
@@ -19,13 +19,15 @@ export class NotablesMdEditorComponent implements OnInit {
   private hatDomain: string;
   private editMode: boolean = false;
   public expires: number;
+  private initState: { isShared: boolean; message: string; };
   public reportLocation: boolean;
   public currentNotable: Notable;
   private cannotPostMessage: string;
 
   constructor(private hatSvc: HatApiService,
               private locationSvc: LocationsService,
-              private notablesSvc: NotablesService) { }
+              private notablesSvc: NotablesService,
+              private dialogSvc: DialogService) { }
 
   ngOnInit() {
     this.mde = new SimpleMDE({
@@ -40,6 +42,10 @@ export class NotablesMdEditorComponent implements OnInit {
     this.notablesSvc.editedNotable$.subscribe(notable => {
       this.currentNotable = notable;
       if (this.currentNotable.id) {
+        this.initState = {
+          isShared: notable.isShared,
+          message: notable.message
+        };
         this.editMode = true;
         this.expires = null;
       }
@@ -61,7 +67,8 @@ export class NotablesMdEditorComponent implements OnInit {
   }
 
   togglePrivacy(): void {
-    this.currentNotable.toggleSharing();
+    // A bit of a hack to force Angular change detection
+    setTimeout(() => this.currentNotable.toggleSharing());
   }
 
   toggleLocation() {
@@ -113,13 +120,59 @@ export class NotablesMdEditorComponent implements OnInit {
 
     if (this.currentNotable.id) {
       this.editMode = false;
-      this.notablesSvc.updateNotable(this.currentNotable);
-    } else {
-      this.notablesSvc.postNotable(this.currentNotable);
-    }
 
+      if (this.currentNotable.isShared === false && this.initState.isShared === true) {
+        this.dialogSvc.createDialog(ConfirmBoxComponent, {
+          message: `This will remove your post at the shared destinations.
+          Warning: any comments at the destination would also be deleted.`,
+          accept: () => {
+            this.updateNotableHelper();
+          }
+        });
+      } else if (this.currentNotable.isShared === true && this.initState.isShared === false) {
+        this.dialogSvc.createDialog(ConfirmBoxComponent, {
+          message: `You are about to share your post.
+          Tip: to remove a note from the external site, edit the note and make it private.`,
+          accept: () => {
+            this.updateNotableHelper();
+          }
+        });
+      } else if (this.currentNotable.message !== this.initState.message && this.currentNotable.isShared === true && this.initState.isShared === true) {
+        this.dialogSvc.createDialog(ConfirmBoxComponent, {
+          message: `Your post would not be edited at the destination.`,
+          accept: () => {
+            this.updateNotableHelper()
+          }
+        });
+      } else {
+        this.updateNotableHelper();
+      }
+    } else if (this.currentNotable.isShared) {
+      this.dialogSvc.createDialog(ConfirmBoxComponent, {
+        message: `You are about to share your post.
+          Tip: to remove a note from the external site, edit the note and make it private.`,
+        accept: () => {
+          this.postNotableHelper();
+        }
+      });
+    } else {
+      this.postNotableHelper();
+    }
+  }
+
+  private postNotableHelper() {
+    this.notablesSvc.postNotable(this.currentNotable);
     this.currentNotable = new Notable();
     this.expires = 0;
+
+    this.resetForm();
+  }
+
+  private updateNotableHelper() {
+    this.notablesSvc.updateNotable(this.currentNotable);
+    this.currentNotable = new Notable();
+    this.expires = 0;
+    this.initState = undefined;
 
     this.resetForm();
   }
