@@ -9,22 +9,18 @@ import { NotablesHatModel } from './notables.hatmodel';
 import { Notable, MSUserClaim, DataDebit } from '../shared/interfaces';
 
 import * as moment from 'moment';
-import { Moment } from 'moment';
 import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
+import {NotablesServiceMeta} from "../shared/interfaces/notables-service-meta.interface";
 
 @Injectable()
 export class NotablesService extends BaseRumpelDataService<Notable> {
-  public notablesState: {
-    allowedActions?: { canPost: boolean, canExpire: boolean };
-    notablesOfferClaimed?: boolean;
-    dataDebit?: { confirmed: boolean; id: string; dateCreated: Moment; };
-  };
+  public notablesServiceMeta: NotablesServiceMeta;
 
   private _editedNotable$: ReplaySubject<Notable>;
   public editedNotable$: Observable<Notable>;
 
-  private _notablesMeta$: BehaviorSubject<any>;
-  public notablesMeta$: Observable<any>;
+  private _notablesMeta$: BehaviorSubject<NotablesServiceMeta>;
+  public notablesMeta$: Observable<NotablesServiceMeta>;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               hat: HatApiService,
@@ -32,30 +28,37 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
               private dataPlug: DataPlugService) {
     super(hat);
 
-    this.notablesState = {
-      allowedActions: { canPost: false, canExpire: false },
-      notablesOfferClaimed: false,
-      dataDebit: { confirmed: false, id: "", dateCreated: moment() }
+    this.notablesServiceMeta = {
+      phata: this.hat.getDomain(),
+      offerClaimed: false,
+      userMessage: '',
+      canPost: ['marketsquare'],
+      activeIntegrations: this.config.notables.activeIntegrations
     };
 
     this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject();
     this.editedNotable$ = this._editedNotable$.asObservable();
 
-    this._notablesMeta$ = <BehaviorSubject<any>>new BehaviorSubject(this.notablesState);
+    this._notablesMeta$ = <BehaviorSubject<NotablesServiceMeta>>new BehaviorSubject(this.notablesServiceMeta);
     this.notablesMeta$ = this._notablesMeta$.asObservable();
 
     this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
 
     this.updateNotablesState();
 
-    this.dataPlug.getFacebookTokenInfo().subscribe(tokenInfo => {
-      if (!tokenInfo.error) {
-        this.notablesState.allowedActions = {
-          canPost: tokenInfo.canPost && moment(tokenInfo.expires).isAfter(),
-          canExpire: moment(tokenInfo.expires).subtract(7, 'days').isAfter()
-        };
+    this.dataPlug.getTokenInfo('Facebook').subscribe(tokenInfo => {
+      if (!tokenInfo.error && tokenInfo.canPost) {
+        this.notablesServiceMeta.canPost.push('facebook');
 
-        this._notablesMeta$.next(this.notablesState);
+        this._notablesMeta$.next(this.notablesServiceMeta);
+      }
+    });
+
+    this.dataPlug.getTokenInfo('Twitter').subscribe(tokenInfo => {
+      if (!tokenInfo.error && tokenInfo.canPost) {
+        this.notablesServiceMeta.canPost.push('twitter');
+
+        this._notablesMeta$.next(this.notablesServiceMeta);
       }
     });
   }
@@ -64,17 +67,17 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
     this.getUserClaim()
       .subscribe((offerInfo: MSUserClaim) => {
         if (offerInfo.dataDebitId) {
-          this.notablesState.notablesOfferClaimed = true;
-          this.notablesState.dataDebit = {
+          this.notablesServiceMeta.offerClaimed = true;
+          this.notablesServiceMeta["dataDebit"] = {
             id: offerInfo.dataDebitId,
             confirmed: offerInfo.confirmed,
             dateCreated: moment(offerInfo.dateCreated)
           };
         } else {
-          this.notablesState.notablesOfferClaimed = false;
+          this.notablesServiceMeta.offerClaimed = false;
         }
 
-        this._notablesMeta$.next(this.notablesState);
+        this._notablesMeta$.next(this.notablesServiceMeta);
       });
 
   }

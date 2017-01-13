@@ -1,3 +1,11 @@
-/**
- * Created by gusdev on 12/01/2017.
- */
+export interface CurrentNotableMeta {
+  phata: string;
+  expires: number;
+  reportLocation: boolean;
+  initialState?: InitialNotableState;
+}
+
+interface InitialNotableState {
+  message: string;
+  isShared: boolean;
+}

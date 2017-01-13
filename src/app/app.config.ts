@@ -7,7 +7,9 @@ export interface IAppConfig {
   market: { url: string; id: string; accessToken: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
-  notables: { marketSquareOfferId: string };
+  notables: { marketSquareOfferId: string;
+              activeIntegrations: Array<{ name: string; logoUrl: string; }>;
+  };
 }
 
 export const AppConfig: IAppConfig = {
@@ -24,6 +26,20 @@ export const AppConfig: IAppConfig = {
     shareUrl: 'https://twitter.com/intent/tweet?url='
   },
   notables: {
-    marketSquareOfferId: '32dde42f-5df9-4841-8257-5639db222e41'
+    marketSquareOfferId: '32dde42f-5df9-4841-8257-5639db222e41',
+    activeIntegrations: [
+      {
+        name: 'marketsquare',
+        logoUrl: 'assets/icons/marketsquare-icon.png'
+      },
+      {
+        name: 'facebook',
+        logoUrl: 'assets/icons/facebook-plug.png'
+      },
+      {
+        name: 'twitter',
+        logoUrl: 'assets/icons/twitter-plug.png'
+      }
+    ]
   }
 };

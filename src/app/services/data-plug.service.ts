@@ -6,14 +6,18 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class DataPlugService {
+  private serviceURLmap: { [key: string]: string; } = {
+    'Facebook': 'https://social-plug.hubofallthings.com',
+    'Twitter': 'https://twitter-plug.hubofallthings.com'
+  };
 
   constructor(private http: Http,
               private hat: HatApiService) { }
 
-  getFacebookTokenInfo() {
-    return this.hat.getApplicationToken('Facebook', 'https://social-plug.hubofallthings.com')
+  getTokenInfo(plugName: string) {
+    return this.hat.getApplicationToken(plugName, this.serviceURLmap[plugName])
       .flatMap(accessToken => {
-        let url = 'https://social-plug.hubofallthings.com/api/user/token/status';
+        let url = this.serviceURLmap[plugName] + '/api/user/token/status';
         let headers = new Headers();
         headers.append('X-Auth-Token', accessToken);
         headers.append('Content-Type', 'application/json');

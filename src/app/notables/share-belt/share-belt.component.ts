@@ -1,12 +1,9 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { NotablesService } from '../notables.service';
-import { HatApiService } from '../../services/hat-api.service';
 import { Notable } from "../../shared/interfaces/notable.class";
 
-import * as moment from 'moment';
-import { Moment } from 'moment';
+import {NotablesServiceMeta} from "../../shared/interfaces/notables-service-meta.interface";
 
 @Component({
   selector: 'rump-share-belt',
@@ -17,14 +14,7 @@ export class ShareBeltComponent implements OnInit {
   @Input() hatDomain: string;
   @Input() currentNotable: Notable;
   @Input() parentError: string;
-  private services: any[];
-  private notablesState: {
-    notablesOfferClaimed: boolean;
-    userMessage: string;
-    dataDebit: { confirmed: boolean; id: string; dateCreated: Moment; };
-    allowedActions: { canPost: boolean; canExpire: boolean };
-    phata: string;
-  };
+  private notablesState: NotablesServiceMeta;
   private showError: boolean;
   private displayMessage: string;
 
@@ -35,33 +25,20 @@ export class ShareBeltComponent implements OnInit {
   ngOnInit() {
     this.showError = false;
 
-    this.services = [
-      {
-        name: 'marketsquare',
-        logoUrl: 'assets/icons/marketsquare-icon.png',
-        shared: this.currentNotable.shared_on.indexOf('marketsquare') > -1
-      },
-      {
-        name: 'facebook',
-        logoUrl: 'assets/icons/facebook-plug.png',
-        shared: this.currentNotable.shared_on.indexOf('facebook') > -1
-      }
-    ];
-
-    this.notablesSvc.notablesMeta$.subscribe(notablesState => {
+    this.notablesSvc.notablesMeta$.subscribe((notablesState: NotablesServiceMeta) => {
       this.notablesState = notablesState;
       this.displayMessage = "";
     });
   }
 
-  toggleSharing(service) {
-    if (service.name === 'facebook' && this.notablesState.allowedActions.canPost === false) {
+  toggleSharing(provider) {
+    if (this.notablesState.canPost.indexOf(provider.name) === -1) {
       this.showError = true;
     } else {
-      service.shared = !service.shared;
+      provider.shared = !provider.shared;
       this.serviceToggled.emit({
-        action: service.shared ? 'SHARE' : 'STOP',
-        service: service.name
+        action: provider.shared ? 'SHARE' : 'STOP',
+        service: provider.name
       });
     }
 
@@ -70,7 +47,7 @@ export class ShareBeltComponent implements OnInit {
   claimNotablesOffer(): void {
     this.displayMessage = "Processing... please wait.";
     this.notablesSvc.setupNotablesService().subscribe(res => {
-      this.notablesState.notablesOfferClaimed = true;
+      this.notablesState.offerClaimed = true;
       this.notablesSvc.updateNotablesState();
     });
   }

@@ -1,11 +1,11 @@
 <div class="belt">
   <div class="content">
     <p>Share with...</p>
-    <ul *ngIf="notablesState.notablesOfferClaimed && (!displayMessage) && notablesState.dataDebit.confirmed">
-      <li *ngFor="let service of services" (click)="toggleSharing(service)">
-        <img src="{{service.logoUrl}}"
+    <ul *ngIf="notablesState.offerClaimed && (!displayMessage) && notablesState.dataDebit.confirmed">
+      <li *ngFor="let provider of notablesState.activeIntegrations" (click)="toggleSharing(provider)">
+        <img [src]="provider.logoUrl"
              class="img img-responsive share-service"
-             [class.on]="service.shared">
+             [class.on]="provider.shared">
       </li>
     </ul>
   </div>
@@ -14,12 +14,12 @@
     {{displayMessage}}
   </div>
 
-  <div class="message" *ngIf="!notablesState.notablesOfferClaimed && (!displayMessage)">
+  <div class="message" *ngIf="!notablesState.offerClaimed && (!displayMessage)">
     Notables data offer needs to be claimed in order to share this notable on other services.
     <span class="claim" (click)="claimNotablesOffer()">Claim it.</span>
   </div>
 
-  <div class="message" *ngIf="notablesState.notablesOfferClaimed && (!notablesState.dataDebit.confirmed) && (!displayMessage)">
+  <div class="message" *ngIf="notablesState.offerClaimed && (!notablesState.dataDebit.confirmed) && (!displayMessage)">
     To share your notable, please accept data offer from MarketSquare.
     <span class="claim" (click)="confirmNotablesDataDebit()">Accept it here</span>.
   </div>
