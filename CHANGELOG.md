@@ -8,6 +8,7 @@
 * Improved notable sharing efficiency, no need to wait up to 30 minutes for notable to be posted on MarketSquare or Facebook
 * Streamlined notables setup process
 * Optimised code re-use among HAT data services
+* Added custom modal implementation for better extensibility
 * Rumpel now ensures creation of notables and profile data tables upon first login
 
 ### Bug Fixes
