@@ -1,9 +1,18 @@
+/*
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
+ */
+
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '../social.service';
-import { Post, MusicListen } from '../../shared/interfaces';
+import { Post, MusicListen, Tweet } from '../../shared/interfaces';
 import { Subscription } from "rxjs";
 import {MediaService} from "../../services/media.service";
+import {TwitterService} from "../../services/twitter.service";
 
 @Component({
   selector: 'rump-social',
@@ -11,13 +20,15 @@ import {MediaService} from "../../services/media.service";
   styleUrls: ['social.component.scss']
 })
 export class SocialComponent implements OnInit, OnDestroy {
-  private posts: Array<any>;
+  private posts: Array<Post|MusicListen|Tweet>;
   private filter: string;
   private svcSub: Subscription;
   private musicSub: Subscription;
+  private twitterSub: Subscription;
 
   constructor(private socialSvc: SocialService,
               private mediaSvc: MediaService,
+              private twitterSvc: TwitterService,
               private route: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -38,13 +49,22 @@ export class SocialComponent implements OnInit, OnDestroy {
       this.scrollToPost();
     });
 
+    this.twitterSub = this.twitterSvc.data$.subscribe((tweets: Tweet[]) => {
+      this.posts = this.posts.concat(tweets);
+
+      this.sortPostsByDate();
+      this.scrollToPost();
+    });
+
     this.socialSvc.getRecentPosts();
     this.mediaSvc.getRecentData();
+    this.twitterSvc.getRecentData();
   }
 
   ngOnDestroy(): void {
     this.svcSub.unsubscribe();
     this.musicSub.unsubscribe();
+    this.twitterSub.unsubscribe();
   }
 
   filterBy(source: string): void {

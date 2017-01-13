@@ -45,21 +45,21 @@ export class SideMenuComponent implements OnInit {
       { display: 'Mashups', icon: 'layergroup', link: 'mixpad', dataType: '', disable: '' },
       { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'no data' },
       { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
-      { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts', disable: 'no data' },
+      { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts,tweets', disable: 'no data' },
       { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
-      { display: 'Data Plugs', icon: 'puzzle', link: '', disable: '' }
+      { display: 'Data Plugs', icon: 'puzzle', link: '', dataType: '', disable: '' }
     ];
 
     this.comingSoonMenu = [
-      { display: 'Weather', icon: 'thermometer', link: '' },
-      { display: 'Finance', icon: 'bank', link: '' },
-      { display: 'Creations (music)', icon: 'guitar', link: '' },
-      { display: 'Creations (art)', icon: 'brush', link: '' }
+      { display: 'Weather', icon: 'thermometer', dataType: '', link: '' },
+      { display: 'Finance', icon: 'bank', dataType: '', link: '' },
+      { display: 'Creations (music)', icon: 'guitar', dataType: '', link: '' },
+      { display: 'Creations (art)', icon: 'brush', dataType: '', link: '' }
     ];
 
     this.sub = this.uiState.getState$().subscribe(state => {
       for (let dt of state.dataTypes) {
-        let changeItem = this.menu.find(item => item.dataType === dt);
+        let changeItem = this.menu.find(item => item.dataType.includes(dt));
         if (changeItem) changeItem.disable = '';
       }
     });

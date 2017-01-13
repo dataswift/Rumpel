@@ -1,27 +1,43 @@
+<!--
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
+  -->
+
 <ng-content></ng-content>
 
 <div class="scroll-mask" id="intro-step17">
   <div class="tile-body">
     <ul>
       <li *ngFor="let post of posts" (click)="navigateToFullPost(post.id)">
-        <div class="row vertical-align">
+        <div class="row vertical-align" [ngSwitch]="post.type">
           <div class="col-xs-2 left-column">
-            <img src="assets/icons/facebook-icon.png" class="img img-responsive">
+            <img [src]="post.type === 'tweet' ? 'assets/icons/twitter-icon.png' : 'assets/icons/facebook-icon.png'" class="img img-responsive">
           </div>
 
-          <div class="col-xs-9 center-column" *ngIf="post.type !== 'music.listens'">
-            <h4>{{post.story ? post.story : post.statusType | replaceChars}}</h4>
-            <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:140}}</p>
-            <p>Posted {{post.createdTime | moment}}</p>
-          </div>
-
-          <div class="col-xs-9 center-column" *ngIf="post.type === 'music.listens'">
+          <div class="col-xs-9 center-column" *ngSwitchCase="'music.listens'">
             <h4>Music Listen</h4>
             <p>Played {{post.data.song.title}}
               <span *ngIf="post.data.musician">by {{post.data.musician.title}}</span>
               <span *ngIf="post.data.playlist">from the {{post.data.playlist.title}} playlist</span>.
             </p>
             <p>On {{post.createdTime | moment}}</p>
+          </div>
+
+          <div class="col-xs-9 center-column" *ngSwitchCase="'tweet'">
+            <p>{{post.text}}</p>
+            <div class="tweet-metadata">
+              <span>Favourited: {{post.favorite_count}}</span>
+              <span>Retweeted: {{post.retweet_count}}</span>
+            </div>
+          </div>
+
+          <div class="col-xs-9 center-column" *ngSwitchDefault>
+            <h4>{{post.story ? post.story : post.statusType | replaceChars}}</h4>
+            <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:140}}</p>
+            <p>Posted {{post.createdTime | moment}}</p>
           </div>
 
           <div class="col-xs-1 right-column">
