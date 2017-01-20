@@ -2,7 +2,7 @@ import { OpaqueToken } from '@angular/core';
 
 export let APP_CONFIG = new OpaqueToken("app.config");
 
-export interface IAppConfig {
+export class IAppConfig {
   version: string;
   market: { url: string; id: string; accessToken: string; };
   facebook: { shareUrl: string; };
@@ -11,7 +11,7 @@ export interface IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  version: '1.2.0',
+  version: '1.2.1',
   market: {
     url: 'https://marketsquare.hubofallthings.com/api',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',

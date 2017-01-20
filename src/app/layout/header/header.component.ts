@@ -180,7 +180,7 @@ export class HeaderComponent implements OnInit {
 
   showModal() {
     this.modal.alert()
-      .size('md')
+      .size("sm")
       .showClose(false)
       .title(this.modalMsgs[this.msg].header)
       .body(this.modalMsgs[this.msg].body)
