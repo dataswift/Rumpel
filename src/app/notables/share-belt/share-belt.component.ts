@@ -23,15 +23,25 @@ export class ShareBeltComponent implements OnInit {
   @Input() currentNotable: Notable;
   @Input() parentError: string;
   private notablesState: NotablesServiceMeta;
-  private showError: boolean;
+  private dataPlugError: string;
   private displayMessage: string;
+  private dataPlugInfoMap = {
+    facebook: {
+      displayName: "Facebook",
+      redirectUrl: "https://social-plug.hubofallthings.com/hat/authenticate"
+    },
+    twitter: {
+      displayName: "Twitter",
+      redirectUrl: "https://twitter-plug.hubofallthings.com/authenticate/hat"
+    }
+  };
 
   @Output() serviceToggled: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private notablesSvc: NotablesService) { }
 
   ngOnInit() {
-    this.showError = false;
+    this.dataPlugError = null;
 
     this.notablesSvc.notablesMeta$.subscribe((notablesState: NotablesServiceMeta) => {
       this.notablesState = notablesState;
@@ -41,7 +51,7 @@ export class ShareBeltComponent implements OnInit {
 
   toggleSharing(provider) {
     if (this.notablesState.canPost.indexOf(provider.name) === -1) {
-      this.showError = true;
+      this.dataPlugError = provider.name;
     } else {
       provider.shared = !provider.shared;
       this.serviceToggled.emit({

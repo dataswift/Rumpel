@@ -63,7 +63,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
     });
 
     this.dataPlug.getTokenInfo('Twitter').subscribe(tokenInfo => {
-      if (!tokenInfo.error && tokenInfo.canPost) {
+      if (!tokenInfo.error && tokenInfo[0].successful) {
         this.notablesServiceMeta.canPost.push('twitter');
 
         this._notablesMeta$.next(this.notablesServiceMeta);

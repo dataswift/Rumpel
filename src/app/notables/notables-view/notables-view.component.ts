@@ -6,12 +6,14 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { Notable, Profile } from '../../shared/interfaces';
 import {DialogService} from "../../layout/dialog.service";
 import {ConfirmBoxComponent} from "../../layout/confirm-box/confirm-box.component";
+import {APP_CONFIG, IAppConfig} from "../../app.config";
+import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
 
 @Component({
   selector: 'rump-notables-view',
@@ -19,17 +21,13 @@ import {ConfirmBoxComponent} from "../../layout/confirm-box/confirm-box.componen
   styleUrls: ['./notables-view.component.scss']
 })
 export class NotablesViewComponent implements OnInit {
-  private ASSET_MAP = {
-    "marketsquare": "assets/icons/marketsquare-icon.png",
-    "facebook": "assets/icons/facebook-plug.png"
-  };
-
   public notables: Array<Notable>;
   private profile: { photo: { url: string; shared: boolean; }; };
   public iconMap: any;
   public filter: string;
 
-  constructor(private notablesSvc: NotablesService,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private notablesSvc: NotablesService,
               private profilesSvc: ProfilesService,
               private dialogSvc: DialogService) { }
 
@@ -68,6 +66,11 @@ export class NotablesViewComponent implements OnInit {
     this.notablesSvc.getRecentData();
   }
 
+  getLogo(name: string): string {
+    const foundIntegration = this.config.notables.activeIntegrations.find(integration => integration.name === name);
+    return foundIntegration ? foundIntegration.logoUrl : "";
+  }
+
   filterBy(category: string) {
     this.filter = category;
   }
@@ -80,7 +83,7 @@ export class NotablesViewComponent implements OnInit {
   deleteNotable(event, notable: Notable) {
     if (notable.isShared) {
       this.dialogSvc.createDialog(ConfirmBoxComponent, {
-        message: `Deleting a note that has already been shared will not delete it at the destination. 
+        message: `Deleting a note that has already been shared will not delete it at the destination.
           To remove a note from the external site, first make it private. You may then choose to delete it.`,
         accept: () => {
           event.target.parentNode.parentNode.className += " removed-item";

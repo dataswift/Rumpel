@@ -10,18 +10,18 @@ import { OpaqueToken } from '@angular/core';
 
 export let APP_CONFIG = new OpaqueToken("app.config");
 
-export interface IAppConfig {
+export class IAppConfig {
   version: string;
   market: { url: string; id: string; accessToken: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
   notables: { marketSquareOfferId: string;
-              activeIntegrations: Array<{ name: string; logoUrl: string; }>;
+              activeIntegrations: Array<{ name: string; displayName: string; logoUrl: string; }>;
   };
 }
 
 export const AppConfig: IAppConfig = {
-  version: '1.2.0',
+  version: '1.2.1',
   market: {
     url: 'https://marketsquare.hubofallthings.com/api',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
@@ -38,14 +38,17 @@ export const AppConfig: IAppConfig = {
     activeIntegrations: [
       {
         name: 'marketsquare',
+        displayName: 'MarketSquare',
         logoUrl: 'assets/icons/marketsquare-icon.png'
       },
       {
         name: 'facebook',
+        displayName: 'Facebook',
         logoUrl: 'assets/icons/facebook-plug.png'
       },
       {
         name: 'twitter',
+        displayName: 'Twitter',
         logoUrl: 'assets/icons/twitter-plug.png'
       }
     ]

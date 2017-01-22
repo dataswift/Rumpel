@@ -32,7 +32,7 @@
         <div class="additional-info">
           <ul class="shared-list" *ngIf="notable.isShared">
             <li *ngFor="let service of notable.shared_on" class="shared-item">
-              <img src="{{ASSET_MAP[service]}}" class="shared-icon">
+              <img src="{{getLogo(service)}}" class="shared-icon">
             </li>
           </ul>
           <div class="notable-type"><span class="ss-{{iconMap[notable.type]}} ss-glyphish-filled"></span>{{notable.kind}}</div>

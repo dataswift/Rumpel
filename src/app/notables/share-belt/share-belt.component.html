@@ -39,11 +39,11 @@
     </span>
   </div>
 
-  <div class="error-message" *ngIf="showError">
+  <div class="error-message" *ngIf="dataPlugError">
     <span class="ss-alert"></span>
     <span class="error-text">
-      Please renew your Facebook access token to enable sharing.
-      <a href="https://{{hatDomain}}/hatlogin?name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate"
+      Please renew your {{dataPlugInfoMap[dataPlugError].displayName}} access token to enable sharing.
+      <a href="https://{{hatDomain}}/hatlogin?name={{dataPlugInfoMap[dataPlugError].displayName}}&redirect={{dataPlugInfoMap[dataPlugError].redirectUrl}}"
          target="_blank">Go to data plug</a>.
     </span>
   </div>
