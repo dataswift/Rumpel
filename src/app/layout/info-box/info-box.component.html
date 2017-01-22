@@ -1,9 +1,9 @@
 <!--
-  ~ Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
   ~ This Source Code Form is subject to the terms of the Mozilla Public
   ~ License, v. 2.0. If a copy of the MPL was not distributed with this
   ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
-  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
   -->
 
 <div class="rump-modal">
@@ -15,10 +15,7 @@
       <p>{{message}}</p>
     </div>
     <div class="rump-modal-footer">
-      <button type="button" class="btn" (click)="closeModal()">Cancel</button>
-      <button type="button" class="btn accept" (click)="closeModal()" *ngFor="let button of buttons">
-        <a [href]="button.link" target="_blank">{{button.title}}</a>
-      </button>
+      <button type="button" class="btn" (click)="closeModal()">Ok</button>
     </div>
 
     <div class="close-modal" (click)="closeModal()">x</div>

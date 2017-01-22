@@ -19,7 +19,8 @@ import { NotificationCentreComponent } from './notification-centre/notification-
 
 import { DialogAnchorDirective } from './dialog-anchor.directive';
 import { DialogService } from './dialog.service';
-import {ConfirmBoxComponent} from "./confirm-box/confirm-box.component";
+import { ConfirmBoxComponent } from "./confirm-box/confirm-box.component";
+import { InfoBoxComponent } from "./info-box/info-box.component";
 
 @NgModule({
   imports: [ SharedModule ],
@@ -30,6 +31,7 @@ import {ConfirmBoxComponent} from "./confirm-box/confirm-box.component";
                   NotificationCentreComponent,
                   DialogBoxComponent,
                   ConfirmBoxComponent,
+                  InfoBoxComponent,
                   DialogAnchorDirective ],
   exports: [ HeaderComponent,
             SideMenuComponent,

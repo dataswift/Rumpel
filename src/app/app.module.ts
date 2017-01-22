@@ -12,8 +12,6 @@ import { AppRootComponent } from './app.component';
 
 import { APP_CONFIG, AppConfig } from './app.config';
 
-import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
-
 import { LayoutModule } from './layout/layout.module';
 import { MashupsModule } from './mashups/mashups.module';
 import { NotablesModule } from './notables/notables.module';
@@ -38,10 +36,13 @@ import { LoginComponent, AuthComponent } from './user-mgmt';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard'
 import { AuthService, HatApiService, UiStateService, RumpelService, DataPlugService, NotificationsService, MediaService, TwitterService } from './services';
 
-import { ModalModule } from 'angular2-modal';
-import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
-import {ConfirmBoxComponent} from "./layout/confirm-box/confirm-box.component";
+/* MODAL COMPONENTS */
 
+import { ConfirmBoxComponent } from "./layout/confirm-box/confirm-box.component";
+import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
+import { InfoBoxComponent } from "./layout/info-box/info-box.component";
+
+import { CookieService } from 'angular2-cookie/core';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,7 @@ import {ConfirmBoxComponent} from "./layout/confirm-box/confirm-box.component";
     GridComponent,
     TileHeaderComponent,
     TileComingSoonComponent,
-    DataTypeFilterPipe,
+    DataTypeFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -61,8 +62,6 @@ import {ConfirmBoxComponent} from "./layout/confirm-box/confirm-box.component";
     PhotosModule,
     FormsModule,
     AppRoutingModule,
-    ModalModule.forRoot(),
-    BootstrapModalModule,
     LayoutModule,
     SocialModule,
     MarketSquareModule,
@@ -74,7 +73,7 @@ import {ConfirmBoxComponent} from "./layout/confirm-box/confirm-box.component";
     WeatherModule
   ],
   bootstrap: [ AppRootComponent ],
-  entryComponents: [ DialogBoxComponent, ConfirmBoxComponent ],
+  entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: AppConfig },
@@ -86,7 +85,8 @@ import {ConfirmBoxComponent} from "./layout/confirm-box/confirm-box.component";
     DataPlugService,
     NotificationsService,
     MediaService,
-    TwitterService
+    TwitterService,
+    CookieService
   ]
 })
 export class AppRootModule {}

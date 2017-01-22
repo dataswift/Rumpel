@@ -18,6 +18,7 @@
             <label for="hatAddress">Your personal HAT address</label>
             <input type="text" class="form-control rump-input" id="hatAddress"
                 [(ngModel)]="hatDomain"
+                (keyup.enter)="onSubmit()"
                 placeholder="hat.hubofallthings.net"
                 aria-describedby="hatAddressStatus">
             <span id="loginAddressStatus" class="sr-only">(success)</span>

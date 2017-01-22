@@ -10,6 +10,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
 import { Subject, Observable } from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
+import {CookieService} from "angular2-cookie/core";
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,8 @@ export class AuthService {
   private jwtHelper: JwtHelper;
   private hatDomain: string;
 
-  constructor(private hat: HatApiService) {
+  constructor(private hat: HatApiService,
+              private cookieSvc: CookieService) {
     this._auth$ = <Subject<any>>new Subject();
     this.auth$ = this._auth$.asObservable();
     this.authenticated = false;
@@ -55,6 +57,7 @@ export class AuthService {
       res => {
         if (res && res.message === 'Authenticated') {
           this.authenticated = true;
+          this.cookieSvc.put("lastLoginPHATA", hatDomain);
           localStorage.setItem('hat-at', jwt);
         } else {
           this.authenticated = false;

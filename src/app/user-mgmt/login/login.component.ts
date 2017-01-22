@@ -6,10 +6,11 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, ViewContainerRef, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
-import { Overlay } from 'angular2-modal';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
+import {CookieService} from "angular2-cookie/core";
+import {DialogService} from "../../layout/dialog.service";
+import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
 
 @Component({
   selector: 'rump-login',
@@ -21,13 +22,12 @@ export class LoginComponent implements OnInit {
   private redirectUrl: string = 'https://rumpel.hubofallthings.com/users/authenticate';
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-              private overlay: Overlay,
-              private vcRef: ViewContainerRef,
-              public modal: Modal) {
-    overlay.defaultViewContainer = vcRef;
+              private cookieSvc: CookieService,
+              private dialogSvc: DialogService) {
   }
 
   ngOnInit() {
+    this.hatDomain = this.cookieSvc.get("lastLoginPHATA");
     // if (this.route.snapshot.queryParams['redirect']) {
     //   this.redirectUrl += this.route.snapshot.queryParams['redirect'];
     // } else {
@@ -36,12 +36,9 @@ export class LoginComponent implements OnInit {
   }
 
   showScreenshot() {
-    this.modal.alert()
-      .size('lg')
-      .showClose(true)
-      .title('Example of a populated Rumpel')
-      .body(`<img src="assets/images/rumpel.png" class="img img-responsive">`)
-      .open();
+    this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
+      message: "Here should come up a picture of the Rumpel interface. Soon.."
+    });
   }
 
   onSubmit() {

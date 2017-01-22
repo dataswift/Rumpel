@@ -8,7 +8,7 @@
 
 import {
   Injectable, ViewContainerRef, ComponentRef, Injector,
-  ReflectiveInjector, ComponentFactory, ComponentFactoryResolver
+  ReflectiveInjector, ComponentFactory, ComponentFactoryResolver, Type
 } from '@angular/core';
 import { ReplaySubject, Observable } from "rxjs";
 
@@ -33,11 +33,11 @@ export class DialogService {
     this.resolver = resolver;
   }
 
-  createDialog(component: any, parameters?: Object): Observable<ComponentRef> {
-    let componentFactory = this.resolver.resolveComponentFactory(component);
-    let componentRef$ = new ReplaySubject();
+  createDialog<T>(component: Type<T>, parameters?: Object): Observable<ComponentRef<T>> {
+    let componentFactory = this.resolver.resolveComponentFactory<T>(component);
+    let componentRef$ = <ReplaySubject<ComponentRef<T>>>new ReplaySubject();
     const childInjector = ReflectiveInjector.resolveAndCreate([], this.injector);
-    let componentRef = this.vcRef.createComponent(componentFactory, 0, childInjector);
+    let componentRef: ComponentRef<T> = this.vcRef.createComponent<T>(componentFactory, 0, childInjector);
 
     Object.assign(componentRef.instance, parameters);
     this.activeInstances++;
