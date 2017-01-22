@@ -36,6 +36,7 @@ export class DialogService {
   createDialog<T>(component: Type<T>, parameters?: Object): Observable<ComponentRef<T>> {
     let componentFactory = this.resolver.resolveComponentFactory<T>(component);
     let componentRef$ = <ReplaySubject<ComponentRef<T>>>new ReplaySubject();
+
     const childInjector = ReflectiveInjector.resolveAndCreate([], this.injector);
     let componentRef: ComponentRef<T> = this.vcRef.createComponent<T>(componentFactory, 0, childInjector);
 

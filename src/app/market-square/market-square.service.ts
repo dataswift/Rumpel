@@ -102,7 +102,7 @@ export class MarketSquareService {
       .map(res => res.json());
   }
 
-  getNotifications() {
+  getNotifications(): Observable<any> {
     const url = this.config.market.url + '/notices';
 
     return this.getMarketSquareApplicationToken()
@@ -110,7 +110,7 @@ export class MarketSquareService {
       .catch(err => Observable.of({ error: "Offer not found." }));
   }
 
-  markAsRead(notificationID: number) {
+  markAsRead(notificationID: number): Observable<any> {
     const url = this.config.market.url + '/notices/' + notificationID + '/read';
 
     return this.getMarketSquareApplicationToken()

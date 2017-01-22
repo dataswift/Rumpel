@@ -36,7 +36,7 @@ export class TileDataPlugsComponent implements OnInit {
           icon: plug.name.toLowerCase() + '-plug'
         };
 
-        if (plug.name === 'facebook') displayPlug.icon += '.png';
+        if (plug.name === 'facebook' || plug.name === 'twitter') displayPlug.icon += '.png';
         else displayPlug.icon += '.svg';
 
         return displayPlug;

@@ -11,10 +11,11 @@ import { HatApiService } from '../../services';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Notable, Location } from '../../shared/interfaces';
-import * as SimpleMDE from 'simplemde';
 import {DialogService} from "../../layout/dialog.service";
 import {ConfirmBoxComponent} from "../../layout/confirm-box/confirm-box.component";
 import {CurrentNotableMeta} from "../../shared/interfaces/current-notable-meta.interface";
+
+declare var SimpleMDE: any;
 
 @Component({
   selector: 'rump-notables-md-editor',

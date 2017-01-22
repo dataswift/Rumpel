@@ -1,7 +1,7 @@
 {
   "name": "Rumpel",
-  "version": "1.2.0",
-  "license": "MIT",
+  "version": "1.2.2",
+  "license": "MPL-2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Hub-of-all-Things/Rumpel.git"
@@ -16,37 +16,36 @@
   },
   "private": false,
   "dependencies": {
-    "@angular/common": "2.2.1",
-    "@angular/compiler": "2.2.1",
-    "@angular/core": "2.2.1",
-    "@angular/forms": "2.2.1",
-    "@angular/http": "2.2.1",
-    "@angular/platform-browser": "2.2.1",
-    "@angular/platform-browser-dynamic": "2.2.1",
-    "@angular/router": "3.2.1",
+    "@angular/common": "2.4.4",
+    "@angular/compiler": "2.4.4",
+    "@angular/core": "2.4.4",
+    "@angular/forms": "2.4.4",
+    "@angular/http": "2.4.4",
+    "@angular/platform-browser": "2.4.4",
+    "@angular/platform-browser-dynamic": "2.4.4",
+    "@angular/router": "3.4.4",
     "@types/lodash": "^4.14.38",
     "angular2-cookie": "^1.2.6",
-    "angular2-jwt": "^0.1.25",
+    "angular2-jwt": "^0.1.28",
     "core-js": "^2.4.1",
     "lodash": "^4.17.2",
     "marked": "^0.3.6",
-    "moment": "^2.17.0",
+    "moment": "^2.17.1",
     "pouchdb": "^6.0.7",
-    "rxjs": "5.0.0-beta.12",
+    "rxjs": "^5.0.1",
     "simplemde": "^1.11.2",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.6.23"
+    "zone.js": "^0.7.2"
   },
   "devDependencies": {
-    "@angular/compiler-cli": "2.2.1",
+    "@angular/compiler-cli": "2.4.4",
     "@types/jasmine": "^2.5.38",
     "@types/marked": "0.0.28",
     "@types/moment": "^2.13.0",
     "@types/node": "^6.0.42",
     "@types/pouchdb": "^5.4.28",
-    "@types/simplemde": "^1.11.5",
-    "angular-cli": "^1.0.0-beta.21",
-    "codelyzer": "~1.0.0-beta.3",
+    "angular-cli": "^1.0.0-beta.26",
+    "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
     "karma": "1.2.0",
@@ -54,12 +53,12 @@
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
-    "protractor": "4.0.9"
+    "protractor": "~4.0.13"
   },
   "engines": {
     "node": "6.9.1",
     "ts-node": "1.2.1",
-    "tslint": "3.13.0",
+    "tslint": "^4.3.0",
     "typescript": "~2.0.3",
     "webdriver-manager": "10.2.5"
   }

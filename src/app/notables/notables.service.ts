@@ -54,7 +54,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
 
     this.updateNotablesState();
 
-    this.dataPlug.getTokenInfo('Facebook').subscribe(tokenInfo => {
+    this.dataPlug.getTokenInfo('Facebook').subscribe((tokenInfo: any) => {
       if (!tokenInfo.error && tokenInfo.canPost) {
         this.notablesServiceMeta.canPost.push('facebook');
 
