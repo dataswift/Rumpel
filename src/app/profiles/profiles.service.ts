@@ -11,15 +11,15 @@ import { HatApiService } from '../services/hat-api.service';
 import { Profile } from '../shared/interfaces/profile.interface';
 import { ProfileHatModel } from './profile.hatmodel';
 import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
-import {UserService} from "../services/user.service";
+import {UiStateService} from "../services/ui-state.service";
 
 @Injectable()
 export class ProfilesService extends BaseRumpelDataService<Profile> {
   constructor(hat: HatApiService,
-              userSvc: UserService) {
-    super(hat, userSvc);
+              uiSvc: UiStateService) {
+    super(hat, uiSvc);
 
-    this.registerUser$Listener('profile', 'rumpel', ProfileHatModel.model);
+    this.ensureTableExists('profile', 'rumpel', ProfileHatModel.model);
   }
 
   getPicture() {

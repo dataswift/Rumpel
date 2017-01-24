@@ -11,17 +11,16 @@ import {HatApiService} from "./hat-api.service";
 
 import { MusicListen } from "../shared/interfaces/music-listen.interface";
 import * as moment from 'moment';
-import {BaseDataService} from "./base-data.service";
-import {UserService} from "./user.service";
+import { BaseDataService } from "./base-data.service";
+import { UiStateService } from "./ui-state.service";
 
 @Injectable()
 export class MediaService extends BaseDataService<MusicListen> {
 
-  constructor(hat: HatApiService,
-              userSvc: UserService) {
-    super(hat, userSvc);
+  constructor(hat: HatApiService, uiSvc: UiStateService) {
+    super(hat, uiSvc);
 
-    this.registerUser$Listener('music_listens', 'facebook');
+    this.ensureTableExists('music_listens', 'facebook');
   }
 
   mapData(rawMusicListen: any): MusicListen {

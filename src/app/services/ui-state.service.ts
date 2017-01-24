@@ -7,19 +7,18 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs/Rx';
+import { Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
 import { UserService } from './user.service';
 import {User} from "../shared/interfaces/user.interface";
+import {DataTable} from "../shared/interfaces/data-table.interface";
 
 @Injectable()
 export class UiStateService {
-  private state$: Subject<any>;
-  private state: { dataSources: Array<string>; dataTypes: Array<string> };
+  private state$: ReplaySubject<DataTable[]>;
 
   constructor(private hat: HatApiService, private userSvc: UserService) {
-    this.state = { dataSources: [], dataTypes: [] };
-    this.state$ = <Subject<any>>new Subject();
+    this.state$ = <ReplaySubject<Array<DataTable>>>new ReplaySubject();
 
     this.userSvc.user$
       .flatMap((user: User) => {
@@ -29,33 +28,21 @@ export class UiStateService {
           return Observable.of([]);
         }
       })
-      .subscribe(dataSources => {
-        for (let dataSource of dataSources) {
-          if (!(~this.state.dataSources.indexOf(dataSource.source))) {
-            this.state.dataSources.push(dataSource.source);
-          }
+      .subscribe(rawDataTables => {
+        const dataTables: Array<DataTable> = rawDataTables.map(table => {
+          return {
+            name: table.name,
+            source: table.source,
+            id: table.id
+          };
+        });
 
-          if (!(~this.state.dataTypes.indexOf(dataSource.name))) {
-            this.state.dataTypes.push(dataSource.name);
-          }
-        }
-
-        this.state$.next(this.state);
+        this.state$.next(dataTables);
     });
   }
 
-  getState$() {
+  get tables$(): Observable<DataTable[]> {
     return this.state$.asObservable();
-  }
-
-  fetchState() {
-    this.state$.next(this.state);
-  }
-
-  getDataTypes() {
-    const stateStr = localStorage.getItem('state');
-    const state = JSON.parse(stateStr);
-    return state.dataTypes;
   }
 
 }

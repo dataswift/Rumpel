@@ -8,6 +8,8 @@
 
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { UiStateService } from '../../services';
+import {DataTable} from "../../shared/interfaces/data-table.interface";
+import {Subscription} from "rxjs";
 
 declare var $: any;
 
@@ -20,7 +22,7 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   public state: any;
   public showTile = { locations: false, events: false, posts: false };
   public tileHeights: { notables: number; profile: number };
-  private sub: any;
+  private sub: Subscription;
 
   constructor(private uiState: UiStateService) { }
 
@@ -29,15 +31,11 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tileHeights = { notables: 2, profile: 1 };
 
-    this.sub = this.uiState.getState$().subscribe(state => {
-      this.state = state;
-
-      if (state.dataTypes.indexOf('locations') > -1) this.showTile.locations = true;
-      if (state.dataTypes.indexOf('posts') > -1 || state.dataTypes.indexOf('tweets') > -1) this.showTile.posts = true;
-      if (state.dataTypes.indexOf('events') > -1) this.showTile.events = true;
+    this.sub = this.uiState.tables$.subscribe((tables: DataTable[]) => {
+      if (tables.findIndex(this.searchHandler('locations')) > -1) this.showTile.locations = true;
+      if (tables.findIndex(this.searchHandler('posts tweets music_listens')) > -1) this.showTile.posts = true;
+      if (tables.findIndex(this.searchHandler('events')) > -1) this.showTile.events = true;
     });
-
-    this.uiState.fetchState();
   }
 
   ngOnDestroy() {
@@ -50,5 +48,9 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
       itemSelector: '.grid-item',
       percentPosition: true
     });
+  }
+
+  private searchHandler(names: string) {
+    return (table: DataTable) => names.includes(table.name);
   }
 }

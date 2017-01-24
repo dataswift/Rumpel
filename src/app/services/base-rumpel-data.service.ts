@@ -8,12 +8,13 @@
 
 import {BaseDataService} from "./base-data.service";
 import {HatApiService} from "./hat-api.service";
-import {UserService} from "./user.service";
-import {User} from "../shared/interfaces/user.interface";
+import {UiStateService} from "./ui-state.service";
+import {DataTable} from "../shared/interfaces/index";
+
 
 export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
-  constructor(hat: HatApiService, userSvc: UserService) {
-    super(hat, userSvc);
+  constructor(hat: HatApiService, uiSvc: UiStateService) {
+    super(hat, uiSvc);
 
     this.store = {
       data: [],
@@ -22,27 +23,18 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
     };
   }
 
-  registerUser$Listener(name: string, source: string, hatDataModel?: any): void {
-    this.userSvc.user$.subscribe((user: User) => {
-      if (user.authenticated) {
-        this.ensureTableExists(name, source, hatDataModel);
-      }
-    });
-  }
-
   ensureTableExists(name: string, source: string, hatDataModel?: any): void {
-    this.hat.getTable(name, source)
-      .flatMap(table => {
-        if (table === "Not Found") {
-          return this.hat.postModel(hatDataModel);
+    this.uiSvc.tables$
+      .flatMap((tables: DataTable[]) => {
+        const tableFound = tables.find((table: DataTable) => table.name === name && table.source === source);
+        if (tableFound) {
+          this.store.tableId = tableFound.id;
+          return this.hat.getModelMapping(tableFound.id);
         } else {
-          this.store.tableId = table.id;
-          return this.hat.getModelMapping(table.id);
+          return this.hat.postModel(hatDataModel);
         }
       })
-      .subscribe(idMapping => {
-        this.store.idMapping = idMapping;
-      });
+      .subscribe(idMapping => this.store.idMapping = idMapping);
   }
 
   postData(dataItem: T, recordName: string): void {

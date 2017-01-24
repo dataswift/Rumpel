@@ -8,22 +8,22 @@
 
 import { Subject, Observable } from "rxjs";
 import { HatApiService } from "./hat-api.service";
+import { UiStateService } from "./ui-state.service";
 import { uniqBy } from 'lodash';
-import {UserService} from "./user.service";
-import {User} from "../shared/interfaces/user.interface";
+import { DataTable } from "../shared/interfaces/data-table.interface";
 
 export abstract class BaseDataService<T> {
   private _data$: Subject<Array<T>> = <Subject<Array<T>>>new Subject();
   public hat: HatApiService;
-  public userSvc: UserService;
+  public uiSvc: UiStateService;
   public store: {
     data: Array<T>;
     tableId: number;
     idMapping?: { [s: string]: number; };
   };
 
-  constructor(hat: HatApiService, userSvc: UserService) {
-    this.hat = hat; this.userSvc = userSvc;
+  constructor(hat: HatApiService, uiSvc: UiStateService) {
+    this.hat = hat; this.uiSvc = uiSvc;
     this.store = {
       data: [],
       tableId: null
@@ -34,10 +34,11 @@ export abstract class BaseDataService<T> {
     return this._data$.asObservable();
   }
 
-  registerUser$Listener(name: string, source: string): void {
-    this.userSvc.user$.subscribe((user: User) => {
-      if (user.authenticated) {
-        this.ensureTableExists(name, source);
+  ensureTableExists(name: string, source: string): void {
+    this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
+      const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);
+      if (foundTable) {
+        this.store.tableId = foundTable.id;
       }
     });
   }
@@ -62,17 +63,6 @@ export abstract class BaseDataService<T> {
   }
 
   abstract mapData(rawDataItem: any): T
-
-  ensureTableExists(name: string, source: string): void {
-    this.hat.getTable(name, source)
-      .subscribe(table => {
-        if (table === "Not Found") {
-          console.log(`${name} of ${source} table does not exist.`);
-        } else {
-          this.store.tableId = table.id;
-        }
-      })
-  }
 
   pushToStream(): void {
     return this._data$.next(this.store.data);

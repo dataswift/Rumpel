@@ -11,6 +11,8 @@ import { UiStateService, NotificationsService, UserService, HatApiService } from
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
 import { MarketSquareService } from '../../market-square/market-square.service';
+import {Subscription} from "rxjs";
+import {DataTable} from "../../shared/interfaces/data-table.interface";
 
 @Component({
   selector: 'rump-side-menu',
@@ -20,7 +22,7 @@ import { MarketSquareService } from '../../market-square/market-square.service';
 export class SideMenuComponent implements OnInit {
   @Output() clickNotifications = new EventEmitter<string>();
   public selectedItem: string;
-  private sub: any;
+  private sub: Subscription;
   public state: any;
   public menu: Array<any>;
   private comingSoonMenu: Array<any>;
@@ -52,7 +54,7 @@ export class SideMenuComponent implements OnInit {
       { display: 'Mashups', icon: 'layergroup', link: 'mashups/myday', dataType: '', disable: '' },
       { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'no data' },
       { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
-      { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts,tweets', disable: 'no data' },
+      { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts,tweets,music_listens', disable: 'no data' },
       { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
       { display: 'Data Plugs', icon: 'puzzle', link: '', dataType: '', disable: '' }
     ];
@@ -64,10 +66,12 @@ export class SideMenuComponent implements OnInit {
       { display: 'Creations (art)', icon: 'brush', dataType: '', link: '' }
     ];
 
-    this.sub = this.uiState.getState$().subscribe(state => {
-      for (let dt of state.dataTypes) {
-        let changeItem = this.menu.find(item => item.dataType.includes(dt));
-        if (changeItem) changeItem.disable = '';
+    this.sub = this.uiState.tables$.subscribe((tables: Array<DataTable>) => {
+      for (let table of tables) {
+        let itemToActivate = this.menu.find(menuItem => menuItem.dataType.includes(table.name));
+        if (itemToActivate) {
+          itemToActivate.disable = '';
+        }
       }
     });
   }
