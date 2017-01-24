@@ -1,0 +1,8 @@
+<div class="tab-navbar">
+  <div class="tab-nav" [class.active]="activeTab === '/mashups/myday'">
+    <a [routerLink]="['myday']">My Day</a>
+  </div>
+  <div class="tab-nav inactive">+</div>
+</div>
+
+<router-outlet></router-outlet>

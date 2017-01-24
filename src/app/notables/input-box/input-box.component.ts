@@ -90,7 +90,7 @@ export class InputBoxComponent implements OnInit {
   onSubmit(form: NgForm) {
     if (!form.value.message) { return; }
 
-    let author = { phata: this.hatSvc.getDomain() };
+    let author = { phata: this.hatSvc.hatDomain };
 
     if (this.profile.photo.shared) {
       author['photo_url'] = this.profile.photo.url;

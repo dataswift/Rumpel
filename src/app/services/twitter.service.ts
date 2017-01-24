@@ -12,14 +12,16 @@ import { HatApiService } from "./hat-api.service";
 import { Tweet } from '../shared/interfaces/index';
 import * as moment from 'moment';
 import { BaseDataService } from './base-data.service';
+import {UserService} from "./user.service";
 
 @Injectable()
 export class TwitterService extends BaseDataService<Tweet> {
 
-  constructor(private _hat: HatApiService) {
-    super(_hat);
+  constructor(hat: HatApiService,
+              userSvc: UserService) {
+    super(hat, userSvc);
 
-    this.ensureTableExists('tweets', 'twitter');
+    this.registerUser$Listener('tweets', 'twitter');
   }
 
   mapData(rawTweet: any): Tweet {

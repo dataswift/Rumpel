@@ -8,18 +8,18 @@
 
 import { Injectable } from '@angular/core';
 import { HatApiService } from '../services/hat-api.service';
-import { AuthService } from '../services/auth.service';
 import { Profile } from '../shared/interfaces/profile.interface';
 import { ProfileHatModel } from './profile.hatmodel';
 import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
+import {UserService} from "../services/user.service";
 
 @Injectable()
 export class ProfilesService extends BaseRumpelDataService<Profile> {
   constructor(hat: HatApiService,
-              private auth: AuthService) {
-    super(hat);
+              userSvc: UserService) {
+    super(hat, userSvc);
 
-    this.ensureTableExists('profile', 'rumpel', ProfileHatModel.model);
+    this.registerUser$Listener('profile', 'rumpel', ProfileHatModel.model);
   }
 
   getPicture() {

@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.uiMessageHidden = true;
-    this.hatUrl = this.hat.getUrl();
+    this.hatUrl = 'https://' + this.hat.hatDomain;
     this.profilePhoto = {};
     this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
       if (profileSnapshots.length > 0) {

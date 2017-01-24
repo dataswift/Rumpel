@@ -6,5 +6,4 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-export { AuthComponent } from './auth/auth.component';
 export { LoginComponent } from './login/login.component';

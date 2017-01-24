@@ -9,18 +9,21 @@
 import { Subject, Observable } from "rxjs";
 import { HatApiService } from "./hat-api.service";
 import { uniqBy } from 'lodash';
+import {UserService} from "./user.service";
+import {User} from "../shared/interfaces/user.interface";
 
 export abstract class BaseDataService<T> {
   private _data$: Subject<Array<T>> = <Subject<Array<T>>>new Subject();
   public hat: HatApiService;
+  public userSvc: UserService;
   public store: {
     data: Array<T>;
     tableId: number;
     idMapping?: { [s: string]: number; };
   };
 
-  constructor(hat: HatApiService) {
-    this.hat = hat;
+  constructor(hat: HatApiService, userSvc: UserService) {
+    this.hat = hat; this.userSvc = userSvc;
     this.store = {
       data: [],
       tableId: null
@@ -29,6 +32,14 @@ export abstract class BaseDataService<T> {
 
   get data$(): Observable<Array<T>> {
     return this._data$.asObservable();
+  }
+
+  registerUser$Listener(name: string, source: string): void {
+    this.userSvc.user$.subscribe((user: User) => {
+      if (user.authenticated) {
+        this.ensureTableExists(name, source);
+      }
+    });
   }
 
   getRecentData(failedAttempts: number = 0): void {

@@ -43,7 +43,7 @@ export class NotablesMdEditorComponent implements OnInit {
     });
 
     this.currentNotableMeta ={
-      phata: this.hatSvc.getDomain(),
+      phata: this.hatSvc.hatDomain,
       expires: 0,
       reportLocation: false
     };
@@ -54,7 +54,7 @@ export class NotablesMdEditorComponent implements OnInit {
       this.currentNotable = notable;
       if (this.currentNotable.id) {
         this.currentNotableMeta = {
-          phata: this.hatSvc.getDomain(),
+          phata: this.hatSvc.hatDomain,
           expires: null,
           reportLocation: false,
           initialState: {

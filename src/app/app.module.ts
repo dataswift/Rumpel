@@ -32,9 +32,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
 
 import { DataTypeFilterPipe } from './pipes';
-import { LoginComponent, AuthComponent } from './user-mgmt';
+import { LoginComponent } from './user-mgmt';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard'
-import { AuthService, HatApiService, UiStateService, RumpelService, DataPlugService, NotificationsService, MediaService, TwitterService } from './services';
+import { UserService, HatApiService, UiStateService, RumpelService, DataPlugService, NotificationsService, MediaService, TwitterService } from './services';
 
 /* MODAL COMPONENTS */
 
@@ -48,7 +48,6 @@ import { CookieService } from 'angular2-cookie/core';
   declarations: [
     AppRootComponent,
     LoginComponent,
-    AuthComponent,
     GridComponent,
     TileHeaderComponent,
     TileComingSoonComponent,
@@ -78,7 +77,7 @@ import { CookieService } from 'angular2-cookie/core';
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: AppConfig },
     AuthGuard,
-    AuthService,
+    UserService,
     HatApiService,
     UiStateService,
     RumpelService,

@@ -20,11 +20,11 @@ import { NotablesService } from "../../notables/notables.service";
 import { Notable } from "../../shared/interfaces/notable.class";
 
 @Component({
-  selector: 'rump-mixpad',
-  templateUrl: 'mixpad.component.html',
-  styleUrls: ['mixpad.component.scss']
+  selector: 'rump-my-day',
+  templateUrl: 'my-day.component.html',
+  styleUrls: ['my-day.component.scss']
 })
-export class MixpadComponent implements OnInit {
+export class MyDayComponent implements OnInit {
   private eventSub;
   private imgSub;
   private posts: Array<Post> = [];

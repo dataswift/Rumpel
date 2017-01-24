@@ -19,6 +19,7 @@ import { Notable, MSUserClaim, DataDebit } from '../shared/interfaces';
 import * as moment from 'moment';
 import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
 import {NotablesServiceMeta} from "../shared/interfaces/notables-service-meta.interface";
+import {UserService} from "../services/user.service";
 
 @Injectable()
 export class NotablesService extends BaseRumpelDataService<Notable> {
@@ -32,12 +33,13 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               hat: HatApiService,
+              userSvc: UserService,
               private market: MarketSquareService,
               private dataPlug: DataPlugService) {
-    super(hat);
+    super(hat, userSvc);
 
     this.notablesServiceMeta = {
-      phata: this.hat.getDomain(),
+      phata: this.hat.hatDomain,
       offerClaimed: false,
       userMessage: '',
       canPost: ['marketsquare'],
@@ -50,7 +52,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
     this._notablesMeta$ = <BehaviorSubject<NotablesServiceMeta>>new BehaviorSubject(this.notablesServiceMeta);
     this.notablesMeta$ = this._notablesMeta$.asObservable();
 
-    this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
+    this.registerUser$Listener('notablesv1', 'rumpel', NotablesHatModel.model);
 
     this.updateNotablesState();
 

@@ -7,10 +7,12 @@
  */
 
 import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
 import {CookieService} from "angular2-cookie/core";
 import {DialogService} from "../../layout/dialog.service";
 import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
+
 
 @Component({
   selector: 'rump-login',
@@ -19,20 +21,21 @@ import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
 })
 export class LoginComponent implements OnInit {
   public hatDomain: string;
-  private redirectUrl: string = 'https://rumpel.hubofallthings.com/users/authenticate';
+  private redirectUrl: string = 'https://rumpel.hubofallthings.com/';
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private route: ActivatedRoute,
               private cookieSvc: CookieService,
               private dialogSvc: DialogService) {
   }
 
   ngOnInit() {
     this.hatDomain = this.cookieSvc.get("lastLoginPHATA");
-    // if (this.route.snapshot.queryParams['redirect']) {
-    //   this.redirectUrl += this.route.snapshot.queryParams['redirect'];
-    // } else {
-    //   this.redirectUrl += 'dashboard';
-    // }
+    if (this.route.snapshot.queryParams['redirect']) {
+      this.redirectUrl += this.route.snapshot.queryParams['redirect'];
+    } else {
+      this.redirectUrl += 'dashboard';
+    }
   }
 
   showScreenshot() {

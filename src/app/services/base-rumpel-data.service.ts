@@ -8,16 +8,26 @@
 
 import {BaseDataService} from "./base-data.service";
 import {HatApiService} from "./hat-api.service";
+import {UserService} from "./user.service";
+import {User} from "../shared/interfaces/user.interface";
 
 export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
-  constructor(hat: HatApiService) {
-    super(hat);
+  constructor(hat: HatApiService, userSvc: UserService) {
+    super(hat, userSvc);
 
     this.store = {
       data: [],
       tableId: null,
       idMapping: null
     };
+  }
+
+  registerUser$Listener(name: string, source: string, hatDataModel?: any): void {
+    this.userSvc.user$.subscribe((user: User) => {
+      if (user.authenticated) {
+        this.ensureTableExists(name, source, hatDataModel);
+      }
+    });
   }
 
   ensureTableExists(name: string, source: string, hatDataModel?: any): void {

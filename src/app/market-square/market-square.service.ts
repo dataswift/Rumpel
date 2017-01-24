@@ -78,10 +78,7 @@ export class MarketSquareService {
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
       .map(res => res.json()))
-      .catch(res => {
-        console.log("Failed to get offer information", res);
-        return Observable.of({});
-      })
+      .catch(this.handleError);
   }
 
   claimOffer(id: string) {
@@ -142,7 +139,7 @@ export class MarketSquareService {
   }
 
   tickle(): void {
-    const hatDomain = this.hat.getDomain();
+    const hatDomain = this.hat.hatDomain;
     const url = "https://notables.hubofallthings.com/api/bulletin/tickle";
 
     let headers = new Headers();
@@ -166,7 +163,7 @@ export class MarketSquareService {
    */
 
   connectHAT() {
-    const hatDomain = this.hat.getDomain();
+    const hatDomain = this.hat.hatDomain;
     const url = this.config.market.url + '/dataplugs/' + this.config.market.id + '/connect';
 
     let headers = new Headers();
@@ -185,5 +182,15 @@ export class MarketSquareService {
           console.log('Successfully registered with MarketSquare.', registrationMessage.message);
         }
       });
+  }
+
+  private handleError(error: Response) {
+    const body = error.json() || "";
+    const err = body.error || JSON.stringify(body);
+    const errMsg = `${error.status} - ${error.statusText || ""}
+                    ${err}`;
+
+    console.warn(errMsg);
+    return Observable.throw(errMsg);
   }
 }

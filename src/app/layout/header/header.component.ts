@@ -8,10 +8,11 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { AuthService } from '../../services';
 import { DialogService } from "../dialog.service";
 import { InfoBoxComponent } from "../info-box/info-box.component";
+import { UserService } from '../../services/index';
+import { User } from '../../shared/interfaces/index';
+import {Subscription} from "rxjs";
 
 declare var introJs: any;
 
@@ -21,14 +22,14 @@ declare var introJs: any;
   styleUrls: ['header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  public hatDomain: string;
-  private sub: any;
-  public msLink: string;
+  private hatDomain: string;
+  private sub: Subscription;
+  private marketSquareLink: string;
   private intro: any;
 
-  constructor(private auth: AuthService,
-              private router: Router,
-              private dialogSvc: DialogService) {
+  constructor(private router: Router,
+              private dialogSvc: DialogService,
+              private userSvc: UserService) {
 
     this.intro = introJs();
     this.intro.setOptions({
@@ -147,16 +148,19 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sub = this.auth.auth$.subscribe(isAuthenticated => {
-      if (isAuthenticated) {
-        this.hatDomain = this.auth.getDomain();
-        this.msLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
+    this.marketSquareLink = 'https://marketsquare.hubofallthings.com';
+    this.sub = this.userSvc.user$.subscribe((user: User) => {
+      this.hatDomain = user.iss;
+      if (this.hatDomain) {
+        this.marketSquareLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
+      } else {
+        this.marketSquareLink = "https://marketsquare.hubofallthings.com/";
       }
     });
   }
 
   showInfoModal() {
-    this.dialogSvc.createDialog(InfoBoxComponent, {
+    this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
       title: "Who can see this page?",
       message: `This page is only seen by you (and whoever is looking over your shoulder).
                Rumpel is your PERSONAL hyperdata browser for your HAT data.
@@ -178,8 +182,7 @@ export class HeaderComponent implements OnInit {
   // }
 
   signOut() {
-    this.hatDomain = null;
-    this.auth.signOut();
+    this.userSvc.logout();
     this.router.navigate(['/users/login']);
   }
 

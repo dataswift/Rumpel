@@ -11,21 +11,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { AuthComponent } from './auth.component';
+import { MixpadComponent } from './my-day.component';
 
-describe('AuthComponent', () => {
-  let component: AuthComponent;
-  let fixture: ComponentFixture<AuthComponent>;
+describe('MixpadComponent', () => {
+  let component: MixpadComponent;
+  let fixture: ComponentFixture<MixpadComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AuthComponent ]
+      declarations: [ MixpadComponent ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AuthComponent);
+    fixture = TestBed.createComponent(MixpadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

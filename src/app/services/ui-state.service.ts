@@ -9,22 +9,25 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable } from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
-import { AuthService } from './auth.service';
+import { UserService } from './user.service';
+import {User} from "../shared/interfaces/user.interface";
 
 @Injectable()
 export class UiStateService {
   private state$: Subject<any>;
   private state: { dataSources: Array<string>; dataTypes: Array<string> };
-  private defaultMenu: Array<any>;
 
-  constructor(private hat: HatApiService, private auth: AuthService) {
-    this.state = { dataSources: [], dataTypes: [] }
+  constructor(private hat: HatApiService, private userSvc: UserService) {
+    this.state = { dataSources: [], dataTypes: [] };
     this.state$ = <Subject<any>>new Subject();
 
-    this.auth.auth$
-      .flatMap(authenticated => {
-        if (authenticated)
+    this.userSvc.user$
+      .flatMap((user: User) => {
+        if (user.authenticated) {
           return this.hat.getDataSources()
+        } else {
+          return Observable.of([]);
+        }
       })
       .subscribe(dataSources => {
         for (let dataSource of dataSources) {
@@ -37,7 +40,6 @@ export class UiStateService {
           }
         }
 
-        localStorage.setItem('state', JSON.stringify(this.state));
         this.state$.next(this.state);
     });
   }

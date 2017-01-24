@@ -7,31 +7,40 @@
  */
 
 import { Injectable } from '@angular/core';
-import { CanActivate, Router, NavigationExtras } from '@angular/router';
-import { AuthService } from './services';
+import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ReplaySubject, Observable } from 'rxjs/Rx';
+import { UserService } from './services/user.service';
+import { User } from './shared/interfaces/index';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private authSvc: AuthService, private router: Router) {
+  constructor(private router: Router,
+              private user: UserService) {
   }
 
-  canActivate() {
-    if (this.authSvc.isAuthenticated()) {
-      return true;
-    } else if (this.authSvc.isPreviousTokenValid()) {
-      const token = this.authSvc.getSavedToken();
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
 
-      const navigationExtras: NavigationExtras = {
-        queryParams: { 'token': token }
-      };
+    var subject = new ReplaySubject<boolean>();
 
-      this.router.navigate(['/users/authenticate'], navigationExtras);
-      return false;
+    this.user.auth$.subscribe((isAuthenticated: boolean) => {
+      if (isAuthenticated === false) {
+        let navigationExtras: NavigationExtras = {
+          queryParams: { 'redirect': route.routeConfig.path }
+        };
+
+        this.router.navigate(['/users/login'], navigationExtras);
+      }
+
+      subject.next(isAuthenticated);
+    });
+
+    if (route.queryParams['token']) {
+      this.user.login(route.queryParams['token']);
     } else {
-      this.router.navigate(['/users/login']);
-      return false;
+      this.user.ensureUserAuthenticated();
     }
 
+    return subject.asObservable().take(1);
   }
 }

@@ -6,12 +6,15 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
  */
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, HatApiService } from '../../services';
+import { Subscription } from 'rxjs/Rx';
+import { HatApiService, UserService } from '../../services/index';
 import { DataDebitService } from '../data-debits.service';
-import { DataDebit } from '../../shared/interfaces';
+import { DataDebit, User } from '../../shared/interfaces';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
+
+// import { DomSanitizer } from '@angular/platform-browser';
 import { isUndefined } from "util";
 
 @Component({
@@ -19,11 +22,11 @@ import { isUndefined } from "util";
   templateUrl: 'data-debit-confirm.component.html',
   styleUrls: ['data-debit-confirm.component.scss']
 })
-export class DataDebitConfirmComponent implements OnInit {
+export class DataDebitConfirmComponent implements OnInit, OnDestroy {
   private offer: any;
   private status: any;
+  private userSub: Subscription;
   private dataDebit: DataDebit;
-  private token: string;
   private uuid: string;
   private ddConfirmed: boolean;
   private offerSatisfied: boolean;
@@ -35,11 +38,12 @@ export class DataDebitConfirmComponent implements OnInit {
               private _route: ActivatedRoute,
               private _ddSvc: DataDebitService,
               private _hat: HatApiService,
-              private authSvc: AuthService,
+              private _userSvc: UserService,
               private router: Router) {}
 
   ngOnInit() {
     this.status = '';
+    this.uuid = this._route.snapshot.params['uuid'];
     this.offer = {
       offer: {
         title: '',
@@ -52,26 +56,18 @@ export class DataDebitConfirmComponent implements OnInit {
       owner: { firstName: '', lastName: '', email: '' }
     };
 
-    this.authSvc.auth$.subscribe(isAuthenticated => {
-      if (isAuthenticated === false) return;
-
-      this.updateDataDebitInformation();
-      this.updateOfferInformation(false);
-    });
-
-    this._route.params.subscribe(params => {
-      this.uuid = params['uuid'] || null;
-    });
-
-    this._route.queryParams.subscribe(params => {
-      if (this.authSvc.isAuthenticated() === true) {
+    this.userSub = this._userSvc.auth$.subscribe((isAuthenticated: boolean) => {
+      if (isAuthenticated) {
         this.updateDataDebitInformation();
         this.updateOfferInformation(false);
-      } else {
-        let jwtToken = params['token'] || null;
-        return this.authSvc.authenticate(jwtToken);
       }
     });
+
+    this._userSvc.ensureUserAuthenticated();
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe();
   }
 
   acceptDataDebit() {
@@ -103,7 +99,7 @@ export class DataDebitConfirmComponent implements OnInit {
         'https://marketsquare.hubofallthings.com/offers/' + results[1];
       this.twitterShareLink = this.config.twitter.shareUrl +
         'https://marketsquare.hubofallthings.com/offers/' + results[1];
-      this.offerSatisfied = offer.offer.status === 'satisfied' ? true : false;
+      this.offerSatisfied = offer.offer.status === 'satisfied';
       this.offer = offer;
       this.updateStatus();
     });

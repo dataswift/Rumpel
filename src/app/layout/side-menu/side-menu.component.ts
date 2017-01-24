@@ -7,9 +7,10 @@
  */
 
 import {Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UiStateService, AuthService, NotificationsService } from '../../services';
+import { UiStateService, NotificationsService, UserService, HatApiService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
+import { MarketSquareService } from '../../market-square/market-square.service';
 
 @Component({
   selector: 'rump-side-menu',
@@ -30,16 +31,14 @@ export class SideMenuComponent implements OnInit {
   // so that it can subscribe for Auth observable in time.
 
   constructor(private uiState: UiStateService,
-              private _authSvc: AuthService,
               private _dialogSvc: DialogService,
-              private _notificationsSvc: NotificationsService) {}
+              private _notificationsSvc: NotificationsService,
+              private userSvc: UserService,
+              private hat: HatApiService,
+              private marketSvc: MarketSquareService) {}
 
   ngOnInit() {
     this.state = { dataSources: [], dataTypes: [] };
-
-    this._authSvc.auth$.subscribe(authenticated => {
-      if (authenticated) this._notificationsSvc.getAllNotifications();
-    });
 
     this._notificationsSvc.stats$.subscribe(stats => {
       this.unreadNotifications = stats.unread;
@@ -50,7 +49,7 @@ export class SideMenuComponent implements OnInit {
       { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '' },
       { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
       { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
-      { display: 'Mashups', icon: 'layergroup', link: 'mixpad', dataType: '', disable: '' },
+      { display: 'Mashups', icon: 'layergroup', link: 'mashups/myday', dataType: '', disable: '' },
       { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'no data' },
       { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
       { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts,tweets', disable: 'no data' },
@@ -82,7 +81,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   displayConfirmDialog() {
-    this._dialogSvc.createDialog(DialogBoxComponent, {
+    this._dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
       buttons: [{
         title: "Continue",
         link: "https://marketsquare.hubofallthings.com/offers"

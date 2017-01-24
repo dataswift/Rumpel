@@ -1,0 +1,30 @@
+.tab-navbar {
+  font-family: "Open Sans Condensed", sans-serif;
+  margin-top: 0.5em;
+  margin-left: 1em;
+
+  .tab-nav {
+    background-color: #37474F;
+    color: white;
+    padding: 0.5em 1.5em;
+    margin-right: 0.5em;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    display: inline-block;
+    opacity: 0.2;
+    cursor: pointer;
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+
+    &:hover:not(.active.inactive) {
+      opacity: 0.8;
+    }
+
+    &.active {
+      opacity: 1.0;
+    }
+  }
+}

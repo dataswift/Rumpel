@@ -9,8 +9,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DialogBoxComponent } from '../../layout/dialog-box/dialog-box.component';
 import { MarketSquareService } from '../market-square.service';
-import { AuthService } from '../../services/auth.service';
 import { DialogService } from '../../layout/dialog.service';
+import { HatApiService } from '../../services/index';
 
 @Component({
   selector: 'rump-tile-data-plugs',
@@ -24,7 +24,7 @@ export class TileDataPlugsComponent implements OnInit {
 
   constructor(private marketSvc: MarketSquareService,
               private dialogSvc: DialogService,
-              private auth: AuthService) {}
+              private hatSvc: HatApiService) {}
 
   ngOnInit() {
     this.marketSvc.getDataPlugs().subscribe(plugs => {
@@ -45,14 +45,14 @@ export class TileDataPlugsComponent implements OnInit {
       this.plugs = displayPlugs;
     });
 
-    this.hatDomain = this.auth.getDomain();
+    //this.hatDomain = this.hatSvc.hatDomain;
   }
 
   displayConfirmDialog(plug: any) {
     let loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
     if (plug.name === 'location') return plug.url;
 
-    this.dialogSvc.createDialog(DialogBoxComponent, {
+    this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
       buttons: [{
         title: "Continue",
         link: `https://${this.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`
