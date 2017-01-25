@@ -7,12 +7,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import {HatApiService} from "./hat-api.service";
+import {HatApiService} from "../services/hat-api.service";
 
 import { MusicListen } from "../shared/interfaces/music-listen.interface";
 import * as moment from 'moment';
-import { BaseDataService } from "./base-data.service";
-import { UiStateService } from "./ui-state.service";
+import { BaseDataService } from "../services/base-data.service";
+import { UiStateService } from "../services/ui-state.service";
 
 @Injectable()
 export class MediaService extends BaseDataService<MusicListen> {

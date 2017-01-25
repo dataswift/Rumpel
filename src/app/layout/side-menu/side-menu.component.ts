@@ -7,12 +7,13 @@
  */
 
 import {Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { UiStateService, NotificationsService, UserService, HatApiService } from '../../services';
+import { UiStateService, UserService, HatApiService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
 import { MarketSquareService } from '../../market-square/market-square.service';
 import {Subscription} from "rxjs";
 import {DataTable} from "../../shared/interfaces/data-table.interface";
+import {NotificationsService} from "../notifications.service";
 
 @Component({
   selector: 'rump-side-menu',

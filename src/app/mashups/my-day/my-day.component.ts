@@ -18,6 +18,9 @@ import * as moment from 'moment';
 import { sortedUniqBy, unionBy } from 'lodash';
 import { NotablesService } from "../../notables/notables.service";
 import { Notable } from "../../shared/interfaces/notable.class";
+import {Subscription, Observable} from "rxjs";
+import {FacebookEventsService} from "../../dimensions/facebook-events.service";
+import {GoogleEventsService} from "../../dimensions/google-events.service";
 
 @Component({
   selector: 'rump-my-day',
@@ -25,7 +28,7 @@ import { Notable } from "../../shared/interfaces/notable.class";
   styleUrls: ['my-day.component.scss']
 })
 export class MyDayComponent implements OnInit {
-  private eventSub;
+  private eventsSub: Subscription;
   private imgSub;
   private posts: Array<Post> = [];
   private events: Array<Event> = [];
@@ -39,6 +42,8 @@ export class MyDayComponent implements OnInit {
 
   constructor(private locationsSvc: LocationsService,
               private eventsSvc: EventsService,
+              private facebookEventsSvc: FacebookEventsService,
+              private googleEventsSvc: GoogleEventsService,
               private photosSvc: PhotosService,
               private socialSvc: SocialService,
               private notablesSvc: NotablesService,
@@ -51,24 +56,32 @@ export class MyDayComponent implements OnInit {
     this.timeline = [new ExpandedTime(now)];
     this.shownComponents = { map: true, events: true, photos: true, timeline: true };
 
-    this.eventsSvc.getEvents$().subscribe(events => {
-      this.addDatesToTimeline(events, 'start');
-      this.events = events.sort((a, b) => a.start.isBefore(b.start) ? -1 : 1);
-    });
+    this.eventsSub =
+      Observable.merge(
+        this.eventsSvc.data$,
+        this.facebookEventsSvc.data$,
+        this.googleEventsSvc.data$
+      )
+        .subscribe((events: Array<Event>) => {
+          this.addDatesToTimeline(events, 'start');
+          this.events = this.events.concat(events).sort((a, b) => a.start.isBefore(b.start) ? -1 : 1);
+        });
 
     this.photosSvc.photos$.subscribe(photos => {
       this.addDatesToTimeline(photos, 'timestamp');
       this.photos = photos;
     });
 
-    this.socialSvc.socialFeed$.subscribe(posts => {
+    this.socialSvc.data$.subscribe((posts: Array<Post>) => {
       this.addDatesToTimeline(posts, 'createdTime');
       this.posts = posts;
     });
 
-    this.locationsSvc.locations$.subscribe(locations => {
+    this.locationsSvc.data$.subscribe(locations => {
       this.addDatesToTimeline(locations, 'timestamp');
       this.locations = locations;
+
+      this.locationsSvc.getMoreData(500, 5000);
     });
 
     this.notablesSvc.data$.subscribe(notables => {
@@ -76,10 +89,12 @@ export class MyDayComponent implements OnInit {
       this.notables = notables;
     });
 
-    this.socialSvc.getRecentPosts();
-    this.locationsSvc.getRecentLocations();
+    this.socialSvc.getRecentData();
+    this.locationsSvc.getRecentData();
     this.photosSvc.getRecentPhotos();
-    this.eventsSvc.showAll();
+    this.eventsSvc.getRecentData();
+    this.facebookEventsSvc.getRecentData();
+    this.googleEventsSvc.getRecentData();
     this.notablesSvc.getRecentData();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('73em');

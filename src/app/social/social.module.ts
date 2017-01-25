@@ -17,11 +17,13 @@ import { FbPostComponent } from './fb-post/fb-post.component';
 import { TweetComponent } from './tweet/tweet.component';
 
 import { SocialService } from './social.service';
+import {TwitterService} from "./twitter.service";
+import {MediaService} from "./media.service";
 
 @NgModule({
     imports: [ SharedModule, SocialRoutingModule ],
     declarations: [ SocialComponent, TileSocialComponent, FbPostComponent, TweetComponent ],
-    providers: [ SocialService ],
+    providers: [ SocialService, TwitterService, MediaService ],
     exports: [ TileSocialComponent, FbPostComponent, TweetComponent ]
 })
 export class SocialModule {}

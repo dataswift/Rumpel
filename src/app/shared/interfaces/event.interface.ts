@@ -16,7 +16,7 @@ export interface Event {
   start: Moment;
   end?: Moment;
   allDay: boolean;
-  location?: string;
+  location?: { latitude: string; longitude: string; };
   organiser?: string;
   attendees?: string;
   link?: string;

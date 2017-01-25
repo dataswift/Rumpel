@@ -7,9 +7,9 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { NotificationsService, UserService } from '../../services/index';
+import { UserService } from '../../services/index';
 import { ExternalNotification } from "../../shared/interfaces/index";
-import {User} from "../../shared/interfaces/user.interface";
+import {NotificationsService} from "../notifications.service";
 
 @Component({
   selector: 'rump-notification-centre',

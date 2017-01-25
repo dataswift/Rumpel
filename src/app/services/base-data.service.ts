@@ -11,6 +11,7 @@ import { HatApiService } from "./hat-api.service";
 import { UiStateService } from "./ui-state.service";
 import { uniqBy } from 'lodash';
 import { DataTable } from "../shared/interfaces/data-table.interface";
+import * as moment from "moment";
 
 export abstract class BaseDataService<T> {
   private _data$: Subject<Array<T>> = <Subject<Array<T>>>new Subject();
@@ -21,6 +22,8 @@ export abstract class BaseDataService<T> {
     tableId: number;
     idMapping?: { [s: string]: number; };
   };
+
+  private oldestRecordTimestamp: string = null;
 
   constructor(hat: HatApiService, uiSvc: UiStateService) {
     this.hat = hat; this.uiSvc = uiSvc;
@@ -49,7 +52,11 @@ export abstract class BaseDataService<T> {
     } else if (this.store.tableId) {
       this.hat.getValuesWithLimit(this.store.tableId)
         .map((rawData: Array<any>) => {
-          let typeSafeData = rawData.map(this.mapData);
+          if (rawData.length > 0) {
+            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format("X");
+          }
+
+          let typeSafeData: Array<T> = rawData.map(this.mapData);
           return uniqBy(typeSafeData, "id");
         })
         .subscribe((data: Array<T>) => {
@@ -59,6 +66,29 @@ export abstract class BaseDataService<T> {
         });
     } else if (failedAttempts <= 10) {
       Observable.timer(75).subscribe(() => this.getRecentData(++failedAttempts));
+    }
+  }
+
+  getMoreData(fetchRecordCount: number = 50, totalRecordCount: number = 50): void {
+    if (this.oldestRecordTimestamp) {
+      this.hat.getValuesWithLimit(this.store.tableId, fetchRecordCount, this.oldestRecordTimestamp)
+        .map((rawData: Array<any>) => {
+          if (rawData.length > 0) {
+            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format("X");
+          }
+
+          let typeSafeData: Array<T> = rawData.map(this.mapData);
+          return uniqBy(typeSafeData, "id");
+        })
+        .subscribe((data: Array<T>) => {
+          this.store.data = this.store.data.concat(data);
+
+          this.pushToStream();
+
+          if (this.store.data.length < totalRecordCount && data.length > 0) {
+            this.getMoreData(fetchRecordCount, totalRecordCount);
+          }
+        });
     }
   }
 

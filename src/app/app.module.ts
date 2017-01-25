@@ -34,7 +34,7 @@ import { AuthGuard } from './auth.guard';
 import { DataTypeFilterPipe } from './pipes';
 import { LoginComponent } from './user-mgmt';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard'
-import { UserService, HatApiService, UiStateService, RumpelService, DataPlugService, NotificationsService, MediaService, TwitterService } from './services';
+import { UserService, HatApiService, UiStateService, RumpelService, DataPlugService } from './services';
 
 /* MODAL COMPONENTS */
 
@@ -82,9 +82,6 @@ import { CookieService } from 'angular2-cookie/core';
     UiStateService,
     RumpelService,
     DataPlugService,
-    NotificationsService,
-    MediaService,
-    TwitterService,
     CookieService
   ]
 })

@@ -21,6 +21,7 @@ import { DialogAnchorDirective } from './dialog-anchor.directive';
 import { DialogService } from './dialog.service';
 import { ConfirmBoxComponent } from "./confirm-box/confirm-box.component";
 import { InfoBoxComponent } from "./info-box/info-box.component";
+import {NotificationsService} from "./notifications.service";
 
 @NgModule({
   imports: [ SharedModule ],
@@ -38,6 +39,6 @@ import { InfoBoxComponent } from "./info-box/info-box.component";
             FooterComponent,
             NotificationCentreComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService ]
+  providers: [ DialogService, NotificationsService ]
 })
 export class LayoutModule {}

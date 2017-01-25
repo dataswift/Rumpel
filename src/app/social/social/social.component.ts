@@ -11,8 +11,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '../social.service';
 import { Post, MusicListen, Tweet } from '../../shared/interfaces';
 import { Subscription } from "rxjs";
-import {MediaService} from "../../services/media.service";
-import {TwitterService} from "../../services/twitter.service";
+import {MediaService} from "../media.service";
+import {TwitterService} from "../twitter.service";
 
 @Component({
   selector: 'rump-social',
@@ -35,7 +35,7 @@ export class SocialComponent implements OnInit, OnDestroy {
     this.posts = [];
     this.filter = '';
 
-    this.svcSub = this.socialSvc.socialFeed$.subscribe((posts: Post[]) => {
+    this.svcSub = this.socialSvc.data$.subscribe((posts: Post[]) => {
       this.posts = this.posts.concat(posts);
 
       this.sortPostsByDate();
@@ -56,7 +56,7 @@ export class SocialComponent implements OnInit, OnDestroy {
       this.scrollToPost();
     });
 
-    this.socialSvc.getRecentPosts();
+    this.socialSvc.getRecentData();
     this.mediaSvc.getRecentData();
     this.twitterSvc.getRecentData();
   }

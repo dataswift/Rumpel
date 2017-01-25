@@ -10,9 +10,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { SocialService } from '../social.service';
 import { Post, MusicListen, Tweet } from '../../shared/interfaces';
-import { MediaService } from "../../services/media.service";
+import { MediaService } from "../media.service";
 import { Subscription } from "rxjs";
-import {TwitterService} from "../../services/twitter.service";
+import {TwitterService} from "../twitter.service";
 
 @Component({
   selector: 'rump-tile-social',
@@ -33,7 +33,7 @@ export class TileSocialComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.posts = [];
 
-    this.postsSub = this.socialSvc.socialFeed$.subscribe((posts: Post[]) => {
+    this.postsSub = this.socialSvc.data$.subscribe((posts: Post[]) => {
       this.posts = this.posts.concat(posts);
 
       this.sortPostsByDate();
@@ -52,7 +52,7 @@ export class TileSocialComponent implements OnInit, OnDestroy {
     });
 
     this.mediaSvc.getRecentData();
-    this.socialSvc.getRecentPosts();
+    this.socialSvc.getRecentData();
     this.twitterSvc.getRecentData();
   }
 

@@ -10,6 +10,8 @@ import { Component, OnInit } from '@angular/core';
 import { Notable, Profile } from '../../shared/interfaces';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { NotablesService } from '../notables.service';
+import {UserService} from "../../services/user.service";
+import {User} from "../../shared/interfaces/user.interface";
 
 @Component({
   selector: 'rump-tile-notables',
@@ -23,7 +25,8 @@ export class TileNotablesComponent implements OnInit {
   private sub: any;
 
   constructor(private notablesSvc: NotablesService,
-              private profilesSvc: ProfilesService) {}
+              private profilesSvc: ProfilesService,
+              private userSvc: UserService) {}
 
   ngOnInit() {
     this.notables =[];
@@ -42,9 +45,13 @@ export class TileNotablesComponent implements OnInit {
       photo: { url: "", shared: false }
     };
 
-    this.profilesSvc.getPicture().subscribe(result => {
-      if (result && result.url) {
-        this.profile.photo.url = result.url;
+    this.userSvc.user$.subscribe((user: User) => {
+      if (user.authenticated === true) {
+        this.profilesSvc.getPicture().subscribe(result => {
+          if (result && result.url) {
+            this.profile.photo.url = result.url;
+          }
+        });
       }
     });
 

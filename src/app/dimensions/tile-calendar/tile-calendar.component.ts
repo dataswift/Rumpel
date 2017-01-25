@@ -8,9 +8,12 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventsService } from '../events.service';
-import { Event } from '../../shared/interfaces';
+import {FacebookEventsService} from "../facebook-events.service";
+import {GoogleEventsService} from "../google-events.service";
+import { Event } from '../../shared/interfaces/index';
 
 import * as moment from 'moment';
+import { Observable, Subscription } from "rxjs/Rx";
 
 @Component({
   selector: 'rump-tile-calendar',
@@ -20,34 +23,45 @@ import * as moment from 'moment';
 export class TileCalendarComponent implements OnInit, OnDestroy {
   public events: Array<any>;
   public upcomingEventsExist: boolean;
-  private sub: any;
+  private sub: Subscription;
 
-  constructor(private eventsSvc: EventsService) {}
+  constructor(private eventsSvc: EventsService,
+              private facebookEventSvc: FacebookEventsService,
+              private googleEventsSvc: GoogleEventsService) {}
 
   ngOnInit() {
     this.events = [];
-    this.sub = this.eventsSvc.getEvents$()
-      .subscribe((events: Array<Event>) => {
-        let upcomingEvents = events
-          .filter(event => event.start.isAfter() && event.start.isBefore(moment().add(1, 'days').endOf('day')))
-          .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
+    this.sub =
+    Observable.merge(
+      this.eventsSvc.data$,
+      this.facebookEventSvc.data$,
+      this.googleEventsSvc.data$
+    ).subscribe(this.handleEventAddition);
 
-        if (upcomingEvents.length > 0) {
-          this.upcomingEventsExist = true;
-          let daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')))
-          this.events = [
-            { relativeTime: 'today', events: upcomingEvents.splice(0, daySplitIndex) },
-            { relativeTime: 'tomorrow', events: upcomingEvents }
-          ];
-        } else {
-          this.upcomingEventsExist = false;
-        }
-      });
-    this.eventsSvc.showAll();
+    this.eventsSvc.getRecentData();
+    this.facebookEventSvc.getRecentData();
+    this.googleEventsSvc.getRecentData();
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+  }
+
+  private handleEventAddition(events: Array<Event>): void {
+    let upcomingEvents = events
+      .filter(event => event.start.isAfter() && event.start.isBefore(moment().add(1, 'days').endOf('day')))
+      .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
+
+    if (upcomingEvents.length > 0) {
+      this.upcomingEventsExist = true;
+      let daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')))
+      this.events = [
+        { relativeTime: 'today', events: upcomingEvents.splice(0, daySplitIndex) },
+        { relativeTime: 'tomorrow', events: upcomingEvents }
+      ];
+    } else {
+      this.upcomingEventsExist = false;
+    }
   }
 
 }

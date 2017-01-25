@@ -7,7 +7,11 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import {Observable, Subscription} from "rxjs";
 import { EventsService } from '../events.service';
+import {FacebookEventsService} from "../facebook-events.service";
+import {GoogleEventsService} from "../google-events.service";
+
 import { Event } from '../../shared/interfaces';
 import * as moment from 'moment';
 
@@ -19,7 +23,7 @@ declare var $: any;
   styleUrls: ['calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  private sub;
+  private sub: Subscription;
   private events: any;
   private header: any;
   private viewChoices: string;
@@ -28,7 +32,9 @@ export class CalendarComponent implements OnInit {
   private firstDay: number;
   private height: string;
 
-  constructor(private eventsSvc: EventsService) {}
+  constructor(private eventsSvc: EventsService,
+              private facebookEventsSvc: FacebookEventsService,
+              private googleEventsSvc: GoogleEventsService) {}
 
   ngOnInit() {
     this.viewChoices = 'month,agendaWeek,agendaDay';
@@ -60,23 +66,29 @@ export class CalendarComponent implements OnInit {
       height: this.height
     });
 
-    this.sub = this.eventsSvc.getEvents$().subscribe((events: Array<Event>)  => {
-      this.events = events.map(dp => {
-        return {
-          id: dp.id,
-          title: dp.title,
-          start: dp.start.format(),
-          end: !!dp.end ? dp.end.format() : null,
-          allDay: dp.allDay,
-          url: dp.link
-        };
+    this.sub =
+      Observable.merge(
+        this.eventsSvc.data$,
+        this.facebookEventsSvc.data$,
+        this.googleEventsSvc.data$
+      ).subscribe((events: Array<Event>)  => {
+        this.events = this.events.concat(events.map(dp => {
+          return {
+            id: dp.id,
+            title: dp.title,
+            start: dp.start.format(),
+            end: !!dp.end ? dp.end.format() : null,
+            allDay: dp.allDay,
+            url: dp.link
+          };
+        }));
+
+        this.updateCalendar();
       });
 
-      this.updateCalendar();
-    });
-
-    this.eventsSvc.showAll();
-
+    this.eventsSvc.getRecentData();
+    this.facebookEventsSvc.getRecentData();
+    this.googleEventsSvc.getRecentData();
   }
 
   private updateCalendar() {

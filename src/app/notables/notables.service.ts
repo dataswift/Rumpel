@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
 import {NotablesServiceMeta} from "../shared/interfaces/notables-service-meta.interface";
 import { UiStateService } from "../services/ui-state.service";
+import {DataTable} from "../shared/interfaces/data-table.interface";
 
 @Injectable()
 export class NotablesService extends BaseRumpelDataService<Notable> {
@@ -54,22 +55,24 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
 
     this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
 
-    this.updateNotablesState();
+    this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
+      this.updateNotablesState();
 
-    this.dataPlug.getTokenInfo('Facebook').subscribe((tokenInfo: any) => {
-      if (!tokenInfo.error && tokenInfo.canPost) {
-        this.notablesServiceMeta.canPost.push('facebook');
+      this.dataPlug.getTokenInfo('Facebook').subscribe((tokenInfo: any) => {
+        if (!tokenInfo.error && tokenInfo.canPost) {
+          this.notablesServiceMeta.canPost.push('facebook');
 
-        this._notablesMeta$.next(this.notablesServiceMeta);
-      }
-    });
+          this._notablesMeta$.next(this.notablesServiceMeta);
+        }
+      });
 
-    this.dataPlug.getTokenInfo('Twitter').subscribe(tokenInfo => {
-      if (!tokenInfo.error && tokenInfo[0].successful) {
-        this.notablesServiceMeta.canPost.push('twitter');
+      this.dataPlug.getTokenInfo('Twitter').subscribe(tokenInfo => {
+        if (!tokenInfo.error && tokenInfo[0].successful) {
+          this.notablesServiceMeta.canPost.push('twitter');
 
-        this._notablesMeta$.next(this.notablesServiceMeta);
-      }
+          this._notablesMeta$.next(this.notablesServiceMeta);
+        }
+      });
     });
   }
 

@@ -29,11 +29,13 @@ export class LocationsComponent implements OnInit, OnDestroy {
     this.locations = [];
     this.selectedTime = 'all';
 
-    this.sub = this.locationsSvc.locations$.subscribe(locations => {
+    this.sub = this.locationsSvc.data$.subscribe(locations => {
       this.locations = locations;
+
+      this.locationsSvc.getMoreData(500, 5000);
     });
 
-    this.locationsSvc.getRecentLocations();
+    this.locationsSvc.getRecentData();
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('73em');
   }
