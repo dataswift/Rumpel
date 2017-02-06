@@ -10,3 +10,4 @@ export { SwitchComponent } from './switch/switch.component';
 export { TreeViewComponent } from './tree-view/tree-view.component';
 export { TimelineComponent } from './timeline/timeline.component';
 export { ProfilePhotoComponent } from './profile-photo/profile-photo.component';
+export { DateInputComponent } from './date-input/date-input.component';

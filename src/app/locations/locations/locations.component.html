@@ -11,15 +11,28 @@
     <div class="view-header">
       <h4>Locations</h4>
       <span>(open your RumpelLite app to synchronise your latest location data)</span>
+      <form #f="ngForm" (submit)="submitForm(f)" class="date-selector">
+        <div class="form-group">
+          <rump-date-input class="form-control rump-form-input" name="date" ngModel></rump-date-input>
+        </div>
+        <div class="form-group">
+          <button type="submit">Show day</button>
+        </div>
+      </form>
     </div>
     <div class="map-wrapper">
-      <rump-map [dataPoints]="locations | relativeTimesFilter:selectedTime" [mapHeight]="safeSize"
+      <rump-map [dataPoints]="locations | timeFilterTwo:lowerTimeBound:upperTimeBound" [mapHeight]="safeSize"
                 [enableMapControls]="true">
         <div class="controls-overlay" (click)="selectLocationTime($event)">
           <button type="button" class="btn-overlay" value="today" [class.selected]="selectedTime === 'today'">Today</button>
           <button type="button" class="btn-overlay" value="yesterday" [class.selected]="selectedTime === 'yesterday'">Yesterday</button>
           <button type="button" class="btn-overlay" value="last week" [class.selected]="selectedTime === 'last week'">Last Week</button>
           <button type="button" class="btn-overlay" value="all" [class.selected]="selectedTime === 'all'">All</button>
+        </div>
+
+        <div class="loading-overlay" *ngIf="loading">
+          <rump-spinner [isRunning]="true"></rump-spinner>
+          <span>Loading more data...</span>
         </div>
       </rump-map>
     </div>

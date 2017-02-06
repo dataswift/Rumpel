@@ -9,6 +9,7 @@
 export { MomentPipe } from './moment.pipe';
 export { FilterByPipe } from './filter-by.pipe';
 export { TimeFilterPipe } from './time-filter.pipe';
+export { TimeFilterTwoPipe } from './time-filter-two.pipe';
 export { WithObjectPipe } from './with-object.pipe';
 export { LimitContentPipe } from './limit-content.pipe';
 export { ReplaceCharsPipe } from './replace-chars.pipe';
@@ -16,3 +17,4 @@ export { RelativeTimePipe } from './relative-time.pipe';
 export { LimitMembersPipe } from './limit-members.pipe';
 export { MarkdownToHtmlPipe } from './markdown-to-html.pipe';
 export { RelativeTimesFilterPipe } from './relative-times-filter.pipe';
+export { SafeHtmlPipe } from './safe-html.pipe';

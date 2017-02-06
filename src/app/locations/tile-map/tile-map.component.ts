@@ -21,22 +21,26 @@ export class TileMapComponent implements OnInit, OnDestroy {
   @Input() info;
   public locations: Array<Location>;
   private sub;
+  private totalDP: number = 0;
   public safeSize;
 
   constructor(private sanitizer: DomSanitizer,
-              private locationSvc: LocationsService) {}
+              private locationsSvc: LocationsService) {}
 
   ngOnInit() {
     this.locations = [];
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('21em');
-    this.sub = this.locationSvc.data$.subscribe(locations => {
+    this.sub = this.locationsSvc.data$.subscribe(locations => {
       this.locations = locations;
 
-      this.locationSvc.getMoreData(500, 5000)
+      if (locations.length > this.totalDP) {
+        this.totalDP = locations.length;
+        this.locationsSvc.getMoreData(500);
+      }
     });
 
-    this.locationSvc.getRecentData();
+    this.locationsSvc.getRecentData();
   }
 
   ngOnDestroy() {

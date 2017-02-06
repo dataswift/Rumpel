@@ -1,0 +1,16 @@
+input {
+  border: none;
+  text-align: center;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.day, .month {
+  width: 1.75em;
+}
+
+.year {
+  width: 3.5em;
+}

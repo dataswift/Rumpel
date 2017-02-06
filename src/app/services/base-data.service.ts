@@ -24,6 +24,7 @@ export abstract class BaseDataService<T> {
   };
 
   private oldestRecordTimestamp: string = null;
+  private _loading$: Subject<boolean> = <Subject<boolean>>new Subject();
 
   constructor(hat: HatApiService, uiSvc: UiStateService) {
     this.hat = hat; this.uiSvc = uiSvc;
@@ -35,6 +36,10 @@ export abstract class BaseDataService<T> {
 
   get data$(): Observable<Array<T>> {
     return this._data$.asObservable();
+  }
+
+  get loading$(): Observable<boolean> {
+    return this._loading$.asObservable();
   }
 
   ensureTableExists(name: string, source: string): void {
@@ -50,6 +55,7 @@ export abstract class BaseDataService<T> {
     if (this.store.data.length > 0) {
       this.pushToStream();
     } else if (this.store.tableId) {
+      this._loading$.next(true);
       this.hat.getValuesWithLimit(this.store.tableId)
         .map((rawData: Array<any>) => {
           if (rawData.length > 0) {
@@ -69,8 +75,9 @@ export abstract class BaseDataService<T> {
     }
   }
 
-  getMoreData(fetchRecordCount: number = 50, totalRecordCount: number = 50): void {
+  getMoreData(fetchRecordCount: number = 100, totalRecordCount: number = 500): void {
     if (this.oldestRecordTimestamp) {
+      this._loading$.next(true);
       this.hat.getValuesWithLimit(this.store.tableId, fetchRecordCount, this.oldestRecordTimestamp)
         .map((rawData: Array<any>) => {
           if (rawData.length > 0) {
@@ -85,17 +92,32 @@ export abstract class BaseDataService<T> {
 
           this.pushToStream();
 
-          if (this.store.data.length < totalRecordCount && data.length > 0) {
-            this.getMoreData(fetchRecordCount, totalRecordCount);
-          }
+          // if (this.store.data.length < totalRecordCount && data.length > 0) {
+          //   this.getMoreData(fetchRecordCount, totalRecordCount);
+          // }
         });
     }
+  }
+
+  getTimeIntervalData(startTime: string, endTime: string): void {
+    this._loading$.next(true);
+    this.hat.getValuesWithLimit(this.store.tableId, 5000, endTime, startTime)
+      .map((rawData: Array<any>) => {
+        let typeSafeData: Array<T> = rawData.map(this.mapData);
+        return uniqBy(typeSafeData, "id");
+      })
+      .subscribe((data: Array<T>) => {
+        this.store.data = this.store.data.concat(data);
+
+        this.pushToStream();
+      });
   }
 
   abstract mapData(rawDataItem: any): T
 
   pushToStream(): void {
-    return this._data$.next(this.store.data);
+    this._loading$.next(false);
+    this._data$.next(this.store.data);
   }
 
 }

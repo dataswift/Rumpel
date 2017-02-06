@@ -11,6 +11,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '../../shared/interfaces';
 import { LocationsService } from '../locations.service';
 
+import * as moment from 'moment';
+import { Moment } from 'moment';
+import {Subscription} from "rxjs";
+
 @Component({
   selector: 'rump-locations',
   templateUrl: 'locations.component.html',
@@ -20,7 +24,13 @@ export class LocationsComponent implements OnInit, OnDestroy {
   public locations: Array<Location>;
   public safeSize;
   private selectedTime: string;
-  private sub;
+  private lowerTimeBound: Moment;
+  private upperTimeBound: Moment;
+  private totalDP: number = 0;
+  private loading: boolean = false;
+  private date: any;
+
+  private sub: Subscription;
 
   constructor(private locationsSvc: LocationsService,
               private sanitizer: DomSanitizer) { }
@@ -29,10 +39,15 @@ export class LocationsComponent implements OnInit, OnDestroy {
     this.locations = [];
     this.selectedTime = 'all';
 
+    this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
+
     this.sub = this.locationsSvc.data$.subscribe(locations => {
       this.locations = locations;
 
-      this.locationsSvc.getMoreData(500, 5000);
+      if (locations.length > this.totalDP) {
+        this.totalDP = locations.length;
+        this.locationsSvc.getMoreData(500);
+      }
     });
 
     this.locationsSvc.getRecentData();
@@ -45,6 +60,36 @@ export class LocationsComponent implements OnInit, OnDestroy {
   }
 
   selectLocationTime(event) {
+    switch (event.target.value) {
+      case 'today':
+        this.lowerTimeBound = moment().startOf("day");
+        this.upperTimeBound = moment();
+        break;
+      case 'yesterday':
+        this.lowerTimeBound = moment().subtract(1, "days").startOf("day");
+        this.upperTimeBound = moment().subtract(1, "days").endOf("day");
+        break;
+      case 'last week':
+        this.lowerTimeBound = moment().subtract(7, "days").startOf("day");
+        this.upperTimeBound = moment();
+        break;
+      case 'all':
+        this.lowerTimeBound = null;
+        this.upperTimeBound = null;
+        break;
+      default:
+        this.lowerTimeBound = null; this.upperTimeBound = null;
+    }
     this.selectedTime = event.target.value;
+  }
+
+  submitForm(form): void {
+    let formContent = form.value;
+    const startTime = moment(formContent.date).format("X");
+    const endTime = moment(formContent.date).endOf("day").format("X");
+
+    this.locationsSvc.getTimeIntervalData(startTime, endTime);
+    this.lowerTimeBound = moment(formContent.date);
+    this.upperTimeBound = moment(formContent.date).endOf("day");
   }
 }

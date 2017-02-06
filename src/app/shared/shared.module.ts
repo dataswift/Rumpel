@@ -10,25 +10,28 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { SwitchComponent, TreeViewComponent, TimelineComponent, ProfilePhotoComponent } from './components';
+import { SwitchComponent, TreeViewComponent, TimelineComponent, ProfilePhotoComponent, DateInputComponent } from './components';
 import { OutsideClick, StickDirective } from './directives';
 import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, RelativeTimePipe,
-         MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe } from './pipes';
+         MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
+import {TimeFilterTwoPipe} from "./pipes/time-filter-two.pipe";
+import {SpinnerComponent} from "./components/spinner/spinner.component";
 
 @NgModule({
   imports: [ CommonModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
                   ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
-                  TimeFilterPipe,
+                  TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClick, StickDirective,
-                  SwitchComponent, TreeViewComponent, ProfilePhotoComponent, TimelineComponent ],
+                  SwitchComponent, TreeViewComponent, ProfilePhotoComponent, TimelineComponent, SpinnerComponent,
+                  DateInputComponent],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
-             TimeFilterPipe,
+             TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
              SwitchComponent, TreeViewComponent, ProfilePhotoComponent, TimelineComponent,
-             OutsideClick, StickDirective,
+             OutsideClick, StickDirective, SpinnerComponent, DateInputComponent,
              CommonModule, RouterModule ]
 })
 export class SharedModule {}

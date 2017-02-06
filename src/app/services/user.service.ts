@@ -31,14 +31,16 @@ export class UserService {
     this._hat.validateToken(hatDomain, jwt).subscribe(
       res => {
         if (res.message === 'Authenticated') {
-          this.cookieSvc.putObject(hatDomain, { token: this._user.token });
+          this.cookieSvc.put("lastLoginPHATA", hatDomain);
+          this.cookieSvc.put("lastLoginToken", this._user.token);
           this._user.authenticated = true;
           this._auth$.next(true);
           this.publishUser();
           this._marketSquare.connectHAT();
         } else {
-          this._user.authenticated = false
+          this._user.authenticated = false;
           this._auth$.next(false);
+          this.cookieSvc.remove("lastLoginToken");
         }
       }
     )
@@ -56,6 +58,7 @@ export class UserService {
       token: ''
     };
 
+    this.cookieSvc.remove("lastLoginToken");
     this._auth$.next(false);
     this.publishUser();
   }
@@ -64,13 +67,11 @@ export class UserService {
     if (this._user && this._user.token) {
       this._auth$.next(true);
     } else {
-      const lastLoginPHATA = this.cookieSvc.get("lastLoginPHATA");
-      const userInformation: any = this.cookieSvc.getObject(lastLoginPHATA);
-
-      const previousToken = userInformation ? userInformation.token : null;
+      const previousToken: string = this.cookieSvc.get("lastLoginToken");
 
       if (previousToken && !this._jwtHelper.isTokenExpired(previousToken)) {
         const payload = this._jwtHelper.decodeToken(previousToken);
+        this.cookieSvc.put("lastLoginPHATA", payload["iss"]);
 
         this._user = payload;
         this._user.token = previousToken;
@@ -79,8 +80,7 @@ export class UserService {
         this._auth$.next(true);
         this.publishUser();
       } else if (previousToken && this._jwtHelper.isTokenExpired(previousToken)) {
-        delete userInformation.token;
-        this.cookieSvc.putObject(lastLoginPHATA, userInformation);
+        this.cookieSvc.remove("lastLoginToken");
         this._auth$.next(false);
       } else {
         this._auth$.next(false);
