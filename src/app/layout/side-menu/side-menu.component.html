@@ -21,8 +21,7 @@
     </div>
   </li>
   <li *ngFor="let item of menu; let i = index"
-      (click)="onItemSelect(item.display)"
-      [class.selected]="item.display === selectedItem">
+      [class.selected]="item.link === selectedItem">
     <div class="wrapper" id="intro-step{{i + 3}}">
       <a [routerLink]="[item.link]">
         <span class="ss-{{item.icon}}"></span>

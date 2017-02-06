@@ -64,6 +64,12 @@ export class TimelineComponent implements OnInit, OnChanges {
         for (let month in grouped) {
           this.timelineGrouped.push([month, grouped[month]])
         }
+
+        // ensure that the months in the timeline are ordered appropriately
+        // should not be necessary unless dealing with large data sets
+        this.timelineGrouped.sort((a1, a2) => {
+          return a1[1][0].timestamp.isBefore(a2[1][0].timestamp) ? 1 : -1;
+        });
       }
     }
   }

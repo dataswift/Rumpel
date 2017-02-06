@@ -16,9 +16,10 @@ import { MapComponent } from './map/map.component';
 import { TileMapComponent } from './tile-map/tile-map.component';
 
 import { LocationsService } from './locations.service';
+import { FormsModule } from "@angular/forms";
 
 @NgModule({
-    imports: [ SharedModule, LocationsRoutingModule ],
+    imports: [ SharedModule, LocationsRoutingModule, FormsModule ],
     declarations: [ LocationsComponent, MapComponent, TileMapComponent ],
     providers: [ LocationsService ],
     exports: [ TileMapComponent, MapComponent ]

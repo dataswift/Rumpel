@@ -151,7 +151,7 @@ export class HeaderComponent implements OnInit {
     this.marketSquareLink = 'https://marketsquare.hubofallthings.com';
     this.sub = this.userSvc.user$.subscribe((user: User) => {
       this.hatDomain = user.iss;
-      if (this.hatDomain) {
+      if (this.hatDomain && user.authenticated) {
         this.marketSquareLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
       } else {
         this.marketSquareLink = "https://marketsquare.hubofallthings.com/";

@@ -28,7 +28,12 @@ export class TileHeaderComponent implements OnInit {
   }
 
   showPopover(event) {
-    $(event.target.parentNode).popover("show");
+    // Handle special case for Locations tile
+    if (this.title === "Locations") {
+      window.location.href = "http://www.hatdex.org/rumpel-lite/"
+    } else {
+      $(event.target.parentNode).popover("show");
+    }
   }
 
   navigateTo(pageName: string, event) {

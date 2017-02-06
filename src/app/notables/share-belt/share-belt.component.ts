@@ -25,6 +25,7 @@ export class ShareBeltComponent implements OnInit {
   private notablesState: NotablesServiceMeta;
   private dataPlugError: string;
   private displayMessage: string;
+  private sharedOn = { facebook: false, twitter: false, marketsquare: false };
   private dataPlugInfoMap = {
     facebook: {
       displayName: "Facebook",
@@ -47,15 +48,22 @@ export class ShareBeltComponent implements OnInit {
       this.notablesState = notablesState;
       this.displayMessage = "";
     });
+
+    this.notablesSvc.editedNotable$.subscribe((editedNotable: Notable) => {
+      this.sharedOn = { facebook: false, twitter: false, marketsquare: false };
+      for (let provider of editedNotable.shared_on) {
+        this.sharedOn[provider] = true;
+      }
+    });
   }
 
   toggleSharing(provider) {
     if (this.notablesState.canPost.indexOf(provider.name) === -1) {
       this.dataPlugError = provider.name;
     } else {
-      provider.shared = !provider.shared;
+      this.sharedOn[provider.name.toLowerCase()] = !this.sharedOn[provider.name.toLowerCase()];
       this.serviceToggled.emit({
-        action: provider.shared ? 'SHARE' : 'STOP',
+        action: this.sharedOn[provider.name.toLowerCase()] ? 'SHARE' : 'STOP',
         service: provider.name
       });
     }

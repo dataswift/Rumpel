@@ -33,8 +33,8 @@ import { AuthGuard } from './auth.guard';
 
 import { DataTypeFilterPipe } from './pipes';
 import { LoginComponent } from './user-mgmt';
-import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard'
-import { UserService, HatApiService, UiStateService, RumpelService, DataPlugService } from './services';
+import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
+import { UserService, HatApiService, UiStateService, RumpelService, DataPlugService } from './services/index';
 
 /* MODAL COMPONENTS */
 

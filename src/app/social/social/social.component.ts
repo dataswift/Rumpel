@@ -22,6 +22,7 @@ import {TwitterService} from "../twitter.service";
 export class SocialComponent implements OnInit, OnDestroy {
   private posts: Array<Post|MusicListen|Tweet>;
   private filter: string;
+  private filterMap: any;
   private svcSub: Subscription;
   private musicSub: Subscription;
   private twitterSub: Subscription;
@@ -33,7 +34,11 @@ export class SocialComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.posts = [];
-    this.filter = '';
+    this.filter = "";
+    this.filterMap = {
+      'Facebook': 'status,photo,music.listens,link',
+      'Twitter': 'tweet'
+    };
 
     this.svcSub = this.socialSvc.data$.subscribe((posts: Post[]) => {
       this.posts = this.posts.concat(posts);

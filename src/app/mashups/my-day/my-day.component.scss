@@ -25,3 +25,23 @@
   color: white;
   overflow: auto;
 }
+
+.loading-overlay {
+  position: absolute;
+  top: 3em;
+  right: 30%;
+  z-index: 1002;
+  padding: 0 1em;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.4);
+
+  * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  span {
+    color: #009688;
+    font-size: 1.25em;
+  }
+}

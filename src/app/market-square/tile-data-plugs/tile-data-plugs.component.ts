@@ -45,7 +45,7 @@ export class TileDataPlugsComponent implements OnInit {
       this.plugs = displayPlugs;
     });
 
-    //this.hatDomain = this.hatSvc.hatDomain;
+    this.hatDomain = this.hatSvc.hatDomain;
   }
 
   displayConfirmDialog(plug: any) {

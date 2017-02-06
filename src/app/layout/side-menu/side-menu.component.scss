@@ -32,6 +32,10 @@ ul.center {
 
     &.selected {
       background: #262626;
+
+      a {
+        color: #009688;
+      }
     }
 
     &:hover {

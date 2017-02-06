@@ -38,6 +38,8 @@ export class MyDayComponent implements OnInit {
   public selectedTime: ExpandedTime;
   public shownComponents: { [key:string]:boolean };
   public safeSize;
+  private totalDP: number = 0;
+  private loading: boolean = false;
   public timeline: Array<ExpandedTime>;
 
   constructor(private locationsSvc: LocationsService,
@@ -81,8 +83,13 @@ export class MyDayComponent implements OnInit {
       this.addDatesToTimeline(locations, 'timestamp');
       this.locations = locations;
 
-      this.locationsSvc.getMoreData(500, 5000);
+      if (locations.length > this.totalDP) {
+        this.totalDP = locations.length;
+        this.locationsSvc.getMoreData(500);
+      }
     });
+
+    this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
 
     this.notablesSvc.data$.subscribe(notables => {
       this.addDatesToTimeline(notables, 'created_time');
@@ -106,7 +113,9 @@ export class MyDayComponent implements OnInit {
       dataPoints.map(dp => new ExpandedTime(dp[timeField])).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
       'unixDayStart');
 
-    this.timeline = unionBy(this.timeline, timestamps, 'unixDayStart').sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1);
+    this.timeline = unionBy(this.timeline, timestamps, 'unixDayStart')
+      .sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1)
+      .filter((a: ExpandedTime) => a.timestamp.isValid());
 
     // for (let dp of dataPoints) {
     //   let timestamp = dp[timeField];
@@ -145,5 +154,14 @@ export class MyDayComponent implements OnInit {
 
   onViewReset() {
     this.selectedTime = null;
+  }
+
+  loadMoreData() {
+    this.socialSvc.getMoreData(50);
+    this.locationsSvc.getMoreData(1000);
+    this.eventsSvc.getMoreData(50);
+    this.facebookEventsSvc.getMoreData(50);
+    this.googleEventsSvc.getMoreData(50);
+    this.notablesSvc.getMoreData(50);
   }
 }

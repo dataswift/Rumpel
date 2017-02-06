@@ -13,7 +13,7 @@
       <li *ngFor="let provider of notablesState.activeIntegrations" (click)="toggleSharing(provider)">
         <img [src]="provider.logoUrl"
              class="img img-responsive share-service"
-             [class.on]="provider.shared">
+             [class.on]="sharedOn[provider.name.toLowerCase()]">
       </li>
     </ul>
   </div>

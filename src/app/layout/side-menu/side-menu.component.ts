@@ -14,6 +14,7 @@ import { MarketSquareService } from '../../market-square/market-square.service';
 import {Subscription} from "rxjs";
 import {DataTable} from "../../shared/interfaces/data-table.interface";
 import {NotificationsService} from "../notifications.service";
+import {Router, NavigationEnd} from "@angular/router";
 
 @Component({
   selector: 'rump-side-menu',
@@ -36,12 +37,19 @@ export class SideMenuComponent implements OnInit {
   constructor(private uiState: UiStateService,
               private _dialogSvc: DialogService,
               private _notificationsSvc: NotificationsService,
+              private router: Router,
               private userSvc: UserService,
               private hat: HatApiService,
               private marketSvc: MarketSquareService) {}
 
   ngOnInit() {
     this.state = { dataSources: [], dataTypes: [] };
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.selectedItem = event.url.slice(1);
+      }
+    });
 
     this._notificationsSvc.stats$.subscribe(stats => {
       this.unreadNotifications = stats.unread;
@@ -75,10 +83,6 @@ export class SideMenuComponent implements OnInit {
         }
       }
     });
-  }
-
-  onItemSelect(itemName: string) {
-    this.selectedItem = itemName;
   }
 
   showNotificationsCentre() {

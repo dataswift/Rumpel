@@ -16,9 +16,12 @@
     </div>
     <div class="rump-modal-footer">
       <button type="button" class="btn" (click)="closeModal()">Cancel</button>
-      <button type="button" class="btn accept" (click)="closeModal()" *ngFor="let button of buttons">
-        <a [href]="button.link" target="_blank">{{button.title}}</a>
-      </button>
+      <!--Warning: on Chrome, there is a lag between clicking the button and closing the modal-->
+      <a [href]="button.link" target="_blank" (click)="closeModal()" *ngFor="let button of buttons">
+        <button type="button" class="btn accept">
+        {{button.title}}
+        </button>
+      </a>
     </div>
 
     <div class="close-modal" (click)="closeModal()">x</div>

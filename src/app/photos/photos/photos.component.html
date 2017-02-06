@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="view-body">
-      <ul class="photos">
+      <ul class="photos bulletless-list">
         <li *ngFor="let photo of images | timeFilter:selectedTime:'day'" class="photo-box">
           <h5>{{photo.name}}</h5>
           <img [src]="photo.src" class="img img-responsive">

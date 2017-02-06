@@ -20,7 +20,7 @@
 </div>
 
 <div class="tweet" *ngIf="!tweet.media">
-  <p>{{tweet.text}}</p>
+  <p [innerHTML]="tweet.text | safeHtml"></p>
   <div class="tweet-metadata">
     <span>Favourited: {{tweet.favorite_count}}</span>
     <span>Retweeted: {{tweet.retweet_count}}</span>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-      <p>{{tweet.text}}</p>
+      <p [innerHTML]="tweet.text | safeHtml"></p>
       <div class="tweet-metadata">
         <span>Favourited: {{tweet.favorite_count}}</span>
         <span>Retweeted: {{tweet.retweet_count}}</span>

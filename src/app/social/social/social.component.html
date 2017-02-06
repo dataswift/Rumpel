@@ -15,13 +15,23 @@
       <div class="col-md-8 col-md-offset-2">
         <div class="filter-header">
           <span>{{filter ? filter + ' only' : 'Shows all posts'}}</span>
-          <div class="filter" [class.on]="filter === ''" (click)="filterBy('')"><span class="ss-index ss-glyphish-filled"></span>All</div>
-          <div class="filter" [class.on]="filter === 'facebook'" (click)="filterBy('facebook')"><span class="ss-list ss-glyphish-filled"></span>Facebook</div>
+          <div class="filter" [class.on]="filter === ''" (click)="filterBy('')">
+            <span class="ss-index ss-glyphish-filled"></span>
+            All
+          </div>
+          <div class="filter" [class.on]="filter === 'Facebook'" (click)="filterBy('Facebook')">
+            <span class="ss-list ss-glyphish-filled"></span>
+            Facebook
+          </div>
+          <div class="filter" [class.on]="filter === 'Twitter'" (click)="filterBy('Twitter')">
+            <span class="ss-list ss-glyphish-filled"></span>
+            Twitter
+          </div>
           <div class="filter">Filter by:</div>
         </div>
 
-        <ul class="feed">
-          <li *ngFor="let post of posts" class="post">
+        <ul class="feed bulletless-list">
+          <li *ngFor="let post of posts | filterBy:'type':filterMap[filter]" class="post">
             <a id="{{post.id}}"></a>
             <rump-fb-post [post]="post" *ngIf="post.type !== 'tweet'"></rump-fb-post>
             <rump-tweet [tweet]="post" *ngIf="post.type === 'tweet'"></rump-tweet>

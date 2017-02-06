@@ -9,6 +9,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from './app.config';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'rumpel',
   templateUrl: 'app.component.html',
@@ -20,6 +22,7 @@ export class AppRootComponent implements OnInit {
   // Had to use auxiliary variable canHide to control notification centre visibility.
   // Outside-click directive produces an error when applied onto dynamically inserted DOM element
   private canHide: boolean;
+  private appExpireTime: moment.Moment;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig) { }
 
@@ -28,6 +31,16 @@ export class AppRootComponent implements OnInit {
 
     this.showNotifications = false;
     this.canHide = false;
+
+    // After an hour the app is forced to refresh if user defocuses/focuses the tab
+    this.appExpireTime = moment().add(1, "hours");
+
+    window.onfocus = () => {
+      if (moment().isAfter(this.appExpireTime)) {
+        window.location.reload(true);
+      }
+    };
+
   }
 
   show() {
