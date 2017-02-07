@@ -1,4 +1,32 @@
-# v1.2.0 (2016-12-22)
+# v1.3 (2017-02-07)
+
+### Features
+* Support for Notables sharing on Twitter
+* Incorporated Twitter's tweets in the Social Feed
+* Automatic app refreshes after periods of inactivity
+* Added support for direct links to any Rumpel page (support for direct links allows page to be refreshed w/o redirecting the user back to the dashboard)
+
+### Updates/improvements
+* Improved User Interface on Notables
+* Improved location data acquisition experience
+* Improved meta tags for more detailed rendering on search engines and social media
+* Added ability to filter Social Feed by source
+* Added ability to "choose a date" for location data
+
+### Bug Fixes
+* Fixed left-side menu bar to correctly highlight active page
+* Corrected bulleted lists rendering in Notables
+* Many more small fixes
+
+### DEPRECATIONS
+* As a result of direct links implementation, the general authentication route "/users/authenticate" is being deprecated.
+Please link directly to the required resource providing access token as a query parameter, when possible.
+Current version will support the old behaviour via internal redirects. However, support will be phased out in the future releases.
+* Related to the change above, it is no longer possible to pass access token as a path parameter such as "/users/authenticate/{{accessToken}}".
+Please use query parameter "token" instead.
+
+
+# v1.2 (2016-12-22)
 
 ### Features
 * Adds the choice to share forever, or for 1/7/14/30 days
@@ -15,7 +43,8 @@
 * Other UI tweaks
 * Minor bug fixes
 
-# v1.1.0 Notables (2016-11-17)
+
+# v1.1 Notables (2016-11-17)
 
 ### Features
 
@@ -33,7 +62,7 @@
 * General bugfixes and UI tweaks
 * Compartmentalises codebase using Angular's NgModule, changes folder structure accordingly
 
-# v1.0.0 Public beta (2016-07-17)
+# v1.0 Public beta (2016-07-17)
 
 ### Features
 

@@ -90,7 +90,9 @@ export abstract class BaseDataService<T> {
         .subscribe((data: Array<T>) => {
           this.store.data = this.store.data.concat(data);
 
-          this.pushToStream();
+          if (this.store.data.length < totalRecordCount) {
+            this.pushToStream();
+          }
 
           // if (this.store.data.length < totalRecordCount && data.length > 0) {
           //   this.getMoreData(fetchRecordCount, totalRecordCount);

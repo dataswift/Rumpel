@@ -85,7 +85,7 @@ export class MyDayComponent implements OnInit {
 
       if (locations.length > this.totalDP) {
         this.totalDP = locations.length;
-        this.locationsSvc.getMoreData(500);
+        this.locationsSvc.getMoreData(500, 5000);
       }
     });
 
@@ -158,7 +158,7 @@ export class MyDayComponent implements OnInit {
 
   loadMoreData() {
     this.socialSvc.getMoreData(50);
-    this.locationsSvc.getMoreData(1000);
+    this.locationsSvc.getMoreData(1000, 15000);
     this.eventsSvc.getMoreData(50);
     this.facebookEventsSvc.getMoreData(50);
     this.googleEventsSvc.getMoreData(50);
