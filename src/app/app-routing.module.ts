@@ -18,6 +18,7 @@ import { AuthGuard } from './auth.guard';
   imports: [
     RouterModule.forRoot([
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: GridComponent, canActivate: [AuthGuard] },
       { path: 'about', component: AboutComponent },
       ...userMgmtRoutes

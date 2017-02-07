@@ -79,7 +79,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
   updateNotablesState(): void {
     this.getUserClaim()
       .subscribe((offerInfo: MSUserClaim) => {
-        if (offerInfo.dataDebitId) {
+        if (offerInfo && offerInfo.dataDebitId) {
           this.notablesServiceMeta.offerClaimed = true;
           this.notablesServiceMeta["dataDebit"] = {
             id: offerInfo.dataDebitId,
@@ -88,6 +88,11 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
           };
         } else {
           this.notablesServiceMeta.offerClaimed = false;
+          this.notablesServiceMeta["dataDebit"] = {
+            id: null,
+            confirmed: null,
+            dateCreated: null
+          };
         }
 
         this._notablesMeta$.next(this.notablesServiceMeta);
@@ -98,18 +103,18 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
   private getUserClaim(): Observable<MSUserClaim> {
     return this.market.getOffer(this.config.notables.marketSquareOfferId)
       .flatMap((offerInfo: MSUserClaim)  => {
-        if (offerInfo.confirmed) {
+        if (offerInfo && offerInfo.confirmed) {
           return Observable.of(offerInfo);
           // If the MaketSquare reports offer as unconfirmed, check its status on the HAT
           // For the initial 30 mins after offer confirmation MarketSquare can report it as unconfirmed
-        } else if (offerInfo.dataDebitId) {
+        } else if (offerInfo && offerInfo.dataDebitId) {
           return this.hat.getSlimDataDebit(offerInfo.dataDebitId)
             .map((ddInfo: DataDebit) => {
               offerInfo.confirmed = ddInfo.enabled;
               return offerInfo;
             });
         } else {
-          return Observable.of({});
+          return Observable.of(null);
         }
       });
   }
@@ -172,7 +177,15 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
   setupNotablesService(): Observable<DataDebit> {
     return this.market.claimOffer(this.config.notables.marketSquareOfferId)
       .flatMap((offerInfo: MSUserClaim) => {
-        return this.hat.updateDataDebit(offerInfo.dataDebitId, 'enable')
+        if (offerInfo) {
+          return this.hat.updateDataDebit(offerInfo.dataDebitId, 'enable')
+            .catch(err => {
+              console.log("Failed to confirm Data Debit with the HAT", err);
+              return Observable.of(null);
+            });
+        } else {
+          return Observable.of(null);
+        }
       });
   }
 }

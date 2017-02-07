@@ -43,6 +43,7 @@ import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
 import { InfoBoxComponent } from "./layout/info-box/info-box.component";
 
 import { CookieService } from 'angular2-cookie/core';
+import { cookieServiceFactory } from './aot-workaround';
 
 @NgModule({
   declarations: [
@@ -76,13 +77,13 @@ import { CookieService } from 'angular2-cookie/core';
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: AppConfig },
+    { provide: CookieService, useFactory: cookieServiceFactory },
     AuthGuard,
     UserService,
     HatApiService,
     UiStateService,
     RumpelService,
-    DataPlugService,
-    CookieService
+    DataPlugService
   ]
 })
 export class AppRootModule {}

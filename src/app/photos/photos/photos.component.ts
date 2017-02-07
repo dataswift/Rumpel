@@ -7,7 +7,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { sortedUniqBy, unionBy } from 'lodash';
+import * as _ from 'lodash';
 import { PhotosService } from '../photos.service';
 import { Photo, ExpandedTime } from '../../shared/interfaces/index';
 import * as moment from 'moment';
@@ -67,10 +67,10 @@ export class PhotosComponent implements OnInit {
   }
 
   private addDatesToTimeline(dataPoints: Array<Photo>) {
-    let timestamps: Array<ExpandedTime> = sortedUniqBy(
+    let timestamps: Array<ExpandedTime> = _.sortedUniqBy(
       dataPoints.map(dp => new ExpandedTime(dp.timestamp)).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
       'unixDayStart');
 
-    this.timeline = unionBy(this.timeline, timestamps, 'unixDayStart').sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1);
+    this.timeline = _.unionBy(this.timeline, timestamps, 'unixDayStart').sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1);
   }
 }

@@ -12,6 +12,8 @@ import { NotablesService } from '../notables.service';
 import { Notable } from "../../shared/interfaces/notable.class";
 
 import {NotablesServiceMeta} from "../../shared/interfaces/notables-service-meta.interface";
+import {DialogService} from "../../layout/dialog.service";
+import {DialogBoxComponent} from "../../layout/dialog-box/dialog-box.component";
 
 @Component({
   selector: 'rump-share-belt',
@@ -39,7 +41,7 @@ export class ShareBeltComponent implements OnInit {
 
   @Output() serviceToggled: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private notablesSvc: NotablesService) { }
+  constructor(private notablesSvc: NotablesService, private dialogSvc: DialogService) { }
 
   ngOnInit() {
     this.dataPlugError = null;
@@ -73,8 +75,21 @@ export class ShareBeltComponent implements OnInit {
   claimNotablesOffer(): void {
     this.displayMessage = "Processing... please wait.";
     this.notablesSvc.setupNotablesService().subscribe(res => {
-      this.notablesState.offerClaimed = true;
-      this.notablesSvc.updateNotablesState();
+      if (res) {
+        this.notablesState.offerClaimed = true;
+        this.notablesSvc.updateNotablesState();
+        this.displayMessage = "";
+      } else {
+        this.displayMessage = "";
+        this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
+          title: "Something went wrong",
+          message: "There was a problem setting up your notables service. Please report the problem and try again by refreshing this page.",
+          buttons: [{
+            title: "Report the Problem",
+            link: `http://forum.hatcommunity.org/c/hat-users`
+          }]
+        })
+      }
     });
   }
 

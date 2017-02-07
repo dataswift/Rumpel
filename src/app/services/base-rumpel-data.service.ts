@@ -34,7 +34,10 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
           return this.hat.postModel(hatDataModel);
         }
       })
-      .subscribe(idMapping => this.store.idMapping = idMapping);
+      .subscribe(maps => {
+        this.store.tableId = maps.id;
+        this.store.idMapping = maps.mapping;
+      });
   }
 
   postData(dataItem: T, recordName: string): void {

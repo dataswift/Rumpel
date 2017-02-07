@@ -87,9 +87,9 @@ export class MarketSquareService {
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
       .map(res => res.json()))
-      .catch(res => {
-        console.log("Failed to claim data offer on user's behalf", res);
-        return Observable.of({});
+      .catch(err => {
+        console.log("Failed to claim data offer on user's behalf", err);
+        return Observable.of(null);
       });
   }
 

@@ -9,7 +9,7 @@
 import { Subject, Observable } from "rxjs";
 import { HatApiService } from "./hat-api.service";
 import { UiStateService } from "./ui-state.service";
-import { uniqBy } from 'lodash';
+import * as _ from 'lodash';
 import { DataTable } from "../shared/interfaces/data-table.interface";
 import * as moment from "moment";
 
@@ -63,7 +63,7 @@ export abstract class BaseDataService<T> {
           }
 
           let typeSafeData: Array<T> = rawData.map(this.mapData);
-          return uniqBy(typeSafeData, "id");
+          return _.uniqBy(typeSafeData, "id");
         })
         .subscribe((data: Array<T>) => {
           this.store.data = data;
@@ -71,7 +71,7 @@ export abstract class BaseDataService<T> {
           this.pushToStream();
         });
     } else if (failedAttempts <= 10) {
-      Observable.timer(75).subscribe(() => this.getRecentData(++failedAttempts));
+      Observable.timer(100).subscribe(() => this.getRecentData(++failedAttempts));
     }
   }
 
@@ -85,7 +85,7 @@ export abstract class BaseDataService<T> {
           }
 
           let typeSafeData: Array<T> = rawData.map(this.mapData);
-          return uniqBy(typeSafeData, "id");
+          return _.uniqBy(typeSafeData, "id");
         })
         .subscribe((data: Array<T>) => {
           this.store.data = this.store.data.concat(data);
@@ -104,7 +104,7 @@ export abstract class BaseDataService<T> {
     this.hat.getValuesWithLimit(this.store.tableId, 5000, endTime, startTime)
       .map((rawData: Array<any>) => {
         let typeSafeData: Array<T> = rawData.map(this.mapData);
-        return uniqBy(typeSafeData, "id");
+        return _.uniqBy(typeSafeData, "id");
       })
       .subscribe((data: Array<T>) => {
         this.store.data = this.store.data.concat(data);

@@ -102,7 +102,12 @@ export class HatApiService {
 
   getModelMapping(tableId: number): Observable<any> {
     return this.getModel(tableId)
-      .map(rawModel => this.mapDataSource(rawModel, rawModel.name));
+      .map(rawModel => {
+        return {
+          id: rawModel.id,
+          mapping: this.mapDataSource(rawModel, rawModel.name)
+        };
+      });
   }
 
   postModel(model: any): Observable<any> {
@@ -110,7 +115,12 @@ export class HatApiService {
 
     return this._http.post(url, model, { headers: this._headers })
       .map(res => res.json())
-      .map(rawModel => this.mapDataSource(rawModel, rawModel.name));
+      .map(rawModel => {
+        return {
+          id: rawModel.id,
+          mapping: this.mapDataSource(rawModel, rawModel.name)
+        };
+      });
   }
 
   postRecord(obj: any, hatIdMapping: any, prefix: string = 'default'): Observable<any> {

@@ -15,7 +15,7 @@ import { LocationsService } from '../../locations/locations.service';
 import { Post, Event, Photo, Location } from '../../shared/interfaces/index';
 import { ExpandedTime } from '../../shared/interfaces/index';
 import * as moment from 'moment';
-import { sortedUniqBy, unionBy } from 'lodash';
+import * as _ from 'lodash';
 import { NotablesService } from "../../notables/notables.service";
 import { Notable } from "../../shared/interfaces/notable.class";
 import {Subscription, Observable} from "rxjs";
@@ -109,11 +109,11 @@ export class MyDayComponent implements OnInit {
 
   addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
     //console.log(dataPoints);
-    let timestamps: Array<ExpandedTime> = sortedUniqBy(
+    let timestamps: Array<ExpandedTime> = _.sortedUniqBy(
       dataPoints.map(dp => new ExpandedTime(dp[timeField])).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
       'unixDayStart');
 
-    this.timeline = unionBy(this.timeline, timestamps, 'unixDayStart')
+    this.timeline = _.unionBy(this.timeline, timestamps, 'unixDayStart')
       .sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1)
       .filter((a: ExpandedTime) => a.timestamp.isValid());
 
