@@ -23,7 +23,7 @@ export class UiStateService {
     this.userSvc.user$
       .flatMap((user: User) => {
         if (user.authenticated) {
-          return this.hat.getDataSources()
+          return this.hat.getDataSources();
         } else {
           return Observable.of([]);
         }
@@ -37,7 +37,9 @@ export class UiStateService {
           };
         });
 
-        this.state$.next(dataTables);
+        if (dataTables.length > 0) {
+          this.state$.next(dataTables);
+        }
     });
   }
 

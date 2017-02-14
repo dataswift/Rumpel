@@ -24,6 +24,7 @@ import { SocialModule } from './social/social.module';
 import { MarketSquareModule } from './market-square/market-square.module';
 import { DataDebitsModule } from './data-debits/data-debits.module';
 import { WeatherModule } from './weather/weather.module';
+import { PublicPagesModule } from './public-pages/public-pages.module';
 
 import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -70,7 +71,8 @@ import { cookieServiceFactory } from './aot-workaround';
     NotablesModule,
     DimensionsModule,
     ProfilesModule,
-    WeatherModule
+    WeatherModule,
+    PublicPagesModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent ],

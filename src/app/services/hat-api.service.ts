@@ -327,4 +327,21 @@ export class HatApiService {
 
     return values;
   }
+
+  /* HAT Public API methods */
+
+  getPublicData(endpoint: string): Observable<any> {
+    const url = 'http://bobtheplumber.hat.org:9000/api/' + endpoint;
+
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    return this._http.get(url, { headers: headers, body: '' })
+      .map(res => res.json())
+      .catch(err => {
+        console.warn(`Could not access public data of the current HAT.
+                      Reason: ${err}`);
+        return Observable.of(endpoint === "profile" ? { "public": false } : []);
+      });
+  }
 }
