@@ -14,10 +14,10 @@ export class Notable {
   public id: number;
   public message: string;
   public kind: string;
-  private created_time: Moment;
+  public created_time: Moment;
   private updated_time: Moment;
   private shared: boolean;
-  private public_until: Moment;
+  public public_until: Moment;
   public shared_on: Array<string>;
 
   public authorv1: {
@@ -47,7 +47,11 @@ export class Notable {
       this.updated_time = moment(options.updated_time);
       this.public_until = options.public_until ? moment(options.public_until) : null;
       this.shared = options.shared === "true" || options.shared === true;
-      this.shared_on = options.shared_on ? options.shared_on.split(",") : [];
+      if (options.shared_on) {
+        this.shared_on = Array.isArray(options.shared_on) ? options.shared_on : options.shared_on.split(",");
+      } else {
+        this.shared_on = [];
+      }
 
       if (options.locationv1) {
         this.locationv1 = options.locationv1;
@@ -55,6 +59,11 @@ export class Notable {
 
       if (options.authorv1) {
         this.authorv1 = options.authorv1;
+      } else {
+        this.authorv1 = {
+          phata: "",
+          photo_url: ""
+        };
       }
 
       if (options.photov1) {

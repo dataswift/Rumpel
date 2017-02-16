@@ -15,8 +15,10 @@ export class IAppConfig {
   market: { url: string; id: string; accessToken: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
-  notables: { marketSquareOfferId: string;
-              activeIntegrations: Array<{ name: string; displayName: string; logoUrl: string; }>;
+  notables: {
+    iconMap: { [key: string]: string; };
+    marketSquareOfferId: string;
+    activeIntegrations: Array<{ name: string; displayName: string; logoUrl: string; }>;
   };
 }
 
@@ -34,6 +36,7 @@ export const AppConfig: IAppConfig = {
     shareUrl: 'https://twitter.com/intent/tweet?url='
   },
   notables: {
+    iconMap: { note: 'ellipsischat', list: 'list', blog: 'write' },
     marketSquareOfferId: '32dde42f-5df9-4841-8257-5639db222e41',
     activeIntegrations: [
       {

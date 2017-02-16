@@ -29,32 +29,9 @@
 
     <ul class="bulletless-list">
       <li *ngFor="let notable of notables | filterBy:'kind':filter" class="notable-item placeholder">
-        <div class="additional-info">
-          <ul class="shared-list" *ngIf="notable.isShared">
-            <li *ngFor="let service of notable.shared_on" class="shared-item">
-              <img [src]="getLogo(service)" class="shared-icon">
-            </li>
-          </ul>
-          <div class="notable-type"><span class="ss-{{iconMap[notable.kind]}} ss-glyphish-filled"></span>{{notable.kind}}</div>
-        </div>
-
-        <div class="notable-header">
-          <rump-profile-photo class="user-photo"
-                              [userPhotoUrl]="notable.authorv1['photo_url']"></rump-profile-photo>
-          <div class="header-content">
-            <h5>{{notable.authorv1.phata}}</h5>
-            <span>Logged {{notable.created_time | moment}}</span>
-            <span *ngIf="!notable.isShared">PRIVATE</span>
-            <span *ngIf="notable.isShared">
-              SHARED{{notable.public_until === null ? ' forever' : notable.public_until.isBefore() ? ', expired' : ', expires ' + (notable.public_until | relativeTime) }}
-            </span>
-          </div>
-        </div>
-        <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>
-        <div class="notable-controls">
-          <div class="controls-item" (click)="deleteNotable($event, notable)">Delete<span class="ss-trash"></span></div>
-          <div class="controls-item" (click)="editNotable(notable)">Edit<span class="ss-compose"></span></div>
-        </div>
+        <rump-notable [notable]="notable"
+                      [modifiable]="true"
+                      (change)="changeNotable($event)"></rump-notable>
       </li>
     </ul>
   </div>

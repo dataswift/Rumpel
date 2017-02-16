@@ -171,6 +171,13 @@
     margin: 0;
     padding: 0;
   }
+
+  .icon-text-valign {
+    display: inline-block;
+    span {
+      vertical-align: middle;
+    }
+  }
 }
 
 .modal {
@@ -192,4 +199,5 @@
   .btn-primary {
     background-color: #009688;
   }
+
 }

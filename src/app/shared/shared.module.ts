@@ -16,6 +16,7 @@ import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentP
          MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
 import {TimeFilterTwoPipe} from "./pipes/time-filter-two.pipe";
 import {SpinnerComponent} from "./components/spinner/spinner.component";
+import {NotableComponent} from "./components/notable/notable.component";
 
 @NgModule({
   imports: [ CommonModule ],
@@ -25,13 +26,13 @@ import {SpinnerComponent} from "./components/spinner/spinner.component";
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClick, StickDirective,
                   SwitchComponent, TreeViewComponent, ProfilePhotoComponent, TimelineComponent, SpinnerComponent,
-                  DateInputComponent],
+                  DateInputComponent, NotableComponent],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
              SwitchComponent, TreeViewComponent, ProfilePhotoComponent, TimelineComponent,
              OutsideClick, StickDirective, SpinnerComponent, DateInputComponent,
-             CommonModule, RouterModule ]
+             CommonModule, RouterModule, NotableComponent ]
 })
 export class SharedModule {}

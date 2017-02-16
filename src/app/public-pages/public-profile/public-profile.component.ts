@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HatApiService} from "../../services/hat-api.service";
+import {Notable} from "../../shared/interfaces/notable.class";
+
+declare var username: string;
 
 @Component({
   selector: 'rump-public-profile',
@@ -9,12 +12,7 @@ import {HatApiService} from "../../services/hat-api.service";
 export class PublicProfileComponent implements OnInit {
   private shared: boolean;
   private profile: any;
-  private notables: Array<any>;
-  private iconMap = {
-    note: 'ellipsischat',
-    list: 'list',
-    blog: 'write'
-  };
+  private notables: Array<Notable>;
 
   constructor(private hatSvc: HatApiService) { }
 
@@ -23,7 +21,7 @@ export class PublicProfileComponent implements OnInit {
       if (profileResponse["public"] === true) {
         this.shared = true;
         this.profile = profileResponse.profile;
-        this.notables = profileResponse.notables;
+        this.notables = profileResponse.notables.map((note: any) => new Notable(note, note.id));
       } else {
         this.shared = false;
       }

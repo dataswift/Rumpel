@@ -16,109 +16,7 @@
   //}
 }
 
-.notable-header {
-  padding: 1em;
 
-  .user-photo {
-    float: left;
-    font-size: 0.75em;
-    margin-right: 0.5em;
-  }
-
-  .header-content {
-    padding-top: 0.5em;
-
-    h5 {
-      font-size: 1.3em;
-      margin-top: 0;
-      margin-bottom: 0.25em;
-    }
-
-    span {
-      font-size: 1em;
-    }
-
-    &:after {
-      clear: both;
-    }
-  }
-
-  .notable-type {
-    float: right;
-    margin-top: 0.1em;
-    font-size: 3em;
-  }
-}
-
-.notable-item {
-  border-top: 3px solid #515151;
-  margin-bottom: 2em;
-  position: relative;
-
-  .additional-info {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    .shared-list {
-      display: inline-block;
-      padding: 0.5em 0.5em;
-    }
-
-    .shared-item {
-      display: inline-block;
-      padding: 0 0.5em;
-    }
-
-    .shared-icon {
-      max-height: 2em;
-      border-radius: 50%;
-    }
-
-    .notable-type {
-      display: inline-block;
-      font-family: "Open Sans Condensed", sans-serif;
-      background-color: #515151;
-      text-transform: uppercase;
-      padding: 0.5em 1em;
-      font-size: 1.2em;
-      color: white;
-
-      span {
-        margin-right: 0.5em;
-      }
-    }
-  }
-
-  .notable-controls {
-    height: 2em;
-
-    div {
-      float: right;
-    }
-
-    .controls-item {
-      font-size: 1.1em;
-      padding: 0.5em 1em;
-      border-right: 2px solid #515151;
-      cursor: pointer;
-
-      &:first-child {
-        border: none;
-        padding-right: 0;
-      }
-
-      span {
-        margin-left: 0.5em;
-      }
-    }
-  }
-}
-
-.notable-content {
-  padding-left: 2em;
-  padding-right: 2em;
-}
 
 .filter-header {
   font-family: "Open Sans Condensed", sans-serif;
@@ -142,17 +40,6 @@
       color: #009688;
     }
   }
-}
-
-.img-profile {
-  float: left;
-  margin-left: 0.5em;
-  margin-right: 1em;
-  height: 4em;
-}
-
-.img-circle {
-  border-radius: 50%;
 }
 
 li.removed-item {
