@@ -7,35 +7,41 @@
   -->
 
 <div class="row landing">
-  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 view-body">
+  <div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-3 view-body">
     <img src="assets/icons/rumpel.svg" class="logo">
     <p>Rumpel is a service that allows you to <span class="highlight">acquire</span>, <span class="highlight">visualise</span> and <span class="highlight">exchange</span> your HAT data.</p>
 
-    <p class="subtext">You would need a <a href="https://marketsquare.hubofallthings.com/signup" target="_blank">HAT</a> to use Rumpel. Please enter your personal HAT address.</p>
-
     <div class="form">
-        <div class="form-group">
-            <label for="hatAddress">Your personal HAT address</label>
-            <input type="text" class="form-control rump-input" id="hatAddress"
-                [(ngModel)]="hatDomain"
-                (keyup.enter)="onSubmit()"
-                placeholder="hat.hubofallthings.net"
-                aria-describedby="hatAddressStatus">
-            <span id="loginAddressStatus" class="sr-only">(success)</span>
-            <!--<div *ngIf="hat.control.hasError('required')" class="ui error message">
-                HAT is required
-            </div>
-            <div *ngIf="hat.control.hasError('invalidHat')" class="ui error message">
-                HAT address should look like http://hat.hubofallthings.net:12345
-            </div>-->
-        </div>
+      <div class="form-group" [class.has-error]="error">
+          <label for="hatAddress">Please enter your HAT password</label>
+          <input type="password" class="form-control rump-input" id="hatAddress"
+              #passwordRef
+              (focus)="clearError()"
+              (keyup.enter)="onSubmit(passwordRef.value)"
+              placeholder="Password"
+              aria-describedby="hatPassword">
+          <span id="loginAddressStatus" class="sr-only">(success)</span>
+          <div *ngIf="error" class="error alert alert-danger">
+            {{error}}
+          </div>
+          <!--<div *ngIf="hat.control.hasError('required')" class="ui error message">
+              HAT is required
+          </div>
+          <div *ngIf="hat.control.hasError('invalidHat')" class="ui error message">
+              HAT address should look like http://hat.hubofallthings.net:12345
+          </div>-->
+      </div>
 
-        <button type="button" class="btn btn-rump" (click)="onSubmit()">Login</button>
+      <div class="form-group">
+        <button type="button" class="btn btn-rump" (click)="onSubmit(passwordRef.value)">Login</button>
+      </div>
 
-        <div class="form-context2">You will be taken to your personal HAT page. For security reasons, your HAT password should only be entered at that page.</div>
     </div>
 
-    <div class="form-context"><a href="https://marketsquare.hubofallthings.com/signup" target="_blank">Sign up</a> for a HAT &nbsp; | &nbsp; <a href="http://www.hatdex.org/what-is-the-hat/" target="_blank">What is the HAT?</a> &nbsp; | &nbsp; <span (click)="showScreenshot()">See a Screenshot</span></div>
+    <div class="form-context"><a href="https://marketsquare.hubofallthings.com/signup" target="_blank">Sign up</a> for a HAT &nbsp;
+      | &nbsp; <a href="http://www.hatdex.org/what-is-the-hat/" target="_blank">What is the HAT?</a> &nbsp;
+      | &nbsp; <span (click)="showScreenshot()">See a Screenshot</span>
+    </div>
 
   </div>
 

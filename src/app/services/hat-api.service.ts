@@ -28,7 +28,7 @@ export class HatApiService {
 
   injectUserSubscription(user$: Observable<User>) {
     this._userSub = user$.subscribe((user: User) => {
-      this._baseUrl = 'https://' + user.iss;
+      this._baseUrl = 'http://' + user.iss + ':9000';
       this._domain = user.iss;
       this._token = user.token;
 
@@ -39,7 +39,7 @@ export class HatApiService {
   }
 
   validateToken(domain: string, token: string) {
-    const url = `https://${domain}/users/access_token/validate`;
+    const url = `http://${domain}:9000/users/access_token/validate`;
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("X-Auth-Token", token);
@@ -326,6 +326,17 @@ export class HatApiService {
     }
 
     return values;
+  }
+
+  login(username: string, password: string) {
+    const url = 'http://bobtheplumber.hat.org:9000/users/access_token';
+
+    let headers = new Headers();
+    headers.append("username", username);
+    headers.append("password", password);
+
+    return this._http.get(url, { headers: headers, body: '' })
+      .map(res => res.json().accessToken);
   }
 
   /* HAT Public API methods */

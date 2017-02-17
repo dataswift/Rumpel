@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Inject} from '@angular/core';
 import { UiStateService, UserService, HatApiService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
@@ -15,6 +15,7 @@ import {Subscription} from "rxjs";
 import {DataTable} from "../../shared/interfaces/data-table.interface";
 import {NotificationsService} from "../notifications.service";
 import {Router, NavigationEnd} from "@angular/router";
+import { APP_CONFIG, IAppConfig} from "../../app.config";
 
 @Component({
   selector: 'rump-side-menu',
@@ -34,7 +35,8 @@ export class SideMenuComponent implements OnInit {
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
 
-  constructor(private uiState: UiStateService,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private uiState: UiStateService,
               private _dialogSvc: DialogService,
               private _notificationsSvc: NotificationsService,
               private router: Router,
@@ -44,6 +46,7 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit() {
     this.state = { dataSources: [], dataTypes: [] };
+    this.menu = this.config.menuItems.public;
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -56,24 +59,11 @@ export class SideMenuComponent implements OnInit {
       this.totalNotifications = stats.total;
     });
 
-    this.menu = [
-      { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '' },
-      { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
-      { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
-      { display: 'Mashups', icon: 'layergroup', link: 'mashups/myday', dataType: '', disable: '' },
-      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'no data' },
-      { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
-      { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts,tweets,music_listens', disable: 'no data' },
-      { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
-      { display: 'Data Plugs', icon: 'puzzle', link: '', dataType: '', disable: '' }
-    ];
+    this.userSvc.auth$.subscribe((isAuthenticated: boolean) => {
+      this.menu = isAuthenticated ? this.config.menuItems.private : this.config.menuItems.public;
+    });
 
-    this.comingSoonMenu = [
-      { display: 'Weather', icon: 'thermometer', dataType: '', link: '' },
-      { display: 'Finance', icon: 'bank', dataType: '', link: '' },
-      { display: 'Creations (music)', icon: 'guitar', dataType: '', link: '' },
-      { display: 'Creations (art)', icon: 'brush', dataType: '', link: '' }
-    ];
+    this.comingSoonMenu = this.config.menuItems.comingSoon;
 
     this.sub = this.uiState.tables$.subscribe((tables: Array<DataTable>) => {
       for (let table of tables) {

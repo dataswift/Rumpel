@@ -9,7 +9,7 @@
 .landing {
   background-image: url("assets/images/landing_bg.jpg");
   background-repeat: repeat;
-  min-height: 90em;
+  min-height: 60em;
   position: relative;
 
   .version-tag {
@@ -92,6 +92,14 @@
   &:-moz-placeholder {
     font-weight: normal;
   }
+}
+
+.error {
+  font-family: "Open Sans Regular", sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  border-radius: 0;
+  margin-top: 0.25em;
 }
 
 .form {

@@ -20,6 +20,11 @@ export class IAppConfig {
     marketSquareOfferId: string;
     activeIntegrations: Array<{ name: string; displayName: string; logoUrl: string; }>;
   };
+  menuItems: {
+    public: Array<any>;
+    private: Array<any>;
+    comingSoon: Array<any>;
+  }
 }
 
 export const AppConfig: IAppConfig = {
@@ -54,6 +59,27 @@ export const AppConfig: IAppConfig = {
         displayName: 'Twitter',
         logoUrl: 'assets/icons/twitter-plug.png'
       }
+    ]
+  },
+  menuItems: {
+    "public": [
+      { display: 'Public Profile', icon: 'user', link: 'public/profile', dataType: '', disable: '' },
+      { display: 'Shared Notables', icon: 'notebook', link: 'public/notables', dataType: '', disable: '' },
+    ],
+    "private": [
+      { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '' },
+      { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
+      { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
+      { display: 'Mashups', icon: 'layergroup', link: 'mashups/myday', dataType: '', disable: '' },
+      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'no data' },
+      { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
+      { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts,tweets,music_listens', disable: 'no data' },
+      { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
+      { display: 'Data Plugs', icon: 'puzzle', link: '', dataType: '', disable: '' }
+    ],
+    "comingSoon": [
+      { display: 'Weather', icon: 'thermometer', dataType: '', link: '' },
+      { display: 'Finance', icon: 'bank', dataType: '', link: '' }
     ]
   }
 };

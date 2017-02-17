@@ -7,12 +7,14 @@
  */
 
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router, NavigationExtras} from '@angular/router';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
 import {CookieService} from "angular2-cookie/core";
 import {DialogService} from "../../layout/dialog.service";
 import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
+import {HatApiService} from "../../services/hat-api.service";
 
+declare var username: any;
 
 @Component({
   selector: 'rump-login',
@@ -21,11 +23,14 @@ import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
 })
 export class LoginComponent implements OnInit {
   public hatDomain: string;
+  private error: string;
   private redirectUrl: string = 'https://rumpel.hubofallthings.com/';
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private route: ActivatedRoute,
+              private router: Router,
               private cookieSvc: CookieService,
+              private hatSvc: HatApiService,
               private dialogSvc: DialogService) {
   }
 
@@ -38,14 +43,29 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  clearError() {
+    this.error = '';
+  }
+
   showScreenshot() {
     this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
       message: "Here should come up a picture of the Rumpel interface. Soon.."
     });
   }
 
-  onSubmit() {
-    window.location.href = `https://${this.hatDomain}/hatlogin?name=Rumpel&redirect=${this.redirectUrl}`;
+  onSubmit(password) {
+    this.hatSvc.login(username, password).subscribe(
+      accessToken => {
+        let navigationExtras: NavigationExtras = {
+          queryParams: { "token": accessToken }
+        };
+        this.router.navigate(["dashboard"], navigationExtras);
+      },
+      err => {
+        console.log("Login failed! Reason: ", err);
+        this.error = "Incorrect password. Please try again."
+      });
+    // window.location.href = `https://${this.hatDomain}/hatlogin?name=Rumpel&redirect=${this.redirectUrl}`;
   }
 
 }

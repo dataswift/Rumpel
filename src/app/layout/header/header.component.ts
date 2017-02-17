@@ -183,7 +183,11 @@ export class HeaderComponent implements OnInit {
 
   signOut() {
     this.userSvc.logout();
-    this.router.navigate(['/users/login']);
+    this.router.navigate(['/public/profile']);
+  }
+
+  signIn() {
+    this.router.navigate(['/users/login'])
   }
 
   navigateTo(link: string) {
