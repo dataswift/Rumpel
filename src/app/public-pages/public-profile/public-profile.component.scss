@@ -3,8 +3,9 @@
 @import "../../style/variables";
 
 .page-wrapper {
-  min-height: 83em;
+  min-height: 60em;
   background: url("assets/images/tiled-bg.png");
+  background-repeat: repeat;
   color: white;
 }
 
@@ -21,12 +22,12 @@
 }
 
 .profile-private {
-  margin-top: 10em;
   text-align: center;
 }
 
 .profile-private h1 {
   font-size: 4em;
+  margin-top: 20%;
 }
 
 .profile-img {
@@ -381,5 +382,22 @@ a:hover {
 
   a {
     color: $text-dark;
+  }
+}
+
+.loading-animation {
+  margin-top: 10em;
+  font-size: 2em;
+  color: white;
+
+  * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  span {
+    color: white;
+    font-size: 1.5em;
+    font-family: "Open Sans Condensed", sans-serif;
   }
 }

@@ -1,0 +1,8 @@
+<div class="list-container">
+  <h2 class="icon-text-valign"><span class="icon ss-write"></span>&nbsp;More of My Public Notables</h2>
+  <ul class="bulletless-list">
+    <li *ngFor="let notable of notables" class="notable-item placeholder">
+      <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
+    </li>
+  </ul>
+</div>

@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { SwitchComponent, TreeViewComponent, TimelineComponent, ProfilePhotoComponent, DateInputComponent } from './components';
+import { SwitchComponent, TreeViewComponent, TimelineComponent, DateInputComponent } from './components';
 import { OutsideClick, StickDirective } from './directives';
 import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, RelativeTimePipe,
          MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
@@ -25,13 +25,13 @@ import {NotableComponent} from "./components/notable/notable.component";
                   ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClick, StickDirective,
-                  SwitchComponent, TreeViewComponent, ProfilePhotoComponent, TimelineComponent, SpinnerComponent,
+                  SwitchComponent, TreeViewComponent, TimelineComponent, SpinnerComponent,
                   DateInputComponent, NotableComponent],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
-             SwitchComponent, TreeViewComponent, ProfilePhotoComponent, TimelineComponent,
+             SwitchComponent, TreeViewComponent, TimelineComponent,
              OutsideClick, StickDirective, SpinnerComponent, DateInputComponent,
              CommonModule, RouterModule, NotableComponent ]
 })

@@ -1,7 +1,16 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="page-wrapper">
-  <div class="row profile profile-private" *ngIf="!shared">
+  <div class="row profile profile-private" *ngIf="isLoading()">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="loading-animation">
+        <rump-spinner [isRunning]="true"></rump-spinner>
+        <span>Retrieving data...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row profile profile-private" *ngIf="shared === false">
     <div class="col-md-offset-1 col-md-10">
       <h1>Private Profile</h1>
       <h2>The user has made this Profile Private</h2>
@@ -69,7 +78,7 @@
     <div class="wrapper grid-item item-wide" *ngIf="notables">
       <div class="box-content notes">
 
-        <h1 class="icon-text-valign"><span class="icon ss-write"></span>&nbsp;My Public Notables</h1>
+        <h2 class="icon-text-valign"><span class="icon ss-write"></span>&nbsp;My Public Notables</h2>
         <ul class="bulletless-list">
           <li *ngFor="let notable of notables" class="notable-item placeholder">
             <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>

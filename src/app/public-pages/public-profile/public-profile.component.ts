@@ -28,4 +28,8 @@ export class PublicProfileComponent implements OnInit {
     });
   }
 
+  isLoading(): boolean {
+    return typeof this.shared === "undefined";
+  }
+
 }
