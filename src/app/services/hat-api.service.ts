@@ -47,14 +47,12 @@ export class HatApiService {
     return this._http.get(url, { headers: headers, body: '' }).map(res => res.json());
   }
 
-  getApplicationToken(name: string, resource: string) {
-    const url = this._baseUrl + '/users/application_token';
-
+  getApplicationToken(name: string, resource: string): Observable<string> {
     let query: URLSearchParams = new URLSearchParams();
     query.append('name', name);
     query.append('resource', resource);
 
-    return this._http.get(url, { headers: this._headers, search: query, body: '' })
+    return this._http.get("/users/application_token", { headers: this._headers, search: query, body: '' })
       .map(res => res.json().accessToken);
   }
 

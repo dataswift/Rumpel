@@ -13,7 +13,6 @@ export interface NotablesServiceMeta {
   offerClaimed: boolean;
   userMessage: string;
   dataDebit?: DataDebitMeta;
-  canPost: Array<string>;
   activeIntegrations: Array<ActiveIntegrations>;
 }
 

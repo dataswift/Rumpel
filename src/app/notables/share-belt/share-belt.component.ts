@@ -14,6 +14,7 @@ import { Notable } from "../../shared/interfaces/notable.class";
 import {NotablesServiceMeta} from "../../shared/interfaces/notables-service-meta.interface";
 import {DialogService} from "../../layout/dialog.service";
 import {DialogBoxComponent} from "../../layout/dialog-box/dialog-box.component";
+import {DataPlugService} from "../../services/data-plug.service";
 
 @Component({
   selector: 'rump-share-belt',
@@ -41,7 +42,9 @@ export class ShareBeltComponent implements OnInit {
 
   @Output() serviceToggled: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private notablesSvc: NotablesService, private dialogSvc: DialogService) { }
+  constructor(private notablesSvc: NotablesService,
+              private dialogSvc: DialogService,
+              private dataPlugSvc: DataPlugService) { }
 
   ngOnInit() {
     this.dataPlugError = null;
@@ -60,16 +63,15 @@ export class ShareBeltComponent implements OnInit {
   }
 
   toggleSharing(provider) {
-    if (this.notablesState.canPost.indexOf(provider.name) === -1) {
-      this.dataPlugError = provider.name;
-    } else {
+    if (provider.name === "marketsquare" || this.dataPlugSvc.status(provider.name)) {
       this.sharedOn[provider.name.toLowerCase()] = !this.sharedOn[provider.name.toLowerCase()];
       this.serviceToggled.emit({
         action: this.sharedOn[provider.name.toLowerCase()] ? 'SHARE' : 'STOP',
         service: provider.name
       });
+    } else {
+      this.dataPlugError = provider.name;
     }
-
   }
 
   claimNotablesOffer(): void {

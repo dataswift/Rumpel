@@ -43,7 +43,6 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
       phata: this.hat.hatDomain,
       offerClaimed: false,
       userMessage: '',
-      canPost: ['marketsquare'],
       activeIntegrations: this.config.notables.activeIntegrations
     };
 
@@ -54,26 +53,6 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
     this.notablesMeta$ = this._notablesMeta$.asObservable();
 
     this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
-
-    this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-      this.updateNotablesState();
-
-      this.dataPlug.getTokenInfo('Facebook').subscribe((tokenInfo: any) => {
-        if (!tokenInfo.error && tokenInfo.canPost) {
-          this.notablesServiceMeta.canPost.push('facebook');
-
-          this._notablesMeta$.next(this.notablesServiceMeta);
-        }
-      });
-
-      this.dataPlug.getTokenInfo('Twitter').subscribe(tokenInfo => {
-        if (!tokenInfo.error && tokenInfo[0].successful) {
-          this.notablesServiceMeta.canPost.push('twitter');
-
-          this._notablesMeta$.next(this.notablesServiceMeta);
-        }
-      });
-    });
   }
 
   updateNotablesState(): void {
