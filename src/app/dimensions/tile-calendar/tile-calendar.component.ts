@@ -14,6 +14,8 @@ import { Event } from '../../shared/interfaces/index';
 
 import * as moment from 'moment';
 import { Observable, Subscription } from "rxjs/Rx";
+import {UiStateService} from "../../services/ui-state.service";
+import {DataTable} from "../../shared/interfaces/data-table.interface";
 
 @Component({
   selector: 'rump-tile-calendar',
@@ -21,26 +23,35 @@ import { Observable, Subscription } from "rxjs/Rx";
   styleUrls: ['tile-calendar.component.scss']
 })
 export class TileCalendarComponent implements OnInit, OnDestroy {
-  public events: Array<any>;
-  public upcomingEventsExist: boolean;
+  private events: Array<{ relativeTime: string; events: Array<Event> }>;
+  private eventsExist: boolean = false;
+  private upcomingEventsExist: boolean;
   private sub: Subscription;
 
   constructor(private eventsSvc: EventsService,
               private facebookEventSvc: FacebookEventsService,
-              private googleEventsSvc: GoogleEventsService) {}
+              private googleEventsSvc: GoogleEventsService,
+              private uiStateSvc: UiStateService) {}
 
   ngOnInit() {
-    this.events = [];
+    this.events = [{ relativeTime: "today", events: [] }, { relativeTime: "tomorrow", events: [] }];
     this.sub =
-    Observable.merge(
-      this.eventsSvc.data$,
-      this.facebookEventSvc.data$,
-      this.googleEventsSvc.data$
-    ).subscribe(this.handleEventAddition);
+      Observable.merge(
+        this.eventsSvc.data$,
+        this.facebookEventSvc.data$,
+        this.googleEventsSvc.data$
+      ).subscribe(this.handleEventAddition);
 
     this.eventsSvc.getRecentData();
     this.facebookEventSvc.getRecentData();
     this.googleEventsSvc.getRecentData();
+
+    this.uiStateSvc.tables$.subscribe((tables: DataTable[]) => {
+      const foundTable = tables.find((table: DataTable) => table.name === "events");
+      if (foundTable) {
+        this.eventsExist = true;
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -49,19 +60,19 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
 
   private handleEventAddition(events: Array<Event>): void {
     let upcomingEvents = events
-      .filter(event => event.start.isAfter() && event.start.isBefore(moment().add(1, 'days').endOf('day')))
+      .filter(event => event.start.isAfter(moment().startOf('day')) && event.start.isBefore(moment().add(1, 'days').endOf('day')))
       .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
 
     if (upcomingEvents.length > 0) {
+      let daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
+      this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
+      this.events[1].events = this.events[1].events.concat(upcomingEvents);
+
       this.upcomingEventsExist = true;
-      let daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')))
-      this.events = [
-        { relativeTime: 'today', events: upcomingEvents.splice(0, daySplitIndex) },
-        { relativeTime: 'tomorrow', events: upcomingEvents }
-      ];
     } else {
       this.upcomingEventsExist = false;
     }
+
   }
 
 }

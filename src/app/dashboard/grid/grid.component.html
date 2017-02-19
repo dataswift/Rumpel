@@ -23,7 +23,7 @@
     <rump-tile-header [title]="'Calendar'" [iconName]="'calendar'"
                       [backColor]="'#37474F'"
                       [info]="'Displays the list of most recent events in the your HAT calendar. To get started with gathering your events enable Social and Calendar data plugs.'"></rump-tile-header>
-    <div class="inactive" *ngIf="!showTile.events">
+    <div class="inactive" *ngIf="!showEventsTile">
       <div class="filter">
         <span class="ss-calendar"></span>
         <h2>Calendar</h2>
@@ -42,7 +42,7 @@
     <rump-tile-header [title]="'Social'" [iconName]="'replyall'"
                       [backColor]="'#546E7A'"
                       [info]="'What happened on the social media recently? See all your recent activity in one convenient place.'"></rump-tile-header>
-    <div class="inactive" *ngIf="!showTile.posts">
+    <div class="inactive" *ngIf="!showPostsTile">
       <div class="filter">
         <span class="ss-replyall"></span>
         <h2>Social</h2>
@@ -55,7 +55,7 @@
     <rump-tile-header [title]="'Locations'" [iconName]="'merge'"
                       [backColor]="'#607D8B'"
                       [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'"></rump-tile-header>
-    <div class="inactive" *ngIf="!showTile.locations">
+    <div class="inactive" *ngIf="!showLocationsTile">
       <div class="filter">
         <span class="ss-merge"></span>
         <h2>Locations</h2>

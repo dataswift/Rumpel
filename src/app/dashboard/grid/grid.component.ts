@@ -20,7 +20,9 @@ declare var $: any;
 })
 export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   public state: any;
-  public showTile = { locations: false, events: false, posts: false };
+  private showLocationsTile = false;
+  private showEventsTile = false;
+  private showPostsTile = false;
   public tileHeights: { notables: number; profile: number };
   private sub: Subscription;
 
@@ -32,9 +34,9 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tileHeights = { notables: 2, profile: 1 };
 
     this.sub = this.uiState.tables$.subscribe((tables: DataTable[]) => {
-      if (tables.findIndex(this.searchHandler('locations')) > -1) this.showTile.locations = true;
-      if (tables.findIndex(this.searchHandler('posts tweets music_listens')) > -1) this.showTile.posts = true;
-      if (tables.findIndex(this.searchHandler('events')) > -1) this.showTile.events = true;
+      this.showLocationsTile = tables.findIndex(this.searchHandler('locations')) > -1;
+      this.showPostsTile = tables.findIndex(this.searchHandler('posts tweets music_listens')) > -1;
+      this.showEventsTile = tables.findIndex(this.searchHandler('events')) > -1;
     });
   }
 
