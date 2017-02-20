@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {HatApiService} from "../../services/hat-api.service";
 import {Notable} from "../../shared/interfaces/notable.class";
 
-declare var username: string;
-
 @Component({
   selector: 'rump-public-profile',
   templateUrl: 'public-profile.component.html',
@@ -26,6 +24,10 @@ export class PublicProfileComponent implements OnInit {
         this.shared = false;
       }
     });
+  }
+
+  get hostname(): string {
+    return window.location.hostname;
   }
 
   isLoading(): boolean {

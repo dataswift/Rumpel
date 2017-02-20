@@ -175,12 +175,13 @@ export class MarketSquareService {
 
     this.http.get(url, { headers: headers, search: query, body: '' })
       .map(res => res.json())
-      .subscribe(registrationMessage => {
-        if (registrationMessage.error) {
-          console.log('Failed to register with MarketSquare.');
-        } else if (registrationMessage.message) {
+      .subscribe(
+        registrationMessage => {
           console.log('Successfully registered with MarketSquare.', registrationMessage.message);
-        }
+        },
+        error => {
+          console.log(`Failed to register with MarketSquare.
+                       Reason: ${error}`);
       });
   }
 

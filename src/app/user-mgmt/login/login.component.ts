@@ -14,8 +14,6 @@ import {DialogService} from "../../layout/dialog.service";
 import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
 import {HatApiService} from "../../services/hat-api.service";
 
-declare var username: any;
-
 @Component({
   selector: 'rump-login',
   templateUrl: 'login.component.html',
@@ -47,14 +45,21 @@ export class LoginComponent implements OnInit {
     this.error = '';
   }
 
-  showScreenshot() {
-    this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
-      message: "Here should come up a picture of the Rumpel interface. Soon.."
-    });
+  get username(): string {
+    const host = window.location.hostname;
+    return host.substring(0, host.indexOf("."));
+  }
+
+  get protocol(): string {
+    return window.location.protocol;
+  }
+
+  get hostname(): string {
+    return window.location.hostname;
   }
 
   onSubmit(password) {
-    this.hatSvc.login(username, password).subscribe(
+    this.hatSvc.login(this.username, password).subscribe(
       accessToken => {
         let navigationExtras: NavigationExtras = {
           queryParams: { "token": accessToken }

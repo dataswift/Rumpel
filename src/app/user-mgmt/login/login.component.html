@@ -38,9 +38,10 @@
 
     </div>
 
-    <div class="form-context"><a href="https://marketsquare.hubofallthings.com/signup" target="_blank">Sign up</a> for a HAT &nbsp;
-      | &nbsp; <a href="http://www.hatdex.org/what-is-the-hat/" target="_blank">What is the HAT?</a> &nbsp;
-      | &nbsp; <span (click)="showScreenshot()">See a Screenshot</span>
+    <div class="form-context">
+      <a href="https://hatters.hubofallthings.com/" target="_blank">Sign up</a> for a HAT &nbsp;| &nbsp;
+      <a href="http://www.hatdex.org/what-is-the-hat/" target="_blank">What is the HAT?</a> &nbsp;| &nbsp;
+      <a [href]="protocol + '//' + hostname + '/passwordreset'">Forgot Password?</a>
     </div>
 
   </div>

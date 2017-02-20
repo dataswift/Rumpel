@@ -80,9 +80,7 @@ export class ShareBeltComponent implements OnInit {
       if (res) {
         this.notablesState.offerClaimed = true;
         this.notablesSvc.updateNotablesState();
-        this.displayMessage = "";
       } else {
-        this.displayMessage = "";
         this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
           title: "Something went wrong",
           message: "There was a problem setting up your notables service. Please report the problem and try again by refreshing this page.",
@@ -92,6 +90,8 @@ export class ShareBeltComponent implements OnInit {
           }]
         })
       }
+
+      this.displayMessage = "";
     });
   }
 

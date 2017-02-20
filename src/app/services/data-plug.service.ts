@@ -57,7 +57,7 @@ export class DataPlugService {
         if (error.status !== 404) {
           this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
             title: "Something went wrong",
-            message: "There is a problem with the Facebook plug. If the problem persists, please try disconnecting and re-connecting the plug.",
+            message: "There is a problem with your Facebook plug. If the problem persists, we suggest disconnecting and re-connecting the plug.",
             cancelBtnText: "Dismiss",
             buttons: [{
               title: "Reconnect Facebook Plug",
@@ -80,7 +80,7 @@ export class DataPlugService {
           if (tableFound) {
             this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
               title: "Something went wrong",
-              message: "There is a problem with the Twitter plug. If the problem persists, please try disconnecting and re-connecting the plug.",
+              message: "There is a problem with your Twitter plug. If the problem persists, we suggest disconnecting and re-connecting the plug.",
               cancelBtnText: "Dismiss",
               buttons: [{
                 title: "Reconnect Twitter Plug",

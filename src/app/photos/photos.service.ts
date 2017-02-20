@@ -65,19 +65,42 @@ export class PhotosService {
       });
   }
 
-  private loadPhotoSources():void {
+  private loadPhotoSources(): void {
     let photo = this._store.sourcelessPhotos.shift();
 
     this.photoDb.get(photo.path, {attachments: true})
       .then(savedPhoto => {
-        photo.src = this.sanitizer.bypassSecurityTrustUrl("data: image/jpg;base64," + savedPhoto._attachments[photo.path].data);
-        this._store.photos.push(photo);
-        this.publishPhotos();
+        if (savedPhoto.cachedTime && moment(savedPhoto.cachedTime).add(7, "days").isAfter()) {
+          photo.src = this.sanitizer.bypassSecurityTrustUrl("data: image/jpg;base64," + savedPhoto._attachments[photo.path].data);
+          this._store.photos.push(photo);
+          this.publishPhotos();
+        } else {
+          this.photoDb.removeAttachment(photo.path, photo.path, savedPhoto._rev).then(
+            result => {
+              this._store.sourcelessPhotos.push(photo);
+              this.loadPhotoSources();
+            },
+            error => {
+              console.log("Image purging failed.", photo);
+            }
+          )
+        }
       }, () => {
         this.downloadPhotoData(photo, "w640h480").subscribe(srcArrayBuffer => {
           let base64String = this.base64ArrayBuffer(srcArrayBuffer);
 
-          this.photoDb.putAttachment(photo.path, photo.path, base64String, 'image/jpg').then(() => {
+          let doc = {
+            "_id": photo.path,
+            "cachedTime": moment().format(),
+            "_attachments": {}
+          };
+
+          doc._attachments[photo.path] = {
+            "content_type": "image/jpg",
+            "data": base64String
+          };
+
+          this.photoDb.put(doc).then((result) => {
             photo.src = this.sanitizer.bypassSecurityTrustUrl("data: image/jpg;base64," + base64String);
             this._store.photos.push(photo);
             this.publishPhotos();
