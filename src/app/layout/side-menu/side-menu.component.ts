@@ -16,6 +16,7 @@ import {DataTable} from "../../shared/interfaces/data-table.interface";
 import {NotificationsService} from "../notifications.service";
 import {Router, NavigationEnd} from "@angular/router";
 import { APP_CONFIG, IAppConfig} from "../../app.config";
+import {User} from "../../shared/interfaces/user.interface";
 
 @Component({
   selector: 'rump-side-menu',
@@ -40,9 +41,7 @@ export class SideMenuComponent implements OnInit {
               private _dialogSvc: DialogService,
               private _notificationsSvc: NotificationsService,
               private router: Router,
-              private userSvc: UserService,
-              private hat: HatApiService,
-              private marketSvc: MarketSquareService) {}
+              private userSvc: UserService) {}
 
   ngOnInit() {
     this.state = { dataSources: [], dataTypes: [] };
@@ -59,8 +58,8 @@ export class SideMenuComponent implements OnInit {
       this.totalNotifications = stats.total;
     });
 
-    this.userSvc.auth$.subscribe((isAuthenticated: boolean) => {
-      this.menu = isAuthenticated ? this.config.menuItems.private : this.config.menuItems.public;
+    this.userSvc.user$.subscribe((user: User) => {
+      this.menu = user.authenticated ? this.config.menuItems.private : this.config.menuItems.public;
     });
 
     this.comingSoonMenu = this.config.menuItems.comingSoon;

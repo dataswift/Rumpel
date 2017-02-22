@@ -15,7 +15,7 @@
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="!!hatDomain" class="user-nav" style="text-transform: lowercase;">
-          <a href="https://{{hatDomain}}/profile" target="_blank">{{hatDomain}}</a>
+          <a [routerLink]="['public', 'profile']">{{hatDomain}}</a>
         </li>
         <li *ngIf="!!hatDomain" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
         <li *ngIf="!hatDomain" (click)="signIn()" class="user-nav" style="cursor: pointer;"><p>Sign In</p></li>

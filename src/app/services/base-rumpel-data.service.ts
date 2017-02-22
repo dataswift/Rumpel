@@ -27,6 +27,7 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
     this.uiSvc.tables$
       .flatMap((tables: DataTable[]) => {
         const tableFound = tables.find((table: DataTable) => table.name === name && table.source === source);
+
         if (tableFound) {
           this.store.tableId = tableFound.id;
           return this.hat.getModelMapping(tableFound.id);

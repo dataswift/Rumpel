@@ -25,22 +25,22 @@ export class UiStateService {
         if (user.authenticated) {
           return this.hat.getDataSources();
         } else {
-          return Observable.of([]);
+          return Observable.throw("User is not authenticated.");
         }
       })
-      .subscribe(rawDataTables => {
-        const dataTables: Array<DataTable> = rawDataTables.map(table => {
-          return {
-            name: table.name,
-            source: table.source,
-            id: table.id
-          };
-        });
+      .subscribe(
+        rawDataTables => {
+          const dataTables: Array<DataTable> = rawDataTables.map(table => {
+            return {
+              name: table.name,
+              source: table.source,
+              id: table.id
+            };
+          });
 
-        if (dataTables.length > 0) {
           this.state$.next(dataTables);
-        }
-    });
+        },
+        error => console.log(error));
   }
 
   get tables$(): Observable<DataTable[]> {

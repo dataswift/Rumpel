@@ -6,6 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+.row {
+  background-color: #eeeeee;
+}
+
 section {
   margin-top: 3em;
   margin-bottom: 1em;
@@ -15,7 +19,7 @@ section {
 
 .section-title {
   background-color: #263238;
-  color: #eeeeee;
+  color: #dddddd;
   display: inline-block;
   width: auto;
   margin: 0;
