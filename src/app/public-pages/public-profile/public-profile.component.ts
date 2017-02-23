@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {HatApiService} from "../../services/hat-api.service";
 import {Notable} from "../../shared/interfaces/notable.class";
+import {UserService} from "../../services/user.service";
+import {User} from "../../shared/interfaces/user.interface";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'rump-public-profile',
@@ -9,10 +12,13 @@ import {Notable} from "../../shared/interfaces/notable.class";
 })
 export class PublicProfileComponent implements OnInit {
   private shared: boolean;
+  private userAuthenticated: boolean = false;
   private profile: any;
   private notables: Array<Notable>;
 
-  constructor(private hatSvc: HatApiService) { }
+  constructor(private hatSvc: HatApiService,
+              private userSvc: UserService,
+              private router: Router) { }
 
   ngOnInit() {
     this.hatSvc.getPublicData("profile").subscribe((profileResponse: any) => {
@@ -24,6 +30,14 @@ export class PublicProfileComponent implements OnInit {
         this.shared = false;
       }
     });
+
+    this.userSvc.user$.subscribe((user: User) => {
+      this.userAuthenticated = user.authenticated;
+    });
+  }
+
+  switchView() {
+    this.router.navigate([ "profile" ]);
   }
 
   get hostname(): string {

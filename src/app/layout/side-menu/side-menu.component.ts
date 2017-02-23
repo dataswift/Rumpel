@@ -28,6 +28,7 @@ export class SideMenuComponent implements OnInit {
   public selectedItem: string;
   private sub: Subscription;
   public state: any;
+  private userAuthenticated: boolean;
   public menu: Array<any>;
   private comingSoonMenu: Array<any>;
   private unreadNotifications: number;
@@ -45,6 +46,7 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit() {
     this.state = { dataSources: [], dataTypes: [] };
+    this.userAuthenticated = false;
     this.menu = this.config.menuItems.public;
 
     this.router.events.subscribe(event => {
@@ -59,6 +61,7 @@ export class SideMenuComponent implements OnInit {
     });
 
     this.userSvc.user$.subscribe((user: User) => {
+      this.userAuthenticated = user.authenticated;
       this.menu = user.authenticated ? this.config.menuItems.private : this.config.menuItems.public;
     });
 

@@ -6,6 +6,29 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+.view-header {
+  h4, h6 {
+    display: inline-block;
+    text-transform: uppercase;
+  }
+
+  .view-mode-toggle {
+    float: right;
+    margin-right: 1em;
+
+    .switch-main {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0.75em;
+      margin: 0.5em;
+    }
+
+    .switch-label {
+      font-size: 1.25em;
+    }
+  }
+}
+
 .row {
   background-color: #eeeeee;
 }

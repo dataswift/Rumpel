@@ -74,6 +74,10 @@ export class ProfileComponent implements OnInit {
     this.profilesSvc.getRecentData();
   }
 
+  switchView() {
+    this.router.navigate([ "public", "profile" ]);
+  }
+
   submitForm(event) {
     event.preventDefault();
     this.profilesSvc.postData(this.profile, 'profile');

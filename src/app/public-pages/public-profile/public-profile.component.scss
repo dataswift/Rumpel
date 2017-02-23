@@ -2,6 +2,29 @@
 @import "../../style/bootstrap/mixins/clearfix";
 @import "../../style/variables";
 
+.view-header {
+  h4, h6 {
+    display: inline-block;
+    text-transform: uppercase;
+  }
+
+  .view-mode-toggle {
+    float: right;
+    margin-right: 1em;
+
+    .switch-main {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0.75em;
+      margin: 0.5em;
+    }
+
+    .switch-label {
+      font-size: 1.25em;
+    }
+  }
+}
+
 .page-wrapper {
   min-height: 60em;
   background: url("/assets/images/tiled-bg.png");
@@ -115,14 +138,9 @@ a:hover {
   /*margin-top: 10em;*/
 }
 
-.wrapper {
-  width: 100%;
-  position: relative;
-}
-
 .grid-item {
-  width: 50%;
   float: left;
+  height: 50em;
 
   .icon {
     color: $base-active-color;

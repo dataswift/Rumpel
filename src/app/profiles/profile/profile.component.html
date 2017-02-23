@@ -7,6 +7,19 @@
   -->
 
 <div class="row">
+  <div class="col-md-12">
+    <div class="view-header">
+      <h4>Edit Profile</h4>
+      <div class="view-mode-toggle">
+        <h6 class="switch-label">Edit</h6>
+        <rump-switch [isChecked]="false" (onSwitch)="switchView()" class="switch-main"></rump-switch>
+        <h6 class="switch-label">View</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
     <form #f="ngForm" (submit)="submitForm($event)">
       <div class="row" style="margin: 0;">
