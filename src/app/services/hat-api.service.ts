@@ -28,7 +28,7 @@ export class HatApiService {
 
   injectUserSubscription(user$: Observable<User>) {
     this._userSub = user$.subscribe((user: User) => {
-      this._baseUrl = 'https://' + user.iss;
+      this._baseUrl = '//' + user.iss;
       this._domain = user.iss;
       this._token = user.token;
 
@@ -39,7 +39,7 @@ export class HatApiService {
   }
 
   validateToken(domain: string, token: string) {
-    const url = `https://${domain}/users/access_token/validate`;
+    const url = `//${domain}/users/access_token/validate`;
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("X-Auth-Token", token);
