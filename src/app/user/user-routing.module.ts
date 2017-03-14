@@ -6,9 +6,9 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './index';
+import { Routes } from '@angular/router';
+import { LoginComponent } from './login/login.component';
 
-export const userMgmtRoutes: Routes = [
-  { path: 'users/login', component: LoginComponent }
+export const userRoutes: Routes = [
+  { path: 'user/login', component: LoginComponent }
 ];

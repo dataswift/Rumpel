@@ -331,7 +331,7 @@ export class HatApiService {
     headers.append("username", username);
     headers.append("password", password);
 
-    return this._http.get("/users/access_token", { headers: headers, body: '' })
+    return this._http.get(`//${window.location.hostname}:9000/users/access_token`, { headers: headers, body: '' })
       .map(res => res.json().accessToken);
   }
 
@@ -341,7 +341,7 @@ export class HatApiService {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    return this._http.get("/api/" + endpoint, { headers: headers, body: '' })
+    return this._http.get(`//${window.location.hostname}:9000/api/${endpoint}`, { headers: headers, body: '' })
       .map(res => res.json())
       .catch(err => {
         console.warn(`Could not access public data of the current HAT.

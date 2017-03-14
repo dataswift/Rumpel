@@ -20,10 +20,10 @@
 
     <div class="filter-header">
       <span>{{filter ? filter + ' only' : 'Shows everything'}}</span>
-      <div class="filter" [class.on]="filter === ''" (click)="filterBy('')"><span class="ss-index ss-glyphish-filled"></span>All</div>
-      <div class="filter" [class.on]="filter === 'list'" (click)="filterBy('list')"><span class="ss-list ss-glyphish-filled"></span>Lists</div>
-      <div class="filter" [class.on]="filter === 'note'" (click)="filterBy('note')"><span class="ss-ellipsischat ss-glyphish-filled"></span>Notes</div>
-      <div class="filter" [class.on]="filter === 'blog'" (click)="filterBy('blog')"><span class="ss-write ss-glyphish-filled"></span>Blogs</div>
+      <div class="filter icon-text-valign" [class.on]="filter === ''" (click)="filterBy('')"><span class="ss-index ss-glyphish-filled"></span>All</div>
+      <div class="filter icon-text-valign" [class.on]="filter === 'list'" (click)="filterBy('list')"><span class="ss-list ss-glyphish-filled"></span>Lists</div>
+      <div class="filter icon-text-valign" [class.on]="filter === 'note'" (click)="filterBy('note')"><span class="ss-ellipsischat ss-glyphish-filled"></span>Notes</div>
+      <div class="filter icon-text-valign" [class.on]="filter === 'blog'" (click)="filterBy('blog')"><span class="ss-write ss-glyphish-filled"></span>Blogs</div>
       <div class="filter">Filter by:</div>
     </div>
 

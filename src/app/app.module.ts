@@ -33,7 +33,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
 
 import { DataTypeFilterPipe } from './pipes';
-import { LoginComponent } from './user-mgmt';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
 import { UserService, HatApiService, UiStateService, RumpelService, DataPlugService } from './services/index';
 
@@ -45,11 +44,11 @@ import { InfoBoxComponent } from "./layout/info-box/info-box.component";
 
 import { CookieService } from 'angular2-cookie/core';
 import { cookieServiceFactory } from './aot-workaround';
+import { UserModule } from "./user/user.module";
 
 @NgModule({
   declarations: [
     AppRootComponent,
-    LoginComponent,
     GridComponent,
     TileHeaderComponent,
     TileComingSoonComponent,
@@ -64,6 +63,7 @@ import { cookieServiceFactory } from './aot-workaround';
     FormsModule,
     AppRoutingModule,
     LayoutModule,
+    UserModule,
     SocialModule,
     MarketSquareModule,
     DataDebitsModule,

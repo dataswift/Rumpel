@@ -6,8 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+@import "../../style/variables";
+
 .notables-view {
-  font-family: "Open Sans Regular", sans-serif;
+  color: $text-dark;
   //@include make-row();
   //
   //@media only screen and (min-device-width: $screen-md-min) {
@@ -16,10 +18,8 @@
   //}
 }
 
-
-
 .filter-header {
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: $font-condensed;
   font-size: 2em;
   margin-top: 2em;
   padding: 0.5em 1em;
@@ -37,7 +37,7 @@
     }
 
     &.on {
-      color: #009688;
+      color: $rump-color;
     }
   }
 }

@@ -1,0 +1,73 @@
+/*
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
+ */
+
+@import "variables";
+
+/* General styling for popovers */
+
+.popover {
+  border-radius: 0;
+  background-color: $material-bg-200;
+}
+
+.popover.left > .arrow,
+.popover.left > .arrow:after {
+  border-left-color: $material-bg-200;
+}
+
+/* Customised styling for Simple MD Editor */
+
+.editor-toolbar.fullscreen,
+.editor-toolbar {
+  border-radius: 0;
+  border: none;
+  background-color: #393939;
+}
+
+.editor-toolbar.disabled-for-preview a:not(.no-disable) {
+  background-color: #393939;
+  opacity: 1;
+}
+
+.editor-toolbar .fa {
+  color: white !important;
+  border-radius: 0;
+}
+
+.editor-toolbar .fa:hover,
+.editor-toolbar a.active {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.CodeMirror {
+  border: none;
+  border-radius: 0;
+}
+
+.customIntroTooltip {
+  background-color: $rump-color;
+  color: white;
+}
+
+.customIntroTooltip .inline-link {
+  color: #cacaca;
+  text-decoration: underline;
+}
+
+.customIntroTooltip .inline-link:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.customIntroHighlight {
+  background-color: $rump-color;
+}
+
+.CodeMirror pre {
+  font-size: 1.5em;
+}

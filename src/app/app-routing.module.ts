@@ -8,7 +8,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { userMgmtRoutes } from './user-mgmt/user-mgmt.routing';
+import { userRoutes } from './user/user-routing.module';
 
 import { GridComponent } from './dashboard';
 import { AboutComponent } from './layout/about/about.component';
@@ -21,7 +21,7 @@ import { AuthGuard } from './auth.guard';
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: GridComponent, canActivate: [AuthGuard] },
       { path: 'about', component: AboutComponent },
-      ...userMgmtRoutes
+      ...userRoutes
     ])
   ],
   exports: [

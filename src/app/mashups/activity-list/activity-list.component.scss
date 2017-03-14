@@ -6,8 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-$text-color: white;
-$active-color: #009688;
+@import "../../style/variables";
 
 .activitylist-container {
   float: left;
@@ -18,24 +17,16 @@ $active-color: #009688;
 }
 
 .activitylist-container .activitylist-day-title {
-  border-bottom: 2.5px solid $active-color;
+  border-bottom: 2.5px solid $rump-color;
 }
 
 .activitylist-container .category-title {
-  border-bottom: 2.5px solid $active-color;
-}
-
-.notables-view {
-  font-family: "Open Sans Regular", sans-serif;
-  //@include make-row();
-  //
-  //@media only screen and (min-device-width: $screen-md-min) {
-  //  padding-left: 10em;
-  //  padding-right: 10em;
-  //}
+  border-bottom: 2.5px solid $rump-color;
 }
 
 .activitylist-container {
+  color: $text-dark;
+
   .notable-header {
     padding: 1em;
 
@@ -79,7 +70,7 @@ $active-color: #009688;
       position: absolute;
       top: 0;
       right: 0;
-      font-family: "Open Sans Condensed", sans-serif;
+      font-family: $font-condensed;
       background-color: #515151;
       text-transform: uppercase;
       padding: 0.5em 1em;

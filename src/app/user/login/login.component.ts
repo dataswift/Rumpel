@@ -11,7 +11,6 @@ import {ActivatedRoute, Router, NavigationExtras} from '@angular/router';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
 import {CookieService} from "angular2-cookie/core";
 import {DialogService} from "../../layout/dialog.service";
-import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
 import {HatApiService} from "../../services/hat-api.service";
 
 @Component({
@@ -58,12 +57,13 @@ export class LoginComponent implements OnInit {
     return window.location.hostname;
   }
 
-  onSubmit(password) {
-    this.hatSvc.login(this.username, password).subscribe(
+  onSubmit(form) {
+    this.hatSvc.login(this.username, form.value.password).subscribe(
       accessToken => {
         let navigationExtras: NavigationExtras = {
           queryParams: { "token": accessToken }
         };
+
         this.router.navigate(["dashboard"], navigationExtras);
       },
       err => {

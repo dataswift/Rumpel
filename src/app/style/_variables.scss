@@ -50,31 +50,31 @@ $grid-float-breakpoint:     $screen-sm-min !default;
 //** Point at which the navbar begins collapsing.
 $grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;
 
-$base-red: rgb(136, 17, 29);
-$base-gray: rgb(83, 83, 83);
-$gray-light: lighten($base-gray, 20%);
-$base-white: white;
-$heading-dark: $base-red;
-$text-dark: darken($base-gray, 20%);
-$text-dark-icon: darken($base-gray, 20%);
-$text-light: white;
-$lightred: lighten($base-red, 40%);
-
 $base-black: rgb(1, 1, 1);
 $base-grey: #262626;
 $text-white: rgb(254, 254, 254);
 
-$blue-grey-900: #263238;
-$blue-grey-800: #37474F;
-$blue-grey-700: #455A64;
-$blue-grey-600: #546E7A;
-$blue-grey-500: #607D8B;
-$blue-grey-400: #78909C;
-
 $base-white: white;
 $base-black: black;
 $base-color: rgb(188, 51, 51); /*rgb(233, 58, 63);*/
-$base-active-color: rgb(17, 134, 117);
-$text-light: white;
-$text-dark: lighten(black, 20%);
 $base-background-color: #535353;
+
+$font-regular: "Open Sans Regular", sans-serif;
+$font-condensed: "Open Sans Condensed", sans-serif;
+
+$rump-color: #009688;
+$text-dark: black;
+$text-light: white;
+
+$background-grey: #F3F3F3;
+
+$material-bg-900: #263238;
+$material-bg-800: #37474F;
+$material-bg-700: #455A64;
+$material-bg-600: #546E7A;
+$material-bg-500: #607D8B;
+$material-bg-400: #78909C;
+$material-bg-300: #90A4AE;
+$material-bg-200: #B0BEC5;
+
+$min-private-window-height: 62em;
