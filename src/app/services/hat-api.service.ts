@@ -51,6 +51,18 @@ export class HatApiService {
       .map((res: Response) => res.json());
   }
 
+  changePassword(body: any): Observable<any> {
+    return this.authHttp.post("/control/v2/auth/password", body)
+      .map((res: Response) => res.json());
+  }
+
+  resetPassword(resetToken: string, body: any): Observable<any> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+
+    return this.http.post("/control/v2/auth/passwordreset/confirm/" + resetToken, body, { headers: headers })
+      .map((res: Response) => res.json());
+  }
+
   /* Application authentication management methods */
 
   getApplicationToken(name: string, resource: string): Observable<string> {

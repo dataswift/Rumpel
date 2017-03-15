@@ -50,6 +50,14 @@ export class UserService {
     return this.hatSvc.recoverPassword({ email: email });
   }
 
+  changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    return this.hatSvc.changePassword({ password: oldPassword, newPassword: newPassword });
+  }
+
+  resetPassword(resetToken: string, newPassword: string): Observable<any> {
+    return this.hatSvc.resetPassword(resetToken, { newPassword: newPassword });
+  }
+
   get user$(): Observable<User> {
     return this._user$.asObservable();
   }

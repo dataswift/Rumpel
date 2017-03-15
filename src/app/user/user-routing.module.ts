@@ -9,8 +9,12 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { PasswordRecoverComponent } from "./password-recover/password-recover.component";
+import { PasswordChangeComponent } from "./password-change/password-change.component";
+import { AuthGuard } from "../auth.guard";
 
 export const userRoutes: Routes = [
-  { path: 'user/login', component: LoginComponent },
-  { path: "user/password/recover", component: PasswordRecoverComponent }
+  { path: "user/login", component: LoginComponent },
+  { path: "user/password/recover", component: PasswordRecoverComponent },
+  { path: "user/password/change", component: PasswordChangeComponent, canActivate: [AuthGuard] },
+  { path: "user/password/change/:resetToken", component: PasswordChangeComponent }
 ];
