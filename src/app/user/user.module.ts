@@ -12,10 +12,11 @@ import { FormsModule } from "@angular/forms";
 import { SharedModule } from "../shared/shared.module";
 import { LoginComponent } from "./login/login.component";
 import { UserService } from "./user.service";
+import { PasswordRecoverComponent } from './password-recover/password-recover.component';
 
 @NgModule({
   imports: [ SharedModule, FormsModule ],
-  declarations: [ LoginComponent ],
+  declarations: [ LoginComponent, PasswordRecoverComponent ],
   providers: [ UserService ],
   exports: [  ]
 })

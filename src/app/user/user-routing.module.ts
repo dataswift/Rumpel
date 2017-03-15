@@ -8,7 +8,9 @@
 
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { PasswordRecoverComponent } from "./password-recover/password-recover.component";
 
 export const userRoutes: Routes = [
-  { path: 'user/login', component: LoginComponent }
+  { path: 'user/login', component: LoginComponent },
+  { path: "user/password/recover", component: PasswordRecoverComponent }
 ];

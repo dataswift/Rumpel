@@ -46,6 +46,9 @@ export class UserService {
     this.authHttp.removeToken();
   }
 
+  recoverPassword(email: string): Observable<any> {
+    return this.hatSvc.recoverPassword({ email: email });
+  }
 
   get user$(): Observable<User> {
     return this._user$.asObservable();
