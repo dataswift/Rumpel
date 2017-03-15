@@ -9,8 +9,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
-import { UserService } from './user.service';
-import {User} from "../shared/interfaces/user.interface";
+import { UserService } from '../user/user.service';
+import {User} from "../user/user.interface";
 import {DataTable} from "../shared/interfaces/data-table.interface";
 
 @Injectable()
@@ -23,7 +23,7 @@ export class UiStateService {
     this.userSvc.user$
       .flatMap((user: User) => {
         if (user.authenticated) {
-          return this.hat.getDataSources();
+          return this.hat.getTableList();
         } else {
           return Observable.throw("User is not authenticated.");
         }
@@ -40,7 +40,8 @@ export class UiStateService {
 
           this.state$.next(dataTables);
         },
-        error => console.log(error));
+        error => console.log(error)
+      );
   }
 
   get tables$(): Observable<DataTable[]> {

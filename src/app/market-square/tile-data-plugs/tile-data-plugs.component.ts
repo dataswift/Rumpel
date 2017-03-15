@@ -10,7 +10,6 @@ import { Component, OnInit } from '@angular/core';
 import { DialogBoxComponent } from '../../layout/dialog-box/dialog-box.component';
 import { MarketSquareService } from '../market-square.service';
 import { DialogService } from '../../layout/dialog.service';
-import { HatApiService } from '../../services/index';
 
 @Component({
   selector: 'rump-tile-data-plugs',
@@ -22,8 +21,7 @@ export class TileDataPlugsComponent implements OnInit {
   public icons: Array<string>;
 
   constructor(private marketSvc: MarketSquareService,
-              private dialogSvc: DialogService,
-              private hatSvc: HatApiService) {}
+              private dialogSvc: DialogService) {}
 
   ngOnInit() {
     this.marketSvc.getDataPlugs().subscribe(plugs => {
@@ -52,7 +50,7 @@ export class TileDataPlugsComponent implements OnInit {
     this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
       buttons: [{
         title: "Continue",
-        link: `https://${this.hatSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`
+        link: `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`
       }]
     });
   }
@@ -67,7 +65,7 @@ export class TileDataPlugsComponent implements OnInit {
     let popupHeight = h * 0.7; let top = h * 0.15;
 
     let windowRef = window.open(
-      `https://${this.hatSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
+      `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
       `Setting up ${plug.name} data plug`,
       `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
     );

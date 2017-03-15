@@ -16,7 +16,7 @@ import {DataTable} from "../../shared/interfaces/data-table.interface";
 import {NotificationsService} from "../notifications.service";
 import {Router, NavigationEnd} from "@angular/router";
 import { APP_CONFIG, IAppConfig} from "../../app.config";
-import {User} from "../../shared/interfaces/user.interface";
+import {User} from "../../user/user.interface";
 
 @Component({
   selector: 'rump-side-menu',

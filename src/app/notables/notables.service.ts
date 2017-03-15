@@ -21,6 +21,8 @@ import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
 import {NotablesServiceMeta} from "../shared/interfaces/notables-service-meta.interface";
 import { UiStateService } from "../services/ui-state.service";
 import {DataTable} from "../shared/interfaces/data-table.interface";
+import {UserService} from "../user/user.service";
+import {User} from "../user/user.interface";
 
 @Injectable()
 export class NotablesService extends BaseRumpelDataService<Notable> {
@@ -36,15 +38,21 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
               hat: HatApiService,
               uiSvc: UiStateService,
               private market: MarketSquareService,
+              private userSvc: UserService,
               private dataPlug: DataPlugService) {
     super(hat, uiSvc);
 
     this.notablesServiceMeta = {
-      phata: this.hat.hatDomain,
+      phata: "",
       offerClaimed: false,
       userMessage: '',
       activeIntegrations: this.config.notables.activeIntegrations
     };
+
+    userSvc.user$.subscribe((user: User) => {
+      this.notablesServiceMeta.phata = `${user.hatId}@${user.domain}`;
+      this._notablesMeta$.next(this.notablesServiceMeta);
+    });
 
     this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject();
     this.editedNotable$ = this._editedNotable$.asObservable();
@@ -53,6 +61,10 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
     this.notablesMeta$ = this._notablesMeta$.asObservable();
 
     this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
+  }
+
+  get hatDomain(): string {
+    return this.notablesServiceMeta.phata;
   }
 
   updateNotablesState(): void {

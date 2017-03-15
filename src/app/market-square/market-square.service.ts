@@ -11,26 +11,37 @@ import {Http, Headers, URLSearchParams, Response} from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { JwtHelper } from 'angular2-jwt';
 import { APP_CONFIG, IAppConfig } from '../app.config';
-import { HatApiService } from '../services/hat-api.service';
 
 import * as moment from 'moment';
 import {MSUserClaim} from "../shared/interfaces/MSUserClaim.interface";
+import {UserService} from "../user/user.service";
+import {User} from "../user/user.interface";
+import {HatApiService} from "../services/hat-api.service";
 
 @Injectable()
 export class MarketSquareService {
   private offersStore: Array<any>;
   private applicationToken: { token: string; expires: number; };
+  public hatDomain: string;
+
   private jwt: JwtHelper;
   private _headers: Headers;
   public notifications: Array<any>;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private http: Http,
-              private hat: HatApiService) {
+              private userSvc: UserService,
+              private hatSvc: HatApiService) {
     this.offersStore = [];
     this.jwt = new JwtHelper();
     this._headers = new Headers();
     this._headers.append('Content-Type', 'application/json');
+
+    userSvc.user$.subscribe((user: User) => {
+      this.hatDomain = user.hatId + "." + user.domain;
+
+      //this.connectHAT(this.hatDomain);
+    });
   }
 
   getValidOffers(): Observable<any> {
@@ -122,7 +133,7 @@ export class MarketSquareService {
 
       return Observable.of(headers);
     } else {
-      return this.hat.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
+      return this.hatSvc.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
         .map(accessToken => {
           let payload = this.jwt.decodeToken(accessToken);
           this.applicationToken = {
@@ -139,14 +150,13 @@ export class MarketSquareService {
   }
 
   tickle(): void {
-    const hatDomain = this.hat.hatDomain;
     const url = "https://notables.hubofallthings.com/api/bulletin/tickle";
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
     let query = new URLSearchParams();
-    query.append('phata', hatDomain);
+    query.append('phata', this.hatDomain);
 
     this.http.get(url, { headers: headers, search: query, body: '' })
       .subscribe((res: Response) => {
@@ -162,8 +172,7 @@ export class MarketSquareService {
    * Registers Rumpel as an active data plug with MarketSquare
    */
 
-  connectHAT() {
-    const hatDomain = this.hat.hatDomain;
+  connectHAT(hatDomain: string): void {
     const url = this.config.market.url + '/dataplugs/' + this.config.market.id + '/connect';
 
     let headers = new Headers();

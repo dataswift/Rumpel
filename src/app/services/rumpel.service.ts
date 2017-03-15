@@ -37,7 +37,7 @@ export class RumpelService {
       return this.state$;
     }
 
-    this.hat.getDataSources()
+    this.hat.getTableList()
       .map(rawTables => {
         const newTables = rawTables.map(this.mapRawTable);
 

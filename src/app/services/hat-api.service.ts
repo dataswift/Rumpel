@@ -7,61 +7,105 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { DataDebit, User } from '../shared/interfaces/index';
+import {Http, Headers, URLSearchParams, Response} from '@angular/http';
+import { AuthHttp } from "./auth-http.service";
+import { Observable } from 'rxjs/Rx';
+import { DataDebit } from '../shared/interfaces/index';
+import { User } from '../user/user.interface';
 import * as moment from 'moment';
 
 @Injectable()
 export class HatApiService {
-  private _token: string;
-  private _domain: string;
-  private _baseUrl: string;
-  private _headers: Headers;
-  private _userSub: Subscription;
+  constructor(private http: Http,
+              private authHttp: AuthHttp) {}
 
-  constructor(private _http: Http) {}
+  // validateToken(domain: string, token: string) {
+  //   const url = `//${domain}/users/access_token/validate`;
+  //   let headers = new Headers();
+  //   headers.append("Content-Type", "application/json");
+  //   headers.append("X-Auth-Token", token);
+  //
+  //   return this._http.get(url, { headers: headers, body: '' }).map(res => res.json());
+  // }
 
-  get hatDomain() {
-    return this._domain;
+  /* User authentication management methods */
+
+  login(username: string, password: string): Observable<User> {
+    let headers = new Headers({ username: username, password: password });
+
+    return this.http.get("users/access_token", { headers: headers, body: '' })
+      .map((res: Response) => {
+        const token = res.json().accessToken;
+        return this.authHttp.setToken(token);
+      });
   }
 
-  injectUserSubscription(user$: Observable<User>) {
-    this._userSub = user$.subscribe((user: User) => {
-      this._baseUrl = '//' + user.iss;
-      this._domain = user.iss;
-      this._token = user.token;
-
-      this._headers = new Headers();
-      this._headers.append("Content-Type", "application/json");
-      this._headers.append("X-Auth-Token", user.token);
-    });
+  loginWithToken(token: string): User {
+    return this.authHttp.setToken(token);
   }
 
-  validateToken(domain: string, token: string) {
-    const url = `//${domain}/users/access_token/validate`;
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("X-Auth-Token", token);
-
-    return this._http.get(url, { headers: headers, body: '' }).map(res => res.json());
-  }
+  /* Application authentication management methods */
 
   getApplicationToken(name: string, resource: string): Observable<string> {
     let query: URLSearchParams = new URLSearchParams();
     query.append('name', name);
     query.append('resource', resource);
 
-    return this._http.get("/users/application_token", { headers: this._headers, search: query, body: '' })
+    return this.authHttp.get("/users/application_token", { search: query })
       .map(res => res.json().accessToken);
   }
 
-  getDataSources(): Observable<any> {
-    const url = this._baseUrl + '/data/sources';
+  /* Data table methods */
 
-    return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json());
+  getTableList(): Observable<any> {
+    return this.authHttp.get("/data/sources").map(res => res.json());
   }
+
+  // getDataSources(): Observable<any> {
+  //   const url = this._baseUrl + '/data/sources';
+  //
+  //   return this._http.get(url, { headers: this._headers, body: '' })
+  //     .map(res => res.json());
+  // }
+
+  getTable(name: string, source: string): Observable<any> {
+    let query: URLSearchParams = new URLSearchParams();
+    query.append('name', name);
+    query.append('source', source);
+
+    return this.authHttp.get("/data/table", { search: query })
+      .map(res => res.json())
+      .catch(e => {
+        if (e.status === 404) return Observable.of("Not Found");
+      });
+  }
+
+  getModel(tableId: number): Observable<any> {
+    return this.authHttp.get(`/data/table/${tableId}`).map(res => res.json());
+  }
+
+  getModelMapping(tableId: number): Observable<any> {
+    return this.getModel(tableId)
+      .map(rawModel => {
+        return {
+          id: rawModel.id,
+          mapping: this.mapDataSource(rawModel, rawModel.name)
+        };
+      });
+  }
+
+  postModel(model: any): Observable<any> {
+    return this.authHttp.post("/data/table", model)
+      .map(res => res.json())
+      .map(rawModel => {
+        return {
+          id: rawModel.id,
+          mapping: this.mapDataSource(rawModel, rawModel.name)
+        };
+      });
+  }
+
+  /* Data record methods */
 
   getAllValuesOf(name: string, source: string, startTime?: string): Observable<any> {
     return this.getTable(name, source)
@@ -78,74 +122,26 @@ export class HatApiService {
       });
   }
 
-  getTable(name: string, source: string): Observable<any> {
-    const url = this._baseUrl + '/data/table';
-    let query: URLSearchParams = new URLSearchParams();
-    query.append('name', name);
-    query.append('source', source);
-
-    return this._http.get(url, { headers: this._headers, search: query, body: '' })
-      .map(res => res.json())
-      .catch(e => {
-        if (e.status === 404) return Observable.of("Not Found");
-      });
-  }
-
-  getModel(tableId: number): Observable<any> {
-    const url = this._baseUrl + '/data/table/' + tableId;
-
-    return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json());
-  }
-
-  getModelMapping(tableId: number): Observable<any> {
-    return this.getModel(tableId)
-      .map(rawModel => {
-        return {
-          id: rawModel.id,
-          mapping: this.mapDataSource(rawModel, rawModel.name)
-        };
-      });
-  }
-
-  postModel(model: any): Observable<any> {
-    const url = this._baseUrl + '/data/table';
-
-    return this._http.post(url, model, { headers: this._headers })
-      .map(res => res.json())
-      .map(rawModel => {
-        return {
-          id: rawModel.id,
-          mapping: this.mapDataSource(rawModel, rawModel.name)
-        };
-      });
-  }
-
   postRecord(obj: any, hatIdMapping: any, prefix: string = 'default'): Observable<any> {
-    const url = this._baseUrl + '/data/record/values';
     const hatFormattedObj = this.createRecord(obj, hatIdMapping, prefix);
 
-    return this._http.post(url, hatFormattedObj, { headers: this._headers })
+    return this.authHttp.post("/data/record/values", hatFormattedObj)
         .map(res => res.json());
   }
 
   deleteRecord(id: number) {
-    const url = this._baseUrl + '/data/record/' + id;
-
-    return this._http.delete(url, { headers: this._headers })
+    return this.authHttp.delete(`/data/record/${id}`)
       .map(res => res.json());
   }
 
   getValues(tableId: number, startTime: string = '0', pretty: boolean = false): Observable<any> {
-    const url = this._baseUrl + '/data/table/' + tableId + '/values';
-
     let query: URLSearchParams = new URLSearchParams();
     query.append('starttime', startTime);
     if (pretty) {
       query.append('pretty', pretty.toString());
     }
 
-    let requestObservable = this._http.get(url, { headers: this._headers , search: query, body: '' })
+    let requestObservable = this.authHttp.get(`/data/table/${tableId}/values`, { search: query })
       .map(res => res.json());
 
     if (pretty) {
@@ -156,8 +152,6 @@ export class HatApiService {
   }
 
   getValuesWithLimit(tableId: number, limit: number = 50, endtime: string = null, starttime: string = null): Observable<any> {
-    const url = this._baseUrl + '/data/table/' + tableId + '/values';
-
     let query: URLSearchParams = new URLSearchParams();
     query.append('pretty', 'true');
     query.append('limit', limit.toString());
@@ -167,34 +161,50 @@ export class HatApiService {
       query.append('endtime', endtime);
     }
 
-    return this._http.get(url, { headers: this._headers , search: query, body: '' })
-        .map(res => res.json());
+    return this.authHttp.get(`/data/table/${tableId}/values`, { search: query })
+      .map(res => res.json());
   }
 
+  /* Data debit methods */
+
   getSlimDataDebit(uuid: string): Observable<DataDebit> {
-    const url = this._baseUrl + '/dataDebit/' + uuid;
-    return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json())
+    return this.authHttp.get(`/dataDebit/${uuid}`).map(res => res.json())
   }
 
   getDataDebit(uuid: string) {
-    const url = this._baseUrl + '/dataDebit/' + uuid + '/values?limit=0&starttime=0';
-    return this._http.get(url, { headers: this._headers, body: '' })
+    let query: URLSearchParams = new URLSearchParams();
+    query.append('limit', '0');
+    query.append('starttime', '0');
+
+    return this.authHttp.get(`/dataDebit/${uuid}/values`, { search: query })
       .map(res => res.json())
       .map(debit => this.transformDataDebit(debit));
   }
 
   getAllDataDebits() {
-    const url = this._baseUrl + '/dataDebit';
-    return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json());
+    return this.authHttp.get("/dataDebit").map(res => res.json());
   }
 
-  updateDataDebit(uuid: string, state: string): Observable<any> {
-    const url = this._baseUrl + '/dataDebit/' + uuid + '/' + state;
-
-    return this._http.put(url, {}, { headers: this._headers });
+  updateDataDebit(uuid: string, action: string): Observable<any> {
+    return this.authHttp.put(`/dataDebit/${uuid}/${action}`, {});
   }
+
+  /* HAT Public API methods */
+
+  getPublicData(endpoint: string): Observable<any> {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    return this.http.get(`/api/${endpoint}`, { headers: headers, body: '' })
+      .map(res => res.json())
+      .catch(err => {
+        console.warn(`Could not access public data of the current HAT.
+                      Reason: ${err}`);
+        return Observable.of(endpoint === "profile" ? { "public": false } : []);
+      });
+  }
+
+  /* Private helper methods */
 
   static stringify(value: any): string {
     if (typeof value === 'string') {
@@ -326,27 +336,4 @@ export class HatApiService {
     return values;
   }
 
-  login(username: string, password: string) {
-    let headers = new Headers();
-    headers.append("username", username);
-    headers.append("password", password);
-
-    return this._http.get(`//${window.location.hostname}:9000/users/access_token`, { headers: headers, body: '' })
-      .map(res => res.json().accessToken);
-  }
-
-  /* HAT Public API methods */
-
-  getPublicData(endpoint: string): Observable<any> {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-
-    return this._http.get(`//${window.location.hostname}:9000/api/${endpoint}`, { headers: headers, body: '' })
-      .map(res => res.json())
-      .catch(err => {
-        console.warn(`Could not access public data of the current HAT.
-                      Reason: ${err}`);
-        return Observable.of(endpoint === "profile" ? { "public": false } : []);
-      });
-  }
 }

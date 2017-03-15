@@ -7,7 +7,6 @@
  */
 
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
-import { HatApiService } from '../../services';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Notable, Location } from '../../shared/interfaces';
@@ -31,8 +30,7 @@ export class NotablesMdEditorComponent implements OnInit {
   public currentNotable: Notable;
   private cannotPostMessage: string;
 
-  constructor(private hatSvc: HatApiService,
-              private locationSvc: LocationsService,
+  constructor(private locationSvc: LocationsService,
               private notablesSvc: NotablesService,
               private dialogSvc: DialogService) { }
 
@@ -43,7 +41,7 @@ export class NotablesMdEditorComponent implements OnInit {
     });
 
     this.currentNotableMeta ={
-      phata: this.hatSvc.hatDomain,
+      phata: this.notablesSvc.hatDomain,
       expires: 0,
       reportLocation: false
     };
@@ -54,7 +52,7 @@ export class NotablesMdEditorComponent implements OnInit {
       this.currentNotable = notable;
       if (this.currentNotable.id) {
         this.currentNotableMeta = {
-          phata: this.hatSvc.hatDomain,
+          phata: this.notablesSvc.hatDomain,
           expires: null,
           reportLocation: false,
           initialState: {

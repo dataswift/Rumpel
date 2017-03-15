@@ -150,7 +150,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.marketSquareLink = 'https://marketsquare.hubofallthings.com';
     this.sub = this.userSvc.user$.subscribe((user: User) => {
-      this.hatDomain = user.iss;
+      this.hatDomain = user.hatId + "." + user.domain;
       if (this.hatDomain && user.authenticated) {
         this.marketSquareLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
       } else {
@@ -187,7 +187,7 @@ export class HeaderComponent implements OnInit {
   }
 
   signIn() {
-    this.router.navigate(['/users/login'])
+    this.router.navigate(['/user/login'])
   }
 
   navigateTo(link: string) {

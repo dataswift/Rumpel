@@ -26,7 +26,7 @@ import { DataDebitsModule } from './data-debits/data-debits.module';
 import { WeatherModule } from './weather/weather.module';
 import { PublicPagesModule } from './public-pages/public-pages.module';
 
-import { HttpModule } from '@angular/http';
+import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,7 +34,8 @@ import { AuthGuard } from './auth.guard';
 
 import { DataTypeFilterPipe } from './pipes';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
-import { UserService, HatApiService, UiStateService, RumpelService, DataPlugService } from './services/index';
+import { HatApiService, UiStateService, RumpelService, DataPlugService } from './services/index';
+import { AuthHttp } from './services/auth-http.service';
 
 /* MODAL COMPONENTS */
 
@@ -43,8 +44,15 @@ import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
 import { InfoBoxComponent } from "./layout/info-box/info-box.component";
 
 import { CookieService } from 'angular2-cookie/core';
-import { cookieServiceFactory } from './aot-workaround';
 import { UserModule } from "./user/user.module";
+
+export function authHttpFactory(backend: XHRBackend, defaultOptions: RequestOptions, cookie: CookieService) {
+  return new AuthHttp(backend, defaultOptions, cookie);
+}
+
+export function cookieServiceFactory() {
+  return new CookieService();
+}
 
 @NgModule({
   declarations: [
@@ -80,8 +88,12 @@ import { UserModule } from "./user/user.module";
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: AppConfig },
     { provide: CookieService, useFactory: cookieServiceFactory },
+    {
+      provide: AuthHttp,
+      useFactory: authHttpFactory,
+      deps: [ XHRBackend, RequestOptions, CookieService ]
+    },
     AuthGuard,
-    UserService,
     HatApiService,
     UiStateService,
     RumpelService,

@@ -16,8 +16,8 @@ import {DialogBoxComponent} from "../layout/dialog-box/dialog-box.component";
 import {UiStateService} from "./ui-state.service";
 import {DataTable} from "../shared/interfaces/data-table.interface";
 import {InfoBoxComponent} from "../layout/info-box/info-box.component";
-import {UserService} from "./user.service";
-import {User} from "../shared/interfaces/user.interface";
+import {UserService} from "../user/user.service";
+import {User} from "../user/user.interface";
 
 @Injectable()
 export class DataPlugService {

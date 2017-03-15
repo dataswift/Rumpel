@@ -7,15 +7,16 @@
  */
 
 import { NgModule } from '@angular/core';
-
-import { LoginComponent } from "./login/login.component";
-import { SharedModule } from "../shared/shared.module";
 import { FormsModule } from "@angular/forms";
+
+import { SharedModule } from "../shared/shared.module";
+import { LoginComponent } from "./login/login.component";
+import { UserService } from "./user.service";
 
 @NgModule({
   imports: [ SharedModule, FormsModule ],
   declarations: [ LoginComponent ],
-  providers: [  ],
+  providers: [ UserService ],
   exports: [  ]
 })
 export class UserModule {}

@@ -7,11 +7,10 @@
  */
 
 import { Component, OnInit, Inject } from '@angular/core';
-import {ActivatedRoute, Router, NavigationExtras} from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
-import {CookieService} from "angular2-cookie/core";
-import {DialogService} from "../../layout/dialog.service";
-import {HatApiService} from "../../services/hat-api.service";
+import { CookieService } from "angular2-cookie/core";
+import { UserService } from "../user.service";
 
 @Component({
   selector: 'rump-login',
@@ -27,8 +26,7 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private cookieSvc: CookieService,
-              private hatSvc: HatApiService,
-              private dialogSvc: DialogService) {
+              private userSvc: UserService) {
   }
 
   ngOnInit() {
@@ -58,13 +56,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form) {
-    this.hatSvc.login(this.username, form.value.password).subscribe(
-      accessToken => {
-        let navigationExtras: NavigationExtras = {
-          queryParams: { "token": accessToken }
-        };
-
-        this.router.navigate(["dashboard"], navigationExtras);
+    this.userSvc.login(this.username, form.value.password).subscribe(
+      (isAuthenticated: boolean) => {
+        this.router.navigate(["dashboard"]);
       },
       err => {
         console.log("Login failed! Reason: ", err);

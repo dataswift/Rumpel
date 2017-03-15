@@ -63,7 +63,6 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
       }
     });
 
-    this._userSvc.ensureUserAuthenticated();
   }
 
   ngOnDestroy() {

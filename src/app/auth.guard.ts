@@ -8,39 +8,27 @@
 
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { ReplaySubject, Observable } from 'rxjs/Rx';
-import { UserService } from './services/user.service';
-import { User } from './shared/interfaces/index';
+import { UserService } from './user/user.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
   constructor(private router: Router,
-              private user: UserService) {
-  }
+              private userSvc: UserService) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-
-    var subject = new ReplaySubject<boolean>();
-
-    this.user.auth$.subscribe((isAuthenticated: boolean) => {
-      if (isAuthenticated === false) {
-        let navigationExtras: NavigationExtras = {
-          queryParams: { 'redirect': route.routeConfig.path }
-        };
-
-        this.router.navigate(['/users/login'], navigationExtras);
-      }
-
-      subject.next(isAuthenticated);
-    });
-
-    if (route.queryParams['token']) {
-      this.user.login(route.queryParams['token']);
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (route.queryParams["token"]) {
+      return this.userSvc.loginWithToken(route.queryParams["token"]);
+    } else if (this.userSvc.isLoggedIn()) {
+      return true;
     } else {
-      this.user.ensureUserAuthenticated();
+      const navExtras: NavigationExtras = {
+        queryParams: { redirect: route.routeConfig.path }
+      };
+
+      this.router.navigate(["user", "login"], navExtras);
+      return false;
     }
 
-    return subject.asObservable().take(1);
   }
 }

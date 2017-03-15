@@ -27,7 +27,7 @@
                (onSwitch)="togglePrivacy()"></rump-switch>
 
   <rump-share-belt *ngIf="currentNotable.isShared" class="sharing-belt"
-                   [hatDomain]="hatSvc.hatDomain"
+                   [hatDomain]="notablesSvc.hatDomain"
                    [currentNotable]="currentNotable"
                    [parentError]="cannotPostMessage"
                    (serviceToggled)="updateShareOptions($event)"></rump-share-belt>

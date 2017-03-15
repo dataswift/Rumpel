@@ -10,8 +10,8 @@ import { Component, OnInit } from '@angular/core';
 import { Notable, Profile } from '../../shared/interfaces';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { NotablesService } from '../notables.service';
-import {UserService} from "../../services/user.service";
-import {User} from "../../shared/interfaces/user.interface";
+import {UserService} from "../../user/user.service";
+import {User} from "../../user/user.interface";
 
 @Component({
   selector: 'rump-tile-notables',

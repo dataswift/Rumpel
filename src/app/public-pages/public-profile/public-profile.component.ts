@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {HatApiService} from "../../services/hat-api.service";
 import {Notable} from "../../shared/interfaces/notable.class";
-import {UserService} from "../../services/user.service";
-import {User} from "../../shared/interfaces/user.interface";
+import {UserService} from "../../user/user.service";
+import {User} from "../../user/user.interface";
 import {Router} from "@angular/router";
 
 @Component({

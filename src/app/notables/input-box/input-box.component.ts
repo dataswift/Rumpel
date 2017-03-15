@@ -9,7 +9,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Notable, Location } from '../../shared/interfaces';
-import { HatApiService } from '../../services';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Router } from "@angular/router";
@@ -35,7 +34,6 @@ export class InputBoxComponent implements OnInit {
 
   constructor(private notableSvc: NotablesService,
               private locationsSvc: LocationsService,
-              private hatSvc: HatApiService,
               private router: Router) {}
 
   ngOnInit() {
@@ -90,7 +88,7 @@ export class InputBoxComponent implements OnInit {
   onSubmit(form: NgForm) {
     if (!form.value.message) { return; }
 
-    let author = { phata: this.hatSvc.hatDomain };
+    let author = { phata: this.notableSvc.hatDomain };
 
     if (this.profile.photo.shared) {
       author['photo_url'] = this.profile.photo.url;
