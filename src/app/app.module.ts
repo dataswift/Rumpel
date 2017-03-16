@@ -31,6 +31,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
+import { NativeGuard } from "./native-guard.service";
 
 import { DataTypeFilterPipe } from './pipes';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
@@ -94,6 +95,7 @@ export function cookieServiceFactory() {
       deps: [ XHRBackend, RequestOptions, CookieService ]
     },
     AuthGuard,
+    NativeGuard,
     HatApiService,
     UiStateService,
     RumpelService,

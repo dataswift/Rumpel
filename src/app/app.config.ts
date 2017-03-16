@@ -13,6 +13,7 @@ export let APP_CONFIG = new OpaqueToken("app.config");
 export class IAppConfig {
   version: string;
   name: string;
+  native: boolean;
   market: { url: string; id: string; accessToken: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
@@ -31,6 +32,7 @@ export class IAppConfig {
 export const AppConfig: IAppConfig = {
   version: '2.0.0-beta.1',
   name: "Rumpel",
+  native: false,
   market: {
     url: 'https://marketsquare.hubofallthings.com/api',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',

@@ -6,14 +6,16 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UserService } from './user/user.service';
+import { APP_CONFIG, IAppConfig } from "./app.config";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private router: Router,
               private userSvc: UserService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -31,7 +33,9 @@ export class AuthGuard implements CanActivate {
         navExtras.queryParams["redirect"] = route.queryParams["redirect"];
       }
 
-      this.router.navigate(["user", "login"], navExtras);
+      const redirectPath = this.config.native ? ["user", "login"] : ["user", "login", "start"];
+
+      this.router.navigate(redirectPath, navExtras);
       return false;
     }
 
