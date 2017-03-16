@@ -14,12 +14,16 @@ import { LoginComponent } from "./login/login.component";
 import { UserService } from "./user.service";
 import { PasswordRecoverComponent } from './password-recover/password-recover.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
+import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';
+import { LoginHatComponent } from './login-hat/login-hat.component';
 
 @NgModule({
   imports: [ SharedModule, FormsModule ],
   declarations: [ LoginComponent,
                   PasswordRecoverComponent,
-                  PasswordChangeComponent ],
+                  PasswordChangeComponent,
+                  LoginStandaloneComponent,
+                  LoginHatComponent ],
   providers: [ UserService ],
   exports: [  ]
 })

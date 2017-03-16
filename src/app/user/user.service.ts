@@ -35,6 +35,10 @@ export class UserService {
       });
   }
 
+  hatLogin(name: string, redirect: string): Observable<any> {
+    return this.hatSvc.hatLogin(name, redirect);
+  }
+
   logout(): void {
     this._user$.next({
       hatId: null,

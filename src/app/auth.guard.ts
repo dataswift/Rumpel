@@ -22,9 +22,14 @@ export class AuthGuard implements CanActivate {
     } else if (this.userSvc.isLoggedIn()) {
       return true;
     } else {
-      const navExtras: NavigationExtras = {
-        queryParams: { redirect: route.routeConfig.path }
+      let navExtras: NavigationExtras = {
+        queryParams: { target: route.routeConfig.path }
       };
+
+      if (route.queryParams["name"] && route.queryParams["redirect"]) {
+        navExtras.queryParams["name"] = route.queryParams["name"];
+        navExtras.queryParams["redirect"] = route.queryParams["redirect"];
+      }
 
       this.router.navigate(["user", "login"], navExtras);
       return false;

@@ -44,6 +44,15 @@ export class HatApiService {
     return this.authHttp.setToken(token);
   }
 
+  hatLogin(name: string, redirect: string): Observable<any> {
+    let queryParams = new URLSearchParams();
+    queryParams.append("name", name);
+    queryParams.append("redirect", redirect);
+
+    return this.authHttp.get("/control/v2/auth/hatlogin", { search: queryParams })
+      .map((res: Response) => res.json()["message"]);
+  }
+
   recoverPassword(body: any): Observable<any> {
     let headers = new Headers({ "Content-Type": "application/json" });
 

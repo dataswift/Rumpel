@@ -20,7 +20,8 @@ import { UserService } from "../user.service";
 export class LoginComponent implements OnInit {
   public hatDomain: string;
   private error: string;
-  private redirectUrl: string = 'https://rumpel.hubofallthings.com/';
+  private redirectPath: string;
+  private navExtras: NavigationExtras;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private route: ActivatedRoute,
@@ -31,10 +32,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.hatDomain = this.cookieSvc.get("lastLoginPHATA");
-    if (this.route.snapshot.queryParams['redirect']) {
-      this.redirectUrl += this.route.snapshot.queryParams['redirect'];
+    let qps = this.route.snapshot.queryParams;
+
+    if (qps["name"] && qps["redirect"]) {
+      this.navExtras = { queryParams: {
+        name: qps["name"],
+        redirect: qps["redirect"]
+      }};
     } else {
-      this.redirectUrl += 'dashboard';
+      this.navExtras = {};
+    }
+
+    if (qps['target']) {
+      this.redirectPath = qps['target'];
+    } else {
+      this.redirectPath = 'dashboard';
     }
   }
 
@@ -58,7 +70,7 @@ export class LoginComponent implements OnInit {
   onSubmit(form) {
     this.userSvc.login(this.username, form.value.password).subscribe(
       (isAuthenticated: boolean) => {
-        this.router.navigate(["dashboard"]);
+        this.router.navigate([this.redirectPath], this.navExtras);
       },
       err => {
         console.log("Login failed! Reason: ", err);
