@@ -117,7 +117,7 @@ export class AuthHttp extends Http {
     const user: User = this.validUserObject;
 
     if (this.validateToken(token)) {
-      this.hatBaseUrl = "//" + user.fullDomain;
+      this.hatBaseUrl = "https://" + user.fullDomain;
       this.cookie.put("lastLoginDomain", user.fullDomain);
       this.cookie.put("token", token);
       this._auth$.next(true);
@@ -152,7 +152,7 @@ export class AuthHttp extends Http {
 
       if (this.validateToken(token)) {
         this.tokenName = token;
-        this.hatBaseUrl = "//" + this.jwtHelper.decodeToken(token)["iss"];
+        this.hatBaseUrl = "https://" + this.jwtHelper.decodeToken(token)["iss"];
         this._auth$.next(true);
         return this.validUserObject;
       } else {
