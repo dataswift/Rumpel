@@ -69,18 +69,18 @@ export class NotablesViewComponent implements OnInit {
         window.scrollTo(0, 100);
         break;
 
-      case "delete":
+      case "remove":
         if (event.notable.isShared) {
           this.dialogSvc.createDialog(ConfirmBoxComponent, {
             message: `Deleting a note that has already been shared will not delete it at the destination.
           To remove a note from the external site, first make it private. You may then choose to delete it.`,
             accept: () => {
-              event.target.parentNode.parentNode.className += " removed-item";
+              //event.target.parentNode.parentNode.className += " removed-item";
               setTimeout(() => this.notablesSvc.deleteNotable(event.notable.id), 900);
             }
           });
         } else {
-          event.target.parentNode.parentNode.className += " removed-item";
+          //event.target.parentNode.parentNode.className += " removed-item";
           setTimeout(() => this.notablesSvc.deleteNotable(event.notable.id), 900);
         }
         break;

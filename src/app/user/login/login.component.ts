@@ -48,6 +48,11 @@ export class LoginComponent implements OnInit {
     } else {
       this.redirectPath = 'dashboard';
     }
+
+    // Redirect user to the dashboard if she is already authenticated
+    if (this.userSvc.isLoggedIn()) {
+      this.router.navigate(["dashboard"]);
+    }
   }
 
   clearError() {
