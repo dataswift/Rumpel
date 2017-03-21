@@ -10,8 +10,7 @@ import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'rump-dialog-box',
-  templateUrl: './dialog-box.component.html',
-  styleUrls: ['./dialog-box.component.scss']
+  templateUrl: './dialog-box.component.html'
 })
 export class DialogBoxComponent implements OnInit {
   @Input() title: string = "Are you sure?";

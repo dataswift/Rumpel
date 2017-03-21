@@ -96,14 +96,6 @@ export class MyDayComponent implements OnInit {
       this.notables = notables;
     });
 
-    this.socialSvc.getRecentData();
-    this.locationsSvc.getRecentData();
-    this.photosSvc.getRecentPhotos();
-    this.eventsSvc.getRecentData();
-    this.facebookEventsSvc.getRecentData();
-    this.googleEventsSvc.getRecentData();
-    this.notablesSvc.getRecentData();
-
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('73em');
   }
 

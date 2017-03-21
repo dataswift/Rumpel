@@ -7,21 +7,19 @@
  */
 
 import {Component, OnInit, Output, EventEmitter, Inject} from '@angular/core';
-import { UiStateService, UserService, HatApiService } from '../../services';
+import { UiStateService, UserService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
-import { MarketSquareService } from '../../market-square/market-square.service';
-import {Subscription} from "rxjs";
-import {DataTable} from "../../shared/interfaces/data-table.interface";
-import {NotificationsService} from "../notifications.service";
-import {Router, NavigationEnd} from "@angular/router";
+import { Subscription } from "rxjs";
+import { DataTable } from "../../shared/interfaces/data-table.interface";
+import { NotificationsService } from "../notifications.service";
+import { Router, NavigationEnd } from "@angular/router";
 import { APP_CONFIG, IAppConfig} from "../../app.config";
-import {User} from "../../user/user.interface";
+import { User } from "../../user/user.interface";
 
 @Component({
   selector: 'rump-side-menu',
-  templateUrl: 'side-menu.component.html',
-  styleUrls: ['side-menu.component.scss']
+  templateUrl: 'side-menu.component.html'
 })
 export class SideMenuComponent implements OnInit {
   @Output() clickNotifications = new EventEmitter<string>();

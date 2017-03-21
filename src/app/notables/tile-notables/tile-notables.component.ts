@@ -62,8 +62,6 @@ export class TileNotablesComponent implements OnInit {
       }
     });
 
-    this.profilesSvc.getRecentData();
-    this.notablesSvc.getRecentData();
   }
 
 }

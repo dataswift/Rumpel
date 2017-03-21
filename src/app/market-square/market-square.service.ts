@@ -38,7 +38,7 @@ export class MarketSquareService {
     this._headers.append('Content-Type', 'application/json');
 
     userSvc.user$.subscribe((user: User) => {
-      this.hatDomain = user.hatId + "." + user.domain;
+      this.hatDomain = user.fullDomain;
 
       //this.connectHAT(this.hatDomain);
     });

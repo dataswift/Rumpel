@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Subject, Observable } from "rxjs";
+import { Subject, Observable, ReplaySubject } from "rxjs";
 import { HatApiService } from "./hat-api.service";
 import { UiStateService } from "./ui-state.service";
 import * as _ from 'lodash';
@@ -14,7 +14,7 @@ import { DataTable } from "../shared/interfaces/data-table.interface";
 import * as moment from "moment";
 
 export abstract class BaseDataService<T> {
-  private _data$: Subject<Array<T>> = <Subject<Array<T>>>new Subject();
+  private _data$: ReplaySubject<Array<T>> = <ReplaySubject<Array<T>>>new ReplaySubject(1);
   public hat: HatApiService;
   public uiSvc: UiStateService;
   public store: {
@@ -47,6 +47,7 @@ export abstract class BaseDataService<T> {
       const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);
       if (foundTable) {
         this.store.tableId = foundTable.id;
+        this.getRecentData();
       }
     });
   }
@@ -67,7 +68,6 @@ export abstract class BaseDataService<T> {
         })
         .subscribe((data: Array<T>) => {
           this.store.data = data;
-
           this.pushToStream();
         });
     } else if (failedAttempts <= 10) {

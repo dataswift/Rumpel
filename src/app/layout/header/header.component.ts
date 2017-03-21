@@ -12,14 +12,13 @@ import { DialogService } from "../dialog.service";
 import { InfoBoxComponent } from "../info-box/info-box.component";
 import { UserService } from '../../services/index';
 import { User } from '../../shared/interfaces/index';
-import {Subscription} from "rxjs";
+import { Subscription } from "rxjs";
 
 declare var introJs: any;
 
 @Component({
   selector: 'rump-header',
-  templateUrl: 'header.component.html',
-  styleUrls: ['header.component.scss']
+  templateUrl: 'header.component.html'
 })
 export class HeaderComponent implements OnInit {
   private hatDomain: string;
@@ -151,7 +150,7 @@ export class HeaderComponent implements OnInit {
     this.marketSquareLink = 'https://marketsquare.hubofallthings.com';
     this.sub = this.userSvc.user$.subscribe((user: User) => {
       if (user.authenticated) {
-        this.hatDomain = user.hatId + "." + user.domain;
+        this.hatDomain = user.fullDomain;
         this.marketSquareLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
       } else {
         this.hatDomain = null;

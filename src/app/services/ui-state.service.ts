@@ -18,16 +18,11 @@ export class UiStateService {
   private state$: ReplaySubject<DataTable[]>;
 
   constructor(private hat: HatApiService, private userSvc: UserService) {
-    this.state$ = <ReplaySubject<Array<DataTable>>>new ReplaySubject();
+    this.state$ = <ReplaySubject<Array<DataTable>>>new ReplaySubject(1);
 
     this.userSvc.user$
-      .flatMap((user: User) => {
-        if (user.authenticated) {
-          return this.hat.getTableList();
-        } else {
-          return Observable.throw("User is not authenticated.");
-        }
-      })
+      .filter((user: User) => user.authenticated === true)
+      .flatMap((user: User) => this.hat.getTableList())
       .subscribe(
         rawDataTables => {
           const dataTables: Array<DataTable> = rawDataTables.map(table => {

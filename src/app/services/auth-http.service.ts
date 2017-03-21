@@ -47,7 +47,7 @@ export class AuthHttp extends Http {
   get(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
       console.log("Starting request");
-      console.log(this.hatBaseUrl + path);
+      console.log("URL", this.hatBaseUrl + path);
 
       return super.get(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
@@ -62,7 +62,7 @@ export class AuthHttp extends Http {
   post(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
       console.log("Starting post request");
-      console.log(this.hatBaseUrl + path);
+      console.log("URL", this.hatBaseUrl + path);
 
       return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
@@ -77,7 +77,7 @@ export class AuthHttp extends Http {
   put(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
       console.log("Starting post request");
-      console.log(this.hatBaseUrl + path);
+      console.log("URL", this.hatBaseUrl + path);
 
       return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
@@ -92,7 +92,7 @@ export class AuthHttp extends Http {
   delete(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
       console.log("Starting post request");
-      console.log(this.hatBaseUrl + path);
+      console.log("URL", this.hatBaseUrl + path);
 
       return super.delete(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
@@ -106,22 +106,30 @@ export class AuthHttp extends Http {
 
   removeToken(): void {
     this.tokenName = null;
-    this.cookie.remove("token");
+    this.storageSvc.removeAuthToken();
     this._auth$.next(false);
   }
 
   /* Sets HAT authentication token if valid, returns result of the validation process */
   // TODO: improve token validation implementation
   setToken(token: string): User {
-    this.tokenName = token;
-    const user: User = this.validUserObject;
-
     if (this.validateToken(token)) {
-      this.hatBaseUrl = "https://" + user.fullDomain;
-      this.cookie.put("lastLoginDomain", user.fullDomain);
-      this.cookie.put("token", token);
+      this.tokenName = token;
+      const fullDomain = this.jwtHelper.decodeToken(token)["iss"];
+
+      this.hatBaseUrl = "https://" + fullDomain;
+      const hatId = fullDomain.slice(0, fullDomain.indexOf("."));
+      const domain = fullDomain.slice(fullDomain.indexOf(".") + 1);
+      this.storageSvc.setItem("lastLoginId", hatId);
+      this.storageSvc.setItem("lastLoginDomain", domain);
+      this.storageSvc.setAuthToken(token);
       this._auth$.next(true);
-      return user;
+      return {
+        hatId: hatId,
+        domain: domain,
+        fullDomain: fullDomain,
+        authenticated: true
+      };
     } else {
       this._auth$.next(false);
       return {
@@ -133,28 +141,30 @@ export class AuthHttp extends Http {
     }
   }
 
-  get validUserObject(): User {
-    const hatDomain = this.jwtHelper.decodeToken(this.tokenName)["iss"];
-
-    return {
-      hatId: hatDomain.slice(0, hatDomain.indexOf(".")),
-      domain: hatDomain.slice(hatDomain.indexOf(".") + 1),
-      fullDomain: hatDomain,
-      authenticated: true
-    }
-  }
-
   get hasValidToken(): User {
     if (this.validateToken(this.tokenName)) {
-      return this.validUserObject;
+      const fullDomain = this.jwtHelper.decodeToken(this.tokenName)["iss"];
+
+      return {
+        hatId: fullDomain.slice(0, fullDomain.indexOf(".")),
+        domain: fullDomain.slice(fullDomain.indexOf(".") + 1),
+        fullDomain: fullDomain,
+        authenticated: true
+      };
     } else {
-      const token = this.cookie.get("token");
+      const token = this.storageSvc.getAuthToken();
 
       if (this.validateToken(token)) {
         this.tokenName = token;
-        this.hatBaseUrl = "https://" + this.jwtHelper.decodeToken(token)["iss"];
+        const fullDomain = this.jwtHelper.decodeToken(token)["iss"];
+        this.hatBaseUrl = "https://" + fullDomain;
         this._auth$.next(true);
-        return this.validUserObject;
+        return {
+          hatId: fullDomain.slice(0, fullDomain.indexOf(".")),
+          domain: fullDomain.slice(fullDomain.indexOf(".") + 1),
+          fullDomain: fullDomain,
+          authenticated: true
+        };
       } else {
         return {
           hatId: null,

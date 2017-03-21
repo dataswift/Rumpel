@@ -40,7 +40,6 @@ export class TileMapComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.locationsSvc.getRecentData();
   }
 
   ngOnDestroy() {

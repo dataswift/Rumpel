@@ -86,9 +86,6 @@ export class CalendarComponent implements OnInit {
         this.updateCalendar();
       });
 
-    this.eventsSvc.getRecentData();
-    this.facebookEventsSvc.getRecentData();
-    this.googleEventsSvc.getRecentData();
   }
 
   private updateCalendar() {

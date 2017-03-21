@@ -54,8 +54,6 @@ export class NotablesViewComponent implements OnInit {
       }
     });
 
-    this.profilesSvc.getRecentData();
-    this.notablesSvc.getRecentData();
   }
 
   filterBy(category: string) {

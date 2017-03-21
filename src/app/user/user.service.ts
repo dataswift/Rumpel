@@ -7,7 +7,7 @@ import { AuthHttp } from "../services/auth-http.service";
 @Injectable()
 export class UserService {
   private _auth$: Subject<boolean> = <Subject<boolean>>new Subject();
-  private _user$: ReplaySubject<User> = <ReplaySubject<User>>new ReplaySubject();
+  private _user$: ReplaySubject<User> = <ReplaySubject<User>>new ReplaySubject(1);
 
   constructor(private hatSvc: HatApiService,
               private authHttp: AuthHttp) {

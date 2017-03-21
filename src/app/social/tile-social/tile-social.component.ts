@@ -51,9 +51,6 @@ export class TileSocialComponent implements OnInit, OnDestroy {
       this.sortPostsByDate();
     });
 
-    this.mediaSvc.getRecentData();
-    this.socialSvc.getRecentData();
-    this.twitterSvc.getRecentData();
   }
 
   ngOnDestroy(): void {

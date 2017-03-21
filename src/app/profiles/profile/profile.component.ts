@@ -75,7 +75,6 @@ export class ProfileComponent implements OnInit {
       about: { title: '', body: '', private: true }
     };
 
-    this.profilesSvc.getRecentData();
   }
 
   switchView() {

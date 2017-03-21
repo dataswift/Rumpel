@@ -42,10 +42,6 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
         this.googleEventsSvc.data$
       ).subscribe(this.handleEventAddition);
 
-    this.eventsSvc.getRecentData();
-    this.facebookEventSvc.getRecentData();
-    this.googleEventsSvc.getRecentData();
-
     this.uiStateSvc.tables$.subscribe((tables: DataTable[]) => {
       const foundTable = tables.find((table: DataTable) => table.name === "events");
       if (foundTable) {

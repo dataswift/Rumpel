@@ -50,11 +50,11 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
     };
 
     userSvc.user$.subscribe((user: User) => {
-      this.notablesServiceMeta.phata = `${user.hatId}@${user.domain}`;
+      this.notablesServiceMeta.phata = user.fullDomain;
       this._notablesMeta$.next(this.notablesServiceMeta);
     });
 
-    this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject();
+    this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject(1);
     this.editedNotable$ = this._editedNotable$.asObservable();
 
     this._notablesMeta$ = <BehaviorSubject<NotablesServiceMeta>>new BehaviorSubject(this.notablesServiceMeta);

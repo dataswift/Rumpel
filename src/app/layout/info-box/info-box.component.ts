@@ -10,8 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'rump-info-box',
-  templateUrl: './info-box.component.html',
-  styleUrls: ['./info-box.component.scss']
+  templateUrl: './info-box.component.html'
 })
 export class InfoBoxComponent implements OnInit {
   @Input() title: string;

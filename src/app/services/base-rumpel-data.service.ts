@@ -38,6 +38,7 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
       .subscribe(maps => {
         this.store.tableId = maps.id;
         this.store.idMapping = maps.mapping;
+        this.getRecentData();
       });
   }
 

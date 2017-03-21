@@ -50,8 +50,6 @@ export class LocationsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.locationsSvc.getRecentData();
-
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('75em');
   }
 

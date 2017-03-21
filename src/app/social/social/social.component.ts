@@ -61,9 +61,6 @@ export class SocialComponent implements OnInit, OnDestroy {
       this.scrollToPost();
     });
 
-    this.socialSvc.getRecentData();
-    this.mediaSvc.getRecentData();
-    this.twitterSvc.getRecentData();
   }
 
   ngOnDestroy(): void {
