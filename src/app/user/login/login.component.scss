@@ -41,9 +41,16 @@
 }
 
 .form-group {
-  margin-top: 3em;
   text-align: left;
   font-weight: 300;
+
+  &:first-child {
+    margin-top: 3em;
+  }
+
+  &:not(:first-child) {
+    margin-top: 1.5em;
+  }
 
   label {
     font-family: 'Open Sans Condensed', sans-serif;
@@ -95,4 +102,20 @@ text-decoration: underline;
 
 .btn-rump {
   width: 100%;
+}
+
+.inline-checkbox {
+  text-align: center;
+  font-size: 1.25em;
+
+  .checkbox {
+    margin: 0;
+    margin-right: 0.5em;
+    display: inline-block;
+    vertical-align: text-top;
+  }
+
+  .text {
+    text-transform: none;
+  }
 }

@@ -8,9 +8,9 @@
 import { Injectable } from "@angular/core";
 import { Http, XHRBackend, Request, RequestOptions, RequestOptionsArgs, Response, Headers } from "@angular/http";
 import { ReplaySubject, Observable } from "rxjs/Rx";
-import { CookieService } from "angular2-cookie/core";
 import { JwtHelper } from "angular2-jwt";
 import { User } from "../user/user.interface";
+import { BrowserStorageService } from "./browser-storage.service";
 
 const COOKIE_EXPIRATION_CHECK_OFFSET = 600; // in seconds
 
@@ -22,18 +22,14 @@ export class AuthHttp extends Http {
   private _auth$: ReplaySubject<boolean> = <ReplaySubject<boolean>>new ReplaySubject();
 
   constructor(backend: XHRBackend, defaultOptions: RequestOptions,
-              private cookie: CookieService) {
+              private storageSvc: BrowserStorageService) {
     super(backend, defaultOptions);
 
     this.hatBaseUrl = `//${window.location.hostname}`; // ADD port 9000 for local testing
-
-    this.cookie.remove("lastLoginPHATA"); // Some old cookie cleanup TODO: remove in the future
   }
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting request");
-
       return super.request(url, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log("Got an error 1", err);
@@ -46,8 +42,7 @@ export class AuthHttp extends Http {
 
   get(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting request");
-      console.log("URL", this.hatBaseUrl + path);
+      console.log("Starting request with URL", this.hatBaseUrl + path);
 
       return super.get(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
@@ -61,8 +56,7 @@ export class AuthHttp extends Http {
 
   post(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting post request");
-      console.log("URL", this.hatBaseUrl + path);
+      console.log("Starting request with URL", this.hatBaseUrl + path);
 
       return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
@@ -76,8 +70,7 @@ export class AuthHttp extends Http {
 
   put(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting post request");
-      console.log("URL", this.hatBaseUrl + path);
+      console.log("Starting request with URL", this.hatBaseUrl + path);
 
       return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
@@ -91,8 +84,7 @@ export class AuthHttp extends Http {
 
   delete(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting post request");
-      console.log("URL", this.hatBaseUrl + path);
+      console.log("Starting request with URL", this.hatBaseUrl + path);
 
       return super.delete(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {

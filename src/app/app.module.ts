@@ -46,9 +46,10 @@ import { InfoBoxComponent } from "./layout/info-box/info-box.component";
 
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from "./user/user.module";
+import { BrowserStorageService } from "./services/browser-storage.service";
 
-export function authHttpFactory(backend: XHRBackend, defaultOptions: RequestOptions, cookie: CookieService) {
-  return new AuthHttp(backend, defaultOptions, cookie);
+export function authHttpFactory(backend: XHRBackend, defaultOptions: RequestOptions, storageSvc: BrowserStorageService) {
+  return new AuthHttp(backend, defaultOptions, storageSvc);
 }
 
 export function cookieServiceFactory() {
@@ -92,14 +93,15 @@ export function cookieServiceFactory() {
     {
       provide: AuthHttp,
       useFactory: authHttpFactory,
-      deps: [ XHRBackend, RequestOptions, CookieService ]
+      deps: [ XHRBackend, RequestOptions, BrowserStorageService ]
     },
     AuthGuard,
     NativeGuard,
     HatApiService,
     UiStateService,
     RumpelService,
-    DataPlugService
+    DataPlugService,
+    BrowserStorageService
   ]
 })
 export class AppRootModule {}

@@ -1,7 +1,7 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {APP_CONFIG, IAppConfig} from "../../app.config";
-import {ActivatedRoute} from "@angular/router";
-import {CookieService} from "angular2-cookie/core";
+import { Component, OnInit, Inject } from '@angular/core';
+import { APP_CONFIG, IAppConfig } from "../../app.config";
+import { ActivatedRoute } from "@angular/router";
+import { BrowserStorageService } from "../../services/browser-storage.service";
 
 @Component({
   selector: 'rump-login-standalone',
@@ -9,18 +9,20 @@ import {CookieService} from "angular2-cookie/core";
   styleUrls: ['./login-standalone.component.scss']
 })
 export class LoginStandaloneComponent implements OnInit {
-  private lastLoginDomain: string;
+  private lastLoginId: string;
   private redirectPath: string;
   private dropdownExpanded: boolean = false;
   private availableDomains: Array<string> = [".hubofallthings.net", ".bheard.org"];
-  private selectedDomain: string = this.availableDomains[0];
+  private selectedDomain: string;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private route: ActivatedRoute,
-              private cookieSvc: CookieService) { }
+              private storageSvc: BrowserStorageService) { }
 
   ngOnInit() {
-    this.lastLoginDomain = this.cookieSvc.get("lastLoginDomain");
+    this.lastLoginId = this.storageSvc.getItem("lastLoginId");
+    const lastLoginDomain = this.storageSvc.getItem("lastLoginDomain");
+    this.selectedDomain = lastLoginDomain ? "." + lastLoginDomain : this.availableDomains[0];
     this.redirectPath = this.route.snapshot.queryParams["redirect"] || "home";
   }
 

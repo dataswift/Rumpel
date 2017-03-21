@@ -9,8 +9,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
-import { CookieService } from "angular2-cookie/core";
 import { UserService } from "../user.service";
+import { BrowserStorageService } from "../../services/browser-storage.service";
 
 @Component({
   selector: 'rump-login',
@@ -26,12 +26,11 @@ export class LoginComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private route: ActivatedRoute,
               private router: Router,
-              private cookieSvc: CookieService,
+              private storageSvc: BrowserStorageService,
               private userSvc: UserService) {
   }
 
   ngOnInit() {
-    this.hatDomain = this.cookieSvc.get("lastLoginPHATA");
     let qps = this.route.snapshot.queryParams;
 
     if (qps["name"] && qps["redirect"]) {
@@ -73,6 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form) {
+    this.storageSvc.rememberMe = form.value.rememberMe;
     this.userSvc.login(this.username, form.value.password).subscribe(
       (isAuthenticated: boolean) => {
         this.router.navigate([this.redirectPath], this.navExtras);
