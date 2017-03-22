@@ -79,7 +79,7 @@ export const AppConfig: IAppConfig = {
       { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
       { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts,tweets,music_listens', disable: 'no data' },
       { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
-      { display: 'Data Plugs', icon: 'puzzle', link: 'dashboard', dataType: '', disable: '' }
+      { display: 'Data Plugs', icon: 'puzzle', link: 'dataplugs', dataType: '', disable: '' }
     ],
     "comingSoon": [
       { display: 'Weather', icon: 'thermometer', dataType: '', link: '' },

@@ -47,11 +47,9 @@ export class SideMenuComponent implements OnInit {
     this.userAuthenticated = false;
     this.menu = this.config.menuItems.public;
 
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.selectedItem = event.url.slice(1);
-      }
-    });
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .subscribe(event => this.selectedItem = event.url.slice(1));
 
     this._notificationsSvc.stats$.subscribe(stats => {
       this.unreadNotifications = stats.unread;
