@@ -163,6 +163,12 @@ button.btn-view-header {
     outline: none;
   }
 
+  &.sm {
+    font-size: 1em;
+    margin: 0.75em 0;
+    padding: 0.5em 2em;
+  }
+
   &.md {
     font-size: 1.5em;
     margin: 1em 0;
@@ -186,6 +192,12 @@ button.btn-view-header {
   background-color: transparent;
   border: 2px solid $material-bg-700;
   color: $material-bg-700;
+
+  &.sm {
+    font-size: 1em;
+    margin: 0.75em 0;
+    padding: 0.5em 2em;
+  }
 
   &.md {
     font-size: 1.5em;

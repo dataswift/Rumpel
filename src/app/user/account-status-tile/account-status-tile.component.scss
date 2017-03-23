@@ -1,0 +1,15 @@
+.tile-body {
+  font-size: 1.25em;
+}
+
+.storage-info {
+  > div {
+    display: inline-block;
+  }
+
+  .used-share {
+    font-size: 3em;
+    margin-right: 0.25em;
+    vertical-align: bottom;
+  }
+}

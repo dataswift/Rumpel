@@ -232,6 +232,13 @@ export class HatApiService {
       });
   }
 
+  /* System status methods */
+
+  getAccountStatus(): Observable<any> {
+    return this.authHttp.get("/api/v2/system/status")
+      .map((res: Response) => res.json());
+  }
+
   /* Private helper methods */
 
   static stringify(value: any): string {

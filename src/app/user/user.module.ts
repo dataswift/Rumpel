@@ -16,15 +16,22 @@ import { PasswordRecoverComponent } from './password-recover/password-recover.co
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';
 import { LoginHatComponent } from './login-hat/login-hat.component';
+import { AccountStatusTileComponent } from './account-status-tile/account-status-tile.component';
 
 @NgModule({
-  imports: [ SharedModule, FormsModule ],
-  declarations: [ LoginComponent,
-                  PasswordRecoverComponent,
-                  PasswordChangeComponent,
-                  LoginStandaloneComponent,
-                  LoginHatComponent ],
+  imports: [
+    SharedModule,
+    FormsModule
+  ],
+  declarations: [
+    LoginComponent,
+    PasswordRecoverComponent,
+    PasswordChangeComponent,
+    LoginStandaloneComponent,
+    LoginHatComponent,
+    AccountStatusTileComponent
+  ],
   providers: [ UserService ],
-  exports: [  ]
+  exports: [ AccountStatusTileComponent ]
 })
 export class UserModule {}

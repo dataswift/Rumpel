@@ -6,7 +6,7 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
   -->
 
-<div class="tile-header" [style.background-color]="backColor" (click)="navigateTo(title.toLowerCase(), $event)" style="cursor: pointer">
+<div class="tile-header icon-text-valign" [style.background-color]="backColor" (click)="navigateTo(title.toLowerCase(), $event)" style="cursor: pointer">
   <span class="tile-logo ss-{{iconName}}"></span>
   <div class="tile-title">{{title}}</div>
   <a role="button" tabindex="0" data-toggle="popover" data-container="body"
