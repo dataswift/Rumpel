@@ -9,7 +9,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from '../services/hat-api.service';
-import { DataPlugService } from '../services/data-plug.service';
+import { DataPlugService } from '../data-management/data-plug.service';
 import { MarketSquareService } from '../market-square/market-square.service';
 
 import { APP_CONFIG, IAppConfig } from '../app.config'

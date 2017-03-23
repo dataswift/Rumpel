@@ -1,0 +1,12 @@
+<div class="view-body">
+  <div *ngFor="let plug of dataplugs | async" (click)="openPlugPopup(plug)" class="dataplug-tile-wrapper">
+    <div class="dataplug-tile">
+      <img src="assets/icons/{{plug.icon}}" class="img img-responsive dataplug-image">
+      <div>
+        <h3 class="header">{{plug.name}} plug</h3>
+        <p class="text">{{plug.description}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+

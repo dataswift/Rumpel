@@ -8,8 +8,8 @@
 
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { UiStateService } from '../../services';
-import {DataTable} from "../../shared/interfaces/data-table.interface";
-import {Subscription} from "rxjs";
+import { DataTable } from "../../shared/interfaces/data-table.interface";
+import { Subscription } from "rxjs";
 
 declare var $: any;
 

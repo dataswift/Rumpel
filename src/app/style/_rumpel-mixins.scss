@@ -1,0 +1,42 @@
+@import "variables";
+
+@mixin make-xs-square($columns) {
+  position: relative;
+  float: left;
+  width: percentage(($columns / $grid-columns));
+  padding-bottom: percentage(($columns / $grid-columns));
+  min-height: 1px;
+}
+
+@mixin make-sm-square($columns) {
+  position: relative;
+  min-height: 1px;
+
+  @media (min-width: $screen-sm-min) {
+    float: left;
+    width: percentage(($columns / $grid-columns));
+    padding-bottom: percentage(($columns / $grid-columns));
+  }
+}
+
+@mixin make-md-square($columns) {
+  position: relative;
+  min-height: 1px;
+
+  @media (min-width: $screen-md-min) {
+    float: left;
+    width: percentage(($columns / $grid-columns));
+    padding-bottom: percentage(($columns / $grid-columns));
+  }
+}
+
+@mixin make-lg-square($columns) {
+  position: relative;
+  min-height: 1px;
+
+  @media (min-width: $screen-lg-min) {
+    float: left;
+    width: percentage(($columns / $grid-columns));
+    padding-bottom: percentage(($columns / $grid-columns));
+  }
+}

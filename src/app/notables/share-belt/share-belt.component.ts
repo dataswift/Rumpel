@@ -14,7 +14,7 @@ import { Notable } from "../../shared/interfaces/notable.class";
 import {NotablesServiceMeta} from "../../shared/interfaces/notables-service-meta.interface";
 import {DialogService} from "../../layout/dialog.service";
 import {DialogBoxComponent} from "../../layout/dialog-box/dialog-box.component";
-import {DataPlugService} from "../../services/data-plug.service";
+import {DataPlugService} from "../../data-management/data-plug.service";
 
 @Component({
   selector: 'rump-share-belt',

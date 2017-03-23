@@ -7,26 +7,28 @@
  */
 
 import { Injectable } from '@angular/core';
-import {Http, Headers, Response} from '@angular/http';
+import { Http, Headers } from '@angular/http';
 
-import { HatApiService } from './hat-api.service';
-import { Observable } from "rxjs";
-import {DialogService} from "../layout/dialog.service";
-import {DialogBoxComponent} from "../layout/dialog-box/dialog-box.component";
-import {UiStateService} from "./ui-state.service";
-import {DataTable} from "../shared/interfaces/data-table.interface";
-import {InfoBoxComponent} from "../layout/info-box/info-box.component";
-import {UserService} from "../user/user.service";
-import {User} from "../user/user.interface";
+import { HatApiService } from '../services/hat-api.service';
+import {Observable, ReplaySubject} from "rxjs";
+import { DialogService } from "../layout/dialog.service";
+import { DialogBoxComponent } from "../layout/dialog-box/dialog-box.component";
+import { UiStateService } from "../services/ui-state.service";
+import { DataTable } from "../shared/interfaces/data-table.interface";
+import { UserService } from "../user/user.service";
+import { User } from "../user/user.interface";
+import {MarketSquareService} from "../market-square/market-square.service";
 
 @Injectable()
 export class DataPlugService {
   private hostname: string = window.location.hostname;
   private protocol: string = window.location.protocol;
   private services: { [key: string]: { url: string; connected: boolean; }; };
+  private _dataplugs$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
 
   constructor(private http: Http,
               private hatSvc: HatApiService,
+              private marketSvc: MarketSquareService,
               private dialogSvc: DialogService,
               private uiSvc: UiStateService,
               private userSvc: UserService) {
@@ -41,12 +43,18 @@ export class DataPlugService {
       }
     };
 
-    this.userSvc.user$.subscribe((user: User) => {
-      if (user.authenticated) {
+    this.userSvc.user$
+      .filter((user: User) => user.authenticated === true)
+      .subscribe((user: User) => {
         this.getFacebookStatus();
         this.getTwitterStatus();
-      }
-    });
+      });
+
+    this.getDataPlugList();
+  }
+
+  get dataplugs$(): Observable<any> {
+    return this._dataplugs$.asObservable();
   }
 
   status(plugName: string): boolean {
@@ -64,6 +72,26 @@ export class DataPlugService {
         return this.http.get(url, { headers: headers, body: '' })
           .map(res => res.json());
       });
+  }
+
+  private getDataPlugList() {
+    this.marketSvc.getDataPlugs().subscribe(plugs => {
+      const displayPlugs = plugs.map(plug => {
+        let displayPlug = {
+          name: plug.name,
+          description: plug.description,
+          url: plug.url.replace('/dataplug', '/hat/authenticate'),
+          icon: plug.name.toLowerCase() + '-plug'
+        };
+
+        if (plug.name === 'facebook' || plug.name === 'twitter') displayPlug.icon += '.png';
+        else displayPlug.icon += '.svg';
+
+        return displayPlug;
+      }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
+
+      this._dataplugs$.next(displayPlugs);
+    });
   }
 
   private getFacebookStatus(): void {

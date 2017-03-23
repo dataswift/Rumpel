@@ -15,6 +15,7 @@ import { APP_CONFIG, AppConfig } from './app.config';
 import { LayoutModule } from './layout/layout.module';
 import { MashupsModule } from './mashups/mashups.module';
 import { NotablesModule } from './notables/notables.module';
+import { DataManagementModule } from './data-management/data-management.module';
 import { DimensionsModule } from './dimensions/dimensions.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { SharedModule } from './shared/shared.module';
@@ -35,7 +36,7 @@ import { NativeGuard } from "./native-guard.service";
 
 import { DataTypeFilterPipe } from './pipes';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
-import { HatApiService, UiStateService, RumpelService, DataPlugService } from './services/index';
+import { HatApiService, UiStateService, RumpelService } from './services/index';
 import { AuthHttp } from './services/auth-http.service';
 
 /* MODAL COMPONENTS */
@@ -76,6 +77,7 @@ export function cookieServiceFactory() {
     UserModule,
     SocialModule,
     MarketSquareModule,
+    DataManagementModule,
     DataDebitsModule,
     MashupsModule,
     NotablesModule,
@@ -100,7 +102,6 @@ export function cookieServiceFactory() {
     HatApiService,
     UiStateService,
     RumpelService,
-    DataPlugService,
     BrowserStorageService
   ]
 })
