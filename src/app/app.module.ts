@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRootComponent } from './app.component';
 
-import { APP_CONFIG, AppConfig } from './app.config';
+import {APP_CONFIG, AppConfig, IAppConfig} from './app.config';
 
 import { LayoutModule } from './layout/layout.module';
 import { MashupsModule } from './mashups/mashups.module';
@@ -32,7 +32,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
-import { NativeGuard } from "./native-guard.service";
+import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
@@ -41,16 +41,19 @@ import { AuthHttp } from './services/auth-http.service';
 
 /* MODAL COMPONENTS */
 
-import { ConfirmBoxComponent } from "./layout/confirm-box/confirm-box.component";
+import { ConfirmBoxComponent } from './layout/confirm-box/confirm-box.component';
 import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
-import { InfoBoxComponent } from "./layout/info-box/info-box.component";
+import { InfoBoxComponent } from './layout/info-box/info-box.component';
 
 import { CookieService } from 'angular2-cookie/core';
-import { UserModule } from "./user/user.module";
-import { BrowserStorageService } from "./services/browser-storage.service";
+import { UserModule } from './user/user.module';
+import { BrowserStorageService } from './services/browser-storage.service';
 
-export function authHttpFactory(backend: XHRBackend, defaultOptions: RequestOptions, storageSvc: BrowserStorageService) {
-  return new AuthHttp(backend, defaultOptions, storageSvc);
+export function authHttpFactory(backend: XHRBackend,
+                                defaultOptions: RequestOptions,
+                                storageSvc: BrowserStorageService,
+                                config: IAppConfig) {
+  return new AuthHttp(backend, defaultOptions, storageSvc, config);
 }
 
 export function cookieServiceFactory() {
@@ -95,7 +98,7 @@ export function cookieServiceFactory() {
     {
       provide: AuthHttp,
       useFactory: authHttpFactory,
-      deps: [ XHRBackend, RequestOptions, BrowserStorageService ]
+      deps: [ XHRBackend, RequestOptions, BrowserStorageService, APP_CONFIG ]
     },
     AuthGuard,
     NativeGuard,

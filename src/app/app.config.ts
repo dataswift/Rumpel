@@ -14,6 +14,7 @@ export class IAppConfig {
   version: string;
   name: string;
   native: boolean;
+  protocol: string;
   market: { url: string; id: string; accessToken: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
@@ -26,17 +27,25 @@ export class IAppConfig {
     public: Array<any>;
     private: Array<any>;
     comingSoon: Array<any>;
-  }
+  };
 }
 
 export const AppConfig: IAppConfig = {
   version: '2.0.0-beta.1',
-  name: "Rumpel",
+  name: 'Rumpel',
   native: true,
+  protocol: 'https',
   market: {
     url: 'https://marketsquare.hubofallthings.com/api',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
-    accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLTU3alM2RkN4NXV3WHFLWWp0cHZRaDBDSzg5cXhta042dldjQmdBZHNUM0ZnUlZCSnlrTnVyKzhPK2hXRDAwOTh0SGtaZUFSc1ZsMGM0b3d3aGZhVTU3WEpQa1dpOHBXbHFSTjdrSWM9IiwiZGF0YXBsdWciOiJiNjY3M2U0Ni05MjQ2LTQxMzUtOTA1ZS1jMjc1ZTAxZTZiNWQiLCJpc3MiOiJoYXQtbWFya2V0IiwiZXhwIjoxNTE1NzU3MzA5LCJpYXQiOjE0ODQ5OTg5MDksImp0aSI6IjRlMDMxZTYzY2Q4MzY5MTNhZTE5ZDUwNTQ1OTNhNjNhNzFjZTFiNWZjMzFiZGM2NWMxOGQ0NmJiM2ZjMDVmNzQ2NWRlMTcwOTU0MGE0MTU1NTI5OTgwMWJmYzRhYmQwYjQxOThmMGQ3ZjhhOTNjNjdlNTliM2I0NWE4ZGZkYWZmOWY4Yjk0NmIxNDBkNWM2ZGI5ZmY2N2QzMDVjYmE4YjVjOTRiYjY0OGY2MTk1MzA2OThiODQ0NTZlZTA1ODlmMzI5MTgyZjc2OGMxNTQ4NWI4NDUxMTk3ZjlkZDU2YmY0NmRkZWJhZmVjOTA0YmNiMzhkZTI1NDhmM2Y0YjU4MWMifQ.H6S8LZouFFChfWd27X2T_fMvBt8unI6tUwudbDEPwNc'
+    accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLTU3alM2RkN4NXV3WHFLWWp0cHZRaDBDSzg5cXhta042dldjQmd'
+               + 'BZHNUM0ZnUlZCSnlrTnVyKzhPK2hXRDAwOTh0SGtaZUFSc1ZsMGM0b3d3aGZhVTU3WEpQa1dpOHBXbHFSTjdrSWM9IiwiZGF0YXBs'
+               + 'dWciOiJiNjY3M2U0Ni05MjQ2LTQxMzUtOTA1ZS1jMjc1ZTAxZTZiNWQiLCJpc3MiOiJoYXQtbWFya2V0IiwiZXhwIjoxNTE1NzU3M'
+               + 'zA5LCJpYXQiOjE0ODQ5OTg5MDksImp0aSI6IjRlMDMxZTYzY2Q4MzY5MTNhZTE5ZDUwNTQ1OTNhNjNhNzFjZTFiNWZjMzFiZGM2NW'
+               + 'MxOGQ0NmJiM2ZjMDVmNzQ2NWRlMTcwOTU0MGE0MTU1NTI5OTgwMWJmYzRhYmQwYjQxOThmMGQ3ZjhhOTNjNjdlNTliM2I0NWE4ZGZ'
+               + 'kYWZmOWY4Yjk0NmIxNDBkNWM2ZGI5ZmY2N2QzMDVjYmE4YjVjOTRiYjY0OGY2MTk1MzA2OThiODQ0NTZlZTA1ODlmMzI5MTgyZjc2'
+               + 'OGMxNTQ4NWI4NDUxMTk3ZjlkZDU2YmY0NmRkZWJhZmVjOTA0YmNiMzhkZTI1NDhmM2Y0YjU4MWMifQ.H6S8LZouFFChfWd27X2T_f'
+               + 'MvBt8unI6tUwudbDEPwNc'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='
@@ -66,11 +75,11 @@ export const AppConfig: IAppConfig = {
     ]
   },
   menuItems: {
-    "public": [
+    'public': [
       { display: 'Public Profile', icon: 'user', link: 'public/profile', dataType: '', disable: '' },
       { display: 'Shared Notables', icon: 'notebook', link: 'public/notables', dataType: '', disable: '' },
     ],
-    "private": [
+    'private': [
       { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '' },
       { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
       { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
@@ -81,7 +90,7 @@ export const AppConfig: IAppConfig = {
       { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
       { display: 'Data Plugs', icon: 'puzzle', link: 'dataplugs', dataType: '', disable: '' }
     ],
-    "comingSoon": [
+    'comingSoon': [
       { display: 'Weather', icon: 'thermometer', dataType: '', link: '' },
       { display: 'Finance', icon: 'bank', dataType: '', link: '' }
     ]

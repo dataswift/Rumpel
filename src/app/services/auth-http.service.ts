@@ -5,12 +5,13 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
  */
 
-import { Injectable } from "@angular/core";
-import { Http, XHRBackend, Request, RequestOptions, RequestOptionsArgs, Response, Headers } from "@angular/http";
-import { ReplaySubject, Observable } from "rxjs/Rx";
-import { JwtHelper } from "angular2-jwt";
-import { User } from "../user/user.interface";
-import { BrowserStorageService } from "./browser-storage.service";
+import { Injectable } from '@angular/core';
+import { Http, XHRBackend, Request, RequestOptions, RequestOptionsArgs, Response, Headers } from '@angular/http';
+import { ReplaySubject, Observable } from 'rxjs/Rx';
+import { JwtHelper } from 'angular2-jwt';
+import { User } from '../user/user.interface';
+import { BrowserStorageService } from './browser-storage.service';
+import { IAppConfig } from '../app.config';
 
 const COOKIE_EXPIRATION_CHECK_OFFSET = 600; // in seconds
 
@@ -22,77 +23,78 @@ export class AuthHttp extends Http {
   private _auth$: ReplaySubject<boolean> = <ReplaySubject<boolean>>new ReplaySubject();
 
   constructor(backend: XHRBackend, defaultOptions: RequestOptions,
-              private storageSvc: BrowserStorageService) {
+              private storageSvc: BrowserStorageService,
+              private config: IAppConfig) {
     super(backend, defaultOptions);
 
-    this.hatBaseUrl = `//${window.location.hostname}`; // ADD port 9000 for local testing
+    this.hatBaseUrl = `${config.protocol}://${window.location.hostname}`; // ADD port 9000 for local testing
   }
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      return super.request(url, this.addAuthorizationHeaders(options))
+      return super.request(url, options)
         .catch(err => {
-          console.log("Got an error 1", err);
+          console.log('Got an error 1', err);
           return Observable.throw(err);
         });
     } else {
-      return Observable.throw("JWT does not exist");
+      return Observable.throw('JWT does not exist');
     }
   }
 
   get(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting request with URL", this.hatBaseUrl + path);
+      console.log('Starting request with URL', this.hatBaseUrl + path);
 
       return super.get(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
-          console.log("Got an error 2", err);
+          console.log('Got an error 2', err);
           return Observable.throw(err);
         });
     } else {
-      return Observable.throw("JWT does not exist!");
+      return Observable.throw('JWT does not exist!');
     }
   }
 
   post(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting request with URL", this.hatBaseUrl + path);
+      console.log('Starting request with URL', this.hatBaseUrl + path);
 
       return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
-          console.log("Got an error 3", err);
+          console.log('Got an error 3', err);
           return Observable.throw(err);
         });
     } else {
-      return Observable.throw("JWT does not exist!");
+      return Observable.throw('JWT does not exist!');
     }
   }
 
   put(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting request with URL", this.hatBaseUrl + path);
+      console.log('Starting request with URL', this.hatBaseUrl + path);
 
       return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
-          console.log("Got an error 4", err);
+          console.log('Got an error 4', err);
           return Observable.throw(err);
         });
     } else {
-      return Observable.throw("JWT does not exist!");
+      return Observable.throw('JWT does not exist!');
     }
   }
 
   delete(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log("Starting request with URL", this.hatBaseUrl + path);
+      console.log('Starting request with URL', this.hatBaseUrl + path);
 
       return super.delete(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
-          console.log("Got an error 5", err);
+          console.log('Got an error 5', err);
           return Observable.throw(err);
         });
     } else {
-      return Observable.throw("JWT does not exist!");
+      return Observable.throw('JWT does not exist!');
     }
   }
 
@@ -107,13 +109,13 @@ export class AuthHttp extends Http {
   setToken(token: string): User {
     if (this.validateToken(token)) {
       this.tokenName = token;
-      const fullDomain = this.jwtHelper.decodeToken(token)["iss"];
+      const fullDomain = this.jwtHelper.decodeToken(token)['iss'];
 
-      this.hatBaseUrl = "https://" + fullDomain;
-      const hatId = fullDomain.slice(0, fullDomain.indexOf("."));
-      const domain = fullDomain.slice(fullDomain.indexOf(".") + 1);
-      this.storageSvc.setItem("lastLoginId", hatId);
-      this.storageSvc.setItem("lastLoginDomain", domain);
+      this.hatBaseUrl = `${this.config.protocol}://${fullDomain}`;
+      const hatId = fullDomain.slice(0, fullDomain.indexOf('.'));
+      const domain = fullDomain.slice(fullDomain.indexOf('.') + 1);
+      this.storageSvc.setItem('lastLoginId', hatId);
+      this.storageSvc.setItem('lastLoginDomain', domain);
       this.storageSvc.setAuthToken(token);
       this._auth$.next(true);
       return {
@@ -135,11 +137,11 @@ export class AuthHttp extends Http {
 
   get hasValidToken(): User {
     if (this.validateToken(this.tokenName)) {
-      const fullDomain = this.jwtHelper.decodeToken(this.tokenName)["iss"];
+      const fullDomain = this.jwtHelper.decodeToken(this.tokenName)['iss'];
 
       return {
-        hatId: fullDomain.slice(0, fullDomain.indexOf(".")),
-        domain: fullDomain.slice(fullDomain.indexOf(".") + 1),
+        hatId: fullDomain.slice(0, fullDomain.indexOf('.')),
+        domain: fullDomain.slice(fullDomain.indexOf('.') + 1),
         fullDomain: fullDomain,
         authenticated: true
       };
@@ -148,12 +150,12 @@ export class AuthHttp extends Http {
 
       if (this.validateToken(token)) {
         this.tokenName = token;
-        const fullDomain = this.jwtHelper.decodeToken(token)["iss"];
-        this.hatBaseUrl = "https://" + fullDomain;
+        const fullDomain = this.jwtHelper.decodeToken(token)['iss'];
+        this.hatBaseUrl = `${this.config.protocol}://${fullDomain}`;
         this._auth$.next(true);
         return {
-          hatId: fullDomain.slice(0, fullDomain.indexOf(".")),
-          domain: fullDomain.slice(fullDomain.indexOf(".") + 1),
+          hatId: fullDomain.slice(0, fullDomain.indexOf('.')),
+          domain: fullDomain.slice(fullDomain.indexOf('.') + 1),
           fullDomain: fullDomain,
           authenticated: true
         };
@@ -187,7 +189,7 @@ export class AuthHttp extends Http {
       options.headers = new Headers();
     }
 
-    options.headers.set("X-Auth-Token", this.tokenName);
+    options.headers.set('X-Auth-Token', this.tokenName);
     return options;
   }
 
