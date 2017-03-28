@@ -13,6 +13,11 @@
   <title>Rumpel</title>
   <base href="/">
 
+  <script>
+    var httpProtocol = location.protocol;
+    var baseUrl = httpProtocol.concat('//').concat(window.location.host);
+  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@@thehatdex">
@@ -41,7 +46,7 @@
 </head>
 
 <body>
-  <rumpel>Loading...</rumpel>
+  <rump-app>Loading...</rump-app>
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.0-rc.1/leaflet-src.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0-rc.1.0/leaflet.markercluster-src.js"></script>

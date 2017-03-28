@@ -13,6 +13,7 @@ import { User } from '../user/user.interface';
 import { BrowserStorageService } from './browser-storage.service';
 import { IAppConfig } from '../app.config';
 
+declare var httpProtocol: string;
 const COOKIE_EXPIRATION_CHECK_OFFSET = 600; // in seconds
 
 @Injectable()
@@ -27,7 +28,7 @@ export class AuthHttp extends Http {
               private config: IAppConfig) {
     super(backend, defaultOptions);
 
-    this.hatBaseUrl = `${config.protocol}://${window.location.hostname}`; // ADD port 9000 for local testing
+    this.hatBaseUrl = `${httpProtocol || config.protocol}//${window.location.hostname}`;
   }
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
@@ -111,7 +112,7 @@ export class AuthHttp extends Http {
       this.tokenName = token;
       const fullDomain = this.jwtHelper.decodeToken(token)['iss'];
 
-      this.hatBaseUrl = `${this.config.protocol}://${fullDomain}`;
+      this.hatBaseUrl = `${httpProtocol || this.config.protocol}//${fullDomain}`;
       const hatId = fullDomain.slice(0, fullDomain.indexOf('.'));
       const domain = fullDomain.slice(fullDomain.indexOf('.') + 1);
       this.storageSvc.setItem('lastLoginId', hatId);
@@ -151,7 +152,7 @@ export class AuthHttp extends Http {
       if (this.validateToken(token)) {
         this.tokenName = token;
         const fullDomain = this.jwtHelper.decodeToken(token)['iss'];
-        this.hatBaseUrl = `${this.config.protocol}://${fullDomain}`;
+        this.hatBaseUrl = `${httpProtocol || this.config.protocol}//${fullDomain}`;
         this._auth$.next(true);
         return {
           hatId: fullDomain.slice(0, fullDomain.indexOf('.')),

@@ -34,7 +34,7 @@ export const AppConfig: IAppConfig = {
   version: '2.0.0-beta.1',
   name: 'Rumpel',
   native: true,
-  protocol: 'https',
+  protocol: 'https:',
   market: {
     url: 'https://marketsquare.hubofallthings.com/api',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
