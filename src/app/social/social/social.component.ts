@@ -20,9 +20,9 @@ import {TwitterService} from '../twitter.service';
   styleUrls: ['social.component.scss']
 })
 export class SocialComponent implements OnInit, OnDestroy {
-  private posts: Array<Post|MusicListen|Tweet>;
+  public posts: Array<Post|MusicListen|Tweet>;
   public filter: string;
-  private filterMap: any;
+  public filterMap: any;
   private svcSub: Subscription;
   private musicSub: Subscription;
   private twitterSub: Subscription;

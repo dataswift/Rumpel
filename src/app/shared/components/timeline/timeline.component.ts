@@ -21,9 +21,9 @@ export class TimelineComponent implements OnInit, OnChanges {
   @Input() selectedTime: ExpandedTime;
   @Output() timeSelected = new EventEmitter<ExpandedTime>();
   public selected: ExpandedTime;
-  private timelineGrouped: Array<[string, Array<ExpandedTime>]> = [];
+  public timelineGrouped: Array<[string, Array<ExpandedTime>]> = [];
 
-  @ViewChild('timelineScroll') private timelineScrollContainer: ElementRef;
+  @ViewChild('timelineScroll') public timelineScrollContainer: ElementRef;
 
   constructor() {
   }

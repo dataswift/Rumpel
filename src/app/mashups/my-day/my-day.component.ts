@@ -36,7 +36,7 @@ export class MyDayComponent implements OnInit {
   public photos: Array<Photo> = [];
   public notables: Array<Notable> = [];
   public selectedTime: ExpandedTime;
-  public shownComponents: { [key: string]: boolean; };
+  public shownComponents: { map: boolean; events: boolean; photos: boolean; timeline: boolean;   };
   public safeSize;
   private totalDP = 0;
   public loading = false;

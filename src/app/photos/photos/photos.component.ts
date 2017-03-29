@@ -18,7 +18,7 @@ import * as moment from 'moment';
   styleUrls: ['photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
-  private images: Array<Photo> = [];
+  public images: Array<Photo> = [];
   public timeline: Array<ExpandedTime> = [];
   public selectedTime: ExpandedTime = null;
   public showTimeline: boolean;

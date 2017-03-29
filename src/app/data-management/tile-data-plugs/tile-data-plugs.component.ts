@@ -17,7 +17,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['tile-data-plugs.component.scss']
 })
 export class TileDataPlugsComponent implements OnInit {
-  private dataplugs: Observable<Array<any>>;
+  public dataplugs: Observable<Array<any>>;
 
   constructor(private dataplugsSvc: DataPlugService,
               private marketSvc: MarketSquareService) {}

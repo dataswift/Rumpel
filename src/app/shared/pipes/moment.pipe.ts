@@ -7,6 +7,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { Moment } from 'moment';
 import * as moment from 'moment';
 
 @Pipe({
@@ -14,16 +15,16 @@ import * as moment from 'moment';
 })
 export class MomentPipe implements PipeTransform {
 
-  transform(value: any, args?: any): any {
-    if (value === null) {
-      return undefined;
+  transform(value: any, dateFormatting: string = 'DD/MM/YYYY, h:mm a'): Moment {
+    if (!value) {
+      return null;
     }
 
     if (!moment.isMoment(value)) {
       value = moment(value);
     }
 
-    return args ? value.format(args) : value.format('DD/MM/YYYY, h:mm a');
+    return value.format(dateFormatting);
   }
 
 }

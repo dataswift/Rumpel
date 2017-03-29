@@ -26,7 +26,7 @@ export class SideMenuComponent implements OnInit {
   public selectedItem: string;
   private sub: Subscription;
   public state: any;
-  public userAuthenticated: boolean;
+  public userAuthenticated = false;
   public menu: Array<any>;
   private comingSoonMenu: Array<any>;
   public unreadNotifications: number;
@@ -59,6 +59,9 @@ export class SideMenuComponent implements OnInit {
     this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
       this.menu = user.authenticated ? this.config.menuItems.private : this.config.menuItems.public;
+      if (user.authenticated) {
+        this._notificationsSvc.getAllNotifications();
+      }
     });
 
     this.comingSoonMenu = this.config.menuItems.comingSoon;

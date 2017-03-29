@@ -22,7 +22,7 @@
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="profile.personal.private === 'false'"></span>
+            [class.privacy-color]="!profile.personal.private"></span>
         </div>
       </li>
 
@@ -37,7 +37,7 @@
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="profile.mobile.private === 'false'"></span>
+            [class.privacy-color]="!profile.mobile.private"></span>
         </div>
       </li>
 
@@ -52,7 +52,7 @@
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="profile.primary_email.private === 'false'"></span>
+            [class.privacy-color]="!profile.primary_email.private"></span>
         </div>
       </li>
 
@@ -71,7 +71,7 @@
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="profile.address_details.private === 'false'"></span>
+            [class.privacy-color]="!profile.address_details.private"></span>
         </div>
       </li>
 
@@ -86,7 +86,7 @@
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="profile.website.private === 'false'"></span>
+            [class.privacy-color]="!profile.website.private"></span>
         </div>
       </li>
 
@@ -101,7 +101,7 @@
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="profile.facebook.private === 'false'"></span>
+            [class.privacy-color]="!profile.facebook.private"></span>
         </div>
       </li>
     </ul>

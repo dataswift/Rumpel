@@ -25,9 +25,9 @@ export class ShareBeltComponent implements OnInit {
   @Input() hatDomain: string;
   @Input() currentNotable: Notable;
   @Input() parentError: string;
-  private notablesState: NotablesServiceMeta;
-  private dataPlugError: string;
-  private displayMessage: string;
+  public notablesState: NotablesServiceMeta;
+  public dataPlugError: string;
+  public displayMessage: string;
   private sharedOn = { facebook: false, twitter: false, marketsquare: false };
   private dataPlugInfoMap = {
     facebook: {

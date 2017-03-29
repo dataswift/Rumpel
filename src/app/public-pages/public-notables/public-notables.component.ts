@@ -8,7 +8,7 @@ import {Notable} from '../../shared/interfaces/notable.class';
   styleUrls: ['./public-notables.component.scss']
 })
 export class PublicNotablesComponent implements OnInit {
-  private notables: Array<Notable>;
+  public notables: Array<Notable>;
 
   constructor(private hatSvc: HatApiService) { }
 

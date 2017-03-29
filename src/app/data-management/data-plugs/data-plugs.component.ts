@@ -9,7 +9,7 @@ import {MarketSquareService} from '../../market-square/market-square.service';
   styleUrls: ['./data-plugs.component.scss']
 })
 export class DataPlugsComponent implements OnInit {
-  private dataplugs: Observable<Array<any>>;
+  public dataplugs: Observable<Array<any>>;
 
   constructor(private dataplugsSvc: DataPlugService,
               private marketSvc: MarketSquareService) { }

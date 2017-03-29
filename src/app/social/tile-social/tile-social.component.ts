@@ -20,7 +20,7 @@ import {TwitterService} from '../twitter.service';
   styleUrls: ['tile-social.component.scss']
 })
 export class TileSocialComponent implements OnInit, OnDestroy {
-  private posts: Array<Post|MusicListen|Tweet>;
+  public posts: Array<Post|MusicListen|Tweet>;
   private postsSub: Subscription;
   private musicSub: Subscription;
   private twitterSub: Subscription;

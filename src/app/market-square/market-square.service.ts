@@ -37,11 +37,12 @@ export class MarketSquareService {
     this._headers = new Headers();
     this._headers.append('Content-Type', 'application/json');
 
-    userSvc.user$.subscribe((user: User) => {
-      this.hatDomain = user.fullDomain;
-
-      // this.connectHAT(this.hatDomain);
-    });
+    userSvc.user$
+      .filter((user: User) => user.authenticated === true)
+      .subscribe((user: User) => {
+        this.hatDomain = user.fullDomain;
+        this.connectHAT(this.hatDomain);
+      });
   }
 
   getValidOffers(): Observable<any> {
