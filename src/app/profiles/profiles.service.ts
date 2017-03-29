@@ -10,8 +10,8 @@ import { Injectable } from '@angular/core';
 import { HatApiService } from '../services/hat-api.service';
 import { Profile } from '../shared/interfaces/profile.interface';
 import { ProfileHatModel } from './profile.hatmodel';
-import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
-import {UiStateService} from "../services/ui-state.service";
+import {BaseRumpelDataService} from '../services/base-rumpel-data.service';
+import {UiStateService} from '../services/ui-state.service';
 
 @Injectable()
 export class ProfilesService extends BaseRumpelDataService<Profile> {
@@ -34,7 +34,7 @@ export class ProfilesService extends BaseRumpelDataService<Profile> {
   }
 
   mapData(rawProfile) {
-    let coreData = rawProfile.data.profile;
+    const coreData = rawProfile.data.profile;
     return {
       private: coreData.private === 'true',
       fb_profile_photo: { private: coreData.fb_profile_photo.private === 'true' },

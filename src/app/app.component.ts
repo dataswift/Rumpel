@@ -17,7 +17,7 @@ import * as moment from 'moment';
   styleUrls: ['app.component.scss']
 })
 export class AppRootComponent implements OnInit {
-  private showNotifications: boolean;
+  public showNotifications: boolean;
 
   // Had to use auxiliary variable canHide to control notification centre visibility.
   // Outside-click directive produces an error when applied onto dynamically inserted DOM element

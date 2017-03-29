@@ -5,9 +5,9 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 3, 2017
  */
 
-import { Injectable, Inject } from "@angular/core";
-import { CanActivate, Router } from "@angular/router";
-import { APP_CONFIG, IAppConfig } from "./app.config";
+import { Injectable, Inject } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
+import { APP_CONFIG, IAppConfig } from './app.config';
 
 @Injectable()
 export class NativeGuard implements CanActivate {
@@ -19,7 +19,7 @@ export class NativeGuard implements CanActivate {
     if (this.config.native) {
       return true;
     } else {
-      this.router.navigate(["user", "login", "start"]);
+      this.router.navigate(['user', 'login', 'start']);
       return false;
     }
   }

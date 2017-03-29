@@ -24,7 +24,7 @@ export class MapComponent implements OnInit, OnChanges {
   @Input() enableMapControls: boolean;
   @Output() timeSelected = new EventEmitter<any>();
 
-  private map;
+  private map: any;
   private markers = L.markerClusterGroup();
   private bbox = {
     minLng: 180,
@@ -50,8 +50,9 @@ export class MapComponent implements OnInit, OnChanges {
     })
       .setView([51.5074, 0.1278], 10);
 
+    const map = this.map;
     this.map.once('focus', () => map.scrollWheelZoom.enable());
-    let map = this.map;
+
     // WHY
     setTimeout(() => {
       map.invalidateSize();
@@ -70,7 +71,7 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   updateMap(locations: Array<Location>) {
-    if(this.map) {
+    if (this.map) {
       this.drawMarkers(locations);
       if (locations.length > 0) {
         this.map.invalidateSize();
@@ -99,21 +100,21 @@ export class MapComponent implements OnInit, OnChanges {
     this.map.removeLayer(this.markers);
     this.markers = L.markerClusterGroup();
     this.resetBoundingBox();
-    //var pointlist = [];
-    for(let loc of locations) {
+    // const pointlist = [];
+    for (const loc of locations) {
       this.adjustBoundingBox(loc.latitude, loc.longitude);
-      let pos = new L.LatLng(loc.latitude, loc.longitude);
-      let marker = L.marker(pos);
+      const pos = new L.LatLng(loc.latitude, loc.longitude);
+      const marker = L.marker(pos);
       marker.timestamp = loc.timestamp;
-      let self = this;
+      const self = this;
       marker.on('click', (e: any) => {
         self.onMarkerSelected(e);
       });
-      //pointlist.push(pos);
+      // pointlist.push(pos);
       this.markers.addLayer(marker);
     }
 
-    // var routePolyline = new L.Polyline(pointlist, {color: 'red', weight: 3, oapcity: 0.8, smoothFactor: 10});
+    // var routePolyline = new L.Polyline(pointlist, {color: 'red', weight: 2, oapcity: 0.8, smoothFactor: 10});
     // routePolyline.addTo(this.map);
 
     this.map.addLayer(this.markers);

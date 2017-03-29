@@ -10,8 +10,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfilesService } from '../profiles.service';
 import { Profile } from '../../shared/interfaces/profile.interface';
-import {UserService} from "../../user/user.service";
-import {User} from "../../user/user.interface";
+import {UserService} from '../../user/user.service';
+import {User} from '../../user/user.interface';
 
 @Component({
   selector: 'rump-profile',
@@ -43,7 +43,9 @@ export class ProfileComponent implements OnInit {
 
     this.profilesSvc.getPicture().subscribe(
       profilePicture => {
-        if (profilePicture) this.profilePhoto = profilePicture;
+        if (profilePicture) {
+          this.profilePhoto = profilePicture;
+        }
       },
       err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
     );
@@ -78,7 +80,7 @@ export class ProfileComponent implements OnInit {
   }
 
   switchView() {
-    this.router.navigate([ "public", "profile" ]);
+    this.router.navigate([ 'public', 'profile' ]);
   }
 
   submitForm(event) {

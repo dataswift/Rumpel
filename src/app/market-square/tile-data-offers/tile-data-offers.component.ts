@@ -8,8 +8,8 @@
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MarketSquareService } from '../market-square.service';
-import { UserService } from "../../user/user.service";
-import { User } from "../../user/user.interface";
+import { UserService } from '../../user/user.service';
+import { User } from '../../user/user.interface';
 
 @Component({
   selector: 'rump-tile-data-offers',
@@ -25,7 +25,7 @@ export class TileDataOffersComponent implements OnInit {
 
   ngOnInit() {
     this.userSvc.user$.subscribe((user: User) => {
-      if (user.authenticated === true){
+      if (user.authenticated === true) {
         this.marketSvc.getValidOffers().subscribe(offers => this.offers = offers);
       }
     });

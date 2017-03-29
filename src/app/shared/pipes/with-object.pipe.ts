@@ -15,8 +15,9 @@ import { Node } from '../interfaces';
 export class WithObjectPipe implements PipeTransform {
 
   transform(value: any, args?: string[]): any {
-    let keys = [];
-    for (let key in value) {
+    const keys = [];
+
+    for (const key in value) {
       if (typeof value[key] === 'string') {
         keys.push(new Node(key, value[key], null));
       } else {

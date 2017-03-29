@@ -6,24 +6,22 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Directive, Output, EventEmitter, ElementRef } from '@angular/core';
+import {Directive, Output, EventEmitter, ElementRef, HostListener} from '@angular/core';
 
 @Directive({
-  selector: '[outside-click]',
-  host: {
-    '(document:click)': 'onClick($event)'
-  }
+  selector: '[rumpOutsideClick]'
 })
-export class OutsideClick {
-  constructor(private _elementRef: ElementRef) {}
-
+export class OutsideClickDirective {
   @Output() clickOutside = new EventEmitter<any>();
 
-  onClick(event) {
-    const clickedInside = this._elementRef.nativeElement.contains(event.target);
+  @HostListener('document:click') onClick($event) {
+    const clickedInside = this._elementRef.nativeElement.contains($event.target);
 
     if (!clickedInside) {
-      this.clickOutside.emit(event);
+      this.clickOutside.emit($event);
     }
   }
+
+  constructor(private _elementRef: ElementRef) {}
+
 }

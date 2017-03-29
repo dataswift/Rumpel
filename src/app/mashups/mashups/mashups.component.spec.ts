@@ -13,7 +13,7 @@ import { MashupsComponent } from './mashups.component';
 
 describe('Component: Mashups', () => {
   it('should create an instance', () => {
-    let component = new MashupsComponent();
+    const component = new MashupsComponent();
     expect(component).toBeTruthy();
   });
 });

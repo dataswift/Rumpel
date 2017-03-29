@@ -14,16 +14,18 @@ import { ExpandedTime } from '../interfaces/index';
 })
 export class TimeFilterPipe implements PipeTransform {
 
-  transform(dataPoints: Array<any>, time: ExpandedTime, unit: string, field: string = "timestamp"): Array<any> {
+  transform(dataPoints: Array<any>, time: ExpandedTime, unit: string, field: string = 'timestamp'): Array<any> {
     if (!time) {
       return dataPoints;
     }
 
+    let filtered: Array<any>;
+
     try {
-      var filtered = dataPoints.filter(dp => dp[field].isSame(time.timestamp, unit));
+      filtered = dataPoints.filter(dp => dp[field].isSame(time.timestamp, unit));
     } catch (e) {
-      console.error("Error while filtering data", dataPoints, e);
-      var filtered = Array<any>();
+      console.error('Error while filtering data', dataPoints, e);
+      filtered = [];
     }
     return filtered;
   }

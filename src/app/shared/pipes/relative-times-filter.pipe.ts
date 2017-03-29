@@ -18,15 +18,15 @@ export class RelativeTimesFilterPipe implements PipeTransform {
     let filteredData: Array<any>;
     switch (relativeTime) {
       case 'today':
-        let today = moment();
+        const today = moment();
         filteredData = timedData.filter(dataPoint => dataPoint.timestamp.isSame(today, 'd'));
         break;
       case 'yesterday':
-        let yesterday = moment().subtract(1, 'days');
+        const yesterday = moment().subtract(1, 'days');
         filteredData = timedData.filter(dataPoint => dataPoint.timestamp.isSame(yesterday, 'd'));
         break;
       case 'last week':
-        let weekAgo = moment().subtract(7, 'days');
+        const weekAgo = moment().subtract(7, 'days');
         filteredData = timedData.filter(dataPoint => dataPoint.timestamp.isAfter(weekAgo));
         break;
       case 'all':

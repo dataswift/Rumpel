@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from '../services/hat-api.service';
 import { User } from './user.interface';
-import { AuthHttp } from "../services/auth-http.service";
-import {AccountStatus} from "./account-status.interface";
+import { AuthHttp } from '../services/auth-http.service';
+import {AccountStatus} from './account-status.interface';
 
 @Injectable()
 export class UserService {
@@ -67,20 +67,20 @@ export class UserService {
     return this.hatSvc.getAccountStatus()
       .map((accStatus: Array<any>) => {
         return {
-          previousLogin: accStatus[0]["kind"]["metric"],
+          previousLogin: accStatus[0]['kind']['metric'],
           databaseStorage: {
-            metric: accStatus[2]["kind"]["metric"],
-            units: accStatus[2]["kind"]["units"]
+            metric: accStatus[2]['kind']['metric'],
+            units: accStatus[2]['kind']['units']
           },
           databaseStorageUsed: {
-            metric: accStatus[4]["kind"]["metric"],
-            units: accStatus[4]["kind"]["units"]
+            metric: accStatus[4]['kind']['metric'],
+            units: accStatus[4]['kind']['units']
           },
           databaseStorageUsedShare: {
-            metric: accStatus[6]["kind"]["metric"],
-            units: accStatus[6]["kind"]["units"]
+            metric: accStatus[6]['kind']['metric'],
+            units: accStatus[6]['kind']['units']
           }
-        }
+        };
       });
   }
 

@@ -9,8 +9,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
-import { UserService } from "../user.service";
-import { BrowserStorageService } from "../../services/browser-storage.service";
+import { UserService } from '../user.service';
+import { BrowserStorageService } from '../../services/browser-storage.service';
 
 @Component({
   selector: 'rump-login',
@@ -19,11 +19,11 @@ import { BrowserStorageService } from "../../services/browser-storage.service";
 })
 export class LoginComponent implements OnInit {
   public hatDomain: string;
-  private error: string;
+  public error: string;
   private redirectPath: string;
   private navExtras: NavigationExtras;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) public config: IAppConfig,
               private route: ActivatedRoute,
               private router: Router,
               private storageSvc: BrowserStorageService,
@@ -31,12 +31,12 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    let qps = this.route.snapshot.queryParams;
+    const qps = this.route.snapshot.queryParams;
 
-    if (qps["name"] && qps["redirect"]) {
+    if (qps['name'] && qps['redirect']) {
       this.navExtras = { queryParams: {
-        name: qps["name"],
-        redirect: qps["redirect"]
+        name: qps['name'],
+        redirect: qps['redirect']
       }};
     } else {
       this.navExtras = {};
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 
     // Redirect user to the dashboard if she is already authenticated
     if (this.userSvc.isLoggedIn()) {
-      this.router.navigate(["dashboard"]);
+      this.router.navigate(['dashboard']);
     }
   }
 
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
 
   get username(): string {
     const host = window.location.hostname;
-    return host.substring(0, host.indexOf("."));
+    return host.substring(0, host.indexOf('.'));
   }
 
   get protocol(): string {
@@ -78,8 +78,8 @@ export class LoginComponent implements OnInit {
         this.router.navigate([this.redirectPath], this.navExtras);
       },
       err => {
-        console.log("Login failed! Reason: ", err);
-        this.error = "Incorrect password. Please try again."
+        console.log('Login failed! Reason: ', err);
+        this.error = 'Incorrect password. Please try again.';
       });
     // window.location.href = `https://${this.hatDomain}/hatlogin?name=Rumpel&redirect=${this.redirectUrl}`;
   }

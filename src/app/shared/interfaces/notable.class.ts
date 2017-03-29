@@ -46,9 +46,9 @@ export class Notable {
       this.created_time = moment(options.created_time);
       this.updated_time = moment(options.updated_time);
       this.public_until = options.public_until ? moment(options.public_until) : null;
-      this.shared = options.shared === "true" || options.shared === true;
+      this.shared = options.shared === 'true' || options.shared === true;
       if (options.shared_on) {
-        this.shared_on = Array.isArray(options.shared_on) ? options.shared_on : options.shared_on.split(",");
+        this.shared_on = Array.isArray(options.shared_on) ? options.shared_on : options.shared_on.split(',');
       } else {
         this.shared_on = [];
       }
@@ -61,8 +61,8 @@ export class Notable {
         this.authorv1 = options.authorv1;
       } else {
         this.authorv1 = {
-          phata: "",
-          photo_url: ""
+          phata: '',
+          photo_url: ''
         };
       }
 
@@ -93,7 +93,7 @@ export class Notable {
   }
 
   removeShareDestination(destination: string) {
-    let index = this.shared_on.indexOf(destination);
+    const index = this.shared_on.indexOf(destination);
 
     if (index > -1) {
       this.shared_on.splice(index, 1);
@@ -104,7 +104,7 @@ export class Notable {
     if (days === 0) {
       this.public_until = null;
     } else {
-      this.public_until = moment().add(days, "days");
+      this.public_until = moment().add(days, 'days');
     }
   }
 

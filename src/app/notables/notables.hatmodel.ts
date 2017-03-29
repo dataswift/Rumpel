@@ -8,56 +8,56 @@
 
 export const NotablesHatModel = {
   metadata: {
-    version: "1.1.0"
+    version: '1.1.0'
   },
   model: {
-    name: "notablesv1",
-    source: "rumpel",
+    name: 'notablesv1',
+    source: 'rumpel',
     fields: [
-      { name: "message" },
-      { name: "kind" },
-      { name: "created_time" },
-      { name: "updated_time" },
-      { name: "public_until" },
-      { name: "shared" },
-      { name: "shared_on" }
+      { name: 'message' },
+      { name: 'kind' },
+      { name: 'created_time' },
+      { name: 'updated_time' },
+      { name: 'public_until' },
+      { name: 'shared' },
+      { name: 'shared_on' }
     ],
     subTables: [
       {
-        name: "authorv1",
-        source: "rumpel",
+        name: 'authorv1',
+        source: 'rumpel',
         fields: [
-          { name: "id" },
-          { name: "name" },
-          { name: "nick" },
-          { name: "phata" },
-          { name: "photo_url" }
+          { name: 'id' },
+          { name: 'name' },
+          { name: 'nick' },
+          { name: 'phata' },
+          { name: 'photo_url' }
         ]
       },
       {
-        name: "locationv1",
-        source: "rumpel",
+        name: 'locationv1',
+        source: 'rumpel',
         fields: [
-          { name: "latitude" },
-          { name: "longitude" },
-          { name: "accuracy" },
-          { name: "altitude" },
-          { name: "altitude_accuracy" },
-          { name: "heading" },
-          { name: "speed" },
-          { name: "shared" }
+          { name: 'latitude' },
+          { name: 'longitude' },
+          { name: 'accuracy' },
+          { name: 'altitude' },
+          { name: 'altitude_accuracy' },
+          { name: 'heading' },
+          { name: 'speed' },
+          { name: 'shared' }
         ]
       },
       {
-        name: "photov1",
-        source: "rumpel",
+        name: 'photov1',
+        source: 'rumpel',
         fields: [
-          { name: "link" },
-          { name: "source" },
-          { name: "caption" },
-          { name: "shared" }
+          { name: 'link' },
+          { name: 'source' },
+          { name: 'caption' },
+          { name: 'shared' }
         ]
       }
     ]
   }
-}
+};

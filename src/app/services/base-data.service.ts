@@ -6,12 +6,12 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Subject, Observable, ReplaySubject } from "rxjs";
-import { HatApiService } from "./hat-api.service";
-import { UiStateService } from "./ui-state.service";
+import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
+import { HatApiService } from './hat-api.service';
+import { UiStateService } from './ui-state.service';
 import * as _ from 'lodash';
-import { DataTable } from "../shared/interfaces/data-table.interface";
-import * as moment from "moment";
+import { DataTable } from '../shared/interfaces/data-table.interface';
+import * as moment from 'moment';
 
 export abstract class BaseDataService<T> {
   private _data$: ReplaySubject<Array<T>> = <ReplaySubject<Array<T>>>new ReplaySubject(1);
@@ -60,11 +60,11 @@ export abstract class BaseDataService<T> {
       this.hat.getValuesWithLimit(this.store.tableId)
         .map((rawData: Array<any>) => {
           if (rawData.length > 0) {
-            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format("X");
+            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format('X');
           }
 
-          let typeSafeData: Array<T> = rawData.map(this.mapData);
-          return _.uniqBy(typeSafeData, "id");
+          const typeSafeData: Array<T> = rawData.map(this.mapData);
+          return _.uniqBy(typeSafeData, 'id');
         })
         .subscribe((data: Array<T>) => {
           this.store.data = data;
@@ -81,11 +81,11 @@ export abstract class BaseDataService<T> {
       this.hat.getValuesWithLimit(this.store.tableId, fetchRecordCount, this.oldestRecordTimestamp)
         .map((rawData: Array<any>) => {
           if (rawData.length > 0) {
-            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format("X");
+            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format('X');
           }
 
-          let typeSafeData: Array<T> = rawData.map(this.mapData);
-          return _.uniqBy(typeSafeData, "id");
+          const typeSafeData: Array<T> = rawData.map(this.mapData);
+          return _.uniqBy(typeSafeData, 'id');
         })
         .subscribe((data: Array<T>) => {
           this.store.data = this.store.data.concat(data);
@@ -105,8 +105,8 @@ export abstract class BaseDataService<T> {
     this._loading$.next(true);
     this.hat.getValuesWithLimit(this.store.tableId, 5000, endTime, startTime)
       .map((rawData: Array<any>) => {
-        let typeSafeData: Array<T> = rawData.map(this.mapData);
-        return _.uniqBy(typeSafeData, "id");
+        const typeSafeData: Array<T> = rawData.map(this.mapData);
+        return _.uniqBy(typeSafeData, 'id');
       })
       .subscribe((data: Array<T>) => {
         this.store.data = this.store.data.concat(data);

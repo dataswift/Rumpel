@@ -19,9 +19,9 @@ import * as moment from 'moment';
 })
 export class PhotosComponent implements OnInit {
   private images: Array<Photo> = [];
-  private timeline: Array<ExpandedTime> = [];
-  private selectedTime: ExpandedTime = null;
-  private showTimeline: boolean;
+  public timeline: Array<ExpandedTime> = [];
+  public selectedTime: ExpandedTime = null;
+  public showTimeline: boolean;
   private _sub;
 
   constructor(private _photosSvc: PhotosService) {}
@@ -67,7 +67,7 @@ export class PhotosComponent implements OnInit {
   }
 
   private addDatesToTimeline(dataPoints: Array<Photo>) {
-    let timestamps: Array<ExpandedTime> = _.sortedUniqBy(
+    const timestamps: Array<ExpandedTime> = _.sortedUniqBy(
       dataPoints.map(dp => new ExpandedTime(dp.timestamp)).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
       'unixDayStart');
 

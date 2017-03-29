@@ -7,9 +7,9 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { DataPlugService } from "../data-plug.service";
-import { MarketSquareService } from "../../market-square/market-square.service";
-import { Observable } from "rxjs";
+import { DataPlugService } from '../data-plug.service';
+import { MarketSquareService } from '../../market-square/market-square.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'rump-tile-data-plugs',
@@ -27,15 +27,15 @@ export class TileDataPlugsComponent implements OnInit {
   }
 
   openPlugPopup(plug: any) {
-    let loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
+    const loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
 
-    let w = window.innerWidth;
-    let h = window.innerHeight;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
 
-    let popupWidth = w * 0.6; let left = w * 0.2;
-    let popupHeight = h * 0.7; let top = h * 0.15;
+    const popupWidth = w * 0.6; const left = w * 0.2;
+    const popupHeight = h * 0.7; const top = h * 0.15;
 
-    let windowRef = window.open(
+    const windowRef = window.open(
       `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
       `Setting up ${plug.name} data plug`,
       `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {HatApiService} from "../../services/hat-api.service";
-import {Notable} from "../../shared/interfaces/notable.class";
-import {UserService} from "../../user/user.service";
-import {User} from "../../user/user.interface";
-import {Router} from "@angular/router";
+import {HatApiService} from '../../services/hat-api.service';
+import {Notable} from '../../shared/interfaces/notable.class';
+import {UserService} from '../../user/user.service';
+import {User} from '../../user/user.interface';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'rump-public-profile',
@@ -11,18 +11,18 @@ import {Router} from "@angular/router";
   styleUrls: ['public-profile.component.scss']
 })
 export class PublicProfileComponent implements OnInit {
-  private shared: boolean;
-  private userAuthenticated: boolean = false;
-  private profile: any;
-  private notables: Array<Notable>;
+  public userAuthenticated = false;
+  public shared: boolean;
+  public profile: any;
+  public notables: Array<Notable>;
 
   constructor(private hatSvc: HatApiService,
               private userSvc: UserService,
               private router: Router) { }
 
   ngOnInit() {
-    this.hatSvc.getPublicData("profile").subscribe((profileResponse: any) => {
-      if (profileResponse["public"] === true) {
+    this.hatSvc.getPublicData('profile').subscribe((profileResponse: any) => {
+      if (profileResponse['public'] === true) {
         this.shared = true;
         this.profile = profileResponse.profile;
         this.notables = profileResponse.notables.map((note: any) => new Notable(note, note.id));
@@ -37,7 +37,7 @@ export class PublicProfileComponent implements OnInit {
   }
 
   switchView() {
-    this.router.navigate([ "profile" ]);
+    this.router.navigate(['profile']);
   }
 
   get hostname(): string {
@@ -45,7 +45,7 @@ export class PublicProfileComponent implements OnInit {
   }
 
   isLoading(): boolean {
-    return typeof this.shared === "undefined";
+    return typeof this.shared === 'undefined';
   }
 
 }

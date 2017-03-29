@@ -13,7 +13,7 @@ import { RelativeTimesFilterPipe } from './relative-times-filter.pipe';
 
 describe('RelativeTimesFilterPipe', () => {
   it('create an instance', () => {
-    let pipe = new RelativeTimesFilterPipe();
+    const pipe = new RelativeTimesFilterPipe();
     expect(pipe).toBeTruthy();
   });
 });

@@ -8,9 +8,9 @@
 
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { Moment } from 'moment';
-import {Post} from "../../shared/interfaces/post.interface";
-import {Photo} from "../../shared/interfaces/photo.interface";
-import {Notable} from "../../shared/interfaces/notable.class";
+import {Post} from '../../shared/interfaces/post.interface';
+import {Photo} from '../../shared/interfaces/photo.interface';
+import {Notable} from '../../shared/interfaces/notable.class';
 
 @Component({
   selector: 'rump-activity-list',
@@ -22,7 +22,7 @@ export class ActivityListComponent implements OnInit, OnChanges {
   @Input() componentWidth: string;
   @Input() posts: Array<Post>;
   @Input() events: Array<Event>;
-  //@Input() locations: Array<Location>;
+  // @Input() locations: Array<Location>;
   @Input() photos: Array<Photo>;
   @Input() notables: Array<Notable>;
   @Input() timeSelected: Moment;
@@ -31,7 +31,6 @@ export class ActivityListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-
   }
 
   ngOnInit() {

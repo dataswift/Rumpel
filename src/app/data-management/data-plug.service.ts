@@ -10,14 +10,14 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 import { HatApiService } from '../services/hat-api.service';
-import {Observable, ReplaySubject} from "rxjs";
-import { DialogService } from "../layout/dialog.service";
-import { DialogBoxComponent } from "../layout/dialog-box/dialog-box.component";
-import { UiStateService } from "../services/ui-state.service";
-import { DataTable } from "../shared/interfaces/data-table.interface";
-import { UserService } from "../user/user.service";
-import { User } from "../user/user.interface";
-import {MarketSquareService} from "../market-square/market-square.service";
+import { Observable, ReplaySubject } from 'rxjs/Rx';
+import { DialogService } from '../layout/dialog.service';
+import { DialogBoxComponent } from '../layout/dialog-box/dialog-box.component';
+import { UiStateService } from '../services/ui-state.service';
+import { DataTable } from '../shared/interfaces/data-table.interface';
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.interface';
+import { MarketSquareService } from '../market-square/market-square.service';
 
 @Injectable()
 export class DataPlugService {
@@ -33,12 +33,12 @@ export class DataPlugService {
               private uiSvc: UiStateService,
               private userSvc: UserService) {
     this.services = {
-      "Facebook": {
-        url: "https://social-plug.hubofallthings.com/api/user/token/status",
+      'Facebook': {
+        url: 'https://social-plug.hubofallthings.com/api/user/token/status',
         connected: false
       },
-      "Twitter": {
-        url: "https://twitter-plug.hubofallthings.com/api/status",
+      'Twitter': {
+        url: 'https://twitter-plug.hubofallthings.com/api/status',
         connected: false
       }
     };
@@ -64,8 +64,8 @@ export class DataPlugService {
   getTokenInfo(plugName: string): Observable<any> {
     return this.hatSvc.getApplicationToken(plugName, this.services[plugName].url)
       .flatMap(accessToken => {
-        let url = this.services[plugName].url;
-        let headers = new Headers();
+        const url = this.services[plugName].url;
+        const headers = new Headers();
         headers.append('X-Auth-Token', accessToken);
         headers.append('Content-Type', 'application/json');
 
@@ -77,15 +77,18 @@ export class DataPlugService {
   private getDataPlugList() {
     this.marketSvc.getDataPlugs().subscribe(plugs => {
       const displayPlugs = plugs.map(plug => {
-        let displayPlug = {
+        const displayPlug = {
           name: plug.name,
           description: plug.description,
           url: plug.url.replace('/dataplug', '/hat/authenticate'),
           icon: plug.name.toLowerCase() + '-plug'
         };
 
-        if (plug.name === 'facebook' || plug.name === 'twitter') displayPlug.icon += '.png';
-        else displayPlug.icon += '.svg';
+        if (plug.name === 'facebook' || plug.name === 'twitter') {
+          displayPlug.icon += '.png';
+        } else {
+          displayPlug.icon += '.svg';
+        }
 
         return displayPlug;
       }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
@@ -95,37 +98,41 @@ export class DataPlugService {
   }
 
   private getFacebookStatus(): void {
-    this.getTokenInfo("Facebook").subscribe(
+    this.getTokenInfo('Facebook').subscribe(
       tokenInfo => {
-        this.services["Facebook"].connected = tokenInfo.canPost;
+        this.services['Facebook'].connected = tokenInfo.canPost;
         if (tokenInfo.canPost === false) {
           this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-            title: "Reconnect your Facebook plug",
-            message: "Every two months, you need to reset your Facebook plug – it's our way of checking that you're still happy to pull this data into your HAT.",
-            cancelBtnText: "No Thanks",
+            title: 'Reconnect your Facebook plug',
+            message: `Every two months, you need to reset your Facebook plug – it's our way of checking that ` +
+                     `you're still happy to pull this data into your HAT.`,
+            cancelBtnText: 'No Thanks',
             buttons: [{
-              title: "Reconnect Facebook Plug",
-              link: `${this.protocol}//${this.hostname}/hatlogin?name=Facebook&redirect=https://social-plug.hubofallthings.net/hat/authenticate/`
+              title: 'Reconnect Facebook Plug',
+              link: `${this.protocol}//${this.hostname}/hatlogin?` +
+                    `name=Facebook&redirect=https://social-plug.hubofallthings.net/hat/authenticate/`
             }]
           });
         }
       },
       error => {
-        this.services["Facebook"].connected = false;
+        this.services['Facebook'].connected = false;
         if (error.url.includes(window.location.hostname)) {
-          console.warn("Retrieving application token for the Facebook plug is broken.");
+          console.warn('Retrieving application token for the Facebook plug is broken.');
         } else {
           this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-            const tableFound = tables.find(table => table.name === "posts" && table.source === "facebook");
+            const tableFound = tables.find(table => table.name === 'posts' && table.source === 'facebook');
 
             if (tableFound) {
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-                title: "Something went wrong",
-                message: "There is a problem with your Facebook plug. If the problem persists, we suggest disconnecting and re-connecting the plug.",
-                cancelBtnText: "Dismiss",
+                title: 'Something went wrong',
+                message: 'There is a problem with your Facebook plug. If the problem persists, we suggest ' +
+                         'disconnecting and re-connecting the plug.',
+                cancelBtnText: 'Dismiss',
                 buttons: [{
-                  title: "Reconnect Facebook Plug",
-                  link: `${this.protocol}//${this.hostname}/hatlogin?name=Facebook&redirect=https://social-plug.hubofallthings.net/hat/authenticate/`
+                  title: 'Reconnect Facebook Plug',
+                  link: `${this.protocol}//${this.hostname}/hatlogin?` +
+                        `name=Facebook&redirect=https://social-plug.hubofallthings.net/hat/authenticate/`
                 }]
               });
             }
@@ -136,28 +143,30 @@ export class DataPlugService {
   }
 
   private getTwitterStatus(): void {
-    this.getTokenInfo("Twitter").subscribe(
+    this.getTokenInfo('Twitter').subscribe(
       tokenInfo => {
-        this.services["Twitter"].connected = true;
+        this.services['Twitter'].connected = true;
       },
       error => {
-        this.services["Twitter"].connected = false;
+        this.services['Twitter'].connected = false;
         if (error.url.includes(window.location.hostname)) {
-          console.warn("Retrieving application token for the Twitter plug is broken.");
+          console.warn('Retrieving application token for the Twitter plug is broken.');
         } else {
           this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-            const tableFound = tables.find(table => table.name === "tweets" && table.source === "twitter");
+            const tableFound = tables.find(table => table.name === 'tweets' && table.source === 'twitter');
 
             // If Twitter plug status endpoint gives HTTP error but table exists on the HAT => problem occurred
             // If the table hasn't been created => plug is not set up, all ok
             if (tableFound) {
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-                title: "Something went wrong",
-                message: "There is a problem with your Twitter plug. If the problem persists, we suggest disconnecting and re-connecting the plug.",
-                cancelBtnText: "Dismiss",
+                title: 'Something went wrong',
+                message: 'There is a problem with your Twitter plug. If the problem persists, we suggest ' +
+                         'disconnecting and re-connecting the plug.',
+                cancelBtnText: 'Dismiss',
                 buttons: [{
-                  title: "Reconnect Twitter Plug",
-                  link: `${this.protocol}//${this.hostname}/hatlogin?name=Twitter&redirect=https://twitter-plug.hubofallthings.net/authenticate/hat/`
+                  title: 'Reconnect Twitter Plug',
+                  link: `${this.protocol}//${this.hostname}/hatlogin?` +
+                        `name=Twitter&redirect=https://twitter-plug.hubofallthings.net/authenticate/hat/`
                 }]
               });
             }

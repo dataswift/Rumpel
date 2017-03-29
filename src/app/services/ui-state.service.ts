@@ -10,8 +10,8 @@ import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
 import { UserService } from '../user/user.service';
-import {User} from "../user/user.interface";
-import {DataTable} from "../shared/interfaces/data-table.interface";
+import {User} from '../user/user.interface';
+import {DataTable} from '../shared/interfaces/data-table.interface';
 
 @Injectable()
 export class UiStateService {

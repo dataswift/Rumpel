@@ -8,8 +8,8 @@
 
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { UiStateService } from '../../services';
-import { DataTable } from "../../shared/interfaces/data-table.interface";
-import { Subscription } from "rxjs";
+import { DataTable } from '../../shared/interfaces/data-table.interface';
+import { Subscription } from 'rxjs/Subscription';
 
 declare var $: any;
 
@@ -20,9 +20,9 @@ declare var $: any;
 })
 export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   public state: any;
-  private showLocationsTile = false;
-  private showEventsTile = false;
-  private showPostsTile = false;
+  public showLocationsTile = false;
+  public showEventsTile = false;
+  public showPostsTile = false;
   public tileHeights: { notables: number; profile: number };
   private sub: Subscription;
 

@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
  */
 
-import {Component, OnDestroy, Input} from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
 
 @Component({
   selector: 'rump-spinner',
@@ -16,9 +16,9 @@ import {Component, OnDestroy, Input} from '@angular/core';
 export class SpinnerComponent implements OnDestroy {
 
   private currentTimeout: any;
-  private isDelayedRunning: boolean = false;
+  public isDelayedRunning = false;
 
-  @Input() public delay: number = 300;
+  @Input() public delay = 300;
 
   @Input() public set isRunning(value: boolean) {
     if (!value) {

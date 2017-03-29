@@ -14,7 +14,7 @@ import { DataDebitConfirmComponent } from './data-debit-confirm/data-debit-confi
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: 'dataDebit/:uuid/confirm', component: DataDebitConfirmComponent, canActivate:[AuthGuard] }
+      { path: 'dataDebit/:uuid/confirm', component: DataDebitConfirmComponent, canActivate: [AuthGuard] }
     ])
   ],
   exports: [

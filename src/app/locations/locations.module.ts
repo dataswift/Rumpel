@@ -16,7 +16,7 @@ import { MapComponent } from './map/map.component';
 import { TileMapComponent } from './tile-map/tile-map.component';
 
 import { LocationsService } from './locations.service';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     imports: [ SharedModule, LocationsRoutingModule, FormsModule ],

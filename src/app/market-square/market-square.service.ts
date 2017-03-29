@@ -13,10 +13,10 @@ import { JwtHelper } from 'angular2-jwt';
 import { APP_CONFIG, IAppConfig } from '../app.config';
 
 import * as moment from 'moment';
-import {MSUserClaim} from "../shared/interfaces/MSUserClaim.interface";
-import {UserService} from "../user/user.service";
-import {User} from "../user/user.interface";
-import {HatApiService} from "../services/hat-api.service";
+import {MSUserClaim} from '../shared/interfaces/MSUserClaim.interface';
+import {UserService} from '../user/user.service';
+import {User} from '../user/user.interface';
+import {HatApiService} from '../services/hat-api.service';
 
 @Injectable()
 export class MarketSquareService {
@@ -40,7 +40,7 @@ export class MarketSquareService {
     userSvc.user$.subscribe((user: User) => {
       this.hatDomain = user.fullDomain;
 
-      //this.connectHAT(this.hatDomain);
+      // this.connectHAT(this.hatDomain);
     });
   }
 
@@ -65,7 +65,7 @@ export class MarketSquareService {
       .map(res => {
         this.offersStore = res.json();
         return this.offersStore;
-      })
+      });
   }
 
   getOfferIdByDataDebitId(dataDebitId: string): Observable<string> {
@@ -73,14 +73,14 @@ export class MarketSquareService {
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => {
-        let query = new URLSearchParams();
+        const query = new URLSearchParams();
         query.append('dataDebitId', dataDebitId);
 
         return this.http.get(url, { headers: headers, search: query, body: '' })
           .map(res => res.json().offerId);
       })
       .catch(err => {
-        return Observable.of("Offer not found.");
+        return Observable.of('Offer not found.');
       });
   }
 
@@ -99,7 +99,7 @@ export class MarketSquareService {
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
       .map(res => res.json()))
       .catch(err => {
-        console.log("Failed to claim data offer on user's behalf", err);
+        console.log(`Failed to claim data offer on user's behalf`, err);
         return Observable.of(null);
       });
   }
@@ -115,7 +115,7 @@ export class MarketSquareService {
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' }).map(res => res.json()))
-      .catch(err => Observable.of({ error: "Offer not found." }));
+      .catch(err => Observable.of({ error: 'Offer not found.' }));
   }
 
   markAsRead(notificationID: number): Observable<any> {
@@ -123,25 +123,25 @@ export class MarketSquareService {
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.put(url, {}, { headers: headers }).map(res => res.json()))
-      .catch(err => Observable.of({ error: "Offer could not be marked as read." }))
+      .catch(err => Observable.of({ error: 'Offer could not be marked as read.' }));
   }
 
   private getMarketSquareApplicationToken(): Observable<Headers> {
     if (this.applicationToken && this.applicationToken.token && this.applicationToken.expires > moment().unix()) {
-      let headers = new Headers();
+      const headers = new Headers();
       headers.append('X-Auth-Token', this.applicationToken.token);
 
       return Observable.of(headers);
     } else {
       return this.hatSvc.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
         .map(accessToken => {
-          let payload = this.jwt.decodeToken(accessToken);
+          const payload = this.jwt.decodeToken(accessToken);
           this.applicationToken = {
             token: accessToken,
             expires: payload['exp']
           };
 
-          let headers = new Headers();
+          const headers = new Headers();
           headers.append('X-Auth-Token', accessToken);
 
           return headers;
@@ -150,20 +150,20 @@ export class MarketSquareService {
   }
 
   tickle(): void {
-    const url = "https://notables.hubofallthings.com/api/bulletin/tickle";
+    const url = 'https://notables.hubofallthings.com/api/bulletin/tickle';
 
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
-    let query = new URLSearchParams();
+    const query = new URLSearchParams();
     query.append('phata', this.hatDomain);
 
     this.http.get(url, { headers: headers, search: query, body: '' })
       .subscribe((res: Response) => {
         if (res.status === 200) {
-          console.log("Notables service tickled.");
+          console.log('Notables service tickled.');
         } else {
-          console.log("Failed to tickle notables service.");
+          console.log('Failed to tickle notables service.');
         }
       });
   }
@@ -175,11 +175,11 @@ export class MarketSquareService {
   connectHAT(hatDomain: string): void {
     const url = this.config.market.url + '/dataplugs/' + this.config.market.id + '/connect';
 
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('X-Auth-Token', this.config.market.accessToken);
 
-    let query = new URLSearchParams();
+    const query = new URLSearchParams();
     query.append('hat', hatDomain);
 
     this.http.get(url, { headers: headers, search: query, body: '' })
@@ -195,9 +195,9 @@ export class MarketSquareService {
   }
 
   private handleError(error: Response) {
-    const body = error.json() || "";
+    const body = error.json() || '';
     const err = body.error || JSON.stringify(body);
-    const errMsg = `${error.status} - ${error.statusText || ""}
+    const errMsg = `${error.status} - ${error.statusText || ''}
                     ${err}`;
 
     console.warn(errMsg);

@@ -7,14 +7,13 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs/Rx';
 
 import { HatApiService } from '../services/hat-api.service';
 import { Location } from '../shared/interfaces';
 
 import * as moment from 'moment';
-import {BaseDataService} from "../services/base-data.service";
-import {UiStateService} from "../services/ui-state.service";
+import {BaseDataService} from '../services/base-data.service';
+import {UiStateService} from '../services/ui-state.service';
 
 declare var L: any;
 
@@ -28,17 +27,18 @@ export class LocationsService extends BaseDataService<Location> {
 
     this.baseMaps = {
       OpenStreetMap: new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+        attribution: `Map data &copy; <a href='http://openstreetmap.org'>OpenStreetMap</a> contributors,` +
+                     `<a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>`
       })
     };
 
-    this.ensureTableExists("locations", "iphone");
+    this.ensureTableExists('locations', 'iphone');
   }
 
   getCurrentDeviceLocation(callback) {
     navigator.geolocation.getCurrentPosition(
       location => {
-        let here: Location = {
+        const here: Location = {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
           accuracy: location.coords.accuracy

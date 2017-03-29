@@ -7,8 +7,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import {Http, Headers, URLSearchParams, Response} from '@angular/http';
-import { AuthHttp } from "./auth-http.service";
+import { Http, Headers, URLSearchParams, Response } from '@angular/http';
+import { AuthHttp } from './auth-http.service';
 import { Observable } from 'rxjs/Rx';
 import { DataDebit } from '../shared/interfaces/index';
 import { User } from '../user/user.interface';
@@ -16,14 +16,29 @@ import * as moment from 'moment';
 
 @Injectable()
 export class HatApiService {
+
+  static stringify(value: any): string {
+    if (typeof value === 'string') {
+      return value;
+    } else if (value === null) {
+      return '';
+    } else if (moment.isMoment(value)) {
+      return value.format();
+    } else if (Array.isArray(value)) {
+      return value.join(',');
+    } else {
+      return '' + value;
+    }
+  }
+
   constructor(private http: Http,
               private authHttp: AuthHttp) {}
 
   // validateToken(domain: string, token: string) {
   //   const url = `//${domain}/users/access_token/validate`;
-  //   let headers = new Headers();
-  //   headers.append("Content-Type", "application/json");
-  //   headers.append("X-Auth-Token", token);
+  //   const headers = new Headers();
+  //   headers.append('Content-Type', 'application/json');
+  //   headers.append('X-Auth-Token', token);
   //
   //   return this._http.get(url, { headers: headers, body: '' }).map(res => res.json());
   // }
@@ -31,9 +46,9 @@ export class HatApiService {
   /* User authentication management methods */
 
   login(username: string, password: string): Observable<User> {
-    let headers = new Headers({ username: username, password: password });
+    const headers = new Headers({ username: username, password: password });
 
-    return this.http.get("users/access_token", { headers: headers, body: '' })
+    return this.http.get('users/access_token', { headers: headers, body: '' })
       .map((res: Response) => {
         const token = res.json().accessToken;
         return this.authHttp.setToken(token);
@@ -45,48 +60,48 @@ export class HatApiService {
   }
 
   hatLogin(name: string, redirect: string): Observable<any> {
-    let queryParams = new URLSearchParams();
-    queryParams.append("name", name);
-    queryParams.append("redirect", redirect);
+    const queryParams = new URLSearchParams();
+    queryParams.append('name', name);
+    queryParams.append('redirect', redirect);
 
-    return this.authHttp.get("/control/v2/auth/hatlogin", { search: queryParams })
-      .map((res: Response) => res.json()["message"]);
+    return this.authHttp.get('/control/v2/auth/hatlogin', { search: queryParams })
+      .map((res: Response) => res.json()['message']);
   }
 
   recoverPassword(body: any): Observable<any> {
-    let headers = new Headers({ "Content-Type": "application/json" });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    return this.http.post("/control/v2/auth/passwordReset", body, { headers: headers })
+    return this.http.post('/control/v2/auth/passwordReset', body, { headers: headers })
       .map((res: Response) => res.json());
   }
 
   changePassword(body: any): Observable<any> {
-    return this.authHttp.post("/control/v2/auth/password", body)
+    return this.authHttp.post('/control/v2/auth/password', body)
       .map((res: Response) => res.json());
   }
 
   resetPassword(resetToken: string, body: any): Observable<any> {
-    let headers = new Headers({ "Content-Type": "application/json" });
+    const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    return this.http.post("/control/v2/auth/passwordreset/confirm/" + resetToken, body, { headers: headers })
+    return this.http.post('/control/v2/auth/passwordreset/confirm/' + resetToken, body, { headers: headers })
       .map((res: Response) => res.json());
   }
 
   /* Application authentication management methods */
 
   getApplicationToken(name: string, resource: string): Observable<string> {
-    let query: URLSearchParams = new URLSearchParams();
+    const query: URLSearchParams = new URLSearchParams();
     query.append('name', name);
     query.append('resource', resource);
 
-    return this.authHttp.get("/users/application_token", { search: query })
+    return this.authHttp.get('/users/application_token', { search: query })
       .map(res => res.json().accessToken);
   }
 
   /* Data table methods */
 
   getTableList(): Observable<any> {
-    return this.authHttp.get("/data/sources").map(res => res.json());
+    return this.authHttp.get('/data/sources').map(res => res.json());
   }
 
   // getDataSources(): Observable<any> {
@@ -97,14 +112,16 @@ export class HatApiService {
   // }
 
   getTable(name: string, source: string): Observable<any> {
-    let query: URLSearchParams = new URLSearchParams();
+    const query: URLSearchParams = new URLSearchParams();
     query.append('name', name);
     query.append('source', source);
 
-    return this.authHttp.get("/data/table", { search: query })
+    return this.authHttp.get('/data/table', { search: query })
       .map(res => res.json())
       .catch(e => {
-        if (e.status === 404) return Observable.of("Not Found");
+        if (e.status === 404) {
+          return Observable.of('Not Found');
+        }
       });
   }
 
@@ -123,7 +140,7 @@ export class HatApiService {
   }
 
   postModel(model: any): Observable<any> {
-    return this.authHttp.post("/data/table", model)
+    return this.authHttp.post('/data/table', model)
       .map(res => res.json())
       .map(rawModel => {
         return {
@@ -138,7 +155,7 @@ export class HatApiService {
   getAllValuesOf(name: string, source: string, startTime?: string): Observable<any> {
     return this.getTable(name, source)
       .flatMap(table => {
-        if (table === "Not Found") {
+        if (table === 'Not Found') {
           return Observable.of([]);
         } else {
           if (name === 'profile' || name === 'photos' || name === 'metadata' || name === 'profile_picture') {
@@ -153,7 +170,7 @@ export class HatApiService {
   postRecord(obj: any, hatIdMapping: any, prefix: string = 'default'): Observable<any> {
     const hatFormattedObj = this.createRecord(obj, hatIdMapping, prefix);
 
-    return this.authHttp.post("/data/record/values", hatFormattedObj)
+    return this.authHttp.post('/data/record/values', hatFormattedObj)
         .map(res => res.json());
   }
 
@@ -163,13 +180,13 @@ export class HatApiService {
   }
 
   getValues(tableId: number, startTime: string = '0', pretty: boolean = false): Observable<any> {
-    let query: URLSearchParams = new URLSearchParams();
+    const query: URLSearchParams = new URLSearchParams();
     query.append('starttime', startTime);
     if (pretty) {
       query.append('pretty', pretty.toString());
     }
 
-    let requestObservable = this.authHttp.get(`/data/table/${tableId}/values`, { search: query })
+    const requestObservable = this.authHttp.get(`/data/table/${tableId}/values`, { search: query })
       .map(res => res.json());
 
     if (pretty) {
@@ -180,7 +197,7 @@ export class HatApiService {
   }
 
   getValuesWithLimit(tableId: number, limit: number = 50, endtime: string = null, starttime: string = null): Observable<any> {
-    let query: URLSearchParams = new URLSearchParams();
+    const query: URLSearchParams = new URLSearchParams();
     query.append('pretty', 'true');
     query.append('limit', limit.toString());
     query.append('starttime', starttime || '0');
@@ -196,11 +213,11 @@ export class HatApiService {
   /* Data debit methods */
 
   getSlimDataDebit(uuid: string): Observable<DataDebit> {
-    return this.authHttp.get(`/dataDebit/${uuid}`).map(res => res.json())
+    return this.authHttp.get(`/dataDebit/${uuid}`).map(res => res.json());
   }
 
   getDataDebit(uuid: string) {
-    let query: URLSearchParams = new URLSearchParams();
+    const query: URLSearchParams = new URLSearchParams();
     query.append('limit', '0');
     query.append('starttime', '0');
 
@@ -210,7 +227,7 @@ export class HatApiService {
   }
 
   getAllDataDebits() {
-    return this.authHttp.get("/dataDebit").map(res => res.json());
+    return this.authHttp.get('/dataDebit').map(res => res.json());
   }
 
   updateDataDebit(uuid: string, action: string): Observable<any> {
@@ -220,40 +237,26 @@ export class HatApiService {
   /* HAT Public API methods */
 
   getPublicData(endpoint: string): Observable<any> {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
 
     return this.http.get(`/api/${endpoint}`, { headers: headers, body: '' })
       .map(res => res.json())
       .catch(err => {
         console.warn(`Could not access public data of the current HAT.
                       Reason: ${err}`);
-        return Observable.of(endpoint === "profile" ? { "public": false } : []);
+        return Observable.of(endpoint === 'profile' ? { 'public': false } : []);
       });
   }
 
   /* System status methods */
 
   getAccountStatus(): Observable<any> {
-    return this.authHttp.get("/api/v2/system/status")
+    return this.authHttp.get('/api/v2/system/status')
       .map((res: Response) => res.json());
   }
 
   /* Private helper methods */
-
-  static stringify(value: any): string {
-    if (typeof value === 'string') {
-      return value;
-    } else if (value === null) {
-      return "";
-    } else if (moment.isMoment(value)) {
-      return value.format();
-    } else if (Array.isArray(value)) {
-      return value.join(",");
-    } else {
-      return "" + value;
-    }
-  }
 
   private createRecord(obj: any, hatIdMapping: any, prefix: string) {
     if (Array.isArray(obj)) {
@@ -261,13 +264,13 @@ export class HatApiService {
         return {
           record: { name: new Date() },
           values: this.createValue(record, hatIdMapping, prefix)
-        }
+        };
       });
     } else {
       return [{
         record: { name: new Date() },
         values: this.createValue(obj, hatIdMapping, prefix)
-      }]
+      }];
     }
   }
 
@@ -291,7 +294,7 @@ export class HatApiService {
   }
 
   private mapDataSource(table: any, prefix: string = 'default') {
-    var mapping = {};
+    const mapping = {};
 
     table.fields.reduce((acc, field) => {
       acc[prefix + '_' + field.name] = field.id;
@@ -299,8 +302,8 @@ export class HatApiService {
     }, mapping);
 
     if (table.subTables) {
-      const mappedSubTables = table.subTables.reduce((acc, table) => {
-        const mappedTable = this.mapDataSource(table, prefix + '_' + table.name);
+      const mappedSubTables = table.subTables.reduce((acc, tableNode) => {
+        const mappedTable = this.mapDataSource(tableNode, prefix + '_' + tableNode.name);
         Object.assign(acc, mappedTable);
         return acc;
       }, mapping);
@@ -310,23 +313,23 @@ export class HatApiService {
   }
 
   private transformDataDebit(rawDebit) {
-    let dataGroups = rawDebit.bundleContextless.dataGroups;
+    const dataGroups = rawDebit.bundleContextless.dataGroups;
 
-    let dataGroupsNames = Object.keys(dataGroups);
+    const dataGroupsNames = Object.keys(dataGroups);
 
-    let mappedDataGroups = dataGroupsNames.map(groupName => {
+    const mappedDataGroups = dataGroupsNames.map(groupName => {
       return {
         name: groupName,
         data: dataGroups[groupName].map(group => {
           return {
             name: group.name,
             data: this.transformRecord(group.data)
-          }
+          };
         })
-      }
+      };
     });
 
-    let processedDebit: DataDebit = {
+    const processedDebit: DataDebit = {
       dateCreated: moment(rawDebit.dateCreated),
       startDate: moment(rawDebit.startDate),
       endDate: moment(rawDebit.endDate),
@@ -350,7 +353,7 @@ export class HatApiService {
   }
 
   private processNode(node) {
-    var values = {};
+    const values = {};
     node.fields.reduce((acc, field) => {
       if (field.values) {
         acc[field.name] = field.values[0].value;

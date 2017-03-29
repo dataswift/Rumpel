@@ -7,9 +7,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MarketSquareService } from '../market-square/market-square.service';
-import { ExternalNotification } from "../shared/interfaces/index";
+import { ExternalNotification } from '../shared/interfaces/index';
 
 @Injectable()
 export class NotificationsService {
@@ -75,7 +75,7 @@ export class NotificationsService {
   markAsRead(notification: ExternalNotification) {
     if (!notification.read) {
       this._marketSvc.markAsRead(notification.notice.id).subscribe((readNotification: ExternalNotification) => {
-        let foundNotificationIndex = this.hatdexNotifications.findIndex(note => note.notice.id === readNotification.notice.id);
+        const foundNotificationIndex = this.hatdexNotifications.findIndex(note => note.notice.id === readNotification.notice.id);
         this.hatdexNotifications[foundNotificationIndex] = readNotification;
 
         this.unreadNotifications = this.countUnread();
@@ -87,7 +87,7 @@ export class NotificationsService {
 
   private countUnread(): number {
     let unreadCount = 0;
-    for (let notification of this.hatdexNotifications) {
+    for (const notification of this.hatdexNotifications) {
       if (!notification.read) {
         unreadCount++;
       }

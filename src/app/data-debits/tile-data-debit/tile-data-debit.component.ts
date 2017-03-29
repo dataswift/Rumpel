@@ -8,8 +8,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { DataDebitService } from '../data-debits.service';
-import {UserService} from "../../user/user.service";
-import {User} from "../../user/user.interface";
+import {UserService} from '../../user/user.service';
+import {User} from '../../user/user.interface';
 
 @Component({
   selector: 'rump-tile-data-debit',
@@ -30,7 +30,7 @@ export class TileDataDebitComponent implements OnInit {
           this.debits = dataDebits;
         });
       }
-    })
+    });
   }
 
 }

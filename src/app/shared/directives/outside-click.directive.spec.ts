@@ -13,7 +13,7 @@ import { OutsideClick } from './outside-click.directive';
 
 describe('OutsideClick', () => {
   it('should create an instance', () => {
-    let directive = new OutsideClick();
+    const directive = new OutsideClick();
     expect(directive).toBeTruthy();
   });
 });

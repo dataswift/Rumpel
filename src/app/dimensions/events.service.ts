@@ -8,8 +8,8 @@
 
 import { Injectable } from '@angular/core';
 import { HatApiService } from '../services/hat-api.service';
-import {BaseDataService} from "../services/base-data.service";
-import {UiStateService} from "../services/ui-state.service";
+import {BaseDataService} from '../services/base-data.service';
+import {UiStateService} from '../services/ui-state.service';
 
 import { Event } from '../shared/interfaces';
 import * as moment from 'moment';
@@ -22,7 +22,7 @@ export class EventsService extends BaseDataService<Event> {
   constructor(hatSvc: HatApiService, uiSvc: UiStateService) {
     super(hatSvc, uiSvc);
 
-    this.ensureTableExists("events", "ical");
+    this.ensureTableExists('events', 'ical');
   }
 
   mapData(rawEvent: any): Event {

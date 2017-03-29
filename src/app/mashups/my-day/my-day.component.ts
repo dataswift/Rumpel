@@ -16,11 +16,11 @@ import { Post, Event, Photo, Location } from '../../shared/interfaces/index';
 import { ExpandedTime } from '../../shared/interfaces/index';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { NotablesService } from "../../notables/notables.service";
-import { Notable } from "../../shared/interfaces/notable.class";
-import {Subscription, Observable} from "rxjs";
-import {FacebookEventsService} from "../../dimensions/facebook-events.service";
-import {GoogleEventsService} from "../../dimensions/google-events.service";
+import { NotablesService } from '../../notables/notables.service';
+import { Notable } from '../../shared/interfaces/notable.class';
+import {Subscription, Observable} from 'rxjs/Rx';
+import {FacebookEventsService} from '../../dimensions/facebook-events.service';
+import {GoogleEventsService} from '../../dimensions/google-events.service';
 
 @Component({
   selector: 'rump-my-day',
@@ -30,16 +30,16 @@ import {GoogleEventsService} from "../../dimensions/google-events.service";
 export class MyDayComponent implements OnInit {
   private eventsSub: Subscription;
   private imgSub;
-  private posts: Array<Post> = [];
-  private events: Array<Event> = [];
-  private locations: Array<Location> = [];
-  private photos: Array<Photo> = [];
-  private notables: Array<Notable> = [];
+  public posts: Array<Post> = [];
+  public events: Array<Event> = [];
+  public locations: Array<Location> = [];
+  public photos: Array<Photo> = [];
+  public notables: Array<Notable> = [];
   public selectedTime: ExpandedTime;
-  public shownComponents: { [key:string]:boolean };
+  public shownComponents: { [key: string]: boolean; };
   public safeSize;
-  private totalDP: number = 0;
-  private loading: boolean = false;
+  private totalDP = 0;
+  public loading = false;
   public timeline: Array<ExpandedTime>;
 
   constructor(private locationsSvc: LocationsService,
@@ -53,7 +53,7 @@ export class MyDayComponent implements OnInit {
   }
 
   ngOnInit() {
-    let now = moment();
+    const now = moment();
     this.selectedTime = new ExpandedTime(now);
     this.timeline = [new ExpandedTime(now)];
     this.shownComponents = { map: true, events: true, photos: true, timeline: true };
@@ -100,8 +100,8 @@ export class MyDayComponent implements OnInit {
   }
 
   addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
-    //console.log(dataPoints);
-    let timestamps: Array<ExpandedTime> = _.sortedUniqBy(
+    // console.log(dataPoints);
+    const timestamps: Array<ExpandedTime> = _.sortedUniqBy(
       dataPoints.map(dp => new ExpandedTime(dp[timeField])).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
       'unixDayStart');
 

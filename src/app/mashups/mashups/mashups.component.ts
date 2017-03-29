@@ -15,15 +15,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./mashups.component.scss']
 })
 export class MashupsComponent implements OnInit {
-
-  private activeTab: string;
+  public activeTab: string;
 
   constructor(private router: Router) { }
 
   ngOnInit() {
     this.router.events.subscribe(routerEvent => {
       this.activeTab = routerEvent.url;
-    })
+    });
   }
 
 }

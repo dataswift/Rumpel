@@ -37,7 +37,7 @@
   <div class="arrow-down" [class.sharing-on]="currentNotable.isShared"></div>
 
   <button type="button" class="btn btn-options"
-          [class.on]="reportLocation"
+          [class.on]="currentNotableMeta.reportLocation"
           (click)="toggleLocation()">
     <span class="ss-location ss-glyphish-filled"></span>
   </button>

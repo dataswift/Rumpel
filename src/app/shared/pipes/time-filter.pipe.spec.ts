@@ -13,7 +13,7 @@ import { TimeFilterPipe } from './time-filter.pipe';
 
 describe('TimeFilterPipe', () => {
   it('create an instance', () => {
-    let pipe = new TimeFilterPipe();
+    const pipe = new TimeFilterPipe();
     expect(pipe).toBeTruthy();
   });
 });

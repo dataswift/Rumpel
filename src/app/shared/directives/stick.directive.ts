@@ -9,12 +9,12 @@
 import { Directive, ElementRef, Input, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[stick]'
+  selector: '[rumpStick]'
 })
 export class StickDirective {
 
-  private _minY: number = 100;
-  private _className: string = 'stick';
+  private _minY = 100;
+  private _className = 'stick';
 
   @Input('stickMin') set stickMin(minY: number) {
     this._minY = minY || this._minY;

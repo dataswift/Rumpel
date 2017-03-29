@@ -13,7 +13,7 @@ import { WithObjectPipe } from './with-object.pipe';
 
 describe('WithObjectPipe', () => {
   it('create an instance', () => {
-    let pipe = new WithObjectPipe();
+    const pipe = new WithObjectPipe();
     expect(pipe).toBeTruthy();
   });
 });

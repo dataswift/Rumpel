@@ -7,12 +7,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import {HatApiService} from "../services/hat-api.service";
-import {UiStateService} from "../services/ui-state.service";
-import {BaseDataService} from "../services/base-data.service";
+import {HatApiService} from '../services/hat-api.service';
+import {UiStateService} from '../services/ui-state.service';
+import {BaseDataService} from '../services/base-data.service';
 
 import { Event } from '../shared/interfaces/index';
-import * as moment from "moment";
+import * as moment from 'moment';
 
 @Injectable()
 export class GoogleEventsService extends BaseDataService<Event> {
@@ -20,7 +20,7 @@ export class GoogleEventsService extends BaseDataService<Event> {
   constructor(hatSvc: HatApiService, uiSvc: UiStateService) {
     super(hatSvc, uiSvc);
 
-    this.ensureTableExists("events", "google");
+    this.ensureTableExists('events', 'google');
   }
 
   mapData(rawEvent: any): Event {

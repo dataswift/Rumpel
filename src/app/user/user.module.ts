@@ -7,11 +7,11 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import { FormsModule } from '@angular/forms';
 
-import { SharedModule } from "../shared/shared.module";
-import { LoginComponent } from "./login/login.component";
-import { UserService } from "./user.service";
+import { SharedModule } from '../shared/shared.module';
+import { LoginComponent } from './login/login.component';
+import { UserService } from './user.service';
 import { PasswordRecoverComponent } from './password-recover/password-recover.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';

@@ -9,7 +9,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UserService } from './user/user.service';
-import { APP_CONFIG, IAppConfig } from "./app.config";
+import { APP_CONFIG, IAppConfig } from './app.config';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,21 +19,21 @@ export class AuthGuard implements CanActivate {
               private userSvc: UserService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (route.queryParams["token"]) {
-      return this.userSvc.loginWithToken(route.queryParams["token"]);
+    if (route.queryParams['token']) {
+      return this.userSvc.loginWithToken(route.queryParams['token']);
     } else if (this.userSvc.isLoggedIn()) {
       return true;
     } else {
-      let navExtras: NavigationExtras = {
+      const navExtras: NavigationExtras = {
         queryParams: { target: route.routeConfig.path }
       };
 
-      if (route.queryParams["name"] && route.queryParams["redirect"]) {
-        navExtras.queryParams["name"] = route.queryParams["name"];
-        navExtras.queryParams["redirect"] = route.queryParams["redirect"];
+      if (route.queryParams['name'] && route.queryParams['redirect']) {
+        navExtras.queryParams['name'] = route.queryParams['name'];
+        navExtras.queryParams['redirect'] = route.queryParams['redirect'];
       }
 
-      const redirectPath = this.config.native ? ["user", "login"] : ["user", "login", "start"];
+      const redirectPath = this.config.native ? ['user', 'login'] : ['user', 'login', 'start'];
 
       this.router.navigate(redirectPath, navExtras);
       return false;

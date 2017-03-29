@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from "../user.service";
-import { User } from "../user.interface";
-import { AccountStatus } from "../account-status.interface";
+import { UserService } from '../user.service';
+import { User } from '../user.interface';
+import { AccountStatus } from '../account-status.interface';
 
 @Component({
   selector: 'rump-account-status-tile',
@@ -9,8 +9,8 @@ import { AccountStatus } from "../account-status.interface";
   styleUrls: ['./account-status-tile.component.scss']
 })
 export class AccountStatusTileComponent implements OnInit {
-  private username: string;
-  private accountStatus: AccountStatus;
+  public username: string;
+  public accountStatus: AccountStatus;
 
   constructor(private userSvc: UserService) { }
 

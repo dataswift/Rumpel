@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { UserService } from "../user.service";
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../user.service';
 
 declare var zxcvbn: any;
 
@@ -10,22 +10,22 @@ declare var zxcvbn: any;
   styleUrls: ['./password-change.component.scss']
 })
 export class PasswordChangeComponent implements OnInit {
-  private colorMapping = ["red", "red", "orange", "green", "green"];
-  private evaluationMapping = ["Too guessable", "Weak", "So-so", "Strong", "Very Strong"];
-  private resetToken: string;
-  private unauthorizedError: boolean;
-  private matchError: boolean;
-  private strengthError: string;
-  private successMessage: string;
-  private passwordStrength: any;
-  private loadingText: string;
+  public colorMapping = ['red', 'red', 'orange', 'green', 'green'];
+  public evaluationMapping = ['Too guessable', 'Weak', 'So-so', 'Strong', 'Very Strong'];
+  public resetToken: string;
+  public unauthorizedError: boolean;
+  public matchError: boolean;
+  public strengthError: string;
+  public successMessage: string;
+  public passwordStrength: any;
+  public loadingText: string;
 
   constructor(private route: ActivatedRoute,
               private userSvc: UserService) { }
 
   ngOnInit() {
     this.route.params.subscribe((routeParams) => {
-      this.resetToken = routeParams["resetToken"] || null;
+      this.resetToken = routeParams['resetToken'] || null;
     });
   }
 
@@ -46,7 +46,7 @@ export class PasswordChangeComponent implements OnInit {
       const passwordStrength = zxcvbn(form.value.newPassword);
 
       if (passwordStrength.score <= 2) {
-        this.strengthError = "ERROR: Password is too weak. Please make it harder to guess.";
+        this.strengthError = 'ERROR: Password is too weak. Please make it harder to guess.';
         return;
       }
 
@@ -61,40 +61,40 @@ export class PasswordChangeComponent implements OnInit {
   }
 
   private changePassword(oldPassword: string, newPassword: string) {
-    this.loadingText = "Saving new password";
+    this.loadingText = 'Saving new password';
     this.userSvc.changePassword(oldPassword, newPassword)
       .subscribe(
         (res: any) => {
           this.loadingText = null;
-          this.successMessage = "Password changed.";
+          this.successMessage = 'Password changed.';
         },
         error => {
-          console.warn("Failed to recover password. Reason: ", error);
+          console.warn('Failed to recover password. Reason: ', error);
           this.loadingText = null;
           if (error.status === 403) {
             this.unauthorizedError = true;
           } else {
-            this.strengthError = "ERROR: Failed to request password change.";
+            this.strengthError = 'ERROR: Failed to request password change.';
           }
         }
       );
   }
 
   private resetPassword(resetToken: string, newPassword: string) {
-    this.loadingText = "Saving new password";
+    this.loadingText = 'Saving new password';
     this.userSvc.resetPassword(resetToken, newPassword)
       .subscribe(
         (res: any) => {
           this.loadingText = null;
-          this.successMessage = "Password reset.";
+          this.successMessage = 'Password reset.';
         },
         error => {
-          console.warn("Failed to recover password. Reason: ", error);
+          console.warn('Failed to recover password. Reason: ', error);
           this.loadingText = null;
           if (error.status === 403) {
             this.unauthorizedError = true;
           } else {
-            this.strengthError = "ERROR: Failed to request password change.";
+            this.strengthError = 'ERROR: Failed to request password change.';
           }
         }
       );

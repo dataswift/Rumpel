@@ -21,7 +21,7 @@ export class TileMapComponent implements OnInit, OnDestroy {
   @Input() info;
   public locations: Array<Location>;
   private sub;
-  private totalDP: number = 0;
+  private totalDP = 0;
   public safeSize;
 
   constructor(private sanitizer: DomSanitizer,

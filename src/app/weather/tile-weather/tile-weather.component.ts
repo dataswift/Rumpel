@@ -29,7 +29,9 @@ export class TileWeatherComponent implements OnInit {
     this.weatherSvc.getCurrentWeather('UK', 'London').subscribe(
       currentw => {
         this.icon = currentw.weather.replace(new RegExp(' ', 'g'), '').toLowerCase();
-        if (this.icon === 'haze' || this.icon === 'clear') this.icon = 'cloud';
+        if (this.icon === 'haze' || this.icon === 'clear') {
+          this.icon = 'cloud';
+        }
         this.city = currentw.display_location.full;
         this.temp = currentw.temp_c;
         this.description = currentw.weather;

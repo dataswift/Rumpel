@@ -10,9 +10,9 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Notable, Location } from '../../shared/interfaces';
-import {DialogService} from "../../layout/dialog.service";
-import {ConfirmBoxComponent} from "../../layout/confirm-box/confirm-box.component";
-import {CurrentNotableMeta} from "../../shared/interfaces/current-notable-meta.interface";
+import {DialogService} from '../../layout/dialog.service';
+import {ConfirmBoxComponent} from '../../layout/confirm-box/confirm-box.component';
+import {CurrentNotableMeta} from '../../shared/interfaces/current-notable-meta.interface';
 
 declare var SimpleMDE: any;
 
@@ -25,13 +25,13 @@ export class NotablesMdEditorComponent implements OnInit {
   @Input() profile: { photo: { url: string; shared: boolean; }; };
   @ViewChild('editor') textarea: ElementRef;
   private mde: any;
-  private currentNotableMeta: CurrentNotableMeta;
-  private editMode: boolean = false;
+  public currentNotableMeta: CurrentNotableMeta;
+  public editMode = false;
   public currentNotable: Notable;
-  private cannotPostMessage: string;
+  public cannotPostMessage: string;
 
   constructor(private locationSvc: LocationsService,
-              private notablesSvc: NotablesService,
+              public notablesSvc: NotablesService,
               private dialogSvc: DialogService) { }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class NotablesMdEditorComponent implements OnInit {
       status: false
     });
 
-    this.currentNotableMeta ={
+    this.currentNotableMeta = {
       phata: this.notablesSvc.hatDomain,
       expires: 0,
       reportLocation: false
@@ -118,13 +118,13 @@ export class NotablesMdEditorComponent implements OnInit {
 
   submit() {
     if (this.currentNotable.isShared === true && this.currentNotable.shared_on.length === 0) {
-      this.cannotPostMessage = "Please select at least one shared destination.";
+      this.cannotPostMessage = 'Please select at least one shared destination.';
       return;
     }
 
     if (!this.mde.value()) { return; }
 
-    let author = { phata: this.currentNotableMeta.phata };
+    const author = { phata: this.currentNotableMeta.phata };
 
     if (this.profile.photo.shared) {
       author['photo_url'] = this.profile.photo.url;
@@ -151,11 +151,13 @@ export class NotablesMdEditorComponent implements OnInit {
             this.updateNotableHelper();
           }
         });
-      } else if (this.currentNotable.message !== this.currentNotableMeta.initialState.message && this.currentNotable.isShared === true && this.currentNotableMeta.initialState.isShared === true) {
+      } else if (this.currentNotable.message !== this.currentNotableMeta.initialState.message &&
+                 this.currentNotable.isShared === true &&
+                 this.currentNotableMeta.initialState.isShared === true) {
         this.dialogSvc.createDialog(ConfirmBoxComponent, {
           message: `Your post would not be edited at the destination.`,
           accept: () => {
-            this.updateNotableHelper()
+            this.updateNotableHelper();
           }
         });
       } else {

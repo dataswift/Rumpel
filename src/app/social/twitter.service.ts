@@ -7,12 +7,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HatApiService } from "../services/hat-api.service";
+import { HatApiService } from '../services/hat-api.service';
 
 import { Tweet } from '../shared/interfaces/index';
 import * as moment from 'moment';
 import { BaseDataService } from '../services/base-data.service';
-import { UiStateService } from "../services/ui-state.service";
+import { UiStateService } from '../services/ui-state.service';
 
 @Injectable()
 export class TwitterService extends BaseDataService<Tweet> {
@@ -26,11 +26,11 @@ export class TwitterService extends BaseDataService<Tweet> {
   mapData(rawTweet: any): Tweet {
     const tweetContent = rawTweet.data.tweets;
 
-    let tweet: Tweet = {
+    const tweet: Tweet = {
       id: tweetContent.id,
       text: tweetContent.text,
       createdTime: moment(rawTweet.lastUpdated),
-      type: "tweet",
+      type: 'tweet',
       favorite_count: tweetContent.favorite_count,
       retweet_count: tweetContent.retweet_count,
       user: {
@@ -51,7 +51,7 @@ export class TwitterService extends BaseDataService<Tweet> {
         id: tweetContent.media.id,
         media_url_https: tweetContent.media.media_url_https,
         type: tweetContent.media.type
-      }
+      };
     }
 
     return tweet;

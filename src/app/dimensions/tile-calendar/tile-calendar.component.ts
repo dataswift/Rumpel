@@ -8,14 +8,14 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventsService } from '../events.service';
-import {FacebookEventsService} from "../facebook-events.service";
-import {GoogleEventsService} from "../google-events.service";
+import {FacebookEventsService} from '../facebook-events.service';
+import {GoogleEventsService} from '../google-events.service';
 import { Event } from '../../shared/interfaces/index';
 
 import * as moment from 'moment';
-import { Observable, Subscription } from "rxjs/Rx";
-import {UiStateService} from "../../services/ui-state.service";
-import {DataTable} from "../../shared/interfaces/data-table.interface";
+import { Observable, Subscription } from 'rxjs/Rx';
+import {UiStateService} from '../../services/ui-state.service';
+import {DataTable} from '../../shared/interfaces/data-table.interface';
 
 @Component({
   selector: 'rump-tile-calendar',
@@ -24,8 +24,8 @@ import {DataTable} from "../../shared/interfaces/data-table.interface";
 })
 export class TileCalendarComponent implements OnInit, OnDestroy {
   private events: Array<{ relativeTime: string; events: Array<Event> }>;
-  private eventsExist: boolean = false;
-  private upcomingEventsExist: boolean;
+  public eventsExist = false;
+  public upcomingEventsExist: boolean;
   private sub: Subscription;
 
   constructor(private eventsSvc: EventsService,
@@ -34,7 +34,7 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
               private uiStateSvc: UiStateService) {}
 
   ngOnInit() {
-    this.events = [{ relativeTime: "today", events: [] }, { relativeTime: "tomorrow", events: [] }];
+    this.events = [{ relativeTime: 'today', events: [] }, { relativeTime: 'tomorrow', events: [] }];
     this.sub =
       Observable.merge(
         this.eventsSvc.data$,
@@ -43,7 +43,7 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
       ).subscribe(this.handleEventAddition);
 
     this.uiStateSvc.tables$.subscribe((tables: DataTable[]) => {
-      const foundTable = tables.find((table: DataTable) => table.name === "events");
+      const foundTable = tables.find((table: DataTable) => table.name === 'events');
       if (foundTable) {
         this.eventsExist = true;
       }
@@ -55,12 +55,12 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
   }
 
   private handleEventAddition(events: Array<Event>): void {
-    let upcomingEvents = events
+    const upcomingEvents = events
       .filter(event => event.start.isAfter(moment().startOf('day')) && event.start.isBefore(moment().add(1, 'days').endOf('day')))
       .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
 
     if (upcomingEvents.length > 0) {
-      let daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
+      const daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
       this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
       this.events[1].events = this.events[1].events.concat(upcomingEvents);
 

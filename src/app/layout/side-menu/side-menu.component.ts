@@ -10,12 +10,12 @@ import {Component, OnInit, Output, EventEmitter, Inject} from '@angular/core';
 import { UiStateService, UserService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
-import { Subscription } from "rxjs";
-import { DataTable } from "../../shared/interfaces/data-table.interface";
-import { NotificationsService } from "../notifications.service";
-import { Router, NavigationEnd } from "@angular/router";
-import { APP_CONFIG, IAppConfig} from "../../app.config";
-import { User } from "../../user/user.interface";
+import { Subscription } from 'rxjs/Subscription';
+import { DataTable } from '../../shared/interfaces/data-table.interface';
+import { NotificationsService } from '../notifications.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { APP_CONFIG, IAppConfig} from '../../app.config';
+import { User } from '../../user/user.interface';
 
 @Component({
   selector: 'rump-side-menu',
@@ -26,11 +26,11 @@ export class SideMenuComponent implements OnInit {
   public selectedItem: string;
   private sub: Subscription;
   public state: any;
-  private userAuthenticated: boolean;
+  public userAuthenticated: boolean;
   public menu: Array<any>;
   private comingSoonMenu: Array<any>;
-  private unreadNotifications: number;
-  private totalNotifications: number;
+  public unreadNotifications: number;
+  public totalNotifications: number;
 
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
@@ -64,8 +64,8 @@ export class SideMenuComponent implements OnInit {
     this.comingSoonMenu = this.config.menuItems.comingSoon;
 
     this.sub = this.uiState.tables$.subscribe((tables: Array<DataTable>) => {
-      for (let table of tables) {
-        let itemToActivate = this.menu.find(menuItem => menuItem.dataType.includes(table.name));
+      for (const table of tables) {
+        const itemToActivate = this.menu.find(menuItem => menuItem.dataType.includes(table.name));
         if (itemToActivate) {
           itemToActivate.disable = '';
         }
@@ -80,9 +80,9 @@ export class SideMenuComponent implements OnInit {
   displayConfirmDialog() {
     this._dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
       buttons: [{
-        title: "Continue",
-        link: "https://marketsquare.hubofallthings.com/offers"
+        title: 'Continue',
+        link: 'https://marketsquare.hubofallthings.com/offers'
       }]
-    })
+    });
   }
 }

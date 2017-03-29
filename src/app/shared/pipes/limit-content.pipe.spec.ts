@@ -13,7 +13,7 @@ import { LimitContentPipe } from './limit-content.pipe';
 
 describe('LimitContentPipe', () => {
   it('create an instance', () => {
-    let pipe = new LimitContentPipe();
+    const pipe = new LimitContentPipe();
     expect(pipe).toBeTruthy();
   });
 });

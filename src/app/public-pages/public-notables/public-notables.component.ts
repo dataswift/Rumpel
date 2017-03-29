@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {HatApiService} from "../../services/hat-api.service";
-import {Notable} from "../../shared/interfaces/notable.class";
+import {HatApiService} from '../../services/hat-api.service';
+import {Notable} from '../../shared/interfaces/notable.class';
 
 @Component({
   selector: 'rump-public-notables',
@@ -14,8 +14,8 @@ export class PublicNotablesComponent implements OnInit {
 
   ngOnInit() {
     this.hatSvc.getPublicData('notables').subscribe((notables: Array<any>) => {
-      this.notables = notables.map(note => new Notable(note, note.id))
-    })
+      this.notables = notables.map(note => new Notable(note, note.id));
+    });
   }
 
 }

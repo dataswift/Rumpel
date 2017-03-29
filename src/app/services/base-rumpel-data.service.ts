@@ -6,11 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {BaseDataService} from "./base-data.service";
-import {HatApiService} from "./hat-api.service";
-import {UiStateService} from "./ui-state.service";
-import {DataTable} from "../shared/interfaces/index";
-
+import {BaseDataService} from './base-data.service';
+import {HatApiService} from './hat-api.service';
+import {UiStateService} from './ui-state.service';
+import {DataTable} from '../shared/interfaces/index';
 
 export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
   constructor(hat: HatApiService, uiSvc: UiStateService) {
@@ -48,7 +47,7 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
         this.store.data.unshift(dataItem);
 
         this.pushToStream();
-      })
+      });
   }
 
 }

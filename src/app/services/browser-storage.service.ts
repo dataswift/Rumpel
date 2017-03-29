@@ -1,16 +1,38 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from "angular2-cookie/core";
+import { CookieService } from 'angular2-cookie/core';
 
-const TOKEN_NAME = "token";
+const TOKEN_NAME = 'token';
 
 @Injectable()
 export class BrowserStorageService {
-  private remember: boolean = false;
-  private sessionStoreAvailable: boolean = false;
-  private localStoreAvailable: boolean = false;
+  private remember = false;
+  private sessionStoreAvailable = false;
+  private localStoreAvailable = false;
+
+  static testSessionStorage(): boolean {
+    const test = 'test';
+    try {
+      sessionStorage.setItem(test, test);
+      sessionStorage.removeItem(test);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  static testLocalStorage(): boolean {
+    const test = 'test';
+    try {
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   constructor(private cookieSvc: CookieService) {
-    cookieSvc.remove("lastLoginPHATA"); // Some old cookie cleanup TODO: remove in the future
+    cookieSvc.remove('lastLoginPHATA'); // Some old cookie cleanup TODO: remove in the future
 
     this.sessionStoreAvailable = BrowserStorageService.testSessionStorage();
     this.localStoreAvailable = BrowserStorageService.testLocalStorage();
@@ -59,28 +81,6 @@ export class BrowserStorageService {
       localStorage.removeItem(key);
       return true;
     } else {
-      return false;
-    }
-  }
-
-  static testSessionStorage(): boolean {
-    const test = "test";
-    try {
-      sessionStorage.setItem(test, test);
-      sessionStorage.removeItem(test);
-      return true;
-    } catch(e) {
-      return false;
-    }
-  }
-
-  static testLocalStorage(): boolean {
-    const test = "test";
-    try {
-      localStorage.setItem(test, test);
-      localStorage.removeItem(test);
-      return true;
-    } catch(e) {
       return false;
     }
   }

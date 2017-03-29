@@ -166,7 +166,7 @@ export class AuthHttp extends Http {
           domain: null,
           fullDomain: null,
           authenticated: false
-        }
+        };
       }
     }
   }

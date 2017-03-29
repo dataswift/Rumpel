@@ -10,9 +10,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '../social.service';
 import { Post, MusicListen, Tweet } from '../../shared/interfaces';
-import { Subscription } from "rxjs";
-import {MediaService} from "../media.service";
-import {TwitterService} from "../twitter.service";
+import { Subscription } from 'rxjs/Subscription';
+import {MediaService} from '../media.service';
+import {TwitterService} from '../twitter.service';
 
 @Component({
   selector: 'rump-social',
@@ -21,7 +21,7 @@ import {TwitterService} from "../twitter.service";
 })
 export class SocialComponent implements OnInit, OnDestroy {
   private posts: Array<Post|MusicListen|Tweet>;
-  private filter: string;
+  public filter: string;
   private filterMap: any;
   private svcSub: Subscription;
   private musicSub: Subscription;
@@ -34,7 +34,7 @@ export class SocialComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.posts = [];
-    this.filter = "";
+    this.filter = null;
     this.filterMap = {
       'Facebook': 'status,photo,music.listens,link',
       'Twitter': 'tweet'
@@ -82,7 +82,7 @@ export class SocialComponent implements OnInit, OnDestroy {
 
     if (fragmentFound) {
       setTimeout(() => {
-        var element = document.getElementById(fragmentFound);
+        const element = document.getElementById(fragmentFound);
         element.scrollIntoView();
       }, 5);
     }

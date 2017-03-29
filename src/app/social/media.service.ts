@@ -7,12 +7,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import {HatApiService} from "../services/hat-api.service";
+import {HatApiService} from '../services/hat-api.service';
 
-import { MusicListen } from "../shared/interfaces/music-listen.interface";
+import { MusicListen } from '../shared/interfaces/music-listen.interface';
 import * as moment from 'moment';
-import { BaseDataService } from "../services/base-data.service";
-import { UiStateService } from "../services/ui-state.service";
+import { BaseDataService } from '../services/base-data.service';
+import { UiStateService } from '../services/ui-state.service';
 
 @Injectable()
 export class MediaService extends BaseDataService<MusicListen> {
@@ -24,7 +24,7 @@ export class MediaService extends BaseDataService<MusicListen> {
   }
 
   mapData(rawMusicListen: any): MusicListen {
-    let musicListen: MusicListen = {
+    const musicListen: MusicListen = {
       id: rawMusicListen.data.music_listens.id,
       type: rawMusicListen.data.music_listens.type,
       createdTime: moment(rawMusicListen.data.music_listens.start_time),
@@ -44,7 +44,7 @@ export class MediaService extends BaseDataService<MusicListen> {
         title: rawMusicListen.data.music_listens.data.playlist.title,
         type: rawMusicListen.data.music_listens.data.playlist.type,
         url: rawMusicListen.data.music_listens.data.playlist.url
-      }
+      };
     }
 
     if (rawMusicListen.data.music_listens.data.musician) {
@@ -52,7 +52,7 @@ export class MediaService extends BaseDataService<MusicListen> {
         title: rawMusicListen.data.music_listens.data.musician.title,
         type: rawMusicListen.data.music_listens.data.musician.type,
         url: rawMusicListen.data.music_listens.data.musician.url
-      }
+      };
     }
 
     return musicListen;

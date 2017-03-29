@@ -6,14 +6,12 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { Notable, Profile } from '../../shared/interfaces';
-import {DialogService} from "../../layout/dialog.service";
-import {ConfirmBoxComponent} from "../../layout/confirm-box/confirm-box.component";
-import {APP_CONFIG, IAppConfig} from "../../app.config";
-import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
+import {DialogService} from '../../layout/dialog.service';
+import {ConfirmBoxComponent} from '../../layout/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'rump-notables-view',
@@ -22,7 +20,7 @@ import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
 })
 export class NotablesViewComponent implements OnInit {
   public notables: Array<Notable>;
-  private profile: { photo: { url: string; shared: boolean; }; };
+  public profile: { photo: { url: string; shared: boolean; }; };
   public filter: string;
 
   constructor(private notablesSvc: NotablesService,
@@ -38,7 +36,7 @@ export class NotablesViewComponent implements OnInit {
     });
 
     this.profile = {
-      photo: { url: "", shared: false }
+      photo: { url: '', shared: false }
     };
 
     this.profilesSvc.getPicture().subscribe(result => {
@@ -48,7 +46,7 @@ export class NotablesViewComponent implements OnInit {
     });
 
     this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
-      let latestSnapshot = profileSnapshots[0];
+      const latestSnapshot = profileSnapshots[0];
       if (latestSnapshot && latestSnapshot.fb_profile_photo) {
         this.profile.photo.shared = !latestSnapshot.fb_profile_photo.private;
       }
@@ -62,23 +60,23 @@ export class NotablesViewComponent implements OnInit {
 
   changeNotable(event) {
     switch (event.action) {
-      case "edit":
+      case 'edit':
         this.notablesSvc.editNotable(event.notable);
         window.scrollTo(0, 100);
         break;
 
-      case "remove":
+      case 'remove':
         if (event.notable.isShared) {
           this.dialogSvc.createDialog(ConfirmBoxComponent, {
             message: `Deleting a note that has already been shared will not delete it at the destination.
           To remove a note from the external site, first make it private. You may then choose to delete it.`,
             accept: () => {
-              //event.target.parentNode.parentNode.className += " removed-item";
+              // event.target.parentNode.parentNode.className += " removed-item";
               setTimeout(() => this.notablesSvc.deleteNotable(event.notable.id), 900);
             }
           });
         } else {
-          //event.target.parentNode.parentNode.className += " removed-item";
+          // event.target.parentNode.parentNode.className += " removed-item";
           setTimeout(() => this.notablesSvc.deleteNotable(event.notable.id), 900);
         }
         break;
