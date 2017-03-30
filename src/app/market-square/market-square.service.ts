@@ -52,6 +52,7 @@ export class MarketSquareService {
           return moment(offer.offer.expires).isAfter() &&
             (offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
         });
+
         return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
       });
   }

@@ -41,8 +41,10 @@ export class NotificationsService {
   getAllNotifications() {
     if (this.totalNotifications === 0) {
       this._marketSvc.getNotifications().subscribe((notifications: Array<ExternalNotification>) => {
-        this.hatdexNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
-        this.totalNotifications = notifications.length;
+        if (Array.isArray(notifications)) {
+          this.hatdexNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
+          this.totalNotifications = notifications.length;
+        }
 
         this.unreadNotifications = this.countUnread();
 
