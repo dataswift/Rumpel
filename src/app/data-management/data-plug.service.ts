@@ -109,8 +109,8 @@ export class DataPlugService {
             cancelBtnText: 'No Thanks',
             buttons: [{
               title: 'Reconnect Facebook Plug',
-              link: `${this.protocol}//${this.hostname}/hatlogin?` +
-                    `name=Facebook&redirect=https://social-plug.hubofallthings.net/hat/authenticate/`
+              link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+                    `name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate/`
             }]
           });
         }
@@ -131,8 +131,8 @@ export class DataPlugService {
                 cancelBtnText: 'Dismiss',
                 buttons: [{
                   title: 'Reconnect Facebook Plug',
-                  link: `${this.protocol}//${this.hostname}/hatlogin?` +
-                        `name=Facebook&redirect=https://social-plug.hubofallthings.net/hat/authenticate/`
+                  link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+                        `name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate/`
                 }]
               });
             }
@@ -165,8 +165,8 @@ export class DataPlugService {
                 cancelBtnText: 'Dismiss',
                 buttons: [{
                   title: 'Reconnect Twitter Plug',
-                  link: `${this.protocol}//${this.hostname}/hatlogin?` +
-                        `name=Twitter&redirect=https://twitter-plug.hubofallthings.net/authenticate/hat/`
+                  link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+                        `name=Twitter&redirect=https://twitter-plug.hubofallthings.com/authenticate/hat/`
                 }]
               });
             }

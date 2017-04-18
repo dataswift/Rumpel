@@ -59,19 +59,19 @@
           </div>
 
           <div class="contactme" *ngIf="profile['contact']">
-            <div class="contact">
+            <div class="contact" *ngIf="profile.contact['primary_email']">
               <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['primary_email'] }}</h4>
             </div>
 
-            <div class="contact">
+            <div class="contact" *ngIf="profile.contact['alternative_email']">
               <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['alternative_email'] }}</h4>
             </div>
 
-            <div class="contact">
+            <div class="contact" *ngIf="profile.contact['mobile']">
               <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact['mobile'] }}</h4>
             </div>
 
-            <div class="contact">
+            <div class="contact" *ngIf="profile.contact['home_phone']">
               <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact['home_phone'] }}</h4>
             </div>
           </div>

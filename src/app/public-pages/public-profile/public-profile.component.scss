@@ -139,6 +139,8 @@ a:hover {
 }
 
 .grid-item {
+  padding-right: 0;
+  padding-left: 0;
   float: left;
   height: 50em;
 
@@ -163,6 +165,7 @@ a:hover {
   left: 0;
   right: 0;
   padding: 2em; /* Optional padding for content area */
+  padding-right: 4em;
   overflow: hidden;
 }
 
@@ -310,6 +313,13 @@ a:hover {
     }
 
   }
+}
+
+.fa-web:before {
+  content: "\f0ac";
+}
+.fa-blog:before {
+  content: "\f040";
 }
 
 .about-me .findme a div.findme-link {
