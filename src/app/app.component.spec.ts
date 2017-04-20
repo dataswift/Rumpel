@@ -12,13 +12,11 @@ import { TestBed, async } from '@angular/core/testing';
 import { AppRootComponent } from './app.component';
 
 describe('AppRootComponent', () => {
-  beforeEach(() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppRootComponent
-      ],
-    });
-  });
+      declarations: [ AppRootComponent ]
+    }).compileComponents();
+  }));
 
   it('should create the app', async(() => {
     const fixture = TestBed.createComponent(AppRootComponent);

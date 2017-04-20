@@ -15,11 +15,7 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
   constructor(hat: HatApiService, uiSvc: UiStateService) {
     super(hat, uiSvc);
 
-    this.store = {
-      data: [],
-      tableId: null,
-      idMapping: null
-    };
+    this.clearLocalStore();
   }
 
   ensureTableExists(name: string, source: string, hatDataModel?: any): void {
@@ -48,6 +44,16 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
 
         this.pushToStream();
       });
+  }
+
+  clearLocalStore(): void {
+    this.store = {
+      data: [],
+      tableId: null,
+      idMapping: null
+    };
+
+    this.pushToStream();
   }
 
 }

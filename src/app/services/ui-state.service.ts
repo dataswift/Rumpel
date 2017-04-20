@@ -7,7 +7,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs/Rx';
+import {Observable, ReplaySubject, Subject} from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
 import { UserService } from '../user/user.service';
 import {User} from '../user/user.interface';
@@ -16,6 +16,7 @@ import {DataTable} from '../shared/interfaces/data-table.interface';
 @Injectable()
 export class UiStateService {
   private state$: ReplaySubject<DataTable[]>;
+  private _auth$: Subject<boolean> = <Subject<boolean>>new Subject();
 
   constructor(private hat: HatApiService, private userSvc: UserService) {
     this.state$ = <ReplaySubject<Array<DataTable>>>new ReplaySubject(1);
@@ -37,10 +38,18 @@ export class UiStateService {
         },
         error => console.log(error)
       );
+
+    this.userSvc.user$
+      .filter((user: User) => user.authenticated === false)
+      .subscribe((user: User) => this._auth$.next(user.authenticated));
   }
 
   get tables$(): Observable<DataTable[]> {
     return this.state$.asObservable();
+  }
+
+  get auth$(): Observable<boolean> {
+    return this._auth$.asObservable();
   }
 
 }

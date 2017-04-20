@@ -28,10 +28,13 @@ export abstract class BaseDataService<T> {
 
   constructor(hat: HatApiService, uiSvc: UiStateService) {
     this.hat = hat; this.uiSvc = uiSvc;
-    this.store = {
-      data: [],
-      tableId: null
-    };
+    this.clearLocalStore();
+
+    this.uiSvc.auth$.subscribe((authenticated: boolean) => {
+      if (authenticated === false) {
+        this.clearLocalStore();
+      }
+    });
   }
 
   get data$(): Observable<Array<T>> {
@@ -116,6 +119,15 @@ export abstract class BaseDataService<T> {
   }
 
   abstract mapData(rawDataItem: any): T
+
+  clearLocalStore(): void {
+    this.store = {
+      data: [],
+      tableId: null
+    };
+
+    this.pushToStream();
+  }
 
   pushToStream(): void {
     this._loading$.next(false);
