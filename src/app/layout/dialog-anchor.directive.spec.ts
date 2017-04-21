@@ -13,7 +13,7 @@ import { DialogAnchorDirective } from './dialog-anchor.directive';
 
 describe('DialogAnchorDirective', () => {
   it('should create an instance', () => {
-    let directive = new DialogAnchorDirective();
+    const directive = new DialogAnchorDirective();
     expect(directive).toBeTruthy();
   });
 });

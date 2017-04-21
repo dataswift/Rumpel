@@ -10,14 +10,13 @@ import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'rump-confirm-box',
-  templateUrl: './confirm-box.component.html',
-  styleUrls: ['./confirm-box.component.scss']
+  templateUrl: './confirm-box.component.html'
 })
 export class ConfirmBoxComponent implements OnInit {
-  @Input() message: string = ``;
+  private destroy: Function;
+  @Input() message = '';
   @Input() accept: () => void = () => {};
   @Input() reject: () => void = () => {};
-  private destroy: Function;
 
   constructor() { }
 

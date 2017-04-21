@@ -13,7 +13,7 @@ import { ReplaceCharsPipe } from './replace-chars.pipe';
 
 describe('ReplaceCharsPipe', () => {
   it('create an instance', () => {
-    let pipe = new ReplaceCharsPipe();
+    const pipe = new ReplaceCharsPipe();
     expect(pipe).toBeTruthy();
   });
 });

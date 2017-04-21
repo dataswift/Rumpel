@@ -6,6 +6,36 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+@import "../../style/variables";
+
+.view-header {
+  h4, h6 {
+    display: inline-block;
+    text-transform: uppercase;
+  }
+
+  .view-mode-toggle {
+    float: right;
+    margin-right: 1em;
+
+    .switch-main {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 0.75em;
+      margin: 0.5em;
+    }
+
+    .switch-label {
+      font-size: 1.25em;
+    }
+  }
+}
+
+.row {
+  background-color: $background-grey;
+  color: $text-dark;
+}
+
 section {
   margin-top: 3em;
   margin-bottom: 1em;
@@ -14,8 +44,8 @@ section {
 }
 
 .section-title {
-  background-color: #263238;
-  color: #eeeeee;
+  background-color: $material-bg-900;
+  color: darken($text-light, 5%);
   display: inline-block;
   width: auto;
   margin: 0;
@@ -52,7 +82,7 @@ section {
 
     span {
       font-size: 2.5em;
-      font-family: "Open Sans Condensed", sans-serif;
+      font-family: $font-condensed;
       text-transform: uppercase;
     }
 
@@ -197,13 +227,17 @@ form {
   border-radius: 50%;
 }
 
+.btn-cancel {
+  margin-right: 2em;
+}
+
 .ui-message {
   padding: 0.75em;
   margin-bottom: 1.25em;
   z-index: 101;
   background: white;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
+  font-family: $font-regular;
   font-weight: 500;
   font-size: 1.3em;
   overflow: hidden;

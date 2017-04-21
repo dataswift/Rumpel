@@ -13,7 +13,7 @@ import { StickDirective } from './stick.directive';
 
 describe('StickDirective', () => {
   it('should create an instance', () => {
-    let directive = new StickDirective();
+    const directive = new StickDirective();
     expect(directive).toBeTruthy();
   });
 });

@@ -20,7 +20,7 @@ export class MarkdownToHtmlPipe implements PipeTransform {
   }
 
   transform(mdString: string): string {
-    let htmlString = this.md.parse(mdString);
+    const htmlString = this.md.parse(mdString);
     return htmlString;
   }
 

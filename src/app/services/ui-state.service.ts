@@ -7,42 +7,49 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs/Rx';
+import {Observable, ReplaySubject, Subject} from 'rxjs/Rx';
 import { HatApiService } from './hat-api.service';
-import { UserService } from './user.service';
-import {User} from "../shared/interfaces/user.interface";
-import {DataTable} from "../shared/interfaces/data-table.interface";
+import { UserService } from '../user/user.service';
+import {User} from '../user/user.interface';
+import {DataTable} from '../shared/interfaces/data-table.interface';
 
 @Injectable()
 export class UiStateService {
   private state$: ReplaySubject<DataTable[]>;
+  private _auth$: Subject<boolean> = <Subject<boolean>>new Subject();
 
   constructor(private hat: HatApiService, private userSvc: UserService) {
-    this.state$ = <ReplaySubject<Array<DataTable>>>new ReplaySubject();
+    this.state$ = <ReplaySubject<Array<DataTable>>>new ReplaySubject(1);
 
     this.userSvc.user$
-      .flatMap((user: User) => {
-        if (user.authenticated) {
-          return this.hat.getDataSources()
-        } else {
-          return Observable.of([]);
-        }
-      })
-      .subscribe(rawDataTables => {
-        const dataTables: Array<DataTable> = rawDataTables.map(table => {
-          return {
-            name: table.name,
-            source: table.source,
-            id: table.id
-          };
-        });
+      .filter((user: User) => user.authenticated === true)
+      .flatMap((user: User) => this.hat.getTableList())
+      .subscribe(
+        rawDataTables => {
+          const dataTables: Array<DataTable> = rawDataTables.map(table => {
+            return {
+              name: table.name,
+              source: table.source,
+              id: table.id
+            };
+          });
 
-        this.state$.next(dataTables);
-    });
+          this.state$.next(dataTables);
+        },
+        error => console.log(error)
+      );
+
+    this.userSvc.user$
+      .filter((user: User) => user.authenticated === false)
+      .subscribe((user: User) => this._auth$.next(user.authenticated));
   }
 
   get tables$(): Observable<DataTable[]> {
     return this.state$.asObservable();
+  }
+
+  get auth$(): Observable<boolean> {
+    return this._auth$.asObservable();
   }
 
 }

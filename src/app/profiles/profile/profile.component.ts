@@ -8,9 +8,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HatApiService } from '../../services';
 import { ProfilesService } from '../profiles.service';
 import { Profile } from '../../shared/interfaces/profile.interface';
+import {UserService} from '../../user/user.service';
+import {User} from '../../user/user.interface';
 
 @Component({
   selector: 'rump-profile',
@@ -24,12 +25,15 @@ export class ProfileComponent implements OnInit {
   public uiMessageHidden: boolean;
 
   constructor(private profilesSvc: ProfilesService,
-              private hat: HatApiService,
+              private userSvc: UserService,
               private router: Router) {}
 
   ngOnInit() {
     this.uiMessageHidden = true;
-    this.hatUrl = 'https://' + this.hat.hatDomain;
+    this.userSvc.user$.subscribe((user: User) => {
+      this.hatUrl = `https://${user.hatId}.${user.domain}/#/public/profile`;
+    });
+
     this.profilePhoto = {};
     this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
       if (profileSnapshots.length > 0) {
@@ -39,7 +43,9 @@ export class ProfileComponent implements OnInit {
 
     this.profilesSvc.getPicture().subscribe(
       profilePicture => {
-        if (profilePicture) this.profilePhoto = profilePicture;
+        if (profilePicture) {
+          this.profilePhoto = profilePicture;
+        }
       },
       err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
     );
@@ -71,7 +77,10 @@ export class ProfileComponent implements OnInit {
       about: { title: '', body: '', private: true }
     };
 
-    this.profilesSvc.getRecentData();
+  }
+
+  switchView() {
+    this.router.navigate([ 'public', 'profile' ]);
   }
 
   submitForm(event) {

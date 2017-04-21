@@ -9,7 +9,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-declare let $: any;
+declare const $: any;
 
 @Component({
   selector: 'rump-tile-header',
@@ -29,15 +29,15 @@ export class TileHeaderComponent implements OnInit {
 
   showPopover(event) {
     // Handle special case for Locations tile
-    if (this.title === "Locations") {
-      window.location.href = "http://www.hatdex.org/rumpel-lite/"
+    if (this.title === 'Locations') {
+      window.location.href = 'http://www.hatdex.org/rumpel-lite/';
     } else {
-      $(event.target.parentNode).popover("show");
+      $(event.target.parentNode).popover('show');
     }
   }
 
   navigateTo(pageName: string, event) {
-    if (!event.target.className.includes("tile-expand")) {
+    if (!event.target.className.includes('tile-expand')) {
       this.router.navigate([pageName]);
     }
   }

@@ -21,7 +21,7 @@
   <rump-footer></rump-footer>
 </footer>
 
-<div class="notifications-wrapper" outside-click (clickOutside)="hide($event)">
+<div class="notifications-wrapper" rumpOutsideClick (clickOutside)="hide($event)">
   <rump-notification-centre *ngIf="showNotifications"></rump-notification-centre>
 </div>
 

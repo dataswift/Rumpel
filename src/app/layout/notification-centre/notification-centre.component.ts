@@ -8,8 +8,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/index';
-import { ExternalNotification } from "../../shared/interfaces/index";
-import {NotificationsService} from "../notifications.service";
+import { ExternalNotification } from '../../shared/interfaces/index';
+import { NotificationsService } from '../notifications.service';
+import { User } from '../../user/user.interface';
 
 @Component({
   selector: 'rump-notification-centre',
@@ -17,10 +18,10 @@ import {NotificationsService} from "../notifications.service";
   styleUrls: ['./notification-centre.component.scss']
 })
 export class NotificationCentreComponent implements OnInit {
-  private notification: ExternalNotification;
-  private totalNotifications: number;
+  public notification: ExternalNotification;
+  public totalNotifications: number;
 
-  constructor(private _userSvc: UserService,
+  constructor(private userSvc: UserService,
               private _notificationsSvc: NotificationsService) { }
 
   ngOnInit() {
@@ -34,11 +35,9 @@ export class NotificationCentreComponent implements OnInit {
       this.totalNotifications = stats.total;
     });
 
-    this._userSvc.auth$.subscribe((isAuthenticated: boolean) => {
-      if (isAuthenticated) {
-        this._notificationsSvc.getAllNotifications();
-      }
-    });
+    this.userSvc.user$
+      .filter((user: User) => user.authenticated === true)
+      .subscribe((user: User) => this._notificationsSvc.getAllNotifications());
   }
 
   nextNote() {

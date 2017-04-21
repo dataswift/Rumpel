@@ -15,7 +15,7 @@
       <p>{{message}}</p>
     </div>
     <div class="rump-modal-footer">
-      <button type="button" class="btn" (click)="closeModal()">Cancel</button>
+      <button type="button" class="btn" (click)="closeModal()">{{cancelBtnText}}</button>
       <!--Warning: on Chrome, there is a lag between clicking the button and closing the modal-->
       <a [href]="button.link" target="_blank" (click)="closeModal()" *ngFor="let button of buttons">
         <button type="button" class="btn accept">

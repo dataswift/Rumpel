@@ -1,0 +1,84 @@
+/*
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
+ */
+
+.navbar {
+  background-color: rgb(1, 1, 1);
+  min-height: unset;
+  height: 9em;
+  $transition-speed: 500ms;
+  -webkit-transition: all $transition-speed;
+  -moz-transition: all $transition-speed;
+  -o-transition: all $transition-speed;
+  transition: all $transition-speed;
+  padding-top: 3em;
+  padding-bottom: 3em;
+  margin: 0;
+  border-radius: 0;
+
+  &.smaller {
+    font-size: 0.75em;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    height: 9em;
+  }
+
+  .navbar-nav {
+    font-size: 2.2em;
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-weight: lighter;
+    text-transform: capitalize;
+
+    li {
+      margin-top: 0.4em;
+    }
+
+    li > a {
+      margin: 0;
+      padding: 0.3em 0.5em;
+      color: #ffffff;
+    }
+
+    .user-nav > p {
+      margin: 0;
+      padding: 0.3em 0.5em;
+      color: #ffffff;
+      line-height: 20px;
+    }
+
+    &.navbar-right {
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      li {
+        border-left: solid 0.05em #ffffff;
+        &:first-child {
+          border-left: none;
+        }
+        a:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  .navbar-header {
+    .navbar-brand {
+      color: white;
+      font-size: 4em;
+      height: 1em;
+    }
+
+    img {
+      height: 1.25em;
+    }
+
+    a {
+      padding: 0;
+      padding-left: 1em;
+    }
+  }
+}

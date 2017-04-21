@@ -13,7 +13,7 @@ import { LocationsService } from '../locations.service';
 
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import {Subscription} from "rxjs";
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'rump-locations',
@@ -23,11 +23,11 @@ import {Subscription} from "rxjs";
 export class LocationsComponent implements OnInit, OnDestroy {
   public locations: Array<Location>;
   public safeSize;
-  private selectedTime: string;
-  private lowerTimeBound: Moment;
-  private upperTimeBound: Moment;
-  private totalDP: number = 0;
-  private loading: boolean = false;
+  public selectedTime: string;
+  public lowerTimeBound: Moment;
+  public upperTimeBound: Moment;
+  private totalDP = 0;
+  public loading = false;
   private date: any;
 
   private sub: Subscription;
@@ -50,8 +50,6 @@ export class LocationsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.locationsSvc.getRecentData();
-
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('75em');
   }
 
@@ -62,15 +60,15 @@ export class LocationsComponent implements OnInit, OnDestroy {
   selectLocationTime(event) {
     switch (event.target.value) {
       case 'today':
-        this.lowerTimeBound = moment().startOf("day");
+        this.lowerTimeBound = moment().startOf('day');
         this.upperTimeBound = moment();
         break;
       case 'yesterday':
-        this.lowerTimeBound = moment().subtract(1, "days").startOf("day");
-        this.upperTimeBound = moment().subtract(1, "days").endOf("day");
+        this.lowerTimeBound = moment().subtract(1, 'days').startOf('day');
+        this.upperTimeBound = moment().subtract(1, 'days').endOf('day');
         break;
       case 'last week':
-        this.lowerTimeBound = moment().subtract(7, "days").startOf("day");
+        this.lowerTimeBound = moment().subtract(7, 'days').startOf('day');
         this.upperTimeBound = moment();
         break;
       case 'all':
@@ -84,12 +82,12 @@ export class LocationsComponent implements OnInit, OnDestroy {
   }
 
   submitForm(form): void {
-    let formContent = form.value;
-    const startTime = moment(formContent.date).format("X");
-    const endTime = moment(formContent.date).endOf("day").format("X");
+    const formContent = form.value;
+    const startTime = moment(formContent.date).format('X');
+    const endTime = moment(formContent.date).endOf('day').format('X');
 
     this.locationsSvc.getTimeIntervalData(startTime, endTime);
     this.lowerTimeBound = moment(formContent.date);
-    this.upperTimeBound = moment(formContent.date).endOf("day");
+    this.upperTimeBound = moment(formContent.date).endOf('day');
   }
 }

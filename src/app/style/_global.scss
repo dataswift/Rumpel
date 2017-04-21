@@ -1,0 +1,273 @@
+/*
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
+ */
+
+@import "variables";
+@import "bootstrap/mixins/grid";
+
+body {
+  font-size: 12px;
+  font-family: $font-regular;
+  min-width: 480px;
+}
+
+h1, h2, h3, h4, h5, h6,
+.tile-header,
+.section-title {
+  font-family: $font-condensed;
+}
+
+.content-main {
+  background: rgb(1, 1, 1);
+
+  .content-grid {
+    overflow: hidden;
+    color: white;
+    padding-left: 0;
+    padding-right: 0;
+    background: url("/assets/images/tiled-bg.png");
+  }
+
+  .grid {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+.responsive {
+  @include make-xs-column(12);
+  @include make-sm-column(10);
+  @include make-sm-column-offset(1);
+  @include make-md-column(6);
+  @include make-md-column-offset(3);
+}
+
+.login-form {
+  text-align: center;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+
+  .logo {
+    height: 6em;
+    margin-top: 2em;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  p {
+    color: #ffffff;
+    font-size: 1.8em;
+    margin-top: 1.5em;
+
+    &.subtext {
+      font-size: 1.4em;
+    }
+  }
+
+  .highlight {
+    font-weight: 600;
+  }
+}
+
+button.btn-view-header {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  border: 2px solid #ffffff;
+  outline: none;
+  float: left;
+
+  label {
+    font-weight: normal;
+    margin-bottom: 0;
+    cursor: pointer;
+    padding: 0.75em 2em;
+  }
+
+  &.empty {
+    padding: 0.75em 2em;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  &.selected {
+    background-color: white;
+    color: #37474F;
+    border: 2px solid #CFD8DC;
+  }
+}
+
+.view-header {
+  min-height: 5em;
+  background-color: #37474F;
+  color: #eeeeee;
+  padding: 1em;
+  font-size: 1em;
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    display: inline-block;
+    font-size: 1.75em;
+    margin: 0.4em 0;
+  }
+
+  .inline-btn-group {
+    float: right;
+  }
+
+  .view-controls {
+    margin-left: 3em;
+  }
+}
+
+.timeline {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  height: 73em;
+  top: 0;
+  right: 0;
+  z-index: 5550;
+  overflow: auto;
+}
+
+.btn {
+  font-family: $font-condensed;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+.btn-rump {
+  background-color: $rump-color;
+  border: 2px solid $rump-color;
+  color: #dddddd;
+
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: darken($rump-color, 10%);
+    border: 2px solid darken($rump-color, 10%);
+    color: white;
+    outline: none;
+  }
+
+  &.sm {
+    font-size: 1em;
+    margin: 0.75em 0;
+    padding: 0.5em 2em;
+  }
+
+  &.md {
+    font-size: 1.5em;
+    margin: 1em 0;
+    padding: 0.75em 4em;
+  }
+
+  &.fading {
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+
+    -webkit-transition-property: #{"color, background-color"};
+    -moz-transition-property: #{"color, background-color"};
+    -o-transition-property: #{"color, background-color"};
+    transition-property: #{"color, background-color"};
+  }
+}
+
+.btn-cancel {
+  background-color: transparent;
+  border: 2px solid $material-bg-700;
+  color: $material-bg-700;
+
+  &.sm {
+    font-size: 1em;
+    margin: 0.75em 0;
+    padding: 0.5em 2em;
+  }
+
+  &.md {
+    font-size: 1.5em;
+    margin: 1em 0;
+    padding: 0.75em 4em;
+  }
+}
+
+.btn-white {
+  float: right;
+  border: 1px solid white;
+
+  &.sm {
+    padding: 0.5em 1em;
+    margin: 0 0.5em;
+  }
+}
+
+.input-rump {
+  border-radius: 0;
+  border: 1px solid #c7c7c7;
+  outline: none;
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  transition: all 0.30s ease-in-out;
+
+
+  &::-webkit-input-placeholder,
+  &::-moz-placeholder,
+  &:-ms-input-placeholder,
+  &:-moz-placeholder {
+    font-weight: normal;
+  }
+
+  &:focus {
+    box-shadow: 0 0 5px $rump-color;
+  }
+
+  &.lg {
+    font-size: 1.6em;
+    height: 3em;
+  }
+}
+
+.rump-lg {
+  font-size: 1.5em;
+  height: 3em;
+}
+
+.rump-md {
+  font-size: 1.25em;
+  height: 3em;
+}
+
+.rump-sm {
+  font-size: 0.75em;
+  height: 1.5em;
+}
+
+.bulletless-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.icon-text-valign {
+  display: inline-block;
+  span {
+    vertical-align: middle;
+  }
+}
+

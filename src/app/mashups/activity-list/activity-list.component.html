@@ -12,21 +12,7 @@
   <div *ngIf="notables.length > 0">
     <h3 class="category-title">Notables</h3>
     <div *ngFor="let notable of notables" class="notable-item">
-      <div class="notable-type"><span class="ss-glyphish-filled"></span>{{notable.kind}}</div>
-      <div class="notable-header">
-        <rump-profile-photo class="user-photo"
-                            [userPhotoUrl]="notable.authorv1['photo_url']"></rump-profile-photo>
-        <div class="header-content">
-          <h5>{{notable.authorv1.phata}}</h5>
-          <span>Logged {{notable.created_time | moment}}</span>
-          <span *ngIf="!notable.isShared">PRIVATE</span>
-          <span *ngIf="notable.isShared">
-              SHARED{{notable.public_until === null ? ' forever' : notable.public_until.isBefore() ? ', expired' : ', expires ' + (notable.public_until | relativeTime) }}
-          </span>
-        </div>
-      </div>
-      <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>
-
+      <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
     </div>
   </div>
 

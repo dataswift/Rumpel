@@ -6,15 +6,15 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Subject, Observable } from "rxjs";
-import { HatApiService } from "./hat-api.service";
-import { UiStateService } from "./ui-state.service";
+import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
+import { HatApiService } from './hat-api.service';
+import { UiStateService } from './ui-state.service';
 import * as _ from 'lodash';
-import { DataTable } from "../shared/interfaces/data-table.interface";
-import * as moment from "moment";
+import { DataTable } from '../shared/interfaces/data-table.interface';
+import * as moment from 'moment';
 
 export abstract class BaseDataService<T> {
-  private _data$: Subject<Array<T>> = <Subject<Array<T>>>new Subject();
+  private _data$: ReplaySubject<Array<T>> = <ReplaySubject<Array<T>>>new ReplaySubject(1);
   public hat: HatApiService;
   public uiSvc: UiStateService;
   public store: {
@@ -28,10 +28,13 @@ export abstract class BaseDataService<T> {
 
   constructor(hat: HatApiService, uiSvc: UiStateService) {
     this.hat = hat; this.uiSvc = uiSvc;
-    this.store = {
-      data: [],
-      tableId: null
-    };
+    this.clearLocalStore();
+
+    this.uiSvc.auth$.subscribe((authenticated: boolean) => {
+      if (authenticated === false) {
+        this.clearLocalStore();
+      }
+    });
   }
 
   get data$(): Observable<Array<T>> {
@@ -47,6 +50,7 @@ export abstract class BaseDataService<T> {
       const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);
       if (foundTable) {
         this.store.tableId = foundTable.id;
+        this.getRecentData();
       }
     });
   }
@@ -59,15 +63,14 @@ export abstract class BaseDataService<T> {
       this.hat.getValuesWithLimit(this.store.tableId)
         .map((rawData: Array<any>) => {
           if (rawData.length > 0) {
-            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format("X");
+            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format('X');
           }
 
-          let typeSafeData: Array<T> = rawData.map(this.mapData);
-          return _.uniqBy(typeSafeData, "id");
+          const typeSafeData: Array<T> = rawData.map(this.mapData);
+          return _.uniqBy(typeSafeData, 'id');
         })
         .subscribe((data: Array<T>) => {
           this.store.data = data;
-
           this.pushToStream();
         });
     } else if (failedAttempts <= 10) {
@@ -81,11 +84,11 @@ export abstract class BaseDataService<T> {
       this.hat.getValuesWithLimit(this.store.tableId, fetchRecordCount, this.oldestRecordTimestamp)
         .map((rawData: Array<any>) => {
           if (rawData.length > 0) {
-            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format("X");
+            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format('X');
           }
 
-          let typeSafeData: Array<T> = rawData.map(this.mapData);
-          return _.uniqBy(typeSafeData, "id");
+          const typeSafeData: Array<T> = rawData.map(this.mapData);
+          return _.uniqBy(typeSafeData, 'id');
         })
         .subscribe((data: Array<T>) => {
           this.store.data = this.store.data.concat(data);
@@ -105,8 +108,8 @@ export abstract class BaseDataService<T> {
     this._loading$.next(true);
     this.hat.getValuesWithLimit(this.store.tableId, 5000, endTime, startTime)
       .map((rawData: Array<any>) => {
-        let typeSafeData: Array<T> = rawData.map(this.mapData);
-        return _.uniqBy(typeSafeData, "id");
+        const typeSafeData: Array<T> = rawData.map(this.mapData);
+        return _.uniqBy(typeSafeData, 'id');
       })
       .subscribe((data: Array<T>) => {
         this.store.data = this.store.data.concat(data);
@@ -116,6 +119,15 @@ export abstract class BaseDataService<T> {
   }
 
   abstract mapData(rawDataItem: any): T
+
+  clearLocalStore(): void {
+    this.store = {
+      data: [],
+      tableId: null
+    };
+
+    this.pushToStream();
+  }
 
   pushToStream(): void {
     this._loading$.next(false);

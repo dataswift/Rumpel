@@ -6,8 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+@import "../../style/variables";
+
 .editor-header {
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: $font-condensed;
 
   h3 {
     font-size: 2em;
@@ -16,7 +18,7 @@
   }
 
   .notes-tab {
-    background-color: #009688;
+    background-color: $rump-color;
     color: white;
     padding: 0.5em 1.5em;
     margin-right: 0.5em;
@@ -58,7 +60,7 @@
 
 .options-bar {
   position: relative;
-  background-color: #009688;
+  background-color: $rump-color;
   padding: 1.5em 1em;
   padding-bottom: 1em;
 
@@ -80,22 +82,13 @@
     }
   }
 
-  .btn-modify {
-    font-family: "Open Sans Condensed", sans-serif;
-    font-weight: bold;
-    float: right;
-    padding: 0.5em 1em;
-    margin: 0 0.5em;
-    border: 2px solid white;
-    border-radius: 0;
+  .expiration-time {
+    border: none;
+    padding-right: 0;
+    padding-left: 0;
 
-    &.expiration-time {
-      border: none;
-      padding-right: 0;
-      padding-left: 0;
-    }
-
-    &:focus {
+    &:focus,
+    &:active {
       outline: none;
     }
   }

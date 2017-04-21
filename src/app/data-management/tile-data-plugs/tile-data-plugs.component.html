@@ -1,0 +1,30 @@
+<!--
+  ~ Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+  -->
+
+<ng-content></ng-content>
+
+<div class="scroll-mask" id="intro-step18">
+  <div class="tile-body">
+    <ul>
+      <li *ngFor="let plug of dataplugs | async" (click)="openPlugPopup(plug)">
+        <div class="row vertical-align">
+          <div class="col-xs-2">
+            <img src="assets/icons/{{plug.icon}}" class="img img-responsive">
+          </div>
+          <div class="col-xs-8">
+            <h3>{{plug.name}} plug</h3>
+            <p>{{plug.description}}</p>
+          </div>
+          <div class="col-xs-2">
+            <button type="button"><span class="ss-right"></span></button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -8,7 +8,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { userMgmtRoutes } from './user-mgmt/user-mgmt.routing';
+import { userRoutes } from './user/user-routing.module';
 
 import { GridComponent } from './dashboard';
 import { AboutComponent } from './layout/about/about.component';
@@ -17,11 +17,11 @@ import { AuthGuard } from './auth.guard';
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: GridComponent, canActivate: [AuthGuard] },
       { path: 'about', component: AboutComponent },
-      ...userMgmtRoutes
+      ...userRoutes
     ])
   ],
   exports: [

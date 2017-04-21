@@ -15,9 +15,10 @@
     <div class="navbar-collapse collapse" id="navbar-main">
       <ul class="nav navbar-nav navbar-right">
         <li *ngIf="!!hatDomain" class="user-nav" style="text-transform: lowercase;">
-          <a href="https://{{hatDomain}}/profile" target="_blank">{{hatDomain}}</a>
+          <a [routerLink]="['public', 'profile']">{{hatDomain}}</a>
         </li>
         <li *ngIf="!!hatDomain" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
+        <li *ngIf="!hatDomain" [routerLink]="['user', 'login']" class="user-nav" style="cursor: pointer;"><a>Sign In</a></li>
         <li *ngIf="!!hatDomain" class="user-nav hidden-xs"><p style="cursor: pointer;" (click)="startIntro()">New to Rumpel</p></li>
         <li class="user-nav hidden-xs hidden-sm"><a [href]="marketSquareLink" target="_blank" style="cursor: pointer;">MarketSquare</a></li>
         <li class="user-nav hidden-xs" style="cursor: pointer;" (click)="showInfoModal()"><p>Who Can See This?</p></li>

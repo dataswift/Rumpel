@@ -10,15 +10,15 @@ import { Injectable } from '@angular/core';
 import { HatApiService } from '../services/hat-api.service';
 import { Post } from '../shared/interfaces';
 import * as moment from 'moment';
-import {BaseDataService} from "../services/base-data.service";
-import {UiStateService} from "../services/ui-state.service";
+import {BaseDataService} from '../services/base-data.service';
+import {UiStateService} from '../services/ui-state.service';
 
 @Injectable()
 export class SocialService extends BaseDataService<Post> {
   constructor(hatSvc: HatApiService, uiSvc: UiStateService) {
     super(hatSvc, uiSvc);
 
-    this.ensureTableExists("posts", "facebook");
+    this.ensureTableExists('posts', 'facebook');
   }
 
   mapData(rawPost: any): Post {
@@ -26,7 +26,7 @@ export class SocialService extends BaseDataService<Post> {
     let postContent;
 
     switch (posts.type) {
-      case "link":
+      case 'link':
         postContent = {
           caption: posts.caption,
           description: posts.description,
@@ -36,12 +36,12 @@ export class SocialService extends BaseDataService<Post> {
           fullPicture: posts.full_picture
         };
         break;
-      case "status":
+      case 'status':
         postContent = {
           message: posts.message
         };
         break;
-      case "photo":
+      case 'photo':
         postContent = {
           name: posts.name,
           message: posts.message,

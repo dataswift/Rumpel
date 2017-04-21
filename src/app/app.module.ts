@@ -10,11 +10,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRootComponent } from './app.component';
 
-import { APP_CONFIG, AppConfig } from './app.config';
+import {APP_CONFIG, AppConfig, IAppConfig} from './app.config';
 
 import { LayoutModule } from './layout/layout.module';
 import { MashupsModule } from './mashups/mashups.module';
 import { NotablesModule } from './notables/notables.module';
+import { DataManagementModule } from './data-management/data-management.module';
 import { DimensionsModule } from './dimensions/dimensions.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { SharedModule } from './shared/shared.module';
@@ -24,31 +25,44 @@ import { SocialModule } from './social/social.module';
 import { MarketSquareModule } from './market-square/market-square.module';
 import { DataDebitsModule } from './data-debits/data-debits.module';
 import { WeatherModule } from './weather/weather.module';
+import { PublicPagesModule } from './public-pages/public-pages.module';
 
-import { HttpModule } from '@angular/http';
+import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
+import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
-import { LoginComponent } from './user-mgmt';
 import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
-import { UserService, HatApiService, UiStateService, RumpelService, DataPlugService } from './services/index';
+import { HatApiService, UiStateService, RumpelService } from './services/index';
+import { AuthHttp } from './services/auth-http.service';
 
 /* MODAL COMPONENTS */
 
-import { ConfirmBoxComponent } from "./layout/confirm-box/confirm-box.component";
+import { ConfirmBoxComponent } from './layout/confirm-box/confirm-box.component';
 import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
-import { InfoBoxComponent } from "./layout/info-box/info-box.component";
+import { InfoBoxComponent } from './layout/info-box/info-box.component';
 
 import { CookieService } from 'angular2-cookie/core';
-import { cookieServiceFactory } from './aot-workaround';
+import { UserModule } from './user/user.module';
+import { BrowserStorageService } from './services/browser-storage.service';
+
+export function authHttpFactory(backend: XHRBackend,
+                                defaultOptions: RequestOptions,
+                                storageSvc: BrowserStorageService,
+                                config: IAppConfig) {
+  return new AuthHttp(backend, defaultOptions, storageSvc, config);
+}
+
+export function cookieServiceFactory() {
+  return new CookieService();
+}
 
 @NgModule({
   declarations: [
     AppRootComponent,
-    LoginComponent,
     GridComponent,
     TileHeaderComponent,
     TileComingSoonComponent,
@@ -63,14 +77,17 @@ import { cookieServiceFactory } from './aot-workaround';
     FormsModule,
     AppRoutingModule,
     LayoutModule,
+    UserModule,
     SocialModule,
     MarketSquareModule,
+    DataManagementModule,
     DataDebitsModule,
     MashupsModule,
     NotablesModule,
     DimensionsModule,
     ProfilesModule,
-    WeatherModule
+    WeatherModule,
+    PublicPagesModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent ],
@@ -78,12 +95,17 @@ import { cookieServiceFactory } from './aot-workaround';
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: AppConfig },
     { provide: CookieService, useFactory: cookieServiceFactory },
+    {
+      provide: AuthHttp,
+      useFactory: authHttpFactory,
+      deps: [ XHRBackend, RequestOptions, BrowserStorageService, APP_CONFIG ]
+    },
     AuthGuard,
-    UserService,
+    NativeGuard,
     HatApiService,
     UiStateService,
     RumpelService,
-    DataPlugService
+    BrowserStorageService
   ]
 })
 export class AppRootModule {}

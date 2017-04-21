@@ -38,11 +38,17 @@
   }
 }
 
+
+
 .item-header {
   .user-photo {
     float: left;
-    font-size: 0.75em;
-    margin-right: 0.5em;
+    margin: 1em;
+
+    img {
+      max-height: 3em;
+      opacity: 0.7;
+    }
   }
 
   .header-content {

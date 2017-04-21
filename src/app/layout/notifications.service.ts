@@ -7,9 +7,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs/Rx';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MarketSquareService } from '../market-square/market-square.service';
-import { ExternalNotification } from "../shared/interfaces/index";
+import { ExternalNotification } from '../shared/interfaces/index';
 
 @Injectable()
 export class NotificationsService {
@@ -41,8 +41,10 @@ export class NotificationsService {
   getAllNotifications() {
     if (this.totalNotifications === 0) {
       this._marketSvc.getNotifications().subscribe((notifications: Array<ExternalNotification>) => {
-        this.hatdexNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
-        this.totalNotifications = notifications.length;
+        if (Array.isArray(notifications)) {
+          this.hatdexNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
+          this.totalNotifications = notifications.length;
+        }
 
         this.unreadNotifications = this.countUnread();
 
@@ -75,7 +77,7 @@ export class NotificationsService {
   markAsRead(notification: ExternalNotification) {
     if (!notification.read) {
       this._marketSvc.markAsRead(notification.notice.id).subscribe((readNotification: ExternalNotification) => {
-        let foundNotificationIndex = this.hatdexNotifications.findIndex(note => note.notice.id === readNotification.notice.id);
+        const foundNotificationIndex = this.hatdexNotifications.findIndex(note => note.notice.id === readNotification.notice.id);
         this.hatdexNotifications[foundNotificationIndex] = readNotification;
 
         this.unreadNotifications = this.countUnread();
@@ -87,7 +89,7 @@ export class NotificationsService {
 
   private countUnread(): number {
     let unreadCount = 0;
-    for (let notification of this.hatdexNotifications) {
+    for (const notification of this.hatdexNotifications) {
       if (!notification.read) {
         unreadCount++;
       }

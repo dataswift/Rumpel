@@ -10,9 +10,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { SocialService } from '../social.service';
 import { Post, MusicListen, Tweet } from '../../shared/interfaces';
-import { MediaService } from "../media.service";
-import { Subscription } from "rxjs";
-import {TwitterService} from "../twitter.service";
+import { MediaService } from '../media.service';
+import { Subscription } from 'rxjs/Subscription';
+import {TwitterService} from '../twitter.service';
 
 @Component({
   selector: 'rump-tile-social',
@@ -20,7 +20,7 @@ import {TwitterService} from "../twitter.service";
   styleUrls: ['tile-social.component.scss']
 })
 export class TileSocialComponent implements OnInit, OnDestroy {
-  private posts: Array<Post|MusicListen|Tweet>;
+  public posts: Array<Post|MusicListen|Tweet>;
   private postsSub: Subscription;
   private musicSub: Subscription;
   private twitterSub: Subscription;
@@ -51,9 +51,6 @@ export class TileSocialComponent implements OnInit, OnDestroy {
       this.sortPostsByDate();
     });
 
-    this.mediaSvc.getRecentData();
-    this.socialSvc.getRecentData();
-    this.twitterSvc.getRecentData();
   }
 
   ngOnDestroy(): void {
@@ -63,7 +60,7 @@ export class TileSocialComponent implements OnInit, OnDestroy {
   }
 
   navigateToFullPost(id: string): void {
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       fragment: id,
       preserveFragment: false
     };

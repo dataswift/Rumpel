@@ -8,9 +8,15 @@
 
 <div class="editor-header">
   <h3>New Notable</h3>
-  <div class="notes-tab" [class.active]="currentNotable.kind === 'note'" (click)="switchType('note')"><span class="ss-ellipsischat ss-glyphish-filled"></span>Note</div>
-  <div class="notes-tab" [class.active]="currentNotable.kind ==='list'" (click)="switchType('list')"><span class="ss-list ss-glyphish-filled"></span>List</div>
-  <div class="notes-tab" [class.active]="currentNotable.kind === 'blog'" (click)="switchType('blog')"><span class="ss-write ss-glyphish-filled"></span>Blog</div>
+  <div class="notes-tab icon-text-valign" [class.active]="currentNotable.kind === 'note'" (click)="switchType('note')">
+    <span class="ss-ellipsischat ss-glyphish-filled"></span>Note
+  </div>
+  <div class="notes-tab icon-text-valign" [class.active]="currentNotable.kind ==='list'" (click)="switchType('list')">
+    <span class="ss-list ss-glyphish-filled"></span>List
+  </div>
+  <div class="notes-tab icon-text-valign" [class.active]="currentNotable.kind === 'blog'" (click)="switchType('blog')">
+    <span class="ss-write ss-glyphish-filled"></span>Blog
+  </div>
 </div>
 
 <div class="editor-wrapper">
@@ -21,7 +27,7 @@
                (onSwitch)="togglePrivacy()"></rump-switch>
 
   <rump-share-belt *ngIf="currentNotable.isShared" class="sharing-belt"
-                   [hatDomain]="hatSvc.hatDomain"
+                   [hatDomain]="notablesSvc.hatDomain"
                    [currentNotable]="currentNotable"
                    [parentError]="cannotPostMessage"
                    (serviceToggled)="updateShareOptions($event)"></rump-share-belt>
@@ -31,13 +37,13 @@
   <div class="arrow-down" [class.sharing-on]="currentNotable.isShared"></div>
 
   <button type="button" class="btn btn-options"
-          [class.on]="reportLocation"
+          [class.on]="currentNotableMeta.reportLocation"
           (click)="toggleLocation()">
     <span class="ss-location ss-glyphish-filled"></span>
   </button>
 
   <div class="action-buttons">
-    <div class="btn btn-modify expiration-time" *ngIf="currentNotable.isShared">
+    <div class="btn btn-white sm expiration-time" *ngIf="currentNotable.isShared">
       <span class="share-for-bubble" [class.selected]="currentNotableMeta.expires === 0" (click)="setExpiration($event, 0)">forever</span>
       <span class="share-for-bubble" [class.selected]="currentNotableMeta.expires === 1" (click)="setExpiration($event, 1)">1</span>
       <span class="share-for-bubble" [class.selected]="currentNotableMeta.expires === 7" (click)="setExpiration($event, 7)">7</span>
@@ -45,10 +51,10 @@
       <span class="share-for-bubble" [class.selected]="currentNotableMeta.expires === 30" (click)="setExpiration($event, 30)">30</span>
       Days
     </div>
-    <button type="submit" class="btn btn-modify" (click)="submit()">
+    <button type="submit" class="btn btn-white sm" (click)="submit()">
       <span *ngIf="currentNotable.isShared">{{editMode ? "Save Notable" : "Share Notable" }}</span>
       <span *ngIf="!currentNotable.isShared">Save Privately</span>
     </button>
-    <button type="button" class="btn btn-modify" (click)="discardChanges()">Cancel</button>
+    <button type="button" class="btn btn-white sm" (click)="discardChanges()">Cancel</button>
   </div>
 </div>

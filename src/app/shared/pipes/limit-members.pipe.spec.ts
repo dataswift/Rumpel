@@ -13,7 +13,7 @@ import { LimitMembersPipe } from './limit-members.pipe';
 
 describe('LimitMembersPipe', () => {
   it('create an instance', () => {
-    let pipe = new LimitMembersPipe();
+    const pipe = new LimitMembersPipe();
     expect(pipe).toBeTruthy();
   });
 });

@@ -54,7 +54,6 @@ export class TileProfileComponent implements OnInit {
       about: { title: '', body: '', private: true }
     };
 
-    this.profilesSvc.getRecentData();
   }
 
 }

@@ -7,23 +7,23 @@
  */
 
 import { Pipe, PipeTransform, Sanitizer, SecurityContext } from '@angular/core';
-import { SafeHtml } from "@angular/platform-browser";
+import { SafeHtml } from '@angular/platform-browser';
 
 @Pipe({
   name: 'safeHtml'
 })
 export class SafeHtmlPipe implements PipeTransform {
 
+  static replaceUrlsWithHtmlLinks(message: string): string {
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return message.replace(urlRegex, `<a href='$1' target='_blank'>$1</a>`);
+  }
+
   constructor(private sanitizer: Sanitizer) {}
 
   transform(message: string): SafeHtml {
-    let html = SafeHtmlPipe.replaceUrlsWithHtmlLinks(message);
+    const html = SafeHtmlPipe.replaceUrlsWithHtmlLinks(message);
     return this.sanitizer.sanitize(SecurityContext.HTML, html);
-  }
-
-  static replaceUrlsWithHtmlLinks(message: string): string {
-    let urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-    return message.replace(urlRegex, "<a href='$1' target='_blank'>$1</a>");
   }
 
 }

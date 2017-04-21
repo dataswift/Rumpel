@@ -6,6 +6,11 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
  */
 
+.grid {
+  background-image: url("/assets/images/tiled-bg.png");
+  background-repeat: repeat;
+}
+
 :host /deep/ {
   .scroll-mask {
     border: solid transparent;

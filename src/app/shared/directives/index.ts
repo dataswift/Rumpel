@@ -6,5 +6,5 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-export { OutsideClick } from './outside-click.directive';
+export { OutsideClickDirective } from './outside-click.directive';
 export { StickDirective } from './stick.directive';

@@ -1,0 +1,121 @@
+/*!
+ * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+ */
+
+.view-body {
+  background-image: url("/assets/images/landing_bg.jpg");
+  background-repeat: repeat;
+  text-align: center;
+  min-height: 70em;
+  position: relative;
+
+  .version-tag {
+    position: absolute;
+    bottom: 1em;
+    right: 3em;
+    color: white;
+  }
+
+  .logo {
+    height: 6em;
+    margin-top: 2em;
+  }
+
+  p {
+    color: #ffffff;
+    font-size: 1.8em;
+    margin-top: 1.5em;
+
+    &.subtext {
+      font-size: 1.4em;
+    }
+  }
+
+  .highlight {
+    font-weight: 600;
+  }
+}
+
+.form-group {
+  text-align: left;
+  font-weight: 300;
+
+  &:first-child {
+    margin-top: 3em;
+  }
+
+  &:not(:first-child) {
+    margin-top: 1.5em;
+  }
+
+  label {
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 1.25em;
+  }
+}
+
+.error {
+  font-family: "Open Sans Regular", sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  border-radius: 0;
+  margin-top: 0.25em;
+}
+
+a {
+color: #ffffff;
+font-weight: 600;
+text-decoration: underline;
+
+  &:hover {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+}
+
+.form-context {
+  color: #ffffff;
+  font-size: 1.2em;
+  font-family: 'Open Sans', sans-serif;
+
+  span {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}
+
+.form-context2 {
+  color: #ffffff;
+  font-size: 1.2em;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 1em;
+}
+
+.btn-rump {
+  width: 100%;
+}
+
+.inline-checkbox {
+  text-align: center;
+  font-size: 1.25em;
+
+  .checkbox {
+    margin: 0;
+    margin-right: 0.5em;
+    display: inline-block;
+    vertical-align: text-top;
+  }
+
+  .text {
+    text-transform: none;
+  }
+}

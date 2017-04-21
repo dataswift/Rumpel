@@ -18,7 +18,7 @@ export class TimeFilterTwoPipe implements PipeTransform {
     if (startTime && endTime) {
       return timedData.filter(dp => dp.timestamp.isAfter(startTime) && dp.timestamp.isBefore(endTime));
     } else if (startTime) {
-      return timedData.filter(dp => dp.timestamp.isAfter(startTime))
+      return timedData.filter(dp => dp.timestamp.isAfter(startTime));
     } else {
       return timedData;
     }

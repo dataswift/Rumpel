@@ -7,7 +7,7 @@
   -->
 
 <ul class="center" id="intro-step1">
-  <li>
+  <li *ngIf="userAuthenticated">
     <div class="wrapper" id="intro-step2">
       <button (click)="showNotificationsCentre()" type="button">
         <span class="ss-notice"></span>
@@ -34,7 +34,7 @@
     </div>
   </li>
 
-  <li>
+  <li *ngIf="userAuthenticated">
     <div class="wrapper" id="intro-step12">
       <button (click)="displayConfirmDialog()" type="button">
         <span class="ss-tags"></span>
@@ -44,7 +44,7 @@
   </li>
 </ul>
 
-<ul class="center" id="intro-step13">
+<ul class="center" id="intro-step13" *ngIf="userAuthenticated">
   <li *ngFor="let item of comingSoonMenu">
     <a href="#">
       <span class="ss-{{item.icon}}"></span>

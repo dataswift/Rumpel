@@ -13,7 +13,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterByPipe implements PipeTransform {
 
-  transform(values: Array<any>, property: string, match: string = ""): any {
+  transform(values: Array<any>, property: string, match: string = ''): any {
     if (match) {
       return values.filter(value => match.includes(value[property]));
     } else {

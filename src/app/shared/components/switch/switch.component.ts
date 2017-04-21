@@ -27,7 +27,9 @@ export class SwitchComponent implements OnInit {
   toggleSwitch(event) {
     event.stopPropagation();
     event.preventDefault();
-    if (!this.disabled) this.onSwitch.emit(this.id);
+    if (!this.disabled) {
+      this.onSwitch.emit(this.id);
+    }
   }
 
 }

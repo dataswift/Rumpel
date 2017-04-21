@@ -7,12 +7,12 @@
  */
 
 import { Injectable } from '@angular/core';
-import {BaseDataService} from "../services/base-data.service";
-import {HatApiService} from "../services/hat-api.service";
-import {UiStateService} from "../services/ui-state.service";
+import {BaseDataService} from '../services/base-data.service';
+import {HatApiService} from '../services/hat-api.service';
+import {UiStateService} from '../services/ui-state.service';
 
 import { Event } from '../shared/interfaces/index';
-import * as moment from "moment";
+import * as moment from 'moment';
 
 @Injectable()
 export class FacebookEventsService extends BaseDataService<Event> {
@@ -20,13 +20,13 @@ export class FacebookEventsService extends BaseDataService<Event> {
   constructor(hatSvc: HatApiService, uiSvc: UiStateService) {
     super(hatSvc, uiSvc);
 
-    this.ensureTableExists("events", "facebook");
+    this.ensureTableExists('events', 'facebook');
   }
 
   mapData(rawEvent: any): Event {
     const eventContent = rawEvent.data.events;
 
-    let event: Event = {
+    const event: Event = {
       id: eventContent.id,
       title: eventContent.name,
       description: eventContent.description,

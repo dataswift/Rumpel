@@ -6,14 +6,12 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { Notable, Profile } from '../../shared/interfaces';
-import {DialogService} from "../../layout/dialog.service";
-import {ConfirmBoxComponent} from "../../layout/confirm-box/confirm-box.component";
-import {APP_CONFIG, IAppConfig} from "../../app.config";
-import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
+import {DialogService} from '../../layout/dialog.service';
+import {ConfirmBoxComponent} from '../../layout/confirm-box/confirm-box.component';
 
 @Component({
   selector: 'rump-notables-view',
@@ -22,12 +20,10 @@ import {InfoBoxComponent} from "../../layout/info-box/info-box.component";
 })
 export class NotablesViewComponent implements OnInit {
   public notables: Array<Notable>;
-  private profile: { photo: { url: string; shared: boolean; }; };
-  public iconMap: any;
+  public profile: { photo: { url: string; shared: boolean; }; };
   public filter: string;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-              private notablesSvc: NotablesService,
+  constructor(private notablesSvc: NotablesService,
               private profilesSvc: ProfilesService,
               private dialogSvc: DialogService) { }
 
@@ -35,18 +31,12 @@ export class NotablesViewComponent implements OnInit {
     this.filter = '';
     this.notables = [];
 
-    this.iconMap = {
-      note: 'ellipsischat',
-      list: 'list',
-      blog: 'write'
-    };
-
     this.notablesSvc.data$.subscribe((notables: Notable[]) => {
       this.notables = notables;
     });
 
     this.profile = {
-      photo: { url: "", shared: false }
+      photo: { url: '', shared: false }
     };
 
     this.profilesSvc.getPicture().subscribe(result => {
@@ -56,43 +46,40 @@ export class NotablesViewComponent implements OnInit {
     });
 
     this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
-      let latestSnapshot = profileSnapshots[0];
+      const latestSnapshot = profileSnapshots[0];
       if (latestSnapshot && latestSnapshot.fb_profile_photo) {
         this.profile.photo.shared = !latestSnapshot.fb_profile_photo.private;
       }
     });
 
-    this.profilesSvc.getRecentData();
-    this.notablesSvc.getRecentData();
-  }
-
-  getLogo(name: string): string {
-    const foundIntegration = this.config.notables.activeIntegrations.find(integration => integration.name === name);
-    return foundIntegration ? foundIntegration.logoUrl : "";
   }
 
   filterBy(category: string) {
     this.filter = category;
   }
 
-  editNotable(notable: Notable) {
-    this.notablesSvc.editNotable(notable);
-    window.scrollTo(0, 100);
-  }
+  changeNotable(event) {
+    switch (event.action) {
+      case 'edit':
+        this.notablesSvc.editNotable(event.notable);
+        window.scrollTo(0, 100);
+        break;
 
-  deleteNotable(event, notable: Notable) {
-    if (notable.isShared) {
-      this.dialogSvc.createDialog(ConfirmBoxComponent, {
-        message: `Deleting a note that has already been shared will not delete it at the destination.
+      case 'remove':
+        if (event.notable.isShared) {
+          this.dialogSvc.createDialog(ConfirmBoxComponent, {
+            message: `Deleting a note that has already been shared will not delete it at the destination.
           To remove a note from the external site, first make it private. You may then choose to delete it.`,
-        accept: () => {
-          event.target.parentNode.parentNode.className += " removed-item";
-          setTimeout(() => this.notablesSvc.deleteNotable(notable.id), 900);
+            accept: () => {
+              // event.target.parentNode.parentNode.className += " removed-item";
+              setTimeout(() => this.notablesSvc.deleteNotable(event.notable.id), 900);
+            }
+          });
+        } else {
+          // event.target.parentNode.parentNode.className += " removed-item";
+          setTimeout(() => this.notablesSvc.deleteNotable(event.notable.id), 900);
         }
-      });
-    } else {
-      event.target.parentNode.parentNode.className += " removed-item";
-      setTimeout(() => this.notablesSvc.deleteNotable(notable.id), 900);
+        break;
     }
   }
 

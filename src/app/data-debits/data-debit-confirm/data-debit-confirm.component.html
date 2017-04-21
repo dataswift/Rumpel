@@ -108,8 +108,8 @@
         <section *ngFor="let table of source.data">
           <h4>{{table.name.charAt(0).toUpperCase() + table.name.slice(1)}}</h4>
 
-          <tree-view [treeNodes]="table.data[0] | withObject"
-                     [offset]="0"></tree-view>
+          <rump-tree-view [treeNodes]="table.data[0] | withObject"
+                     [offset]="0"></rump-tree-view>
         </section>
       </div>
     </div>

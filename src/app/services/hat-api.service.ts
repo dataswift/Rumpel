@@ -7,97 +7,126 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
-import { Observable, Subscription } from 'rxjs/Rx';
-import { DataDebit, User } from '../shared/interfaces/index';
+import { Http, Headers, URLSearchParams, Response } from '@angular/http';
+import { AuthHttp } from './auth-http.service';
+import { Observable } from 'rxjs/Rx';
+import { DataDebit } from '../shared/interfaces/index';
+import { User } from '../user/user.interface';
 import * as moment from 'moment';
 
 @Injectable()
 export class HatApiService {
-  private _token: string;
-  private _domain: string;
-  private _baseUrl: string;
-  private _headers: Headers;
-  private _userSub: Subscription;
 
-  constructor(private _http: Http) {}
-
-  get hatDomain() {
-    return this._domain;
+  static stringify(value: any): string {
+    if (typeof value === 'string') {
+      return value;
+    } else if (value === null) {
+      return '';
+    } else if (moment.isMoment(value)) {
+      return value.format();
+    } else if (Array.isArray(value)) {
+      return value.join(',');
+    } else {
+      return '' + value;
+    }
   }
 
-  injectUserSubscription(user$: Observable<User>) {
-    this._userSub = user$.subscribe((user: User) => {
-      this._baseUrl = 'https://' + user.iss;
-      this._domain = user.iss;
-      this._token = user.token;
+  constructor(private http: Http,
+              private authHttp: AuthHttp) {}
 
-      this._headers = new Headers();
-      this._headers.append("Content-Type", "application/json");
-      this._headers.append("X-Auth-Token", user.token);
-    });
+  // validateToken(domain: string, token: string) {
+  //   const url = `//${domain}/users/access_token/validate`;
+  //   const headers = new Headers();
+  //   headers.append('Content-Type', 'application/json');
+  //   headers.append('X-Auth-Token', token);
+  //
+  //   return this._http.get(url, { headers: headers, body: '' }).map(res => res.json());
+  // }
+
+  /* User authentication management methods */
+
+  login(username: string, password: string): Observable<User> {
+    const headers = new Headers({ username: username, password: password });
+
+    return this.http.get('users/access_token', { headers: headers, body: '' })
+      .map((res: Response) => {
+        const token = res.json().accessToken;
+        return this.authHttp.setToken(token);
+      });
   }
 
-  validateToken(domain: string, token: string) {
-    const url = `https://${domain}/users/access_token/validate`;
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("X-Auth-Token", token);
-
-    return this._http.get(url, { headers: headers, body: '' }).map(res => res.json());
+  loginWithToken(token: string): User {
+    return this.authHttp.setToken(token);
   }
 
-  getApplicationToken(name: string, resource: string) {
-    const url = this._baseUrl + '/users/application_token';
+  hatLogin(name: string, redirect: string): Observable<any> {
+    const queryParams = new URLSearchParams();
+    queryParams.append('name', name);
+    queryParams.append('redirect', redirect);
 
-    let query: URLSearchParams = new URLSearchParams();
+    return this.authHttp.get('/control/v2/auth/hatlogin', { search: queryParams })
+      .map((res: Response) => res.json()['message']);
+  }
+
+  recoverPassword(body: any): Observable<any> {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.post('/control/v2/auth/passwordReset', body, { headers: headers })
+      .map((res: Response) => res.json());
+  }
+
+  changePassword(body: any): Observable<any> {
+    return this.authHttp.post('/control/v2/auth/password', body)
+      .map((res: Response) => res.json());
+  }
+
+  resetPassword(resetToken: string, body: any): Observable<any> {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.post('/control/v2/auth/passwordreset/confirm/' + resetToken, body, { headers: headers })
+      .map((res: Response) => res.json());
+  }
+
+  /* Application authentication management methods */
+
+  getApplicationToken(name: string, resource: string): Observable<string> {
+    const query: URLSearchParams = new URLSearchParams();
     query.append('name', name);
     query.append('resource', resource);
 
-    return this._http.get(url, { headers: this._headers, search: query, body: '' })
+    return this.authHttp.get('/users/application_token', { search: query })
       .map(res => res.json().accessToken);
   }
 
-  getDataSources(): Observable<any> {
-    const url = this._baseUrl + '/data/sources';
+  /* Data table methods */
 
-    return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json());
+  getTableList(): Observable<any> {
+    return this.authHttp.get('/data/sources').map(res => res.json());
   }
 
-  getAllValuesOf(name: string, source: string, startTime?: string): Observable<any> {
-    return this.getTable(name, source)
-      .flatMap(table => {
-        if (table === "Not Found") {
-          return Observable.of([]);
-        } else {
-          if (name === 'profile' || name === 'photos' || name === 'metadata' || name === 'profile_picture') {
-            return this.getValues(table.id, startTime, false);
-          } else {
-            return this.getValues(table.id, startTime, true);
-          }
+  // getDataSources(): Observable<any> {
+  //   const url = this._baseUrl + '/data/sources';
+  //
+  //   return this._http.get(url, { headers: this._headers, body: '' })
+  //     .map(res => res.json());
+  // }
+
+  getTable(name: string, source: string): Observable<any> {
+    const query: URLSearchParams = new URLSearchParams();
+    query.append('name', name);
+    query.append('source', source);
+
+    return this.authHttp.get('/data/table', { search: query })
+      .map(res => res.json())
+      .catch(e => {
+        if (e.status === 404) {
+          return Observable.of('Not Found');
         }
       });
   }
 
-  getTable(name: string, source: string): Observable<any> {
-    const url = this._baseUrl + '/data/table';
-    let query: URLSearchParams = new URLSearchParams();
-    query.append('name', name);
-    query.append('source', source);
-
-    return this._http.get(url, { headers: this._headers, search: query, body: '' })
-      .map(res => res.json())
-      .catch(e => {
-        if (e.status === 404) return Observable.of("Not Found");
-      });
-  }
-
   getModel(tableId: number): Observable<any> {
-    const url = this._baseUrl + '/data/table/' + tableId;
-
-    return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json());
+    return this.authHttp.get(`/data/table/${tableId}`).map(res => res.json());
   }
 
   getModelMapping(tableId: number): Observable<any> {
@@ -111,9 +140,7 @@ export class HatApiService {
   }
 
   postModel(model: any): Observable<any> {
-    const url = this._baseUrl + '/data/table';
-
-    return this._http.post(url, model, { headers: this._headers })
+    return this.authHttp.post('/data/table', model)
       .map(res => res.json())
       .map(rawModel => {
         return {
@@ -123,31 +150,43 @@ export class HatApiService {
       });
   }
 
+  /* Data record methods */
+
+  getAllValuesOf(name: string, source: string, startTime?: string): Observable<any> {
+    return this.getTable(name, source)
+      .flatMap(table => {
+        if (table === 'Not Found') {
+          return Observable.of([]);
+        } else {
+          if (name === 'profile' || name === 'photos' || name === 'metadata' || name === 'profile_picture') {
+            return this.getValues(table.id, startTime, false);
+          } else {
+            return this.getValues(table.id, startTime, true);
+          }
+        }
+      });
+  }
+
   postRecord(obj: any, hatIdMapping: any, prefix: string = 'default'): Observable<any> {
-    const url = this._baseUrl + '/data/record/values';
     const hatFormattedObj = this.createRecord(obj, hatIdMapping, prefix);
 
-    return this._http.post(url, hatFormattedObj, { headers: this._headers })
+    return this.authHttp.post('/data/record/values', hatFormattedObj)
         .map(res => res.json());
   }
 
   deleteRecord(id: number) {
-    const url = this._baseUrl + '/data/record/' + id;
-
-    return this._http.delete(url, { headers: this._headers })
+    return this.authHttp.delete(`/data/record/${id}`)
       .map(res => res.json());
   }
 
   getValues(tableId: number, startTime: string = '0', pretty: boolean = false): Observable<any> {
-    const url = this._baseUrl + '/data/table/' + tableId + '/values';
-
-    let query: URLSearchParams = new URLSearchParams();
+    const query: URLSearchParams = new URLSearchParams();
     query.append('starttime', startTime);
     if (pretty) {
       query.append('pretty', pretty.toString());
     }
 
-    let requestObservable = this._http.get(url, { headers: this._headers , search: query, body: '' })
+    const requestObservable = this.authHttp.get(`/data/table/${tableId}/values`, { search: query })
       .map(res => res.json());
 
     if (pretty) {
@@ -158,9 +197,7 @@ export class HatApiService {
   }
 
   getValuesWithLimit(tableId: number, limit: number = 50, endtime: string = null, starttime: string = null): Observable<any> {
-    const url = this._baseUrl + '/data/table/' + tableId + '/values';
-
-    let query: URLSearchParams = new URLSearchParams();
+    const query: URLSearchParams = new URLSearchParams();
     query.append('pretty', 'true');
     query.append('limit', limit.toString());
     query.append('starttime', starttime || '0');
@@ -169,48 +206,57 @@ export class HatApiService {
       query.append('endtime', endtime);
     }
 
-    return this._http.get(url, { headers: this._headers , search: query, body: '' })
-        .map(res => res.json());
+    return this.authHttp.get(`/data/table/${tableId}/values`, { search: query })
+      .map(res => res.json());
   }
 
+  /* Data debit methods */
+
   getSlimDataDebit(uuid: string): Observable<DataDebit> {
-    const url = this._baseUrl + '/dataDebit/' + uuid;
-    return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json())
+    return this.authHttp.get(`/dataDebit/${uuid}`).map(res => res.json());
   }
 
   getDataDebit(uuid: string) {
-    const url = this._baseUrl + '/dataDebit/' + uuid + '/values?limit=0&starttime=0';
-    return this._http.get(url, { headers: this._headers, body: '' })
+    const query: URLSearchParams = new URLSearchParams();
+    query.append('limit', '0');
+    query.append('starttime', '0');
+
+    return this.authHttp.get(`/dataDebit/${uuid}/values`, { search: query })
       .map(res => res.json())
       .map(debit => this.transformDataDebit(debit));
   }
 
   getAllDataDebits() {
-    const url = this._baseUrl + '/dataDebit';
-    return this._http.get(url, { headers: this._headers, body: '' })
-      .map(res => res.json());
+    return this.authHttp.get('/dataDebit').map(res => res.json());
   }
 
-  updateDataDebit(uuid: string, state: string): Observable<any> {
-    const url = this._baseUrl + '/dataDebit/' + uuid + '/' + state;
-
-    return this._http.put(url, {}, { headers: this._headers });
+  updateDataDebit(uuid: string, action: string): Observable<any> {
+    return this.authHttp.put(`/dataDebit/${uuid}/${action}`, {});
   }
 
-  static stringify(value: any): string {
-    if (typeof value === 'string') {
-      return value;
-    } else if (value === null) {
-      return "";
-    } else if (moment.isMoment(value)) {
-      return value.format();
-    } else if (Array.isArray(value)) {
-      return value.join(",");
-    } else {
-      return "" + value;
-    }
+  /* HAT Public API methods */
+
+  getPublicData(endpoint: string): Observable<any> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.get(`/api/${endpoint}`, { headers: headers, body: '' })
+      .map(res => res.json())
+      .catch(err => {
+        console.warn(`Could not access public data of the current HAT.
+                      Reason: ${err}`);
+        return Observable.of(endpoint === 'profile' ? { 'public': false } : []);
+      });
   }
+
+  /* System status methods */
+
+  getAccountStatus(): Observable<any> {
+    return this.authHttp.get('/api/v2/system/status')
+      .map((res: Response) => res.json());
+  }
+
+  /* Private helper methods */
 
   private createRecord(obj: any, hatIdMapping: any, prefix: string) {
     if (Array.isArray(obj)) {
@@ -218,13 +264,13 @@ export class HatApiService {
         return {
           record: { name: new Date() },
           values: this.createValue(record, hatIdMapping, prefix)
-        }
+        };
       });
     } else {
       return [{
         record: { name: new Date() },
         values: this.createValue(obj, hatIdMapping, prefix)
-      }]
+      }];
     }
   }
 
@@ -248,7 +294,7 @@ export class HatApiService {
   }
 
   private mapDataSource(table: any, prefix: string = 'default') {
-    var mapping = {};
+    const mapping = {};
 
     table.fields.reduce((acc, field) => {
       acc[prefix + '_' + field.name] = field.id;
@@ -256,8 +302,8 @@ export class HatApiService {
     }, mapping);
 
     if (table.subTables) {
-      const mappedSubTables = table.subTables.reduce((acc, table) => {
-        const mappedTable = this.mapDataSource(table, prefix + '_' + table.name);
+      const mappedSubTables = table.subTables.reduce((acc, tableNode) => {
+        const mappedTable = this.mapDataSource(tableNode, prefix + '_' + tableNode.name);
         Object.assign(acc, mappedTable);
         return acc;
       }, mapping);
@@ -267,23 +313,23 @@ export class HatApiService {
   }
 
   private transformDataDebit(rawDebit) {
-    let dataGroups = rawDebit.bundleContextless.dataGroups;
+    const dataGroups = rawDebit.bundleContextless.dataGroups;
 
-    let dataGroupsNames = Object.keys(dataGroups);
+    const dataGroupsNames = Object.keys(dataGroups);
 
-    let mappedDataGroups = dataGroupsNames.map(groupName => {
+    const mappedDataGroups = dataGroupsNames.map(groupName => {
       return {
         name: groupName,
         data: dataGroups[groupName].map(group => {
           return {
             name: group.name,
             data: this.transformRecord(group.data)
-          }
+          };
         })
-      }
+      };
     });
 
-    let processedDebit: DataDebit = {
+    const processedDebit: DataDebit = {
       dateCreated: moment(rawDebit.dateCreated),
       startDate: moment(rawDebit.startDate),
       endDate: moment(rawDebit.endDate),
@@ -307,7 +353,7 @@ export class HatApiService {
   }
 
   private processNode(node) {
-    var values = {};
+    const values = {};
     node.fields.reduce((acc, field) => {
       if (field.values) {
         acc[field.name] = field.values[0].value;
@@ -327,4 +373,5 @@ export class HatApiService {
 
     return values;
   }
+
 }

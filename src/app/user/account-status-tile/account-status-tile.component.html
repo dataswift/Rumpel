@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+  -->
+
+<ng-content></ng-content>
+
+<div class="scroll-mask">
+  <div class="tile-body">
+    <h3>Welcome, <br>{{username}}</h3>
+    <p>Last login: {{accountStatus?.previousLogin}}</p>
+    <div class="storage-info" *ngIf="accountStatus">
+      <div class="used-share">
+        {{accountStatus?.databaseStorageUsedShare.metric}}{{accountStatus?.databaseStorageUsedShare.units}}
+      </div>
+      <div class="text">
+        <p>Storage used:<br>
+          {{round(accountStatus?.databaseStorageUsed.metric, 2)}} {{accountStatus?.databaseStorageUsed.units}}
+          out of {{round(accountStatus?.databaseStorage.metric, 2)}} {{accountStatus?.databaseStorage.units}} available.
+        </p>
+      </div>
+    </div>
+
+    <a [routerLink]="['/user', 'password', 'change']" class="btn btn-rump sm">Change password</a>
+  </div>
+</div>

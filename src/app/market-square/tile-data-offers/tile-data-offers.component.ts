@@ -8,8 +8,8 @@
 
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MarketSquareService } from '../market-square.service';
-import {UserService} from "../../services/user.service";
-import {User} from "../../shared/interfaces/user.interface";
+import { UserService } from '../../user/user.service';
+import { User } from '../../user/user.interface';
 
 @Component({
   selector: 'rump-tile-data-offers',
@@ -20,12 +20,13 @@ export class TileDataOffersComponent implements OnInit {
   public offers: any;
   @Output() navigateModal = new EventEmitter<any>();
 
-  constructor(private market: MarketSquareService, private userSvc: UserService) {}
+  constructor(private marketSvc: MarketSquareService,
+              private userSvc: UserService) {}
 
   ngOnInit() {
     this.userSvc.user$.subscribe((user: User) => {
-      if (user.authenticated === true){
-        this.market.getValidOffers().subscribe(offers => this.offers = offers);
+      if (user.authenticated === true) {
+        this.marketSvc.getValidOffers().subscribe(offers => this.offers = offers);
       }
     });
   }

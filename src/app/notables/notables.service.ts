@@ -9,18 +9,19 @@
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiService } from '../services/hat-api.service';
-import { DataPlugService } from '../services/data-plug.service';
+import { DataPlugService } from '../data-management/data-plug.service';
 import { MarketSquareService } from '../market-square/market-square.service';
 
-import { APP_CONFIG, IAppConfig } from '../app.config'
+import { APP_CONFIG, IAppConfig } from '../app.config';
 import { NotablesHatModel } from './notables.hatmodel';
 import { Notable, MSUserClaim, DataDebit } from '../shared/interfaces';
 
 import * as moment from 'moment';
-import {BaseRumpelDataService} from "../services/base-rumpel-data.service";
-import {NotablesServiceMeta} from "../shared/interfaces/notables-service-meta.interface";
-import { UiStateService } from "../services/ui-state.service";
-import {DataTable} from "../shared/interfaces/data-table.interface";
+import {BaseRumpelDataService} from '../services/base-rumpel-data.service';
+import {NotablesServiceMeta} from '../shared/interfaces/notables-service-meta.interface';
+import { UiStateService } from '../services/ui-state.service';
+import {UserService} from '../user/user.service';
+import {User} from '../user/user.interface';
 
 @Injectable()
 export class NotablesService extends BaseRumpelDataService<Notable> {
@@ -36,44 +37,33 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
               hat: HatApiService,
               uiSvc: UiStateService,
               private market: MarketSquareService,
+              private userSvc: UserService,
               private dataPlug: DataPlugService) {
     super(hat, uiSvc);
 
     this.notablesServiceMeta = {
-      phata: this.hat.hatDomain,
+      phata: '',
       offerClaimed: false,
       userMessage: '',
-      canPost: ['marketsquare'],
       activeIntegrations: this.config.notables.activeIntegrations
     };
 
-    this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject();
+    userSvc.user$.subscribe((user: User) => {
+      this.notablesServiceMeta.phata = user.fullDomain;
+      this._notablesMeta$.next(this.notablesServiceMeta);
+    });
+
+    this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject(1);
     this.editedNotable$ = this._editedNotable$.asObservable();
 
     this._notablesMeta$ = <BehaviorSubject<NotablesServiceMeta>>new BehaviorSubject(this.notablesServiceMeta);
     this.notablesMeta$ = this._notablesMeta$.asObservable();
 
     this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
+  }
 
-    this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-      this.updateNotablesState();
-
-      this.dataPlug.getTokenInfo('Facebook').subscribe((tokenInfo: any) => {
-        if (!tokenInfo.error && tokenInfo.canPost) {
-          this.notablesServiceMeta.canPost.push('facebook');
-
-          this._notablesMeta$.next(this.notablesServiceMeta);
-        }
-      });
-
-      this.dataPlug.getTokenInfo('Twitter').subscribe(tokenInfo => {
-        if (!tokenInfo.error && tokenInfo[0].successful) {
-          this.notablesServiceMeta.canPost.push('twitter');
-
-          this._notablesMeta$.next(this.notablesServiceMeta);
-        }
-      });
-    });
+  get hatDomain(): string {
+    return this.notablesServiceMeta.phata;
   }
 
   updateNotablesState(): void {
@@ -81,14 +71,14 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
       .subscribe((offerInfo: MSUserClaim) => {
         if (offerInfo && offerInfo.dataDebitId) {
           this.notablesServiceMeta.offerClaimed = true;
-          this.notablesServiceMeta["dataDebit"] = {
+          this.notablesServiceMeta['dataDebit'] = {
             id: offerInfo.dataDebitId,
             confirmed: offerInfo.confirmed,
             dateCreated: moment(offerInfo.dateCreated)
           };
         } else {
           this.notablesServiceMeta.offerClaimed = false;
-          this.notablesServiceMeta["dataDebit"] = {
+          this.notablesServiceMeta['dataDebit'] = {
             id: null,
             confirmed: null,
             dateCreated: null
@@ -122,8 +112,8 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
   updateNotable(notable: Notable): void {
     this.hat.deleteRecord(notable.id)
       .subscribe(responseMessage => {
-        if (responseMessage.message.indexOf("deleted") > -1) {
-          let foundNoteIndex = this.store.data.findIndex(note => note.id === notable.id);
+        if (responseMessage.message.indexOf('deleted') > -1) {
+          const foundNoteIndex = this.store.data.findIndex(note => note.id === notable.id);
 
           if (foundNoteIndex > -1) {
             this.store.data.splice(foundNoteIndex, 1);
@@ -158,8 +148,8 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
 
   deleteNotable(id: number) {
     this.hat.deleteRecord(id).subscribe(responseMessage => {
-      if (responseMessage.message.indexOf("deleted") > -1) {
-        let foundNoteIndex = this.store.data.findIndex(note => note.id === id);
+      if (responseMessage.message.indexOf('deleted') > -1) {
+        const foundNoteIndex = this.store.data.findIndex(note => note.id === id);
         if (foundNoteIndex > -1) {
           this.store.data.splice(foundNoteIndex, 1);
 
@@ -171,7 +161,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
   }
 
   mapData(rawNotable: any): Notable {
-    return new Notable(rawNotable.data["notablesv1"], rawNotable.id);
+    return new Notable(rawNotable.data['notablesv1'], rawNotable.id);
   }
 
   setupNotablesService(): Observable<DataDebit> {
@@ -180,7 +170,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
         if (offerInfo) {
           return this.hat.updateDataDebit(offerInfo.dataDebitId, 'enable')
             .catch(err => {
-              console.log("Failed to confirm Data Debit with the HAT", err);
+              console.log('Failed to confirm Data Debit with the HAT', err);
               return Observable.of(null);
             });
         } else {

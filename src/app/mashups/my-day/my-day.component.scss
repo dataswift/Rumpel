@@ -6,8 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+@import "../../style/variables";
+
 .view-body {
-  height: 73em;
+  height: $min-private-window-height;
   position: relative;
 }
 
@@ -18,7 +20,7 @@
 .mixpad .day-view {
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  height: 73em;
+  height: $min-private-window-height;
   top: 0;
   left: 0;
   z-index: 5551;
@@ -41,7 +43,7 @@
   }
 
   span {
-    color: #009688;
+    color: $rump-color;
     font-size: 1.25em;
   }
 }

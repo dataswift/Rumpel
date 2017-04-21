@@ -11,11 +11,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { HatApiService, UserService } from '../../services/index';
 import { DataDebitService } from '../data-debits.service';
-import { DataDebit, User } from '../../shared/interfaces';
+import { DataDebit } from '../../shared/interfaces';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
-
-// import { DomSanitizer } from '@angular/platform-browser';
-import { isUndefined } from "util";
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'rump-data-debit-confirm',
@@ -23,16 +21,16 @@ import { isUndefined } from "util";
   styleUrls: ['data-debit-confirm.component.scss']
 })
 export class DataDebitConfirmComponent implements OnInit, OnDestroy {
-  private offer: any;
-  private status: any;
+  public offer: any;
+  public status: any;
   private userSub: Subscription;
-  private dataDebit: DataDebit;
+  public dataDebit: DataDebit;
   private uuid: string;
   private ddConfirmed: boolean;
   private offerSatisfied: boolean;
-  private confirmMessage: boolean;
-  private facebookShareLink: string;
-  private twitterShareLink: string;
+  public confirmMessage: boolean;
+  public facebookShareLink: string;
+  public twitterShareLink: string;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private _route: ActivatedRoute,
@@ -63,7 +61,6 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
       }
     });
 
-    this._userSvc.ensureUserAuthenticated();
   }
 
   ngOnDestroy() {
@@ -93,14 +90,14 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
 
   private updateOfferInformation(forceReload: boolean) {
     this._ddSvc.getDataOffer(this.uuid, forceReload).subscribe(results => {
-      console.log(results);
-      let offer = results[0].find(offer => offer.offer.uuid === results[1]);
+      // console.log(results);
+      const offerMatchedToDataDebit = results[0].find(offer => offer.offer.uuid === results[1]);
       this.facebookShareLink = this.config.facebook.shareUrl +
         'https://marketsquare.hubofallthings.com/offers/' + results[1];
       this.twitterShareLink = this.config.twitter.shareUrl +
         'https://marketsquare.hubofallthings.com/offers/' + results[1];
-      this.offerSatisfied = offer.offer.status === 'satisfied';
-      this.offer = offer;
+      this.offerSatisfied = offerMatchedToDataDebit.offer.status === 'satisfied';
+      this.offer = offerMatchedToDataDebit;
       this.updateStatus();
     });
   }

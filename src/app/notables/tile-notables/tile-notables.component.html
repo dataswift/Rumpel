@@ -10,17 +10,17 @@
 
 <div class="scroll-mask" id="intro-step14">
   <rump-input-box [profile]="profile">
-    <rump-profile-photo [userPhotoUrl]="profile?.photo.url">
-    </rump-profile-photo>
+    <img style="max-height: 4.5em; margin: 1em; border-radius: 50%;" [src]="profile?.photo.url || '/assets/images/user-icon-white.svg'">
   </rump-input-box>
 
   <div class="content tile-body">
     <ul class="note-list bulletless-list" *ngIf="notables.length > 0">
       <li *ngFor="let notable of notables" class="notable">
         <div class="item-header">
-          <rump-profile-photo class="user-photo"
-                              [userPhotoUrl]="notable.authorv1 ? notable.authorv1['photo_url'] : ''">
-          </rump-profile-photo>
+          <div class="user-photo">
+            <img [src]="notable.authorv1 && notable.authorv1['photo_url'] ? notable.authorv1['photo_url'] : '/assets/images/user-icon-white.svg'">
+          </div>
+
           <div class="notable-type">
             <span class="ss-maplocation" *ngIf="notable.location"></span>
             <span class="ss-{{iconMap[notable.kind]}}"></span>

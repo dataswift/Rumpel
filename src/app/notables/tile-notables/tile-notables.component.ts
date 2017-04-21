@@ -10,8 +10,8 @@ import { Component, OnInit } from '@angular/core';
 import { Notable, Profile } from '../../shared/interfaces';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { NotablesService } from '../notables.service';
-import {UserService} from "../../services/user.service";
-import {User} from "../../shared/interfaces/user.interface";
+import {UserService} from '../../user/user.service';
+import {User} from '../../user/user.interface';
 
 @Component({
   selector: 'rump-tile-notables',
@@ -20,7 +20,7 @@ import {User} from "../../shared/interfaces/user.interface";
 })
 export class TileNotablesComponent implements OnInit {
   public notables: Array<Notable>;
-  private profile: { photo: { url: string; shared: boolean; }; };
+  public profile: { photo: { url: string; shared: boolean; }; };
   public iconMap: any;
   private sub: any;
 
@@ -29,7 +29,7 @@ export class TileNotablesComponent implements OnInit {
               private userSvc: UserService) {}
 
   ngOnInit() {
-    this.notables =[];
+    this.notables = [];
 
     this.iconMap = {
       note: 'ellipsischat',
@@ -42,7 +42,7 @@ export class TileNotablesComponent implements OnInit {
     });
 
     this.profile = {
-      photo: { url: "", shared: false }
+      photo: { url: '', shared: false }
     };
 
     this.userSvc.user$.subscribe((user: User) => {
@@ -56,14 +56,12 @@ export class TileNotablesComponent implements OnInit {
     });
 
     this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
-      let latestSnapshot = profileSnapshots[0];
+      const latestSnapshot = profileSnapshots[0];
       if (latestSnapshot && latestSnapshot.fb_profile_photo) {
         this.profile.photo.shared = !latestSnapshot.fb_profile_photo.private;
       }
     });
 
-    this.profilesSvc.getRecentData();
-    this.notablesSvc.getRecentData();
   }
 
 }

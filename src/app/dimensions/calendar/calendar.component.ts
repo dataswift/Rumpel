@@ -7,10 +7,10 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {Observable, Subscription} from "rxjs";
+import {Observable, Subscription} from 'rxjs/Rx';
 import { EventsService } from '../events.service';
-import {FacebookEventsService} from "../facebook-events.service";
-import {GoogleEventsService} from "../google-events.service";
+import {FacebookEventsService} from '../facebook-events.service';
+import {GoogleEventsService} from '../google-events.service';
 
 import { Event } from '../../shared/interfaces';
 import * as moment from 'moment';
@@ -38,7 +38,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.viewChoices = 'month,agendaWeek,agendaDay';
-    this.defaultView = "agendaWeek";
+    this.defaultView = 'agendaWeek';
     this.defaultDate = moment().format('YYYY-MM-DD');
     this.firstDay = 1;
     this.height = '70em';
@@ -49,7 +49,7 @@ export class CalendarComponent implements OnInit {
       right: this.viewChoices
     };
 
-    $("#calendar").fullCalendar('destroy');
+    $('#calendar').fullCalendar('destroy');
 
     $('#calendar').fullCalendar({
       header: {
@@ -86,9 +86,6 @@ export class CalendarComponent implements OnInit {
         this.updateCalendar();
       });
 
-    this.eventsSvc.getRecentData();
-    this.facebookEventsSvc.getRecentData();
-    this.googleEventsSvc.getRecentData();
   }
 
   private updateCalendar() {

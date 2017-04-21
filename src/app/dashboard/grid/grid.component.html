@@ -13,6 +13,12 @@
                       [info]="'Your words are your memories! Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists - all in one place, and lets you decide what is private to yourself and what to share! Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the shared space.'"></rump-tile-header>
   </rump-tile-notables>
 
+  <rump-account-status-tile class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-{{tileHeights.profile}}">
+    <rump-tile-header [title]="'Account'" [iconName]="'settings'"
+                      [backColor]="'#37474F'"
+                      [info]="'Insert text here'"></rump-tile-header>
+  </rump-account-status-tile>
+
   <rump-tile-profile class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-{{tileHeights.profile}}">
     <rump-tile-header [title]="'Profile'" [iconName]="'user'"
                       [backColor]="'#263238'"
@@ -23,7 +29,7 @@
     <rump-tile-header [title]="'Calendar'" [iconName]="'calendar'"
                       [backColor]="'#37474F'"
                       [info]="'Displays the list of most recent events in the your HAT calendar. To get started with gathering your events enable Social and Calendar data plugs.'"></rump-tile-header>
-    <div class="inactive" *ngIf="!showTile.events">
+    <div class="inactive" *ngIf="!showEventsTile">
       <div class="filter">
         <span class="ss-calendar"></span>
         <h2>Calendar</h2>
@@ -32,7 +38,7 @@
     </div>
   </rump-tile-calendar>
 
-  <rump-tile-data-offers class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1" (navigateModal)="setModalLink($event)">
+  <rump-tile-data-offers class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1">
     <rump-tile-header [title]="'Data Offers'" [iconName]="'piggybank'"
                       [backColor]="'#455A64'"
                       [info]="'Check out this section to see all the latest data offers. Claim any of the offers and start benefiting from your data.'"></rump-tile-header>
@@ -42,7 +48,7 @@
     <rump-tile-header [title]="'Social'" [iconName]="'replyall'"
                       [backColor]="'#546E7A'"
                       [info]="'What happened on the social media recently? See all your recent activity in one convenient place.'"></rump-tile-header>
-    <div class="inactive" *ngIf="!showTile.posts">
+    <div class="inactive" *ngIf="!showPostsTile">
       <div class="filter">
         <span class="ss-replyall"></span>
         <h2>Social</h2>
@@ -55,11 +61,11 @@
     <rump-tile-header [title]="'Locations'" [iconName]="'merge'"
                       [backColor]="'#607D8B'"
                       [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'"></rump-tile-header>
-    <div class="inactive" *ngIf="!showTile.locations">
+    <div class="inactive" *ngIf="!showLocationsTile">
       <div class="filter">
         <span class="ss-merge"></span>
         <h2>Locations</h2>
-        <p>(coming 2016)</p>
+        <p>(no data)</p>
       </div>
     </div>
   </rump-tile-map>
@@ -85,12 +91,4 @@
   <rump-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"
                     [bkgImage]="'assets/images/finance_bg.png'"
                     [icon]="'bank'" [title]="'Finance'"></rump-tile-coming-soon>
-
-  <rump-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"
-                    [bkgImage]="'assets/images/music_creations_bg.png'"
-                    [icon]="'guitar'" [title]="'Creations (music)'"></rump-tile-coming-soon>
-
-  <rump-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"
-                    [bkgImage]="'assets/images/art_bg.png'"
-                    [icon]="'brush'" [title]="'Creations (art)'"></rump-tile-coming-soon>
 </div>

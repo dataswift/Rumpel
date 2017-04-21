@@ -13,7 +13,7 @@ import { DataTypeFilterPipe } from './data-type-filter.pipe';
 
 describe('DataTypeFilterPipe', () => {
   it('create an instance', () => {
-    let pipe = new DataTypeFilterPipe();
+    const pipe = new DataTypeFilterPipe();
     expect(pipe).toBeTruthy();
   });
 });

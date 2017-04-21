@@ -10,14 +10,14 @@ import {
   Injectable, ViewContainerRef, ComponentRef, Injector,
   ReflectiveInjector, ComponentFactory, ComponentFactoryResolver, Type
 } from '@angular/core';
-import { ReplaySubject, Observable } from "rxjs";
+import { ReplaySubject, Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class DialogService {
   private vcRef: ViewContainerRef;
   private injector: Injector;
   private resolver: ComponentFactoryResolver;
-  public activeInstances: number = 0;
+  public activeInstances = 0;
 
   constructor() { }
 
@@ -34,16 +34,16 @@ export class DialogService {
   }
 
   createDialog<T>(component: Type<T>, parameters?: Object): Observable<ComponentRef<T>> {
-    let componentFactory = this.resolver.resolveComponentFactory<T>(component);
-    let componentRef$ = <ReplaySubject<ComponentRef<T>>>new ReplaySubject();
+    const componentFactory = this.resolver.resolveComponentFactory<T>(component);
+    const componentRef$ = <ReplaySubject<ComponentRef<T>>>new ReplaySubject();
 
     const childInjector = ReflectiveInjector.resolveAndCreate([], this.injector);
-    let componentRef: ComponentRef<T> = this.vcRef.createComponent<T>(componentFactory, 0, childInjector);
+    const componentRef: ComponentRef<T> = this.vcRef.createComponent<T>(componentFactory, 0, childInjector);
 
     Object.assign(componentRef.instance, parameters);
     this.activeInstances++;
 
-    componentRef.instance["destroy"] = () => {
+    componentRef.instance['destroy'] = () => {
       this.activeInstances--;
       componentRef.destroy();
     };

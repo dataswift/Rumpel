@@ -1,0 +1,110 @@
+<!--
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+  -->
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="view-header">
+      <h4>Public Profile</h4>
+      <div class="view-mode-toggle" *ngIf="userAuthenticated">
+        <h6 class="switch-label">Edit</h6>
+        <rump-switch [isChecked]="true" (onSwitch)="switchView()" class="switch-main"></rump-switch>
+        <h6 class="switch-label">View</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrapper">
+  <div class="row profile profile-private" *ngIf="isLoading()">
+    <div class="col-md-offset-1 col-md-10">
+      <div class="loading-animation">
+        <rump-spinner [isRunning]="true"></rump-spinner>
+        <span>Retrieving data...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row profile profile-private" *ngIf="shared === false">
+    <div class="col-md-offset-1 col-md-10">
+      <h1>Private Profile</h1>
+      <h2>The user has made this Profile Private</h2>
+    </div>
+  </div>
+
+  <div class="grid row" *ngIf="shared">
+    <div class="grid-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
+      <div class="box-square aspect-ratio"></div>
+      <div class="box-content box-photos">
+        <img [src]="profile['profile_picture'] || '/assets/images/user-icon-white.svg'"
+             alt="HAT" class="img img-responsive img-rounded profile-img" />
+      </div>
+    </div>
+    <div class="grid-item col-xs-12 col-sm-12 col-md-6 col-lg-6">
+      <div class="box-square aspect-ratio"></div>
+      <div class="box-content about-me">
+        <div class="about-me-wrapper">
+          <h2 class="icon-text-valign">
+            <span class="icon ss-user"></span>
+            {{hostname}}
+          </h2>
+
+          <h2>
+            {{ profile.profile ? profile.profile.personal : "" }}
+          </h2>
+
+          <div class="description" *ngIf="profile.about">
+            <h3>
+              {{ profile.about.title }}
+            </h3>
+            <p [innerHTML]="profile.about.body | markdownToHtml | safeHtml"></p>
+          </div>
+
+          <div class="contactme" *ngIf="profile['contact']">
+            <div class="contact" *ngIf="profile.contact['primary_email']">
+              <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['primary_email'] }}</h4>
+            </div>
+
+            <div class="contact" *ngIf="profile.contact['alternative_email']">
+              <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['alternative_email'] }}</h4>
+            </div>
+
+            <div class="contact" *ngIf="profile.contact['mobile']">
+              <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact['mobile'] }}</h4>
+            </div>
+
+            <div class="contact" *ngIf="profile.contact['home_phone']">
+              <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact['home_phone'] }}</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="findme" *ngIf="profile.links">
+          <a [href]="link.value" *ngFor="let link of profile.links | withObject">
+            <div class="findme-link {{ link.key.toLowerCase() }}">
+              <i class="fa fa-{{ link.key.toLowerCase() }}"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-item item-wide col-xs-12 col-sm-12 col-md-6 col-lg-6" *ngIf="notables">
+      <div class="box-content notes">
+
+        <h2 class="icon-text-valign"><span class="icon ss-write"></span>&nbsp;My Public Notables</h2>
+        <ul class="bulletless-list">
+          <li *ngFor="let notable of notables" class="notable-item placeholder">
+            <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

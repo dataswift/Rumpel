@@ -1,0 +1,171 @@
+/*!
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 3, 2017
+ */
+
+@import "../../style/variables";
+
+.view-body {
+  background-image: url("/assets/images/landing_bg.jpg");
+  background-repeat: repeat;
+  text-align: center;
+  min-height: 70em;
+  position: relative;
+
+  .version-tag {
+    position: absolute;
+    bottom: 1em;
+    right: 3em;
+    color: white;
+  }
+
+  .logo {
+    height: 6em;
+    margin-top: 2em;
+  }
+
+  p {
+    color: #ffffff;
+    font-size: 1.8em;
+    margin-top: 1.5em;
+
+    &.subtext {
+      font-size: 1.4em;
+    }
+  }
+
+  .highlight {
+    font-weight: 600;
+  }
+}
+
+.form-group {
+  margin-top: 3em;
+  text-align: left;
+  font-weight: 300;
+
+  label {
+    font-family: 'Open Sans Condensed', sans-serif;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 1.25em;
+  }
+}
+
+.error {
+  font-family: "Open Sans Regular", sans-serif;
+  font-size: 1em;
+  font-weight: 700;
+  border-radius: 0;
+  margin-top: 0.25em;
+}
+
+a {
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: underline;
+
+  &:hover {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+}
+
+.form-context {
+  color: #ffffff;
+  font-size: 1.2em;
+  font-family: 'Open Sans', sans-serif;
+
+  span {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+  }
+}
+
+.btn-rump {
+  width: 100%;
+}
+
+.form-group {
+  text-align: center;
+
+  &.with-dropdown {
+    input {
+      width: 50%;
+      display: inline;
+
+      //@media (min-width: $screen-md-min) and (max-width: 1310px), (max-width: 590px) {
+      //  width: 100%;
+      //}
+    }
+
+    .dropdown-wrapper {
+      display: inline;
+      position: relative;
+      line-height: initial;
+
+      button {
+        background-color: white;
+        margin-left: -5px;
+        min-width: 180px;
+        width: 50%;
+        color: $rump-color;
+
+        &:focus {
+          box-shadow: none;
+        }
+
+        //@media (min-width: $screen-md-min) and (max-width: 1310px), (max-width: 590px) {
+        //  width: 100%;
+        //  margin-left: 0;
+        //}
+      }
+
+      .dropdown-menu-rump {
+        margin: 2px 0 0 -5px;
+        padding: 0;
+        z-index: 1001;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid #c7c7c7;
+        border-radius: 0;
+        list-style: none;
+        display: block;
+        top: 3em;
+        left: 0;
+        width: 101.5%;
+        color: $rump-color;
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        cursor: pointer;
+
+        li {
+          font-size: 1.6em;
+          height: 3em;
+          padding: 0.7em;
+          line-height: 1.6;
+
+          &:hover {
+            background-color: rgba(232, 232, 232, 0.7);
+          }
+        }
+      }
+    }
+  }
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 0;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}

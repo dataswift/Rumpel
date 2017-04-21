@@ -6,41 +6,38 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { ReplaySubject, Observable } from 'rxjs/Rx';
-import { UserService } from './services/user.service';
-import { User } from './shared/interfaces/index';
+import { UserService } from './user/user.service';
+import { APP_CONFIG, IAppConfig } from './app.config';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router,
-              private user: UserService) {
-  }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private router: Router,
+              private userSvc: UserService) { }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (route.queryParams['token']) {
+      return this.userSvc.loginWithToken(route.queryParams['token']);
+    } else if (this.userSvc.isLoggedIn()) {
+      return true;
+    } else {
+      const navExtras: NavigationExtras = {
+        queryParams: { target: route.routeConfig.path }
+      };
 
-    var subject = new ReplaySubject<boolean>();
-
-    this.user.auth$.subscribe((isAuthenticated: boolean) => {
-      if (isAuthenticated === false) {
-        let navigationExtras: NavigationExtras = {
-          queryParams: { 'redirect': route.routeConfig.path }
-        };
-
-        this.router.navigate(['/users/login'], navigationExtras);
+      if (route.queryParams['name'] && route.queryParams['redirect']) {
+        navExtras.queryParams['name'] = route.queryParams['name'];
+        navExtras.queryParams['redirect'] = route.queryParams['redirect'];
       }
 
-      subject.next(isAuthenticated);
-    });
+      const redirectPath = this.config.native ? ['user', 'login'] : ['user', 'login', 'start'];
 
-    if (route.queryParams['token']) {
-      this.user.login(route.queryParams['token']);
-    } else {
-      this.user.ensureUserAuthenticated();
+      this.router.navigate(redirectPath, navExtras);
+      return false;
     }
 
-    return subject.asObservable().take(1);
   }
 }

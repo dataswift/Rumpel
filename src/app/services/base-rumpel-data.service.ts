@@ -6,27 +6,23 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {BaseDataService} from "./base-data.service";
-import {HatApiService} from "./hat-api.service";
-import {UiStateService} from "./ui-state.service";
-import {DataTable} from "../shared/interfaces/index";
-
+import {BaseDataService} from './base-data.service';
+import {HatApiService} from './hat-api.service';
+import {UiStateService} from './ui-state.service';
+import {DataTable} from '../shared/interfaces/index';
 
 export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
   constructor(hat: HatApiService, uiSvc: UiStateService) {
     super(hat, uiSvc);
 
-    this.store = {
-      data: [],
-      tableId: null,
-      idMapping: null
-    };
+    this.clearLocalStore();
   }
 
   ensureTableExists(name: string, source: string, hatDataModel?: any): void {
     this.uiSvc.tables$
       .flatMap((tables: DataTable[]) => {
         const tableFound = tables.find((table: DataTable) => table.name === name && table.source === source);
+
         if (tableFound) {
           this.store.tableId = tableFound.id;
           return this.hat.getModelMapping(tableFound.id);
@@ -37,6 +33,7 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
       .subscribe(maps => {
         this.store.tableId = maps.id;
         this.store.idMapping = maps.mapping;
+        this.getRecentData();
       });
   }
 
@@ -46,7 +43,17 @@ export abstract class BaseRumpelDataService<T> extends BaseDataService<T> {
         this.store.data.unshift(dataItem);
 
         this.pushToStream();
-      })
+      });
+  }
+
+  clearLocalStore(): void {
+    this.store = {
+      data: [],
+      tableId: null,
+      idMapping: null
+    };
+
+    this.pushToStream();
   }
 
 }
