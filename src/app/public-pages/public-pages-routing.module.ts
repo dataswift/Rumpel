@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 
 import { PublicProfileComponent } from './public-profile/public-profile.component';
 import { PublicNotablesComponent } from './public-notables/public-notables.component';
-import { NativeGuard } from "../native-guard.service";
+import { NativeGuard } from '../native-guard.service';
 
 @NgModule({
   imports: [
