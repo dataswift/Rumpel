@@ -23,7 +23,7 @@ export class LoginStandaloneComponent implements OnInit {
     this.lastLoginId = this.storageSvc.getItem('lastLoginId');
     const lastLoginDomain = this.storageSvc.getItem('lastLoginDomain');
     this.selectedDomain = lastLoginDomain ? '.' + lastLoginDomain : this.availableDomains[0];
-    this.redirectPath = this.route.snapshot.queryParams['redirect'] || 'home';
+    this.redirectPath = this.route.snapshot.queryParams['redirect'] || 'dashboard';
   }
 
   clearError() {
