@@ -17,9 +17,10 @@
         {{accountStatus?.databaseStorageUsedShare.metric}}{{accountStatus?.databaseStorageUsedShare.units}}
       </div>
       <div class="text">
-        <p>Storage used:<br>
-          {{round(accountStatus?.databaseStorageUsed.metric, 2)}} {{accountStatus?.databaseStorageUsed.units}}
-          out of {{round(accountStatus?.databaseStorage.metric, 2)}} {{accountStatus?.databaseStorage.units}} available.
+        <p>
+          Storage used: {{round(accountStatus?.databaseStorageUsed.metric, 2)}} {{accountStatus?.databaseStorageUsed.units}}
+          <br>
+          Total storage available: {{round(accountStatus?.databaseStorage.metric, 2)}} {{accountStatus?.databaseStorage.units}}
         </p>
       </div>
     </div>
