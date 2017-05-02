@@ -26,7 +26,7 @@ export class IAppConfig {
   menuItems: {
     public: Array<any>;
     private: Array<any>;
-    comingSoon: Array<any>;
+    dataPlugs: Array<any>;
   };
 }
 
@@ -76,23 +76,24 @@ export const AppConfig: IAppConfig = {
   },
   menuItems: {
     'public': [
-      { display: 'Public Profile', icon: 'user', link: 'public/profile', dataType: '', disable: '' },
-      { display: 'Shared Notables', icon: 'notebook', link: 'public/notables', dataType: '', disable: '' },
+      { display: 'Public profile', icon: 'user', link: 'public/profile', dataType: '', disable: '' },
+      { display: 'Shared notables', icon: 'notebook', link: 'public/notables', dataType: '', disable: '' },
     ],
     'private': [
       { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '' },
-      { display: 'Notables', icon: 'notebook', link: 'notables', dataType: '', disable: '' },
-      { display: 'Profile', icon: 'user', link: 'profile', dataType: 'profile', disable: '' },
-      { display: 'Mashups', icon: 'layergroup', link: 'mashups/myday', dataType: '', disable: '' },
-      { display: 'Locations', icon: 'tags', link: 'locations', dataType: 'locations', disable: 'no data' },
-      { display: 'Calendar', icon: 'calendar', link: 'calendar', dataType: 'events', disable: 'no data' },
-      { display: 'Social', icon: 'replyall', link: 'social', dataType: 'posts,tweets,music_listens', disable: 'no data' },
-      { display: 'Photos', icon: 'camera', link: 'photos', dataType: 'photos', disable: 'no data' },
-      { display: 'Data Plugs', icon: 'puzzle', link: 'dataplugs', dataType: '', disable: '' }
+      { display: 'My data store', icon: 'security', link: 'datastore', dataType: 'profile', disable: '' },
+      { display: 'Redeem offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '' },
+      { display: 'My data services', icon: 'assessment', link: 'profile', dataType: '', disable: '' },
+      { display: 'My data plugs', icon: 'settings_input_component', link: 'dataplugs', dataType: '', disable: '' }
     ],
-    'comingSoon': [
-      { display: 'Weather', icon: 'thermometer', dataType: '', link: '' },
-      { display: 'Finance', icon: 'bank', dataType: '', link: '' }
+    'dataPlugs': [
+      { display: 'Facebook', activatedSearchName: 'posts', activatedSearchSource: 'facebook' },
+      { display: 'Twitter', activatedSearchName: 'tweets', activatedSearchSource: 'twitter' },
+      { display: 'Location', activatedSearchName: 'location', activatedSearchSource: 'rumpel' },
+      { display: 'Google Calendar', activatedSearchName: 'events', activatedSearchSource: 'google' },
+      { display: 'Calendar', activatedSearchName: 'events', activatedSearchSource: 'ical' },
+      { display: 'Photos', activatedSearchName: 'photos', activatedSearchSource: 'dropbox' },
+      { display: 'Rumpel', activatedSearchName: 'profile', activatedSearchSource: 'rumpel' }
     ]
   }
 };

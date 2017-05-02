@@ -6,53 +6,63 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<ul class="center" id="intro-step1">
-  <li *ngIf="userAuthenticated">
-    <div class="wrapper" id="intro-step2">
-      <button (click)="showNotificationsCentre()" type="button">
-        <span class="ss-notice"></span>
-        Notifications
-        <span class="new-notifications" *ngIf="unreadNotifications > 0">{{unreadNotifications}}</span>
-      </button>
-    </div>
 
-    <div class="disable" *ngIf="totalNotifications === 0">
-      <p class="text">no data</p>
-    </div>
-  </li>
-  <li *ngFor="let item of menu; let i = index"
-      [class.selected]="item.link === selectedItem">
-    <div class="wrapper" id="intro-step{{i + 3}}">
-      <a [routerLink]="[item.link]">
-        <span class="ss-{{item.icon}}"></span>
-        {{item.display}}
-      </a>
-    </div>
+<div class="burger" (click)="animateMenu()"
+  data-toggle="popover" data-container=".navbar"
+   data-content="Menu"
+   data-trigger="hover"
+   (mouseover)="showPopover()">
+  <i class="material-icons">menu</i>
+</div>
 
-    <div class="disable" *ngIf="item.disable">
-      <p class="text">{{item.disable}}</p>
-    </div>
-  </li>
+<div class="menu-scroll">
 
-  <li *ngIf="userAuthenticated">
-    <div class="wrapper" id="intro-step12">
-      <button (click)="displayConfirmDialog()" type="button">
-        <span class="ss-tags"></span>
-        Offers
-      </button>
-    </div>
-  </li>
-</ul>
+    <ul class="center" id="intro-step1">
+      <li *ngFor="let item of menu; let i = index"
+          [class.selected]="item.link === selectedItem">
+        <div class="wrapper" id="intro-step{{i + 3}}">
+          <a [routerLink]="[item.link]" (click)="closeMenu()">
+            <div class="icon"><i class="material-icons">{{item.icon}}</i></div>
+            {{item.display}}
+            <span class="badge" *ngIf="item.display === 'Redeem offers'">4</span>
+          </a>
+        </div>
+      </li>
+    </ul>
 
-<ul class="center" id="intro-step13" *ngIf="userAuthenticated">
-  <li *ngFor="let item of comingSoonMenu">
-    <a href="#">
-      <span class="ss-{{item.icon}}"></span>
-      {{item.display}}
-    </a>
+    <div *ngIf="userAuthenticated">
+        <h6 class="data-plugs-title">Add data plugs</h6>
+        <ul class="center plug-menu">
+          <li *ngFor="let item of dataplugList; let i = index" class="data-plugs-list" [class.hidden]="item.activated" >
+            <div class="wrapper">
+              <a (click)="openPlugPopup(item); closeMenu();" data-toggle="popover" data-container=".menubar-left"
+                 [attr.data-content]="item.description"
+                 data-trigger="hover"
+                 (mouseover)="showPopover()">
+                <div class="icon icon-grey"><img [src]="'assets/icons/grey-' + item.icon" /></div>
+                <div class="icon icon-color"><img [src]="'assets/icons/' + item.icon" /></div>
+                {{item.name}}
+                <span class="plus-icon"><i class="material-icons">control_point</i></span>
+              </a>
+            </div>
+          </li>
+        </ul>
+          <ul class="center" >
+          <li class="data-plugs-more">
+            <div class="wrapper">
+              <a [routerLink]="['dataplugs']">
+                <div class="icon"><i class="material-icons">more_horiz</i></div>
+                <em>More</em>
+              </a>
+            </div>
+          </li>
+        </ul>
+  </div>
 
-    <div class="disable">
-      <p class="text">coming soon</p>
-    </div>
-  </li>
-</ul>
+</div>
+
+
+<div class="poweredBy">
+  <img src="assets/icons/rumpel-plug.svg" class="img img-responsive">
+  <p>Dashboard by Rumpel</p>
+</div>

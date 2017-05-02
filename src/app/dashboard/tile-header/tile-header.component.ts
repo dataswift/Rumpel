@@ -18,8 +18,6 @@ declare const $: any;
 })
 export class TileHeaderComponent implements OnInit {
   @Input() title: string;
-  @Input() iconName: string;
-  @Input() backColor: string;
   @Input() info: string;
 
   constructor(private router: Router) {}

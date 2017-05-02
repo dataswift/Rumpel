@@ -13,6 +13,7 @@ body {
   font-size: 12px;
   font-family: $font-regular;
   min-width: 480px;
+  background-color: $app-background-color !important;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -22,14 +23,19 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .content-main {
-  background: rgb(1, 1, 1);
+
+  margin-top: 106px;
+  margin-left: 345px;
+
+  @media screen and (max-width: $screen-md) {
+      margin-left: 0px;
+  }
 
   .content-grid {
     overflow: hidden;
     color: white;
     padding-left: 0;
     padding-right: 0;
-    background: url("/assets/images/tiled-bg.png");
   }
 
   .grid {
@@ -271,3 +277,81 @@ button.btn-view-header {
   }
 }
 
+.badge{
+  background-color: $app-notification-color;
+  color: black;
+  float: right;
+  margin-top: 4px;
+  font-weight: normal;
+  min-width: 24px;
+}
+
+.notif-badge{
+  min-width: 18px !important;
+  padding: 3px;
+  position: relative;
+  top: -45px;
+  right: 5px;
+}
+
+
+.customIntroHighlight {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 3px dashed $app-accent-color;
+  box-shadow: none;
+}
+
+
+.introjs-overlay{
+  opacity: 0 !important;
+}
+
+.introjs-arrow.left {
+  border-right-color: $app-accent-color;
+}
+.introjs-arrow.right {
+  border-left-color: $app-accent-color;
+}
+.introjs-arrow.up {
+  border-bottom-color: $app-accent-color;
+}
+.introjs-arrow.down {
+  border-top-color: $app-accent-color;
+}
+
+.introjs-tooltip{
+  padding: 30px;
+  width: 250px;
+}
+
+.introjs-tooltiptext{
+  font-size: 14px;
+}
+
+.introjs-tooltipbuttons {
+    text-align: center;
+}
+
+.introjs-button{
+  padding: 15px;
+  &:hover{
+    color: $app-accent-color;
+  }
+}
+
+.introjs-bullets ul li {
+    margin: 4px 4px;
+}
+
+.introjs-bullets{
+  padding: 15px;
+  a{
+    background: white !important;
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  a.active{
+    background: $app-header-color !important;
+  }
+}

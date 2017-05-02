@@ -8,6 +8,7 @@
 
 import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from './app.config';
+import { NotificationsService } from './layout/notifications.service';
 
 import * as moment from 'moment';
 
@@ -24,7 +25,8 @@ export class AppRootComponent implements OnInit {
   private canHide: boolean;
   private appExpireTime: moment.Moment;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig) { }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+            private _notificationsSvc: NotificationsService) { }
 
   ngOnInit() {
     console.log(`Rumpel is running. Version: ${this.config.version}`);
@@ -41,22 +43,8 @@ export class AppRootComponent implements OnInit {
       }
     };
 
+    this._notificationsSvc.showNotifs$.subscribe(status => this.showNotifications = status);
+
   }
 
-  show() {
-    this.showNotifications = true;
-
-    setTimeout(() => this.canHide = true, 100);
-    setTimeout(() => {
-      this.canHide = false;
-      this.showNotifications = false;
-    }, 10000);
-  }
-
-  hide(event) {
-    if (this.canHide === true) {
-      this.showNotifications = false;
-      this.canHide = false;
-    }
-  }
 }

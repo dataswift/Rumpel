@@ -108,8 +108,10 @@ export class MarketSquareService {
 
   getDataPlugs(): Observable<any> {
     const url = this.config.market.url + '/dataplugs';
+
     return this.http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json());
+
   }
 
   getNotifications(): Observable<any> {

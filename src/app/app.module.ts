@@ -48,6 +48,7 @@ import { InfoBoxComponent } from './layout/info-box/info-box.component';
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
 import { BrowserStorageService } from './services/browser-storage.service';
+import { OffersComponent } from './offers/offers.component';
 
 export function authHttpFactory(backend: XHRBackend,
                                 defaultOptions: RequestOptions,
@@ -66,7 +67,8 @@ export function cookieServiceFactory() {
     GridComponent,
     TileHeaderComponent,
     TileComingSoonComponent,
-    DataTypeFilterPipe
+    DataTypeFilterPipe,
+    OffersComponent
   ],
   imports: [
     BrowserModule,

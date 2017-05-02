@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 import { HatApiService } from '../services/hat-api.service';
@@ -18,6 +18,12 @@ import { DataTable } from '../shared/interfaces/data-table.interface';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.interface';
 import { MarketSquareService } from '../market-square/market-square.service';
+import { EventsService } from '../dimensions/events.service';
+
+import { APP_CONFIG, IAppConfig} from '../app.config';
+
+import { Event } from '../shared/interfaces';
+import * as moment from 'moment';
 
 @Injectable()
 export class DataPlugService {
@@ -25,13 +31,16 @@ export class DataPlugService {
   private protocol: string = window.location.protocol;
   private services: { [key: string]: { url: string; connected: boolean; }; };
   private _dataplugs$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
+  private pluglist: {};
 
-  constructor(private http: Http,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private http: Http,
               private hatSvc: HatApiService,
               private marketSvc: MarketSquareService,
               private dialogSvc: DialogService,
               private uiSvc: UiStateService,
-              private userSvc: UserService) {
+              private userSvc: UserService,
+              private eventsSvc: EventsService) {
     this.services = {
       'Facebook': {
         url: 'https://social-plug.hubofallthings.com/api/user/token/status',
@@ -57,6 +66,10 @@ export class DataPlugService {
     return this._dataplugs$.asObservable();
   }
 
+  getPlugs(): Observable<any> {
+    return this._dataplugs$.asObservable();
+  }
+
   status(plugName: string): boolean {
     return this.services[plugName].connected;
   }
@@ -74,26 +87,48 @@ export class DataPlugService {
       });
   }
 
+
+  private getDataPlugStatus(tables, plug): boolean{
+    var plugStatus:boolean = false;
+
+    var plugList:any = this.config.menuItems.dataPlugs;
+    var plugName = plug.name.toLowerCase();
+
+    for(var i=0; i < plugList.length; i++){
+      if(plugName === plugList[i].display.toLowerCase()){
+        plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
+      }
+    }
+
+    return plugStatus;
+  }
+
+
   private getDataPlugList() {
     this.marketSvc.getDataPlugs().subscribe(plugs => {
-      const displayPlugs = plugs.map(plug => {
-        const displayPlug = {
-          name: plug.name,
-          description: plug.description,
-          url: plug.url.replace('/dataplug', '/hat/authenticate'),
-          icon: plug.name.toLowerCase() + '-plug'
-        };
 
-        if (plug.name === 'facebook' || plug.name === 'twitter') {
-          displayPlug.icon += '.png';
-        } else {
-          displayPlug.icon += '.svg';
-        }
+      this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
+        console.log(tables);
 
-        return displayPlug;
-      }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
+        const displayPlugs = plugs.map(plug => {
 
-      this._dataplugs$.next(displayPlugs);
+          var plugActivated:boolean = this.getDataPlugStatus(tables, plug);
+
+          const displayPlug = {
+            name: plug.name,
+            description: plug.description,
+            url: plug.url.replace('/dataplug', '/hat/authenticate'),
+            icon: plug.name.toLowerCase() + '-plug.svg',
+            activated: plugActivated
+          };
+
+          return displayPlug;
+        }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
+
+        this._dataplugs$.next(displayPlugs);
+      });
+
+
     });
   }
 

@@ -11,8 +11,8 @@
 /* General styling for popovers */
 
 .popover {
-  border-radius: 0;
-  background-color: $material-bg-200;
+  z-index: 600;
+  width: 250px;
 }
 
 .popover.left > .arrow,

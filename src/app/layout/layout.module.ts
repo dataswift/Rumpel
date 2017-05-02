@@ -22,6 +22,7 @@ import { DialogService } from './dialog.service';
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { InfoBoxComponent } from './info-box/info-box.component';
 import {NotificationsService} from './notifications.service';
+import {BaseDataService} from '../services/base-data.service';
 
 @NgModule({
   imports: [ SharedModule ],

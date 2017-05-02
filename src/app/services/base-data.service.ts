@@ -55,6 +55,19 @@ export abstract class BaseDataService<T> {
     });
   }
 
+  checkTableExists(name: string, source: string):boolean {
+    var result:boolean = false;
+
+    this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
+      const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);
+      if (foundTable) {
+        result = true;
+      }
+    });
+
+    return result;
+  }
+
   getRecentData(failedAttempts: number = 0): void {
     if (this.store.data.length > 0) {
       this.pushToStream();

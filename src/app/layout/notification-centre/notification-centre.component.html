@@ -8,11 +8,12 @@
 
 <div class="notifications-banner">
   <div class="row vertical-align">
-    <div class="col-xs-1" (click)="previousNote()"><span class="ss-left" *ngIf="totalNotifications > 1"></span></div>
-    <div class="col-xs-10" (click)="markAsRead()">
+    <div class="col-xs-1 col-xs-offset-3" (click)="previousNote()"><span *ngIf="totalNotifications > 1"><i class="material-icons">navigate_before</i></span></div>
+    <div class="col-xs-4" (click)="markAsRead()">
       <div class="notification-message" [innerHTML]="notification.notice.message | markdownToHtml"></div>
       <h5>Released {{notification.notice.dateCreated | moment}}</h5>
     </div>
-    <div class="col-xs-1" (click)="nextNote()" style="text-align: right;"><span class="ss-right" *ngIf="totalNotifications > 1"></span></div>
+    <div class="col-xs-1" (click)="nextNote()" style="text-align: right;"><span *ngIf="totalNotifications > 1"><i class="material-icons">navigate_next</i></span></div>
+    <div class="col-xs-1 col-xs-offset-2" (click)="closeNotifs()" style="text-align: left; margin-right: 10px"><span><i class="material-icons">clear</i></span></div>
   </div>
 </div>

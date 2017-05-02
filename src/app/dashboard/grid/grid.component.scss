@@ -6,26 +6,27 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
  */
 
+@import "../../style/variables";
+
 .grid {
-  background-image: url("/assets/images/tiled-bg.png");
-  background-repeat: repeat;
+
 }
 
 :host /deep/ {
   .scroll-mask {
-    border: solid transparent;
-    border-width: 0.5em 1em;
     height: 21em;
     width: 100%;
     overflow: hidden;
   }
 
   .tile-body {
-    width: 107%;
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
-    padding-right: 7%;
+    background-color: white;
+    padding: 30px 20px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 
@@ -33,8 +34,7 @@
   float: left;
   padding: 0;
   margin: 0;
-  background-color: #262626;
-  color: #ffffff;
+  color: $app-dark-grey;
   overflow: hidden;
 }
 

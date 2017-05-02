@@ -6,35 +6,32 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
  */
 
+
 .navbar {
-  background-color: rgb(1, 1, 1);
-  min-height: unset;
-  height: 9em;
+  background-color: $app-header-color;
   $transition-speed: 500ms;
   -webkit-transition: all $transition-speed;
   -moz-transition: all $transition-speed;
   -o-transition: all $transition-speed;
   transition: all $transition-speed;
-  padding-top: 3em;
-  padding-bottom: 3em;
   margin: 0;
   border-radius: 0;
+  margin-bottom: 42px;
+  width: 100%;
+  height: 64px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 600;
 
-  &.smaller {
-    font-size: 0.75em;
-    padding-top: 2em;
-    padding-bottom: 2em;
-    height: 9em;
-  }
 
   .navbar-nav {
-    font-size: 2.2em;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-weight: lighter;
-    text-transform: capitalize;
+    font-size: 1.2em;
+    font-family: $font-display;
+    padding: 13px;
 
     li {
-      margin-top: 0.4em;
+      float: left;
     }
 
     li > a {
@@ -45,7 +42,6 @@
 
     .user-nav > p {
       margin: 0;
-      padding: 0.3em 0.5em;
       color: #ffffff;
       line-height: 20px;
     }
@@ -53,11 +49,10 @@
     &.navbar-right {
       padding-left: 0.5em;
       padding-right: 0.5em;
+      float: right;
+      margin: 0px -15px 0px 0px;
+
       li {
-        border-left: solid 0.05em #ffffff;
-        &:first-child {
-          border-left: none;
-        }
         a:hover {
           background-color: transparent;
         }
@@ -81,4 +76,168 @@
       padding-left: 1em;
     }
   }
+}
+
+.notif{
+  button {
+    background-color: transparent;
+    border: none;
+
+    .new-notifications {
+      height: 1.5em;
+      width: 1.5em;
+      position: absolute;
+      font-weight: bold;
+      font-size: 1em;
+      background-color: red;
+      top: 0.25em;
+      right: 2em;
+      -moz-border-radius: 50%;
+      -webkit-border-radius: 50%;
+      border-radius: 50%;
+    }
+
+    &:focus {
+      outline: 0;
+    }
+  }
+}
+
+.help{
+  i{
+    vertical-align: bottom;
+    margin-right: 8px;
+  }
+
+  border-right: solid 1px #4a5260;
+  font-size: 12px;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 14px;
+
+  cursor: pointer;
+
+
+  span{
+    margin-bottom: 2px;
+    display: inline-block;
+  }
+}
+
+
+
+.account{
+
+    margin-top: 3px;
+    margin-right: 20px;
+
+    @media screen and (max-width: 510px) {
+      margin-top: 6px;
+    }
+
+    .user-photo{
+      display: inline-block;
+      padding-left: 14px;
+      width: 62px;
+      cursor: pointer;
+
+      img{
+        width: 38px;
+        height: 38px;
+        margin-top: -19px;
+        margin-right: 5px;
+
+      }
+    }
+
+    h6{
+      color: white;
+      font-family: $font-display;
+      font-weight: 600;
+      display: inline-block;
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-top: 0;
+
+      span{
+        font-weight: 400;
+        font-size: 11px;
+        color: #767e8d;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .account-options{
+      color: white;
+      display: inline-block;
+    }
+
+    .account-actions{
+      display: inline-block;
+      cursor: pointer;
+
+      .welcome{
+        min-width: 100px;
+
+        @media screen and (max-width: 510px) {
+          display: none;
+        }
+      }
+
+
+    }
+}
+
+.notifications-wrapper{
+  position: fixed;
+  z-index: 1000;
+}
+
+.account-btn{
+  background-color: unset;
+  text-transform: none;
+  text-align: left;
+  padding-top: 0;
+  padding-left: 0;
+}
+
+.dropdown-menu{
+  top: 45px;
+  width: 100%;
+  background-color: white !important;
+  position: absolute !important;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175) !important;
+
+  @media screen and (max-width: 510px) {
+    left: -130px;
+  }
+
+  span{
+    font-size: 12px;
+  }
+
+  .dropdown-item{
+    cursor: pointer;
+    padding: 15px;
+    display: block;
+
+    p{
+      margin-bottom: 0;
+    }
+
+    &:hover{
+      color: $app-accent-color;
+      text-decoration: none;
+    }
+  }
+
+  .dropdown-divider{
+    margin: 0px;
+    border-top: 1px solid #ddd;
+  }
+
+
+
 }

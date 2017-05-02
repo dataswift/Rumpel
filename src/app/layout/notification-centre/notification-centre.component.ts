@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../../services/index';
 import { ExternalNotification } from '../../shared/interfaces/index';
 import { NotificationsService } from '../notifications.service';
@@ -18,6 +18,7 @@ import { User } from '../../user/user.interface';
   styleUrls: ['./notification-centre.component.scss']
 })
 export class NotificationCentreComponent implements OnInit {
+  @Output() clickNotifications = new EventEmitter<string>();
   public notification: ExternalNotification;
   public totalNotifications: number;
 
@@ -50,5 +51,9 @@ export class NotificationCentreComponent implements OnInit {
 
   markAsRead() {
     this._notificationsSvc.markAsRead(this.notification);
+  }
+
+  closeNotifs(){
+    this._notificationsSvc.toggleShow(false);
   }
 }

@@ -9,41 +9,171 @@
 @import "variables";
 
 .menubar-left {
-  min-width: 6em;
-  background: rgb(1, 1, 1);
+  width: 345px;
+  height: 100%;
+  position: fixed;
+  top: 106px;
+  left: 0px;
+  z-index: 600;
+  color: $app-dark-grey;
+  font-family: $font-display;
+  background-color: $app-background-color !important;
+
+  @media screen and (max-width: $screen-md) {
+      left: -345px;
+  }
+
+  .menu-scroll{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: calc(100% - 200px);
+  }
+}
+
+.burger{
   color: white;
-  float: left;
+  position: fixed;
+  top: 10px;
+  left: 35px;
+  z-index: 700;
+  display: block;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+@keyframes burger-pulse {
+    from {background-color: rgba(255, 255, 255, 0.3);}
+    to {background-color: rgba(255, 255, 255, 0);}
+}
+
+.burger-pulse-animation{
+  animation-name: burger-pulse;
+  animation-duration: 1s;
+}
+
+
+.data-plugs-title{
+  text-transform: uppercase;
+  font-weight: lighter;
+  font-family: $font-regular;
+  font-size: 12px;
+  color: #bdbdbd;
+  margin: 35px 0px 10px 45px;
+}
+
+.data-plugs-list{
+  a{
+    text-transform: capitalize;
+    cursor: pointer;
+
+    .icon-grey{
+      display: inline-block !important;
+    }
+
+    .icon-color{
+      display: none !important;
+    }
+
+    .plus-icon{
+      color: #ddd;
+      float: right;
+    }
+
+    &:hover{
+      .plus-icon{
+        color: $app-dark-grey;
+      }
+
+      .icon-grey{
+        display: none !important;
+      }
+
+      .icon-color{
+        display: inline-block !important;
+      }
+    }
+  }
+
+
+}
+
+.data-plugs-more{
+
+  em{
+    color: #bbb;
+  }
+}
+
+
+
+.poweredBy{
+  position: absolute;
+  left: 45px;
+  bottom: 100px;
+  border-top: 1px solid #e4e4e4;
+  width: 300px;
+  padding-top: 22px;
+  padding-bottom: 22px;
+  display: block;
+  background-color: $app-background-color;
+
+
+  p{
+    display: inline-block;
+    letter-spacing: 0.5px;
+  }
+
+  img{
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-right: 20px;
+  }
 }
 
 ul.center {
   list-style: none;
   padding: 0;
-  font-family: $font-condensed;
-  font-weight: lighter;
+  font-family: $font-display;
 
   li {
     position: relative;
-    text-align: center;
-    width: 7em;
-    height: 5.2em;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-    font-size: 1em;
+    width: 100%;
+    height: 50px;
+    font-size: 1.2em;
 
-    span {
-      font-size: 2em;
-      display: block;
+    .icon, .icon img {
+      font-size: 1.6em;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: bottom;
+      margin-right: 20px;
+    }
+
+    .icon img{
+      vertical-align: baseline !important;
     }
 
     a {
-      color: white;
       text-decoration: none;
+      display: block;
+      color: $app-dark-grey;
+      padding: 13px 15px 13px 45px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+
+      &:hover {
+        color: $app-dark-grey;
+      }
     }
 
     &.selected {
-      background: $base-grey;
+      background-color: $app-hover-grey;
 
       a {
         color: $rump-color;
@@ -51,31 +181,9 @@ ul.center {
     }
 
     &:hover {
-      background-color: $base-grey;
+      background-color: $app-hover-grey;
     }
 
-    button {
-      background-color: transparent;
-      border: none;
-
-      .new-notifications {
-        height: 1.5em;
-        width: 1.5em;
-        position: absolute;
-        font-weight: bold;
-        font-size: 1em;
-        background-color: red;
-        top: 0.25em;
-        right: 2em;
-        -moz-border-radius: 50%;
-        -webkit-border-radius: 50%;
-        border-radius: 50%;
-      }
-
-      &:focus {
-        outline: 0;
-      }
-    }
   }
 
   .disable {
@@ -85,11 +193,16 @@ ul.center {
     bottom: 0;
     right: 0;
     left: 0;
-    color: #ffffff;
     background-color: rgba(0, 0, 0, 0.7);
 
     .text {
       margin-top: 2em;
     }
   }
+}
+
+.plug-menu{
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 200px;
 }
