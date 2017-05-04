@@ -8,16 +8,19 @@
 
  @import "../../style/variables";
 
+
+
 .notifications-banner {
-  position: fixed;
-  padding: 0.75em;
+  //position: fixed;
+  padding: 12px;
   padding-left: 0;
   z-index: 101;
-  top: 0;
+  top: 0px;
   left: 0;
   right: 0;
-  background: $app-accent-color;
+  height: 100px;
   color: white;
+  background-color: $app-accent-color;
   text-align: center;
   font-family: $font-display;
   font-weight: 500;
@@ -26,6 +29,93 @@
   -webkit-box-shadow: 0 0 5px black;
   -moz-box-shadow:    0 0 5px black;
   box-shadow:         0 0 5px black;
+  margin-top: 35px;
+  max-height: 64px;
+
+
+
+  .notif-center{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    align-content: center;
+  }
+
+  .notif-more{
+    color: white;
+    text-decoration: underline;
+    font-style: italic;
+    margin: 0 30px 0 10px;
+    position: relative;
+    top: -6px;
+    opacity: 0.8;
+    font-size: 12px;
+    cursor: pointer;
+
+    @media screen and (max-width: 460px) {
+        margin-right: 10px;
+    }
+  }
+
+  .notification-message, h5{
+    text-align: left;
+    margin-top: 0px;
+  }
+
+  .notif-time{
+    font-family: $font-display;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .notification-message{
+
+        white-space: nowrap;
+        margin-top: 2px;
+        max-width: 550px;
+        display: inline;
+
+        @media screen and (max-width: 1250px) {
+            max-width: 400px;
+        }
+
+        @media screen and (max-width: 1050px) {
+            max-width: 250px;
+        }
+
+        @media screen and (max-width: 750px) {
+            max-width: 140px;
+        }
+
+        @media screen and (max-width: 460px) {
+            max-width: 120px;
+        }
+
+        /deep/ p{
+          margin-bottom: 0px;
+          text-overflow: ellipsis;
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          max-width: 550px;
+
+          @media screen and (max-width: 1250px) {
+              max-width: 400px;
+          }
+
+          @media screen and (max-width: 1050px) {
+              max-width: 250px;
+          }
+
+          @media screen and (max-width: 750px) {
+              max-width: 140px;
+          }
+
+          @media screen and (max-width: 460px) {
+              max-width: 120px;
+          }
+        }
+  }
+
 
   h6 {
     text-align: left;
@@ -34,7 +124,56 @@
 
   span{
     cursor: pointer;
-    display: block;
+    display: inline-block;
+
+  }
+
+  .notif-nav{
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    //top: -55px;
+    position: relative;
+    margin-left: 10px;
+    padding: 1px 10px 3px 18px;
+    margin-top: -10px;
+    cursor: pointer;
+    user-select: none;
+
+    @media screen and (max-width: 800px) {
+        padding: 1px 10px 3px 10px !important;
+    }
+
+    i{
+      vertical-align: bottom;
+    }
+
+    &:hover{
+      border: 2px solid rgba(255, 255, 255, 1.0);
+    }
+
+    span{
+      @media screen and (max-width: 800px) {
+          display: none;
+      }
+    }
+  }
+
+  .notif-nav-prev{
+      padding: 1px 18px 3px 10px;
+  }
+
+  .close-btn{
+    color: rgba(255, 255, 255, 0.5);
+
+    span{
+      position: absolute;
+      top: 9px;
+      right: 48px;
+    }
+
+    &:hover{
+      color: rgba(255, 255, 255, 1.0);
+    }
   }
 }
 

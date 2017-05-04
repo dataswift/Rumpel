@@ -13,6 +13,8 @@ import { Profile } from '../../shared/interfaces/profile.interface';
 import {UserService} from '../../user/user.service';
 import {User} from '../../user/user.interface';
 
+declare var $:any;
+
 @Component({
   selector: 'rump-profile',
   templateUrl: 'profile.component.html',
@@ -103,6 +105,10 @@ export class ProfileComponent implements OnInit {
   togglePrivacy(field: string) {
     // A bit of a hack to force Angular change detection
     setTimeout(() => this.profile[field].private = !this.profile[field].private);
+  }
+
+  showPopover() {
+    $('[data-toggle="popover"]').popover();
   }
 
 }

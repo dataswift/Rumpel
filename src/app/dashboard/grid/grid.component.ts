@@ -45,12 +45,14 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    /*
     $('.grid').packery({
       // options
       gutter: 42,
       itemSelector: '.grid-item',
-      percentPosition: true
+      percentPosition: false
     });
+    */
   }
 
   private searchHandler(names: string) {

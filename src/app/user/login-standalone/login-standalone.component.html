@@ -15,7 +15,7 @@
   </div>
 
   <div class="row">
-    <form class="responsive" (submit)="onSubmit(f)" #f="ngForm">
+    <form class="col-md-12" (submit)="onSubmit(f)" #f="ngForm">
       <div class="form-group with-dropdown">
         <label for="username" hidden>Please enter your HAT password</label>
         <input type="text" class="form-control input-rump lg" id="username"
@@ -49,7 +49,7 @@
       </div>
 
       <div class="form-context">
-        <a href="https://hatters.hubofallthings.com/" target="_blank">Sign up</a> for a HAT &nbsp;| &nbsp;
+        <a href="https://hatters.hubofallthings.com/" target="_blank">Sign up for a HAT</a> &nbsp;| &nbsp;
         <a href="http://www.hatdex.org/what-is-the-hat/" target="_blank">What is the HAT?</a> &nbsp;| &nbsp;
         <a [routerLink]="['/user', 'password', 'recover']">Forgot Password?</a>
       </div>

@@ -10,19 +10,25 @@
 
 .grid {
 
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
 }
 
 :host /deep/ {
   .scroll-mask {
-    height: 21em;
+    height: 290px;
     width: 100%;
     overflow: hidden;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
   }
 
   .tile-body {
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100%;
+    height: 290px;
     background-color: white;
     padding: 30px 20px;
     border-bottom-left-radius: 8px;
@@ -31,11 +37,24 @@
 }
 
 .grid-item {
-  float: left;
   padding: 0;
-  margin: 0;
+  margin: 0px 21px 42px 21px;
   color: $app-dark-grey;
   overflow: hidden;
+  width: 300px;
+  height: 350px;
+
+  @media (max-width: 600px) {
+    margin: 0px 0px 42px 0px;
+  }
+}
+
+.grid-item-2{
+  width: 642px;
+
+  @media (max-width: $screen-xs-max) {
+    width: 300px;
+  }
 }
 
 @media (min-width: 1200px) {

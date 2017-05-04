@@ -9,7 +9,7 @@
 .belt {
   width: 100%;
   background-color: #dbdbdb;
-  height: 5em;
+
 
   .content {
     display: inline-block;
@@ -39,7 +39,7 @@
   }
 
   div {
-    max-height: 4em;
+
     vertical-align: bottom;
     font-size: 1.2em;
 
@@ -64,5 +64,12 @@
 .message {
   display: inline-block;
   margin-left: 1em;
-  margin-top: 1em;
+  max-width: calc(100% - 120px);
+  padding: 10px 0px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 0.9em !important;
+  }
+
+
 }

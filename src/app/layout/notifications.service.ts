@@ -21,6 +21,8 @@ export class NotificationsService {
   private _notification$: BehaviorSubject<ExternalNotification>;
   public showNotifs$: EventEmitter<boolean>;
 
+  public notificationsShowing:boolean = false;
+
   constructor(private _marketSvc: MarketSquareService) {
     this.hatdexNotifications = [];
     this.selectedNotification = 0;
@@ -48,8 +50,8 @@ export class NotificationsService {
         notifications = [{
           notice: {
             id: 3,
-            message: 'Notif 1',
-            dateCreated: 3,
+            message: 'Notif 1 text goes here, and there is probably a little bit more too. Who knows how long it is, really? Notif 1 text goes here, and there is probably a little bit more too. Who knows how long it is, really?',
+            dateCreated: 311338963495,
             target: ''
           },
           received: 1,
@@ -58,8 +60,8 @@ export class NotificationsService {
         {
           notice: {
             id: 5,
-            message: 'Notif 2',
-            dateCreated: 3389634956,
+            message: 'Notif 2 a little bit longer',
+            dateCreated: 113389634956,
             target: ''
           },
           received: 1,
@@ -113,8 +115,9 @@ export class NotificationsService {
     }
   }
 
-  toggleShow(status: boolean): void {
-     this.showNotifs$.emit(status);
+  toggleShow(): void {
+     this.notificationsShowing = !this.notificationsShowing;
+     this.showNotifs$.emit(this.notificationsShowing);
     }
 
   private countUnread(): number {

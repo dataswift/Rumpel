@@ -93,4 +93,8 @@ export class CalendarComponent implements OnInit {
     $('#calendar').fullCalendar('addEventSource', this.events);
   }
 
+  showPopover() {
+    $('[data-toggle="popover"]').popover();
+  }
+
 }

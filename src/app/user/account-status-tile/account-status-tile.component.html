@@ -10,8 +10,6 @@
 
 <div class="scroll-mask">
   <div class="tile-body">
-    <h3>Welcome, <br>{{username}}</h3>
-    <p>Last login: {{accountStatus?.previousLogin}}</p>
     <div class="storage-info" *ngIf="accountStatus">
       <div class="used-share">
         {{accountStatus?.databaseStorageUsedShare.metric}}{{accountStatus?.databaseStorageUsedShare.units}}
@@ -25,6 +23,6 @@
       </div>
     </div>
 
-    <a [routerLink]="['/user', 'password', 'change']" class="btn btn-rump sm">Change password</a>
+    <a [routerLink]="['/user', 'password', 'change']" class="btn btn-rump sm" style="width: 100%;">Change password</a>
   </div>
 </div>

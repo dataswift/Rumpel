@@ -6,36 +6,40 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+
+@import '../../style/variables';
+
 .scroll-mask {
-  height: 46em;
+  height: 290px;
   border: none;
 }
 
 .tile-body {
-  height: 40em;
+  height: 290px;
+}
+
+.notable-tile-body{
+  padding: 0 !important;
 }
 
 .notable {
-  font-family: "Open Sans Regular", sans-serif;
+  font-family: $font-display;
   font-weight: 300;
   padding: 1em;
   max-height: 30em;
   overflow: hidden;
 
-  &:nth-child(2n+1) {
-    background-color: rgba(99, 99, 99, 0.5);
-  }
 
-  &:nth-child(2n) {
-    background-color: transparent;
-  }
 
   .notable-content {
     clear: both;
-    margin: 1em;
-    margin-top: 1.5em;
+    margin: 1.5em 0;
     font-size: 1em;
   }
+}
+
+.note-list{
+  padding: 15px 30px;
 }
 
 
@@ -52,7 +56,6 @@
   }
 
   .header-content {
-    padding-top: 1em;
 
     h5 {
       font-size: 1.3em;

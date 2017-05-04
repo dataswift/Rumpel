@@ -7,24 +7,30 @@
   -->
 
 <div class="grid">
-  <rump-tile-notables class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-{{tileHeights.notables}}">
+
+  <rump-tile-hero class="grid-item grid-item-2"></rump-tile-hero>
+
+  <rump-tile-notables class="grid-item">
     <rump-tile-header [title]="'Notables'"
+                      [pagelink]="'/notables'"
                       [info]="'Your words are your memories! Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists - all in one place, and lets you decide what is private to yourself and what to share! Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the shared space.'"></rump-tile-header>
   </rump-tile-notables>
 
-  <rump-account-status-tile class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-{{tileHeights.profile}}">
+  <rump-account-status-tile class="grid-item">
     <rump-tile-header [title]="'Account'"
-                      [info]="'Insert text here'"></rump-tile-header>
+                      [info]="'This tile lets you know how much storage space you have left on your HAT'"></rump-tile-header>
   </rump-account-status-tile>
 
-  <rump-tile-profile class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-{{tileHeights.profile}}">
-    <rump-tile-header [title]="'Profile'"
+  <rump-tile-profile class="grid-item">
+    <rump-tile-header [title]="'My personal data'"
+                      [pagelink]="'/datastore'"
                       [info]="'You can add to your HAT personal profile and decide what information should be made public or kept private. Public information would be available on your Personal HAT address (PHATA) front page and also by others. If you choose not to have any information public, your PHATA front page would display a pre-set standard private PHATA page.'"></rump-tile-header>
   </rump-tile-profile>
 
 <!--
   <rump-tile-calendar class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
     <rump-tile-header [title]="'Calendar'"
+                      [pagelink]="'/calendar'"
                       [info]="'Displays the list of most recent events in the your HAT calendar. To get started with gathering your events enable Social and Calendar data plugs.'"></rump-tile-header>
     <div class="inactive" *ngIf="!showEventsTile">
       <div class="filter">
@@ -36,25 +42,14 @@
   </rump-tile-calendar>
 -->
 
-  <rump-tile-data-offers class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1">
-    <rump-tile-header [title]="'Data Offers'"
+  <rump-tile-data-offers class="grid-item">
+    <rump-tile-header [title]="'Data offers'"
                       [info]="'Check out this section to see all the latest data offers. Claim any of the offers and start benefiting from your data.'"></rump-tile-header>
   </rump-tile-data-offers>
 
-  <rump-tile-social class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-2">
-    <rump-tile-header [title]="'Social'"
-                      [info]="'What happened on the social media recently? See all your recent activity in one convenient place.'"></rump-tile-header>
-    <div class="inactive" *ngIf="!showPostsTile">
-      <div class="filter">
-        <span class="ss-replyall"></span>
-        <h2>Social</h2>
-        <p>(no data)</p>
-      </div>
-    </div>
-  </rump-tile-social>
-
-  <rump-tile-map class="grid-item col-xs-12 col-sm-12 col-md-12 col-lg-6 grid-item-height-1">
+  <rump-tile-map class="grid-item grid-item-2">
     <rump-tile-header [title]="'Locations'"
+                      [pagelink]="'/locations'"
                       [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'"></rump-tile-header>
     <div class="inactive" *ngIf="!showLocationsTile">
       <div class="filter">
@@ -65,22 +60,38 @@
     </div>
   </rump-tile-map>
 
-  <rump-tile-weather class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
+  <rump-tile-social class="grid-item">
+    <rump-tile-header [title]="'Social feed'"
+                      [pagelink]="'/social'"
+                      [info]="'What happened on social media recently? See all your recent activity in one convenient place.'"></rump-tile-header>
+    <div class="inactive" *ngIf="!showPostsTile">
+      <div class="filter">
+        <span class="ss-replyall"></span>
+        <h2>Social</h2>
+        <p>(no data)</p>
+      </div>
+    </div>
+  </rump-tile-social>
+
+
+
+  <rump-tile-weather class="grid-item">
     <rump-tile-header [title]="'Weather'"
                       [info]="'What is the weather like today? Look at the sky or use this widget ;)'"></rump-tile-header>
   </rump-tile-weather>
 
-  <rump-tile-data-plugs class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
-    <rump-tile-header [title]="'Data Plugs'"
+  <rump-tile-data-plugs class="grid-item">
+    <rump-tile-header [title]="'Data plugs'"
+                      [pagelink]="'/dataplugs'"
                       [info]="'List of currently available data plugs. Set up your HAT by acquiring data and view it on RUMPEL'"></rump-tile-header>
   </rump-tile-data-plugs>
 
-  <rump-tile-data-debit class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
-    <rump-tile-header [title]="'Data Debits'"
+  <rump-tile-data-debit class="grid-item">
+    <rump-tile-header [title]="'Data debits'"
                       [info]="'List of data debits created on the HAT.'"></rump-tile-header>
   </rump-tile-data-debit>
 
-  <rump-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1"
+  <rump-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 "
                     [bkgImage]="'assets/images/finance_bg.png'"
                     [icon]="'bank'" [title]="'Finance'"></rump-tile-coming-soon>
 </div>

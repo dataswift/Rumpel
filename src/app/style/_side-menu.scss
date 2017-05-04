@@ -14,12 +14,12 @@
   position: fixed;
   top: 106px;
   left: 0px;
-  z-index: 600;
+  z-index: 1020;
   color: $app-dark-grey;
   font-family: $font-display;
   background-color: $app-background-color !important;
 
-  @media screen and (max-width: $screen-md) {
+  @media screen and (max-width: 1113px) {
       left: -345px;
   }
 
@@ -35,7 +35,7 @@
   position: fixed;
   top: 10px;
   left: 35px;
-  z-index: 700;
+  z-index: 1030;
   display: block;
   width: 44px;
   height: 44px;

@@ -21,18 +21,41 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 
-  div {
+
+
+  a {
     display: inline;
     margin-right: 0.25em;
     margin-left: 0.25em;
+    color: $app-tile-title-color;
+    cursor: default;
+
+    &:hover{
+      text-decoration: none;
+      color: $app-tile-title-color;
+    }
+  }
+
+  .activeLink{
+    text-decoration: underline;
+    cursor: pointer;
+
+    &:hover{
+      text-decoration: underline;
+      color: lighten($app-tile-title-color, 5%);
+    }
   }
 }
 
 .info-button {
-  background-color: transparent;
-  border: none;
+  margin-top: -6px;
   float: right;
   color: $app-tile-title-color;
+  display: block;
+  margin-top: -17px;
+  padding: 10px;
+  margin-right: -7px;
+  cursor: pointer !important;
 }
 
 .info-button,

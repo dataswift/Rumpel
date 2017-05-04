@@ -21,7 +21,12 @@
       <li *ngFor="let item of menu; let i = index"
           [class.selected]="item.link === selectedItem">
         <div class="wrapper" id="intro-step{{i + 3}}">
-          <a [routerLink]="[item.link]" (click)="closeMenu()">
+          <a [routerLink]="[item.link]" (click)="closeMenu()"
+            data-toggle="popover" data-container=".menubar-left"
+             [attr.data-content]="item.description"
+             data-trigger="hover"
+             data-delay='{"show": "500", "hide": "100"}'
+             (mouseover)="showPopover()">
             <div class="icon"><i class="material-icons">{{item.icon}}</i></div>
             {{item.display}}
             <span class="badge" *ngIf="item.display === 'Redeem offers'">4</span>
@@ -35,7 +40,7 @@
         <ul class="center plug-menu">
           <li *ngFor="let item of dataplugList; let i = index" class="data-plugs-list" [class.hidden]="item.activated" >
             <div class="wrapper">
-              <a (click)="openPlugPopup(item); closeMenu();" data-toggle="popover" data-container=".menubar-left"
+              <a (click)="openPlugPopup(item); closeMenu();" class="sidebar-pop" data-toggle="popover" data-container=".menubar-left"
                  [attr.data-content]="item.description"
                  data-trigger="hover"
                  (mouseover)="showPopover()">

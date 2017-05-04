@@ -11,6 +11,8 @@ import { DataPlugService } from '../data-plug.service';
 import { MarketSquareService } from '../../market-square/market-square.service';
 import { Observable } from 'rxjs/Observable';
 
+declare var $:any;
+
 @Component({
   selector: 'rump-tile-data-plugs',
   templateUrl: 'tile-data-plugs.component.html',
@@ -41,5 +43,7 @@ export class TileDataPlugsComponent implements OnInit {
       `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
     );
   }
+
+
 
 }

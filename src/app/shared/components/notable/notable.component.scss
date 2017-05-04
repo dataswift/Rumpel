@@ -1,3 +1,5 @@
+@import "../../../style/variables";
+
 .notable-header {
   padding: 1em;
   min-height: 6em;
@@ -36,6 +38,7 @@
     float: right;
     margin-top: 0.1em;
     font-size: 3em;
+
   }
 }
 
@@ -48,6 +51,10 @@
     position: absolute;
     top: 0;
     right: 0;
+
+    @media screen and (max-width: $screen-xs) {
+        display: none;
+    }
 
     .shared-list {
       display: inline-block;
@@ -72,6 +79,7 @@
       padding: 0.5em 1em;
       font-size: 1.2em;
       color: white;
+      background-color: $app-accent-color;
 
       span {
         margin-right: 0.5em;
@@ -80,7 +88,8 @@
   }
 
   .notable-controls {
-    height: 2em;
+    height: 50px;
+    margin-right: 25px;
 
     div {
       float: right;
@@ -98,7 +107,7 @@
       }
 
       span {
-        margin-left: 0.5em;
+        margin-right: 0.5em;
       }
     }
   }

@@ -9,16 +9,18 @@
 <ng-content></ng-content>
 
 <div class="scroll-mask" id="intro-step14">
-  <rump-input-box [profile]="profile">
-    <img style="max-height: 4.5em; margin: 1em; border-radius: 50%;" [src]="profile?.photo.url || '/assets/images/user-icon-white.svg'">
-  </rump-input-box>
 
-  <div class="content tile-body">
+
+  <div class="content tile-body notable-tile-body">
+    <rump-input-box [profile]="profile" class="notable-input">
+      <img style="max-height: 4.5em; margin: 1em; border-radius: 50%;" [src]="profile?.photo.url || '/assets/images/user-icon-white.svg'">
+    </rump-input-box>
+
     <ul class="note-list bulletless-list" *ngIf="notables.length > 0">
-      <li *ngFor="let notable of notables" class="notable">
-        <div class="item-header">
+      <li *ngFor="let notable of notables; let i = index" class="notable">
+        <div class="item-header" *ngIf="i == 0">
           <div class="user-photo">
-            <img [src]="notable.authorv1 && notable.authorv1['photo_url'] ? notable.authorv1['photo_url'] : '/assets/images/user-icon-white.svg'">
+            <img [src]="notable.authorv1 && notable.authorv1['photo_url'] ? notable.authorv1['photo_url'] : '/assets/images/user-icon-black.svg'">
           </div>
 
           <div class="notable-type">
@@ -33,7 +35,7 @@
           </div>
         </div>
 
-        <div class="notable-content" [innerHTML]="notable.message | markdownToHtml"></div>
+        <div class="notable-content" *ngIf="i == 0" [innerHTML]="notable.message | markdownToHtml"></div>
         <!-- <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div> -->
       </li>
     </ul>

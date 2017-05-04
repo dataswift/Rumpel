@@ -19,6 +19,7 @@ declare const $: any;
 export class TileHeaderComponent implements OnInit {
   @Input() title: string;
   @Input() info: string;
+  @Input() pagelink: string;
 
   constructor(private router: Router) {}
 
@@ -27,11 +28,15 @@ export class TileHeaderComponent implements OnInit {
 
   showPopover(event) {
     // Handle special case for Locations tile
+    /*
     if (this.title === 'Locations') {
       window.location.href = 'http://www.hatdex.org/rumpel-lite/';
     } else {
       $(event.target.parentNode).popover('show');
     }
+    */
+    //$(event.target.parentNode).popover('show');
+    $('[data-toggle="popover"]').popover();
   }
 
   navigateTo(pageName: string, event) {

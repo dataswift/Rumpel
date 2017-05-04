@@ -6,38 +6,54 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+@import "../../style/variables";
+
 .feed {
   .post {
     margin: 0;
-    padding: 0 1em;
+    padding: 30px;
     border-top: 3px solid #515151;
-    margin-bottom: 2em;
+    margin-bottom: 50px;
     position: relative;
     color: black;
+    background-color: white;
+
+    a{
+      color: $app-accent-color;
+
+      &:hover{
+        color: lighten($app-accent-color, 5%);
+      }
+    }
   }
 }
 
 .filter-header {
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: $font-display;
   font-size: 2em;
   margin-top: 2em;
-  padding: 0.5em 1em;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  margin-top: 70px;
   color: black;
 
   .filter {
-    float: right;
-    font-size: 0.75em;
-    margin-top: 0.2em;
-    margin-left: 1em;
+    font-size: 16px;
+    padding: 14px 0px 14px 14px;
+    margin-left: 10px;
     cursor: pointer;
+    display: inline-block;
 
-    span {
-      margin-top: 0.1em;
-      margin-right: 0.5em;
+    i{
+      vertical-align: middle;
+      margin-right: 5px;
+      font-size: 18px;
     }
 
     &.on {
-      color: #009688;
+      color: $app-accent-color;
     }
   }
 }

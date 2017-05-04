@@ -16,6 +16,7 @@
   list-style-type: none;
   margin-left: 0px;
   padding-left: 0px;
+  margin-bottom: 30px;
 
   h1, h2, h3, h4, h5, h6 {
     text-transform: uppercase;
@@ -27,11 +28,11 @@
 
   p {
     font-size: 1em;
-    margin-bottom: 0.4em;
+    margin: 20px 0;
+
 
     &:last-child {
       text-align: right;
-      margin-top: 0.5em;
     }
   }
 

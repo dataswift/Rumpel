@@ -17,7 +17,9 @@
   </div>
 </section>
 
-<rump-notification-centre *ngIf="showNotifications" class="notifications-wrapper" rumpOutsideClick></rump-notification-centre>
+<div class="notifications-wrapper">
+  <rump-notification-centre *ngIf="showNotifications" rumpOutsideClick></rump-notification-centre>
+</div>
 
 
 <div rumpDialogAnchor></div>

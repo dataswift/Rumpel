@@ -6,3 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+.leaflet-control, .leaflet-bottom, .leaflet-right{
+    z-index: 1 !important;
+}
+
+.leaflet-container{
+  height: 290px !important;
+}

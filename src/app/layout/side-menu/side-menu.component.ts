@@ -32,6 +32,7 @@ export class SideMenuComponent implements OnInit {
   public userAuthenticated = false;
   public menu: Array<any>;
   public dataplugList: Array<any>;
+  public mobileMode:boolean = false;
 
 
   // hack: uiState service needs to be injected before Auth component,
@@ -60,7 +61,6 @@ export class SideMenuComponent implements OnInit {
         plug[i].icon = plug[i].icon.replace(/ /g, "-");
       }
       this.dataplugList = plug;
-      console.log(this.dataplugList);
       setTimeout(this.showPopover, 1000);
     });
 
@@ -80,15 +80,27 @@ export class SideMenuComponent implements OnInit {
     });
 
     $(window).on("resize", function(){
-      if(window.innerWidth > 768){
+
+      if(window.innerWidth > 1113){
         $('.menubar-left').css("left", "0px");
-        $('.content-main').css("marginLeft", "345px");
+        $('.content-main').css({marginLeft: "345px", left: "0px"});
+        $('.burger').attr("data-content", "Hide menu");
+        this.mobileMode = false;
       }
       else{
         $('.menubar-left').css("left", "-345px");
-        $('.content-main').css("marginLeft", "0px");
+        $('.content-main').css({marginLeft: "0px", left: "0px"});
+        $('.burger').attr("data-content", "Show menu");
+        this.mobileMode = true;
+      }
+
+      if($('.burger').data('bs.popover')){
+        $('.burger').data('bs.popover').setContent();
+        $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
       }
     });
+
+    $(window).resize();
 
   }
 
@@ -125,6 +137,7 @@ export class SideMenuComponent implements OnInit {
 
 
   showPopover() {
+    //$('.sidebar-pop').popover({delay: {show: 1000, hide: 0}});
     $('[data-toggle="popover"]').popover();
   }
 
@@ -137,10 +150,29 @@ export class SideMenuComponent implements OnInit {
     if( $('.menubar-left').css('left') == "0px" ){
         sidenav_x = -345;
         content_margin = 0;
+        $('.burger').attr("data-content", "Show menu");
+    }
+    else{
+      $('.burger').attr("data-content", "Hide menu");
     }
 
+    $('.burger').data('bs.popover').setContent();
+    $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
+
     $('.menubar-left').animate({ left: (sidenav_x + "px") }, duration);
-    $('.content-main').animate({ marginLeft: (content_margin + "px") }, duration);
+
+
+
+    this.mobileMode = (window.innerWidth < 1113);
+
+    console.log(window.innerWidth);
+
+    if(this.mobileMode === true){
+        $('.content-main').animate({ marginLeft: "0px", left: (content_margin + "px") }, duration);
+    }
+    else{
+        $('.content-main').animate({ marginLeft: (content_margin + "px"), left: "0px" }, duration);
+    }
 
     $(".burger").addClass("burger-pulse-animation");
     setTimeout(function(){
@@ -149,9 +181,12 @@ export class SideMenuComponent implements OnInit {
   }
 
   closeMenu(){
-    if(window.innerWidth < 768){
+    if(window.innerWidth < 1114){
+      $('.burger').attr("data-content", "Show menu");
+      $('.burger').data('bs.popover').setContent();
+      $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
       $('.menubar-left').animate({ left: "-345px" }, 500);
-      $('.content-main').animate({ marginLeft: "0px" }, 500);
+      $('.content-main').animate({ marginLeft: "0px", left: "0px" }, 500);
     }
   }
 

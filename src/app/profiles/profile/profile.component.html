@@ -6,10 +6,15 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<div class="row">
+<div class="row content-bg content-header">
   <div class="col-md-12">
     <div class="view-header">
-      <h4>Edit Profile</h4>
+      <a role="button" class="page-info popover-click" tabindex="0" data-toggle="popover" data-container="body"
+         data-content="View and edit the details of your profile and decide what information is private and what is to be shared." class="info-button"
+         data-trigger="focus"
+         (mouseover)="showPopover($event)"
+         data-placement="auto bottom"><i class="material-icons">info_outline</i></a>
+      <h4>My personal data</h4>
       <div class="view-mode-toggle">
         <h6 class="switch-label">Edit</h6>
         <rump-switch [isChecked]="false" (onSwitch)="switchView()" class="switch-main"></rump-switch>
@@ -19,7 +24,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row content-bg">
   <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
     <form #f="ngForm" (submit)="submitForm($event)">
       <div class="row" style="margin: 0;">
@@ -33,7 +38,7 @@
           </div>
         </section>
 
-        <section class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+        <section>
           <h3 class="section-title">Profile Settings</h3>
 
           <div class="section-body settings">
@@ -53,7 +58,7 @@
           </div>
         </section>
 
-        <section class="col-xs-10 col-sm-6 col-md-offset-1 col-md-4 col-lg-offset-1 col-lg-4" *ngIf="profilePhoto.url">
+        <section *ngIf="profilePhoto.url">
           <h3 class="section-title">Profile picture</h3>
 
           <div class="section-body picture">
@@ -77,7 +82,7 @@
                      (onSwitch)="togglePrivacy($event)"></rump-switch>
 
         <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
             <div class="form-group">
               <label for="title">Title</label>
               <input type="text" class="form-control rump-form-input" id="title" name="title"
@@ -100,8 +105,8 @@
             </div>
           </div>
 
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
-            <div class="form-group" style="visibility: hidden;">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
+            <div class="form-group hidden-xs hidden-sm" style="visibility: hidden;">
               <label for="placeholder">Placeholder</label>
               <input type="text" class="form-control rump-form-input" id="placeholder" name="placeholder">
             </div>
@@ -127,7 +132,7 @@
         <h3 class="section-title">Other</h3>
 
         <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
 
             <div class="form-group">
               <rump-switch class="switch field-switch" [id]="'nick'"
@@ -154,7 +159,7 @@
             </div>
           </div>
 
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
 
             <div class="form-group">
               <rump-switch class="switch field-switch" [id]="'gender'"
@@ -188,7 +193,7 @@
         <h3 class="section-title">Contact</h3>
 
         <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
 
             <div class="form-group">
               <rump-switch class="switch field-switch" [id]="'primary_email'"
@@ -215,7 +220,7 @@
             </div>
           </div>
 
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
 
             <div class="form-group">
               <rump-switch class="switch field-switch" [id]="'alternative_email'"
@@ -253,7 +258,7 @@
                      (onSwitch)="togglePrivacy($event)"></rump-switch>
 
         <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10">
 
             <div class="form-group">
               <label for="houseNumber">House/Flat number</label>
@@ -304,7 +309,7 @@
         <h3 class="section-title">Online Profiles</h3>
 
         <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
 
             <div class="form-group">
               <rump-switch class="switch field-switch" [id]="'website'"
@@ -356,7 +361,7 @@
             </div>
           </div>
 
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
 
             <div class="form-group">
               <rump-switch class="switch field-switch" [id]="'twitter'"
@@ -406,7 +411,7 @@
                      (onSwitch)="togglePrivacy($event)"></rump-switch>
 
         <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
 
             <div class="form-group">
               <label for="emFirstName">First Name</label>
@@ -423,7 +428,7 @@
             </div>
           </div>
 
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
+          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
             <div class="form-group">
               <label for="emMobile">Mobile number</label>
               <input type="text" class="form-control rump-form-input" id="emMobile" name="emMobile"
@@ -449,7 +454,7 @@
                      (onSwitch)="togglePrivacy($event)"></rump-switch>
 
         <div class="row section-body">
-          <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
             <div class="form-group">
               <label for="aboutTitle">Title</label>
               <input type="text" class="form-control rump-input rump-md" id="aboutTitle" name="aboutTitle"
@@ -458,7 +463,7 @@
             </div>
           </div>
 
-          <div class="col-xs-12">
+          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
             <div class="form-group">
               <label for="body">Body</label>
               <textarea class="form-control rump-input" id="body" name="body" rows="5"
@@ -469,13 +474,15 @@
         </div>
       </section>
 
+      <div class="ui-message" [hidden]="uiMessageHidden">
+        Profile information saved.
+      </div>
+
       <div class="buttons">
         <button type="button" class="btn btn-cancel md" (click)="discardChanges()">Discard</button>
         <button type="submit" class="btn btn-rump md fading">Save Changes</button>
-        <div class="ui-message" [hidden]="uiMessageHidden">
-          Profile information saved.
-        </div>
       </div>
+
     </form>
   </div>
 </div>

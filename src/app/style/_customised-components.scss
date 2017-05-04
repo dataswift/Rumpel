@@ -15,10 +15,11 @@
   width: 250px;
 }
 
-.popover.left > .arrow,
-.popover.left > .arrow:after {
-  border-left-color: $material-bg-200;
+.navbar .popover{
+  width: unset;
 }
+
+
 
 /* Customised styling for Simple MD Editor */
 

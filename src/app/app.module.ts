@@ -35,7 +35,7 @@ import { AuthGuard } from './auth.guard';
 import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
-import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
+import { GridComponent, TileHeaderComponent, TileHeroComponent, TileComingSoonComponent} from './dashboard';
 import { HatApiService, UiStateService, RumpelService } from './services/index';
 import { AuthHttp } from './services/auth-http.service';
 
@@ -66,6 +66,7 @@ export function cookieServiceFactory() {
     AppRootComponent,
     GridComponent,
     TileHeaderComponent,
+    TileHeroComponent,
     TileComingSoonComponent,
     DataTypeFilterPipe,
     OffersComponent

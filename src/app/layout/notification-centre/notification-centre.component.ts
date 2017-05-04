@@ -11,6 +11,9 @@ import { UserService } from '../../services/index';
 import { ExternalNotification } from '../../shared/interfaces/index';
 import { NotificationsService } from '../notifications.service';
 import { User } from '../../user/user.interface';
+import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
+
+declare var $: any;
 
 @Component({
   selector: 'rump-notification-centre',
@@ -23,13 +26,16 @@ export class NotificationCentreComponent implements OnInit {
   public totalNotifications: number;
 
   constructor(private userSvc: UserService,
-              private _notificationsSvc: NotificationsService) { }
+              private _notificationsSvc: NotificationsService,
+              private markdownPipe:MarkdownToHtmlPipe) { }
 
   ngOnInit() {
     this.totalNotifications = 0;
 
     this._notificationsSvc.notification$.subscribe(notification => {
       this.notification = notification;
+      var msg = this.markdownPipe.transform(this.notification.notice.message);
+      $('.notif-more').popover({html: true, content: msg});
     });
 
     this._notificationsSvc.stats$.subscribe(stats => {
@@ -54,6 +60,10 @@ export class NotificationCentreComponent implements OnInit {
   }
 
   closeNotifs(){
-    this._notificationsSvc.toggleShow(false);
+    this._notificationsSvc.toggleShow();
+  }
+
+  showPopover(evt) {
+    $('[data-toggle="popover"]').popover();
   }
 }

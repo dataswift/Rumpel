@@ -263,7 +263,7 @@ export class HeaderComponent implements OnInit {
 
   showNotificationsCentre() {
     if(this.totalNotifications > 0){
-      this._notificationsSvc.toggleShow(true);
+      this._notificationsSvc.toggleShow();
     }
   }
 

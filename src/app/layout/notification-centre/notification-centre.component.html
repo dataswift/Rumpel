@@ -8,12 +8,22 @@
 
 <div class="notifications-banner">
   <div class="row vertical-align">
-    <div class="col-xs-1 col-xs-offset-3" (click)="previousNote()"><span *ngIf="totalNotifications > 1"><i class="material-icons">navigate_before</i></span></div>
-    <div class="col-xs-4" (click)="markAsRead()">
-      <div class="notification-message" [innerHTML]="notification.notice.message | markdownToHtml"></div>
-      <h5>Released {{notification.notice.dateCreated | moment}}</h5>
+    <div class="col-xs-10 col-xs-offset-0 col-sm-8 col-sm-offset-2" (click)="markAsRead()">
+      <div class="notif-center">
+        <div class="notif-content">
+            <div class="notification-message" [innerHTML]="notification?.notice?.message | markdownToHtml"></div>
+            <a class="notif-more popover-click" data-toggle="popover" data-container="body"
+                data-placement="bottom"
+               [attr.data-content]="notification?.notice?.message | markdownToHtml"
+               data-trigger="hover"
+               (mouseover)="showPopover($event)">More</a>
+            <h5 class="notif-time">{{notification?.notice?.dateCreated | moment}}</h5>
+        </div>
+
+        <div class="notif-nav notif-nav-prev" (click)="previousNote()" *ngIf="totalNotifications > 1"><i class="material-icons">navigate_before</i><span>Prev</span></div>
+        <div class="notif-nav" (click)="nextNote()" *ngIf="totalNotifications > 1"><span>Next</span><i class="material-icons">navigate_next</i></div>
     </div>
-    <div class="col-xs-1" (click)="nextNote()" style="text-align: right;"><span *ngIf="totalNotifications > 1"><i class="material-icons">navigate_next</i></span></div>
-    <div class="col-xs-1 col-xs-offset-2" (click)="closeNotifs()" style="text-align: left; margin-right: 10px"><span><i class="material-icons">clear</i></span></div>
+    </div>
+    <div class="col-xs-1 col-xs-offset-1 close-btn" (click)="closeNotifs()"><span><i class="material-icons">clear</i></span></div>
   </div>
 </div>

@@ -9,8 +9,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from './app.config';
 import { NotificationsService } from './layout/notifications.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 import * as moment from 'moment';
+
+declare var $: any;
 
 @Component({
   selector: 'rump-app',
@@ -26,7 +29,15 @@ export class AppRootComponent implements OnInit {
   private appExpireTime: moment.Moment;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-            private _notificationsSvc: NotificationsService) { }
+            private _notificationsSvc: NotificationsService,
+            private router: Router) {
+
+        router.events
+            .filter(event => event instanceof NavigationEnd)
+            .subscribe((event: NavigationEnd) => {
+              window.scroll(0, 0);
+            });
+  }
 
   ngOnInit() {
     console.log(`Rumpel is running. Version: ${this.config.version}`);
@@ -43,8 +54,24 @@ export class AppRootComponent implements OnInit {
       }
     };
 
-    this._notificationsSvc.showNotifs$.subscribe(status => this.showNotifications = status);
+    this._notificationsSvc.showNotifs$.subscribe(status => this.showNotificationsBar(status));
 
   }
+
+
+  showNotificationsBar(bool:boolean):void{
+    this.showNotifications = bool;
+
+    var duration:number = 400;
+    var barHeight:number = 64;
+
+    if(bool == false){
+      barHeight = 0;
+    }
+
+    $('.navbar, .menubar-left, .burger, .content-main').stop().animate({ marginTop: barHeight }, duration);
+    $('.notifications-wrapper').stop().animate({ top: (barHeight-100) }, duration);
+  }
+
 
 }
