@@ -27,6 +27,7 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
   public eventsExist = false;
   public upcomingEventsExist: boolean;
   private sub: Subscription;
+  public upcomingEvents:Array<Event>;
 
   constructor(private eventsSvc: EventsService,
               private facebookEventSvc: FacebookEventsService,
@@ -54,19 +55,36 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+
+
+
   private handleEventAddition(events: Array<Event>): void {
-    const upcomingEvents = events
-      .filter(event => event.start.isAfter(moment().startOf('day')) && event.start.isBefore(moment().add(1, 'days').endOf('day')))
-      .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
 
-    if (upcomingEvents.length > 0) {
-      const daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
-      this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
-      this.events[1].events = this.events[1].events.concat(upcomingEvents);
+    if(events.length > 0){
+        console.log("events", events);
 
-      this.upcomingEventsExist = true;
-    } else {
-      this.upcomingEventsExist = false;
+        var newEvents:Array<Event> = events
+          .filter(event => event.start.isAfter(moment().startOf('day')) && event.start.isBefore(moment().add(1, 'days').endOf('day')))
+          .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
+
+        console.log("newEvents", newEvents);
+
+        for(var i=0; i< newEvents.length; i++){
+          this.upcomingEvents.push(newEvents[i]);
+        }
+
+        console.log("upcoming", this.upcomingEvents);
+
+        if (this.upcomingEvents.length > 0 && this.upcomingEvents != undefined) {
+          const daySplitIndex = this.upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
+          this.events[0].events = this.events[0].events.concat(this.upcomingEvents.splice(0, daySplitIndex));
+          this.events[1].events = this.events[1].events.concat(this.upcomingEvents);
+
+          this.upcomingEventsExist = true;
+        } else {
+          this.upcomingEventsExist = false;
+        }
+
     }
 
   }
