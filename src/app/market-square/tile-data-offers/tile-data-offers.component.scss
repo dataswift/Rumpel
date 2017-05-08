@@ -29,11 +29,20 @@
   p {
     font-size: 1em;
     margin: 20px 0;
+    max-height: 40px;
 
 
     &:last-child {
       text-align: right;
     }
+  }
+
+  p.description{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
   }
 
   button {

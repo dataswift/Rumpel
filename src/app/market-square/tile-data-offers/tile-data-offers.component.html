@@ -15,8 +15,8 @@
         <div class="row">
           <div class="col-xs-12">
             <h5>{{offer.offer.title}}</h5>
-            <p>{{offer.offer.description | limitContent:300}}</p>
-            <p>Already claimed by {{offer.offer.users}} users. Expires at {{offer.offer.expires | moment}}</p>
+            <p class="description">{{offer.offer.description | limitContent:300}}</p>
+            <p>Already claimed by {{offer.offer.users}} users. <br>Expires at {{offer.offer.expires | moment}}</p>
           </div>
           <div class="col-xs-9" *ngIf="offer.offer.rating">
             <div class="user-votes">
