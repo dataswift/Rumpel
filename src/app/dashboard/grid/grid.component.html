@@ -75,11 +75,14 @@
                       [info]="'What is the weather like today? Look at the sky or use this widget ;)'"></rump-tile-header>
   </rump-tile-weather>
 
+
+  <!--
   <rump-tile-data-plugs class="grid-item">
     <rump-tile-header [title]="'Data plugs'"
                       [pagelink]="'/dataplugs'"
                       [info]="'List of currently available data plugs. Set up your HAT by acquiring data and view it on RUMPEL'"></rump-tile-header>
   </rump-tile-data-plugs>
+-->
 
   <rump-tile-data-offers class="grid-item">
     <rump-tile-header [title]="'Data offers'"
@@ -96,12 +99,9 @@
                     [bkgImage]="'assets/images/finance_bg.png'"
                     [icon]="'bank'" [title]="'Finance'"></rump-tile-coming-soon>
 
-  <rump-tile-data-debit class="grid-item hidden-xs hidden-sm" style="visibility: hidden"> <!-- phantom item to make flexbox align properly -->
+  <rump-tile-data-debit class="grid-item hidden-xs" style="visibility: hidden" *ngFor="let item of [0,1,2]"> <!-- phantom item to make flexbox align properly -->
     <rump-tile-header [title]="'Data debits'"
                       [info]="'List of data debits created on the HAT.'"></rump-tile-header>
   </rump-tile-data-debit>
-  <rump-tile-data-debit class="grid-item hidden-xs hidden-sm" style="visibility: hidden"><!-- phantom item to make flexbox align properly -->
-    <rump-tile-header [title]="'Data debits'"
-                      [info]="'List of data debits created on the HAT.'"></rump-tile-header>
-  </rump-tile-data-debit>
+
 </div>
