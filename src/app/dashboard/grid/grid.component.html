@@ -27,8 +27,8 @@
                       [info]="'You can add to your HAT personal profile and decide what information should be made public or kept private. Public information would be available on your Personal HAT address (PHATA) front page and also by others. If you choose not to have any information public, your PHATA front page would display a pre-set standard private PHATA page.'"></rump-tile-header>
   </rump-tile-profile>
 
-<!--
-  <rump-tile-calendar class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 grid-item-height-1">
+
+  <rump-tile-calendar class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3">
     <rump-tile-header [title]="'Calendar'"
                       [pagelink]="'/calendar'"
                       [info]="'Displays the list of most recent events in the your HAT calendar. To get started with gathering your events enable Social and Calendar data plugs.'"></rump-tile-header>
@@ -40,14 +40,9 @@
       </div>
     </div>
   </rump-tile-calendar>
--->
 
-  <rump-tile-data-offers class="grid-item">
-    <rump-tile-header [title]="'Data offers'"
-                      [info]="'Check out this section to see all the latest data offers. Claim any of the offers and start benefiting from your data.'"></rump-tile-header>
-  </rump-tile-data-offers>
 
-  <rump-tile-map class="grid-item grid-item-2">
+  <rump-tile-map class="grid-item grid-item-2 locations">
     <rump-tile-header [title]="'Locations'"
                       [pagelink]="'/locations'"
                       [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'"></rump-tile-header>
@@ -85,6 +80,12 @@
                       [pagelink]="'/dataplugs'"
                       [info]="'List of currently available data plugs. Set up your HAT by acquiring data and view it on RUMPEL'"></rump-tile-header>
   </rump-tile-data-plugs>
+
+  <rump-tile-data-offers class="grid-item">
+    <rump-tile-header [title]="'Data offers'"
+                      [info]="'Check out this section to see all the latest data offers. Claim any of the offers and start benefiting from your data.'"></rump-tile-header>
+  </rump-tile-data-offers>
+
 
   <rump-tile-data-debit class="grid-item">
     <rump-tile-header [title]="'Data debits'"

@@ -1,0 +1,13 @@
+/*!
+ * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
+ *//*!
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+ */.grid{display:flex;justify-content:center;flex-wrap:wrap}:host /deep/ .scroll-mask{height:290px;width:100%;overflow:hidden;border-bottom-right-radius:8px;border-bottom-left-radius:8px}:host /deep/ .tile-body{overflow-x:hidden;overflow-y:auto;height:290px;background-color:white;padding:30px 20px;border-bottom-left-radius:8px;border-bottom-right-radius:8px}.grid-item{padding:0;margin:0px 21px 42px 21px;color:#939393;overflow:hidden;width:300px;height:350px}@media (max-width: 600px){.grid-item{margin:0px 0px 42px 0px}}.grid-item-2{width:642px}@media (max-width: 767px){.grid-item-2{width:300px}}@media (min-width: 1200px){.col-lg-1-5{width:12.5%}}.grid-item-height-1{height:25em}.grid-item-height-2{height:50em}.grid-item-height-3{height:75em}.grid-item-height-4{height:100em}.filter{background-color:#4A556B;position:absolute;z-index:1002;color:#ffffff;text-align:center;width:300px;height:290px;border-bottom-right-radius:8px;border-bottom-left-radius:8px}.filter span{display:block;margin-top:50px;font-size:5em}.filter h2{margin-top:0;font-size:3em}.filter p{font-size:1.5em;text-transform:uppercase}.grid-item-2 .filter{width:642px}.locations .filter{background-color:rgba(74,85,107,0.8)}.modal{font-family:'Open Sans Condensed', sans-serif;z-index:10000}.modal h4{font-size:3em}.modal p{font-size:2em}.modal button{font-size:1.5em}.modal .btn-primary{background-color:#009688}

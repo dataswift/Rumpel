@@ -80,19 +80,19 @@
 }
 
 .filter {
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: $app-header-color;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
   z-index: 1002;
   color: #ffffff;
   text-align: center;
+  width: 300px;
+  height: 290px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 
   span {
     display: block;
-    margin-top: 1.5em;
+    margin-top: 50px;
     font-size: 5em;
   }
 
@@ -104,6 +104,18 @@
   p {
     font-size: 1.5em;
     text-transform: uppercase;
+  }
+}
+
+.grid-item-2{
+  .filter{
+    width: 642px;
+  }
+}
+
+.locations{
+  .filter{
+    background-color: rgba(74, 85, 107, 0.8);
   }
 }
 

@@ -30,7 +30,7 @@ export class TileMapComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.locations = [];
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('21em');
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('290px');
     this.sub = this.locationsSvc.data$.subscribe(locations => {
       this.locations = locations;
 
