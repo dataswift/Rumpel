@@ -19,6 +19,7 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/user.interface';
 import { MarketSquareService } from '../market-square/market-square.service';
 import { EventsService } from '../dimensions/events.service';
+import { LocationsService } from '../locations/locations.service';
 
 import { APP_CONFIG, IAppConfig} from '../app.config';
 
@@ -32,6 +33,7 @@ export class DataPlugService {
   private services: { [key: string]: { url: string; connected: boolean; }; };
   private _dataplugs$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
   private pluglist: {};
+  private locationData:boolean = false;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private http: Http,
@@ -40,7 +42,8 @@ export class DataPlugService {
               private dialogSvc: DialogService,
               private uiSvc: UiStateService,
               private userSvc: UserService,
-              private eventsSvc: EventsService) {
+              private eventsSvc: EventsService,
+              private locationsSvc: LocationsService) {
     this.services = {
       'Facebook': {
         url: 'https://social-plug.hubofallthings.com/api/user/token/status',
@@ -105,31 +108,49 @@ export class DataPlugService {
 
 
   private getDataPlugList() {
-    this.marketSvc.getDataPlugs().subscribe(plugs => {
+    this.locationsSvc.data$.subscribe(locations => {
+      if (locations.length > 0) {
+        this.locationData = true;
+      }
+      else{
+        this.locationData = false;
+      }
 
-      this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-        console.log(tables);
+      this.marketSvc.getDataPlugs().subscribe(plugs => {
 
-        const displayPlugs = plugs.map(plug => {
+        this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
+          console.log(tables);
 
-          var plugActivated:boolean = this.getDataPlugStatus(tables, plug);
+          const displayPlugs = plugs.map(plug => {
 
-          const displayPlug = {
-            name: plug.name,
-            description: plug.description,
-            url: plug.url.replace('/dataplug', '/hat/authenticate'),
-            icon: plug.name.toLowerCase() + '-plug.svg',
-            activated: plugActivated
-          };
+            var plugActivated:boolean;
 
-          return displayPlug;
-        }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
+            if( plug.name == "location" ){
+              plugActivated = this.locationData;
+            }
+            else{
+              plugActivated = this.getDataPlugStatus(tables, plug);
+            }
 
-        this._dataplugs$.next(displayPlugs);
+            const displayPlug = {
+              name: plug.name,
+              description: plug.description,
+              url: plug.url.replace('/dataplug', '/hat/authenticate'),
+              icon: plug.name.toLowerCase() + '-plug.svg',
+              activated: plugActivated
+            };
+
+            return displayPlug;
+          }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
+
+          this._dataplugs$.next(displayPlugs);
+        });
+
+
       });
-
-
     });
+
+
   }
 
   private getFacebookStatus(): void {
