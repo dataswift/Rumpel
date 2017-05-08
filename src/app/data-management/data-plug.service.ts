@@ -69,10 +69,6 @@ export class DataPlugService {
     return this._dataplugs$.asObservable();
   }
 
-  getPlugs(): Observable<any> {
-    return this._dataplugs$.asObservable();
-  }
-
   status(plugName: string): boolean {
     return this.services[plugName].connected;
   }
@@ -106,6 +102,20 @@ export class DataPlugService {
     return plugStatus;
   }
 
+  private getDataPlugLink(plug): string{
+    var plugList:any = this.config.menuItems.dataPlugs;
+    var link:string = "";
+    var plugName = plug.name.toLowerCase();
+
+    for(var i=0; i < plugList.length; i++){
+      if(plugName === plugList[i].display.toLowerCase()){
+        link = plugList[i].page;
+      }
+    }
+
+    return link;
+  }
+
 
   private getDataPlugList() {
     this.locationsSvc.data$.subscribe(locations => {
@@ -137,7 +147,8 @@ export class DataPlugService {
               description: plug.description,
               url: plug.url.replace('/dataplug', '/hat/authenticate'),
               icon: plug.name.toLowerCase() + '-plug.svg',
-              activated: plugActivated
+              activated: plugActivated,
+              page: this.getDataPlugLink(plug)
             };
 
             return displayPlug;

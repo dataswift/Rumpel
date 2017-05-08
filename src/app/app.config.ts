@@ -88,13 +88,13 @@ export const AppConfig: IAppConfig = {
       { display: 'My data plugs', icon: 'settings_input_component', link: 'dataplugs', dataType: '', disable: '', description: 'Data comes into your HAT via data plugs. Click here to see what data plugs are available, and what data plugs are already connected.' }
     ],
     'dataPlugs': [
-      { display: 'Facebook', activatedSearchName: 'posts', activatedSearchSource: 'facebook' },
-      { display: 'Twitter', activatedSearchName: 'tweets', activatedSearchSource: 'twitter' },
-      { display: 'Location', activatedSearchName: 'location', activatedSearchSource: 'rumpel' },
-      { display: 'Google Calendar', activatedSearchName: 'events', activatedSearchSource: 'google' },
-      { display: 'Calendar', activatedSearchName: 'events', activatedSearchSource: 'ical' },
-      { display: 'Photos', activatedSearchName: 'photos', activatedSearchSource: 'dropbox' },
-      { display: 'Rumpel', activatedSearchName: 'profile', activatedSearchSource: 'rumpel' }
+      { display: 'Facebook', activatedSearchName: 'posts', activatedSearchSource: 'facebook', page: 'social' },
+      { display: 'Twitter', activatedSearchName: 'tweets', activatedSearchSource: 'twitter', page: 'social' },
+      { display: 'Location', activatedSearchName: 'location', activatedSearchSource: 'rumpel', page: 'locations' },
+      { display: 'Google calendar', activatedSearchName: 'events', activatedSearchSource: 'google', page: 'calendar' },
+      { display: 'Calendar', activatedSearchName: 'events', activatedSearchSource: 'ical', page: 'calendar' },
+      { display: 'Photos', activatedSearchName: 'photos', activatedSearchSource: 'dropbox', page: 'photos' },
+      { display: 'Rumpel', activatedSearchName: 'profile', activatedSearchSource: 'rumpel', page: 'dashboard' }
     ]
   }
 };

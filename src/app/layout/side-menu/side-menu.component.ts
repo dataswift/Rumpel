@@ -56,7 +56,7 @@ export class SideMenuComponent implements OnInit {
       .subscribe(event => this.selectedItem = event.url.slice(1));
 
 
-    this.dataplugSvc.getPlugs().subscribe( plug => {
+    this.dataplugSvc.dataplugs$.subscribe( plug => {
       for(var i=0; i<plug.length; i++){
         plug[i].icon = plug[i].icon.replace(/ /g, "-");
       }
