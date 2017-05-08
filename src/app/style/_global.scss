@@ -116,6 +116,7 @@ button.btn-view-header {
 
   &.empty {
     padding: 0.75em 2em;
+    color: $app-header-color;
   }
 
   &:hover {

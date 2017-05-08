@@ -1,0 +1,13 @@
+/*!
+ * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+ *//*!
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+ */.view-header h4{display:inline-block}.view-header .date-selector{float:right;height:3em}.view-header .date-selector .form-group{display:inline-block}.view-header .date-selector .form-group input{width:12em;height:2.75em;border-radius:0}.view-header .date-selector .form-group button{background-color:white;margin-left:1em;padding:7px 24px;border:1px solid #ccc;outline:none;height:34px;color:#4A556B;border-radius:6px;position:relative;top:-3px}.map-header{display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;margin-top:20px;margin-bottom:20px}.map-header span{color:#4A556B;font-size:16px;margin:30px;text-align:center}.map-header form{display:block;min-width:266px}.map-wrapper{position:relative}.controls-overlay{position:absolute;top:1em;right:1em;z-index:1002;box-shadow:0 1px 5px rgba(0,0,0,0.65);border-radius:4px;width:100px}.controls-overlay .btn-overlay{float:left;font-size:1.2em;padding:0.5em 1em;margin:0;border:1px solid #cccccc;background:white;color:black;border-collapse:collapse;width:100px;user-select:none;cursor:pointer}.controls-overlay .btn-overlay:first-child{border-top-left-radius:4px;border-top-right-radius:4px}.controls-overlay .btn-overlay:last-child{border-bottom-left-radius:4px;border-bottom-right-radius:4px}.controls-overlay .btn-overlay:focus{outline:none}.controls-overlay .btn-overlay:hover{background-color:#efefef}.controls-overlay .btn-overlay.selected{background-color:#009688;color:white}.loading-overlay{position:absolute;top:50px;left:50%;transform:translateX(-50%);z-index:1002;padding:0 1em;border-radius:4px;background:rgba(255,255,255,0.85)}.loading-overlay *{display:inline-block;vertical-align:middle}.loading-overlay span{color:#009688;font-size:1.25em}

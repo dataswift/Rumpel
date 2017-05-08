@@ -15,6 +15,8 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs/Subscription';
 
+declare var $:any;
+
 @Component({
   selector: 'rump-locations',
   templateUrl: 'locations.component.html',
@@ -50,7 +52,7 @@ export class LocationsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle('75em');
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height()-350 + 'px');
   }
 
   ngOnDestroy() {
