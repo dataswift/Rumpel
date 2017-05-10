@@ -93,7 +93,7 @@ export const AppConfig: IAppConfig = {
       { display: 'Location', activatedSearchName: 'location', activatedSearchSource: 'rumpel', page: 'locations' },
       { display: 'Google calendar', activatedSearchName: 'events', activatedSearchSource: 'google', page: 'calendar' },
       { display: 'Calendar', activatedSearchName: 'events', activatedSearchSource: 'ical', page: 'calendar' },
-      { display: 'Photos', activatedSearchName: 'photos', activatedSearchSource: 'dropbox', page: 'photos' },
+      { display: 'Dropbox photos', activatedSearchName: 'photos', activatedSearchSource: 'dropbox', page: 'photos' },
       { display: 'Rumpel', activatedSearchName: 'profile', activatedSearchSource: 'rumpel', page: 'dashboard' }
     ]
   }

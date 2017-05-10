@@ -97,6 +97,9 @@ export class DataPlugService {
       if(plugName === plugList[i].display.toLowerCase()){
         plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
       }
+      else if(plugName == "photos" && plugList[i].display == "Dropbox photos"){
+        plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
+      }
     }
 
     return plugStatus;
@@ -129,7 +132,7 @@ export class DataPlugService {
       this.marketSvc.getDataPlugs().subscribe(plugs => {
 
         this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-          console.log(tables);
+          //console.log(tables);
 
           const displayPlugs = plugs.map(plug => {
 
@@ -142,11 +145,21 @@ export class DataPlugService {
               plugActivated = this.getDataPlugStatus(tables, plug);
             }
 
+            var plugName:string = plug.name;
+            if(plugName == 'Photos'){
+              plugName = "Dropbox photos";
+            }
+
+            var plugIcon:string = plug.name.toLowerCase() + '-plug.svg';
+            if(plugName == 'Calendar'){
+              plugIcon = "calendar-plug.png";
+            }
+
             const displayPlug = {
-              name: plug.name,
+              name: plugName,
               description: plug.description,
               url: plug.url.replace('/dataplug', '/hat/authenticate'),
-              icon: plug.name.toLowerCase() + '-plug.svg',
+              icon: plugIcon,
               activated: plugActivated,
               page: this.getDataPlugLink(plug)
             };
