@@ -47,6 +47,7 @@ export class NotificationsService {
     if (this.totalNotifications === 0) {
       this._marketSvc.getNotifications().subscribe((notifications: Array<ExternalNotification>) => {
 
+        /*  // dummy notifications!
         notifications = [{
           notice: {
             id: 3,
@@ -67,6 +68,7 @@ export class NotificationsService {
           received: 1,
           read: 0
         }];
+        */
 
 
         if (Array.isArray(notifications)) {
