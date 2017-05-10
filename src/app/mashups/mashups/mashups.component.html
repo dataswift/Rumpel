@@ -6,11 +6,34 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
   -->
 
+  <div class="row content-bg content-header">
+    <div class="col-md-12">
+      <div class="view-header">
+        <a role="button" class="page-info popover-click" tabindex="0" data-toggle="popover" data-container="body"
+           data-content="See mash ups of your data" class="info-button"
+           data-trigger="focus"
+           (mouseover)="showPopover($event)"
+           data-placement="auto bottom"><i class="material-icons">info_outline</i></a>
+        <h4>My mashups</h4>
+      </div>
+    </div>
+  </div>
+
+  <div class="row content-bg">
+    <div class="col-md-12 padding-none">
+      <div class="view-header padding-none">
+
+<!--
 <div class="tab-navbar">
   <div class="tab-nav" [class.active]="activeTab === '/mashups/myday'">
     <a [routerLink]="['myday']">My Day</a>
   </div>
   <div class="tab-nav inactive">+</div>
 </div>
+-->
 
 <router-outlet></router-outlet>
+
+</div>
+</div>
+</div>

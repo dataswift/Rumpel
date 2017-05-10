@@ -6,9 +6,13 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { Post, Photo, Notable } from '../../shared/interfaces/index';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Post, Tweet, Photo, Notable } from '../../shared/interfaces/index';
 import { Moment } from 'moment';
+import * as moment from 'moment';
+import { ExpandedTime } from '../../shared/interfaces/index';
+
+declare var $:any;
 
 @Component({
   selector: 'rump-activity-list',
@@ -16,19 +20,42 @@ import { Moment } from 'moment';
   styleUrls: ['activity-list.component.scss']
 })
 export class ActivityListComponent implements OnInit {
-  @Input() timeSelected: Moment;
+
   @Input() componentHeight: string;
-  @Input() componentWidth: string;
-  @Input() events: Array<Event>;
-  @Input() posts: Array<Post>;
-  @Input() photos: Array<Photo>;
-  @Input() notables: Array<Notable>;
+  @Output() timeSelected = new EventEmitter<ExpandedTime>();
   // @Input() locations: Array<Location>;
+  @Input() eventList: Array<any>;
+  @Input() timeline: Array<ExpandedTime>;
+
+  public moment:Moment = moment();
+
+
 
   constructor() {
+
   }
 
   ngOnInit() {
+    $('[data-toggle="popover"]').popover();
+  }
+
+
+
+
+  scrollToItem(index){
+
+    for(var i=0; i<this.eventList.length; i++){
+      this.eventList[i].selected = false;
+    }
+
+    this.eventList[index].selected = true;
+    var time:ExpandedTime = new ExpandedTime( this.eventList[index].timestamp );
+    this.timeSelected.emit( time );
+
+    if(index==0){
+      $('.activitylist-container').animate({ scrollTop: 0 }, 'slow');
+    }
+
   }
 
 }

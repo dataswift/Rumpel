@@ -14,7 +14,7 @@
       <li *ngFor="let post of posts" (click)="navigateToFullPost(post.id)">
         <div class="row vertical-align" [ngSwitch]="post.type">
           <div class="col-xs-2 left-column media">
-            <img [src]="post.type === 'tweet' ? 'assets/icons/twitter-icon.png' : 'assets/icons/facebook-plug.svg'" class="img img-responsive">
+            <img [src]="post.type === 'tweet' ? 'assets/icons/twitter-icon.svg' : 'assets/icons/facebook-f-icon.svg'" class="img img-responsive">
           </div>
 
           <div class="col-xs-9 center-column" *ngSwitchCase="'music.listens'">

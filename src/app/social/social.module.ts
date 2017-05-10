@@ -14,7 +14,9 @@ import { SharedModule } from '../shared/shared.module';
 import { SocialComponent } from './social/social.component';
 import { TileSocialComponent } from './tile-social/tile-social.component';
 import { FbPostComponent } from './fb-post/fb-post.component';
+import { LocationFbPostComponent } from './location-fb-post/location-fb-post.component';
 import { TweetComponent } from './tweet/tweet.component';
+import { LocationTweetComponent } from './location-tweet/location-tweet.component';
 
 import { SocialService } from './social.service';
 import {TwitterService} from './twitter.service';
@@ -22,8 +24,8 @@ import {MediaService} from './media.service';
 
 @NgModule({
     imports: [ SharedModule, SocialRoutingModule ],
-    declarations: [ SocialComponent, TileSocialComponent, FbPostComponent, TweetComponent ],
+    declarations: [ SocialComponent, TileSocialComponent, FbPostComponent, LocationFbPostComponent, TweetComponent, LocationTweetComponent ],
     providers: [ SocialService, TwitterService, MediaService ],
-    exports: [ TileSocialComponent, FbPostComponent, TweetComponent ]
+    exports: [ TileSocialComponent, FbPostComponent, LocationFbPostComponent, TweetComponent, LocationTweetComponent ]
 })
 export class SocialModule {}

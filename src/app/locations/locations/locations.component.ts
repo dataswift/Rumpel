@@ -53,6 +53,11 @@ export class LocationsComponent implements OnInit, OnDestroy {
     });
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height()-350 + 'px');
+    var thisScope = this;
+
+    $(window).resize(function(){
+      thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height()-180 + 'px');
+    });
   }
 
   ngOnDestroy() {

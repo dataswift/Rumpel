@@ -4,32 +4,4 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
- */
-
-
-
-
-@import "../../style/variables";
-
-.list-container {
-  padding: 2em;
-  min-height: 60em;
-  color: black;
-}
-
-.notables-view {
-  color: $text-dark;
-}
-
-
-.notable-item{
-  background-color: white;
-  margin-bottom: 50px;
-}
-
-
-.notable-item .notable-content /deep/ {
-  p {
-    font-size: 1.5em;
-  }
-}
+ */h4{font-size:12px;margin-left:0px;margin-top:0px;margin-bottom:4px;color:#878787;pointer-events:none;padding:0;border-top:none}p{font-size:10px;font-weight:200;opacity:0.7;margin-bottom:3px;pointer-events:none}.header-content{margin-top:-10px}

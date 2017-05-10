@@ -8,19 +8,42 @@
 
 @import "../../style/variables";
 
+
+.row{
+  background-color: white;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .view-body {
-  height: $min-private-window-height;
+  //height: $min-private-window-height;
   position: relative;
+
+  .timeline-view{
+    display: flex;
+    justify-content: space-between;
+
+    .map{
+      width: 100%;
+    }
+    .activityList{
+      width: 100%;
+    }
+  }
 }
 
 .timeline.fixed-right {
   position: fixed;
 }
 
+.mixpad{
+  padding: 0;
+}
+
 .mixpad .day-view {
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  height: $min-private-window-height;
+  //height: $min-private-window-height;
   top: 0;
   left: 0;
   z-index: 5551;
@@ -30,8 +53,8 @@
 
 .loading-overlay {
   position: absolute;
-  top: 3em;
-  right: 30%;
+  top: 20px;
+  left: 20px;
   z-index: 1002;
   padding: 0 1em;
   border-radius: 4px;
