@@ -107,7 +107,7 @@ export class ProfileComponent implements OnInit {
     setTimeout(() => this.profile[field].private = !this.profile[field].private);
   }
 
-  showPopover() {
+  showPopover(event) {
     $('[data-toggle="popover"]').popover();
   }
 

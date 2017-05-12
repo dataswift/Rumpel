@@ -90,7 +90,7 @@ export class SocialComponent implements OnInit, OnDestroy {
     }
   }
 
-  showPopover() {
+  showPopover(event) {
     $('[data-toggle="popover"]').popover();
   }
 }

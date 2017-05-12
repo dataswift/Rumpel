@@ -97,4 +97,8 @@ export class LocationsComponent implements OnInit, OnDestroy {
     this.lowerTimeBound = moment(formContent.date);
     this.upperTimeBound = moment(formContent.date).endOf('day');
   }
+
+  showPopover(event) {
+    $('[data-toggle="popover"]').popover();
+  }
 }

@@ -85,7 +85,7 @@ export class NotablesViewComponent implements OnInit {
     }
   }
 
-  showPopover() {
+  showPopover(event) {
     $('[data-toggle="popover"]').popover();
   }
 
