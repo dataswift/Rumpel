@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit {
   public userAuthenticated = false;
   public profile: { photo: { url: string; shared: boolean; }, first_name: string };
   public accountStatus: AccountStatus;
+  public showNotifications: boolean;
 
   public unreadNotifications: number;
   public totalNotifications: number;
@@ -180,6 +181,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.marketSquareLink = 'https://marketsquare.hubofallthings.com';
     this.userAuthenticated = false;
+    this.showNotifications = false;
 
     this.sub = this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
@@ -210,6 +212,8 @@ export class HeaderComponent implements OnInit {
       this.unreadNotifications = stats.unread;
     });
 
+    this._notificationsSvc.showNotifs$.subscribe(status => this.showNotificationsBar(status));
+
 
     this.profile = {
       photo: { url: '', shared: false }, first_name: ''
@@ -228,6 +232,8 @@ export class HeaderComponent implements OnInit {
     });
 
     this.userSvc.getAccountStatus().subscribe((accountStatus: AccountStatus) => this.accountStatus = accountStatus);
+
+
   }
 
   showInfoModal() {
@@ -284,5 +290,20 @@ export class HeaderComponent implements OnInit {
 
   showAccountOptions(){
     $('.dropdown-toggle').dropdown();
+  }
+
+
+  showNotificationsBar(bool:boolean):void{
+    this.showNotifications = bool;
+
+    var duration:number = 400;
+    var barHeight:number = 64;
+
+    if(bool == false){
+      barHeight = 0;
+    }
+
+    $('.navbar, .menubar-left, .burger, .content-main').stop().animate({ marginTop: barHeight }, duration);
+    $('.notifications-wrapper').stop().animate({ top: (barHeight-100) }, duration);
   }
 }
