@@ -115,7 +115,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
       if (locations.length > this.totalDP) {
         this.totalDP = locations.length;
-        this.locationsSvc.getMoreData(500, 5000);
+        this.locationsSvc.getMoreData(100, 5000);
       }
     });
 
