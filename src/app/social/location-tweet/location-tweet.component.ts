@@ -11,7 +11,7 @@ import { Tweet } from '../../shared/interfaces/index';
 
 @Component({
   selector: 'rump-location-tweet',
-  templateUrl: './location-tweet.component.html', 
+  templateUrl: './location-tweet.component.html',
   styleUrls: ['./location-tweet.component.scss']
 })
 export class LocationTweetComponent implements OnInit {

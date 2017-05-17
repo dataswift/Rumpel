@@ -151,7 +151,7 @@ export class SideMenuComponent implements OnInit {
   animateMenu(){
     let sidenav_x = 0;
     let content_margin = 345;
-    let duration = 500;
+    const duration = 500;
 
     if( $('.menubar-left').css('left') === '0px' ){
         sidenav_x = -345;
@@ -179,7 +179,7 @@ export class SideMenuComponent implements OnInit {
 
     $('.burger').addClass('burger-pulse-animation');
     setTimeout(function(){
-      $('.burger').removeClass('burger-pulse-animation')
+      $('.burger').removeClass('burger-pulse-animation');
     }, 1000);
   }
 

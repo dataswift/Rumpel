@@ -24,7 +24,8 @@ import {MediaService} from './media.service';
 
 @NgModule({
     imports: [ SharedModule, SocialRoutingModule ],
-    declarations: [ SocialComponent, TileSocialComponent, FbPostComponent, LocationFbPostComponent, TweetComponent, LocationTweetComponent ],
+    declarations: [ SocialComponent, TileSocialComponent, FbPostComponent,
+                    LocationFbPostComponent, TweetComponent, LocationTweetComponent ],
     providers: [ SocialService, TwitterService, MediaService ],
     exports: [ TileSocialComponent, FbPostComponent, LocationFbPostComponent, TweetComponent, LocationTweetComponent ]
 })

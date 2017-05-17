@@ -44,7 +44,7 @@ export class PublicProfileComponent implements OnInit {
     this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
       if(user.authenticated === false){
-          $('.content-main').css({ marginLeft: "0px"});
+          $('.content-main').css({ marginLeft: '0px'});
       }
     });
   }

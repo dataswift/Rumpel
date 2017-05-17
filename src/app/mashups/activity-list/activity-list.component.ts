@@ -35,21 +35,21 @@ export class ActivityListComponent implements OnInit {
   }
 
   ngOnInit() {
-    $('.backToTop i').popover({html: true, content: "<p style='text-align: center'>Back to today's date</p>"});
+    $('.backToTop i').popover({html: true, content: '<p style="text-align: center">Back to today\'s date</p>'});
   }
 
 
   scrollToItem(index){
 
-    for(var i=0; i<this.eventList.length; i++){
+    for(let i=0; i<this.eventList.length; i++){
       this.eventList[i].selected = false;
     }
 
     this.eventList[index].selected = true;
-    var time:ExpandedTime = new ExpandedTime( this.eventList[index].timestamp );
+    let time:ExpandedTime = new ExpandedTime( this.eventList[index].timestamp );
     this.timeSelected.emit( time );
 
-    if(index==0){
+    if(index === 0){
       $('.activitylist-container').animate({ scrollTop: 0 }, 'slow');
     }
 

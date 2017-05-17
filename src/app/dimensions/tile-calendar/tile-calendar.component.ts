@@ -27,7 +27,7 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
   public eventsExist = false;
   public upcomingEventsExist: boolean;
   private sub: Subscription;
-  private _this:any;
+  private _this: any;
 
   constructor(private eventsSvc: EventsService,
               private facebookEventSvc: FacebookEventsService,
@@ -70,8 +70,8 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
 
         if (upcomingEvents.length > 0) {
           const daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
-          //this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
-          //this.events[1].events = this.events[1].events.concat(upcomingEvents);
+          // this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
+          // this.events[1].events = this.events[1].events.concat(upcomingEvents);
 
           this.upcomingEventsExist = true;
         } else {

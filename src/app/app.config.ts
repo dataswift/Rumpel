@@ -89,13 +89,17 @@ export const AppConfig: IAppConfig = {
       description: 'Allow access to your data in exchange for cash, services or vouchers. Visit the MarketSquare to find out more.' },
 
       { display: 'Notables', icon: 'border_color', link: 'notables', dataType: '', disable: '',
-      description: 'Your words are your memories! Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists - all in one place, and lets you decide what is private to yourself and what to share! Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.' },
+      description: `Your words are your memories!
+      Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists -
+      all in one place, and lets you decide what is private to yourself and what to share!
+      Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.` },
 
       { display: 'My mashups', icon: 'layers', link: 'mashups/myday', dataType: '', disable: '',
       description: 'See mashups of your data' },
 
       { display: 'My data plugs', icon: 'settings_input_component', link: 'dataplugs', dataType: '', disable: '',
-      description: 'Data comes into your HAT via data plugs. Click here to see what data plugs are available, and what data plugs are already connected.' }
+      description: `Data comes into your HAT via data plugs.
+      Click here to see what data plugs are available, and what data plugs are already connected.` }
     ],
     'dataPlugs': [
       { display: 'Facebook', activatedSearchName: 'posts', activatedSearchSource: 'facebook', page: 'social' },
