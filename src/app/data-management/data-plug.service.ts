@@ -88,10 +88,10 @@ export class DataPlugService {
 
 
   private getDataPlugStatus(tables, plug): boolean{
-    var plugStatus:boolean = false;
+    let plugStatus:boolean = false;
 
-    var plugList:any = this.config.menuItems.dataPlugs;
-    var plugName = plug.name.toLowerCase();
+    let plugList:any = this.config.menuItems.dataPlugs;
+    let plugName = plug.name.toLowerCase();
 
     for(var i=0; i < plugList.length; i++){
       if(plugName === plugList[i].display.toLowerCase()){
@@ -106,9 +106,9 @@ export class DataPlugService {
   }
 
   private getDataPlugLink(plug): string{
-    var plugList:any = this.config.menuItems.dataPlugs;
-    var link:string = "";
-    var plugName = plug.name.toLowerCase();
+    let plugList:any = this.config.menuItems.dataPlugs;
+    let link:string = "";
+    let plugName = plug.name.toLowerCase();
 
     for(var i=0; i < plugList.length; i++){
       if(plugName === plugList[i].display.toLowerCase()){

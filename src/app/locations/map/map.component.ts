@@ -7,7 +7,8 @@
  */
 
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-
+import { Moment } from 'moment';
+import * as moment from 'moment';
 import { Location } from '../../shared/interfaces';
 
 declare var L: any;
@@ -106,10 +107,16 @@ export class MapComponent implements OnInit, OnChanges {
       const pos = new L.LatLng(loc.latitude, loc.longitude);
       const marker = L.marker(pos);
       marker.timestamp = loc.timestamp;
+
+      var date = moment(Number(loc.timestamp));
+      marker.bindPopup("<b style='text-align: center'>"+date.format("h:mm a") + "</b>").openPopup();
+
       const self = this;
+      /*
       marker.on('click', (e: any) => {
         self.onMarkerSelected(e);
       });
+      */
       // pointlist.push(pos);
       this.markers.addLayer(marker);
     }

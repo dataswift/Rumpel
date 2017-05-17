@@ -17,13 +17,15 @@ import { SocialModule } from '../social/social.module';
 import { MyDayComponent } from './my-day/my-day.component';
 import { MashupsComponent } from './mashups/mashups.component';
 import { ActivityListComponent } from './activity-list/activity-list.component';
+import { ActivityCardComponent } from './activity-card/activity-card.component';
 
 @NgModule({
   imports: [ SharedModule, LocationsModule, FormsModule, SocialModule, MashupsRoutingModule ],
   declarations: [
     MyDayComponent,
     ActivityListComponent,
-    MashupsComponent
+    MashupsComponent,
+    ActivityCardComponent
   ]
 })
 export class MashupsModule {}

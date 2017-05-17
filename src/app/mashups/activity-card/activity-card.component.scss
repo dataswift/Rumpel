@@ -1,0 +1,264 @@
+
+@import "../../style/variables";
+
+
+
+
+
+.date-box{
+  display: flex;
+  justify-content: space-between;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  padding: 15px 0px;
+
+  div{
+    pointer-events: none;
+  }
+
+
+  h2{
+    font-size: 20px;
+    font-style: italic;
+    font-weight: 300;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    color: #878787;
+    width: 50px;
+    margin-top: 3px;
+    text-transform: none;
+    margin-bottom: -3px;
+    min-width: 20px;
+    pointer-events: none;
+
+    span{
+      font-size: 10px;
+      top: 0px;
+      position: relative;
+      pointer-events: none;
+      margin-bottom: 2px;
+      display: block;
+    }
+  }
+
+  .activity{
+    background-color: #f5f5f5;
+    margin-bottom: 2px;
+    color: #878787;
+    width: 200px;
+    margin-right: 20px;
+    font-size: 12px;
+    pointer-events: none;
+
+    h4{
+      font-size: 12px;
+      margin-left: 0px;
+      margin-top: 0px;
+      color: #878787;
+      pointer-events: none;
+      margin-bottom: 4px;
+      word-wrap: break-word;
+      max-width: 132px;
+    }
+
+    p{
+      font-size: 10px;
+      font-weight: 200;
+      opacity: 0.7;
+      margin-bottom: 3px;
+      pointer-events: none;
+      max-width: 132px;
+    }
+
+    .activity-item{
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+      padding: 15px 12px 15px 20px;
+      min-height: 70px;
+      margin-bottom: 2px;
+
+      div{
+        flex: 1;
+        max-width: 134px !important;
+      }
+
+      i, img{
+        width: 30px;
+        height: 30px;
+      }
+
+      .icon-rounded, i{
+        background-color: white;
+        border-radius: 50%;
+        padding: 6px;
+        font-size: 16px;
+        text-align: center;
+
+      }
+
+
+    }
+
+    .notable{
+      i{
+        color: $app-accent-color;
+      }
+    }
+  }
+
+
+
+
+.notable-header {
+  padding: 1em;
+
+  .user-photo {
+    float: left;
+    font-size: 0.75em;
+    margin-right: 0.5em;
+  }
+
+  .header-content {
+    padding-top: 0.5em;
+
+    h5 {
+      font-size: 1.3em;
+      margin-top: 0;
+      margin-bottom: 0.25em;
+    }
+
+    span {
+      font-size: 1em;
+    }
+
+    &:after {
+      clear: both;
+    }
+  }
+
+  .notable-type {
+    float: right;
+    margin-top: 0.1em;
+    font-size: 3em;
+  }
+}
+
+.notable-item {
+
+  position: relative;
+
+  i{
+    color: white;
+    background-color: $app-accent-color !important;
+  }
+
+  .notable-type {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: $font-condensed;
+    background-color: #515151;
+    text-transform: uppercase;
+    padding: 0.5em 1em;
+    font-size: 1.2em;
+    color: white;
+
+    span {
+      margin-right: 0.5em;
+    }
+  }
+
+  .notable-controls {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    div {
+      display: inline;
+    }
+
+    .controls-item {
+      font-size: 1.1em;
+      padding: 0.5em 1em;
+      border-right: 2px solid #515151;
+      cursor: pointer;
+
+      &:last-child {
+        border: none;
+        padding-right: 0;
+      }
+
+      span {
+        margin-left: 0.5em;
+      }
+    }
+  }
+}
+
+.notable-content {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.img-profile {
+  float: left;
+  margin-left: 0.5em;
+  margin-right: 1em;
+  height: 4em;
+}
+
+.img-circle {
+  border-radius: 50%;
+}
+}
+
+.activitylist-container {
+.photos {
+  -webkit-column-count: 3;
+  -webkit-column-gap:   2em;
+  -moz-column-count:    3;
+  -moz-column-gap:      2em;
+  column-count:         3;
+  column-gap:           2em;
+}
+
+
+}
+
+.photo-box{
+background-color: rgba(80, 82, 117, 0.7);
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+box-shadow: inset 0 0 0 1000px rgba(80, 82, 117, 0.7);
+
+
+.photo-description{
+  min-height: 100px;
+  h4, p{
+    color: white !important;
+  }
+}
+}
+
+
+.today, .date-box:hover{
+
+  background-color: #eff4f7;
+  border-top: 1px solid #a8c5d4;
+  border-bottom: 1px solid #a8c5d4;
+
+  h2{
+    color: #6297b1;
+    font-weight: 400;
+  }
+
+  .activity{
+    background-color: #e0e5e8;
+
+  }
+
+}

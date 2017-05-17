@@ -23,7 +23,6 @@ export class ActivityListComponent implements OnInit {
 
   @Input() componentHeight: string;
   @Output() timeSelected = new EventEmitter<ExpandedTime>();
-  // @Input() locations: Array<Location>;
   @Input() eventList: Array<any>;
   @Input() timeline: Array<ExpandedTime>;
 
@@ -36,10 +35,8 @@ export class ActivityListComponent implements OnInit {
   }
 
   ngOnInit() {
-    $('[data-toggle="popover"]').popover();
+    $('.backToTop i').popover({html: true, content: "<p style='text-align: center'>Back to today's date</p>"});
   }
-
-
 
 
   scrollToItem(index){

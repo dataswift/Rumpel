@@ -1,0 +1,64 @@
+<div class="date-box" [class.today]="day.selected" (click)="scrollToItem(i)">
+
+              <h2>{{day.timestamp.format('D')}}<span>{{day.timestamp.format("MMM")}}</span><span>{{day.timestamp.format('YY')}}</span></h2>
+
+              <div>
+                    <div *ngFor="let activity of day.activities">
+                      <div class="activity">
+
+                          <div *ngIf="activity.type === 'notable'" class="activity-item notable-item">
+                              <rump-location-notable [notable]="activity.event"></rump-location-notable>
+                              <i class="material-icons">border_color</i>
+                          </div>
+
+
+                          <div *ngIf="activity.type === 'event'" class="activity-item event">
+                              <div>
+                                <h4>{{activity.event.title}}</h4>
+                                <p class="event-description" *ngIf="activity.event.description">{{activity.event.description | limitContent:140}}</p>
+                                <p>{{activity.event.start | moment:'hh:mm A'}} - {{activity.event.end | moment:'hh:mm A'}}</p>
+                              </div>
+
+                              <img *ngIf="activity.event.calendarName == 'google'" src="assets/icons/google-calendar-plug.svg">
+                              <img *ngIf="activity.event.calendarName == 'facebook'" src="assets/icons/facebook-f-icon.svg">
+                              <img *ngIf="activity.event.calendarName != 'google' && activity.event.calendarName != 'facebook'" src="assets/icons/calendar-plug.png">
+                          </div>
+
+                          <div *ngIf="activity.type === 'photo'" class="activity-item photo-box" [style.background-image]="'url('+activity.event.src + ')'">
+                              <div class="photo-description" >
+                                <h4>{{activity.event.name}}</h4>
+                                <p>{{activity.event.timestamp | moment}}</p>
+                              </div>
+                              <img class="icon-rounded" src="assets/icons/photos-plug.svg">
+                          </div>
+
+
+                          <div *ngIf="activity.type === 'facebook' && activity.event.type !=='photo' && activity.event.type !=='link'" class="activity-item post">
+                                <rump-location-fb-post [post]="activity.event"></rump-location-fb-post>
+                                <img src="assets/icons/facebook-f-icon.svg">
+                          </div>
+
+                          <div *ngIf="activity.type === 'facebook' && activity.event.type ==='photo' || activity.event.type ==='link'" class="activity-item post" [class.photo-box]="activity.event.content.fullPicture != ''" [style.background-image]="'url('+activity.event.content.fullPicture + ')'">
+                                <rump-location-fb-post [post]="activity.event"></rump-location-fb-post>
+                                <img src="assets/icons/facebook-f-icon.svg">
+                          </div>
+
+
+
+                          <div *ngIf="activity.type === 'twitter'" class="activity-item post">
+                                <rump-location-tweet [tweet]="activity.event"></rump-location-tweet>
+                                <img src="assets/icons/twitter-icon.svg">
+                          </div>
+
+                          <div *ngIf="activity.type === 'location'" class="activity-item location">
+                                <div>
+                                  <h4>Multiple locations</h4>
+                                  <p>Click to update the map</p>
+                                </div>
+                                <img src="assets/icons/location-icon.svg">
+                          </div>
+
+                        </div>
+                  </div>
+              </div>
+    </div>

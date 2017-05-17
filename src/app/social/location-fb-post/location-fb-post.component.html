@@ -18,6 +18,7 @@
 
 
   <div *ngSwitchCase="'music.listens'" >
+    <h4>Via Spotify:</h4>
     <p>You've listened to
       <a href="{{post.data.song.url}}" target="_blank">{{post.data.song.title}}</a>
       <span *ngIf="post.data.musician">
@@ -40,11 +41,9 @@
   </div>
 
   <div *ngSwitchCase="'video'" >
-    <div class="photo-description">
-      <h4>{{post.content?.message}}</h4>
+      <h4>Video post</h4>
       <p>{{post.content?.name}}</p>
       <p>{{post.createdTime | moment}}</p>
-    </div>
   </div>
 
   <div *ngSwitchCase="'link'" >

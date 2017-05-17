@@ -161,25 +161,65 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
       for( var j=0; j < this.events.length; j++){
         if( this.events[j].start.isSame(this.timeline[i].timestamp, "day") ){
-          this.eventList[this.eventList.length-1].activities.push( { event: this.events[j], type: 'event' } );
+          this.eventList[this.eventList.length-1].activities.push( {
+            event: this.events[j],
+            type: 'event',
+            title: this.events[j].title,
+            description: this.events[j].description,
+            startTime: this.events[j].start,
+            endTime: this.events[j].end,
+            image: '',
+            icon: (this.events[j].calendarName === 'google' ? 'google-calendar' : this.events[j].calendarName === 'facebook' ? 'facebook' : 'calendar')
+
+          });
         }
       }
 
       for( var j=0; j < this.notables.length; j++){
         if( this.notables[j].created_time.isSame(this.timeline[i].timestamp, "day") ){
-          this.eventList[this.eventList.length-1].activities.push( { event: this.notables[j], type: 'notable' } );
+          this.eventList[this.eventList.length-1].activities.push( {
+            event: this.notables[j],
+            type: 'notable',
+            title: this.notables[j].message,
+            description: (this.notables[j].isShared ? 'Public' : 'Private'),
+            startTime: this.notables[j].created_time,
+            endTime: '',
+            image: '',
+            icon: 'notable'
+
+          });
         }
       }
 
       for( var j=0; j < this.photos.length; j++){
         if( this.photos[j].timestamp.isSame(this.timeline[i].timestamp, "day") ){
-          this.eventList[this.eventList.length-1].activities.push( { event: this.photos[j], type: 'photo' } );
+          this.eventList[this.eventList.length-1].activities.push( {
+            event: this.photos[j],
+            type: 'photo',
+            title: this.photos[j].name,
+            description: '',
+            startTime: this.photos[j].timestamp,
+            endTime: '',
+            image: this.photos[j].path,
+            icon: 'photo'
+
+          });
         }
       }
 
       for( var j=0; j < this.posts.length; j++){
         if( this.posts[j].createdTime.isSame(this.timeline[i].timestamp, "day") ){
-          this.eventList[this.eventList.length-1].activities.push( { event: this.posts[j], type: 'facebook' } );
+          this.eventList[this.eventList.length-1].activities.push( {
+            event: this.posts[j],
+            type: 'facebook',
+            title: '',
+            description: '',
+            startTime: this.posts[j].createdTime,
+            endTime: '',
+            image: '',
+            icon: 'facebook'
+
+          });
         }
       }
 
@@ -200,6 +240,10 @@ export class MyDayComponent implements OnInit, OnDestroy {
       }
     }
     //console.log(this.eventList);
+
+    this.eventList = this.eventList.filter(function(elem, index, self) {
+        return index == self.indexOf(elem);
+    })
 
     // for (let dp of dataPoints) {
     //   let timestamp = dp[timeField];
