@@ -19,19 +19,14 @@ declare var $: any;
   styleUrls: ['grid.component.scss']
 })
 export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
-  public state: any;
   public showLocationsTile = false;
   public showEventsTile = false;
   public showPostsTile = false;
-  public tileHeights: { notables: number; profile: number };
   private sub: Subscription;
 
   constructor(private uiState: UiStateService) { }
 
   ngOnInit() {
-    this.state = { dataSources: [], dataTypes: [] };
-
-    this.tileHeights = { notables: 2, profile: 1 };
 
     this.sub = this.uiState.tables$.subscribe((tables: DataTable[]) => {
       this.showLocationsTile = tables.findIndex(this.searchHandler('locations')) > -1;
@@ -45,14 +40,6 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    /*
-    $('.grid').packery({
-      // options
-      gutter: 42,
-      itemSelector: '.grid-item',
-      percentPosition: false
-    });
-    */
   }
 
   private searchHandler(names: string) {
