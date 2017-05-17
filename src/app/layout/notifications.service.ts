@@ -48,29 +48,6 @@ export class NotificationsService {
       this._marketSvc.getNotifications().subscribe((notifications: Array<ExternalNotification>) => {
 
 
-        notifications = [{
-          notice: {
-            id: 3,
-            message: 'Notif 1 text goes here, and there is probably a little bit more too. Who knows how long it is, really? Notif 1 text goes here, and there is probably a little bit more too. Who knows how long it is, really?',
-            dateCreated: 311338963495,
-            target: ''
-          },
-          received: 1,
-          read: 0
-        },
-        {
-          notice: {
-            id: 5,
-            message: 'Notif 2 a little bit longer',
-            dateCreated: 113389634956,
-            target: ''
-          },
-          received: 1,
-          read: 0
-        }];
-
-
-
         if (Array.isArray(notifications)) {
           this.hatdexNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
           this.totalNotifications = notifications.length;
