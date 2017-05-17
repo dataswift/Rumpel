@@ -128,7 +128,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height()-180 + 'px');
     this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle($(window).height()-203 + 'px');
-    var thisScope = this;
+    let thisScope = this;
 
     $(window).resize(function(){
       thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height()-180 + 'px');
@@ -147,7 +147,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.timeline = _.unionBy(this.timeline, timestamps, 'unixDayStart')
       .sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1)
-      .filter((a: ExpandedTime) => a.timestamp.isSameOrBefore(this.moment, "day"))
+      .filter((a: ExpandedTime) => a.timestamp.isSameOrBefore(this.moment, 'day'))
       .filter((a: ExpandedTime) => a.timestamp.isValid());
 
 
@@ -156,11 +156,11 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.eventList = [];
 
-    for(var i=0; i<this.timeline.length; i++){
-      this.eventList.push({ timestamp: this.timeline[i].timestamp, activities: [], selected: (i==0) });
+    for(let i=0; i<this.timeline.length; i++){
+      this.eventList.push({ timestamp: this.timeline[i].timestamp, activities: [], selected: (i===0) });
 
-      for( var j=0; j < this.events.length; j++){
-        if( this.events[j].start.isSame(this.timeline[i].timestamp, "day") ){
+      for( let j=0; j < this.events.length; j++){
+        if( this.events[j].start.isSame(this.timeline[i].timestamp, 'day') ){
           this.eventList[this.eventList.length-1].activities.push( {
             event: this.events[j],
             type: 'event',
@@ -169,14 +169,16 @@ export class MyDayComponent implements OnInit, OnDestroy {
             startTime: this.events[j].start,
             endTime: this.events[j].end,
             image: '',
-            icon: (this.events[j].calendarName === 'google' ? 'google-calendar' : this.events[j].calendarName === 'facebook' ? 'facebook' : 'calendar')
+            icon: (this.events[j].calendarName === 'google' ? 'google-calendar' :
+                    this.events[j].calendarName === 'facebook' ? 'facebook' : 'calendar')
 
           });
         }
       }
 
-      for( var j=0; j < this.notables.length; j++){
-        if( this.notables[j].created_time.isSame(this.timeline[i].timestamp, "day") ){
+
+      for( let j=0; j < this.notables.length; j++){
+        if( this.notables[j].created_time.isSame(this.timeline[i].timestamp, 'day') ){
           this.eventList[this.eventList.length-1].activities.push( {
             event: this.notables[j],
             type: 'notable',
@@ -191,8 +193,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      for( var j=0; j < this.photos.length; j++){
-        if( this.photos[j].timestamp.isSame(this.timeline[i].timestamp, "day") ){
+      for( let j=0; j < this.photos.length; j++){
+        if( this.photos[j].timestamp.isSame(this.timeline[i].timestamp, 'day') ){
           this.eventList[this.eventList.length-1].activities.push( {
             event: this.photos[j],
             type: 'photo',
@@ -207,8 +209,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      for( var j=0; j < this.posts.length; j++){
-        if( this.posts[j].createdTime.isSame(this.timeline[i].timestamp, "day") ){
+      for( let j=0; j < this.posts.length; j++){
+        if( this.posts[j].createdTime.isSame(this.timeline[i].timestamp, 'day') ){
           this.eventList[this.eventList.length-1].activities.push( {
             event: this.posts[j],
             type: 'facebook',
@@ -223,15 +225,15 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      for( var j=0; j < this.tweets.length; j++){
-        if( this.tweets[j].createdTime.isSame(this.timeline[i].timestamp, "day") ){
+      for( let j=0; j < this.tweets.length; j++){
+        if( this.tweets[j].createdTime.isSame(this.timeline[i].timestamp, 'day') ){
           this.eventList[this.eventList.length-1].activities.push( { event: this.tweets[j], type: 'twitter' } );
         }
       }
 
-      var locationList = [];
-      for( var j=0; j < this.locations.length; j++){
-        if( this.locations[j].timestamp.isSame(this.timeline[i].timestamp, "day") ){
+      let locationList = [];
+      for( let j=0; j < this.locations.length; j++){
+        if( this.locations[j].timestamp.isSame(this.timeline[i].timestamp, 'day') ){
           locationList.push(this.locations[j]);
         }
       }
@@ -239,10 +241,10 @@ export class MyDayComponent implements OnInit, OnDestroy {
         this.eventList[this.eventList.length-1].activities.push( { event: locationList, type: 'location' } );
       }
     }
-    //console.log(this.eventList);
+    // console.log(this.eventList);
 
     this.eventList = this.eventList.filter(function(elem, index, self) {
-        return index == self.indexOf(elem);
+        return index === self.indexOf(elem);
     })
 
     // for (let dp of dataPoints) {
@@ -254,7 +256,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
     // }
 
     // this.timeline = _.sortedUniqBy(newTimeline.sort((a, b) => a.isAfter(b) ? -1 : 1), date => date.startOf('day').format());
-    //console.log(this.timeline);
+    // console.log(this.timeline);
   }
 
 

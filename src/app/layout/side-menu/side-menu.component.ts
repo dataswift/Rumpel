@@ -33,8 +33,7 @@ export class SideMenuComponent implements OnInit {
   public userAuthenticated = false;
   public menu: Array<any>;
   public dataplugList: Array<any>;
-  public mobileMode:boolean = false;
-
+  public mobileMode = false;
   public profile: any;
 
 
@@ -67,8 +66,8 @@ export class SideMenuComponent implements OnInit {
 
 
     this.dataplugSvc.dataplugs$.subscribe( plug => {
-      for(var i=0; i<plug.length; i++){
-        plug[i].icon = plug[i].icon.replace(/ /g, "-");
+      for(let i=0; i<plug.length; i++){
+        plug[i].icon = plug[i].icon.replace(/ /g, '-');
       }
       this.dataplugList = plug;
       setTimeout(this.showPopover, 1000);
@@ -89,18 +88,17 @@ export class SideMenuComponent implements OnInit {
       }
     });
 
-    $(window).on("resize", function(){
+    $(window).on('resize', function(){
 
       if(window.innerWidth > 1113){
-        $('.menubar-left').css("left", "0px");
-        $('.content-main-authenticated').css({marginLeft: "345px", left: "0px"});
-        $('.burger').attr("data-content", "Hide menu");
+        $('.menubar-left').css('left', '0px');
+        $('.content-main-authenticated').css({marginLeft: '345px', left: '0px'});
+        $('.burger').attr('data-content', 'Hide menu');
         this.mobileMode = false;
-      }
-      else{
-        $('.menubar-left').css("left", "-345px");
-        $('.content-main-authenticated').css({marginLeft: "0px", left: "0px"});
-        $('.burger').attr("data-content", "Show menu");
+      } else{
+        $('.menubar-left').css('left', '-345px');
+        $('.content-main-authenticated').css({marginLeft: '0px', left: '0px'});
+        $('.burger').attr('data-content', 'Show menu');
         this.mobileMode = true;
       }
 
@@ -147,29 +145,26 @@ export class SideMenuComponent implements OnInit {
 
 
   showPopover() {
-    //$('.sidebar-pop').popover({delay: {show: 1000, hide: 0}});
     $('[data-toggle="popover"]').popover();
   }
 
   animateMenu(){
-    var sidenav_x:number = 0;
-    var content_margin:number = 345;
+    let sidenav_x = 0;
+    let content_margin = 345;
+    let duration = 500;
 
-    var duration:number = 500;
-
-    if( $('.menubar-left').css('left') == "0px" ){
+    if( $('.menubar-left').css('left') === '0px' ){
         sidenav_x = -345;
         content_margin = 0;
-        $('.burger').attr("data-content", "Show menu");
-    }
-    else{
-      $('.burger').attr("data-content", "Hide menu");
+        $('.burger').attr('data-content', 'Show menu');
+    } else{
+      $('.burger').attr('data-content', 'Hide menu');
     }
 
     $('.burger').data('bs.popover').setContent();
     $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
 
-    $('.menubar-left').animate({ left: (sidenav_x + "px") }, duration);
+    $('.menubar-left').animate({ left: (sidenav_x + 'px') }, duration);
 
 
 
@@ -177,25 +172,24 @@ export class SideMenuComponent implements OnInit {
 
 
     if(this.mobileMode === true){
-        $('.content-main-authenticated').animate({ marginLeft: "0px", left: (content_margin + "px") }, duration);
-    }
-    else{
-        $('.content-main-authenticated').animate({ marginLeft: (content_margin + "px"), left: "0px" }, duration);
+        $('.content-main-authenticated').animate({ marginLeft: '0px', left: (content_margin + 'px') }, duration);
+    } else{
+        $('.content-main-authenticated').animate({ marginLeft: (content_margin + 'px'), left: '0px' }, duration);
     }
 
-    $(".burger").addClass("burger-pulse-animation");
+    $('.burger').addClass('burger-pulse-animation');
     setTimeout(function(){
-      $(".burger").removeClass("burger-pulse-animation")
+      $('.burger').removeClass('burger-pulse-animation')
     }, 1000);
   }
 
   closeMenu(){
     if(window.innerWidth < 1114){
-      $('.burger').attr("data-content", "Show menu");
+      $('.burger').attr('data-content', 'Show menu');
       $('.burger').data('bs.popover').setContent();
       $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
-      $('.menubar-left').animate({ left: "-345px" }, 500);
-      $('.content-main-authenticated').animate({ marginLeft: "0px", left: "0px" }, 500);
+      $('.menubar-left').animate({ left: '-345px' }, 500);
+      $('.content-main-authenticated').animate({ marginLeft: '0px', left: '0px' }, 500);
     }
   }
 

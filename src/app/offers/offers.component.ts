@@ -11,7 +11,7 @@ export class OffersComponent implements OnInit {
 
   ngOnInit() {
 
-    window.open("https://marketsquare.hubofallthings.com/offers", "_blank");
+    window.open('https://marketsquare.hubofallthings.com/offers', '_blank');
   }
 
 }

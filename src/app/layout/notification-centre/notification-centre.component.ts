@@ -34,7 +34,7 @@ export class NotificationCentreComponent implements OnInit {
 
     this._notificationsSvc.notification$.subscribe(notification => {
       this.notification = notification;
-      var msg = this.markdownPipe.transform(this.notification.notice.message);
+      let msg = this.markdownPipe.transform(this.notification.notice.message);
       $('.notif-more').popover({html: true, content: msg});
     });
 

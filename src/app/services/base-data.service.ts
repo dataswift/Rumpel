@@ -56,7 +56,7 @@ export abstract class BaseDataService<T> {
   }
 
   checkTableExists(name: string, source: string):boolean {
-    var result:boolean = false;
+    let result = false;
 
     this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
       const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);

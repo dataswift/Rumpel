@@ -21,7 +21,7 @@ export class NotificationsService {
   private _notification$: BehaviorSubject<ExternalNotification>;
   public showNotifs$: EventEmitter<boolean>;
 
-  public notificationsShowing:boolean = false;
+  public notificationsShowing = false;
 
   constructor(private _marketSvc: MarketSquareService) {
     this.hatdexNotifications = [];

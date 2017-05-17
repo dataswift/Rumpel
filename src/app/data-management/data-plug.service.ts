@@ -33,7 +33,7 @@ export class DataPlugService {
   private services: { [key: string]: { url: string; connected: boolean; }; };
   private _dataplugs$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
   private pluglist: {};
-  private locationData:boolean = false;
+  private locationData = false;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private http: Http,
@@ -88,16 +88,15 @@ export class DataPlugService {
 
 
   private getDataPlugStatus(tables, plug): boolean{
-    let plugStatus:boolean = false;
+    let plugStatus = false;
 
-    let plugList:any = this.config.menuItems.dataPlugs;
-    let plugName = plug.name.toLowerCase();
+    const plugList:any = this.config.menuItems.dataPlugs;
+    const plugName = plug.name.toLowerCase();
 
-    for(var i=0; i < plugList.length; i++){
+    for(let i=0; i < plugList.length; i++){
       if(plugName === plugList[i].display.toLowerCase()){
         plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
-      }
-      else if(plugName == "photos" && plugList[i].display == "Dropbox photos"){
+      } else if(plugName === 'photos' && plugList[i].display === 'Dropbox photos'){
         plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
       }
     }
@@ -106,11 +105,11 @@ export class DataPlugService {
   }
 
   private getDataPlugLink(plug): string{
-    let plugList:any = this.config.menuItems.dataPlugs;
-    let link:string = "";
-    let plugName = plug.name.toLowerCase();
+    const plugList:any = this.config.menuItems.dataPlugs;
+    let link = '';
+    const plugName = plug.name.toLowerCase();
 
-    for(var i=0; i < plugList.length; i++){
+    for(let i=0; i < plugList.length; i++){
       if(plugName === plugList[i].display.toLowerCase()){
         link = plugList[i].page;
       }
@@ -124,35 +123,32 @@ export class DataPlugService {
     this.locationsSvc.data$.subscribe(locations => {
       if (locations.length > 0) {
         this.locationData = true;
-      }
-      else{
+      } else{
         this.locationData = false;
       }
 
       this.marketSvc.getDataPlugs().subscribe(plugs => {
 
         this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-          //console.log(tables);
 
           const displayPlugs = plugs.map(plug => {
 
-            var plugActivated:boolean;
+            let plugActivated:boolean;
 
-            if( plug.name == "location" ){
+            if( plug.name === 'location' ){
               plugActivated = this.locationData;
-            }
-            else{
+            } else{
               plugActivated = this.getDataPlugStatus(tables, plug);
             }
 
-            var plugName:string = plug.name;
-            if(plugName == 'Photos'){
-              plugName = "Dropbox photos";
+            let plugName:string = plug.name;
+            if(plugName === 'Photos'){
+              plugName = 'Dropbox photos';
             }
 
-            var plugIcon:string = plug.name.toLowerCase() + '-plug.svg';
-            if(plugName == 'Calendar'){
-              plugIcon = "calendar-plug.png";
+            let plugIcon:string = plug.name.toLowerCase() + '-plug.svg';
+            if(plugName === 'Calendar'){
+              plugIcon = 'calendar-plug.png';
             }
 
             const displayPlug = {

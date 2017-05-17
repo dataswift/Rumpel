@@ -296,10 +296,10 @@ export class HeaderComponent implements OnInit {
   showNotificationsBar(bool:boolean):void{
     this.showNotifications = bool;
 
-    var duration:number = 400;
-    var barHeight:number = 64;
+    let duration = 400;
+    let barHeight = 64;
 
-    if(bool == false){
+    if(bool === false){
       barHeight = 0;
     }
 

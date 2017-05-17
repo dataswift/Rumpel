@@ -79,12 +79,23 @@ export const AppConfig: IAppConfig = {
       { display: 'Public profile', icon: 'account_circle', link: 'public/profile', dataType: '', disable: '' }
     ],
     'private': [
-      { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '', description: 'The dashboard is where you have an overview of Rumpel.' },
-      { display: 'My personal data', icon: 'security', link: 'datastore', dataType: 'profile', disable: '', description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
-      { display: 'Redeem offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '', description: 'Allow access to your data in exchange for cash, services or vouchers. Visit the MarketSquare to find out more.' },
-      { display: 'Notables', icon: 'border_color', link: 'notables', dataType: '', disable: '', description: 'Your words are your memories! Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists - all in one place, and lets you decide what is private to yourself and what to share! Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.' },
-      { display: 'My mashups', icon: 'layers', link: 'mashups/myday', dataType: '', disable: '', description: 'See mashups of your data' },
-      { display: 'My data plugs', icon: 'settings_input_component', link: 'dataplugs', dataType: '', disable: '', description: 'Data comes into your HAT via data plugs. Click here to see what data plugs are available, and what data plugs are already connected.' }
+      { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '',
+      description: 'The dashboard is where you have an overview of Rumpel.' },
+
+      { display: 'My personal data', icon: 'security', link: 'datastore', dataType: 'profile', disable: '',
+      description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
+
+      { display: 'Redeem offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '',
+      description: 'Allow access to your data in exchange for cash, services or vouchers. Visit the MarketSquare to find out more.' },
+
+      { display: 'Notables', icon: 'border_color', link: 'notables', dataType: '', disable: '',
+      description: 'Your words are your memories! Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists - all in one place, and lets you decide what is private to yourself and what to share! Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.' },
+
+      { display: 'My mashups', icon: 'layers', link: 'mashups/myday', dataType: '', disable: '',
+      description: 'See mashups of your data' },
+
+      { display: 'My data plugs', icon: 'settings_input_component', link: 'dataplugs', dataType: '', disable: '',
+      description: 'Data comes into your HAT via data plugs. Click here to see what data plugs are available, and what data plugs are already connected.' }
     ],
     'dataPlugs': [
       { display: 'Facebook', activatedSearchName: 'posts', activatedSearchSource: 'facebook', page: 'social' },
