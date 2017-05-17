@@ -10,6 +10,220 @@
 @import "../../style/bootstrap/mixins/clearfix";
 @import "../../style/variables";
 
+
+.phata{
+
+      color: #747474;
+      font-family: "Open Sans", sans-serif;
+      margin-left: -42px;
+      margin-right: -42px;
+
+      .no-margin{
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .no-padding{
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+
+      .phatheader{
+        background-color: white;
+        height: 75px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 42px;
+
+        img{
+          width: 87px;
+        }
+
+        .phatnav{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 14px;
+
+          a{
+            color: #747474;
+            min-width: 84px;
+            display: block;
+            text-align: center;
+            cursor: pointer;
+
+            @media screen and (max-width: 480px) {
+                min-width: 60px;
+            }
+          }
+
+          .btn{
+            background-color: #bc3333;
+            color: white;
+            border-radius: 10px;
+            padding: 12px 44px;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-left: 5px;
+
+            @media screen and (max-width: 480px) {
+                padding: 12px;
+                margin-left: 2px;
+            }
+          }
+        }
+      }
+
+      .phathero{
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-image: url('/assets/images/hero-fade.jpg');
+      }
+
+
+
+
+      .phata-box{
+        background-color: white;
+        border-radius: 8px;
+        position: relative;
+        margin-top: 42px;
+      }
+
+      .phata-name{
+        margin-top: 195px;
+        text-align: center;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+
+
+        img, svg{
+          width: 160px;
+          height: 160px;
+          border-radius: 50%;
+          border: 8px solid white;
+          position: relative;
+          top: -80px;
+          background-color: #4a556b
+        }
+
+        h1{
+          color: #3f3f62;
+          text-align: center;
+          font-size: 36px;
+          font-family: "Lucida Grande", "Open Sans", sans-serif;
+          margin-top: -70px;
+        }
+
+        p{
+          font-size: 14px;
+          color: #9b9b9b;
+          margin: 0px;
+          padding: 10px 10px 40px 10px;
+        }
+
+      }
+
+
+
+      .blue-top{
+
+        .phatabox-header{
+          background-color: #4a556b;
+          color: white;
+          padding: 20px;
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+          font-size: 14px;
+          text-transform: uppercase;
+        }
+
+      }
+
+      .phatabox-body{
+
+        h3{
+          font-size: 20px;
+          margin-top: 0;
+        }
+        padding: 35px;
+        font-size: 12px;
+        color: #878787;
+      }
+
+
+
+      .phata-footer{
+        margin-top: 250px;
+        margin-bottom: 40px;
+        color: #747474;
+        font-size: 14px;
+        text-align: center;
+
+        i{
+          vertical-align: bottom;
+          margin-right: 5px;
+          font-size: 22px;
+        }
+      }
+
+
+      .more-info{
+        border: solid 1px #bc3333;
+
+
+        img{
+          width: 94px;
+          text-align:center;
+          margin: auto;
+          display: block;
+        }
+
+        h3{
+          color: #878787;
+          font-size: 14px;
+          margin-top: 35px;
+          margin-bottom: 5px;
+        }
+
+        p{
+          font-size: 12px;
+          color: #878787;
+          margin-top: 0px;
+          margin-bottom: 0px;
+        }
+
+        a{
+          text-align: center;
+          display: block;
+          font-size: 14px;
+          color: rgba(188, 51, 51, 0.6);
+          margin-top: 30px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+      }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 .view-header {
   h4, h6 {
     display: inline-block;

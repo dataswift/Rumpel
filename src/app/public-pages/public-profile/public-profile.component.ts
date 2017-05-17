@@ -13,6 +13,8 @@ import {UserService} from '../../user/user.service';
 import {User} from '../../user/user.interface';
 import {Router} from '@angular/router';
 
+declare var $:any;
+
 @Component({
   selector: 'rump-public-profile',
   templateUrl: 'public-profile.component.html',
@@ -41,6 +43,9 @@ export class PublicProfileComponent implements OnInit {
 
     this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
+      if(user.authenticated === false){
+          $('.content-main').css({ marginLeft: "0px"});
+      }
     });
   }
 

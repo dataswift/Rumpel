@@ -6,11 +6,10 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<rump-header></rump-header>
+<rump-header *ngIf="!isPublicPage"></rump-header>
 
-<section class="content-main">
-  <rump-side-menu class="menubar-left"
-                  ></rump-side-menu>
+<section class="content-main" [class.content-main-authenticated]="!isPublicPage">
+  <rump-side-menu *ngIf="!isPublicPage" class="menubar-left"></rump-side-menu>
 
   <div class="content-grid container-fluid">
     <router-outlet></router-outlet>

@@ -18,6 +18,7 @@ import { DataTable } from '../../shared/interfaces/data-table.interface';
 import { Router, NavigationEnd } from '@angular/router';
 import { APP_CONFIG, IAppConfig} from '../../app.config';
 import { User } from '../../user/user.interface';
+import {HatApiService} from '../../services/hat-api.service';
 
 declare var $: any;
 
@@ -34,6 +35,8 @@ export class SideMenuComponent implements OnInit {
   public dataplugList: Array<any>;
   public mobileMode:boolean = false;
 
+  public profile: any;
+
 
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
@@ -43,6 +46,7 @@ export class SideMenuComponent implements OnInit {
               private _dialogSvc: DialogService,
               private router: Router,
               private userSvc: UserService,
+              private hatSvc: HatApiService,
               private dataplugSvc: DataPlugService,
               private marketSvc: MarketSquareService ) {}
 
@@ -50,6 +54,12 @@ export class SideMenuComponent implements OnInit {
     this.state = { dataSources: [], dataTypes: [] };
     this.userAuthenticated = false;
     this.menu = this.config.menuItems.public;
+
+    this.hatSvc.getPublicData('profile').subscribe((profileResponse: any) => {
+      if (profileResponse['public'] === true) {
+        this.profile = profileResponse.profile;
+      }
+    });
 
     this.router.events
       .filter(event => event instanceof NavigationEnd)
@@ -83,13 +93,13 @@ export class SideMenuComponent implements OnInit {
 
       if(window.innerWidth > 1113){
         $('.menubar-left').css("left", "0px");
-        $('.content-main').css({marginLeft: "345px", left: "0px"});
+        $('.content-main-authenticated').css({marginLeft: "345px", left: "0px"});
         $('.burger').attr("data-content", "Hide menu");
         this.mobileMode = false;
       }
       else{
         $('.menubar-left').css("left", "-345px");
-        $('.content-main').css({marginLeft: "0px", left: "0px"});
+        $('.content-main-authenticated').css({marginLeft: "0px", left: "0px"});
         $('.burger').attr("data-content", "Show menu");
         this.mobileMode = true;
       }
@@ -165,13 +175,12 @@ export class SideMenuComponent implements OnInit {
 
     this.mobileMode = (window.innerWidth < 1113);
 
-    console.log(window.innerWidth);
 
     if(this.mobileMode === true){
-        $('.content-main').animate({ marginLeft: "0px", left: (content_margin + "px") }, duration);
+        $('.content-main-authenticated').animate({ marginLeft: "0px", left: (content_margin + "px") }, duration);
     }
     else{
-        $('.content-main').animate({ marginLeft: (content_margin + "px"), left: "0px" }, duration);
+        $('.content-main-authenticated').animate({ marginLeft: (content_margin + "px"), left: "0px" }, duration);
     }
 
     $(".burger").addClass("burger-pulse-animation");
@@ -186,7 +195,7 @@ export class SideMenuComponent implements OnInit {
       $('.burger').data('bs.popover').setContent();
       $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
       $('.menubar-left').animate({ left: "-345px" }, 500);
-      $('.content-main').animate({ marginLeft: "0px", left: "0px" }, 500);
+      $('.content-main-authenticated').animate({ marginLeft: "0px", left: "0px" }, 500);
     }
   }
 

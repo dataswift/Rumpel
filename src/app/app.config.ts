@@ -76,8 +76,7 @@ export const AppConfig: IAppConfig = {
   },
   menuItems: {
     'public': [
-      { display: 'Public profile', icon: 'account_circle', link: 'public/profile', dataType: '', disable: '' },
-      { display: 'Shared notables', icon: 'border_color', link: 'public/notables', dataType: '', disable: '' },
+      { display: 'Public profile', icon: 'account_circle', link: 'public/profile', dataType: '', disable: '' }
     ],
     'private': [
       { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '', description: 'The dashboard is where you have an overview of Rumpel.' },

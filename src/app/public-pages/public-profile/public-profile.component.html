@@ -6,6 +6,168 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
   -->
 
+
+<div class="phata">
+
+  <div class="row no-margin no-padding">
+    <div class="col-md-12 phatheader">
+        <img src="assets/icons/hat_logo.png">
+        <div class="phatnav">
+          <a [routerLink]="['/user/login']">Sign in</a>
+          <a href="https://hatters.hubofallthings.com/" class="btn">Get a HAT</a>
+        </div>
+    </div>
+  </div>
+
+
+  <div class="row no-margin phathero">
+    <div class="col-md-offset-3 col-md-6 ">
+      <div class="phata-box phata-name">
+
+        <svg *ngIf="!profile?.profile.profile_picture" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        	 width="20px" height="20px" viewBox="2 2 20 20" enable-background="new 2 2 20 20" xml:space="preserve">
+        <path fill="#FFFFFF" d="M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M12,5
+        	c1.66,0,3,1.34,3,3s-1.34,3-3,3S9,9.66,9,8S10.34,5,12,5z M12,19.2c-2.5,0-4.71-1.28-6-3.22c0.03-1.99,4-3.08,6-3.08
+        	c1.99,0,5.971,1.09,6,3.08C16.71,17.92,14.5,19.2,12,19.2z"/>
+        <path fill="none" d="M0,0h24v24H0V0z"/>
+        </svg>
+
+        <img *ngIf="profile?.profile.profile_picture" [src]="profile?.profile.profile_picture">
+
+
+        <h1>{{hostname}}</h1>
+        <p *ngIf="shared === true">
+          <span *ngIf="profile?.personal.first_name">{{profile?.personal.first_name}} {{profile?.personal.last_name}}  </span>
+          <span *ngIf="profile?.gender.type">&bull;  {{profile?.gender.type}}  </span>
+          <span *ngIf="profile?.age.group">&bull;  {{profile?.age.group}} years old  </span>
+          <span *ngIf="profile?.country">&bull;  {{profile?.country}}  </span>
+        </p>
+
+        <p *ngIf="shared === false">
+          The owner of this HAT has made their profile private.
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row no-margin" *ngIf="shared === true">
+    <div class="col-md-offset-3 col-md-6">
+            <div class="phata-box blue-top">
+                <div class="phatabox-header">
+                  Public Profile
+                </div>
+                <div class="phatabox-body">
+
+                  <div class="col-sm-6 col-xs-12">
+                    <div class="contactme" *ngIf="profile?.contact">
+                      <div class="contact" *ngIf="profile?.contact['primary_email']">
+                        <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['primary_email'] }}</h4>
+                      </div>
+
+                      <div class="contact" *ngIf="profile?.contact['alternative_email']">
+                        <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['alternative_email'] }}</h4>
+                      </div>
+
+                      <div class="contact" *ngIf="profile?.contact['mobile']">
+                        <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact['mobile'] }}</h4>
+                      </div>
+
+                      <div class="contact" *ngIf="profile?.contact['home_phone']">
+                        <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact['home_phone'] }}</h4>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 col-xs-12">
+                    <a [href]="link.value" *ngFor="let link of profile?.links | withObject">
+                      <div class="findme-link {{ link.key.toLowerCase() }}">
+                        <i class="fa fa-{{ link.key.toLowerCase() }}"></i>
+                      </div>
+                    </a>
+                  </div>
+
+                </div>
+            </div>
+
+            <div class="phata-box blue-top" *ngIf="profile?.about">
+                <div class="phatabox-header">
+                  About
+                </div>
+                <div class="phatabox-body">
+                  <h3>{{ profile.about.title }}</h3>
+                  <p [innerHTML]="profile.about.body | markdownToHtml | safeHtml"></p>
+                </div>
+            </div>
+
+            <div class="phata-box blue-top" *ngIf="notables">
+                <div class="phatabox-header">
+                  Public Notables
+                </div>
+                <div class="phatabox-body">
+                  <div class="box-content notes">
+                    <ul class="bulletless-list">
+                      <li *ngFor="let notable of notables" class="notable-item placeholder">
+                        <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="phata-box more-info">
+          <div class="phatabox-body">
+            <img class="text-center" src="assets/icons/hat_logo.png">
+            <h3>What is a HAT?</h3>
+            <p>HATs are individual secure and private storage containers that are specially designed to hold the database of a user's personal data: a private 'data account' (like a savings/current account) to hold your data from the most trivial to the most precious.</p>
+            <h3>Why do I need a HAT?</h3>
+            <p>You can use a HAT to store your private information, and then use it to log in to websites or trade it for goods and services in online marketplaces.</p>
+            <a href="https://hubofallthings.com/c/individuals">Learn more</a>
+          </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="row no-margin" *ngIf="shared === false">
+    <div class="col-md-offset-3 col-md-6">
+      <div class="phata-box more-info">
+          <div class="phatabox-body">
+            <img class="text-center" src="assets/icons/hat_logo.png">
+            <h3>What is a HAT?</h3>
+            <p>HATs are individual secure and private storage containers that are specially designed to hold the database of a user's personal data: a private 'data account' (like a savings/current account) to hold your data from the most trivial to the most precious.</p>
+            <h3>Why do I need a HAT?</h3>
+            <p>You can use a HAT to store your private information, and then use it to log in to websites or trade it for goods and services in online marketplaces.</p>
+            <a href="https://hubofallthings.com/c/individuals">Learn more</a>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+<div class="row no-margin">
+  <div class="col-md-12">
+    <div class="phata-footer">
+        <i class="material-icons">lock_outline</i>ALL YOUR DATA IS SECURE AND PRIVATE
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+
+  <!--
+
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <div class="row">
@@ -108,3 +270,5 @@
     </div>
   </div>
 </div>
+
+-->

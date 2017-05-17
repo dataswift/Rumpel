@@ -10,6 +10,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from './app.config';
 import { NotificationsService } from './layout/notifications.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { User } from './user/user.interface';
+import { UserService } from './services';
 
 import * as moment from 'moment';
 
@@ -22,6 +24,8 @@ declare var $: any;
 })
 export class AppRootComponent implements OnInit {
   public showNotifications: boolean;
+  public userAuthenticated = false;
+  public isPublicPage = false;
 
   // Had to use auxiliary variable canHide to control notification centre visibility.
   // Outside-click directive produces an error when applied onto dynamically inserted DOM element
@@ -30,12 +34,14 @@ export class AppRootComponent implements OnInit {
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
             private _notificationsSvc: NotificationsService,
+            private userSvc: UserService,
             private router: Router) {
 
         router.events
             .filter(event => event instanceof NavigationEnd)
             .subscribe((event: NavigationEnd) => {
               window.scroll(0, 0);
+              this.isPublicPage = router.isActive('public', false);
             });
   }
 
@@ -47,6 +53,15 @@ export class AppRootComponent implements OnInit {
 
     // After an hour the app is forced to refresh if user defocuses/focuses the tab
     this.appExpireTime = moment().add(1, 'hours');
+
+
+
+    this.userAuthenticated = false;
+
+    this.userSvc.user$.subscribe((user: User) => {
+      this.userAuthenticated = user.authenticated;
+    });
+
 
     window.onfocus = () => {
       if (moment().isAfter(this.appExpireTime)) {
