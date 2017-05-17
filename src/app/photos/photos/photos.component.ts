@@ -12,7 +12,7 @@ import { PhotosService } from '../photos.service';
 import { Photo, ExpandedTime } from '../../shared/interfaces/index';
 import * as moment from 'moment';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-photos',

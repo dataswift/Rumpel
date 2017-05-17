@@ -222,7 +222,7 @@ export class HeaderComponent implements OnInit {
     this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
       const latestSnapshot = profileSnapshots[0];
 
-      if(latestSnapshot && latestSnapshot.personal.first_name){
+      if (latestSnapshot && latestSnapshot.personal.first_name) {
         this.profile.first_name = latestSnapshot.personal.first_name;
       }
 
@@ -268,7 +268,7 @@ export class HeaderComponent implements OnInit {
   }
 
   showNotificationsCentre() {
-    if(this.totalNotifications > 0){
+    if (this.totalNotifications > 0) {
       this._notificationsSvc.toggleShow();
     }
   }
@@ -288,22 +288,22 @@ export class HeaderComponent implements OnInit {
     $('[data-toggle="popover"]').popover();
   }
 
-  showAccountOptions(){
+  showAccountOptions() {
     $('.dropdown-toggle').dropdown();
   }
 
 
-  showNotificationsBar(bool:boolean):void{
+  showNotificationsBar(bool: boolean): void {
     this.showNotifications = bool;
 
     const duration = 400;
     let barHeight = 64;
 
-    if(bool === false){
+    if (bool === false) {
       barHeight = 0;
     }
 
     $('.navbar, .menubar-left, .burger, .content-main').stop().animate({ marginTop: barHeight }, duration);
-    $('.notifications-wrapper').stop().animate({ top: (barHeight-100) }, duration);
+    $('.notifications-wrapper').stop().animate({ top: (barHeight - 100) }, duration);
   }
 }

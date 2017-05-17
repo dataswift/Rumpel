@@ -13,7 +13,7 @@ import { Profile } from '../../shared/interfaces/profile.interface';
 import {UserService} from '../../user/user.service';
 import {User} from '../../user/user.interface';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-profile',

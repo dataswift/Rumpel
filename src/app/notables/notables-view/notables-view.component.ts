@@ -13,7 +13,7 @@ import { Notable, Profile } from '../../shared/interfaces';
 import {DialogService} from '../../layout/dialog.service';
 import {ConfirmBoxComponent} from '../../layout/confirm-box/confirm-box.component';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-notables-view',

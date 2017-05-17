@@ -11,7 +11,7 @@ import { DataPlugService } from '../data-plug.service';
 import { MarketSquareService } from '../../market-square/market-square.service';
 import { Observable } from 'rxjs/Observable';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-tile-data-plugs',

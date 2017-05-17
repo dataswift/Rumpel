@@ -12,7 +12,7 @@ import { Moment } from 'moment';
 import * as moment from 'moment';
 import { ExpandedTime } from '../../shared/interfaces/index';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-activity-list',
@@ -26,7 +26,7 @@ export class ActivityListComponent implements OnInit {
   @Input() eventList: Array<any>;
   @Input() timeline: Array<ExpandedTime>;
 
-  public moment:Moment = moment();
+  public moment: Moment = moment();
 
 
 
@@ -39,17 +39,17 @@ export class ActivityListComponent implements OnInit {
   }
 
 
-  scrollToItem(index){
+  scrollToItem(index) {
 
-    for(let i=0; i<this.eventList.length; i++){
+    for (let i = 0; i < this.eventList.length; i++) {
       this.eventList[i].selected = false;
     }
 
     this.eventList[index].selected = true;
-    let time:ExpandedTime = new ExpandedTime( this.eventList[index].timestamp );
+    const time: ExpandedTime = new ExpandedTime( this.eventList[index].timestamp );
     this.timeSelected.emit( time );
 
-    if(index === 0){
+    if (index === 0) {
       $('.activitylist-container').animate({ scrollTop: 0 }, 'slow');
     }
 

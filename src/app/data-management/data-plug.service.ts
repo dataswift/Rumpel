@@ -87,16 +87,16 @@ export class DataPlugService {
   }
 
 
-  private getDataPlugStatus(tables, plug): boolean{
+  private getDataPlugStatus(tables, plug): boolean {
     let plugStatus = false;
 
-    const plugList:any = this.config.menuItems.dataPlugs;
+    const plugList: any = this.config.menuItems.dataPlugs;
     const plugName = plug.name.toLowerCase();
 
-    for(let i=0; i < plugList.length; i++){
-      if(plugName === plugList[i].display.toLowerCase()){
+    for (let i = 0; i < plugList.length; i++) {
+      if (plugName === plugList[i].display.toLowerCase()) {
         plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
-      } else if(plugName === 'photos' && plugList[i].display === 'Dropbox photos'){
+      } else if (plugName === 'photos' && plugList[i].display === 'Dropbox photos') {
         plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
       }
     }
@@ -104,13 +104,13 @@ export class DataPlugService {
     return plugStatus;
   }
 
-  private getDataPlugLink(plug): string{
-    const plugList:any = this.config.menuItems.dataPlugs;
+  private getDataPlugLink(plug): string {
+    const plugList: any = this.config.menuItems.dataPlugs;
     let link = '';
     const plugName = plug.name.toLowerCase();
 
-    for(let i=0; i < plugList.length; i++){
-      if(plugName === plugList[i].display.toLowerCase()){
+    for (let i = 0; i < plugList.length; i++) {
+      if (plugName === plugList[i].display.toLowerCase()) {
         link = plugList[i].page;
       }
     }
@@ -123,7 +123,7 @@ export class DataPlugService {
     this.locationsSvc.data$.subscribe(locations => {
       if (locations.length > 0) {
         this.locationData = true;
-      } else{
+      } else {
         this.locationData = false;
       }
 
@@ -133,21 +133,21 @@ export class DataPlugService {
 
           const displayPlugs = plugs.map(plug => {
 
-            let plugActivated:boolean;
+            let plugActivated: boolean;
 
-            if( plug.name === 'location' ){
+            if ( plug.name === 'location' ) {
               plugActivated = this.locationData;
-            } else{
+            } else {
               plugActivated = this.getDataPlugStatus(tables, plug);
             }
 
-            let plugName:string = plug.name;
-            if(plugName === 'Photos'){
+            let plugName: string = plug.name;
+            if (plugName === 'Photos') {
               plugName = 'Dropbox photos';
             }
 
-            let plugIcon:string = plug.name.toLowerCase() + '-plug.svg';
-            if(plugName === 'Calendar'){
+            let plugIcon: string = plug.name.toLowerCase() + '-plug.svg';
+            if (plugName === 'Calendar') {
               plugIcon = 'calendar-plug.png';
             }
 

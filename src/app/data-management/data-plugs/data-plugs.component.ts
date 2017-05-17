@@ -30,7 +30,7 @@ export class DataPlugsComponent implements OnInit {
 
   openPlugPopup(plug: any) {
 
-    if(plug.activated === false){
+    if (plug.activated === false) {
         const loginName = this.formatPlugName(plug.name);
 
         const w = window.innerWidth;
@@ -44,12 +44,12 @@ export class DataPlugsComponent implements OnInit {
           `Setting up ${plug.name} data plug`,
           `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
         );
-    } else{
+    } else {
       this.router.navigate([plug.page]);
     }
   }
 
-  formatPlugName(name):string{
+  formatPlugName(name): string {
     return (name.charAt(0).toUpperCase() + name.slice(1));
   }
 

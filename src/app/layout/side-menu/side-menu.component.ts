@@ -66,7 +66,7 @@ export class SideMenuComponent implements OnInit {
 
 
     this.dataplugSvc.dataplugs$.subscribe( plug => {
-      for(let i=0; i<plug.length; i++){
+      for (let i = 0; i < plug.length; i++) {
         plug[i].icon = plug[i].icon.replace(/ /g, '-');
       }
       this.dataplugList = plug;
@@ -88,21 +88,21 @@ export class SideMenuComponent implements OnInit {
       }
     });
 
-    $(window).on('resize', function(){
+    $(window).on('resize', function() {
 
-      if(window.innerWidth > 1113){
+      if (window.innerWidth > 1113) {
         $('.menubar-left').css('left', '0px');
         $('.content-main-authenticated').css({marginLeft: '345px', left: '0px'});
         $('.burger').attr('data-content', 'Hide menu');
         this.mobileMode = false;
-      } else{
+      } else {
         $('.menubar-left').css('left', '-345px');
         $('.content-main-authenticated').css({marginLeft: '0px', left: '0px'});
         $('.burger').attr('data-content', 'Show menu');
         this.mobileMode = true;
       }
 
-      if($('.burger').data('bs.popover')){
+      if ($('.burger').data('bs.popover')) {
         $('.burger').data('bs.popover').setContent();
         $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
       }
@@ -148,16 +148,16 @@ export class SideMenuComponent implements OnInit {
     $('[data-toggle="popover"]').popover();
   }
 
-  animateMenu(){
+  animateMenu() {
     let sidenav_x = 0;
     let content_margin = 345;
     const duration = 500;
 
-    if( $('.menubar-left').css('left') === '0px' ){
+    if ( $('.menubar-left').css('left') === '0px' ) {
         sidenav_x = -345;
         content_margin = 0;
         $('.burger').attr('data-content', 'Show menu');
-    } else{
+    } else {
       $('.burger').attr('data-content', 'Hide menu');
     }
 
@@ -171,20 +171,20 @@ export class SideMenuComponent implements OnInit {
     this.mobileMode = (window.innerWidth < 1113);
 
 
-    if(this.mobileMode === true){
+    if (this.mobileMode === true) {
         $('.content-main-authenticated').animate({ marginLeft: '0px', left: (content_margin + 'px') }, duration);
-    } else{
+    } else {
         $('.content-main-authenticated').animate({ marginLeft: (content_margin + 'px'), left: '0px' }, duration);
     }
 
     $('.burger').addClass('burger-pulse-animation');
-    setTimeout(function(){
+    setTimeout(function() {
       $('.burger').removeClass('burger-pulse-animation');
     }, 1000);
   }
 
-  closeMenu(){
-    if(window.innerWidth < 1114){
+  closeMenu() {
+    if (window.innerWidth < 1114) {
       $('.burger').attr('data-content', 'Show menu');
       $('.burger').data('bs.popover').setContent();
       $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);

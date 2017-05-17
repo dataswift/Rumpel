@@ -27,7 +27,7 @@ export class NotificationCentreComponent implements OnInit {
 
   constructor(private userSvc: UserService,
               private _notificationsSvc: NotificationsService,
-              private markdownPipe:MarkdownToHtmlPipe) { }
+              private markdownPipe: MarkdownToHtmlPipe) { }
 
   ngOnInit() {
     this.totalNotifications = 0;
@@ -59,7 +59,7 @@ export class NotificationCentreComponent implements OnInit {
     this._notificationsSvc.markAsRead(this.notification);
   }
 
-  closeNotifs(){
+  closeNotifs() {
     this._notificationsSvc.toggleShow();
   }
 

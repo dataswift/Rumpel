@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 import {MediaService} from '../media.service';
 import {TwitterService} from '../twitter.service';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-social',

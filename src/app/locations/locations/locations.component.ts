@@ -15,7 +15,7 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs/Subscription';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-locations',
@@ -52,11 +52,11 @@ export class LocationsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height()-350 + 'px');
-    let thisScope = this;
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 350 + 'px');
+    const thisScope = this;
 
-    $(window).resize(function(){
-      thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height()-180 + 'px');
+    $(window).resize(function() {
+      thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
     });
   }
 

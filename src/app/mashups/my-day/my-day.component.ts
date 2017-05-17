@@ -24,7 +24,7 @@ import {Subscription, Observable} from 'rxjs/Rx';
 import {FacebookEventsService} from '../../dimensions/facebook-events.service';
 import {GoogleEventsService} from '../../dimensions/google-events.service';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-my-day',
@@ -59,8 +59,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
   public loading = false;
   public timeline: Array<ExpandedTime>;
   public eventList = [];
-  public activityList:Array<any> = [];
-  public moment:Moment = moment();
+  public activityList: Array<any> = [];
+  public moment: Moment = moment();
 
 
 
@@ -104,7 +104,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
       this.posts = posts;
     });
 
-    this.twitterSub= this.twitterSvc.data$.subscribe((tweets: Array<Tweet>) => {
+    this.twitterSub = this.twitterSvc.data$.subscribe((tweets: Array<Tweet>) => {
       this.addDatesToTimeline(tweets, 'createdTime');
       this.tweets = tweets;
     });
@@ -126,13 +126,13 @@ export class MyDayComponent implements OnInit, OnDestroy {
       this.notables = notables;
     });
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height()-180 + 'px');
-    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle($(window).height()-203 + 'px');
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
+    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 203 + 'px');
     const thisScope = this;
 
-    $(window).resize(function(){
-      thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height()-180 + 'px');
-      thisScope.safeSizeSidebar = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height()-203 + 'px');
+    $(window).resize(function() {
+      thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
+      thisScope.safeSizeSidebar = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 203 + 'px');
     });
 
   }
@@ -156,12 +156,12 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.eventList = [];
 
-    for(let i=0; i<this.timeline.length; i++){
-      this.eventList.push({ timestamp: this.timeline[i].timestamp, activities: [], selected: (i===0) });
+    for (let i = 0; i < this.timeline.length; i++) {
+      this.eventList.push({ timestamp: this.timeline[i].timestamp, activities: [], selected: (i === 0) });
 
-      for( let j=0; j < this.events.length; j++){
-        if( this.events[j].start.isSame(this.timeline[i].timestamp, 'day') ){
-          this.eventList[this.eventList.length-1].activities.push( {
+      for ( let j = 0; j < this.events.length; j++) {
+        if ( this.events[j].start.isSame(this.timeline[i].timestamp, 'day') ) {
+          this.eventList[ this.eventList.length - 1 ].activities.push( {
             event: this.events[j],
             type: 'event',
             title: this.events[j].title,
@@ -177,9 +177,9 @@ export class MyDayComponent implements OnInit, OnDestroy {
       }
 
 
-      for( let j=0; j < this.notables.length; j++){
-        if( this.notables[j].created_time.isSame(this.timeline[i].timestamp, 'day') ){
-          this.eventList[this.eventList.length-1].activities.push( {
+      for ( let j = 0; j < this.notables.length; j++) {
+        if ( this.notables[j].created_time.isSame(this.timeline[i].timestamp, 'day') ) {
+          this.eventList[ this.eventList.length - 1 ].activities.push( {
             event: this.notables[j],
             type: 'notable',
             title: this.notables[j].message,
@@ -193,9 +193,9 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      for( let j=0; j < this.photos.length; j++){
-        if( this.photos[j].timestamp.isSame(this.timeline[i].timestamp, 'day') ){
-          this.eventList[this.eventList.length-1].activities.push( {
+      for ( let j = 0; j < this.photos.length; j++) {
+        if ( this.photos[j].timestamp.isSame(this.timeline[i].timestamp, 'day') ) {
+          this.eventList[ this.eventList.length - 1 ].activities.push( {
             event: this.photos[j],
             type: 'photo',
             title: this.photos[j].name,
@@ -209,9 +209,9 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      for( let j=0; j < this.posts.length; j++){
-        if( this.posts[j].createdTime.isSame(this.timeline[i].timestamp, 'day') ){
-          this.eventList[this.eventList.length-1].activities.push( {
+      for ( let j = 0; j < this.posts.length; j++) {
+        if ( this.posts[j].createdTime.isSame(this.timeline[i].timestamp, 'day') ) {
+          this.eventList[ this.eventList.length - 1 ].activities.push( {
             event: this.posts[j],
             type: 'facebook',
             title: '',
@@ -225,20 +225,20 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      for( let j=0; j < this.tweets.length; j++){
-        if( this.tweets[j].createdTime.isSame(this.timeline[i].timestamp, 'day') ){
-          this.eventList[this.eventList.length-1].activities.push( { event: this.tweets[j], type: 'twitter' } );
+      for ( let j = 0; j < this.tweets.length; j++) {
+        if ( this.tweets[j].createdTime.isSame(this.timeline[i].timestamp, 'day') ) {
+          this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.tweets[j], type: 'twitter' } );
         }
       }
 
       const locationList = [];
-      for( let j=0; j < this.locations.length; j++){
-        if( this.locations[j].timestamp.isSame(this.timeline[i].timestamp, 'day') ){
+      for ( let j = 0; j < this.locations.length; j++) {
+        if ( this.locations[j].timestamp.isSame(this.timeline[i].timestamp, 'day') ) {
           locationList.push(this.locations[j]);
         }
       }
-      if(locationList.length > 0){
-        this.eventList[this.eventList.length-1].activities.push( { event: locationList, type: 'location' } );
+      if (locationList.length > 0) {
+        this.eventList[ this.eventList.length - 1 ].activities.push( { event: locationList, type: 'location' } );
       }
     }
     // console.log(this.eventList);

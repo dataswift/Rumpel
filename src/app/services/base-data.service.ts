@@ -55,7 +55,7 @@ export abstract class BaseDataService<T> {
     });
   }
 
-  checkTableExists(name: string, source: string):boolean {
+  checkTableExists(name: string, source: string): boolean {
     let result = false;
 
     this.uiSvc.tables$.subscribe((tables: DataTable[]) => {

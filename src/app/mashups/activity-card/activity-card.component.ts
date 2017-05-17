@@ -4,7 +4,7 @@ import { Moment } from 'moment';
 import * as moment from 'moment';
 import { ExpandedTime } from '../../shared/interfaces/index';
 
-declare var $:any;
+declare var $: any;
 
 @Component({
   selector: 'rump-activity-card',
@@ -15,7 +15,7 @@ export class ActivityCardComponent implements OnInit {
 
   @Input() day: any;
   @Input() i: any;
-  @Output() selection:EventEmitter<number> = new EventEmitter();
+  @Output() selection: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
@@ -24,7 +24,7 @@ export class ActivityCardComponent implements OnInit {
   }
 
 
-  scrollToItem(num:number){
+  scrollToItem(num: number) {
     this.selection.emit( num );
   }
 
