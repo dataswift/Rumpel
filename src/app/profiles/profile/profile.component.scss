@@ -72,11 +72,15 @@ section {
 
 .picture {
   height: 20em;
+  padding-top: 20px;
+  text-align: center;
+
+  .switch{
+    margin-right: 30px;
+  }
 }
 
-.picture {
-  text-align: center;
-}
+
 
 .settings {
   .profile-privacy-switch{
