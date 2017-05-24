@@ -60,6 +60,10 @@
   .notification-message, h5{
     text-align: left;
     margin-top: 0px;
+
+    a{
+      color: $app-header-color;
+    }
   }
 
   .notif-time{
@@ -79,10 +83,6 @@
         }
 
         @media screen and (max-width: 1050px) {
-            max-width: 250px;
-        }
-
-        @media screen and (max-width: 750px) {
             max-width: 140px;
         }
 
@@ -103,10 +103,6 @@
           }
 
           @media screen and (max-width: 1050px) {
-              max-width: 250px;
-          }
-
-          @media screen and (max-width: 750px) {
               max-width: 140px;
           }
 
@@ -139,7 +135,7 @@
     cursor: pointer;
     user-select: none;
 
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 1000px) {
         padding: 1px 10px 3px 10px !important;
     }
 
@@ -152,7 +148,7 @@
     }
 
     span{
-      @media screen and (max-width: 800px) {
+      @media screen and (max-width: 1000px) {
           display: none;
       }
     }
