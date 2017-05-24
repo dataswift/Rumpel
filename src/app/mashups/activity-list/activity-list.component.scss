@@ -11,8 +11,9 @@
 
 
 .activitylist-container {
-  overflow: scroll;
+  overflow-y: scroll;
   width: 276px;
+  overflow-x: hidden;
 }
 
 .activitylist-container .activitylist-day-title {
