@@ -233,7 +233,7 @@ export class DataPlugService {
 
             // If Twitter plug status endpoint gives HTTP error but table exists on the HAT => problem occurred
             // If the table hasn't been created => plug is not set up, all ok
-            if (tableFound) {
+            if (tableFound && this.dialogSvc.activeInstances === 0) {
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
                 title: 'Something went wrong',
                 message: 'There is a problem with your Twitter plug. If the problem persists, we suggest ' +
