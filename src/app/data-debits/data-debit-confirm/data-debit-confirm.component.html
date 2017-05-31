@@ -11,40 +11,40 @@
     <div class="offer">
       <div class="offer-title">
         <div class="text-center">
-          <h2>{{offer.offer.title}}</h2>
+          <h2>{{offer.title}}</h2>
           <span class="creator-info">from {{offer.owner.firstName}} {{offer.owner.lastName}}</span>
         </div>
-        <p class="text-center offer-description">{{offer.offer.description}}</p>
+        <p class="text-center offer-description">{{offer.description}}</p>
 
-        <div class="offer-reward text-center" [ngSwitch]="offer.offer.reward.rewardType">
+        <div class="offer-reward text-center" [ngSwitch]="offer.reward.rewardType">
           <h3>Reward</h3>
           <div *ngSwitchCase="'Cash'">
-            Cash: {{offer.offer.reward.value / 100}} {{offer.offer.reward.currency}}
+            Cash: {{offer.reward.value / 100}} {{offer.reward.currency}}
           </div>
 
           <div *ngSwitchCase="'Voucher'">
-            <a [href]="offer.offer.reward.vendorUrl" target="_blank">{{offer.offer.reward.vendor}}</a>
-            voucher: {{offer.offer.reward.value}}
+            <a [href]="offer.reward.vendorUrl" target="_blank">{{offer.reward.vendor}}</a>
+            voucher: {{offer.reward.value}}
           </div>
 
           <div *ngSwitchCase="'Service'">
-            Service of <a [href]="offer.offer.reward.vendorUrl"  target="_blank">{{offer.offer.reward.vendor}}</a>
+            Service of <a [href]="offer.reward.vendorUrl"  target="_blank">{{offer.reward.vendor}}</a>
           </div>
         </div>
 
         <div class="offer-description text-center">
-          <p>Start date: {{offer.offer.starts | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
-          <p>End date: {{offer.offer.expires | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
+          <p>Start date: {{offer.starts | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
+          <p>End date: {{offer.expires | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
         </div>
 
         <div class="progress-wrapper">
-          <progress max="{{offer.offer.dataRequest.minUsers}}" value="{{offer.offer.users}}">
+          <progress max="{{offer.dataRequest.minUsers}}" value="{{offer.offer.users}}">
             <div class="progress-bar" role="presentation">
               <span class="progress-value" [style.width]="offer.offer.users"></span>
             </div>
           </progress>
-          <span class="claims">{{offer.offer.users}}
-            out of {{offer.offer.dataRequest.minUsers}} reached
+          <span class="claims">{{offer.users}}
+            out of {{offer.dataRequest.minUsers}} reached
           </span>
         </div>
 

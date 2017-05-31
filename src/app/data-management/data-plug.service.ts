@@ -58,7 +58,7 @@ export class DataPlugService {
   }
 
   status(plugName: string): boolean {
-    return this.services[plugName].connected;
+    return this.services[plugName[0].toUpperCase() + plugName.slice(1)].connected;
   }
 
   getTokenInfo(plugName: string): Observable<any> {

@@ -49,8 +49,9 @@ export class MarketSquareService {
     return this.getAllOffers()
       .map(offers => {
         const validOffers = offers.filter(offer => {
-          return moment(offer.offer.expires).isAfter() &&
-            (offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
+          console.log('BA', offer);
+          return moment(offer.expires).isAfter() &&
+            (offer.status === 'approved' || offer.status === 'satisfied');
         });
 
         return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
@@ -79,7 +80,7 @@ export class MarketSquareService {
         query.append('dataDebitId', dataDebitId);
 
         return this.http.get(url, { headers: headers, search: query, body: '' })
-          .map(res => res.json().offerId);
+          .map(res => res.json().offer.offerId);
       })
       .catch(err => {
         return Observable.of('Offer not found.');
@@ -135,7 +136,7 @@ export class MarketSquareService {
 
       return Observable.of(headers);
     } else {
-      return this.hatSvc.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
+      return this.hatSvc.getApplicationToken('Dex', 'https://dex.hubofallthings.com')
         .map(accessToken => {
           const payload = this.jwt.decodeToken(accessToken);
           this.applicationToken = {

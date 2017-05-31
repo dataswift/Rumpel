@@ -60,6 +60,8 @@ export class ShareBeltComponent implements OnInit {
         this.sharedOn[provider] = true;
       }
     });
+
+    this.notablesSvc.updateNotablesState();
   }
 
   toggleSharing(provider) {
