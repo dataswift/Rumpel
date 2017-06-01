@@ -15,7 +15,8 @@ export class IAppConfig {
   name: string;
   native: boolean;
   protocol: string;
-  market: { url: string; id: string; accessToken: string; };
+  exchange: { url: string; id: string; accessToken: string; };
+  marketsquare: { url: string };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
   notables: {
@@ -31,11 +32,11 @@ export class IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  version: '2.0.2',
+  version: '2.0.3',
   name: 'Rumpel',
   native: true,
   protocol: 'https:',
-  market: {
+  exchange: {
     url: 'https://dex.hubofallthings.com/api',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
     accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLVZTUDcrb0RleldPejBTOFd6MHhWM0J2eVNOYzViNnRcLzRKXC85'
@@ -45,6 +46,9 @@ export const AppConfig: IAppConfig = {
                + 'yZTBiYzRhNDk2NGRhYTlhOTc1M2EyMjA1ZjIzMzc5NWY3N2JiODhlYzQwNjQxZjM4MTk4NTgwYWY0YmExZmJkMDg5ZTlhNmU3NjJj'
                + 'N2NhODlkMDdhOTg3MmY1OTczNjdjYWQyYzA0NTdjZDhlODlmM2FlMWQ2MmRmODY3NTcwNTc3NTdiZDJjYzgzNTgyOTU4ZmZlMDVhN'
                + 'jI2NzBmNGMifQ.TvFs6Zp0E24ChFqn3rBP-cpqxZbvkhph91UILGJvM6U'
+  },
+  marketsquare: {
+    url: 'https://marketsquare.hubofallthings.com/api'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='

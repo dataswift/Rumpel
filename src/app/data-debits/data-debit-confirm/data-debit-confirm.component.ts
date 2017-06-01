@@ -14,7 +14,7 @@ import { DataDebitService } from '../data-debits.service';
 import { DataDebit } from '../../shared/interfaces';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
 import { isUndefined } from 'util';
-import {User} from "../../user/user.interface";
+import { User } from '../../user/user.interface';
 
 @Component({
   selector: 'rump-data-debit-confirm',
