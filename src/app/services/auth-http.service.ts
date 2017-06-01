@@ -75,7 +75,7 @@ export class AuthHttp extends Http {
     if (this.hasValidToken) {
       console.log('Starting request with URL', this.hatBaseUrl + path);
 
-      return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
+      return super.put(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('Got an error 4', err);
           return Observable.throw(err);
