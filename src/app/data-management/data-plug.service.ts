@@ -28,11 +28,9 @@ import * as moment from 'moment';
 
 @Injectable()
 export class DataPlugService {
-  private hostname: string = window.location.hostname;
-  private protocol: string = window.location.protocol;
+  private hatUrl: string;
   private services: { [key: string]: { url: string; connected: boolean; }; };
   private _dataplugs$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
-  private pluglist: {};
   private locationData = false;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
@@ -58,6 +56,8 @@ export class DataPlugService {
     this.userSvc.user$
       .filter((user: User) => user.authenticated === true)
       .subscribe((user: User) => {
+        console.log(user);
+        this.hatUrl = user.fullDomain;
         this.getFacebookStatus();
         this.getTwitterStatus();
       });
@@ -185,7 +185,7 @@ export class DataPlugService {
             cancelBtnText: 'No Thanks',
             buttons: [{
               title: 'Reconnect Facebook Plug',
-              link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+              link: `//${this.hatUrl}/#/hatlogin?` +
                     `name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate/`
             }]
           });
@@ -207,7 +207,7 @@ export class DataPlugService {
                 cancelBtnText: 'Dismiss',
                 buttons: [{
                   title: 'Reconnect Facebook Plug',
-                  link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+                  link: `//${this.hatUrl}/#/hatlogin?` +
                         `name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate/`
                 }]
               });
@@ -241,7 +241,7 @@ export class DataPlugService {
                 cancelBtnText: 'Dismiss',
                 buttons: [{
                   title: 'Reconnect Twitter Plug',
-                  link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+                  link: `//${this.hatUrl}/#/hatlogin?` +
                         `name=Twitter&redirect=https://twitter-plug.hubofallthings.com/authenticate/hat/`
                 }]
               });

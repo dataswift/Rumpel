@@ -30,10 +30,12 @@
               <div class="account-options"><i class="material-icons">keyboard_arrow_down</i></div>
             </div>
             <div class="dropdown-menu">
-              <a class="dropdown-item" (click)="showNotificationsCentre()">View notifications<span class="badge" style="margin-top: 0;" *ngIf="unreadNotifications">{{unreadNotifications}}</span></a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" [routerLink]="['/user', 'password', 'change']">Change password</a>
-              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" *ngIf="config.native"
+                 (click)="showNotificationsCentre()">View notifications<span class="badge" style="margin-top: 0;" *ngIf="unreadNotifications">{{unreadNotifications}}</span></a>
+              <div class="dropdown-divider" *ngIf="config.native"></div>
+              <a class="dropdown-item" *ngIf="config.native"
+                 [routerLink]="['/user', 'password', 'change']">Change password</a>
+              <div class="dropdown-divider" *ngIf="config.native"></div>
               <a class="dropdown-item" (click)="signOut()">Sign out</a>
             </div>
           </div>

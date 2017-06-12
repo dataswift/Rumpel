@@ -18,6 +18,7 @@ import { UserService } from '../../services/index';
 import { User } from '../../shared/interfaces/index';
 import { Subscription } from 'rxjs/Rx';
 import { AccountStatus } from '../../user/account-status.interface';
+import { APP_CONFIG, IAppConfig } from '../../app.config';
 
 declare var introJs: any;
 declare var $: any;
@@ -40,7 +41,8 @@ export class HeaderComponent implements OnInit {
   public unreadNotifications: number;
   public totalNotifications: number;
 
-  constructor(private router: Router,
+  constructor(@Inject(APP_CONFIG) public config: IAppConfig,
+              private router: Router,
               private dialogSvc: DialogService,
               private userSvc: UserService,
               private _notificationsSvc: NotificationsService,
