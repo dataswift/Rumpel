@@ -14,6 +14,7 @@ import { DataDebitService } from '../data-debits.service';
 import { DataDebit } from '../../shared/interfaces';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
 import { isUndefined } from 'util';
+import { User } from '../../user/user.interface';
 
 @Component({
   selector: 'rump-data-debit-confirm',
@@ -43,19 +44,17 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
     this.status = '';
     this.uuid = this._route.snapshot.params['uuid'];
     this.offer = {
-      offer: {
-        title: '',
-        description: '',
-        starts: '',
-        expires: '',
-        dataRequest: { definition: [] },
-        reward: { vendor: '', rewardType: '', value: '' }
-      },
+      title: '',
+      description: '',
+      starts: '',
+      expires: '',
+      dataRequest: { definition: [] },
+      reward: { vendor: '', rewardType: '', value: '' },
       owner: { firstName: '', lastName: '', email: '' }
     };
 
-    this.userSub = this._userSvc.auth$.subscribe((isAuthenticated: boolean) => {
-      if (isAuthenticated) {
+    this.userSub = this._userSvc.user$.subscribe((user: User) => {
+      if (user.authenticated) {
         this.updateDataDebitInformation();
         this.updateOfferInformation(false);
       }
@@ -80,6 +79,8 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
     // this._hat.updateDataDebit(this.uuid, 'disable').subscribe(res => this.router.navigate(['']));
   }
 
+  // TODO: change to databuyer URL
+
   navigateToRewardClaim() {
     window.location.href = 'https://marketsquare.hubofallthings.com/offers/' + this.offer.offer.uuid;
   }
@@ -91,12 +92,15 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
   private updateOfferInformation(forceReload: boolean) {
     this._ddSvc.getDataOffer(this.uuid, forceReload).subscribe(results => {
       // console.log(results);
-      const offerMatchedToDataDebit = results[0].find(offer => offer.offer.uuid === results[1]);
+
+      // TODO: change to databuyer URL
+      const offerMatchedToDataDebit = results[0].find(offer => offer.offerId === results[1]);
       this.facebookShareLink = this.config.facebook.shareUrl +
         'https://marketsquare.hubofallthings.com/offers/' + results[1];
       this.twitterShareLink = this.config.twitter.shareUrl +
         'https://marketsquare.hubofallthings.com/offers/' + results[1];
-      this.offerSatisfied = offerMatchedToDataDebit.offer.status === 'satisfied';
+
+      this.offerSatisfied = offerMatchedToDataDebit.status === 'satisfied';
       this.offer = offerMatchedToDataDebit;
       this.updateStatus();
     });
