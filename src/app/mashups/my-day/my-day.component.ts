@@ -61,6 +61,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
   public eventList = [];
   public activityList: Array<any> = [];
   public moment: Moment = moment();
+  public locationList = [];
 
 
 
@@ -89,6 +90,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
       )
         .subscribe((events: Array<Event>) => {
           this.addDatesToTimeline(events, 'start');
+          this.addDataToEventsList('event');
           this.events = this.events.concat(events).sort((a, b) => a.start.isBefore(b.start) ? -1 : 1);
         });
 
@@ -96,36 +98,51 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.photoSub = this.photosSvc.photos$.subscribe(photos => {
       this.addDatesToTimeline(photos, 'timestamp');
+      this.addDataToEventsList('photo');
       this.photos = photos;
     });
 
     this.socialSub = this.socialSvc.data$.subscribe((posts: Array<Post>) => {
       this.addDatesToTimeline(posts, 'createdTime');
+      this.addDataToEventsList('facebook');
       this.posts = posts;
     });
 
     this.twitterSub = this.twitterSvc.data$.subscribe((tweets: Array<Tweet>) => {
       this.addDatesToTimeline(tweets, 'createdTime');
+      this.addDataToEventsList('twitter');
       this.tweets = tweets;
     });
 
     this.locationSub = this.locationsSvc.data$.subscribe(locations => {
       this.addDatesToTimeline(locations, 'timestamp');
+
       this.locations = locations;
 
+      this.addToLocationList(this.totalDP, this.locations.length);
+
       if (locations.length > this.totalDP) {
+
         this.totalDP = locations.length;
+        // this.locationsSvc.getMoreData(500, 5000);
         const self = this;
-        setTimeout( function(){ self.locationsSvc.getMoreData(250, 5000); }, 5000);
+        setTimeout( function(){ self.locationsSvc.getMoreData(2000, 20000); }, 5000);
       }
+
+      this.addDataToEventsList('location');
+
+
     });
 
     this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
 
     this.notableSub = this.notablesSvc.data$.subscribe(notables => {
       this.addDatesToTimeline(notables, 'created_time');
+      this.addDataToEventsList('notable');
       this.notables = notables;
     });
+
+
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
     this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 203 + 'px');
@@ -139,6 +156,20 @@ export class MyDayComponent implements OnInit, OnDestroy {
   }
 
 
+  addToLocationList(start: number, end: number) {
+
+    for (let i = 0; i < this.timeline.length; i++) {
+      for ( let j = start; j < end; j++) {
+          if ( this.locations[j].timestamp.isSame(this.timeline[i].timestamp, 'day')) {
+            if (start === 0 || !this.locations[j].timestamp.isSame(this.locationList[this.locationList.length - 1], 'day')) {
+              this.locationList.push(this.locations[j].timestamp);
+              break;
+            }
+          }
+      }
+    }
+  }
+
 
   addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
     // console.log(dataPoints);
@@ -151,14 +182,18 @@ export class MyDayComponent implements OnInit, OnDestroy {
       .filter((a: ExpandedTime) => a.timestamp.isSameOrBefore(this.moment, 'day'))
       .filter((a: ExpandedTime) => a.timestamp.isValid());
 
+  }
 
-
-
+  addDataToEventsList(type: string) {
 
     this.eventList = [];
 
+
     for (let i = 0; i < this.timeline.length; i++) {
+
       this.eventList.push({ timestamp: this.timeline[i].timestamp, activities: [], selected: (i === 0) });
+
+
 
       for ( let j = 0; j < this.events.length; j++) {
         if ( this.events[j].start.isSame(this.timeline[i].timestamp, 'day') ) {
@@ -232,17 +267,18 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      const locationList = [];
-      for ( let j = 0; j < this.locations.length; j++) {
-        if ( this.locations[j].timestamp.isSame(this.timeline[i].timestamp, 'day') ) {
-          locationList.push(this.locations[j]);
+
+
+      for ( let j = 0; j < this.locationList.length; j++) {
+        if (this.locationList[j].isSame(this.timeline[i].timestamp, 'day') ) {
+          this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.locationList[j], type: 'location' } );
         }
       }
-      if (locationList.length > 0) {
-        this.eventList[ this.eventList.length - 1 ].activities.push( { event: locationList, type: 'location' } );
-      }
+
+
+
+
     }
-    // console.log(this.eventList);
 
     this.eventList = this.eventList.filter(function(elem, index, self) {
         return index === self.indexOf(elem);
@@ -259,6 +295,10 @@ export class MyDayComponent implements OnInit, OnDestroy {
     // this.timeline = _.sortedUniqBy(newTimeline.sort((a, b) => a.isAfter(b) ? -1 : 1), date => date.startOf('day').format());
     // console.log(this.timeline);
   }
+
+
+
+
 
 
   ngOnDestroy(): void {
