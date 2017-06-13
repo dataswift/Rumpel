@@ -62,6 +62,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
   public activityList: Array<any> = [];
   public moment: Moment = moment();
   public locationList = [];
+  public locationDataDownloaded = [];
+  public datesInRange = [];
 
 
 
@@ -124,9 +126,9 @@ export class MyDayComponent implements OnInit, OnDestroy {
       if (locations.length > this.totalDP) {
 
         this.totalDP = locations.length;
-        // this.locationsSvc.getMoreData(500, 5000);
         const self = this;
-        setTimeout( function(){ self.locationsSvc.getMoreData(2000, 20000); }, 5000);
+        // this.locationsSvc.getMoreData(500, 5000);
+        // setTimeout( function(){ self.locationsSvc.getMoreData(2000, 20000); }, 5000);
       }
 
       this.addDataToEventsList('location');
@@ -156,13 +158,39 @@ export class MyDayComponent implements OnInit, OnDestroy {
   }
 
 
+  getDatesInRange(array) {
+    this.datesInRange = array;
+    const newMonths = this.datesInRange;
+
+    for (let j = 0; j < newMonths.length; j++) {
+      for (let i = 0; i < this.locationDataDownloaded.length; i++) {
+        if ( this.locationDataDownloaded[i] === newMonths[j] ) {
+          newMonths.splice(j, 1);
+        }
+      }
+    }
+
+    this.loadLocationData(newMonths);
+  }
+
+
+  loadLocationData(newMonths) {
+    for (let k = 0; k < newMonths.length; k++) {
+      this.locationDataDownloaded.push(newMonths[k]);
+      const startTime = moment(newMonths[k], 'MM YYYY').startOf('month').format('X');
+      const endTime = moment(newMonths[k], 'MM YYYY').endOf('month').format('X');
+      this.locationsSvc.getTimeIntervalData(startTime, endTime);
+    }
+  }
+
+
   addToLocationList(start: number, end: number) {
 
     for (let i = 0; i < this.timeline.length; i++) {
       for ( let j = start; j < end; j++) {
           if ( this.locations[j].timestamp.isSame(this.timeline[i].timestamp, 'day')) {
             if (start === 0 || !this.locations[j].timestamp.isSame(this.locationList[this.locationList.length - 1], 'day')) {
-              this.locationList.push(this.locations[j].timestamp);
+              this.locationList.push(this.locations[j].timestamp.format('DD-MM-YYYY'));
               break;
             }
           }
@@ -269,9 +297,15 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
 
 
+
+      this.locationList = this.locationList.filter(function(elem, index, self) {
+          return index === self.indexOf(elem);
+      });
+
       for ( let j = 0; j < this.locationList.length; j++) {
-        if (this.locationList[j].isSame(this.timeline[i].timestamp, 'day') ) {
-          this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.locationList[j], type: 'location' } );
+        const thisActivities = this.eventList[ this.eventList.length - 1 ].activities;
+        if (this.locationList[j] === this.timeline[i].timestamp.format('DD-MM-YYYY') ) {
+          thisActivities.push( { event: this.locationList[j], type: 'location' } );
         }
       }
 

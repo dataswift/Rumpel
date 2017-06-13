@@ -33,6 +33,7 @@
                          [eventList]="eventList"
                          [timeline]="timeline"
                          (timeSelected)="selectTime($event)"
+                         (notifyDatesInRange)="getDatesInRange($event)"
                          *ngIf="shownComponents.events"></rump-activity-list>
                 <!--
       <rump-timeline class="timeline"

@@ -22,12 +22,14 @@ declare var $: any;
 export class ActivityListComponent implements OnInit {
 
   @Input() componentHeight: string;
-  @Output() timeSelected = new EventEmitter<ExpandedTime>();
   @Input() eventList: Array<any>;
   @Input() timeline: Array<ExpandedTime>;
 
-  public moment: Moment = moment();
+  @Output() timeSelected = new EventEmitter<ExpandedTime>();
+  @Output() notifyDatesInRange: EventEmitter<any> = new EventEmitter();
 
+  public moment: Moment = moment();
+  public datesInRange = [];
 
 
   constructor() {
@@ -36,6 +38,34 @@ export class ActivityListComponent implements OnInit {
 
   ngOnInit() {
     $('.backToTop i').popover({html: true, content: '<p style="text-align: center">Back to today\'s date</p>'});
+
+    this.getMonthsInRange();
+  }
+
+
+
+
+  getMonthsInRange() {
+    const self = this;
+
+    setInterval(function() {
+
+      self.datesInRange = [];
+      const dates = document.getElementsByClassName('date');
+      for (let i = 0; i < dates.length; i++) {
+
+        const $this = <HTMLScriptElement>dates[i];
+        const activityList = <HTMLScriptElement>document.getElementsByClassName('activitylist-container')[0];
+
+        if ( $this.offsetTop < ( activityList.offsetHeight + activityList.scrollTop ) && $this.offsetTop > activityList.scrollTop ) {
+              const monthInRange = self.eventList[i].timestamp.format('MM YYYY');
+              if (!self.datesInRange.includes(monthInRange) ) {
+                self.datesInRange.push(monthInRange);
+              }
+        }
+      }
+      self.notifyDatesInRange.emit(self.datesInRange);
+    }, 1000);
   }
 
 
