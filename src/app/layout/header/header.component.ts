@@ -240,10 +240,9 @@ export class HeaderComponent implements OnInit {
 
   showInfoModal() {
     this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
-      title: 'Who can see this page?',
-      message: `This page is only seen by you (and whoever is looking over your shoulder).
-               Rumpel is your PERSONAL hyperdata browser for your HAT data.
-               You should treat this page like the way you would treat your bank statement page online.`
+      title: 'Help',
+      message: `HATs are distributed systems and being private also means no one will know if you have a problem.<br><br>
+      If you have an issue with your HAT or this dashboard, please report it <a href="mailto:contact@HATDeX.org?subject=Support%20for%20` + window.location.hostname + `">here</a>`
     });
   }
 

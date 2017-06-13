@@ -41,13 +41,13 @@
     font-size: 1.5em;
 
     > div {
-      padding: 30px;
+      padding: 20px 30px;
     }
 
     .close-modal {
       position: absolute;
       cursor: pointer;
-      top: 20px;
+      top: 10px;
       right: 20px;
       padding: 10px;
       color: $app-accent-color;
@@ -70,8 +70,17 @@
   border-top: 1px solid #cdcdcd;
 
   p {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    a{
+      color: $app-accent-color;
+
+      &:hover{
+        color: $app-accent-color;
+        filter: brightness(110%);
+      }
+    }
   }
 }
 
@@ -83,7 +92,7 @@
     background-color: $app-accent-color;
     color: white;
     padding: 10px 20px;
-    margin: 0.25em 1em;
+    margin: 0.5em 1em 1em;
     border-radius: 8px;
     font-family: $font-display;
 

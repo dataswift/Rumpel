@@ -12,13 +12,12 @@
       <h3>{{title}}</h3>
     </div>
     <div class="rump-modal-body">
-      <p>{{message}}</p>
+      <p [innerHTML]="message | safeHtml"></p>
     </div>
     <div class="rump-modal-footer">
-      <button type="button" class="btn" (click)="closeModal()">Ok</button>
+      <button type="button" class="btn" (click)="closeModal()">OK</button>
     </div>
 
-    <div class="close-modal" (click)="closeModal()">x</div> 
   </div>
 </div>
 
