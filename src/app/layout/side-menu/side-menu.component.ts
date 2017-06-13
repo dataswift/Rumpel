@@ -145,6 +145,7 @@ export class SideMenuComponent implements OnInit {
 
 
   showPopover() {
+    $('[data-toggle="popover"]').popover();
     $('.menu-scroll [data-toggle="popover"]').popover({delay: {show: 150, hide: 0}});
   }
 
