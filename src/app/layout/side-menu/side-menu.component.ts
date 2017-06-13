@@ -35,6 +35,7 @@ export class SideMenuComponent implements OnInit {
   public dataplugList: Array<any>;
   public mobileMode = false;
   public profile: any;
+  public isPublicPage = false;
 
 
   // hack: uiState service needs to be injected before Auth component,
@@ -59,6 +60,14 @@ export class SideMenuComponent implements OnInit {
         this.profile = profileResponse.profile;
       }
     });
+
+
+    this.router.events
+        .filter(event => event instanceof NavigationEnd)
+        .subscribe((event: NavigationEnd) => {
+          this.isPublicPage = this.router.isActive('public', false);
+          this.windowResize();
+        });
 
     this.router.events
       .filter(event => event instanceof NavigationEnd)
@@ -88,33 +97,31 @@ export class SideMenuComponent implements OnInit {
       }
     });
 
-    $(window).on('resize', function() {
 
-      if (window.innerWidth > 1113) {
-        $('.menubar-left').css('left', '0px');
-        $('.content-main-authenticated').css({marginLeft: '345px', left: '0px'});
-        $('.burger').attr('data-content', 'Hide menu');
-        this.mobileMode = false;
-      } else {
-        $('.menubar-left').css('left', '-345px');
-        $('.content-main-authenticated').css({marginLeft: '0px', left: '0px'});
-        $('.burger').attr('data-content', 'Show menu');
-        this.mobileMode = true;
-      }
-
-      if ($('.burger').data('bs.popover')) {
-        $('.burger').data('bs.popover').setContent();
-        $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
-      }
-    });
-
-    $(window).resize();
+    window.addEventListener('resize', this.windowResize);
+    this.windowResize();
 
   }
 
+  windowResize() {
+    if (window.innerWidth > 1113) {
+      $('.menubar-left').css('left', '0px');
+      $('.content-main-authenticated').css({marginLeft: '345px', left: '0px'});
+      $('.burger').attr('data-content', 'Hide menu');
+      this.mobileMode = false;
+    } else {
+      $('.menubar-left').css('left', '-345px');
+      $('.content-main-authenticated').css({marginLeft: '0px', left: '0px'});
+      $('.burger').attr('data-content', 'Show menu');
+      $('[data-toggle="popover"]').popover('hide');
+      this.mobileMode = true;
+    }
 
-
-
+    if ($('.burger').data('bs.popover')) {
+      $('.burger').data('bs.popover').setContent();
+      $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
+    }
+  }
 
 
   displayConfirmDialog() {
@@ -155,7 +162,7 @@ export class SideMenuComponent implements OnInit {
     const duration = 500;
 
     if ( $('.menubar-left').css('left') === '0px' ) {
-        sidenav_x = -345;
+        sidenav_x = -content_margin;
         content_margin = 0;
         $('.burger').attr('data-content', 'Show menu');
     } else {
@@ -191,6 +198,7 @@ export class SideMenuComponent implements OnInit {
       $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
       $('.menubar-left').animate({ left: '-345px' }, 500);
       $('.content-main-authenticated').animate({ marginLeft: '0px', left: '0px' }, 500);
+      $('[data-toggle="popover"]').popover('hide');
     }
   }
 
