@@ -37,10 +37,12 @@
 
         <h1>{{hostname}}</h1>
         <p *ngIf="shared === true">
-          <span *ngIf="profile?.personal.first_name">{{profile?.personal.first_name}} {{profile?.personal.last_name}}  </span>
-          <span *ngIf="profile?.gender.type">&bull;  {{profile?.gender.type}}  </span>
-          <span *ngIf="profile?.age.group">&bull;  {{profile?.age.group}} years old  </span>
-          <span *ngIf="profile?.country">&bull;  {{profile?.country}}  </span>
+          <span *ngIf="profile?.profile">
+            <span *ngIf="profile?.profile.personal">{{profile?.profile.personal}} </span>
+            <span *ngIf="profile?.profile.gender">&bull;  {{profile?.profile.gender}}  </span>
+            <span *ngIf="profile?.profile.age">&bull;  {{profile?.profile.age}} years old  </span>
+            <span *ngIf="profile?.profile.country">&bull;  {{profile?.profile.country}}  </span>
+          </span>
         </p>
 
         <p *ngIf="shared === false">
@@ -52,16 +54,16 @@
   </div>
 
 
-  <div class="row no-margin" *ngIf="shared === true">
+  <div class="row no-margin">
     <div class="col-md-offset-3 col-md-6">
-            <div class="phata-box blue-top">
+            <div class="phata-box blue-top" *ngIf="profile?.contact">
                 <div class="phatabox-header">
                   Public Profile
                 </div>
                 <div class="phatabox-body">
 
                   <div class="col-sm-6 col-xs-12">
-                    <div class="contactme" *ngIf="profile?.contact">
+                    <div class="contactme">
                       <div class="contact" *ngIf="profile?.contact['primary_email']">
                         <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['primary_email'] }}</h4>
                       </div>
@@ -101,7 +103,7 @@
                 </div>
             </div>
 
-            <div class="phata-box blue-top" *ngIf="notables">
+            <div class="phata-box blue-top" *ngIf="notables?.length > 0">
                 <div class="phatabox-header">
                   Public Notables
                 </div>

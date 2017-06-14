@@ -35,6 +35,7 @@ export class PublicProfileComponent implements OnInit {
       if (profileResponse['public'] === true) {
         this.shared = true;
         this.profile = profileResponse.profile;
+        console.log(this.profile);
         this.notables = profileResponse.notables.map((note: any) => new Notable(note, note.id));
       } else {
         this.shared = false;

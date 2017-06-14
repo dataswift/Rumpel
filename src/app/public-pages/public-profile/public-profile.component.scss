@@ -463,8 +463,13 @@ a:hover {
 }
 
 .contact {
+  h4 {
+    color: black;
+    text-transform: lowercase;
+  }
   h4 span {
     margin-right: 0.5em;
+    color: black;
   }
 }
 
