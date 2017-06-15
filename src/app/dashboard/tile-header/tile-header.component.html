@@ -10,7 +10,7 @@
   <a [routerLink]="pagelink" [class.activeLink]="pagelink" class="tile-title">{{title}}</a>
   <a role="button" tabindex="0" data-toggle="popover" data-container="body"
      [attr.data-content]="info" class="info-button popover-click"
-     data-trigger="focus"
+     data-trigger="hover focus"
      (click)="showPopover($event)"
      data-placement="auto left"><i class="material-icons">info_outline</i></a>
 </div>
