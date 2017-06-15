@@ -32,6 +32,7 @@ export class PublicProfileComponent implements OnInit {
 
   ngOnInit() {
     this.hatSvc.getPublicData('profile').subscribe((profileResponse: any) => {
+      console.log(profileResponse);
       if (profileResponse['public'] === true) {
         this.shared = true;
         this.profile = profileResponse.profile;
@@ -45,6 +46,13 @@ export class PublicProfileComponent implements OnInit {
     this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
     });
+  }
+
+  openLink(link: string) {
+    if(link.indexOf('http') === -1){
+      link = "http://" + link;
+    }
+    window.open(link, "_blank");
   }
 
   switchView() {

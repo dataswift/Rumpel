@@ -36,17 +36,16 @@
 
 
         <h1>{{hostname}}</h1>
-        <p *ngIf="shared === true">
-          <span *ngIf="profile?.profile">
-            <span *ngIf="profile?.profile.personal">{{profile?.profile.personal}} </span>
-            <span *ngIf="profile?.profile.gender">&bull;  {{profile?.profile.gender}}  </span>
-            <span *ngIf="profile?.profile.age">&bull;  {{profile?.profile.age}} years old  </span>
-            <span *ngIf="profile?.profile.country">&bull;  {{profile?.profile.country}}  </span>
+        <p>
+          <span class="social-links" *ngIf="profile?.profile">
+            <a *ngIf="profile?.profile.website" (click)="openLink(profile?.profile.website.link)" target="_blank"><img src="assets/icons/website-icon.svg"></a>
+            <a *ngIf="profile?.profile.blog" (click)="openLink(profile?.profile.blog.link)" target="_blank"><img src="assets/icons/blog-icon.svg"></a>
+            <a *ngIf="profile?.profile.facebook" (click)="openLink(profile?.profile.facebook.link)" target="_blank"><img src="assets/icons/facebook-grey-icon.svg"></a>
+            <a *ngIf="profile?.profile.twitter" (click)="openLink(profile?.profile.twitter.link)" target="_blank"><img src="assets/icons/twitter-grey-icon.svg"></a>
+            <a *ngIf="profile?.profile.google" (click)="openLink(profile?.profile.google.link)" target="_blank"><img src="assets/icons/google-icon.svg"></a>
+            <a *ngIf="profile?.profile.linkedin" (click)="openLink(profile?.profile.linkedin.link)" target="_blank"><img src="assets/icons/linkedin-icon.svg"></a>
+            <a *ngIf="profile?.profile.youtube" (click)="openLink(profile?.profile.youtube.link)" target="_blank"><img src="assets/icons/youtube-icon.svg"></a>
           </span>
-        </p>
-
-        <p *ngIf="shared === false">
-          The owner of this HAT has made their profile private.
         </p>
 
       </div>
@@ -54,15 +53,15 @@
   </div>
 
 
-  <div class="row no-margin">
+  <div class="row no-margin" *ngIf="shared === true">
     <div class="col-md-offset-3 col-md-6">
-            <div class="phata-box blue-top" *ngIf="profile?.contact">
+            <div class="phata-box blue-top">
                 <div class="phatabox-header">
                   Public Profile
                 </div>
                 <div class="phatabox-body">
 
-                  <div class="col-sm-6 col-xs-12">
+                  <div class="col-sm-6 col-xs-12" *ngIf="profile?.contact">
                     <div class="contactme">
                       <div class="contact" *ngIf="profile?.contact['primary_email']">
                         <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['primary_email'] }}</h4>
@@ -81,6 +80,7 @@
                       </div>
                     </div>
                   </div>
+
 
                   <div class="col-sm-6 col-xs-12">
                     <a [href]="link.value" *ngFor="let link of profile?.links | withObject">
@@ -118,6 +118,7 @@
                 </div>
             </div>
     </div>
+
 
     <div class="col-md-3">
       <div class="phata-box more-info">
