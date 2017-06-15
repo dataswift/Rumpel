@@ -61,7 +61,7 @@
                 </div>
                 <div class="phatabox-body">
 
-                  <div class="col-sm-6 col-xs-12" *ngIf="profile?.contact">
+                  <div *ngIf="profile?.contact">
                     <div class="contactme">
                       <div class="contact" *ngIf="profile?.contact['primary_email']">
                         <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['primary_email'] }}</h4>
