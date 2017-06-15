@@ -16,7 +16,22 @@
 
   .view-mode-toggle {
     float: right;
-    margin-right: 1em;
+    margin-right: 0.2em;
+    margin-top: 1em;
+
+    .previewPHATA{
+      cursor: pointer;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      background-color: $app-accent-color;
+      border-radius: 4px;
+
+      &:hover{
+        text-decoration: none;
+        filter: brightness(110%);
+      }
+    }
 
     .switch-main {
       display: inline-block;

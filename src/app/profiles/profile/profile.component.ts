@@ -82,7 +82,7 @@ export class ProfileComponent implements OnInit {
   }
 
   switchView() {
-    this.router.navigate([ 'public', 'profile' ]);
+    window.open("public/profile", "_blank");
   }
 
   submitForm(event) {
