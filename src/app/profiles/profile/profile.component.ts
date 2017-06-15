@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
     this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
       if (profileSnapshots.length > 0) {
         this.profile = profileSnapshots[0];
+        console.log(this.profile);
       }
     });
 
@@ -82,7 +83,8 @@ export class ProfileComponent implements OnInit {
   }
 
   switchView() {
-    window.open("public/profile", "_blank");
+    this.router.navigate([ 'public', 'profile' ]);
+    // window.open("public/profile", "_blank");
   }
 
   submitForm(event) {
