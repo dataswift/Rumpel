@@ -250,10 +250,6 @@
 
       <section class="address">
         <h3 class="section-title">Address</h3>
-        <rump-switch class="switch group-switch" [id]="'address_details'"
-                     [isChecked]="!profile.address_details.private"
-                     [disabled]="profile.private"
-                     (onSwitch)="togglePrivacy($event)"></rump-switch>
 
         <div class="row section-body">
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10">
@@ -403,10 +399,6 @@
 
       <section class="emergency-contact">
         <h3 class="section-title">Emergency Contact</h3>
-        <rump-switch class="switch group-switch" [id]="'emergency_contact'"
-                     [isChecked]="!profile.emergency_contact.private"
-                     [disabled]="profile.private"
-                     (onSwitch)="togglePrivacy($event)"></rump-switch>
 
         <div class="row section-body">
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
