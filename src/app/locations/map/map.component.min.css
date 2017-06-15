@@ -4,4 +4,4 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
- */.leaflet-control,.leaflet-bottom,.leaflet-right{z-index:1 !important}
+ */#map-view{position:relative}.leaflet-control,.leaflet-bottom,.leaflet-right{z-index:1 !important}.locationDate{background-color:#d2dce1;position:absolute;top:0;left:0;z-index:500;width:100%;padding:10px 22px}.locationDate .location-icon{width:24px;height:24px;background-color:rgba(74,85,107,0.1);padding:6px;display:inline-block;border-radius:50%;top:2px;position:relative;margin-right:5px}.locationDate .location-icon img{height:12px;position:relative;left:2px;top:-4px}.locationDate h4{color:#6297b1;font-size:14px;text-transform:uppercase !important;font-family:"Open Sans", sans-serif}

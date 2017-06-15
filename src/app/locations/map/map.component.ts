@@ -23,7 +23,9 @@ export class MapComponent implements OnInit, OnChanges {
   @Input() mapHeight: string;
   @Input() mapWidth: string;
   @Input() enableMapControls: boolean;
+  @Input() locationDate: any;
   @Output() timeSelected = new EventEmitter<any>();
+
 
   private map: any;
   private markers = L.markerClusterGroup();
@@ -34,10 +36,13 @@ export class MapComponent implements OnInit, OnChanges {
     maxLat: -180
   };
 
+
   constructor() {
   }
 
   ngOnInit() {
+    let self = this;
+    setInterval(function(){console.log(self.locationDate)}, 1000);
   }
 
   constructMap() {

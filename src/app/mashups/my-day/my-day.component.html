@@ -26,6 +26,7 @@
                 [mapHeight]="safeSize"
                 [mapWidth]="shownComponents.events ? '60%' : '100%'"
                 (timeSelected)="selectTime($event)"
+                [locationDate]="selectedTime"
                 *ngIf="shownComponents.map"></rump-map>
 
       <rump-activity-list class="activitylist"

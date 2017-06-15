@@ -23,6 +23,7 @@ import { Notable } from '../../shared/interfaces/notable.class';
 import {Subscription, Observable} from 'rxjs/Rx';
 import {FacebookEventsService} from '../../dimensions/facebook-events.service';
 import {GoogleEventsService} from '../../dimensions/google-events.service';
+import {MapComponent} from '../../locations/map/map.component';
 
 declare var $: any;
 
@@ -34,6 +35,7 @@ declare var $: any;
 
 
 export class MyDayComponent implements OnInit, OnDestroy {
+
 
   @Input() selectedTime: ExpandedTime;
 
@@ -156,6 +158,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
     });
 
   }
+
 
 
   getDatesInRange(array) {
