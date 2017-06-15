@@ -92,7 +92,7 @@ export abstract class BaseDataService<T> {
   }
 
   getMoreData(fetchRecordCount: number = 100, totalRecordCount: number = 500): void {
-    if (this.oldestRecordTimestamp) {
+    if (this.oldestRecordTimestamp && this.store.data.length < totalRecordCount) {
       this._loading$.next(true);
       this.hat.getValuesWithLimit(this.store.tableId, fetchRecordCount, this.oldestRecordTimestamp)
         .map((rawData: Array<any>) => {
@@ -106,9 +106,9 @@ export abstract class BaseDataService<T> {
         .subscribe((data: Array<T>) => {
           this.store.data = this.store.data.concat(data);
 
-          if (this.store.data.length < totalRecordCount) {
-            this.pushToStream();
-          }
+          
+          this.pushToStream();
+
 
           // if (this.store.data.length < totalRecordCount && data.length > 0) {
           //   this.getMoreData(fetchRecordCount, totalRecordCount);
