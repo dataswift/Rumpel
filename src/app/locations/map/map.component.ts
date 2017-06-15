@@ -41,8 +41,6 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    let self = this;
-    setInterval(function(){console.log(self.locationDate)}, 1000);
   }
 
   constructMap() {
