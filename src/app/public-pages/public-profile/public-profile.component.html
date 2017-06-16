@@ -37,14 +37,14 @@
 
         <h1>{{hostname}}</h1>
         <p>
-          <span class="social-links" *ngIf="profile?.profile">
-            <a *ngIf="profile?.profile.website" (click)="openLink(profile?.profile.website.link)" target="_blank"><img src="assets/icons/website-icon.svg"></a>
-            <a *ngIf="profile?.profile.blog" (click)="openLink(profile?.profile.blog.link)" target="_blank"><img src="assets/icons/blog-icon.svg"></a>
-            <a *ngIf="profile?.profile.facebook" (click)="openLink(profile?.profile.facebook.link)" target="_blank"><img src="assets/icons/facebook-grey-icon.svg"></a>
-            <a *ngIf="profile?.profile.twitter" (click)="openLink(profile?.profile.twitter.link)" target="_blank"><img src="assets/icons/twitter-grey-icon.svg"></a>
-            <a *ngIf="profile?.profile.google" (click)="openLink(profile?.profile.google.link)" target="_blank"><img src="assets/icons/google-icon.svg"></a>
-            <a *ngIf="profile?.profile.linkedin" (click)="openLink(profile?.profile.linkedin.link)" target="_blank"><img src="assets/icons/linkedin-icon.svg"></a>
-            <a *ngIf="profile?.profile.youtube" (click)="openLink(profile?.profile.youtube.link)" target="_blank"><img src="assets/icons/youtube-icon.svg"></a>
+          <span class="social-links" *ngIf="profile?.links">
+            <a *ngIf="profile?.links.Web" (click)="openLink(profile?.links.Web)" target="_blank"><img src="assets/icons/website-icon.svg"></a>
+            <a *ngIf="profile?.links.Blog" (click)="openLink(profile?.links.Blog)" target="_blank"><img src="assets/icons/blog-icon.svg"></a>
+            <a *ngIf="profile?.links.Facebook" (click)="openLink(profile?.links.Facebook)" target="_blank"><img src="assets/icons/facebook-grey-icon.svg"></a>
+            <a *ngIf="profile?.links.Twitter" (click)="openLink(profile?.links.Twitter)" target="_blank"><img src="assets/icons/twitter-grey-icon.svg"></a>
+            <a *ngIf="profile?.links.Google-Plus" (click)="openLink(profile?.links.Google-Plus)" target="_blank"><img src="assets/icons/google-icon.svg"></a>
+            <a *ngIf="profile?.links.LinkedIn" (click)="openLink(profile?.links.LinkedIn)" target="_blank"><img src="assets/icons/linkedin-icon.svg"></a>
+            <a *ngIf="profile?.links.Youtube" (click)="openLink(profile?.links.Youtube)" target="_blank"><img src="assets/icons/youtube-icon.svg"></a>
           </span>
         </p>
 
