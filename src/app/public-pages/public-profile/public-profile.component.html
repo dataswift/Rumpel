@@ -61,8 +61,15 @@
                 </div>
                 <div class="phatabox-body">
 
-                  <div *ngIf="profile?.contact">
-                    <div class="contactme">
+                  <div class="flex-column">
+                    <div class="personal-details" *ngIf="profile?.profile">
+                      <h4 class="icon-text-valign" *ngIf="profile?.profile['personal']">&nbsp;{{ profile.profile['personal'] }}</h4>
+                      <h4 class="icon-text-valign" *ngIf="profile?.profile['gender']">&nbsp;{{ profile.profile['gender'] }}</h4>
+                      <h4 class="icon-text-valign" *ngIf="profile?.profile['age']">&nbsp;{{ profile.profile['age'] }}</h4>
+                      <h4 class="icon-text-valign" *ngIf="profile?.profile['birthDate']">&nbsp;{{ profile.profile['birthDate'] }}</h4>
+                    </div>
+
+                    <div class="contactme" *ngIf="profile?.contact">
                       <div class="contact" *ngIf="profile?.contact['primary_email']">
                         <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['primary_email'] }}</h4>
                       </div>

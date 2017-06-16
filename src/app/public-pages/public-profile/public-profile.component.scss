@@ -473,27 +473,35 @@ a:hover {
   color: $text-dark;
 }
 
-.contactme {
-  display: block;
-  width: 100%;
+.flex-column{
+  display: flex;
+
+  .contactme {
+    display: block;
+    width: 50%;
+
+    .contact {
+      h4 {
+        color: #878787;
+        text-transform: lowercase;
+        font-size: 14px;
+      }
+      h4 span {
+        margin-right: 0.5em;
+        color: black;
+      }
+    }
+  }
+
+  .personal-details{
+    width: 50%;
+  }
 }
 
-.contact {
-  h4 {
-    color: black;
-    text-transform: lowercase;
-    font-size: 14px;
-  }
-  h4 span {
-    margin-right: 0.5em;
-    color: black;
-  }
-}
 
-.contactme .contact {
-  width: 50%;
-  display: block;
-}
+
+
+
 
 
 .launcher-content {
