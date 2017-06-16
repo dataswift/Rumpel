@@ -71,7 +71,7 @@ export class SideMenuComponent implements OnInit {
 
     this.router.events
       .filter(event => event instanceof NavigationEnd)
-      .subscribe(event => this.selectedItem = event.url.slice(1));
+      .subscribe((event: NavigationEnd) => this.selectedItem = event.url.slice(1));
 
 
     this.dataplugSvc.dataplugs$.subscribe( plug => {

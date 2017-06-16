@@ -1,6 +1,14 @@
 # Rumpel
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-rc.4.
+This project was last tested with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.2.
+
+## Suggested development environment setup
+
+- NPM >5.0.0 (required to make use of the **package-lock.json** file)
+- Node >7.10.0
+- Angular CLI >1.1.2
+- Typescript >2.3.0
+- Angular >4.0.0
 
 ## Development server
 
@@ -8,7 +16,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
 
 ## Build
 
