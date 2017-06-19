@@ -12,7 +12,7 @@
 
 
     <div class="view-body">
-      <div class="loading-overlay" *ngIf="loading">
+      <div class="loading-overlay" *ngIf="loading && hasLocationData">
         <rump-spinner [isRunning]="true"></rump-spinner>
         <span>Loading more data...</span>
       </div>

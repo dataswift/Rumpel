@@ -12,6 +12,7 @@ import { PhotosService } from '../../photos/photos.service';
 import { EventsService } from '../../dimensions/events.service';
 import { SocialService } from '../../social/social.service';
 import { TwitterService } from '../../social/twitter.service';
+import { DataPlugService } from '../../data-management/data-plug.service';
 import { LocationsService } from '../../locations/locations.service';
 import { Post, Tweet, Event, Photo, Location } from '../../shared/interfaces/index';
 import { ExpandedTime } from '../../shared/interfaces/index';
@@ -66,7 +67,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
   public locationList = [];
   public locationDataDownloaded = [];
   public datesInRange = [];
-
+  public hasLocationData = false;
+  public dataplugs: Subscription;
 
 
   constructor(private locationsSvc: LocationsService,
@@ -77,10 +79,20 @@ export class MyDayComponent implements OnInit, OnDestroy {
               private socialSvc: SocialService,
               private twitterSvc: TwitterService,
               private notablesSvc: NotablesService,
+              private dataplugsSvc: DataPlugService,
               private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
+
+    this.dataplugs = this.dataplugsSvc.dataplugs$.subscribe(plugs => {
+      for (let i = 0; i < plugs.length; i++) {
+        if (plugs[i].name === 'location') {
+          this.hasLocationData = true;
+        }
+      }
+    });
+
     const now = moment();
     this.selectedTime = new ExpandedTime(now);
     this.timeline = [new ExpandedTime(now)];
