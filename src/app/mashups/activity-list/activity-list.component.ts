@@ -48,10 +48,6 @@ export class ActivityListComponent implements OnInit {
 
   }
 
-  sayHello(){
-    console.log('hello');
-  }
-
 
   changeDate(e) {
     const targetDate = this.date.momentObj;
