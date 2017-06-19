@@ -11,7 +11,7 @@ import { Post, Tweet, Photo, Notable } from '../../shared/interfaces/index';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { ExpandedTime } from '../../shared/interfaces/index';
-import { DatePickerOptions, DateModel } from 'ng2-datepicker';
+// import { DatePickerOptions, DateModel } from 'ng2-datepicker';
 
 declare var $: any;
 
@@ -32,11 +32,11 @@ export class ActivityListComponent implements OnInit {
   public moment: Moment = moment();
   public datesInRange = [];
   public currentMonth: String = '';
-  public date: DateModel;
-  public options: DatePickerOptions;
+  // public date: DateModel;
+  // public options: DatePickerOptions;
 
   constructor() {
-    this.options = new DatePickerOptions();
+    // this.options = new DatePickerOptions();
   }
 
   ngOnInit() {
@@ -44,13 +44,14 @@ export class ActivityListComponent implements OnInit {
 
     this.getMonthsInRange();
 
-    this.options.maxDate = moment().toDate();
+    // this.options.maxDate = moment().toDate();
 
   }
 
 
   changeDate(e) {
-    const targetDate = this.date.momentObj;
+    const targetDate = e.target.value;
+    // const targetDate = this.date.momentObj;
     let closestDate = moment();
     let closestDateDistance = Math.abs( closestDate.diff(targetDate, 'days') );
     let targetIndex = 0;
