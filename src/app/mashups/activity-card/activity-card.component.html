@@ -1,6 +1,6 @@
 <div class="date-box" [class.today]="day.selected" (click)="scrollToItem(i)">
 
-              <h2>{{day.timestamp.format('D')}}<span>{{day.timestamp.format("MMM")}}</span><span>{{day.timestamp.format('YY')}}</span></h2>
+              <h2><span>{{day.timestamp.format("ddd")}}</span>{{day.timestamp.format('D')}}<span>{{day.timestamp.format("MMM")}}</span></h2>
 
               <div>
                     <div *ngFor="let activity of day.activities">

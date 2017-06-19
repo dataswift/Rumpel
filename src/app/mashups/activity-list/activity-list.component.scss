@@ -68,6 +68,22 @@ padding: 0px 15px;
     }
 }
 
+
+.datePicker{
+  display: block;
+  width: 100%;
+  padding: 11px 22px;
+  background-color: #eee;
+  position: relative;
+
+  .currentMonth{
+    font-size: 14px;
+  }
+
+
+
+}
+
 .popover-center{
   max-width: 100px !important;
   text-align: center !important;
@@ -75,4 +91,31 @@ padding: 0px 15px;
     width: 100px !important;
       text-align: center !important;
   }
+}
+
+/deep/ .datepicker-container {
+position: unset !important;
+}
+
+/deep/ .datepicker-calendar {
+  position: absolute;
+  left: 15px;
+  top: 50px !important;
+}
+
+
+
+/deep/ .datepicker-input{
+  width: 0 !important;
+  visibility: hidden;
+}
+
+
+/deep/ .datepicker-input-icon{
+  position: relative;
+  top: 3px;
+}
+
+/deep/ .datepicker-buttons button:first-child{
+  display: none !important;
 }

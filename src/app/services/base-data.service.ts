@@ -87,6 +87,7 @@ export abstract class BaseDataService<T> {
           this.pushToStream();
         });
     } else if (failedAttempts <= 10) {
+      this._loading$.next(false);
       Observable.timer(100).subscribe(() => this.getRecentData(++failedAttempts));
     }
   }
@@ -106,7 +107,7 @@ export abstract class BaseDataService<T> {
         .subscribe((data: Array<T>) => {
           this.store.data = this.store.data.concat(data);
 
-          
+
           this.pushToStream();
 
 

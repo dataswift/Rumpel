@@ -6,8 +6,14 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
+<div class="datePicker">
+  <h4 class="currentMonth" [innerHTML]="currentMonth"></h4>
+<!-- <input type="date" name="bday" id="mashupDate" [max]="maxDate" (change)="changeDate($event)"> -->
+  <ng2-datepicker [options]="options" [(ngModel)]="date" (ngModelChange)="changeDate($event)" ></ng2-datepicker>
+</div>
 
 <div class="activitylist-container" [style.height]="componentHeight">
+
   <h6 class="todayHeader">Today</h6>
   <div class="date" *ngFor="let day of eventList; let i = index;">
     <rump-activity-card [day]="day" [i]="i" (selection)="scrollToItem($event)"></rump-activity-card>
