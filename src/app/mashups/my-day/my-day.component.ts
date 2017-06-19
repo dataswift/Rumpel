@@ -149,12 +149,12 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
-    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 203 + 'px');
+    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 259 + 'px');
     const thisScope = this;
 
     $(window).resize(function() {
       thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
-      thisScope.safeSizeSidebar = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 203 + 'px');
+      thisScope.safeSizeSidebar = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 259 + 'px');
     });
 
   }
@@ -304,6 +304,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
       this.locationList = this.locationList.filter(function(elem, index, self) {
           return index === self.indexOf(elem);
       });
+
+
 
       for ( let j = 0; j < this.locationList.length; j++) {
         const thisActivities = this.eventList[ this.eventList.length - 1 ].activities;
