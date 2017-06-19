@@ -49,10 +49,10 @@ export class PublicProfileComponent implements OnInit {
   }
 
   openLink(link: string) {
-    if(link.indexOf('http') === -1){
-      link = "http://" + link;
+    if (link.indexOf('http') === -1) {
+      link = 'http://' + link;
     }
-    window.open(link, "_blank");
+    window.open(link, '_blank');
   }
 
   switchView() {
