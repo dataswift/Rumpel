@@ -39,7 +39,7 @@ import { GridComponent, TileHeaderComponent, TileHeroComponent, TileComingSoonCo
 import { HatApiService, UiStateService, RumpelService } from './services/index';
 import { AuthHttp } from './services/auth-http.service';
 
-import { DatePickerModule } from 'ng2-datepicker';
+// import { DatePickerModule } from 'ng2-datepicker';
 
 /* MODAL COMPONENTS */
 
@@ -92,8 +92,7 @@ export function cookieServiceFactory() {
     DimensionsModule,
     ProfilesModule,
     WeatherModule,
-    PublicPagesModule,
-    DatePickerModule
+    PublicPagesModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent ],

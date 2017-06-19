@@ -19,10 +19,10 @@ import { MashupsComponent } from './mashups/mashups.component';
 import { ActivityListComponent } from './activity-list/activity-list.component';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
 
-import { DatePickerModule } from 'ng2-datepicker';
+// import { DatePickerModule } from 'ng2-datepicker';
 
 @NgModule({
-  imports: [ SharedModule, LocationsModule, FormsModule, SocialModule, MashupsRoutingModule, DatePickerModule ],
+  imports: [ SharedModule, LocationsModule, FormsModule, SocialModule, MashupsRoutingModule ],
   declarations: [
     MyDayComponent,
     ActivityListComponent,
