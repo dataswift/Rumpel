@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { userRoutes } from './user/user-routing.module';
 
 import { GridComponent } from './dashboard';
-import { OffersComponent } from './offers/offers.component';
 import { AboutComponent } from './layout/about/about.component';
 import { AuthGuard } from './auth.guard';
 
@@ -19,7 +18,6 @@ import { AuthGuard } from './auth.guard';
   imports: [
     RouterModule.forRoot([
       { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
-      { path: 'offers', component: OffersComponent },
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: GridComponent, canActivate: [AuthGuard] },
       { path: 'about', component: AboutComponent },
