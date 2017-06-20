@@ -10,6 +10,13 @@
   width: 100%;
 
 
+  .no-offers{
+    color: $app-header-color;
+    text-transform: none;
+    
+  }
+
+
   .offers-nav{
       width: calc(100% + 60px);
       border-bottom: 1px solid #eee;

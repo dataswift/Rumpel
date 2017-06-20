@@ -20,18 +20,18 @@ export class DataOfferService {
     this.jwt = new JwtHelper();
   }
 
-  fetchOfferList(): Observable<Offer> {
+  fetchOfferList(): Observable<Offer[]> {
     const url = this.config.databuyer.url.concat('/api/v1/offers');
 
     return this.http.get(url)
       .map(res => {
         const resJson = res.json();
         console.log(resJson);
-        return <Offer>resJson;
+        return <Offer[]>resJson;
       })
   }
 
-  fetchUserAwareOfferList(): Observable<Offer> {
+  fetchUserAwareOfferList(): Observable<Offer[]> {
     const url = this.config.databuyer.url.concat('/api/v1/offers');
 
     return this.getDataBuyerToken()
@@ -39,11 +39,11 @@ export class DataOfferService {
       .map(res => {
         const resJson = res.json();
         console.log(resJson);
-        return <Offer>resJson;
+        return <Offer[]>resJson;
       });
   }
 
-  claim(offerId: string): Observable<Offer> {
+  claim(offerId: string): Observable<Offer[]> {
     return this.claimOfferWithDataBuyer(offerId)
       .flatMap((claim: Claim) => this.hatSvc.updateDataDebit(claim.dataDebitId, 'enable'))
       .flatMap((res: Response) => this.fetchUserAwareOfferList());

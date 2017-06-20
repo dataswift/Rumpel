@@ -36,12 +36,17 @@
               </p>
             </div>
       </div>
+
+      <div class="user-feedback" *ngIf="userFeedbackShowing">
+          <rump-spinner [isRunning]="true" class="loader"></rump-spinner>
+          Processing...
+      </div>
     </div>
     <div class="rump-modal-footer">
       <div class="checkbox">
-        <label><input type="checkbox" value="">I agree to share the data being requested</label>
+        <label><input type="checkbox" value="" (change)="updateClaimDisabled($event)">I agree to share the data being requested</label>
       </div>
-      <button type="button" class="btn" (click)="acceptOffer()">Accept</button>
+      <button type="button" class="btn" (click)="acceptOffer()" [disabled]='claimDisabled'>Accept</button>
     </div>
     <div class="close-modal" (click)="closeModal()"><i class="material-icons">close</i></div>
   </div>

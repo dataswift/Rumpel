@@ -12,6 +12,9 @@
   </div>
 
   <div class="offers-container">
+      <div *ngIf="offers.length == 0">
+        <h4 class="no-offers">Sorry, there are no offers matching the data you have made available</h4>
+      </div>
 
       <div class="offer" *ngFor="let offer of offers; let i = index" (click)="showModal(i, this)">
           <div [style.background-image]="'url(' + offer?.illustrationUrl + ')'" class="offer-img"></div>
