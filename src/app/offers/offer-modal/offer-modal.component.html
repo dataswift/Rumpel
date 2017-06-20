@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
+  -->
+
+<div class="rump-modal">
+  <div class="rump-modal-content">
+    <div class="rump-modal-header">
+      <h3>Offer details</h3>
+    </div>
+    <div class="rump-modal-body">
+      <a (click)="prevOffer()" class="swipe swipe-left" [class.swipe-disabled]="offer_index == 0"><i class="material-icons">keyboard_backspace</i><span>Prev</span></a>
+      <a (click)="nextOffer()" class="swipe swipe-right" [class.swipe-disabled]="offer_index >= offers.length-1"><span>Next</span><i class="material-icons">keyboard_backspace</i></a>
+      <div class="offer-content">
+            <div class="offer-logo" [style.background-image]="'url(' + offers[offer_index].illustrationUrl + ')'"></div>
+            <h4 class="offer-title">{{ offers[offer_index].title }}</h4>
+            <p class="offer-expires" *ngIf="offers[offer_index].expires && offers[offer_index].expires > timeNow">Expires {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
+            <p class="offer-expires" *ngIf="offers[offer_index].expires && offers[offer_index].expires < timeNow">Expired {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
+
+            <div class="offer-details">
+              <hr>
+              <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+              <h6>Offer description</h6>
+              <p [innerHTML]="offers[offer_index].shortDescription | safeHtml"></p>
+            </div>
+
+            <div class="offer-details">
+              <hr>
+              <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+              <h6>Data requested</h6>
+              <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
+                <span>{{ def.source }}</span>
+              </p>
+            </div>
+      </div>
+    </div>
+    <div class="rump-modal-footer">
+      <div class="checkbox">
+        <label><input type="checkbox" value="">I agree to share the data being requested</label>
+      </div>
+      <button type="button" class="btn" (click)="acceptOffer()">Accept</button>
+    </div>
+    <div class="close-modal" (click)="closeModal()"><i class="material-icons">close</i></div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" (click)="closeModal()"></div>

@@ -1,0 +1,172 @@
+@import "../../style/variables";
+
+
+
+
+.rump-modal-body{
+
+  max-height: 370px;
+  overflow-y: scroll;
+  background-color: #eee;
+  padding: 0px !important;
+  margin: 0px !important;
+  border: none !important;
+
+  .swipe{
+    font-size: 12px;
+    color: #6297b1;
+    font-weight: 300;
+    margin: 15px 55px;
+    cursor: pointer;
+    float: left;
+    user-select: none;
+
+    span{
+      margin: 0px 5px;
+    }
+
+    i{
+      position: relative;
+      top: 6px;
+      font-size: 20px;
+    }
+
+    &:hover{
+      text-decoration: none;
+    }
+  }
+
+  .swipe-disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .swipe-right{
+    float: right;
+    i{
+      transform: scaleX(-1);
+    }
+  }
+
+  .offer-content{
+
+    font-size: 0.75em;
+    background-color: white;
+    margin: 55px;
+    padding: 35px !important;
+    border: 2px solid #e7e7e7;
+
+        .offer-logo{
+          width: 300px;
+          height: 80px;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: contain;
+          display: block;
+          margin: auto;
+          margin-bottom: 30px;
+        }
+
+        .offer-title, .offer-expires{
+          color: $app-header-color;
+          text-align: center;
+        }
+
+        .offer-title{
+          font-size: 18px;
+          text-transform: capitalize;
+          line-height: 1.4;
+        }
+
+        .offer-expires{
+          font-size: 12px;
+          font-weight: 300;
+          letter-spacing: 0.5px;
+          font-style: italic;
+          margin-top: 0;
+        }
+
+        .offer-details{
+              position: relative;
+
+              hr{
+                border-top: 1px dashed #9b9b9b;
+                border-bottom: none;
+                opacity: 0.5;
+              }
+
+              .circle-cutout{
+                border-radius: 50%;
+                width: 26px;
+                height: 26px;
+                display: block;
+                position: absolute;
+                top: -13px;
+                left: -48px;
+                background-color: #eee;
+              }
+              .circle-cutout-right{
+                left: unset;
+                right: -48px;
+              }
+
+              h6, p{
+                text-transform: uppercase;
+                color: #999;
+                font-size: 12px;
+                font-weight: 400;
+                margin-top: 25px;
+              }
+
+
+              p{
+                font-weight: 300;
+                text-transform: none;
+                margin-top: 10px;
+                line-height: 1.4;
+                letter-spacing: 0.4px;
+              }
+        }
+  }
+
+}
+
+
+.rump-modal-footer{
+  background-color: #6297b1;
+  color: white;
+  padding: 0 !important;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+
+
+  .checkbox{
+    margin: 16px 20px 16px 80px;
+    position: relative;
+    top: -3px;
+
+    label{
+      font-size: 14px;
+      color: #deeaee;
+      font-family: "Open Sans", sans-serif;
+      font-weight: 300;
+
+    }
+  }
+
+
+  .btn{
+    background-color: $app-header-color;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 11px;
+    border-radius: 4px;
+    margin: 16px 80px 16px 20px;
+    font-family: "Open Sans", sans-serif;
+  }
+}

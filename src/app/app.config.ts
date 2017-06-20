@@ -93,8 +93,8 @@ export const AppConfig: IAppConfig = {
       { display: 'My personal data', icon: 'security', link: 'datastore', dataType: 'profile', disable: '',
       description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
 
-      // { display: 'Redeem offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '',
-      // description: 'Allow access to your data in exchange for cash, services or vouchers. Visit the MarketSquare to find out more.' },
+      { display: 'Redeem offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '',
+      description: 'Allow access to your data in exchange for cash, services or vouchers.' },
 
       { display: 'Notables', icon: 'border_color', link: 'notables', dataType: '', disable: '',
       description: `Your words are your memories!

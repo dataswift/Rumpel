@@ -26,6 +26,7 @@ import { MarketSquareModule } from './market-square/market-square.module';
 import { DataDebitsModule } from './data-debits/data-debits.module';
 import { WeatherModule } from './weather/weather.module';
 import { PublicPagesModule } from './public-pages/public-pages.module';
+import { OffersModule } from './offers/offers.module';
 
 import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -50,7 +51,7 @@ import { InfoBoxComponent } from './layout/info-box/info-box.component';
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
 import { BrowserStorageService } from './services/browser-storage.service';
-import { OffersComponent } from './offers/offers.component';
+
 
 export function authHttpFactory(backend: XHRBackend,
                                 defaultOptions: RequestOptions,
@@ -70,8 +71,7 @@ export function cookieServiceFactory() {
     TileHeaderComponent,
     TileHeroComponent,
     TileComingSoonComponent,
-    DataTypeFilterPipe,
-    OffersComponent
+    DataTypeFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -92,7 +92,8 @@ export function cookieServiceFactory() {
     DimensionsModule,
     ProfilesModule,
     WeatherModule,
-    PublicPagesModule
+    PublicPagesModule,
+    OffersModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent ],

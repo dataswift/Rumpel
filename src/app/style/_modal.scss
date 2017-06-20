@@ -11,7 +11,7 @@
 .modal-overlay {
   z-index: 1500;
 
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   position: fixed;
   top: 0;
   left: 0;
@@ -31,7 +31,7 @@
   max-width: 90%;
   height: auto;
   max-height: 90%;
-  background-color: white;
+  background-color: #eee;
 
   z-index: 1510;
 
@@ -48,26 +48,38 @@
       position: absolute;
       cursor: pointer;
       top: 10px;
-      right: 20px;
+      right: 8px;
       padding: 10px;
-      color: $app-accent-color;
+      color: white;
     }
   }
 }
 
 .rump-modal-header {
+  background-color: $app-header-color;
+  padding: 0 !important;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
   h3 {
     font-family: $font-display;
-    color: $app-accent-color;
-    margin-top: 0.25em;
-    margin-bottom: 0.25em;
-    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 200;
+    text-transform: uppercase;
+    color: white;;
+    padding: 25px;
+    letter-spacing: 0.5px;
   }
 }
 
 .rump-modal-body {
   font-size: 0.75em;
-  border-top: 1px solid #cdcdcd;
+  background-color: white;
+  margin: 30px 55px 20px;
+  padding: 35px !important;
+  border: 2px solid #e7e7e7;
 
   p {
     margin-top: 10px;

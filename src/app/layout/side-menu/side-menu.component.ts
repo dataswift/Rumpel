@@ -51,6 +51,9 @@ export class SideMenuComponent implements OnInit {
               private marketSvc: MarketSquareService ) {}
 
   ngOnInit() {
+
+    this.selectedItem = window.location.pathname;
+
     this.state = { dataSources: [], dataTypes: [] };
     this.userAuthenticated = false;
     this.menu = this.config.menuItems.public;
