@@ -18,7 +18,7 @@
 
     <ul class="center" id="intro-step1">
       <li *ngFor="let item of menu; let i = index"
-          [class.selected]="item.link === selectedItem">
+          [class.selected]="selectedItem.indexOf(item.link) !== -1">  
         <div class="wrapper" id="intro-step{{i + 3}}">
           <a [routerLink]="[item.link]" (click)="closeMenu()"
             data-toggle="popover" data-container=".menubar-left"
