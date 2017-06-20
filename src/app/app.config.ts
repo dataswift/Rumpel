@@ -17,6 +17,7 @@ export class IAppConfig {
   protocol: string;
   exchange: { url: string; id: string; accessToken: string; };
   marketsquare: { url: string };
+  databuyer: { name: string; url: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
   notables: {
@@ -49,6 +50,10 @@ export const AppConfig: IAppConfig = {
   },
   marketsquare: {
     url: 'https://marketsquare.hubofallthings.com/api'
+  },
+  databuyer: {
+    name: 'DataBuyer',
+    url: 'https://databuyer.hubofallthings.com'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='
