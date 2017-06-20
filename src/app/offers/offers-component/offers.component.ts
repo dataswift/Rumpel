@@ -4,7 +4,7 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 
 import { DialogService } from '../../layout/dialog.service';
-import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
+import { OfferModalComponent } from '../offer-modal/offer-modal.component';
 
 @Component({
   selector: 'rump-offers',
@@ -30,7 +30,7 @@ export class OffersComponent implements OnInit {
 
 
   showModal() {
-    this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
+    this.dialogSvc.createDialog<OfferModalComponent>(OfferModalComponent, {
       title: 'Help',
       message: `HATs are distributed systems and being private also means no one will know if you have a problem.<br><br>
       If you have an issue with your HAT or this dashboard, please report it <a href="mailto:contact@HATDeX.org?subject=Support%20for%20`
