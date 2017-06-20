@@ -56,7 +56,7 @@ export class DataPlugService {
     this.userSvc.user$
       .filter((user: User) => user.authenticated === true)
       .subscribe((user: User) => {
-        console.log(user);
+        // console.log(user);
         this.hatUrl = user.fullDomain;
         this.getFacebookStatus();
         this.getTwitterStatus();
