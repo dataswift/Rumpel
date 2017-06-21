@@ -8,6 +8,8 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
+declare var $: any;
+
 @Component({
   selector: 'rump-info-box',
   templateUrl: './info-box.component.html'
@@ -16,13 +18,18 @@ export class InfoBoxComponent implements OnInit {
   @Input() title: string;
   @Input() message: string;
   private destroy: Function;
+  public scrollTop: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.scrollTop = $('body').scrollTop();
+    $('body, html').addClass('no-scroll');
   }
 
   closeModal(): void {
+    $('body, html').removeClass('no-scroll');
+    $('body').scrollTop(this.scrollTop);
     this.destroy();
   }
 }

@@ -473,3 +473,10 @@ button.btn-view-header {
 .tile-body-tight{
   padding: 10px 30px !important;
 }
+
+
+
+.no-scroll{
+  overflow-y: hidden;
+  position: fixed;
+}

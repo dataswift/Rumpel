@@ -23,14 +23,18 @@ export class OfferModalComponent implements OnInit {
   private destroy: Function;
   public claimDisabled = true;
   public userFeedbackShowing = false;
+  public scrollTop: number;
 
   constructor(private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
-    console.log( this.offers[this.offer_index] );
+    this.scrollTop = $('body').scrollTop();
+    $('body, html').addClass('no-scroll');
   }
 
   closeModal(): void {
+    $('body, html').removeClass('no-scroll');
+    $('body').scrollTop(this.scrollTop);
     this.destroy();
   }
 
