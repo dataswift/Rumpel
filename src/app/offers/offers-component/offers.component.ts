@@ -21,11 +21,15 @@ export class OffersComponent implements OnInit {
 
   public offers: any = [
     {
-      id: '123',
+      id: 'b25334ab-707a-42e7-9a38-6d1e65604602',
       title: 'batman',
       illustrationUrl: 'assets/icons/facebook-plug.svg',
       expires: 1527116400000,
       shortDescription: 'hello jon',
+      pii: true,
+      collectFor: 259200000,
+      requiredMaxUser: 1000,
+      totalUserClaims: 587,
       requiredDataDefinition:
           [{
             'source': 'Facebook',
@@ -38,6 +42,10 @@ export class OffersComponent implements OnInit {
       illustrationUrl: 'assets/icons/twitter-plug.svg',
       expires: 1497889035000,
       shortDescription: 'hello jon hello jon hello jon hello jon hello jon hello jon hello jon hello jon',
+      pii: false,
+      collectFor: 691200000,
+      requiredMaxUser: 100,
+      totalUserClaims: 100,
       requiredDataDefinition:
           [{
             'source': 'Twitter',
@@ -49,6 +57,10 @@ export class OffersComponent implements OnInit {
       illustrationUrl: 'assets/icons/twitter-plug.svg',
       expires: 1327116400000,
       shortDescription: 'hello jon',
+      pii: true,
+      collectFor: 86400000,
+      requiredMaxUser: 10,
+      totalUserClaims: 1,
       requiredDataDefinition:
           [{
             'source': 'Location',
@@ -70,10 +82,14 @@ export class OffersComponent implements OnInit {
   ngOnInit() {
     this.offersSub = this.dataOfferSvc.fetchUserAwareOfferList().subscribe(offers => {
       this.offers = offers.filter(function(offer) {
-          return offer.claim.status === 'untouched'
+          return (  offer.claim.status === 'untouched'
+                    && (offer.requiredMaxUser - offer.totalUserClaims) > 0
+                    && offer.expires > Date.now()
+                  )
       });
     },
     error => { console.log(error); });
+
   }
 
 

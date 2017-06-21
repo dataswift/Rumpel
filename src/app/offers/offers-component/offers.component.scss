@@ -9,6 +9,10 @@
   top: -40px;
   width: 100%;
 
+  @media(max-width: 420px){
+    padding: 20px;
+  }
+
 
   .no-offers{
     color: $app-header-color;
@@ -146,11 +150,17 @@
       border-radius: 6px;
       box-shadow: 0px 0px 8px #ddd;
       width: 278px;
+      min-width: 278px;
       min-height: 100px;
       padding: 40px;
       margin: 22px;
       border: 1px solid #ddd;
       cursor: pointer;
+
+      @media(max-width: 420px){
+        margin-left: 0;
+        margin-right: 0;
+      }
 
       &:last-child{
 

@@ -5,7 +5,7 @@
 
 .rump-modal-body{
 
-  max-height: 370px;
+  max-height: 430px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #eee;
@@ -14,66 +14,61 @@
   border: none !important;
   position: relative;
 
-  .user-feedback{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 200;
-    width: 100%;
-    height: 100%;
-    background: white;
-    text-align: center;
-    color: $app-header-color;
-    font-size: 18px;
+  @media(max-height: 610px){
+    max-height: 300px;
+  }
 
-    .loader{
-      /deep/ .spinner{
-        width: 100px;
-        height: 100px;
-        display: block;
-        margin: 100px auto 20px;
+
+
+  .offer-nav{
+    position: fixed;
+    background: #eee;
+    z-index: 500;
+    width: 100%;
+
+
+    .swipe{
+      font-size: 12px;
+      color: #6297b1;
+      font-weight: 300;
+      margin: 13px 55px 15px;
+      cursor: pointer;
+      float: left;
+      user-select: none;
+
+      @media(max-width: 550px){
+        margin: 15px 25px;
       }
 
-    }
-  }
+      span{
+        margin: 0px 5px;
+      }
 
-  .swipe{
-    font-size: 12px;
-    color: #6297b1;
-    font-weight: 300;
-    margin: 15px 55px;
-    cursor: pointer;
-    float: left;
-    user-select: none;
+      i{
+        position: relative;
+        top: 6px;
+        font-size: 20px;
+      }
 
-    @media(max-width: 550px){
-      margin: 15px 25px;
-    }
-
-    span{
-      margin: 0px 5px;
+      &:hover{
+        text-decoration: none;
+      }
     }
 
-    i{
-      position: relative;
-      top: 6px;
-      font-size: 20px;
+    .swipe-disabled{
+      opacity: 0.4;
+      cursor: not-allowed;
     }
 
-    &:hover{
-      text-decoration: none;
+    .swipe-right{
+      float: right;
+      i{
+        transform: scaleX(-1);
+      }
     }
-  }
 
-  .swipe-disabled{
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .swipe-right{
-    float: right;
-    i{
-      transform: scaleX(-1);
+    &.shadow{
+      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
     }
   }
 
@@ -107,16 +102,48 @@
 
         .offer-title{
           font-size: 18px;
-          text-transform: capitalize;
+          text-transform: none;
           line-height: 1.4;
+          margin-bottom: 5px;
         }
 
         .offer-expires{
-          font-size: 12px;
+          font-size: 11px;
           font-weight: 300;
           letter-spacing: 0.5px;
           font-style: italic;
           margin-top: 0;
+          opacity: 0.6;
+        }
+
+        .offer-icons{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          align-content: center;
+          margin-top: 25px;
+
+          .offer-icon{
+            text-align: center;
+            color: #999;
+            text-transform: uppercase;
+            font-size: 10px;
+            font-weight: 300;
+            margin: 0 15px;
+
+            @media(max-width: 400px){
+              margin: 0 10px;
+            }
+
+            i{
+              color: #9a9a9a;
+              font-size: 18px;
+            }
+
+            p{
+              margin-top: 5px;
+            }
+          }
         }
 
         .offer-details{
@@ -173,6 +200,27 @@
         }
   }
 
+  .PII{
+    display: block;
+    margin: auto;
+    width: 230px;
+    text-align: center;
+    color: #999;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 300;
+    margin-top: -30px;
+    margin-bottom: 30px;
+
+    p{
+      margin-top: 0;
+    }
+
+    i{
+      color: $app-notification-color;
+    }
+  }
+
 }
 
 
@@ -186,19 +234,27 @@
   justify-content: space-between;
   align-items: center;
   align-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media(max-width: 520px){
+
+  }
 
 
   .checkbox{
-    margin: 16px 20px 16px 80px;
+    margin: 16px 15px 16px 80px;
     position: relative;
-    top: -5px;
+    top: -7px;
 
-    @media(max-width: 550px){
-      margin: 16px 10px 16px 25px;
+    @media(max-width: 650px){
+      margin: 16px auto 0px;
+      width: 100%;
     }
 
+
     label{
-      font-size: 14px;
+      font-size: 12px;
       color: #deeaee;
       font-family: "Open Sans", sans-serif;
       font-weight: 300;
@@ -214,11 +270,64 @@
     font-weight: 300;
     font-size: 11px;
     border-radius: 4px;
-    margin: 16px 80px 16px 20px;
+    margin: 16px 80px 16px 15px;
     font-family: "Open Sans", sans-serif;
+    border: 2px solid $app-header-color;
+    width: 140px;
+    height: 38px;
+    cursor: pointer;
 
-    @media(max-width: 550px){
-      margin: 16px 25px 16px 10px;
+    .material-icons{
+      font-size: 18px;
+      color: white;
+      vertical-align: middle;
+      padding-right: 6px;
+      position: relative;
+      top: -1px;
+    }
+
+    @media(max-width: 650px){
+      margin: 16px auto;
+    }
+
+
+
+    @-webkit-keyframes spin {
+        0%   {-webkit-transform: rotate(0deg)}
+        100% {-webkit-transform: rotate(360deg)}
+    }
+
+    &.processing{
+      border-color: white;
+      background-color: white;
+      color: $app-header-color;
+      cursor: progress;
+
+      i{
+        color: $app-header-color;
+        transform-origin: 9px;
+        -webkit-animation: spin 2s infinite linear;
+      }
+    }
+
+    &.failed{
+      border-color: white;
+      background-color: #a00000;
+      color: white;
+
+      i{
+        color: white;
+      }
+    }
+
+    &.accepted{
+      border-color: white;
+      background-color: #86c652;
+      color: white;
+
+      i{
+        color: white;
+      }
     }
   }
 
@@ -237,7 +346,7 @@
 	border-radius: 3px;
 	display: inline-block;
 	position: relative !important;
-  top: 6px;
+  top: 7px;
   margin-right: 10px;
   outline: none;
   cursor: pointer;
