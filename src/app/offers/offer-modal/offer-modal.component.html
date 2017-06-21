@@ -66,7 +66,7 @@
     </div>
     <div class="rump-modal-footer">
       <div class="checkbox">
-        <label><input type="checkbox" class="regular-checkbox" value="" (change)="updateClaimDisabled($event)">I agree to share the data being requested</label>
+        <label><input type="checkbox" class="regular-checkbox" value="" (change)="updateClaimDisabled($event)" [disabled]="btnText != 'Accept' && btnText != 'Try again'">I agree to share the data being requested</label>
       </div>
       <button type="button" class="btn" (click)="acceptOffer($event)" [disabled]='claimDisabled'><i class="material-icons">{{ btnIcon }}</i>{{ btnText }}</button>
     </div>
