@@ -5,7 +5,7 @@
 <style type="text/css">
 	.st0{fill:#FFFFFF;}
 	.st1{fill:none;stroke:#FFFFFF;stroke-width:18;stroke-miterlimit:10;}
-	.st2{fill:#009688;}
+	.st2{fill:$app-accent-color;}
 </style>
 <g id="Layer_2">
 	<g>

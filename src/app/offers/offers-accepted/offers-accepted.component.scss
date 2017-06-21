@@ -43,7 +43,7 @@
 
       a.current{
         border-bottom: 2px solid $app-notification-color;
-        color: #4a556b;
+        color: $app-header-color;
         font-weight: 600;
       }
   }

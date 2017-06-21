@@ -6,8 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+ @import "../../../style/variables";
+
 $text-color: white;
-$active-color: #009688;
+$active-color: $app-accent-color;
 
 h1, h2, h3, h4, h5 {
   color: $text-color;

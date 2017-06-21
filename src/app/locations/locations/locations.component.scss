@@ -118,7 +118,7 @@
     }
 
     &.selected {
-      background-color: #009688;
+      background-color: $app-accent-color;
       color: white;
     }
   }
@@ -142,7 +142,7 @@
   }
 
   span {
-    color: #009688;
+    color: $app-accent-color;
     font-size: 1.25em;
   }
 }

@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+ @import "../../../style/variables";
+
 .cmn-toggle {
   position: absolute;
   margin-left: -9999px;
@@ -52,9 +54,9 @@ input.cmn-toggle-round-flat + label:after {
   transition: margin 0.4s, background 0.4s;
 }
 input.cmn-toggle-round-flat:checked + label {
-  background-color: #009688;
+  background-color: $app-accent-color;
 }
 input.cmn-toggle-round-flat:checked + label:after {
   margin-left: 4.25em;
-  background-color: #009688;
+  background-color: $app-accent-color;
 }

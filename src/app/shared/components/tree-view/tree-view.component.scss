@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+ @import "../../../style/variables";
+
 ul {
   font-family: "Open Sans Regular", sans-serif;
   padding-top: 0.25em;
@@ -22,7 +24,7 @@ ul {
 }
 
 .ss-puzzle {
-  color: #009688;
+  color: $app-accent-color;
   line-height: inherit;
 }
 

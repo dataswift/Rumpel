@@ -2,7 +2,7 @@
   <defs>
     <style>
       .cls-1 {
-        fill: #009688;
+        fill: $app-accent-color;
       }
 
       .cls-2 {

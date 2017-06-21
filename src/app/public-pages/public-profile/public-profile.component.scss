@@ -124,7 +124,7 @@
           border: 8px solid white;
           position: relative;
           top: -80px;
-          background-color: #4a556b
+          background-color: $app-header-color
         }
 
         h1{
@@ -149,7 +149,7 @@
       .blue-top{
 
         .phatabox-header{
-          background-color: #4a556b;
+          background-color: $app-header-color;
           color: white;
           padding: 20px;
           border-top-left-radius: 8px;

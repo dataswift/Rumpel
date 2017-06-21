@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
  */
 
+ @import "../../../style/variables";
+
 .spinner {
   width: 2em;
   height: 2em;
@@ -18,7 +20,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #009688;
+  background-color: $app-accent-color;
   opacity: 0.6;
   position: absolute;
   top: 0;

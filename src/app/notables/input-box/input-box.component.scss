@@ -5,9 +5,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
+ @import "../../style/variables";
 
 .input-box {
-  background-color: #009688;
+  background-color: $app-accent-color;
   min-height: 6em;
 }
 

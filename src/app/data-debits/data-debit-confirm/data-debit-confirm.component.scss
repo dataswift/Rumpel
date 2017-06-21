@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
  */
 
+ @import "../../style/variables";
+ 
 .offer-title {
   background-color: #ececec;
   border: 0.2em dashed #535353;
@@ -47,7 +49,7 @@
 
   div {
     margin-left: 1em;
-    border: 2px dashed #009688;
+    border: 2px dashed $app-accent-color;
     padding: 0.5em 1em;
   }
 
@@ -77,7 +79,7 @@
       margin-right: 0.5em;
 
       &.accepted {
-        color: #009688;
+        color: $app-accent-color;
       }
     }
   }
@@ -144,11 +146,11 @@ progress {
   margin-top: 1.5em;
 
   &::-moz-progress-bar {
-    background-color: #009688;
+    background-color: $app-accent-color;
   }
 
   &::-ms-fill {
-    background-color: #009688;
+    background-color: $app-accent-color;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
   }
 
@@ -159,7 +161,7 @@ progress {
   }
 
   &::-webkit-progress-value {
-    background-color: #009688;
+    background-color: $app-accent-color;
     border-radius: 2px;
     -webkit-animation: width .5s ease-in;
   }
@@ -172,7 +174,7 @@ progress {
   border-radius: 2px;
 
   .progress-value {
-    background-color: #009688;
+    background-color: $app-accent-color;
     display: block;
     height: 2em;
     border-radius: 2px;
