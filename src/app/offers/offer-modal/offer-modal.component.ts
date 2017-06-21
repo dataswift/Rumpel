@@ -25,8 +25,8 @@ export class OfferModalComponent implements OnInit {
   public scrollTop: number;
   public offerDuration: number;
   public scrollShadow = false;
-  public btnIcon:string = '';
-  public btnText:string = 'Accept';
+  public btnIcon = '';
+  public btnText = 'Accept';
   public navDisabled = false;
 
   constructor(private dataOfferSvc: DataOfferService) { }
@@ -56,7 +56,7 @@ export class OfferModalComponent implements OnInit {
     }
   }
 
-  changeOffer(diff: number){
+  changeOffer(diff: number) {
     this.offer_index = this.offer_index + diff;
     this.offerDuration = moment.duration( this.offers[this.offer_index].collectFor ).as('days');
     this.claimDisabled = true;
@@ -70,7 +70,7 @@ export class OfferModalComponent implements OnInit {
 
     this.navDisabled = true;
 
-    if(this.btnText === 'Accept' || this.btnText === 'Try again') {
+    if (this.btnText === 'Accept' || this.btnText === 'Try again') {
         this.showUserFeedback(evt.target, 'Processing');
 
         this.claimSub = this.dataOfferSvc.claim(this.offers[this.offer_index].id).subscribe(offers => {
@@ -96,7 +96,7 @@ export class OfferModalComponent implements OnInit {
     this.btnText = feedback;
     btn.classList.remove('processing', 'accepted', 'failed');
 
-    if(feedback !== 'Accept' && feedback !== 'Try again') {
+    if (feedback !== 'Accept' && feedback !== 'Try again') {
       btn.classList.add( feedback.toLowerCase() );
     }
 
@@ -121,10 +121,9 @@ export class OfferModalComponent implements OnInit {
 
 
   handleScroll(evt) {
-    if(evt.target.scrollTop > 0){
+    if (evt.target.scrollTop > 0) {
       this.scrollShadow = true;
-    }
-    else{
+    } else {
       this.scrollShadow = false;
     }
   }

@@ -37,7 +37,7 @@ export class SideMenuComponent implements OnInit {
   public mobileMode = false;
   public profile: any;
   public isPublicPage = false;
-  public availableOffers:number = 0;
+  public availableOffers = 0;
   private offersSub: Subscription;
   public offers: any;
 
