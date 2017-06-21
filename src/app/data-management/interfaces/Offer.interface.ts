@@ -15,6 +15,7 @@ export interface Offer {
   reward: Cash | Service | Voucher;
   owner: Owner;
   claim: Claim | null;
+  pii: boolean;
 }
 
 export interface Claim {
