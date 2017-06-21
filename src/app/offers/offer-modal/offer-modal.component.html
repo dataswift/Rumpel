@@ -32,7 +32,8 @@
               <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
               <h6>Data requested</h6>
               <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
-                <span>{{ def.source }}</span>
+                <span class="bold">{{ def.source }}</span>
+                <span *ngFor="let dataset of def.datasets">{{ dataset.description }}</span>
               </p>
             </div>
       </div>
