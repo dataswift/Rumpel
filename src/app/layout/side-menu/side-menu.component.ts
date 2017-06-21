@@ -10,6 +10,7 @@ import {Component, OnInit, Output, EventEmitter, Inject} from '@angular/core';
 import { UiStateService, UserService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
+import { DataOfferService } from '../../data-management/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
 import { MarketSquareService } from '../../market-square/market-square.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -36,6 +37,9 @@ export class SideMenuComponent implements OnInit {
   public mobileMode = false;
   public profile: any;
   public isPublicPage = false;
+  public availableOffers:number = 0;
+  private offersSub: Subscription;
+  public offers: any;
 
 
   // hack: uiState service needs to be injected before Auth component,
@@ -48,6 +52,7 @@ export class SideMenuComponent implements OnInit {
               private userSvc: UserService,
               private hatSvc: HatApiService,
               private dataplugSvc: DataPlugService,
+              private dataOfferSvc: DataOfferService,
               private marketSvc: MarketSquareService ) {}
 
   ngOnInit() {
@@ -63,6 +68,19 @@ export class SideMenuComponent implements OnInit {
         this.profile = profileResponse.profile;
       }
     });
+
+
+    this.offersSub = this.dataOfferSvc.fetchUserAwareOfferList().subscribe(offers => {
+       this.offers = offers.filter(function(offer) {
+          return (  offer.claim.status === 'untouched'
+                    && (offer.requiredMaxUser - offer.totalUserClaims) > 0
+                    && offer.expires > Date.now()
+                  )
+      });
+
+      this.availableOffers = this.offers.length();
+    });
+
 
 
     this.router.events
