@@ -13,7 +13,7 @@ import { DialogService } from '../dialog.service';
 import { DataOfferService } from '../../data-management/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
 import { MarketSquareService } from '../../market-square/market-square.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, Observable } from 'rxjs/Rx';
 import { DataTable } from '../../shared/interfaces/data-table.interface';
 
 import { Router, NavigationEnd } from '@angular/router';
@@ -39,7 +39,7 @@ export class SideMenuComponent implements OnInit {
   public isPublicPage = false;
   public availableOffers = 0;
   private offersSub: Subscription;
-  public offers: any;
+  public offers: any = [];
 
 
   // hack: uiState service needs to be injected before Auth component,
@@ -70,18 +70,25 @@ export class SideMenuComponent implements OnInit {
     });
 
 
-    this.offersSub = this.dataOfferSvc.fetchUserAwareOfferList().subscribe(offers => {
-       this.offers = offers.filter(function(offer) {
-          return (  offer.claim.status === 'untouched'
-                    && (offer.requiredMaxUser - offer.totalUserClaims) > 0
-                    && offer.expires > Date.now()
+
+    this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
+      console.log('offerSub', offers);
+      this.offers = offers.filter(function(offer) {
+
+          let claimStatus = 'untouched';
+          if (offer.claim && offer.claim.status) {
+            claimStatus = offer.claim.status;
+          }
+          return (  claimStatus === 'untouched' &&
+                    (offer.requiredMaxUser - offer.totalUserClaims) > 0 &&
+                    offer.expires > Date.now()
                   )
       });
+      this.availableOffers = this.offers.length;
+    },
+    error => { console.log(error); });
 
-      this.availableOffers = this.offers.length();
-    });
-
-
+    this.dataOfferSvc.fetchUserAwareOfferListSubscription();
 
     this.router.events
         .filter(event => event instanceof NavigationEnd)
