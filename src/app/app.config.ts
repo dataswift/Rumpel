@@ -53,7 +53,7 @@ export const AppConfig: IAppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubofallthings.com'
+    url: 'https://databuyer.hubat.net'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='
