@@ -28,6 +28,7 @@ export class OfferModalComponent implements OnInit {
   public btnIcon = '';
   public btnText = 'Accept';
   public navDisabled = false;
+  public offerStatus = 'untouched';
 
   constructor(private dataOfferSvc: DataOfferService) { }
 
@@ -59,9 +60,20 @@ export class OfferModalComponent implements OnInit {
   changeOffer(diff: number) {
     this.offer_index = this.offer_index + diff;
     this.offerDuration = moment.duration( this.offers[this.offer_index].collectFor ).as('days');
+
     this.claimDisabled = true;
     this.scrollShadow = false;
     this.navDisabled = false;
+    this.btnIcon = '';
+    this.btnText = 'Accept'
+
+    if (this.offers[this.offer_index].claim === undefined) {
+      this.offerStatus = 'untouched';
+    } else {
+      this.offerStatus = this.offers[this.offer_index].claim.status;
+    }
+
+    $('.rump-modal-footer .btn').removeClass('processing accepted failed');
     $('.regular-checkbox').attr('checked', false);
     $('.rump-modal-body').scrollTop(0);
   }
@@ -112,7 +124,7 @@ export class OfferModalComponent implements OnInit {
       } else if (feedback === 'Failed') {
         this.btnIcon = 'report_problem';
         setTimeout(function(){
-          self.showUserFeedback(btn, 'Try again');
+          self.showUserFeedback(btn, 'Accept');
         }, 5000);
       }
 

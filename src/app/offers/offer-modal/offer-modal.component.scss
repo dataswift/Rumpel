@@ -14,7 +14,7 @@
   border: none !important;
   position: relative;
 
-  @media(max-height: 610px){
+  @media(max-height: 645px){
     max-height: 300px;
   }
 
@@ -237,8 +237,55 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  @media(max-width: 520px){
+  &.footer-state{
+    padding: 15px !important;
 
+    i{
+      font-size: 36px;
+      margin-right: 12px;
+    }
+
+    h5{
+      display: block;
+      font-weight: 500;
+      text-align: left;
+      margin: 0;
+    }
+
+    p{
+      font-size: 11px;
+      display: block;
+      text-align: left;
+      margin: 0;
+      font-weight: 300;
+    }
+  }
+
+  &.footer-claimed{
+    background-color: rgba(154, 154, 154, 0.2);
+    color: #9a9a9a;
+  }
+
+  &.footer-complete{
+    background-color: rgba(134, 198, 82, 0.1);
+    color: #86c652;
+
+    button{
+      margin: 0 0 0 50px;
+      color: white;
+      background-color: #86c652;
+      border-color: #86c652;
+    }
+  }
+
+  &.footer-redeemed{
+    background-color: #86c652;
+    color: white;
+  }
+
+  &.footer-failed{
+    background-color: #a00000;
+    color: white;
   }
 
 
@@ -371,5 +418,13 @@
       	left: 3px;
       	color: #fff;
       }
+  }
+}
+
+button{
+  outline: none;
+
+  &:hover, &:focus, &:active{
+    outline: none;
   }
 }
