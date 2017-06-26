@@ -10,14 +10,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../auth.guard';
-import { OffersComponent } from './offers-component/offers.component';
-import { OffersAcceptedComponent } from './offers-accepted/offers-accepted.component';
+import { OffersHomeComponent } from './offers-home/offers-home.component';
 
 @NgModule({
     imports: [
       RouterModule.forChild([
-        { path: 'offers', component: OffersComponent, canActivate: [AuthGuard] },
-        { path: 'offers-accepted', component: OffersAcceptedComponent, canActivate: [AuthGuard] }
+        { path: 'offers', component: OffersHomeComponent, canActivate: [AuthGuard] }
       ])
     ],
     exports: [
