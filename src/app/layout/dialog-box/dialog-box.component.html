@@ -8,23 +8,24 @@
 
 <div class="rump-modal" >
   <div class="rump-modal-content">
-    <div class="rump-modal-header">
-      <h3>{{title}}</h3>
-    </div>
-    <div class="rump-modal-body">
+
+    <div class="rump-modal-body white-modal-body">
+      <div class="close-modal" (click)="closeModal()"><i class="material-icons">close</i></div>
+      <img *ngIf="icon != '' && icon != undefined" [src]="[icon]"><h3>{{title}}</h3>
       <p>{{message}}</p>
-    </div>
-    <div class="rump-modal-footer">
-      <button type="button" class="btn" (click)="closeModal()">{{cancelBtnText}}</button>
-      <!--Warning: on Chrome, there is a lag between clicking the button and closing the modal-->
-      <a [href]="button.link" target="_blank" (click)="closeModal()" *ngFor="let button of buttons">
-        <button type="button" class="btn accept">
-        {{button.title}}
-        </button>
-      </a>
+
+        <div class="actions">
+          <button type="button" class="btn" (click)="closeModal()">{{cancelBtnText}}</button>
+          <!--Warning: on Chrome, there is a lag between clicking the button and closing the modal-->
+          <a [href]="button.link" target="_blank" (click)="closeModal()" *ngFor="let button of buttons">
+            <button type="button" class="btn accept">
+            {{button.title}}
+            </button>
+          </a>
+        </div>
     </div>
 
-    <div class="close-modal" (click)="closeModal()">x</div>
+
   </div>
 </div>
 

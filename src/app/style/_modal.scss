@@ -81,6 +81,20 @@
   padding: 35px !important;
   border: 2px solid #e7e7e7;
 
+
+
+  h3 {
+    font-family: $font-display;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 200;
+    text-transform: uppercase;
+    color: white;;
+    padding: 25px;
+    letter-spacing: 0.5px;
+  }
+
   p {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -93,6 +107,74 @@
         filter: brightness(110%);
       }
     }
+  }
+
+  &.white-modal-body{
+    margin: 0;
+    border: 2px solid #e7e7e7;
+    background: white;
+    padding: 50px !important;
+
+    img{
+      width: 55px;
+      height: 55px;
+      margin-right: 15px;
+      margin-bottom: 20px;
+    }
+
+    h3{
+      color: $app-header-color;
+      padding-left: 0;
+      font-weight: 600;
+      padding-top: 10px;
+      display: inline-block;
+      letter-spacing: 0.4px;
+      top: -8px;
+      position: relative;
+    }
+
+    p{
+      color: #999999;
+      font-size: 13px;
+      font-weight: 300;
+      font-family: "Open Sans", sans-serif;
+      letter-spacing: 0.4px;
+    }
+
+    .close-modal{
+      i{
+        color: #9a9a9a;
+      }
+    }
+
+    .actions{
+      display: flex;
+      justify-content: center;
+
+      button{
+        text-align: center;
+        color: white;
+        background-color: $app-header-color;
+        font-size: 11px;
+        outline: none;
+        min-width: 110px;
+        padding: 10px 20px;
+        font-weight: 300;
+        margin: 50px 10px 0px;
+        text-transform: uppercase;
+        display: inline-block;
+        border-radius: 4px;
+
+        &:hover, &:active, &:focus{
+          outline: none;
+          filter: brightness(110%);
+          background-color: $app-header-color;
+          color: white;
+        }
+      }
+    }
+
+
   }
 }
 

@@ -17,6 +17,7 @@ declare var $: any;
 export class InfoBoxComponent implements OnInit {
   @Input() title: string;
   @Input() message: string;
+  @Input() icon: string;
   private destroy: Function;
   public scrollTop: number;
 

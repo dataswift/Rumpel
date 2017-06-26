@@ -241,6 +241,7 @@ export class HeaderComponent implements OnInit {
   showInfoModal() {
     this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
       title: 'Help',
+      icon: 'assets/images/help.svg',
       message: `HATs are distributed systems and being private also means no one will know if you have a problem.<br><br>
       If you have an issue with your HAT or this dashboard, please report it <a href="mailto:contact@HATDeX.org?subject=Support%20for%20`
       + window.location.hostname + `">here</a>`
