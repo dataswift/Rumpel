@@ -12,13 +12,15 @@ export interface Offer {
   requiredMinUser: number;
   requiredMaxUser: number;
   totalUserClaims: number;
+  pii: boolean;
   reward: Cash | Service | Voucher;
   owner: Owner;
   claim: Claim | null;
-  pii: boolean;
 }
 
 export interface Claim {
+  dateCreated: number;
+  dateRedeemed: number | null;
   status: string; // "claimed", "completed", "rejected", "untouched"
   confirmed: boolean;
   dataDebitId: string | null;
