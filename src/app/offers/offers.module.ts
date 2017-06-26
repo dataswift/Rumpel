@@ -10,6 +10,8 @@ import { OffersComponent } from './offers-component/offers.component';
 import { OffersService } from './offers.service';
 import { OffersAcceptedComponent } from './offers-accepted/offers-accepted.component';
 import { OfferModalComponent } from './offer-modal/offer-modal.component';
+import { OffersHomeComponent } from './offers-home/offers-home.component';
+import { OfferAcceptedStatsComponent } from './offer-accepted-stats/offer-accepted-stats.component';
 
 
 @NgModule({
@@ -18,7 +20,7 @@ import { OfferModalComponent } from './offer-modal/offer-modal.component';
     SharedModule,
     OffersRoutingModule
   ],
-  declarations: [ OffersComponent, OffersAcceptedComponent, OfferModalComponent ],
+  declarations: [ OffersComponent, OffersAcceptedComponent, OfferModalComponent, OffersHomeComponent, OfferAcceptedStatsComponent ],
   entryComponents: [ OfferModalComponent ]
 })
 export class OffersModule { }
