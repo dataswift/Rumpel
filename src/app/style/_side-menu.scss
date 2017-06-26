@@ -154,7 +154,7 @@ ul.center {
       vertical-align: bottom;
       margin-right: 20px;
       position: relative;
-      top: 2px;
+      top: 1px;
     }
 
     .icon img{
@@ -207,4 +207,8 @@ ul.center {
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 200px;
+}
+
+.badge{
+  padding: 2px 7px 4px;
 }
