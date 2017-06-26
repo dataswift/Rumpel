@@ -1,63 +1,17 @@
 @import "../../style/variables";
 
 
-.offers{
-  background: white;
-  padding: 30px;
-  margin: 0px -42px;
-  position: absolute;
-  top: -40px;
-  width: 100%;
+  .no-offers-text{
+    width: 100%;
 
-  @media(max-width: 420px){
-    padding: 20px;
-  }
-
-
-  .no-offers{
-    color: $app-header-color;
-    text-transform: none;
+    .no-offers{
+      color: $app-header-color;
+      text-transform: none;
+      text-align: center;
+    }
 
   }
 
-
-  .offers-nav{
-      width: calc(100% + 60px);
-      border-bottom: 1px solid #eee;
-      box-shadow: 0px 1px 2px #eee;
-      margin: -30px -30px 0px -30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      align-content: center;
-
-      a{
-        padding: 13px;
-        margin: 0 12px;
-        border-top: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-        text-transform: uppercase;
-        color: #999;
-        cursor: pointer;
-        font-size: 12px !important;
-        letter-spacing: 0.5px;
-
-        @media (max-width: 704px) {
-          margin: 0 1px;
-        }
-
-        &:hover{
-          text-decoration: none !important;
-        }
-      }
-
-
-      a.current{
-        border-bottom: 2px solid $app-notification-color;
-        color: $app-header-color;
-        font-weight: 600;
-      }
-  }
 
 
   .offer-hero{
@@ -159,6 +113,7 @@
       border: 1px solid #ddd;
       cursor: pointer;
       position: relative;
+      background: white;
 
       @media(max-width: 420px){
         margin-left: 0;
@@ -212,6 +167,7 @@
         bottom: 0;
         margin: 0px -40px;
         width: 100%;
+        left: 40px;
       }
     }
 
@@ -241,5 +197,3 @@
       }
     }
   }
-
-}

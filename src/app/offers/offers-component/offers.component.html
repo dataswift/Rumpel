@@ -1,37 +1,29 @@
-<div class="offers">
+<div class="offer-hero overlay">
+    <h2>Browse offers</h2>
+    <p>Based on the data you have made public, you qualify for the following offers.</p>
+    <a (click)="showInfobox()">Learn more</a>
+</div>
 
-  <nav class="offers-nav">
-    <a [routerLink]="'/offers'" [routerLinkActive]="['current']" >Available <span>(10)</span></a>
-    <a [routerLink]="'/offers-accepted'"  [routerLinkActive]="['current']" >Accepted <span>(20)</span></a>
-  </nav>
+<div class="offers-container">
+    <div *ngIf="offers.length == 0" class="no-offers-text">
+      <h4 class="no-offers">{{ noOffersMessage }}</h4>
+    </div>
 
-  <div class="offer-hero overlay">
-      <h2>Browse offers</h2>
-      <p>Based on the data you have made public, you qualify for the following offers.</p>
-      <a>Learn more</a>
-  </div>
+    <div class="offer" *ngFor="let offer of offers; let i = index" (click)="showModal(i, this)">
+              <div [style.background-image]="'url(' + offer?.illustrationUrl + ')'" class="offer-img"></div>
+              <h4>{{ offer?.title }}</h4>
+              <p class="expiry" *ngIf="offer.expires && offer.expires > timeNow">Expires {{ offer?.expires | moment:'Do MMM YY' }}</p>
+              <p class="expiry" *ngIf="offer.expires && offer.expires < timeNow">Expired {{ offer?.expires | moment:'Do MMM YY' }}</p>
+              <div class="cta">View details</div>
+    </div>
 
-  <div class="offers-container">
-      <div *ngIf="offers.length == 0">
-        <h4 class="no-offers">Sorry, there are no offers matching the data you have made available</h4>
-      </div>
+    <div class="offer didYouKnow" *ngIf="offers.length > 0">
+        <i class="material-icons">accessibility</i>
+        <h4>Did you know?</h4>
+        <p>You can still monetise your data without being personally identified</p>
+    </div>
 
-      <div class="offer" *ngFor="let offer of offers; let i = index" (click)="showModal(i, this)">
-                <div [style.background-image]="'url(' + offer?.illustrationUrl + ')'" class="offer-img"></div>
-                <h4>{{ offer?.title }}</h4>
-                <p class="expiry" *ngIf="offer.expires && offer.expires > timeNow">Expires {{ offer?.expires | moment:'Do MMM YY' }}</p>
-                <p class="expiry" *ngIf="offer.expires && offer.expires < timeNow">Expired {{ offer?.expires | moment:'Do MMM YY' }}</p>
-                <div class="cta">View details</div>
-      </div>
-
-      <div class="offer didYouKnow">
-          <i class="material-icons">accessibility</i>
-          <h4>Did you know?</h4>
-          <p>You can still monetise your data without being personally identified</p>
-      </div>
-
-      <!-- items below are added to fix flexbox layout -->
-      <div class="offer invisible"></div>
-      <div class="offer invisible"></div>
-  </div>
+    <!-- items below are added to fix flexbox layout -->
+    <div class="offer invisible"></div>
+    <div class="offer invisible"></div>
 </div>
