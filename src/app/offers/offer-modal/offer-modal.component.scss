@@ -22,12 +22,7 @@
 
     @media(max-width: 768px){
       max-height: unset;
-      height: calc(100% - 135px);
-    }
-
-    @media(max-width: 650px){
-      max-height: unset;
-      height: calc(100% - 183px);
+      height: calc(100% - 142px);
     }
   }
 
@@ -45,6 +40,10 @@
   }
 
   .rump-modal-footer{
+
+    max-height: 81px;
+    height: 81px;
+
     @media(max-width: 768px){
       position: absolute;
       bottom: 0;
@@ -286,7 +285,6 @@
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  flex-wrap: wrap;
   justify-content: center;
 
   &.footer-state{
@@ -346,9 +344,8 @@
     position: relative;
     top: -7px;
 
-    @media(max-width: 650px){
-      margin: 16px auto 0px;
-      width: 100%;
+    @media(max-width: 460px){
+      margin: 16px 15px 16px 30px;
     }
 
 
@@ -358,6 +355,8 @@
       font-family: "Open Sans", sans-serif;
       font-weight: 300;
       user-select: none;
+      max-width: 150px;
+      text-align: left;
     }
   }
 
@@ -385,10 +384,10 @@
       top: -1px;
     }
 
-    @media(max-width: 650px){
-      margin: 16px auto;
-    }
 
+    @media(max-width: 460px){
+      margin: 16px 15px 16px 5px;
+    }
 
 
     @-webkit-keyframes spin {
@@ -445,8 +444,8 @@
 	border-radius: 3px;
 	display: inline-block;
 	position: relative !important;
-  top: 7px;
-  margin-right: 10px;
+  top: 14px;
+  left: -14px;
   outline: none;
   cursor: pointer;
 
