@@ -75,7 +75,7 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
   }
 
   rejectDataDebit() {
-    this.router.navigate(['']);
+    this.router.navigate(['dashboard']);
     // this._hat.updateDataDebit(this.uuid, 'disable').subscribe(res => this.router.navigate(['']));
   }
 

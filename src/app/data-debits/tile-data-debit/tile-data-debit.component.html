@@ -14,8 +14,8 @@
       <li *ngFor="let debit of debits">
         <a [routerLink]="['/dataDebit', debit.key, 'confirm']">
           <div class="row vertical-align">
-            <div class="col-xs-2">
-              <span class="ss-puzzle"></span>
+            <div class="col-xs-2 icon">
+              <i class="material-icons">settings_input_component</i>
             </div>
             <div class="col-xs-9">
               <h4>{{debit.bundleContextless.name}}</h4>

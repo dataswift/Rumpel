@@ -6,20 +6,39 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
  */
 
+.tile-body{
+    padding-top: 20px !important;
+}
+
 a {
-  color: #ffffff;
+  color: #939393;
   text-decoration: none;
 }
 
 h4 {
-  text-transform: uppercase;
+  text-transform: none !important;
   font-size: 1.4em;
+  color: #939393;
+  max-width: 180px;
 }
 
 p {
   margin-bottom: 0.25em;
   font-size: 1em;
+  color: #bbb;
+  max-width: 180px;
 }
+
+i{
+  margin-right: 25px;
+  margin-top: 15px;
+}
+
+
+li{
+  margin-bottom: 20px;
+}
+
 
 .col-xs-2 {
   padding: 0;
@@ -57,4 +76,9 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+
+.icon{
+  align-items: flex-start !important;
 }
