@@ -80,7 +80,7 @@ export class SideMenuComponent implements OnInit {
             claimStatus = offer.claim.status;
           }
           return (  claimStatus === 'untouched' &&
-                    (offer.requiredMaxUser - offer.totalUserClaims) > 0 &&
+                    // (offer.requiredMaxUser - offer.totalUserClaims) > 0 &&
                     offer.expires > Date.now()
                   )
       });
