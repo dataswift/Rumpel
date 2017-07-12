@@ -21,7 +21,7 @@ export interface Offer {
 export interface Claim {
   dateCreated: number;
   dateRedeemed: number | null;
-  status: string; // "claimed", "completed", "rejected", "untouched"
+  status: string; // "claimed", "completed", "rejected", "untouched", "failed", "redeemed"
   confirmed: boolean;
   dataDebitId: string | null;
 }
