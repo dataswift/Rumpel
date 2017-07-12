@@ -14,6 +14,8 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class ConfirmBoxComponent implements OnInit {
   private destroy: Function;
+  @Input() title: string;
+  @Input() icon: string;
   @Input() message = '';
   @Input() accept: () => void = () => {};
   @Input() reject: () => void = () => {};

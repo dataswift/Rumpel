@@ -31,7 +31,7 @@ export class OffersHomeComponent implements OnInit {
     const self = this;
 
     this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
-
+      console.log('getting new offers');
       offers = self.setOfferImage(offers);
 
       this.offers = offers.filter(function(offer) {

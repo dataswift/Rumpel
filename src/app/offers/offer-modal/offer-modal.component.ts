@@ -29,7 +29,7 @@ export class OfferModalComponent implements OnInit {
   public btnText = 'Accept';
   public navDisabled = false;
   public offerStatus = 'untouched';
-  private remove = false;
+  public remove = false;
 
   constructor(private dataOfferSvc: DataOfferService) { }
 

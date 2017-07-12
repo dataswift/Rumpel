@@ -15,11 +15,12 @@ import {Component, OnInit, Input} from '@angular/core';
 export class DialogBoxComponent implements OnInit {
   @Input() title = 'Are you sure?';
   @Input() cancelBtnText = 'Cancel';
+  @Input() icon: string;
   @Input() message = `You are now leaving your private Rumpel space. Are you sure?
            (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).`;
   @Input() buttons: Array<{ title: string; link: string; }> = [];
   private destroy: Function;
-  private remove = false;
+  public remove = false;
 
   constructor() { }
 

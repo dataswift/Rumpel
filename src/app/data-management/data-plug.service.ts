@@ -179,7 +179,7 @@ export class DataPlugService {
     this.getTokenInfo('Facebook').subscribe(
       tokenInfo => {
         this.services['Facebook'].connected = tokenInfo.canPost;
-        if (tokenInfo.canPost === false && this.facebookPlugWarningShown == false) {
+        if (tokenInfo.canPost === false && this.facebookPlugWarningShown === false) {
           this.facebookPlugWarningShown = true;
           this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
             title: 'Reconnect your Facebook plug',
@@ -202,7 +202,7 @@ export class DataPlugService {
           this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
             const tableFound = tables.find(table => table.name === 'posts' && table.source === 'facebook');
 
-            if (tableFound && this.facebookPlugWarningShown == false) {
+            if (tableFound && this.facebookPlugWarningShown === false) {
               this.facebookPlugWarningShown = true;
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
                 title: 'Something went wrong',
@@ -237,7 +237,7 @@ export class DataPlugService {
 
             // If Twitter plug status endpoint gives HTTP error but table exists on the HAT => problem occurred
             // If the table hasn't been created => plug is not set up, all ok
-            if (tableFound && this.dialogSvc.activeInstances === 0 && this.twitterPlugWarningShown == false) {
+            if (tableFound && this.dialogSvc.activeInstances === 0 && this.twitterPlugWarningShown === false) {
               this.twitterPlugWarningShown = true;
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
                 title: 'Something went wrong',
