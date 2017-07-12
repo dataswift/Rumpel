@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { DialogService } from '../../layout/dialog.service';
 import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
-import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
 import { DataOfferService } from '../../data-management/data-offer.service';
 
 @Component({
@@ -103,7 +102,7 @@ export class OfferAcceptedStatsComponent implements OnInit {
       icon: 'assets/images/coin-icon-green.svg',
       acceptButtonText: 'Request transfer',
       acceptButtonEnabled: this.claimCashEnabled,
-      message: `If your cash balance is at least £` + this.cashWithdrawalThreshold + `, you can use the button below to transfer your balance to your PayPal account.`,
+      message: `<span class="bold-message">Current balance: £` + (this.cashEarned - this.cashClaimed) + `</span><br>If your cash balance is at least £` + this.cashWithdrawalThreshold + `, you can use the button below to transfer your balance to your PayPal account.`,
       accept: this.requestCashTransfer,
       showConfirmationOnAccept: true,
       confirmationMessage: `Thank you for your request. Within 48 hours, you will receive an email with instructions on how to complete the PayPal transfer.`
