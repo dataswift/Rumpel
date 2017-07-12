@@ -7,6 +7,8 @@
  */
 
 import {Component, OnInit, Input} from '@angular/core';
+import { DialogService } from '..//dialog.service';
+import { InfoBoxComponent } from '../info-box/info-box.component';
 
 @Component({
   selector: 'rump-confirm-box',
@@ -16,17 +18,35 @@ export class ConfirmBoxComponent implements OnInit {
   private destroy: Function;
   @Input() title: string;
   @Input() icon: string;
+  @Input() acceptButtonEnabled = true;
+  @Input() acceptButtonText = 'Proceed';
   @Input() message = '';
   @Input() accept: () => void = () => {};
   @Input() reject: () => void = () => {};
+  @Input() showConfirmationOnAccept = false;
+  @Input() confirmationMessage = '';
 
-  constructor() { }
+  constructor(private dialogSvc: DialogService) { }
 
   ngOnInit() {
+    console.log(this.acceptButtonEnabled);
   }
 
   closeModal(): void {
     this.destroy();
+  }
+
+  acceptButton(): void {
+
+    if (this.showConfirmationOnAccept) {
+      this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
+        title: this.title,
+        icon: this.icon,
+        message: this.confirmationMessage
+      });
+    }
+
+    this.closeModal();
   }
 
 }

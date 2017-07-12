@@ -12,11 +12,11 @@
     <div class="rump-modal-body white-modal-body">
       <div class="close-modal" (click)="closeModal()"><i class="material-icons">close</i></div>
       <img *ngIf="icon != '' && icon != undefined" [src]="[icon]"><h3>{{title}}</h3>
-      <p>{{message}}</p>
+      <p [innerHTML]="message | safeHtml"></p>
 
       <div class="actions">
         <button type="button" class="btn" (click)="closeModal(); reject()">Cancel</button>
-        <button type="button" class="btn accept" (click)="closeModal(); accept()">Proceed</button>
+        <button type="button" class="btn accept" [disabled]="!acceptButtonEnabled" (click)="acceptButton(); accept()">{{acceptButtonText}}</button>
       </div>
     </div>
 
