@@ -186,6 +186,7 @@ export class DataPlugService {
             message: `Every two months, you need to reset your Facebook plug – it's our way of checking that ` +
                      `you're still happy to pull this data into your HAT.`,
             cancelBtnText: 'No Thanks',
+            icon: 'assets/icons/facebook-f-icon.svg',
             buttons: [{
               title: 'Reconnect Facebook Plug',
               link: `//${this.hatUrl}/#/hatlogin?` +
@@ -208,6 +209,7 @@ export class DataPlugService {
                 title: 'Something went wrong',
                 message: 'There is a problem with your Facebook plug. If the problem persists, we suggest ' +
                          'disconnecting and re-connecting the plug.',
+                icon: 'assets/icons/facebook-f-icon.svg',
                 cancelBtnText: 'Dismiss',
                 buttons: [{
                   title: 'Reconnect Facebook Plug',
@@ -241,6 +243,7 @@ export class DataPlugService {
               this.twitterPlugWarningShown = true;
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
                 title: 'Something went wrong',
+                icon: 'assets/icons/twitter-icon.svg',
                 message: 'There is a problem with your Twitter plug. If the problem persists, we suggest ' +
                          'disconnecting and re-connecting the plug.',
                 cancelBtnText: 'Dismiss',
