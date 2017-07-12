@@ -51,7 +51,12 @@
     transition: all 1s;
   }
 
-
+  .bold-message{
+    text-align: center;
+    font-weight: 600;
+    color: $app-accent-color;
+    display: block;
+  }
 
   .rump-modal-content {
     position: relative;
