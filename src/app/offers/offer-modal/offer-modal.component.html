@@ -65,6 +65,11 @@
 
     </div>
 
+
+
+
+
+
     <div class="rump-modal-footer" *ngIf="offerStatus == 'untouched'">
       <div class="checkbox">
         <label><input type="checkbox" class="regular-checkbox" value="" (change)="updateClaimDisabled($event)" [disabled]="btnText != 'Accept' && btnText != 'Try again'">I agree to share the data being requested</label>
@@ -81,7 +86,7 @@
 
       <div *ngIf="offers[offer_index].totalUserClaims < offers[offer_index].requiredMinUser && offers[offer_index].requiredMinUser > 0">
         <h5>Pending</h5>
-        <p>{{ offers[offer_index].requiredMinUser - offers[offer_index].totalUserClaims }} more users must claim this offer.</p>
+        <p>Waiting for {{ offers[offer_index].requiredMinUser - offers[offer_index].totalUserClaims }} more users to claim this offer.</p>
       </div>
     </div>
 
@@ -106,7 +111,7 @@
       <i class="material-icons">error</i>
       <div>
         <h5>Offer failed</h5>
-        <p>Your data did not meet the requirements for this offer.</p>
+        <p>The minimum requirements for this offer were not satisfied.</p>
       </div>
     </div>
 
