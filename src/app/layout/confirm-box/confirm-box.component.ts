@@ -16,6 +16,7 @@ import { InfoBoxComponent } from '../info-box/info-box.component';
 })
 export class ConfirmBoxComponent implements OnInit {
   private destroy: Function;
+  public remove = false;
   @Input() title: string;
   @Input() icon: string;
   @Input() acceptButtonEnabled = true;
@@ -33,7 +34,12 @@ export class ConfirmBoxComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.destroy();
+
+    const self = this;
+    this.remove = true;
+    setTimeout(function(){
+      self.destroy();
+    }, 1000);
   }
 
   acceptButton(): void {

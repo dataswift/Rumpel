@@ -6,7 +6,7 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
   -->
 
-<div class="rump-modal">
+<div class="rump-modal" [class.fade-move]="remove">
   <div class="rump-modal-content">
 
     <div class="rump-modal-body white-modal-body">
@@ -22,4 +22,4 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-overlay" (click)="closeModal()"></div>
+<div class="modal-overlay" [class.fade]="remove" id="modal-overlay" (click)="closeModal()"></div>

@@ -20,6 +20,7 @@ export class InfoBoxComponent implements OnInit {
   @Input() icon: string;
   private destroy: Function;
   public scrollTop: number;
+  public remove = false;
 
   constructor() { }
 
@@ -31,6 +32,11 @@ export class InfoBoxComponent implements OnInit {
   closeModal(): void {
     $('body, html').removeClass('no-scroll');
     $('body').scrollTop(this.scrollTop);
-    this.destroy();
+
+    const self = this;
+    this.remove = true;
+    setTimeout(function(){
+      self.destroy();
+    }, 1000);
   }
 }
