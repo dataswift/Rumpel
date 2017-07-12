@@ -35,6 +35,9 @@ export class OffersAcceptedComponent implements OnInit {
 
   }
 
+  claimCash() {
+    this.statsComponent.showConfirmBox();
+  }
 
   showModal(offerIndex) {
     this.dialogSvc.createDialog<OfferModalComponent>(OfferModalComponent, {
