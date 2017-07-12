@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { DialogService } from '../../layout/dialog.service';
+import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
 import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
-
+import { DataOfferService } from '../../data-management/data-offer.service';
 
 @Component({
   selector: 'rump-offer-accepted-stats',
@@ -22,8 +23,12 @@ export class OfferAcceptedStatsComponent implements OnInit {
   public cashEarned = 0;
   public cashClaimed = 0;
   public cashFormat = '1.2-2';
+  public claimCashEnabled = false;
 
-  constructor( private dialogSvc: DialogService ) { }
+  public cashWithdrawalThreshold = 20;
+
+  constructor( private dialogSvc: DialogService,
+               private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
     this.updateStats();
@@ -75,17 +80,33 @@ export class OfferAcceptedStatsComponent implements OnInit {
     }
 
 
+    if ((this.cashEarned - this.cashClaimed) >= this.cashWithdrawalThreshold) {
+      this.claimCashEnabled = true;
+    }
+
+
   }
 
 
 
-  showInfobox() {
-    this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
+  requestCashTransfer() {
+
+    // add logic for request cash transfer endpoint
+        // this.dataOfferSvc.
+  }
+
+
+
+  showConfirmBox() {
+    this.dialogSvc.createDialog<ConfirmBoxComponent>(ConfirmBoxComponent, {
       title: 'Cash earned',
       icon: 'assets/images/coin-icon-green.svg',
-      message: `We’re currently working on the functionality to enable you withdraw the cash you have earned from your account.<br><br>
-      If you would us to withdraw the cash manually for you now, please <a href="mailto:contact@HATDeX.org?subject=Support%20for%20`
-      + window.location.hostname + `">email us</a>.`
+      acceptButtonText: 'Request transfer',
+      acceptButtonEnabled: this.claimCashEnabled,
+      message: `If your cash balance is at least £` + this.cashWithdrawalThreshold + `, you can use the button below to transfer your balance to your PayPal account.`,
+      accept: this.requestCashTransfer,
+      showConfirmationOnAccept: true,
+      confirmationMessage: `Thank you for your request. Within 48 hours, you will receive an email with instructions on how to complete the PayPal transfer.`
     });
   }
 
