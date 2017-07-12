@@ -72,7 +72,6 @@ export class SideMenuComponent implements OnInit {
 
 
     this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
-      console.log('offerSub', offers);
       this.offers = offers.filter(function(offer) {
 
           let claimStatus = 'untouched';

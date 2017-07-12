@@ -29,7 +29,6 @@ export class ConfirmBoxComponent implements OnInit {
   constructor(private dialogSvc: DialogService) { }
 
   ngOnInit() {
-    console.log(this.acceptButtonEnabled);
   }
 
   closeModal(): void {
