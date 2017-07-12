@@ -79,6 +79,7 @@
         <p>Once completed you can claim your reward.</p>
       </div>
 
+      <div *ngIf="offers[offer_index].totalUserClaims < offers[offer_index].requiredMinUser && offers[offer_index].requiredMinUser > 0">
         <h5>Pending</h5>
         <p>{{ offers[offer_index].requiredMinUser - offers[offer_index].totalUserClaims }} more users must claim this offer.</p>
       </div>
