@@ -32,6 +32,8 @@ export class DataPlugService {
   private services: { [key: string]: { url: string; connected: boolean; }; };
   private _dataplugs$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
   private locationData = false;
+  private twitterPlugWarningShown = false;
+  private facebookPlugWarningShown = false;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private http: Http,
@@ -177,7 +179,8 @@ export class DataPlugService {
     this.getTokenInfo('Facebook').subscribe(
       tokenInfo => {
         this.services['Facebook'].connected = tokenInfo.canPost;
-        if (tokenInfo.canPost === false) {
+        if (tokenInfo.canPost === false && this.facebookPlugWarningShown == false) {
+          this.facebookPlugWarningShown = true;
           this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
             title: 'Reconnect your Facebook plug',
             message: `Every two months, you need to reset your Facebook plug – it's our way of checking that ` +
@@ -199,7 +202,8 @@ export class DataPlugService {
           this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
             const tableFound = tables.find(table => table.name === 'posts' && table.source === 'facebook');
 
-            if (tableFound) {
+            if (tableFound && this.facebookPlugWarningShown == false) {
+              this.facebookPlugWarningShown = true;
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
                 title: 'Something went wrong',
                 message: 'There is a problem with your Facebook plug. If the problem persists, we suggest ' +
@@ -233,7 +237,8 @@ export class DataPlugService {
 
             // If Twitter plug status endpoint gives HTTP error but table exists on the HAT => problem occurred
             // If the table hasn't been created => plug is not set up, all ok
-            if (tableFound && this.dialogSvc.activeInstances === 0) {
+            if (tableFound && this.dialogSvc.activeInstances === 0 && this.twitterPlugWarningShown == false) {
+              this.twitterPlugWarningShown = true;
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
                 title: 'Something went wrong',
                 message: 'There is a problem with your Twitter plug. If the problem persists, we suggest ' +
