@@ -480,3 +480,14 @@ button.btn-view-header {
   overflow-y: hidden;
   position: fixed;
 }
+
+
+rump-offer-modal{
+   position: relative;
+   z-index: 2000;
+}
+
+rump-confirm-box, rump-info-box, rump-dialog-box{
+   position: relative;
+   z-index: 3000;
+}
