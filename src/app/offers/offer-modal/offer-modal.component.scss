@@ -4,6 +4,8 @@
 
 .rump-modal{
 
+
+
   @media(max-width: 768px){
     width: 100%;
     max-width: 100%;
@@ -478,4 +480,21 @@ button{
   &:hover, &:focus, &:active{
     outline: none;
   }
+}
+
+
+
+.fade-move {
+  transform: translate(-50%, 200%);
+  opacity: 0;
+  -webkit-transition: all 1.5s;
+  -o-transition: all 1.5s;
+  transition: all 1.5s;
+}
+
+.fade {
+  opacity: 0;
+  -webkit-transition: all 1.5s;
+  -o-transition: all 1.5s;
+  transition: all 1.5s;
 }

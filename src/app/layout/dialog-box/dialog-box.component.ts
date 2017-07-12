@@ -19,6 +19,7 @@ export class DialogBoxComponent implements OnInit {
            (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).`;
   @Input() buttons: Array<{ title: string; link: string; }> = [];
   private destroy: Function;
+  private remove = false;
 
   constructor() { }
 
@@ -26,7 +27,12 @@ export class DialogBoxComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.destroy();
+    const self = this;
+    this.remove = true;
+    setTimeout(function(){
+      self.destroy();
+    }, 1000);
+
   }
 
 }

@@ -6,7 +6,7 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
   -->
 
-<div class="rump-modal">
+<div class="rump-modal" [class.fade-move]="remove">
   <div class="rump-modal-content">
     <div class="rump-modal-header">
       <h3>Offer details</h3>
@@ -74,9 +74,13 @@
 
     <div class="rump-modal-footer footer-state footer-claimed" *ngIf="offerStatus == 'claimed' || offerStatus == 'claim'">
       <i class="material-icons">data_usage</i>
-      <div>
+      <div *ngIf="offers[offer_index].totalUserClaims >= offers[offer_index].requiredMinUser || offers[offer_index].requiredMinUser == 0">
         <h5>Collecting data</h5>
         <p>Once completed you can claim your reward.</p>
+      </div>
+
+        <h5>Pending</h5>
+        <p>{{ offers[offer_index].requiredMinUser - offers[offer_index].totalUserClaims }} more users must claim this offer.</p>
       </div>
     </div>
 
@@ -110,4 +114,4 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-overlay" (click)="closeModal()"></div>
+<div class="modal-overlay" [class.fade]="remove" id="modal-overlay" (click)="closeModal()"></div>
