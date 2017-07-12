@@ -21,10 +21,11 @@ export class ConfirmBoxComponent implements OnInit {
   @Input() acceptButtonEnabled = true;
   @Input() acceptButtonText = 'Proceed';
   @Input() message = '';
-  @Input() accept: () => void = () => {};
-  @Input() reject: () => void = () => {};
   @Input() showConfirmationOnAccept = false;
   @Input() confirmationMessage = '';
+  @Input() accept: () => void = () => {};
+  @Input() reject: () => void = () => {};
+
 
   constructor(private dialogSvc: DialogService) { }
 

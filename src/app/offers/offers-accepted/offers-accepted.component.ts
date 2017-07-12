@@ -13,7 +13,7 @@ import { OfferAcceptedStatsComponent } from '../offer-accepted-stats/offer-accep
 
 export class OffersAcceptedComponent implements OnInit {
 
-  @ViewChild(OfferAcceptedStatsComponent) statsComponent:OfferAcceptedStatsComponent;
+  @ViewChild(OfferAcceptedStatsComponent) statsComponent: OfferAcceptedStatsComponent;
   @Input() offers: any = [];
   @Input() acceptedOffers: any = [];
   @Input() noOffersMessage = '';

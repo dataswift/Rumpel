@@ -145,9 +145,9 @@ export class OfferModalComponent implements OnInit {
      if (type === 'cash') {
        this.statsComponent.showConfirmBox();
      } else if (type === 'voucher') {
-       console.log('voucher');
+       // console.log('voucher');
      } else if (type === 'service') {
-       console.log('service');
+       // console.log('service');
      }
   }
 
