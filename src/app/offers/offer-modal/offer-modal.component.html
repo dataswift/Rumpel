@@ -94,11 +94,12 @@
       <i class="material-icons">insert_emoticon</i>
       <div>
         <h5>Offer complete</h5>
-        <p>Claim your reward!</p>
+        <p *ngIf="offers[offer_index].reward.rewardType == 'Cash'">Claim your reward!</p>
+        <p *ngIf="offers[offer_index].reward.rewardType == 'Voucher'">Redeem your voucher!</p>
+        <p *ngIf="offers[offer_index].reward.rewardType == 'Service'">Enjoy your service!</p>
       </div>
       <button *ngIf="offers[offer_index].reward.rewardType == 'Cash'" type="button" (click)="claimReward('cash')" class="btn">Claim {{ offers[offer_index].reward.value | currency:offers[offer_index].reward.currency:true:'1.2-2' }}</button>
       <button *ngIf="offers[offer_index].reward.rewardType == 'Voucher'" type="button" (click)="claimReward('voucher')" class="btn">Claim voucher</button>
-      <button *ngIf="offers[offer_index].reward.rewardType == 'Service'" type="button" (click)="claimReward('service')" class="btn">Claim service</button>
     </div>
 
 

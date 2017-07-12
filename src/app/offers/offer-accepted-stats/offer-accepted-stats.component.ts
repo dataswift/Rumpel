@@ -46,6 +46,9 @@ export class OfferAcceptedStatsComponent implements OnInit {
 
     for (let i = 0; i < this.acceptedOffers.length; i++) {
 
+      // uncomment following line to test offers with completed state
+      // this.acceptedOffers[i].claim.status = 'completed';
+
       if ( this.acceptedOffers[i].claim.status === 'redeemed' ) {
 
             if (this.acceptedOffers[i].reward.rewardType === 'Voucher') {
@@ -102,10 +105,13 @@ export class OfferAcceptedStatsComponent implements OnInit {
       icon: 'assets/images/coin-icon-green.svg',
       acceptButtonText: 'Request transfer',
       acceptButtonEnabled: this.claimCashEnabled,
-      message: `<span class="bold-message">Current balance: £` + (this.cashEarned - this.cashClaimed) + `</span><br>If your cash balance is at least £` + this.cashWithdrawalThreshold + `, you can use the button below to transfer your balance to your PayPal account.`,
+      message: `<span class="bold-message">Current balance: £` + (this.cashEarned - this.cashClaimed) + `</span>
+      <br>If your cash balance is at least £` + this.cashWithdrawalThreshold + `, you can use the button below
+      to transfer your balance to your PayPal account.`,
       accept: this.requestCashTransfer,
       showConfirmationOnAccept: true,
-      confirmationMessage: `Thank you for your request. Within 48 hours, you will receive an email with instructions on how to complete the PayPal transfer.`
+      confirmationMessage: `Thank you for your request.
+      Within 48 hours, you will receive an email with instructions on how to complete the PayPal transfer.`
     });
   }
 
