@@ -17,6 +17,7 @@ export class OfferModalComponent implements OnInit {
   @Input() offers: any;
 
   @Input() changeModal: Function;
+  @Input() statsComponent: any;
 
   public timeNow = Date.now();
   public claimSub: Subscription;
@@ -94,6 +95,7 @@ export class OfferModalComponent implements OnInit {
 
         this.claimSub = this.dataOfferSvc.claim(this.offers[this.offer_index].id).subscribe(offers => {
             this.offers = offers;
+            this.dataOfferSvc.fetchUserAwareOfferListSubscription();
             this.navDisabled = false;
             this.showUserFeedback(evt.target, 'Accepted');
           },
@@ -136,6 +138,17 @@ export class OfferModalComponent implements OnInit {
       }
 
 
+  }
+
+
+  claimReward (type) {
+     if (type === 'cash') {
+       this.statsComponent.showConfirmBox();
+     } else if (type === 'voucher') {
+       console.log('voucher');
+     } else if (type === 'service') {
+       console.log('service');
+     }
   }
 
 

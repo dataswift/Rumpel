@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 import { DialogService } from '../../layout/dialog.service';
 import { OfferModalComponent } from '../offer-modal/offer-modal.component';
 import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
-
+import { OfferAcceptedStatsComponent } from '../offer-accepted-stats/offer-accepted-stats.component';
 
 @Component({
   selector: 'rump-offers-accepted',
@@ -13,7 +13,7 @@ import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
 
 export class OffersAcceptedComponent implements OnInit {
 
-
+  @ViewChild(OfferAcceptedStatsComponent) statsComponent:OfferAcceptedStatsComponent;
   @Input() offers: any = [];
   @Input() acceptedOffers: any = [];
   @Input() noOffersMessage = '';
@@ -36,12 +36,11 @@ export class OffersAcceptedComponent implements OnInit {
   }
 
 
-
-
   showModal(offerIndex) {
     this.dialogSvc.createDialog<OfferModalComponent>(OfferModalComponent, {
       offer_index: offerIndex,
-      offers: this.acceptedOffers
+      offers: this.acceptedOffers,
+      statsComponent: this.statsComponent
     });
   }
 

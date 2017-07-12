@@ -8,16 +8,16 @@
 
 
 <div class="offers-container mobile-responsive" *ngIf="acceptedOffers.length > 0">
-  <div class="offer" *ngFor="let accepted of acceptedOffers; let i = index" (click)="showModal(i, this)">
-            <div [style.background-image]="'url(' + accepted?.illustrationUrl + ')'" class="offer-img"></div>
-            <h4>{{ accepted?.title }}</h4>
+  <div class="offer" *ngFor="let accepted of acceptedOffers; let i = index">
+            <div [style.background-image]="'url(' + accepted?.illustrationUrl + ')'" class="offer-img" (click)="showModal(i, this)"></div>
+            <h4 (click)="showModal(i, this)">{{ accepted?.title }}</h4>
             <p class="expiry">Accepted {{ accepted?.claim.dateCreated | moment:'Do MMM YY' }}</p>
             <div class="cta" *ngIf="accepted.claim?.status == 'redeemed'" class="redeemed">All done!</div>
             <div class="cta" *ngIf="accepted.claim?.status == 'completed'" class="complete">
-              <button *ngIf="accepted.reward.rewardType == 'Cash' && accepted.reward.currency != 'None'" class="btn">Claim {{ accepted.reward.value | currency:accepted.reward.currency:true:'1.2-2' }}<i class="material-icons">arrow_forward</i></button>
-              <button *ngIf="accepted.reward.rewardType == 'Cash' && accepted.reward.currency == 'None'" class="btn">Claim {{ accepted.reward.value }}<i class="material-icons">arrow_forward</i></button>
-              <button *ngIf="accepted.reward.rewardType == 'Service'" class="btn">Access service <i class="material-icons">arrow_forward</i></button>
-              <button *ngIf="accepted.reward.rewardType == 'Voucher'" class="btn">Get voucher code <i class="material-icons">arrow_forward</i></button>
+              <button *ngIf="accepted.reward.rewardType == 'Cash' && accepted.reward.currency != 'None'" (click)="showModal(i)" class="btn">Claim {{ accepted.reward.value | currency:accepted.reward.currency:true:'1.2-2' }}<i class="material-icons">arrow_forward</i></button>
+              <button *ngIf="accepted.reward.rewardType == 'Cash' && accepted.reward.currency == 'None'" (click)="showModal(i)" class="btn">Claim {{ accepted.reward.value }}<i class="material-icons">arrow_forward</i></button>
+              <button *ngIf="accepted.reward.rewardType == 'Service'" class="btn" (click)="showModal(i, this)">Access service <i class="material-icons">arrow_forward</i></button>
+              <button *ngIf="accepted.reward.rewardType == 'Voucher'" class="btn" (click)="showModal(i, this)">Get voucher code <i class="material-icons">arrow_forward</i></button>
             </div>
             <div class="cta" *ngIf="accepted.claim?.status == 'claimed' || accepted.claim?.status == 'claim'"><a (click)="showModal(i)">View status</a></div>
             <div class="cta" *ngIf="accepted.claim?.status == 'failed'"><a href="mailto:contact@HATDeX.org">Contact support</a></div>
@@ -47,10 +47,10 @@
 
           <td *ngIf="accepted.claim?.status == 'redeemed'" class="redeemed">All done!</td>
           <td *ngIf="accepted.claim?.status == 'completed'" class="complete">
-            <button *ngIf="accepted.reward.rewardType == 'Cash' && accepted.reward.currency != 'None'" class="btn">Claim {{ accepted.reward.value | currency:accepted.reward.currency:true:'1.2-2' }}<i class="material-icons">arrow_forward</i></button>
-            <button *ngIf="accepted.reward.rewardType == 'Cash' && accepted.reward.currency == 'None'" class="btn">Claim {{ accepted.reward.value }}<i class="material-icons">arrow_forward</i></button>
-            <button *ngIf="accepted.reward.rewardType == 'Service'" class="btn">Access service <i class="material-icons">arrow_forward</i></button>
-            <button *ngIf="accepted.reward.rewardType == 'Voucher'" class="btn">Get voucher code <i class="material-icons">arrow_forward</i></button>
+            <button *ngIf="accepted.reward.rewardType == 'Cash' && accepted.reward.currency != 'None'" (click)="showModal(i)" class="btn">Claim {{ accepted.reward.value | currency:accepted.reward.currency:true:'1.2-2' }}<i class="material-icons">arrow_forward</i></button>
+            <button *ngIf="accepted.reward.rewardType == 'Cash' && accepted.reward.currency == 'None'" (click)="showModal(i)" class="btn">Claim {{ accepted.reward.value }}<i class="material-icons">arrow_forward</i></button>
+            <button *ngIf="accepted.reward.rewardType == 'Service'" class="btn" (click)="showModal(i, this)">Access service <i class="material-icons">arrow_forward</i></button>
+            <button *ngIf="accepted.reward.rewardType == 'Voucher'" class="btn" (click)="showModal(i, this)">Get voucher code <i class="material-icons">arrow_forward</i></button>
           </td>
           <td *ngIf="accepted.claim?.status == 'claimed' || accepted.claim?.status == 'claim'"><a (click)="showModal(i)">View status</a></td>
           <td *ngIf="accepted.claim?.status == 'failed'"><a href="mailto:contact@HATDeX.org">Contact support</a></td>
