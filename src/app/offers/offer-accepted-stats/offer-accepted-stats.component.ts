@@ -92,9 +92,7 @@ export class OfferAcceptedStatsComponent implements OnInit {
 
 
   requestCashTransfer() {
-
-    // add logic for request cash transfer endpoint
-        // this.dataOfferSvc.
+    this.dataOfferSvc.redeemCash();
   }
 
 

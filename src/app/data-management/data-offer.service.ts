@@ -72,6 +72,17 @@ export class DataOfferService {
   }
 
 
+  redeemCash(): void {
+    const url = this.config.databuyer.url.concat('/api/v1/user/redeem/cash');
+
+    this.getDataBuyerToken()
+      .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
+      .map(res => {
+        console.log('redeem result', res);
+      });
+  }
+
+
   private claimOfferWithDataBuyer(offerId: string): Observable<Claim> {
     const url = this.config.databuyer.url.concat('/api/v1/offer/', offerId, '/claim');
 
@@ -83,6 +94,8 @@ export class DataOfferService {
         return <Claim>resJson;
       });
   }
+
+
 
   private getDataBuyerToken(): Observable<Headers | null> {
     if (this.cachedToken && this.jwt.decodeToken(this.cachedToken)['exp'] > moment().unix()) {

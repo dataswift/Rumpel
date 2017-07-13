@@ -9,6 +9,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import { DialogService } from '..//dialog.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
+import { DataOfferService } from '../../data-management/data-offer.service';
 
 @Component({
   selector: 'rump-confirm-box',
@@ -28,7 +29,8 @@ export class ConfirmBoxComponent implements OnInit {
   @Input() reject: () => void = () => {};
 
 
-  constructor(private dialogSvc: DialogService) { }
+  constructor(  private dialogSvc: DialogService,
+                private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
   }
