@@ -39,8 +39,16 @@ export class OffersHomeComponent implements OnInit {
           if (offer.claim && offer.claim.status) {
             claimStatus = offer.claim.status;
           }
+
+          let moreUsersRequired = false;
+          if(offer.requiredMaxUser === 0) {
+            moreUsersRequired = true;
+          } else {
+            moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
+          }
+
           return (  claimStatus === 'untouched' &&
-                    // (offer.requiredMaxUser - offer.totalUserClaims) > 0 &&
+                    moreUsersRequired &&
                     offer.expires > Date.now()
                   )
       });
