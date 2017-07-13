@@ -43,7 +43,8 @@ export class OffersAcceptedComponent implements OnInit {
     this.dialogSvc.createDialog<OfferModalComponent>(OfferModalComponent, {
       offer_index: offerIndex,
       offers: this.acceptedOffers,
-      statsComponent: this.statsComponent
+      statsComponent: this.statsComponent,
+      offerMode: 'claimed'
     });
   }
 

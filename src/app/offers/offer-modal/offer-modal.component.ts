@@ -18,6 +18,7 @@ export class OfferModalComponent implements OnInit {
 
   @Input() changeModal: Function;
   @Input() statsComponent: any;
+  @Input() offerMode = 'untouched';
 
   public timeNow = Date.now();
   public claimSub: Subscription;
@@ -94,10 +95,10 @@ export class OfferModalComponent implements OnInit {
         this.showUserFeedback(evt.target, 'Processing');
 
         this.claimSub = this.dataOfferSvc.claim(this.offers[this.offer_index].id).subscribe(offers => {
-            this.offers = offers;
-            this.dataOfferSvc.fetchUserAwareOfferListSubscription();
             this.navDisabled = false;
             this.showUserFeedback(evt.target, 'Accepted');
+            this.dataOfferSvc.fetchUserAwareOfferListSubscription();
+            this.updateOffers(offers);
           },
           error => {
             console.log('claim failed', error);
@@ -106,6 +107,45 @@ export class OfferModalComponent implements OnInit {
           }
         );
     }
+  }
+
+
+  updateOffers(offers) {
+    const self = this;
+
+    setTimeout(function(){
+      if (self.offerMode === 'untouched') {
+          self.offers = offers.filter(function(offer) {
+
+              let claimStatus = 'untouched';
+              if (offer.claim && offer.claim.status) {
+                claimStatus = offer.claim.status;
+              }
+              return (  claimStatus === 'untouched' &&
+                        // (offer.requiredMaxUser - offer.totalUserClaims) > 0 &&
+                        offer.expires > Date.now()
+                      )
+          });
+      } else {
+          self.offers = offers.filter(function(offer) {
+
+              let claimStatus = 'untouched';
+              if (offer.claim && offer.claim.status) {
+                claimStatus = offer.claim.status;
+              }
+              return (  claimStatus !== 'untouched' &&
+                        claimStatus !== 'rejected'
+                      )
+          });
+      }
+
+      if (self.offer_index === self.offers.length) {
+        self.changeOffer(-1);
+      } else {
+        self.changeOffer(0);
+      }
+
+    }, 3000);
   }
 
   updateClaimDisabled(evt) {
