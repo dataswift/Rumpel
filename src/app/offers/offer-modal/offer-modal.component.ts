@@ -69,7 +69,7 @@ export class OfferModalComponent implements OnInit {
 
   changeOffer(diff: number) {
     this.offer_index = this.offer_index + diff;
-    this.offerDuration = moment.duration( this.offers[this.offer_index].collectFor ).as('days');
+    this.offerDuration = this.offers[this.offer_index].collectFor;
 
     this.claimDisabled = true;
     this.scrollShadow = false;
