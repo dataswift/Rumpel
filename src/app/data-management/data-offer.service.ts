@@ -46,7 +46,7 @@ export class DataOfferService {
       .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
       .map(res => {
         const resJson = res.json();
-        console.log(resJson);
+        // console.log(resJson);
         return <Offer[]>resJson;
       });
   }
@@ -79,7 +79,7 @@ export class DataOfferService {
       .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
       .map(res => {
         const resJson = res.json();
-        console.log(resJson);
+        // console.log(resJson);
         return <Claim>resJson;
       });
   }
