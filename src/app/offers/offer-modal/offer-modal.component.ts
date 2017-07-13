@@ -31,7 +31,7 @@ export class OfferModalComponent implements OnInit {
   public btnText = 'Accept';
   public navDisabled = false;
   public offerStatus = 'untouched';
-  public remove = false;
+  public animateIn = false;
 
   constructor(private dataOfferSvc: DataOfferService) { }
 
@@ -40,6 +40,7 @@ export class OfferModalComponent implements OnInit {
     $('body, html').addClass('no-scroll');
 
     this.changeOffer(0);
+    this.animateIn = true;
   }
 
   closeModal(): void {
@@ -47,7 +48,7 @@ export class OfferModalComponent implements OnInit {
     $('body').scrollTop(this.scrollTop);
 
     const self = this;
-    this.remove = true;
+    this.animateIn = false;
     setTimeout(function(){
       self.destroy();
     }, 1000);

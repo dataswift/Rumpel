@@ -6,7 +6,7 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
   -->
 
-<div class="rump-modal" [class.fade-move]="remove">
+<div class="rump-modal" [class.animateIn]="animateIn">
   <div class="rump-modal-content">
     <div class="rump-modal-header">
       <h3>Offer details</h3>
@@ -125,4 +125,4 @@
   </div>
 </div>
 
-<div class="modal-overlay" [class.fade]="remove" id="modal-overlay" (click)="closeModal()"></div>
+<div class="modal-overlay" [class.fadein]="animateIn" id="modal-overlay" (click)="closeModal()"></div>

@@ -1,9 +1,32 @@
 @import "../../style/variables";
 
 
+.modal-overlay{
+  opacity: 0;
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+
+  &.fadein {
+    opacity: 1;
+  }
+}
+
+
 
 .rump-modal{
 
+  transform: translate(-50%, 150%);
+  opacity: 0;
+  -webkit-transition: all 1s;
+  -o-transition: all 1s;
+  transition: all 1s;
+
+
+  &.animateIn {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
 
 
   @media(max-width: 768px){
@@ -480,21 +503,4 @@ button{
   &:hover, &:focus, &:active{
     outline: none;
   }
-}
-
-
-
-.fade-move {
-  transform: translate(-50%, 200%);
-  opacity: 0;
-  -webkit-transition: all 1.5s;
-  -o-transition: all 1.5s;
-  transition: all 1.5s;
-}
-
-.fade {
-  opacity: 0;
-  -webkit-transition: all 1.5s;
-  -o-transition: all 1.5s;
-  transition: all 1.5s;
 }
