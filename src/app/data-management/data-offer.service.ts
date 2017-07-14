@@ -78,8 +78,10 @@ export class DataOfferService {
     this.getDataBuyerToken()
       .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
       .map(res => {
-        console.log('redeem result', res);
-      });
+        const resJson = res.json();
+        console.log(resJson);
+        return <any[]>resJson;
+      }).subscribe();
   }
 
 
