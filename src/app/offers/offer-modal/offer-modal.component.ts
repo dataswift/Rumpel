@@ -122,9 +122,9 @@ export class OfferModalComponent implements OnInit {
               if (offer.claim && offer.claim.status) {
                 claimStatus = offer.claim.status;
               }
-              
+
               let moreUsersRequired = false;
-              if(offer.requiredMaxUser === 0) {
+              if (offer.requiredMaxUser === 0) {
                 moreUsersRequired = true;
               } else {
                 moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;

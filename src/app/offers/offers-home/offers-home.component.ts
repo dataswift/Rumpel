@@ -41,7 +41,7 @@ export class OffersHomeComponent implements OnInit {
           }
 
           let moreUsersRequired = false;
-          if(offer.requiredMaxUser === 0) {
+          if (offer.requiredMaxUser === 0) {
             moreUsersRequired = true;
           } else {
             moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
