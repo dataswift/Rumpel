@@ -58,8 +58,16 @@ export class OffersHomeComponent implements OnInit {
 
           let claimStatus = 'untouched';
           if (offer.claim && offer.claim.status) {
+
+            /* use for testing
+            offer.claim.status = 'completed';
+            offer.reward.rewardType = 'Voucher';
+            offer.reward.codes = ['56456', '35346'];
+            */
+
             claimStatus = offer.claim.status;
           }
+
           return (  claimStatus !== 'untouched' &&
                     claimStatus !== 'rejected'
                   )

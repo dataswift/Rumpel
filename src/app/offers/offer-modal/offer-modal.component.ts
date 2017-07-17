@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { DataOfferService } from '../../data-management/data-offer.service';
 import {Subscription, Observable} from 'rxjs/Rx';
 
+
 declare var $: any;
 
 @Component({
@@ -32,6 +33,7 @@ export class OfferModalComponent implements OnInit {
   public navDisabled = false;
   public offerStatus = 'untouched';
   public animateIn = false;
+  public voucherCopied = false;
 
   constructor(private dataOfferSvc: DataOfferService) { }
 
@@ -193,10 +195,9 @@ export class OfferModalComponent implements OnInit {
   claimReward (type) {
      if (type === 'cash') {
        this.statsComponent.showConfirmBox();
-     } else if (type === 'voucher') {
-       // console.log('voucher');
-     } else if (type === 'service') {
-       // console.log('service');
+     } else {
+       const serviceLink = this.offers[this.offer_index].reward.vendorUrl;
+       window.open(serviceLink, '_blank');
      }
   }
 

@@ -274,6 +274,47 @@
                 letter-spacing: 0.4px;
               }
         }
+
+        .voucher-details{
+
+          text-align: center;
+
+          p{
+            color: #878787;
+            font-size: 12px;
+            margin-top: 30px;
+          }
+
+          h4{
+            color: #86c652;
+            font-size: 36px;
+            font-weight: 600;
+          }
+
+          a{
+            display: block;
+            cursor: pointer;
+            color: #878787;
+            margin-top: 20px;
+
+            i{
+              vertical-align: middle;
+              position: relative;
+              top: -1px;
+              color: #86c652;
+            }
+
+            i.rotate{
+              transform: rotate(135deg);
+              color: #878787;
+            }
+
+            &:hover{
+              color: #878787;
+              text-decoration: none;
+            }
+          }
+        }
   }
 
   .PII{

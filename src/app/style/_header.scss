@@ -246,7 +246,7 @@
     align-items: center;
     color: #9a9a9a;
     opacity: 0.9;
-    font-family: "Open Sans", sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: 12px;
     letter-spacing: 0.4px;
     height: 43px;
@@ -288,10 +288,14 @@
       color: $app-header-color;
       margin-bottom: 0;
       display: block !important;
+      font-size: 16px;
+      letter-spacing: 0.7px;
 
       span{
         color: $app-header-color;
         font-size: 10px;
+        letter-spacing: 0.7px;
+        font-weight: 400;
       }
     }
 

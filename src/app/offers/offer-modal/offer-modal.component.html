@@ -23,6 +23,22 @@
             <p class="offer-expires" *ngIf="offers[offer_index].expires && offers[offer_index].expires > timeNow">Expires {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
             <p class="offer-expires" *ngIf="offers[offer_index].expires && offers[offer_index].expires < timeNow">Expired {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
 
+            <div *ngIf="offers[offer_index].reward.rewardType.toLowerCase() == 'voucher' && offers[offer_index].claim && offers[offer_index].claim.status == 'completed'">
+                <div class="offer-details voucher-details">
+                  <hr>
+                  <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+                  <p>Use this voucher to claim your reward:</p>
+                  <h4>{{ offers[offer_index].reward.codes[0] }}</h4>
+                  <a ngxClipboard [cbContent]="offers[offer_index].reward.codes[0]" (cbOnSuccess)="voucherCopied = true" *ngIf="!voucherCopied"><i class="material-icons rotate">insert_link</i> Copy voucher code</a>
+                  <a *ngIf="voucherCopied"><i class="material-icons">check_circle</i> Voucher code copied!</a>
+                </div>
+
+                <div class="offer-details">
+                  <hr>
+                  <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+                </div>
+            </div>
+
             <div class="offer-icons">
               <div class="offer-icon">
                 <i class="material-icons">local_offer</i>
@@ -94,12 +110,11 @@
       <i class="material-icons">insert_emoticon</i>
       <div>
         <h5>Offer complete</h5>
-        <p *ngIf="offers[offer_index].reward.rewardType == 'Cash'">Claim your reward!</p>
-        <p *ngIf="offers[offer_index].reward.rewardType == 'Voucher'">Redeem your voucher!</p>
-        <p *ngIf="offers[offer_index].reward.rewardType == 'Service'">Enjoy your service!</p>
+        <p>Claim your reward</p>
       </div>
       <button *ngIf="offers[offer_index].reward.rewardType == 'Cash'" type="button" (click)="claimReward('cash')" class="btn">Claim {{ offers[offer_index].reward.value | currency:offers[offer_index].reward.currency:true:'1.2-2' }}</button>
-      <button *ngIf="offers[offer_index].reward.rewardType == 'Voucher'" type="button" (click)="claimReward('voucher')" class="btn">Claim voucher</button>
+      <button *ngIf="offers[offer_index].reward.rewardType == 'Voucher'" type="button" (click)="claimReward('voucher')" class="btn">Visit website</button>
+      <button *ngIf="offers[offer_index].reward.rewardType == 'Service'" type="button" (click)="claimReward('service')" class="btn">Visit website</button>
     </div>
 
 
