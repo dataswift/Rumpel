@@ -84,7 +84,7 @@
   max-height: 430px;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: #eee;
+  background-color: $app-background-color;
   padding: 0px !important;
   margin: 0px !important;
   border: none !important;
@@ -98,14 +98,14 @@
 
   .offer-nav{
     position: fixed;
-    background: #eee;
+    background: $app-background-color;
     z-index: 500;
     width: 100%;
 
 
     .swipe{
       font-size: 12px;
-      color: #6297b1;
+      color: $app-mid-tone;
       font-weight: 300;
       margin: 13px 55px 15px;
       cursor: pointer;
@@ -172,7 +172,7 @@
         }
 
         .offer-title, .offer-expires{
-          color: $app-header-color;
+          color: $app-dark-tone;
           text-align: center;
         }
 
@@ -249,7 +249,7 @@
                 position: absolute;
                 top: -13px;
                 left: -48px;
-                background-color: #eee;
+                background-color: $app-background-color;
               }
               .circle-cutout-right{
                 left: unset;
@@ -280,7 +280,7 @@
           text-align: center;
 
           p{
-            color: #878787;
+            color: $text-dark;
             font-size: 12px;
             margin-top: 30px;
           }
@@ -294,7 +294,7 @@
           a{
             display: block;
             cursor: pointer;
-            color: #878787;
+            color: $text-dark;
             margin-top: 20px;
 
             i{
@@ -306,11 +306,11 @@
 
             i.rotate{
               transform: rotate(135deg);
-              color: #878787;
+              color: $text-dark;
             }
 
             &:hover{
-              color: #878787;
+              color: $text-dark;
               text-decoration: none;
             }
           }
@@ -334,7 +334,7 @@
     }
 
     i{
-      color: $app-notification-color;
+      color: $app-contrast-color;
     }
   }
 
@@ -342,7 +342,7 @@
 
 
 .rump-modal-footer{
-  background-color: #6297b1;
+  background-color: $app-mid-tone;
   color: white;
   padding: 0 !important;
   border-bottom-left-radius: 10px;
@@ -417,8 +417,8 @@
 
     label{
       font-size: 12px;
-      color: #deeaee;
-      font-family: "Open Sans", sans-serif;
+      color: $app-light-tone;
+      font-family: $font-standard;
       font-weight: 300;
       user-select: none;
       max-width: 150px;
@@ -428,15 +428,15 @@
 
 
   .btn{
-    background-color: $app-header-color;
+    background-color: $app-dark-tone;
     color: white;
     text-transform: uppercase;
     font-weight: 300;
     font-size: 11px;
     border-radius: 4px;
     margin: 16px 80px 16px 15px;
-    font-family: "Open Sans", sans-serif;
-    border: 2px solid $app-header-color;
+    font-family: $font-standard;
+    border: 2px solid $app-dark-tone;
     width: 140px;
     height: 38px;
     cursor: pointer;
@@ -464,11 +464,11 @@
     &.processing{
       border-color: white;
       background-color: white;
-      color: $app-header-color;
+      color: $app-dark-tone;
       cursor: progress;
 
       i{
-        color: $app-header-color;
+        color: $app-dark-tone;
         transform-origin: 9px;
         -webkit-animation: spin 2s infinite linear;
       }

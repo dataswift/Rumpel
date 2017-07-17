@@ -9,7 +9,7 @@
  @import "../../style/variables";
 
  div, p, a, h2, h3, h4, h5, h6{
-   font-family: 'Open Sans', sans-serif;
+   font-family: $font-standard;
  }
 
 .offer-title {
@@ -55,7 +55,7 @@
 
   div {
     margin-left: 1em;
-    border: 2px dashed $app-accent-color;
+    border: 2px dashed $app-mid-tone;
     padding: 0.5em 1em;
   }
 
@@ -80,8 +80,8 @@
 
   .message {
     font-size: 12px;
-    font-family: "Open Sans", sans-serif;
-    color: #878787;
+    font-family: $font-standard;
+    color: $text-dark;
     margin-bottom: 10px;
 
     .icon-alert {
@@ -92,7 +92,7 @@
       margin-right: 0.5em;
 
       &.accepted {
-        color: $app-accent-color;
+        color: $app-mid-tone;
       }
     }
   }
@@ -102,9 +102,9 @@
   font-size: 1.2em;
   margin: 0.3em;
   padding: 1em 1em;
-  background-color: $app-header-color;
+  background-color: $app-dark-tone;
   text-transform: uppercase;
-  color: #ffffff;
+  color: white;
   cursor: pointer;
   width: 180px;
   border-radius: 6px;
@@ -116,7 +116,7 @@
 }
 
 .btn-accept {
-  background-color: $app-accent-color;
+  background-color: $app-mid-tone;
 }
 
 .panel-rump {
@@ -165,22 +165,22 @@ progress {
   margin-top: 1.5em;
 
   &::-moz-progress-bar {
-    background-color: $app-accent-color;
+    background-color: $app-mid-tone;
   }
 
   &::-ms-fill {
-    background-color: $app-accent-color;
+    background-color: $app-mid-tone;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
   }
 
   &::-webkit-progress-bar {
-    background-color: #eeeeee;
+    background-color: $app-background-color;
     border-radius: 2px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
   }
 
   &::-webkit-progress-value {
-    background-color: $app-accent-color;
+    background-color: $app-mid-tone;
     border-radius: 2px;
     -webkit-animation: width .5s ease-in;
   }
@@ -188,12 +188,12 @@ progress {
 
 /* Fallback styling */
 .progress-bar {
-  background-color: #eeeeee;
+  background-color: $app-background-color;
   height: 2em;
   border-radius: 2px;
 
   .progress-value {
-    background-color: $app-accent-color;
+    background-color: $app-mid-tone;
     display: block;
     height: 2em;
     border-radius: 2px;
@@ -215,7 +215,7 @@ progress {
 }
 
 .btn-third-party {
-  font-family: "Open Sans", sans-serif;
+  font-family: $font-standard;
   font-size: 1em;
   text-decoration: none;
   text-transform: uppercase;

@@ -7,6 +7,8 @@
  */
 
 
+ @import "../../style/variables";
+
  #map-view{
    position: relative;
  }
@@ -50,10 +52,10 @@
   }
 
   h4{
-    color: #6297b1;
+    color: $app-mid-tone;
     font-size: 14px;
     text-transform: uppercase !important;
-    font-family: "Open Sans", sans-serif;
+    font-family: $font-standard;
   }
 
 }

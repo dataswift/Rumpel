@@ -16,7 +16,7 @@
   left: 0px;
   z-index: 1020;
   color: $app-dark-grey;
-  font-family: $font-display;
+  font-family: $font-standard;
   background-color: $app-background-color !important;
 
   @media screen and (max-width: 1113px) {
@@ -59,7 +59,7 @@
 .data-plugs-title{
   text-transform: uppercase;
   font-weight: lighter;
-  font-family: $font-regular;
+  font-family: $font-standard;
   font-size: 12px;
   color: #bdbdbd;
   margin: 35px 0px 10px 45px;
@@ -138,7 +138,7 @@
 ul.center {
   list-style: none;
   padding: 0;
-  font-family: $font-display;
+  font-family: $font-standard;
 
   li {
     position: relative;
@@ -178,7 +178,7 @@ ul.center {
       background-color: $app-hover-grey;
 
       a {
-        color: $rump-color;
+        color: $app-mid-tone;
       }
     }
 

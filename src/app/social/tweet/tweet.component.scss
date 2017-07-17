@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
  */
 
+ @import "../../style/variables";
+
 .tweet-header {
   .header-content {
     min-height: 4em;
@@ -28,7 +30,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: $font-standard;
   text-transform: uppercase;
   font-size: 1.2em;
   color: white;

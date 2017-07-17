@@ -44,7 +44,7 @@
     align-items: stretch;
     align-content: center;
     margin: 0 auto !important;
-    color: $app-header-color;
+    color: $app-dark-tone;
     background: white;
     padding: 20px 15px 15px;
     box-shadow: 0px 0px 8px #ddd;
@@ -90,7 +90,7 @@
         max-width: 40px;
         margin: 6px auto;
         letter-spacing: 0.4px !important;
-        color: #878787;
+        color: $text-dark;
       }
     }
   }
@@ -106,9 +106,9 @@
 
 .statbox{
   padding: 20px;
-  color: $app-header-color;
-  box-shadow: 0 2px 9px 0 #eeeeee;
-  border: solid 1px #eeeeee;
+  color: $app-dark-tone;
+  box-shadow: 0 2px 9px 0 $app-background-color;
+  border: solid 1px $app-background-color;
   border-radius: 6px;
   margin: 8px;
   width: 30%;
@@ -134,7 +134,7 @@
     text-align: left;
 
     h2{
-      font-family: "Open Sans", sans-serif;
+      font-family: $font-standard;
       font-size: 24px;
       margin-top: 5px;
       margin-bottom: 0;
@@ -169,7 +169,7 @@
     }
 
     p{
-      color: #878787;
+      color: $text-dark;
       font-size: 11px;
       margin-bottom: 0;
       opacity: 0.8;

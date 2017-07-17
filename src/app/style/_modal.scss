@@ -39,7 +39,7 @@
   max-width: 90%;
   height: auto;
   max-height: 90%;
-  background-color: #eee;
+  background-color: $app-background-color;
   opacity: 1;
   z-index: 1510;
 
@@ -54,7 +54,7 @@
   .bold-message{
     text-align: center;
     font-weight: 600;
-    color: $app-accent-color;
+    color: $app-mid-tone;
     display: block;
   }
 
@@ -79,13 +79,13 @@
 }
 
 .rump-modal-header {
-  background-color: $app-header-color;
+  background-color: $app-dark-tone;
   padding: 0 !important;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 
   h3 {
-    font-family: $font-display;
+    font-family: $font-standard;
     margin-top: 0;
     margin-bottom: 0;
     font-size: 14px;
@@ -107,7 +107,7 @@
 
 
   h3 {
-    font-family: $font-display;
+    font-family: $font-standard;
     margin-top: 0;
     margin-bottom: 0;
     font-size: 14px;
@@ -123,10 +123,10 @@
     margin-bottom: 10px;
 
     a{
-      color: $app-accent-color;
+      color: $app-mid-tone;
 
       &:hover{
-        color: $app-accent-color;
+        color: $app-mid-tone;
         filter: brightness(110%);
       }
     }
@@ -146,7 +146,7 @@
     }
 
     h3{
-      color: $app-header-color;
+      color: $app-dark-tone;
       padding-left: 0;
       font-weight: 600;
       padding-top: 10px;
@@ -160,7 +160,7 @@
       color: #999999;
       font-size: 13px;
       font-weight: 300;
-      font-family: "Open Sans", sans-serif;
+      font-family: $font-standard;
       letter-spacing: 0.4px;
     }
 
@@ -179,7 +179,7 @@
       button{
         text-align: center;
         color: white;
-        background-color: $app-header-color;
+        background-color: $app-dark-tone;
         font-size: 11px;
         outline: none;
         min-width: 110px;
@@ -193,7 +193,7 @@
         &:hover, &:active, &:focus{
           outline: none;
           filter: brightness(110%);
-          background-color: $app-header-color;
+          background-color: $app-dark-tone;
           color: white;
         }
       }
@@ -208,12 +208,12 @@
   padding-top: 0px !important;
 
   button {
-    background-color: $app-accent-color;
+    background-color: $app-mid-tone;
     color: white;
     padding: 10px 20px;
     margin: 0.5em 1em 1em;
     border-radius: 8px;
-    font-family: $font-display;
+    font-family: $font-standard;
 
     &:hover {
       -webkit-filter: brightness(110%); /* Safari */
@@ -226,7 +226,7 @@
     }
 
     &.accept {
-      background-color: $rump-color;
+      background-color: $app-mid-tone;
       color: white;
     }
   }

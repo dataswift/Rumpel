@@ -9,7 +9,7 @@
 @import "../../style/variables";
 
 .view-body {
-  background-color: $app-lighter-background-color;
+  background-color: $app-light-background-color;
   text-align: center;
   min-height: 70em;
   position: relative;
@@ -27,7 +27,7 @@
   }
 
   p {
-    color: $app-header-color;
+    color: $app-dark-tone;
     font-size: 1.8em;
     margin-top: 1.5em;
 
@@ -47,8 +47,8 @@
   font-weight: 300;
 
   label {
-    font-family: 'Open Sans Condensed', sans-serif;
-    color: $app-header-color;
+    font-family: $font-standard;
+    color: $app-dark-tone;
     text-transform: uppercase;
     font-weight: 300;
     font-size: 1.25em;
@@ -64,23 +64,23 @@
 }
 
 a {
-  color: $app-accent-color;
+  color: $app-mid-tone;
   font-weight: 600;
   text-decoration: underline;
   display: inline-block;
   cursor: pointer;
 
   &:hover {
-    color: lighten($app-accent-color, 5%);
+    color: lighten($app-mid-tone, 5%);
     font-weight: 600;
     text-decoration: underline;
   }
 }
 
 .form-context {
-  color: $app-accent-color;
+  color: $app-mid-tone;
   font-size: 1.2em;
-  font-family: $font-display;
+  font-family: $font-standard;
 
   span {
     text-decoration: underline;
@@ -120,7 +120,7 @@ a {
         background-color: white;
 
         width: 250px;
-        color: $rump-color;
+        color: $app-mid-tone;
         height: 50px;
 
 
@@ -147,7 +147,7 @@ a {
         top: 3em;
         left: 0;
         width: 101.5%;
-        color: $rump-color;
+        color: $app-mid-tone;
         box-shadow: 0 6px 12px rgba(0,0,0,.175);
         cursor: pointer;
 

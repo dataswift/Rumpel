@@ -19,7 +19,7 @@
 }
 
 .filter-header {
-  font-family: $font-display;
+  font-family: $font-standard;
   font-size: 2em;
   margin-top: 2em;
   display: flex;
@@ -53,7 +53,7 @@
     }
 
     &.on {
-      color: $rump-color;
+      color: $app-mid-tone;
     }
   }
 }

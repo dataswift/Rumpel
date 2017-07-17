@@ -11,7 +11,7 @@
 
 
   @media(max-width: 768px){
-    background: #eee;
+    background: $app-background-color;
   }
 
 
@@ -19,7 +19,7 @@
     width: 100%;
 
     .no-offers{
-      color: $app-header-color;
+      color: $app-dark-tone;
       text-transform: none;
       text-align: center;
       line-height: 1.4;
@@ -30,8 +30,8 @@
 
   .offers-nav{
       width: calc(100% + 60px);
-      border-bottom: 1px solid #eee;
-      box-shadow: 0px 1px 2px #eee;
+      border-bottom: 1px solid $app-background-color;
+      box-shadow: 0px 1px 2px $app-background-color;
       margin: -30px -30px 0px -30px;
       display: flex;
       justify-content: center;
@@ -80,8 +80,8 @@
 
 
       a.current{
-        border-bottom: 2px solid $app-notification-color;
-        color: $app-header-color;
+        border-bottom: 2px solid $app-contrast-color;
+        color: $app-dark-tone;
         font-weight: 600;
       }
 
@@ -141,7 +141,7 @@
 
     h2, p, a{
       color: white;
-      font-family: "Open Sans", sans-serif;
+      font-family: $font-standard;
       max-width: 60%;
       margin-bottom: 20px;
 
@@ -231,9 +231,9 @@
 
       h4, p{
         text-align: center;
-        font-family: 'Open Sans', sans-serif;
+        font-family: $font-standard;
         text-transform: capitalize;
-        color: $app-header-color;
+        color: $app-dark-tone;
       }
 
       h4{
@@ -253,9 +253,9 @@
         padding: 20px;
         text-align: center;
         text-decoration: underline;
-        color: $app-header-color;
+        color: $app-dark-tone;
         border-top: 1px solid #ddd;
-        font-family: 'Open Sans', sans-serif;
+        font-family: $font-standard;
         cursor: pointer;
         position: absolute;
         bottom: 0;
@@ -266,20 +266,20 @@
     }
 
     .didYouKnow{
-      background-color: #deeaee;
-      color: #6297b1;
+      background-color: $app-light-tone;
+      color: $app-mid-tone;
       min-height: 328px;
       cursor: default;
 
       h4{
         font-size: 24px;
-        color: #6297b1;
+        color: $app-mid-tone;
         margin: 20px 0px;
         text-transform: none;
       }
 
       p{
-        color: #6297b1;
+        color: $app-mid-tone;
         text-transform: none;
       }
 

@@ -54,9 +54,9 @@ input.cmn-toggle-round-flat + label:after {
   transition: margin 0.4s, background 0.4s;
 }
 input.cmn-toggle-round-flat:checked + label {
-  background-color: $app-accent-color;
+  background-color: $app-mid-tone;
 }
 input.cmn-toggle-round-flat:checked + label:after {
   margin-left: 4.25em;
-  background-color: $app-accent-color;
+  background-color: $app-mid-tone;
 }

@@ -45,7 +45,7 @@ footer {
 }
 
 h1, h2, h3, h4, h5 {
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: $font-standard;
   font-weight: lighter;
   text-transform: uppercase;
 }
@@ -100,7 +100,7 @@ h1, h2, h3, h4, h5 {
   width: 100%;
   padding: 20px;
   background-color: #fff;
-  background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+  background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient($app-background-color .1em, transparent .1em);
   background-size: 100% 1.2em;
   .row.multi-element span {
     @include make-xs-column(3);
@@ -414,7 +414,7 @@ h1, h2, h3, h4, h5 {
             box-shadow: none !important;
             &:active, &:focus{
               -webkit-box-shadow: none !important;
-              box-shadow: none !important; 
+              box-shadow: none !important;
             }
           }
           &:hover {
@@ -445,7 +445,7 @@ h1, h2, h3, h4, h5 {
     margin: 0;
     color: $lightred;
     .first-word {
-      color: $base-white;
+      color: white;
     }
     @media (max-width: $screen-sm-min) {
       font-size: .8em;
@@ -453,7 +453,7 @@ h1, h2, h3, h4, h5 {
   }
   span.metricMain {
     font-size: 3em;
-    font-family: "Open Sans Condensed", sans-serif;
+    font-family: $font-standard;
     padding: 0;
     margin: 0;
     @media (max-width: $screen-sm-min) {
@@ -484,7 +484,6 @@ h1, h2, h3, h4, h5 {
     border: none;
     &:nth-child(n) {
       border: none;
-      //background: $base-white;
       color: $text-light;
       h1, h2, h3, h4, h5 {
         color: inherit;
@@ -584,7 +583,7 @@ h1, h2, h3, h4, h5 {
       padding-top: 1em;
       font-size: 3em;
       padding-bottom: 1em;
-      font-family: "Open Sans Condensed", sans-serif;
+      font-family: $font-standard;
       .icon {
         font-size: 0.8em;
         color: $base-red;
@@ -595,7 +594,7 @@ h1, h2, h3, h4, h5 {
       padding-top: 1em;
       font-size: 2em;
       padding-bottom: 1em;
-      font-family: "Open Sans Condensed", sans-serif;
+      font-family: $font-standard;
       text-transform: uppercase;
       color: $base-red;
       span {
@@ -605,7 +604,7 @@ h1, h2, h3, h4, h5 {
         span {
           color: $text-light;
         }
-        font-family: "Open Sans", sans-serif;
+        font-family: $font-standard;
       }
     }
   }
@@ -626,7 +625,7 @@ h1, h2, h3, h4, h5 {
   .panel-heading {
     font-size: 2em;
     text-transform: uppercase;
-    font-family: "Open Sans Condensed", sans-serif;
+    font-family: $font-standard;
     background: lighten($base-gray, 60%);
   }
 }

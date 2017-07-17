@@ -38,7 +38,7 @@
         border: 1px solid #ccc;
         outline: none;
         height: 34px;
-        color: $app-header-color;
+        color: $app-dark-tone;
         border-radius: 6px;
         position: relative;
         top: -2px;
@@ -57,7 +57,7 @@
   margin-bottom: 20px;
 
   span {
-    color: $app-header-color;
+    color: $app-dark-tone;
     font-size: 16px;
     margin: 30px;
     text-align: center;
@@ -118,7 +118,7 @@
     }
 
     &.selected {
-      background-color: $app-accent-color;
+      background-color: $app-mid-tone;
       color: white;
     }
   }
@@ -142,7 +142,7 @@
   }
 
   span {
-    color: $app-accent-color;
+    color: $app-mid-tone;
     font-size: 1.25em;
   }
 }

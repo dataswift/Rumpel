@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+ @import "../../style/variables";
+
 .post-header {
   .header-content {
     min-height: 4em;
@@ -29,7 +31,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: $font-standard;
   text-transform: uppercase;
   padding: 0.5em 1em;
   font-size: 1.2em;

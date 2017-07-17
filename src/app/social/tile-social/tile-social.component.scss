@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+ @import "../../style/variables";
+
 .scroll-mask {
   height: 290px;
 }
@@ -51,7 +53,7 @@
   }
 
   h4 {
-    color: #878787;
+    color: $text-dark;
     text-transform: none;
     margin: 0;
     padding: 0;

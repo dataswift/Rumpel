@@ -8,7 +8,7 @@
  @import "../../style/variables";
 
 .input-box {
-  background-color: $app-accent-color;
+  background-color: $app-mid-tone;
   min-height: 6em;
 }
 
@@ -123,5 +123,5 @@ form {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
 
-  border-top: 10px solid #ffffff;
+  border-top: 10px solid white;
 }

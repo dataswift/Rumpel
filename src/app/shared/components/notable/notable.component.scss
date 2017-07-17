@@ -73,13 +73,13 @@
 
     .notable-type {
       display: inline-block;
-      font-family: "Open Sans Condensed", sans-serif;
+      font-family: $font-standard;
       background-color: #515151;
       text-transform: uppercase;
       padding: 0.5em 1em;
       font-size: 1.2em;
       color: white;
-      background-color: $app-accent-color;
+      background-color: $app-mid-tone;
 
       span {
         margin-right: 0.5em;

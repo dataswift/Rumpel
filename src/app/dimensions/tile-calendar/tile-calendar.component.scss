@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
  */
 
+ @import "../../style/variables";
+
 .scroll-mask {
   position: relative;
 
@@ -14,7 +16,7 @@
     width: 100%;
     text-align: center;
     font-size: 2.5em;
-    font-family: "Open Sans Condensed", sans-serif;
+    font-family: $font-standard;
     text-transform: uppercase;
 
     span{
@@ -65,7 +67,7 @@
 }
 
 .event-time {
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: $font-standard;
   font-size: 1.5em;
 }
 
