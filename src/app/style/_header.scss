@@ -224,14 +224,15 @@
 
 .dropdown-menu{
   top: 45px;
-  width: 100%;
+  width: 280px !important;
   background-color: white !important;
   position: absolute !important;
   box-shadow: 0 6px 12px rgba(0,0,0,.175) !important;
+  padding: 0;
+  right: 0;
+  left: auto;
 
-  @media screen and (max-width: 510px) {
-    left: -130px;
-  }
+
 
   span{
     font-size: 12px;
@@ -239,8 +240,33 @@
 
   .dropdown-item{
     cursor: pointer;
-    padding: 15px;
-    display: block;
+    padding: 10px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #9a9a9a;
+    opacity: 0.9;
+    font-family: "Open Sans", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    height: 43px;
+
+    &:first-of-type{
+      margin-top: 10px;
+    }
+
+    &:last-of-type{
+      height: 53px;
+    }
+
+    span{
+      i{
+        position: relative;
+        top: 2px;
+        color: rgba(135, 135, 135, 0.3);
+      }
+    }
+
 
     p{
       margin-bottom: 0;
@@ -252,9 +278,72 @@
     }
   }
 
+  .accountDetails{
+    display: flex;
+    align-items: center;
+    padding: 28px 25px 18px;
+    width: 100%;
+
+    h6{
+      color: $app-header-color;
+      margin-bottom: 0;
+      display: block !important;
+
+      span{
+        color: $app-header-color;
+        font-size: 10px;
+      }
+    }
+
+    img{
+      width: 70px;
+      height: 70px;
+      margin-top: 0;
+      margin-right: 10px;
+    }
+  }
+
+  .accountUsage{
+
+    padding: 0 25px;
+
+    .bar-container{
+      height: 5px;
+      border-radius: 5px;
+      background-color: #deeaee;
+      display: block;
+      width: 100%;
+      padding: 0;
+
+      .bar{
+        background-color: #6297b1;
+        display: block;
+        height: 100%;
+        border-radius: 5px;
+        width: 50%;
+      }
+    }
+
+    h6{
+      color: #9a9a9a;
+      font-size: 10px;
+      letter-spacing: 0;
+      font-family: "Open Sans", sans-serif;
+      margin-bottom: 25px;
+      opacity: 0.9;
+      font-weight: 200;
+    }
+  }
+
   .dropdown-divider{
     margin: 0px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #878787;
+    opacity: 0.1;
+
+    &:last-of-type{
+      margin-top: 10px;
+    }
+
   }
 
 

@@ -17,7 +17,7 @@
       <li class="user-nav help"><a (click)="showInfoModal()"><i class="material-icons">help_outline</i><span>Help</span></a></li>
 
       <li class="user-nav account" *ngIf="userAuthenticated">
-        <div class="user-photo" (click)="showNotificationsCentre()" id="intro-step2">
+        <div class="user-photo" (click)="showNotificationsCentre()">
           <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon.svg'">
           <span class="badge notif-badge" *ngIf="unreadNotifications">{{unreadNotifications}}</span>
         </div>
@@ -30,13 +30,31 @@
               <div class="account-options"><i class="material-icons">keyboard_arrow_down</i></div>
             </div>
             <div class="dropdown-menu">
+
+              <div class="accountDetails user-photo">
+                <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon-blue.svg'">
+                <h6 class="welcome">{{profile?.hatId}}<br><span>&#46;{{profile?.domain}}</span></h6>
+              </div>
+
+              <div class="accountUsage">
+                  <div class="bar-container"><div class="bar" [style.width]="[accountStatus?.databaseStorageUsedShare.metric + accountStatus?.databaseStorageUsedShare.units]"></div></div>
+                  <h6>{{accountStatus?.databaseStorageUsedShare.metric}}{{accountStatus?.databaseStorageUsedShare.units}} of {{round(accountStatus?.databaseStorage.metric, 2)}} {{accountStatus?.databaseStorage.units}} storage used</h6>
+              </div>
+
+              <div class="dropdown-divider"></div>
+
               <a class="dropdown-item" *ngIf="config.native"
-                 (click)="showNotificationsCentre()">View notifications<span class="badge" style="margin-top: 0;" *ngIf="unreadNotifications">{{unreadNotifications}}</span></a>
-              <div class="dropdown-divider" *ngIf="config.native"></div>
+                 [routerLink]="['/datastore']">Public profile</a>
+
+              <a class="dropdown-item" *ngIf="config.native"
+                 (click)="showNotificationsCentre()">Notifications<span class="badge" style="margin-top: 0;" *ngIf="unreadNotifications">{{unreadNotifications}}</span></a>
+
               <a class="dropdown-item" *ngIf="config.native"
                  [routerLink]="['/user', 'password', 'change']">Change password</a>
+
               <div class="dropdown-divider" *ngIf="config.native"></div>
-              <a class="dropdown-item" (click)="signOut()">Sign out</a>
+
+              <a class="dropdown-item" (click)="signOut()">Logout <span><i class="material-icons">exit_to_app</i></span></a>
             </div>
           </div>
 
