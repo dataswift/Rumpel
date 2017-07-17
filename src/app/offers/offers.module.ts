@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { OffersRoutingModule } from './offers-routing.module';
-
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 import { OffersComponent } from './offers-component/offers.component';
@@ -18,7 +18,8 @@ import { OfferAcceptedStatsComponent } from './offer-accepted-stats/offer-accept
   imports: [
     CommonModule,
     SharedModule,
-    OffersRoutingModule
+    OffersRoutingModule,
+    ClipboardModule
   ],
   declarations: [ OffersComponent, OffersAcceptedComponent, OfferModalComponent, OffersHomeComponent, OfferAcceptedStatsComponent ],
   entryComponents: [ OfferModalComponent ]

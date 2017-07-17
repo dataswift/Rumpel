@@ -34,6 +34,7 @@
     "moment": "^2.17.1",
     "ng2-datepicker": "^1.8.3",
     "ng2-slimscroll": "^2.0.1",
+    "ngx-clipboard": "^8.0.3",
     "pouchdb": "^6.2.0",
     "rxjs": "^5.1.0",
     "simplemde": "^1.11.2",
