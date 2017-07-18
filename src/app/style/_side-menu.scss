@@ -26,7 +26,13 @@
   .menu-scroll{
     overflow-x: hidden;
     overflow-y: auto;
-    height: calc(100% - 200px);
+
+    @if $showLogoInSidebar {
+        height: calc(100% - 320px);
+    }
+    @else {
+        height: calc(100% - 200px);
+    }
   }
 }
 
@@ -178,7 +184,7 @@ ul.center {
       background-color: $app-hover-grey;
 
       a {
-        color: $app-mid-tone;
+        color: $app-accent-color;
       }
     }
 
@@ -211,4 +217,21 @@ ul.center {
 
 .badge{
   padding: 2px 7px 4px;
+}
+
+
+.client-logo{
+  background-image: url($logo);
+  background-repeat: no-repeat;
+  background-size: auto 60px;
+  border-bottom: 1px solid #e4e4e4;
+  margin: 20px 0px 30px 45px;
+  height: 90px;
+
+  @if $showLogoInSidebar {
+      display: block;
+  }
+  @else {
+      display: none;
+  }
 }

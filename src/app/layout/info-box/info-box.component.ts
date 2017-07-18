@@ -20,13 +20,14 @@ export class InfoBoxComponent implements OnInit {
   @Input() icon: string;
   private destroy: Function;
   public scrollTop: number;
-  public remove = false;
+  public animateIn = false;
 
   constructor() { }
 
   ngOnInit() {
     this.scrollTop = $('body').scrollTop();
     $('body, html').addClass('no-scroll');
+    this.animateIn = true;
   }
 
   closeModal(): void {
@@ -34,7 +35,7 @@ export class InfoBoxComponent implements OnInit {
     $('body').scrollTop(this.scrollTop);
 
     const self = this;
-    this.remove = true;
+    this.animateIn = false;
     setTimeout(function(){
       self.destroy();
     }, 1000);

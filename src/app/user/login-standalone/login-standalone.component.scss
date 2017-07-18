@@ -22,8 +22,13 @@
   }
 
   .logo {
-    height: 6em;
-    margin-top: 2em;
+    height: 80px;
+    width: 170px;
+    background-image: url($logo);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin: 70px auto 20px;
   }
 
   p {
