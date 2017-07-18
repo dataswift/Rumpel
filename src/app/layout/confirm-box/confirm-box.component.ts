@@ -17,7 +17,7 @@ import { DataOfferService } from '../../data-management/data-offer.service';
 })
 export class ConfirmBoxComponent implements OnInit {
   private destroy: Function;
-  public remove = false;
+  public animateIn = false;
   @Input() title: string;
   @Input() icon: string;
   @Input() acceptButtonEnabled = true;
@@ -33,12 +33,13 @@ export class ConfirmBoxComponent implements OnInit {
                 private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
+    this.animateIn = true;
   }
 
   closeModal(): void {
 
     const self = this;
-    this.remove = true;
+    this.animateIn = false;
     setTimeout(function(){
       self.destroy();
     }, 1000);

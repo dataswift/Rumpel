@@ -20,16 +20,17 @@ export class DialogBoxComponent implements OnInit {
            (You may need to login to Rumpel again if you return unless you have enabled cookies on your web browser).`;
   @Input() buttons: Array<{ title: string; link: string; }> = [];
   private destroy: Function;
-  public remove = false;
+  public animateIn = false;
 
   constructor() { }
 
   ngOnInit() {
+    this.animateIn = true;
   }
 
   closeModal(): void {
     const self = this;
-    this.remove = true;
+    this.animateIn = false;
     setTimeout(function(){
       self.destroy();
     }, 1000);
