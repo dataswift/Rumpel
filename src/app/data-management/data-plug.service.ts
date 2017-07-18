@@ -109,14 +109,14 @@ export class DataPlugService {
   private getDataPlugLink(plug): string {
     const plugList: any = this.config.menuItems.dataPlugs;
     let link = '';
-    let plugName = plug.name.toLowerCase();
 
+    const plugName = plug.name.toLowerCase();
     for (let i = 0; i < plugList.length; i++) {
       if (plugName === plugList[i].display.toLowerCase()) {
         link = plugList[i].page;
       }
     }
-    
+
     return link;
   }
 
