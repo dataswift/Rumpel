@@ -19,13 +19,15 @@
  $app-accent-color: #6297b1;
  $app-contrast-color: #F0C400;
 
- $image-overlay-color: rgba(0,150,136, 0.75);
+ $image-overlay-color: rgba(29,32,59, 0.54);
 
  $showLogoInSidebar: false;
  $logo: '/assets/icons/rumpel.svg';
 
 
-// shades of grey
+// fifty shades of grey
+
+ $sidebarMobileBackground: #1d1f3b;
 
  $text-dark: #878787;
  $text-light: white;
