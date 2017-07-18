@@ -222,8 +222,11 @@
   }
 }
 
-.dropdown-menu{
-  top: 45px;
+
+
+
+.btn-group .dropdown-menu{
+  top: 0px;
   width: 280px !important;
   background-color: white !important;
   position: absolute !important;
@@ -231,6 +234,13 @@
   padding: 0;
   right: 0;
   left: auto;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s, top 0.5s;
+  transition: opacity 0.5s, top 0.5s;
+  display: block;
+  visibility: hidden;
+  max-height: 0px;
+
 
   span{
     font-size: 12px;
@@ -351,5 +361,13 @@
   }
 
 
+}
 
+.btn-group.open{
+  .dropdown-menu{
+    opacity: 1;
+    top: 45px;
+    visibility: visible;
+    max-height: 800px;
+  }
 }
