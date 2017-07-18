@@ -109,14 +109,14 @@ export class DataPlugService {
   private getDataPlugLink(plug): string {
     const plugList: any = this.config.menuItems.dataPlugs;
     let link = '';
-    const plugName = plug.name.toLowerCase();
+    let plugName = plug.name.toLowerCase();
 
     for (let i = 0; i < plugList.length; i++) {
       if (plugName === plugList[i].display.toLowerCase()) {
         link = plugList[i].page;
       }
     }
-
+    
     return link;
   }
 
@@ -144,7 +144,7 @@ export class DataPlugService {
             }
 
             let plugName: string = plug.name;
-            if (plugName === 'Photos') {
+            if (plugName.toLowerCase() === 'photos') {
               plugName = 'Dropbox photos';
             }
 
@@ -152,6 +152,8 @@ export class DataPlugService {
             if (plugName === 'Calendar') {
               plugIcon = 'calendar-plug.png';
             }
+
+            plug.name = plugName;
 
             const displayPlug = {
               name: plugName,
