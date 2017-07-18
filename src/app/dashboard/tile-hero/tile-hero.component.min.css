@@ -1,0 +1,19 @@
+/*!
+ * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
+ *//*!
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+ *//*!
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+ */.dashboard-hero{background-color:#6297b1;background-image:url("/assets/images/hero.jpg");background-position:center;background-repeat:no-repeat;background-size:cover;border-radius:8px;height:350px}.dashboard-hero .hero-content{position:relative;padding:30px 0px}.dashboard-hero .hero-content h2,.dashboard-hero .hero-content p,.dashboard-hero .hero-content a{color:white;font-family:"Roboto",sans-serif;display:inline-block}.dashboard-hero .hero-content h2{font-size:30px;letter-spacing:1px;word-break:break-word;overflow:hidden;margin:auto;width:600px;text-align:center;display:block;margin-bottom:10px;line-height:1.4;word-wrap:break-word}@media (max-width: 768px){.dashboard-hero .hero-content h2{width:100%;font-size:18px}}.dashboard-hero .hero-content p{font-size:18px;margin:auto;max-width:360px;opacity:0.7;text-align:center;display:block}@media (max-width: 768px){.dashboard-hero .hero-content p{font-size:14px;max-width:280px}}.dashboard-hero .hero-content a{font-size:14px;letter-spacing:0.5px;opacity:0.8;display:block;cursor:pointer;text-decoration:underline;text-align:center;margin-top:-3px}.dashboard-hero .hero-content img{width:140px;height:140px;border:6px solid white;border-radius:50%;padding:0px;position:relative;left:50%;transform:translateX(-50%) translateY(0%)}.dashboard-hero .hero-content .details{flex:1;margin-top:20px}.overlay{position:relative}.overlay:before{position:absolute;content:" ";top:0;left:0;width:100%;height:100%;background-color:rgba(0,150,136,0.75);z-index:0;border-radius:8px}
