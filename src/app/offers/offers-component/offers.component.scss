@@ -18,13 +18,26 @@
   .offer-hero{
     width: 928px;
     border-radius: 10px;
-    background-color: #2b5753;
+    background-color: #2b313d;
     padding: 40px 55px;
     margin: 50px auto;
     background-size: contain;
     background-image: url('/assets/images/piggy.jpg');
     background-position: bottom right;
     background-repeat: no-repeat;
+    position: relative;
+
+    &:before{
+      position: absolute;
+      content:" ";
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background-color: $image-overlay-color;
+      z-index:0;
+      border-radius: 8px;
+    }
 
 
     @media (max-width: 1370px) {
@@ -50,6 +63,7 @@
       font-family: $font-standard;
       max-width: 60%;
       margin-bottom: 20px;
+      position: relative;
 
       @media (max-width: 1370px) {
         max-width: 70%;
