@@ -14,12 +14,10 @@
  }
 
 .leaflet-control, .leaflet-bottom, .leaflet-right{
-    z-index: 1 !important;
+    z-index: 1;
 }
 
-.leaflet-container{
-  //height: 290px !important;
-}
+
 
 
 .locationDate{
@@ -54,7 +52,7 @@
   h4{
     color: $app-mid-tone;
     font-size: 14px;
-    text-transform: uppercase !important;
+    text-transform: uppercase;
     font-family: $font-standard;
   }
 

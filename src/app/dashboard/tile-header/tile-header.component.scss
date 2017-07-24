@@ -27,7 +27,6 @@
     display: inline;
     margin-left: 0.25em;
     color: $app-mid-tone;
-    cursor: default;
 
     &:hover{
       text-decoration: none;
@@ -54,7 +53,7 @@
   margin-top: -17px;
   padding: 10px;
   margin-right: -7px;
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
 .info-button,

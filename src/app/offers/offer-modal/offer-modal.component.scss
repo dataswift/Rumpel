@@ -85,9 +85,9 @@
   overflow-x: hidden;
   overflow-y: auto;
   background-color: $app-background-color;
-  padding: 0px !important;
-  margin: 0px !important;
-  border: none !important;
+  padding: 0px;
+  margin: 0px;
+  border: none;
   position: relative;
 
   @media(max-height: 645px){
@@ -153,7 +153,7 @@
     font-size: 0.75em;
     background-color: white;
     margin: 55px;
-    padding: 35px !important;
+    padding: 35px;
     border: 2px solid #e7e7e7;
 
     @media(max-width: 550px){
@@ -344,7 +344,7 @@
 .rump-modal-footer{
   background-color: $app-mid-tone;
   color: white;
-  padding: 0 !important;
+  padding: 0;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   display: flex;
@@ -354,7 +354,7 @@
   justify-content: center;
 
   &.footer-state{
-    padding: 15px !important;
+    padding: 15px;
 
     i{
       font-size: 36px;

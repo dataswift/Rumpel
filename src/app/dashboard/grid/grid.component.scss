@@ -25,14 +25,22 @@
     border-bottom-left-radius: 8px;
   }
 
-  .tile-body {
+  .tile-body, .tile-body-tight {
     overflow-x: hidden;
     overflow-y: auto;
     height: 290px;
     background-color: white;
-    padding: 30px 20px;
+    padding: 30px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+  }
+
+  .tile-body-tight{
+    padding: 20px 30px;
+  }
+
+  .tile-body.no-padding{
+    padding: 0;
   }
 }
 

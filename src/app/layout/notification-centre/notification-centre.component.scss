@@ -127,7 +127,6 @@
   .notif-nav{
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 6px;
-    //top: -55px;
     position: relative;
     margin-left: 10px;
     padding: 1px 10px 3px 18px;
@@ -136,7 +135,7 @@
     user-select: none;
 
     @media screen and (max-width: 1000px) {
-        padding: 1px 10px 3px 10px !important;
+        padding-left: 10px;
     }
 
     i{

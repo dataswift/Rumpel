@@ -6,9 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
  */
 
-.tile-body{
-    padding-top: 20px !important;
-}
+
 
 a {
   color: #939393;
@@ -16,7 +14,7 @@ a {
 }
 
 h4 {
-  text-transform: none !important;
+  text-transform: none;
   font-size: 1.4em;
   color: #939393;
   max-width: 180px;
@@ -74,11 +72,14 @@ li{
 .vertical-align > .col-xs-1,
 .vertical-align > .col-xs-2 {
   display: flex;
-  align-items: center;
   justify-content: center;
+}
+
+.vertical-align > .col-xs-1{
+  align-items: center;
 }
 
 
 .icon{
-  align-items: flex-start !important;
+  align-items: flex-start;
 }

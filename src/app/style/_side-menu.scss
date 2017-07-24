@@ -17,7 +17,7 @@
   z-index: 1020;
   color: $app-dark-grey;
   font-family: $font-standard;
-  background-color: $app-background-color !important;
+  background-color: $app-background-color;
 
   @media screen and (max-width: 1113px) {
       left: -345px;
@@ -77,11 +77,11 @@
     cursor: pointer;
 
     .icon-grey{
-      display: inline-block !important;
+      display: inline-block;
     }
 
     .icon-color{
-      display: none !important;
+      display: none;
     }
 
     .plus-icon{
@@ -95,11 +95,11 @@
       }
 
       .icon-grey{
-        display: none !important;
+        display: none;
       }
 
       .icon-color{
-        display: inline-block !important;
+        display: inline-block;
       }
     }
   }
@@ -164,7 +164,7 @@ ul.center {
     }
 
     .icon img{
-      vertical-align: baseline !important;
+      vertical-align: baseline;
     }
 
     a {

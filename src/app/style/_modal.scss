@@ -67,10 +67,6 @@
     color: black;
     font-size: 1.5em;
 
-    > div {
-      padding: 20px 30px;
-    }
-
     .close-modal {
       position: absolute;
       cursor: pointer;
@@ -84,7 +80,7 @@
 
 .rump-modal-header {
   background-color: $app-dark-tone;
-  padding: 0 !important;
+  padding: 0;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 
@@ -105,7 +101,7 @@
   font-size: 0.75em;
   background-color: white;
   margin: 30px 55px 20px;
-  padding: 35px !important;
+  padding: 35px;
   border: 2px solid #e7e7e7;
 
 
@@ -140,7 +136,7 @@
     margin: 0;
     border: 2px solid #e7e7e7;
     background: white;
-    padding: 50px !important;
+    padding: 50px;
 
     img{
       width: 55px;
@@ -209,7 +205,7 @@
 
 .rump-modal-footer {
   text-align: center;
-  padding-top: 0px !important;
+  padding: 0px 30px 20px;
 
   button {
     background-color: $app-mid-tone;

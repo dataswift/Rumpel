@@ -13,7 +13,7 @@ body {
   font-size: 12px;
   font-family: $font-standard;
   min-width: 320px;
-  background-color: $app-background-color !important;
+  background-color: $app-background-color;
 }
 
 h1, h2, h3, h4, h5, h6, div, p, a, ul, ol, li, blockquote, span
@@ -68,10 +68,6 @@ i{
   margin-left: 0px !important;
 }
 
-
-.content-main {
-  background-color: $app-background-color !important;
-}
 
 .responsive {
   @include make-xs-column(12);
@@ -327,85 +323,29 @@ button.btn-view-header {
 }
 
 .notif-badge{
-  min-width: 24px !important;
-  min-height: 24px !important;
+  min-width: 24px;
+  min-height: 24px;
   padding: 3px;
   position: relative;
   top: -50px;
   right: 0px;
   border: 3px solid $app-dark-tone;
-  border-radius: 50%;
+  border-radius: 12px;
 }
 
 
-.customIntroHighlight {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border: 3px dashed $app-mid-tone;
-  box-shadow: none;
-}
 
 
-.introjs-overlay{
-  opacity: 0 !important;
-}
 
-.introjs-arrow.left {
-  border-right-color: $app-mid-tone;
-}
-.introjs-arrow.right {
-  border-left-color: $app-mid-tone;
-}
-.introjs-arrow.up {
-  border-bottom-color: $app-mid-tone;
-}
-.introjs-arrow.down {
-  border-top-color: $app-mid-tone;
-}
 
-.introjs-tooltip{
-  padding: 30px;
-  width: 250px;
-}
-
-.introjs-tooltiptext{
-  font-size: 14px;
-}
-
-.introjs-tooltipbuttons {
-    text-align: center;
-}
-
-.introjs-button{
-  padding: 15px;
-  &:hover{
-    color: $app-mid-tone;
-  }
-}
-
-.introjs-bullets ul li {
-    margin: 4px 4px;
-}
-
-.introjs-bullets{
-  padding: 15px;
-  a{
-    background: white !important;
-    width: 10px !important;
-    height: 10px !important;
-  }
-
-  a.active{
-    background: $app-dark-tone !important;
-  }
-}
 
 .popover{
-  z-index: 9000 !important;
+  z-index: 9000;
 }
 
 .popover-content{
   color: $app-dark-tone;
-  z-index: 9999 !important;
+  z-index: 9999;
 }
 
 
@@ -413,12 +353,12 @@ button.btn-view-header {
   background-color: $app-light-background-color;
 
   @media screen and (max-width: $screen-sm) {
-      background-color: unset !important;
+      background-color: unset;
   }
 }
 
 .content-header{
-  background-color:$app-light-tone !important;
+  background-color:$app-light-tone ;
   color: $app-mid-tone;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
@@ -434,17 +374,17 @@ button.btn-view-header {
 }
 
 .view-header{
-  background-color: unset !important;
+  background-color: unset;
   h4{
     color: $app-mid-tone;
-    text-transform: none !important;
+    text-transform: none;
     font-family: $font-standard;
     display: inline-block;
     margin-left: 5px;
   }
 
   .info-button{
-    color: $app-mid-tone !important;
+    color: $app-mid-tone;
     margin-left: 10px;
     top: 6px;
     position: relative;
@@ -455,23 +395,15 @@ button.btn-view-header {
     }
 
     &:hover{
-      color: $app-mid-tone !important;
+      color: $app-mid-tone;
     }
   }
 }
 
 .switch-label{
   color: $app-mid-tone;
-  text-transform: none !important;
+  text-transform: none;
   font-family: $font-standard;
-}
-
-.tile-body  {
-  padding: 30px !important;
-}
-
-.tile-body-tight{
-  padding: 10px 30px !important;
 }
 
 
@@ -480,6 +412,8 @@ button.btn-view-header {
   overflow-y: hidden;
   position: fixed;
 }
+
+
 
 
 rump-offer-modal{

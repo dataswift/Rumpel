@@ -111,10 +111,7 @@
     left: 50%;
     transform: translateX(-50%);
 
-    .invisible{
-      visibility: hidden;
-      min-height: 30px !important;
-    }
+
 
     .offer{
       display: block;
@@ -129,6 +126,11 @@
       cursor: pointer;
       position: relative;
       background: white;
+
+      &.invisible{
+        visibility: hidden;
+        min-height: 30px;
+      }
 
       @media(max-width: 420px){
         margin-left: 0;
@@ -184,6 +186,8 @@
         width: 100%;
         left: 40px;
       }
+
+
     }
 
     .didYouKnow{
