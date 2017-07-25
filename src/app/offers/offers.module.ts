@@ -7,7 +7,6 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 import { OffersComponent } from './offers-component/offers.component';
 
-import { OffersService } from './offers.service';
 import { OffersAcceptedComponent } from './offers-accepted/offers-accepted.component';
 import { OfferModalComponent } from './offer-modal/offer-modal.component';
 import { OffersHomeComponent } from './offers-home/offers-home.component';

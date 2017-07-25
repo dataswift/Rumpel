@@ -1,13 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Moment } from 'moment';
-import * as moment from 'moment';
-import { Router } from '@angular/router';
-import {Subscription, Observable} from 'rxjs/Rx';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
 import { DataOfferService } from '../../data-management/data-offer.service';
 import { DialogService } from '../../layout/dialog.service';
-import { OfferModalComponent } from '../offer-modal/offer-modal.component';
-import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
+import { UserService } from '../../user/user.service';
+import { User } from '../../user/user.interface';
 
 @Component({
   selector: 'rump-offers-home',
@@ -25,7 +22,8 @@ export class OffersHomeComponent implements OnInit {
   public acceptedOffers: any = [];
 
   constructor(private dialogSvc: DialogService,
-                private dataOfferSvc: DataOfferService) { }
+              private userSvc: UserService,
+              private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
     const self = this;
@@ -86,8 +84,9 @@ export class OffersHomeComponent implements OnInit {
     },
     error => { console.log(error); });
 
-    this.dataOfferSvc.fetchUserAwareOfferListSubscription();
 
+    this.userSvc.user$.filter((user: User) => user.authenticated)
+      .subscribe(() =>  this.dataOfferSvc.fetchUserAwareOfferListSubscription());
   }
 
 

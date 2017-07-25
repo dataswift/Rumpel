@@ -33,7 +33,7 @@ export class IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  version: '3.0.0',
+  version: '3.1.0-beta.4',
   name: 'Rumpel',
   native: true,
   protocol: 'https:',
