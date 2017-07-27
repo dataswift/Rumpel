@@ -95,8 +95,6 @@ export class SideMenuComponent implements OnInit {
     },
     error => { console.log(error); });
 
-    this.dataOfferSvc.fetchUserAwareOfferListSubscription();
-
     this.router.events
         .filter(event => event instanceof NavigationEnd)
         .subscribe((event: NavigationEnd) => {
@@ -120,6 +118,10 @@ export class SideMenuComponent implements OnInit {
     this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
       this.menu = user.authenticated ? this.config.menuItems.private : this.config.menuItems.public;
+
+      if (user.authenticated) {
+        this.dataOfferSvc.fetchUserAwareOfferListSubscription();
+      }
     });
 
 

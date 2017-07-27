@@ -14,6 +14,9 @@ import { User } from './user/user.interface';
 import { UserService } from './services';
 
 import * as moment from 'moment';
+import { GlobalMessagingService } from './services/global-messaging.service';
+import { InfoBoxComponent } from './layout/info-box/info-box.component';
+import { DialogService } from './layout/dialog.service';
 
 declare var $: any;
 
@@ -34,6 +37,8 @@ export class AppRootComponent implements OnInit {
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
             private _notificationsSvc: NotificationsService,
+            private messagingSvc: GlobalMessagingService,
+            private dialogSvc: DialogService,
             private userSvc: UserService,
             private router: Router) {
 
@@ -54,7 +59,9 @@ export class AppRootComponent implements OnInit {
     // After an hour the app is forced to refresh if user defocuses/focuses the tab
     this.appExpireTime = moment().add(1, 'hours');
 
-
+    this.messagingSvc.message$.subscribe((message: string) => {
+      this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, { message: message });
+    });
 
     this.userAuthenticated = false;
 

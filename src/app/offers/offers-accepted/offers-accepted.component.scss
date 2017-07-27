@@ -35,7 +35,7 @@
         text-transform: uppercase;
         color: #999;
         cursor: pointer;
-        font-size: 12px !important;
+        font-size: 12px;
         letter-spacing: 0.5px;
 
         @media (max-width: 704px) {
@@ -43,7 +43,7 @@
         }
 
         &:hover{
-          text-decoration: none !important;
+          text-decoration: none;
         }
       }
 
@@ -84,10 +84,6 @@
         }
     }
 
-    .invisible{
-      visibility: hidden;
-      min-height: 30px !important;
-    }
 
     .offer{
       display: block;
@@ -101,6 +97,11 @@
       border: 1px solid #ddd;
       position: relative;
       background: white;
+
+      &.invisible{
+        visibility: hidden;
+        min-height: 30px;
+      }
 
       @media(max-width: 420px){
         margin-left: 0;
@@ -316,7 +317,7 @@
     display: block;
 
     &:hover, &:focus, &:active{
-      outline: none !important;
+      outline: none;
       color: #86c652;
       filter: brightness(110%);
     }

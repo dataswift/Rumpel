@@ -8,11 +8,13 @@ This project was last tested with [Angular CLI](https://github.com/angular/angul
 - Node >7.10.0
 - Angular CLI >1.1.2
 - Typescript >2.3.0
-- Angular >4.0.0
+- Angular >4.3.0
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files. 
+To run the server with a customised domain name (such as `http://rumpel.hat.org:4200`), the name needs to be specified when
+initialising `ng serve --host rumpel.hat.org`.
 
 ## Code scaffolding
 

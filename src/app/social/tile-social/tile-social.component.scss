@@ -23,6 +23,8 @@
   position: relative;
   cursor: pointer;
   margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
 }
 
 .item-expand {
@@ -35,7 +37,7 @@
 }
 
 .media{
-  align-items: flex-start !important;
+  align-items: flex-start;
 }
 
 .center-column {
@@ -43,12 +45,14 @@
   padding-left: 15px;
 
    p {
-    font-size: 1em;
+    font-size: 12px;
     margin-bottom: 0;
 
     &:last-child {
       text-align: right;
-      margin-top: 0.5em;
+      margin-top: 10px;
+      font-size: 10px;
+      opacity: 0.7;
     }
   }
 
@@ -57,7 +61,7 @@
     text-transform: none;
     margin: 0;
     padding: 0;
-    font-size: 1.2em;
+    font-size: 12px;
     margin-bottom: 0.4em;
   }
 }
@@ -78,10 +82,20 @@
 .vertical-align > .col-xs-1,
 .vertical-align > .col-xs-2 {
   display: flex;
-  align-items: center;
   justify-content: center;
+}
+
+.vertical-align > .col-xs-1{
+  align-items: flex-start;
 }
 
 .img-responsive {
   max-height: 2em;
+}
+
+
+.tweet-metadata{
+  font-size: 10px;
+  text-align: right;
+  opacity: 0.7;
 }

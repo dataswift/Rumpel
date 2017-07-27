@@ -173,7 +173,9 @@ export class AuthHttp extends Http {
 
   private validateToken(token: string): boolean {
     if (token) {
-      return !this.jwtHelper.isTokenExpired(token, COOKIE_EXPIRATION_CHECK_OFFSET);
+      const expired = this.jwtHelper.isTokenExpired(token, COOKIE_EXPIRATION_CHECK_OFFSET);
+      const ownerScope = this.jwtHelper.decodeToken(token)['accessScope'] === 'owner';
+      return !expired && ownerScope;
     } else {
       return false;
     }

@@ -6,9 +6,11 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+@import "../../style/variables";
+
 .belt {
   width: 100%;
-  background-color: #dbdbdb;
+  background-color: #eaeaea;
 
 
   .content {
@@ -41,13 +43,7 @@
   div {
 
     vertical-align: bottom;
-    font-size: 1.2em;
 
-    .claim {
-      text-decoration: underline;
-      color: blue;
-      cursor: pointer;
-    }
   }
 }
 
@@ -61,14 +57,25 @@
   }
 }
 
+.content{
+  font-size: 1.2em;
+}
+
 .message {
   display: inline-block;
   margin-left: 1em;
   max-width: calc(100% - 120px);
   padding: 10px 0px;
+  font-size: 1.2em;
 
   @media screen and (max-width: 480px) {
-    font-size: 0.9em !important;
+    font-size: 0.9em;
+  }
+
+  .claim {
+    text-decoration: underline;
+    color: $app-mid-tone;
+    cursor: pointer;
   }
 
 
