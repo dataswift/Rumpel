@@ -33,9 +33,9 @@ export class IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  version: '3.1.0-beta.4',
-  name: 'Rumpel',
-  native: true,
+  version: '3.1.0-beta.5',
+  name: 'RumpelStaging',
+  native: false,
   protocol: 'https:',
   exchange: {
     url: 'https://dex.hubofallthings.com/api',

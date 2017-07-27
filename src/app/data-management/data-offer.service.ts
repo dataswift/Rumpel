@@ -84,7 +84,7 @@ export class DataOfferService {
   }
 
   private fetchMerchantFilter(): Observable<string[]> {
-    return this.hatV2Svc.getRecords('dex', 'databuyer')
+    return this.hatV2Svc.getRecords('dex', 'databuyer', 1)
       .map((records: HatRecord[]) => {
         if (records.length > 0 && records[0].data && records[0].data.merchants) {
           return records[0].data.merchants;
@@ -94,7 +94,6 @@ export class DataOfferService {
         }
       });
   }
-
 
   private claimOfferWithDataBuyer(offerId: string): Observable<Claim> {
     const url = this.config.databuyer.url.concat('/api/v1/offer/', offerId, '/claim');
@@ -107,8 +106,6 @@ export class DataOfferService {
         return <Claim>resJson;
       });
   }
-
-
 
   private getDataBuyerToken(): Observable<Headers | null> {
     if (this.cachedToken && this.jwt.decodeToken(this.cachedToken)['exp'] > moment().unix()) {
