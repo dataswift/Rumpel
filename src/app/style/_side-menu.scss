@@ -71,76 +71,6 @@
   margin: 35px 0px 10px 45px;
 }
 
-.data-plugs-list{
-  a{
-    text-transform: capitalize;
-    cursor: pointer;
-
-    .icon-grey{
-      display: inline-block;
-    }
-
-    .icon-color{
-      display: none;
-    }
-
-    .plus-icon{
-      color: #ddd;
-      float: right;
-    }
-
-    &:hover{
-      .plus-icon{
-        color: $app-dark-grey;
-      }
-
-      .icon-grey{
-        display: none;
-      }
-
-      .icon-color{
-        display: inline-block;
-      }
-    }
-  }
-
-
-}
-
-.data-plugs-more{
-
-  em{
-    color: #bbb;
-  }
-}
-
-
-
-.poweredBy{
-  position: absolute;
-  left: 45px;
-  bottom: 100px;
-  border-top: 1px solid #e4e4e4;
-  width: 300px;
-  padding-top: 22px;
-  padding-bottom: 22px;
-  display: block;
-  background-color: $app-background-color;
-
-
-  p{
-    display: inline-block;
-    letter-spacing: 0.5px;
-  }
-
-  img{
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-    margin-right: 20px;
-  }
-}
-
 ul.center {
   list-style: none;
   padding: 0;
@@ -192,6 +122,44 @@ ul.center {
       background-color: $app-hover-grey;
     }
 
+
+    &.data-plugs-list{
+      a{
+        text-transform: capitalize;
+        cursor: pointer;
+
+        .plus-icon{
+          color: #ddd;
+          float: right;
+        }
+
+        .icon-grey{
+          display: inline-block;
+        }
+
+        .icon-color{
+          display: none;
+        }
+
+        &:hover{
+          .plus-icon{
+            color: $app-dark-grey;
+          }
+
+          .icon-grey{
+            display: none;
+          }
+
+          .icon-color{
+            display: inline-block;
+          }
+        }
+
+      }
+
+
+    }
+
   }
 
   .disable {
@@ -208,6 +176,44 @@ ul.center {
     }
   }
 }
+
+
+
+.data-plugs-more{
+
+  em{
+    color: #bbb;
+  }
+}
+
+
+
+.poweredBy{
+  position: absolute;
+  left: 45px;
+  bottom: 100px;
+  border-top: 1px solid #e4e4e4;
+  width: 300px;
+  padding-top: 22px;
+  padding-bottom: 22px;
+  display: block;
+  background-color: $app-background-color;
+
+
+  p{
+    display: inline-block;
+    letter-spacing: 0.5px;
+  }
+
+  img{
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-right: 20px;
+  }
+}
+
+
 
 .plug-menu{
   overflow-x: hidden;
