@@ -153,6 +153,10 @@ export class DataPlugService {
               plugIcon = 'calendar-plug.png';
             }
 
+            if (plugName === 'Dropbox photos') {
+              plugIcon = 'dropbox-photos-plug.svg';
+            }
+
             plug.name = plugName;
 
             const displayPlug = {
