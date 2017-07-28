@@ -2,49 +2,73 @@ language: node_js
 node_js:
   - '7'
 
-before_script:
+cache:
+  directories:
+  - node_modules # NPM packages
+  - $HOME/.npm
+
+before_install:
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
   - npm install -g @angular/cli@1.3.0-rc.2
+
+install:
+  - npm install
 
 script:
   - ng lint
   - ng build --prod
 
-deploy:
-  - provider: s3
-    access_key_id: AKIAISPMI5PZ5RW6NUQQ
-    secret_access_key:
-      secure: NeSalyWGvKgSRMu+iXeR61uW/YqA9k9TMfoTPt9hPQD5V1Q/ni5vLHj1Bj2jKG0JNdBD4WIux/s4faGzgW3ZeFK307eDs1VhgehKXQjfqyBNme973Zys+JXkHfpeRw3x1ujMREzQX9IRjKjhEQDCISBQNrP+ognxMPkronvs1bLtgOP5YSmZTOxcjgdsXj3JjkNnNAFEZPbBGnU5YelveAcB3Gtx7dO8dKJDsDPPF00YGZzC8cjL9xfJiblZ0YyJ/k5PB2uDCJpbZSzGs5tB+xpMFFBnNA2gyCjOOh5UMnPjPBo2BrzuSy8Zzuvu0DPiZlQEmPqIgVikK7rux4EDNzzv1K8+R0iMSnfrWYW6IPw0RrNcYKVdEqFU+vN3B3+eHvkNTF5e9AeoJoMEh39DaUuDC+1cYqaBzj9L/9zGaXOz31WY4ovhJpmoiT4r3rGgvAvVyWa09Eq4EMEcmYt4VPJpG9IDtf8ie+acIBSIGIKVFl6DhvhnByHeec4fJcTAfPEfD/+uwIGn92hjwvMzrlrrPFSQqvYHowfzOrSeZnESHeA88k2t3cyuHJ+Zyq+V8PlyWCWyEFsSVeC9MSmZEca+AFpc2k+JfHoNwkdwoewp6mS5yOmMaK/B3qzGPFABS8b65hGLCDv+0C1APpoAzMjYkd0fQmptdjJ1vBjnsx0=
-    bucket: rumpel.hubat.net
-    local-dir: dist
-    acl: public_read
-    skip_cleanup: true
-    region: eu-west-1
-    on:
-      repo: Hub-of-all-Things/Rumpel
-      branch: dev
+jobs:
+  include:
 
-  - provider: s3
-    access_key_id: AKIAJ7UTSAOH4FZQNMCA
-    secret_access_key:
-      secure: EF8XUhgJk3+oeUN8EiwvlwI59tO0uhCk4g6ivcnXRK1KSGXvxOKu5j0lGfTcbM7LbFv6bOHDbV93+vNn21JwJuVVRIrA5yx57yfbyFaJ+XXkwygeJBs1e8tesIgsY4fvmNtMMBv0rgQU5RmK6WYeF5M5lLT8jGomVnywsadMS9+hqoLCRxAhc3o+BPMCMuyz8+fHa1Noh1WMLwBSOfYnJ1ODahqHUgHknKBk/mjlEzH3N22c1BnjR29hdayy3McSefADh8UdAErmV/zLG1fXjdmPm11hJpd5YX5XRCFUZop/gagFHO37gQ4Ix7d99mATdw5mNIRGHZDKChKkmMP4wvZmusSKyZlvagOrz/eNXnEwWz3xeRw3K9aw2ZP1Emhlk5xYOloA0S2+cpbPpMNZqLnPf+JSmGRSaVab9a4L5Rz0xoSSyCDS/JZyhb4DXUCE2QQsfVsG/qwoZtm4xJZ6vLW979KR0NnLle1Hgc4IKYJ8fD+NHC2Dmt+MG3Q2J5HxRiURV3VeaC9R9Q9IxgCFj1vxV+/WNKXRtH839Y+CUXT+Zx0C73Uh3bZB3AB4Z6k2sjyN616DzYdKxhXFgxaXHyTmUKhWb9WBIVQaZ2ZbNwHaabw/a+3WszdLl3hmLrBKPI1LlHPm5YSxAN3/uJiiqjkHhMYgJLA6w4f6deRJrUA=
-    bucket: xtiva-rumpel.hubat.net
-    local-dir: dist
-    acl: public_read
-    skip_cleanup: true
-    region: eu-west-1
-    on:
-      repo: Hub-of-all-Things/Rumpel
-      branch: xtiva
+    - stage: build-standalone
+      script:
+        - ng lint
+        - ng build -e standalone
+      deploy:
+        - provider: s3
+          access_key_id: AKIAJLFHYRO2WNJ52L5A
+          secret_access_key:
+            secure: Q3JeWmaQGkcuY82wm0384h34e0H9+xMh2YA8W7cVNnlEGj2T3W1mLe/p/epCdo7cP/sB71wFJjjWlOjrdF8tq1zwI4U1xH4zXrQHGs9YTx/INF+qWPYfvQFjBXy3rONgGZ11491Ed5UMgCJYiCiO2teTOig0cHryar1YxciyoEsrDjk7cQkh412Ro0ZnwKkQIUtF1+nRJdpNCZMXZV7UbxWFT1eQnN2DG/OmWmj3Y3YJnfNV3ED4xe+A6cLZYCW0c6CR6F5CvSjjVWjKcO7oUtqZAj7PkmMmy9B/lP90DK5JBJozkr51VsfAT3zp4MS458NANF2ZVoyBxV1q9fO/n6gKpWxoMI094JWvPOjqqPCDw6kMbuTsQN0v1ZVvYvnXdUGgscE2IfZsbRZUa4+gjzX2ANGTANwoknemcBdT3e6QDzacaprsGSNGcoCAXryLfuv5f82jv6LXZ66i4qOqxWbBZY0obfI7h/JSfKlZWIlPDL4kVRwuJM5urok89dS0K64nha8P2gtNaW8Z2AyONA9Wu3CizuUktqsHSr67UkW8/NPqr/JCwba1JhDn3UOjccbvXyOhb1meLpvB2ijhLeozqMEOzhql5kc3S/AGvWyMjyMhYgZMuVFTalYySMAXn6OFYTaA+oodZ4NpDzZIK9s1uYAysA0DL2A+YCmWv+o=
+          bucket: surreycode.hubat.net
+          local-dir: dist
+          acl: public_read
+          skip_cleanup: true
+          region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: surreycode
 
-  - provider: s3
-    access_key_id: AKIAJLFHYRO2WNJ52L5A
-    secret_access_key:
-      secure: S1pSMwVO3refssXi5hvM5t0BWGNOJLA93EiTKdMoRRPlnWLLnULYvex0NMu5aX3jjoCCI98q5TXl/d6KWuzj9RhYJ6SlJylJfWVvKOcnh8N/J0dccsbkxatwL2V2W7Ehg8wQCfCG7uU4G2++0ZRJXdOu3diUtopIiCuWEuRoGEZwUi93D+sGYa8rgvZuOgHQCoRNGDgVXtnVnRGx4ZAuu/+a7ies3GJoQ4FHJXEvU7z4cL41OYM38qfOk47P1/m/+KCwqw9qAWMcuhcFl/moIFTjj/c7Zw2+uRIz5Psw15uRTC4iu9IRCZxmmzOs67eCBfCf4ReZQIKGFj00OmvK3ChPAjdNgq5O34uu4Xj2N2izSdODIO1vvVZxECfqcnoDhpJpscAaWIe0s9Lf4l84djtkOShWE3wdRuyOFd9TEVR5g5m5uY7c8K3328z7LIkXYmZLAy4NkMn4XQyK4HeynwVw4THIAJ3NUFPQw1oR12IyXfRXo5ODAN+Zl0rDDwvgL0wRzuTABnAhU6vDpIZNMK0ixvOJBCqBHgHRRjK/A5jxjYTvNlLJqJ77X4XB2+WrB0OW3v3xgHjX5WLTmpLHG70rxjg4/Nwq13tBlJdeujJ7K6Ecu6PuBitU0EUp+FIQkuVfLx8t2/C877JyX83DwUV1jC/xNU+zagjnDfA/pCM=
-    bucket: surreycode.hubat.net
-    local-dir: dist
-    acl: public_read
-    skip_cleanup: true
-    region: eu-west-1
-    on:
-      repo: Hub-of-all-Things/Rumpel
-      branch: surreycode
+        - provider: s3
+          access_key_id: AKIAJ7UTSAOH4FZQNMCA
+          secret_access_key:
+            secure: lYHYrcJlgLAgoKQMwyCVcD8Y3UVhzjwx/3ShHqIv+j1IH2aJEu1nerMrG6g6+seoFDssxArNXsVC7UYyxFYSk7RdKYYQOFvW02gYvo5oXBZB7IgpoaPUQ76PdeJgi+rVKSFIEVIkKxUanzMHDR55nRzYSgDNvbZJoo8TqY8t+rrPrwMvsix8BA2wpAQN9leBhJFF2e4vollc/0UpnvhrOLXIF+3bN1OV8+l+590aoKcVtXKNaUZkJQ9QGz4N9020LC7mIS7Rscp7B9moFqwEAGsFcLxUBFeq2cEXBqoYuf0ngBBIZ+o4uLzrLKzvJ2UUpD8hb7AeUYGUcIeDSR+XP8z4VYSByfuXAWIUoMcSuWLPt0AK6LYdhScnZNSs0ItnvcFtjAq4qLM/sqPR5UFsKC2gutGx514DugLbCs6qki8pEReB7KebB7v7sUjPkKu1swGsI5RZb95j1YCCXRt7chFWB0o6QeII1Rgevy6q2PMJHw+EkiaAwZhgYh7BxcmuKbCmZaJCzS51IuNVoKCRBY9XuqUcPaulb5VTbU4ScqB3UC0SYSO/F10Eox4ZEL/UiF/bYdHPMwJvhXmNJ7kh3sWJSj9mwiR8QklNGa7RmJefr0zUCnCDKEpZ9ZCoBSFtot4X7OE4hUG22nzxR8YHlyuxLZi55yE1t0Wp0d/cA5c=
+          bucket: xtiva-rumpel.hubat.net
+          local-dir: dist
+          acl: public_read
+          skip_cleanup: true
+          region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: xtiva
+
+        - provider: s3
+          access_key_id: AKIAISPMI5PZ5RW6NUQQ
+          secret_access_key:
+            secure: nURY+vMAc9+ERrQ1q/5wuO8wHx7CJDJnKgyy0HhvbzaU7S7gd7g+zvz5VGQv1qX3yuDquuh19N4jXdh67sw5qeJ0iqBrZiQUa9Pnr1rUTXthdtxp6/mbwry34JA0RKNAF1JzjDkdVdSxJdJ5r4tunPLIqprmqYSI+Ul5mOxF0iubpSnXN+s1+6dhElTG/Czp6Fi8N0kzSULsv6LefZCZ+viEuBNRAkoALSGU7sa4+OsdN4M0sZN2sEkA1P/khoF5ipBIXz2S/PO6X9jNbRIdmmXtmQisOl0A1KTNR6J0G7ZleMDeDP/uBZkJB1CLuFWELzg6b5tRLMrydbUNS823w+Q4anbR2qd+rxknuEAwuqzqbLC21AGVLhTkapsv8t1IyejvXdTSpm+U60zqJCz4McZfehVDYEAiEYuV4tAGX2VjEAiHe9v4oEG+HbNMX/bZeNQDpUIj4J1g5PfbS0d3EK+40Y0c4cEKJ9Sd3iNqo6bG/LN/cLKDa+aPhU+iJa7bxCdw/0oIex9MDE94S1RHK9hZi1kRmPxyHBoNFWNRLfWBnbgBwgL8j7pnwJjYsrvvbwmJF1gEZgzsXgCV9+SpVl04Y6ooQQgYiAov/CXt7MPd28UXlePHZSdHAAY5rQQirEAME+U5weMx0EQ35daDuL9yBFX3Y6WkFZw7L3k5hxk=
+          bucket: rumpel.hubat.net
+          local-dir: dist
+          acl: public_read
+          skip_cleanup: true
+          region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: dev
+
+    - stage: build-hat
+      env:
+        - FOO=foo
+      script:
+        - ng lint
+        - ng build -e native
