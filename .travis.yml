@@ -1,11 +1,12 @@
 language: node_js
+
 node_js:
   - '7'
 
 cache:
   directories:
-  - node_modules # NPM packages
-  - $HOME/.npm
+    - node_modules
+    - $HOME/.npm
 
 before_install:
   - pip install --user awscli
@@ -72,3 +73,17 @@ jobs:
       script:
         - ng lint
         - ng build -e native
+      deploy:
+        - provider: s3
+          access_key_id: AKIAJ4VKFGF4ZU23H4QA
+          secret_access_key:
+            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
+          bucket: rumpel-build-artifacts
+          local-dir: dist
+          upload-dir: rumpel
+          acl: private
+          skip_cleanup: true
+          region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: v3.1.0
