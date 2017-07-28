@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
-import { DataOfferService } from '../../data-management/data-offer.service';
+import { DataOfferService } from '../data-offer.service';
 import { DialogService } from '../../layout/dialog.service';
 import { UserService } from '../../user/user.service';
 import { User } from '../../user/user.interface';

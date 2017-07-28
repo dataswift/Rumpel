@@ -7,6 +7,7 @@
  */
 
 import { OpaqueToken } from '@angular/core';
+import { environment } from '../environments/environment';
 
 export let APP_CONFIG = new OpaqueToken('app.config');
 
@@ -33,10 +34,10 @@ export class IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  version: '3.1.0-beta.4',
+  version: '3.1.0-beta.5',
   name: 'SurreyCODE',
-  native: true,
-  protocol: 'https:',
+  native: environment.native,
+  protocol: environment.protocol,
   exchange: {
     url: 'https://dex.hubofallthings.com/api',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { DialogService } from '../../layout/dialog.service';
 import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
-import { DataOfferService } from '../../data-management/data-offer.service';
+import { DataOfferService } from '../data-offer.service';
 
 @Component({
   selector: 'rump-offer-accepted-stats',

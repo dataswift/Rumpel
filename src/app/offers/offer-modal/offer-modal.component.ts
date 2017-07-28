@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
-import { DataOfferService } from '../../data-management/data-offer.service';
+import { DataOfferService } from '../data-offer.service';
 import {Subscription, Observable} from 'rxjs/Rx';
 
 

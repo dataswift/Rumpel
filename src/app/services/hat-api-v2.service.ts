@@ -7,7 +7,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Headers, Response } from '@angular/http';
+import { Headers, Response, URLSearchParams } from '@angular/http';
 import { AuthHttp } from './auth-http.service';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { Observable } from 'rxjs/Observable';
@@ -17,11 +17,18 @@ export class HatApiV2Service {
 
   constructor(private authHttp: AuthHttp) { }
 
-  getRecords(source: string, namespace: string): Observable<HatRecord[]> {
+  getRecords(source: string, namespace: string, limit?: number): Observable<HatRecord[]> {
     const url = `/api/v2/data/${source}/${namespace}`;
-    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const queryParams = new URLSearchParams();
 
-    return this.authHttp.get(url)
+    queryParams.append('orderBy', 'date');
+    queryParams.append('ordering', 'descending');
+
+    if (limit) {
+      queryParams.append('take', limit.toString());
+    }
+
+    return this.authHttp.get(url, { search: queryParams })
       .map((res: Response) => {
         return <HatRecord[]>res.json();
       });
