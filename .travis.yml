@@ -73,6 +73,12 @@ jobs:
       script:
         - ng lint
         - ng build --prod -e native
+      after_success:
+        - mv ./dist/inline.*.bundle.js ./dist/inline.bundle.js
+        - mv ./dist/polyfills.*.bundle.js ./dist/polyfills.bundle.js
+        - mv ./dist/main.*.bundle.js ./dist/main.bundle.js
+        - mv ./dist/vendor.*.bundle.js ./dist/vendor.bundle.js
+        - mv ./dist/styles.*.bundle.css ./dist/styles.bundle.css
       deploy:
         - provider: s3
           access_key_id: AKIAJ4VKFGF4ZU23H4QA
