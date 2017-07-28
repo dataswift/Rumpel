@@ -38,7 +38,7 @@ import { NativeGuard } from './native-guard.service';
 import { DataTypeFilterPipe } from './pipes';
 import { GridComponent, TileHeaderComponent, TileHeroComponent, TileComingSoonComponent} from './dashboard';
 import { HatApiService, UiStateService, RumpelService } from './services/index';
-import { DataOfferService } from './data-management/data-offer.service';
+import { DataOfferService } from './offers/data-offer.service';
 import { AuthHttp } from './services/auth-http.service';
 
 // import { DatePickerModule } from 'ng2-datepicker';

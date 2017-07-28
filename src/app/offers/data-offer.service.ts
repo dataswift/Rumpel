@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { Observable, ReplaySubject } from 'rxjs/Rx';
-import { Claim, Offer } from './interfaces/Offer.interface';
+import { Claim, Offer } from './offer.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, IAppConfig } from '../app.config';
 import { HatApiService } from '../services/hat-api.service';

@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { OffersRoutingModule } from './offers-routing.module';
 import { ClipboardModule } from 'ngx-clipboard';
 
+import { DataOfferService } from './data-offer.service';
 
 import { OffersComponent } from './offers-component/offers.component';
 
@@ -21,6 +22,7 @@ import { OfferAcceptedStatsComponent } from './offer-accepted-stats/offer-accept
     ClipboardModule
   ],
   declarations: [ OffersComponent, OffersAcceptedComponent, OfferModalComponent, OffersHomeComponent, OfferAcceptedStatsComponent ],
-  entryComponents: [ OfferModalComponent ]
+  entryComponents: [ OfferModalComponent ],
+  providers: [ DataOfferService ]
 })
 export class OffersModule { }
