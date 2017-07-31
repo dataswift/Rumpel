@@ -26,7 +26,7 @@ jobs:
     - stage: build-standalone
       script:
         - ng lint
-        - ng build --prod -e standalone
+        - ng build --target=production --environment=standalone
       deploy:
         - provider: s3
           access_key_id: AKIAJLFHYRO2WNJ52L5A
@@ -72,7 +72,7 @@ jobs:
         - FOO=foo
       script:
         - ng lint
-        - ng build --prod -e native
+        - ng build --target=production --environment=native
       after_success:
         - mv ./dist/inline.*.bundle.js ./dist/inline.bundle.js
         - mv ./dist/polyfills.*.bundle.js ./dist/polyfills.bundle.js
