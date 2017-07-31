@@ -49,10 +49,9 @@ export class OfferModalComponent implements OnInit {
     $('body, html').removeClass('no-scroll');
     $('body').scrollTop(this.scrollTop);
 
-    const self = this;
     this.animateIn = false;
-    setTimeout(function(){
-      self.destroy();
+    setTimeout(() => {
+      this.destroy();
     }, 1000);
   }
 
@@ -114,11 +113,11 @@ export class OfferModalComponent implements OnInit {
 
 
   updateOffers(offers) {
-    const self = this;
 
-    setTimeout(function(){
-      if (self.offerMode === 'untouched') {
-          self.offers = offers.filter(function(offer) {
+
+    setTimeout(() => {
+      if (this.offerMode === 'untouched') {
+          this.offers = offers.filter(function(offer) {
 
               let claimStatus = 'untouched';
               if (offer.claim && offer.claim.status) {
@@ -138,7 +137,7 @@ export class OfferModalComponent implements OnInit {
                       )
           });
       } else {
-          self.offers = offers.filter(function(offer) {
+          this.offers = offers.filter(function(offer) {
 
               let claimStatus = 'untouched';
               if (offer.claim && offer.claim.status) {
@@ -150,10 +149,10 @@ export class OfferModalComponent implements OnInit {
           });
       }
 
-      if (self.offer_index === self.offers.length) {
-        self.changeOffer(-1);
+      if (this.offer_index === this.offers.length) {
+        this.changeOffer(-1);
       } else {
-        self.changeOffer(0);
+        this.changeOffer(0);
       }
 
     }, 3000);
@@ -173,8 +172,6 @@ export class OfferModalComponent implements OnInit {
     }
 
 
-    const self = this;
-
       if (feedback === 'Processing') {
         this.btnIcon = 'autorenew';
       } else if (feedback === 'Accepted') {
@@ -183,8 +180,8 @@ export class OfferModalComponent implements OnInit {
         this.btnIcon = '';
       } else if (feedback === 'Failed') {
         this.btnIcon = 'report_problem';
-        setTimeout(function(){
-          self.showUserFeedback(btn, 'Accept');
+        setTimeout(() => {
+          this.showUserFeedback(btn, 'Accept');
         }, 5000);
       }
 

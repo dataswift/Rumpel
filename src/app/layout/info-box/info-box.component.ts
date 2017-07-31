@@ -34,10 +34,9 @@ export class InfoBoxComponent implements OnInit {
     $('body, html').removeClass('no-scroll');
     $('body').scrollTop(this.scrollTop);
 
-    const self = this;
     this.animateIn = false;
-    setTimeout(function(){
-      self.destroy();
+    setTimeout( () => {
+      this.destroy();
     }, 1000);
   }
 }

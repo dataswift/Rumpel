@@ -36,10 +36,9 @@ export class ConfirmBoxComponent implements OnInit {
 
   closeModal(): void {
 
-    const self = this;
     this.animateIn = false;
-    setTimeout(function(){
-      self.destroy();
+    setTimeout(() => {
+      this.destroy();
     }, 1000);
   }
 

@@ -26,10 +26,9 @@ export class OffersHomeComponent implements OnInit {
               private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
-    const self = this;
 
     this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
-      offers = self.setOfferImage(offers);
+      offers = this.setOfferImage(offers);
 
       this.offers = offers.filter(function(offer) {
 
