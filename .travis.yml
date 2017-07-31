@@ -56,6 +56,19 @@ jobs:
             branch: xtiva
 
         - provider: s3
+          access_key_id: AKIAJQYXKMAT6VQBOHGA
+          secret_access_key:
+            secure: dI65RS7ObrRNtI/sAvdJz9mlCsQ+5DuKDz3CMeTuxRNV1+3ipZSkgtXQrXU97v+DbUjlPQeHVAcd9yWakpeuBKge49ZSz2PEz/LJucLgU2x9pAYvixAWpJww2zUkjcb8CNZgdL4ikAlUSNAchku5+ARI4PSeSSzKc1TzKbd1p71EY6oHJy4Lbo+QqzkSRBWBmEcV3H38RsVIxHvPoq2Wx//DWce8e1x9M1sGbDFXQGIdJkKvIq6bbFh0YEAQFogX8rJ+w0KJ13Y2M4hKzbVIZjRjtotI9G9jqVR1sg3P1ffBGIyOZiLq7WyJDyO3dVjSeQ/yk4s2PBJxjsZp0BXMwU+N5o1xg4R5QvF71dh0FDNLo0YL4J1jxUFON4fF3knfiDmO8GUXzjWPG3FUtZpUcMkb/oLt6bDllm6I7vc4Dp34UZvULV93BnodZd6FvKkGSEpvbf/UzJ/l6/2FgB8xjBoDKf/1GiZmu3sJHYMABCQSsenTHhNl+vy63R7Mi4uSIo/LikLKmTik/QPJvYwkri6HAtbnRdWlY9Vekca+lsdid/udu4kADHqcOAGp3Tp5TDD473s1OVYfUaMJHUfFa/cDlxQl9/mtq1CqdtzOm5EwclNj6pzxv2wO/y8gqwaXXAG6sYNI+aZBUOC0r2UTXd1MyUyK0E0rzqul4JeBcdc=
+          bucket: flow-reporter.hubat.net
+          local-dir: dist
+          acl: public_read
+          skip_cleanup: true
+          region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: quensus
+
+        - provider: s3
           access_key_id: AKIAISPMI5PZ5RW6NUQQ
           secret_access_key:
             secure: nURY+vMAc9+ERrQ1q/5wuO8wHx7CJDJnKgyy0HhvbzaU7S7gd7g+zvz5VGQv1qX3yuDquuh19N4jXdh67sw5qeJ0iqBrZiQUa9Pnr1rUTXthdtxp6/mbwry34JA0RKNAF1JzjDkdVdSxJdJ5r4tunPLIqprmqYSI+Ul5mOxF0iubpSnXN+s1+6dhElTG/Czp6Fi8N0kzSULsv6LefZCZ+viEuBNRAkoALSGU7sa4+OsdN4M0sZN2sEkA1P/khoF5ipBIXz2S/PO6X9jNbRIdmmXtmQisOl0A1KTNR6J0G7ZleMDeDP/uBZkJB1CLuFWELzg6b5tRLMrydbUNS823w+Q4anbR2qd+rxknuEAwuqzqbLC21AGVLhTkapsv8t1IyejvXdTSpm+U60zqJCz4McZfehVDYEAiEYuV4tAGX2VjEAiHe9v4oEG+HbNMX/bZeNQDpUIj4J1g5PfbS0d3EK+40Y0c4cEKJ9Sd3iNqo6bG/LN/cLKDa+aPhU+iJa7bxCdw/0oIex9MDE94S1RHK9hZi1kRmPxyHBoNFWNRLfWBnbgBwgL8j7pnwJjYsrvvbwmJF1gEZgzsXgCV9+SpVl04Y6ooQQgYiAov/CXt7MPd28UXlePHZSdHAAY5rQQirEAME+U5weMx0EQ35daDuL9yBFX3Y6WkFZw7L3k5hxk=
@@ -137,3 +150,17 @@ jobs:
           on:
             repo: Hub-of-all-Things/Rumpel
             branch: surreycode
+
+        - provider: s3
+          access_key_id: AKIAJ4VKFGF4ZU23H4QA
+          secret_access_key:
+            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
+          bucket: rumpel-build-artifacts
+          local-dir: dist
+          upload-dir: quensus
+          acl: private
+          skip_cleanup: true
+          region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: quensus
