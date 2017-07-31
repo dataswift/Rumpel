@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-  - '7'
+  - '8'
 
 cache:
   directories:
@@ -25,6 +25,7 @@ jobs:
 
     - stage: build-standalone
       script:
+        - ng --version
         - ng lint
         - ng build --target=production --environment=standalone
       deploy:
@@ -71,6 +72,7 @@ jobs:
       env:
         - FOO=foo
       script:
+        - ng --version
         - ng lint
         - ng build --target=production --environment=native
       after_success:
