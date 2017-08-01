@@ -46,7 +46,10 @@ export class HatApiService {
   /* User authentication management methods */
 
   login(username: string, password: string): Observable<User> {
-    const headers = new Headers({ username: username, password: password });
+    const headers = new Headers({
+      username: encodeURIComponent(username),
+      password: encodeURIComponent(password)
+    });
 
     return this.http.get('users/access_token', { headers: headers, body: '' })
       .map((res: Response) => {
