@@ -74,12 +74,15 @@ export class ActivityListComponent implements OnInit {
 
 
   getMonthsInRange() {
+
     const self = this;
 
     setInterval(function() {
 
-      self.datesInRange = [];
+      this.datesInRange = [];
       const dates = document.getElementsByClassName('date');
+
+
       for (let i = 0; i < dates.length; i++) {
 
         const $this = <HTMLScriptElement>dates[i];
@@ -87,22 +90,22 @@ export class ActivityListComponent implements OnInit {
 
         if ( $this.offsetTop < ( activityList.offsetHeight + activityList.scrollTop ) && $this.offsetTop > activityList.scrollTop ) {
               const monthInRange = self.eventList[i].timestamp.format('MM YYYY');
-              if (!self.datesInRange.includes(monthInRange) ) {
-                self.datesInRange.push(monthInRange);
+              if (!this.datesInRange.includes(monthInRange) ) {
+                this.datesInRange.push(monthInRange);
               }
         }
       }
 
       const tempMonths = [];
 
-      for ( let j = 0; j < self.datesInRange.length; j++ ) {
-        const formattedMonth = moment( self.datesInRange[j], 'MM YYYY');
+      for ( let j = 0; j < this.datesInRange.length; j++ ) {
+        const formattedMonth = moment( this.datesInRange[j], 'MM YYYY');
         tempMonths.push( formattedMonth.format('MMM YYYY') );
       }
 
-      self.currentMonth = tempMonths.join(' / ');
+      this.currentMonth = tempMonths.join(' / ');
 
-      self.notifyDatesInRange.emit(self.datesInRange);
+      self.notifyDatesInRange.emit(this.datesInRange);
     }, 1000);
   }
 

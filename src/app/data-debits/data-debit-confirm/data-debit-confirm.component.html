@@ -66,21 +66,21 @@
 </div>
 
 <div class="row offer-dialog">
-  <div class="col-xs-10 col-xs-offset-1 text-center" [ngSwitch]="status">
+  <div class="text-center" [ngSwitch]="status">
     <div class="message" *ngIf="confirmMessage" style="margin-bottom: 1.5em;">
       Confirmation: You have accepted the data offer and a data debit has been created on your HAT. You can manage all your HAT data exchanges at the data debit section of Rumpel.
     </div>
     <div *ngSwitchCase="'pending'">
+      <div class="message">
+        <span class="icon-alert ss-alert ss-glyphish-filled"></span>
+        Last chance to review the data being released before accepting offer.
+      </div>
       <div class="offer-dialog">
         <button class="btn btn-rump btn-accept"
                 (click)="acceptDataDebit()">Accept Offer</button>
         <button class="btn btn-rump"
                 (click)="rejectDataDebit()">Cancel</button>
-      </div>
-      <div class="message">
-        <span class="icon-alert ss-alert ss-glyphish-filled"></span>
-        Last chance to review the data being released before accepting offer.
-      </div>
+      </div>  
     </div>
     <div class="message" *ngSwitchCase="'accepted'">
       <span class="icon-alert accepted ss-info ss-glyphish-filled"></span>

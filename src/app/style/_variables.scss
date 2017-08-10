@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
+@import "branding";
+
 //== Media queries breakpoints
 //
 //## Define the breakpoints at which your layout will change, adapting to different screen sizes.
@@ -57,44 +59,3 @@ $grid-gutter-width:         30px !default;
 $grid-float-breakpoint:     $screen-sm-min !default;
 //** Point at which the navbar begins collapsing.
 $grid-float-breakpoint-max: ($grid-float-breakpoint - 1) !default;
-
-$base-black: rgb(1, 1, 1);
-$base-grey: #262626;
-$text-white: rgb(254, 254, 254);
-
-$base-white: white;
-$base-black: black;
-$base-color: rgb(188, 51, 51); /*rgb(233, 58, 63);*/
-$base-background-color: #535353;
-
-$font-display: "Roboto", sans-serif;
-$font-regular: "Roboto", sans-serif;
-$font-condensed: "Roboto", sans-serif;
-
-$rump-color: #009688;
-$text-dark: black;
-$text-light: white;
-
-$background-grey: #F3F3F3;
-
-$material-bg-900: #263238;
-$material-bg-800: #37474F;
-$material-bg-700: #455A64;
-$material-bg-600: #546E7A;
-$material-bg-500: #607D8B;
-$material-bg-400: #78909C;
-$material-bg-300: #90A4AE;
-$material-bg-200: #B0BEC5;
-
-$min-private-window-height: 62em;
-
-
-$app-header-color: #4A556B;
-$app-background-color: #EEEEEE;
-$app-lighter-background-color: #F3F3F3;
-$app-accent-color: #009688;
-$app-dark-grey: #939393;
-$app-hover-grey: #E8E8E8;
-$app-notification-color: #F0C400;
-$app-tile-header-color: #DEE9EE;
-$app-tile-title-color: #6297B1;

@@ -14,11 +14,13 @@
   <i class="material-icons">menu</i>
 </div>
 
+<div class="client-logo"></div>
+
 <div class="menu-scroll">
 
     <ul class="center" id="intro-step1">
       <li *ngFor="let item of menu; let i = index"
-          [class.selected]="item.link === selectedItem">
+          [class.selected]="selectedItem.indexOf(item.link) !== -1">
         <div class="wrapper" id="intro-step{{i + 3}}">
           <a [routerLink]="[item.link]" (click)="closeMenu()"
             data-toggle="popover" data-container=".menubar-left"
@@ -28,7 +30,7 @@
              (mouseover)="showPopover()">
             <div class="icon"><i class="material-icons">{{item.icon}}</i></div>
             {{item.display}}
-            <!--<span class="badge" *ngIf="item.display === 'Redeem offers'">4</span>-->
+            <span class="badge" *ngIf="item.display === 'Redeem offers' && availableOffers > 0">{{ availableOffers }}</span>
           </a>
         </div>
       </li>
@@ -67,6 +69,6 @@
 
 
 <div class="poweredBy">
-  <img src="assets/icons/rumpel-plug.svg" class="img img-responsive">
+  <img src="assets/icons/grey-rumpel-plug.svg" class="img img-responsive">
   <p>Dashboard by Rumpel</p>
 </div>

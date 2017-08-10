@@ -5,9 +5,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
+ @import "../../style/variables";
 
 .input-box {
-  background-color: #009688;
+  background-color: $app-mid-tone;
   min-height: 6em;
 }
 
@@ -122,5 +123,5 @@ form {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
 
-  border-top: 10px solid #ffffff;
+  border-top: 10px solid white;
 }

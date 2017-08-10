@@ -10,17 +10,30 @@ import { Injectable, Inject } from '@angular/core';
 import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UserService } from './user/user.service';
 import { APP_CONFIG, IAppConfig } from './app.config';
+import { GlobalMessagingService } from './services/global-messaging.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  private redirectPath: string[];
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private messagingSvc: GlobalMessagingService,
               private router: Router,
-              private userSvc: UserService) { }
+              private userSvc: UserService) {
+
+    this.redirectPath = config.native ? ['user', 'login'] : ['user', 'login', 'start'];
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (route.queryParams['token']) {
-      return this.userSvc.loginWithToken(route.queryParams['token']);
+      const tokenValid = this.userSvc.loginWithToken(route.queryParams['token']);
+      if (!tokenValid) {
+        this.messagingSvc.sendMessage(
+          `Authentication with HAT failed. Either your session has expired or this app is incompatible with your HAT.`
+        );
+        this.router.navigate(this.redirectPath);
+      }
+      return tokenValid;
     } else if (this.userSvc.isLoggedIn()) {
       return true;
     } else {
@@ -33,9 +46,7 @@ export class AuthGuard implements CanActivate {
         navExtras.queryParams['redirect'] = route.queryParams['redirect'];
       }
 
-      const redirectPath = this.config.native ? ['user', 'login'] : ['user', 'login', 'start'];
-
-      this.router.navigate(redirectPath, navExtras);
+      this.router.navigate(this.redirectPath, navExtras);
       return false;
     }
 

@@ -6,6 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+ @import "../../style/variables";
+
 .post-header {
   .header-content {
     min-height: 4em;
@@ -29,7 +31,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  font-family: "Open Sans Condensed", sans-serif;
+  font-family: $font-standard;
   text-transform: uppercase;
   padding: 0.5em 1em;
   font-size: 1.2em;
@@ -127,13 +129,13 @@ h4{
   margin-bottom: 4px;
   word-wrap: break-word;
   max-width: 132px;
-  color: #878787;
+  color: $text-dark;
 
   a{
     color: white;
     word-wrap: break-word;
     max-width: 132px;
-    color: #878787;
+    color: $text-dark;
   }
 }
 
@@ -144,7 +146,7 @@ p{
   margin-bottom: 3px;
   pointer-events: none;
   max-width: 132px;
-  color: #878787;
+  color: $text-dark;
 }
 
 
@@ -153,6 +155,6 @@ p{
 .photo-description{
   min-height: 100px;
   h4, p{
-    color: white !important;
+    color: white;
   }
 }

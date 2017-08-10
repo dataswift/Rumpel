@@ -11,13 +11,23 @@
 .modal-overlay {
   z-index: 1500;
 
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   cursor: pointer;
+
+
+  opacity: 0;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+
+  &.fadein {
+    opacity: 1;
+  }
 }
 
 .rump-modal {
@@ -31,70 +41,179 @@
   max-width: 90%;
   height: auto;
   max-height: 90%;
-  background-color: white;
-
+  background-color: $app-background-color;
   z-index: 1510;
+
+  opacity: 0;
+  -webkit-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+
+  &.animateIn {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+
+  .bold-message{
+    text-align: center;
+    font-weight: 600;
+    color: $app-mid-tone;
+    display: block;
+  }
 
   .rump-modal-content {
     position: relative;
     color: black;
     font-size: 1.5em;
 
-    > div {
-      padding: 20px 30px;
-    }
-
     .close-modal {
       position: absolute;
       cursor: pointer;
       top: 10px;
-      right: 20px;
+      right: 8px;
       padding: 10px;
-      color: $app-accent-color;
+      color: white;
     }
   }
 }
 
 .rump-modal-header {
+  background-color: $app-dark-tone;
+  padding: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
   h3 {
-    font-family: $font-display;
-    color: $app-accent-color;
-    margin-top: 0.25em;
-    margin-bottom: 0.25em;
-    font-size: 18px;
+    font-family: $font-standard;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 200;
+    text-transform: uppercase;
+    color: white;;
+    padding: 25px;
+    letter-spacing: 0.5px;
   }
 }
 
 .rump-modal-body {
   font-size: 0.75em;
-  border-top: 1px solid #cdcdcd;
+  background-color: white;
+  margin: 30px 55px 20px;
+  padding: 35px;
+  border: 2px solid #e7e7e7;
+
+
+
+  h3 {
+    font-family: $font-standard;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 200;
+    text-transform: uppercase;
+    color: white;;
+    padding: 25px;
+    letter-spacing: 0.5px;
+  }
 
   p {
     margin-top: 10px;
     margin-bottom: 10px;
 
     a{
-      color: $app-accent-color;
+      color: $app-mid-tone;
 
       &:hover{
-        color: $app-accent-color;
+        color: $app-mid-tone;
         filter: brightness(110%);
       }
     }
+  }
+
+  &.white-modal-body{
+    margin: 0;
+    border: 2px solid #e7e7e7;
+    background: white;
+    padding: 50px;
+
+    img{
+      width: 55px;
+      height: 55px;
+      margin-right: 15px;
+      margin-bottom: 20px;
+    }
+
+    h3{
+      color: $app-dark-tone;
+      padding-left: 0;
+      font-weight: 600;
+      padding-top: 10px;
+      display: inline-block;
+      letter-spacing: 0.4px;
+      top: -8px;
+      position: relative;
+    }
+
+    p{
+      color: #999999;
+      font-size: 13px;
+      font-weight: 300;
+      font-family: $font-standard;
+      letter-spacing: 0.4px;
+    }
+
+    .close-modal{
+      i{
+        color: #9a9a9a;
+      }
+    }
+
+    .actions{
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+
+      button{
+        text-align: center;
+        color: white;
+        background-color: $app-dark-tone;
+        font-size: 11px;
+        outline: none;
+        min-width: 110px;
+        padding: 10px 20px;
+        font-weight: 300;
+        margin: 20px 10px 0px;
+        text-transform: uppercase;
+        display: inline-block;
+        border-radius: 4px;
+
+        &:hover, &:active, &:focus{
+          outline: none;
+          filter: brightness(110%);
+          background-color: $app-dark-tone;
+          color: white;
+        }
+      }
+    }
+
+
   }
 }
 
 .rump-modal-footer {
   text-align: center;
-  padding-top: 0px !important;
+  padding: 0px 30px 20px;
 
   button {
-    background-color: $app-accent-color;
+    background-color: $app-mid-tone;
     color: white;
     padding: 10px 20px;
     margin: 0.5em 1em 1em;
     border-radius: 8px;
-    font-family: $font-display;
+    font-family: $font-standard;
 
     &:hover {
       -webkit-filter: brightness(110%); /* Safari */
@@ -107,7 +226,7 @@
     }
 
     &.accept {
-      background-color: $rump-color;
+      background-color: $app-mid-tone;
       color: white;
     }
   }

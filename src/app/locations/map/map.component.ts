@@ -114,10 +114,9 @@ export class MapComponent implements OnInit, OnChanges {
       const date = moment(Number(loc.timestamp));
       marker.bindPopup('<b style="text-align: center">' + date.format('h:mm a') + '</b>').openPopup();
 
-      const self = this;
       /*
       marker.on('click', (e: any) => {
-        self.onMarkerSelected(e);
+        this.onMarkerSelected(e);
       });
       */
       // pointlist.push(pos);

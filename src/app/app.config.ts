@@ -7,6 +7,7 @@
  */
 
 import { OpaqueToken } from '@angular/core';
+import { environment } from '../environments/environment';
 
 export let APP_CONFIG = new OpaqueToken('app.config');
 
@@ -17,6 +18,7 @@ export class IAppConfig {
   protocol: string;
   exchange: { url: string; id: string; accessToken: string; };
   marketsquare: { url: string };
+  databuyer: { name: string; url: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
   notables: {
@@ -32,10 +34,10 @@ export class IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  version: '3.0.0',
-  name: 'Rumpel',
-  native: true,
-  protocol: 'https:',
+  version: '3.1.0-beta.5',
+  name: 'RumpelStaging',
+  native: environment.native,
+  protocol: environment.protocol,
   exchange: {
     url: 'https://dex.hubofallthings.com/api',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
@@ -49,6 +51,10 @@ export const AppConfig: IAppConfig = {
   },
   marketsquare: {
     url: 'https://marketsquare.hubofallthings.com/api'
+  },
+  databuyer: {
+    name: 'DataBuyer',
+    url: 'https://databuyer.hubat.net'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='
@@ -88,8 +94,8 @@ export const AppConfig: IAppConfig = {
       { display: 'My personal data', icon: 'security', link: 'datastore', dataType: 'profile', disable: '',
       description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
 
-      // { display: 'Redeem offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '',
-      // description: 'Allow access to your data in exchange for cash, services or vouchers. Visit the MarketSquare to find out more.' },
+      { display: 'Redeem offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '',
+      description: 'Allow access to your data in exchange for cash, services or vouchers.' },
 
       { display: 'Notables', icon: 'border_color', link: 'notables', dataType: '', disable: '',
       description: `Your words are your memories!

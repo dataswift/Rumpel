@@ -1,0 +1,143 @@
+<!--
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
+  -->
+
+<div class="rump-modal" [class.animateIn]="animateIn">
+  <div class="rump-modal-content">
+    <div class="rump-modal-header">
+      <h3>Offer details</h3>
+    </div>
+    <div class="rump-modal-body" (scroll)="handleScroll($event)">
+      <div class="offer-nav" [class.shadow]="scrollShadow" >
+          <a (click)="prevOffer()" class="swipe swipe-left" [class.swipe-disabled]="offer_index == 0 || navDisabled"><i class="material-icons">keyboard_backspace</i><span>Prev</span></a>
+          <a (click)="nextOffer()" class="swipe swipe-right" [class.swipe-disabled]="offer_index >= offers.length-1 || navDisabled"><span>Next</span><i class="material-icons">keyboard_backspace</i></a>
+      </div>
+
+      <div class="offer-content">
+            <div class="offer-logo" [style.background-image]="'url(' + offers[offer_index].illustrationUrl + ')'"></div>
+            <h4 class="offer-title">{{ offers[offer_index].title }}</h4>
+            <p class="offer-expires" *ngIf="offers[offer_index].expires && offers[offer_index].expires > timeNow">Expires {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
+            <p class="offer-expires" *ngIf="offers[offer_index].expires && offers[offer_index].expires < timeNow">Expired {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
+
+            <div *ngIf="offers[offer_index].reward.rewardType.toLowerCase() == 'voucher' && offers[offer_index].claim && offers[offer_index].claim.status == 'completed'">
+                <div class="offer-details voucher-details">
+                  <hr>
+                  <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+                  <p>Use this voucher to claim your reward:</p>
+                  <h4>{{ offers[offer_index].reward.codes[0] }}</h4>
+                  <a ngxClipboard [cbContent]="offers[offer_index].reward.codes[0]" (cbOnSuccess)="voucherCopied = true" *ngIf="!voucherCopied"><i class="material-icons rotate">insert_link</i> Copy voucher code</a>
+                  <a *ngIf="voucherCopied"><i class="material-icons">check_circle</i> Voucher code copied!</a>
+                </div>
+
+                <div class="offer-details">
+                  <hr>
+                  <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+                </div>
+            </div>
+
+            <div class="offer-icons">
+              <div class="offer-icon">
+                <i class="material-icons">local_offer</i>
+                <p>{{ offers[offer_index].requiredMaxUser - offers[offer_index].totalUserClaims }} <br>remaining</p>
+              </div>
+
+              <div class="offer-icon">
+                <i class="material-icons">accessibility</i>
+                <p >PII <span *ngIf="!offers[offer_index].pii">NOT </span><br>REQUESTED</p>
+              </div>
+
+              <div class="offer-icon">
+                <i class="material-icons">schedule</i>
+                <p>{{ offerDuration }} day<span *ngIf="offerDuration != 1">s</span><br>duration</p>
+              </div>
+            </div>
+
+            <div class="offer-details">
+              <hr>
+              <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+              <h6>Offer description</h6>
+              <p [innerHTML]="offers[offer_index].shortDescription | safeHtml"></p>
+            </div>
+
+            <div class="offer-details">
+              <hr>
+              <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+              <h6>Data requested</h6>
+              <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
+                <span class="bold">{{ def.source }}</span>
+                <span *ngFor="let dataset of def.datasets">{{ dataset.description }}</span>
+              </p>
+            </div>
+      </div>
+
+      <div class="PII" *ngIf="offers[offer_index].pii">
+        <i class="material-icons">accessibility</i>
+        <p>Personally identifiable information (PII) is requested in this offer</p>
+      </div>
+
+    </div>
+
+
+
+
+
+
+    <div class="rump-modal-footer" *ngIf="offerStatus == 'untouched'">
+      <div class="checkbox">
+        <label><input type="checkbox" class="regular-checkbox" value="" (change)="updateClaimDisabled($event)" [disabled]="btnText != 'Accept' && btnText != 'Try again'">I agree to share the data being requested</label>
+      </div>
+      <button type="button" class="btn" (click)="acceptOffer($event)" [disabled]='claimDisabled'><i class="material-icons">{{ btnIcon }}</i>{{ btnText }}</button>
+    </div>
+
+    <div class="rump-modal-footer footer-state footer-claimed" *ngIf="offerStatus == 'claimed' || offerStatus == 'claim'">
+      <i class="material-icons">data_usage</i>
+      <div *ngIf="offers[offer_index].totalUserClaims >= offers[offer_index].requiredMinUser || offers[offer_index].requiredMinUser == 0">
+        <h5>Collecting data</h5>
+        <p>Once completed you can claim your reward.</p>
+      </div>
+
+      <div *ngIf="offers[offer_index].totalUserClaims < offers[offer_index].requiredMinUser && offers[offer_index].requiredMinUser > 0">
+        <h5>Pending</h5>
+        <p>Waiting for {{ offers[offer_index].requiredMinUser - offers[offer_index].totalUserClaims }} more users to claim this offer.</p>
+      </div>
+    </div>
+
+    <div class="rump-modal-footer footer-state footer-complete" *ngIf="offerStatus == 'completed'">
+      <i class="material-icons">insert_emoticon</i>
+      <div>
+        <h5>Offer complete</h5>
+        <p>Claim your reward</p>
+      </div>
+      <button *ngIf="offers[offer_index].reward.rewardType == 'Cash'" type="button" (click)="claimReward('cash')" class="btn">Claim {{ offers[offer_index].reward.value | currency:offers[offer_index].reward.currency:true:'1.2-2' }}</button>
+      <button *ngIf="offers[offer_index].reward.rewardType == 'Voucher'" type="button" (click)="claimReward('voucher')" class="btn">Visit website</button>
+      <button *ngIf="offers[offer_index].reward.rewardType == 'Service'" type="button" (click)="claimReward('service')" class="btn">Visit website</button>
+    </div>
+
+
+
+    <div class="rump-modal-footer footer-state footer-redeemed" *ngIf="offerStatus == 'redeemed'">
+      <i class="material-icons">check_circle</i>
+      <div>
+        <h5>All done!</h5>
+        <p>This offer is complete and you have collected your reward</p>
+      </div>
+    </div>
+
+    <div class="rump-modal-footer footer-state" *ngIf="offerStatus == 'failed'">
+      <i class="material-icons">error</i>
+      <div>
+        <h5>Offer failed</h5>
+        <p>The minimum requirements for this offer were not satisfied.</p>
+      </div>
+    </div>
+
+
+    <div class="close-modal" (click)="closeModal()"><i class="material-icons">close</i></div>
+  </div>
+</div>
+
+<div class="modal-overlay" [class.fadein]="animateIn" id="modal-overlay" (click)="closeModal()"></div>

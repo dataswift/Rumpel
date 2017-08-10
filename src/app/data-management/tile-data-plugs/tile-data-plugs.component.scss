@@ -44,7 +44,7 @@
 }
 
 .plugimg{
-  align-items: flex-start !important;
+  align-items: flex-start;
 }
 
 .col-xs-2, .col-xs-8 {
@@ -53,7 +53,7 @@
   padding-right: 0;
 
   a {
-    color: #ffffff;
+    color: white;
     text-decoration: none;
 
     span {

@@ -19,17 +19,17 @@
     background-color: white;
 
     a{
-      color: $app-accent-color;
+      color: $app-mid-tone;
 
       &:hover{
-        color: lighten($app-accent-color, 5%);
+        color: lighten($app-mid-tone, 5%);
       }
     }
   }
 }
 
 .filter-header {
-  font-family: $font-display;
+  font-family: $font-standard;
   font-size: 2em;
   margin-top: 2em;
   display: flex;
@@ -53,7 +53,7 @@
     }
 
     &.on {
-      color: $app-accent-color;
+      color: $app-mid-tone;
     }
   }
 }

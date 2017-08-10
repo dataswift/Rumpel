@@ -8,6 +8,8 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 
+declare var $: any;
+
 @Component({
   selector: 'rump-info-box',
   templateUrl: './info-box.component.html'
@@ -15,14 +17,26 @@ import { Component, OnInit, Input } from '@angular/core';
 export class InfoBoxComponent implements OnInit {
   @Input() title: string;
   @Input() message: string;
+  @Input() icon: string;
   private destroy: Function;
+  public scrollTop: number;
+  public animateIn = false;
 
   constructor() { }
 
   ngOnInit() {
+    this.scrollTop = $('body').scrollTop();
+    $('body, html').addClass('no-scroll');
+    this.animateIn = true;
   }
 
   closeModal(): void {
-    this.destroy();
+    $('body, html').removeClass('no-scroll');
+    $('body').scrollTop(this.scrollTop);
+
+    this.animateIn = false;
+    setTimeout( () => {
+      this.destroy();
+    }, 1000);
   }
 }

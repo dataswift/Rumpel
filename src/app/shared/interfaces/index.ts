@@ -24,3 +24,4 @@ export { Tweet } from './tweet.interface';
 export { NotablesServiceMeta } from './notables-service-meta.interface';
 export { CurrentNotableMeta } from './current-notable-meta.interface';
 export { DataTable } from './data-table.interface';
+export { HatRecord } from './hat-record.interface';

@@ -10,7 +10,7 @@
 
  .dashboard-hero{
 
-   background-color: $app-accent-color;
+   background-color: $app-mid-tone;
    background-image: url('/assets/images/hero.jpg');
    background-position: center;
    background-repeat: no-repeat;
@@ -25,7 +25,7 @@
 
      h2, p, a{
        color: white;
-       font-family: $font-display;
+       font-family: $font-standard;
        display: inline-block;
 
      }
@@ -102,7 +102,7 @@
     left:0;
     width:100%;
     height:100%;
-    background-color: rgba(0,150,136, 0.75);
+    background-color: $image-overlay-color;
     z-index:0;
     border-radius: 8px;
 

@@ -1,0 +1,332 @@
+@import "../../style/variables";
+
+
+
+
+  .no-offers-text{
+    width: 100%;
+    margin-top: 60px;
+    margin-bottom: 60px;
+
+    .no-offers{
+      color: $app-dark-tone;
+      text-transform: none;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+  }
+
+  .offers-nav{
+      width: calc(100% + 60px);
+      border-bottom: 1px solid $app-background-color;
+      box-shadow: 0px 1px 2px $app-background-color;
+      margin: -30px -30px 0px -30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+
+      a{
+        padding: 13px;
+        margin: 0 12px;
+        border-top: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+        text-transform: uppercase;
+        color: #999;
+        cursor: pointer;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+
+        @media (max-width: 704px) {
+          margin: 0 1px;
+        }
+
+        &:hover{
+          text-decoration: none;
+        }
+      }
+
+
+      a.current{
+        border-bottom: 2px solid $app-contrast-color;
+        color: $app-dark-tone;
+        font-weight: 600;
+      }
+  }
+
+
+
+  .offers-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    padding: 0;
+    max-width: 972px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    &.table-responsive{
+        display: flex;
+
+        @media(max-width: 768px){
+          display: none;
+        }
+    }
+
+    &.mobile-responsive{
+        display: none;
+
+        @media(max-width: 768px){
+          display: flex;
+        }
+    }
+
+
+    .offer{
+      display: block;
+      border-radius: 6px;
+      box-shadow: 0px 0px 8px #ddd;
+      width: 278px;
+      min-width: 278px;
+      min-height: 270px;
+      padding: 40px 30px;
+      margin: 22px;
+      border: 1px solid #ddd;
+      position: relative;
+      background: white;
+
+      &.invisible{
+        visibility: hidden;
+        min-height: 30px;
+      }
+
+      @media(max-width: 420px){
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      &:last-child{
+
+      }
+
+      .offer-img{
+        width: 100%;
+        height: 90px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        display: block;
+        margin: auto;
+        margin-bottom: 30px;
+        cursor: pointer;
+      }
+
+      h4{
+        cursor: pointer;
+      }
+
+      h4, p{
+        text-align: center;
+        font-family: $font-standard;
+        text-transform: capitalize;
+        color: $app-dark-tone;
+      }
+
+      h4{
+        line-height: 1.4;
+        font-size: 14px;
+      }
+
+
+      p{
+        font-style: italic;
+        letter-spacing: 0.5px;
+        font-weight: 300;
+        margin-bottom: 30px;
+        font-size: 10px;
+      }
+
+      .cta{
+        display: block;
+        padding: 20px;
+        text-align: center;
+        text-decoration: underline;
+        color: $app-dark-tone;
+        font-family: $font-standard;
+        cursor: pointer;
+        position: absolute;
+        bottom: 0;
+        margin: 0px -40px;
+        width: 100%;
+        left: 40px;
+
+        a:hover{
+          color: $app-dark-tone;
+          filter: brightness(110%);
+        }
+
+      }
+    }
+
+    .didYouKnow{
+      background-color: $app-light-tone;
+      color: $app-mid-tone;
+      min-height: 328px;
+      cursor: default;
+
+      h4{
+        font-size: 24px;
+        color: $app-mid-tone;
+        margin: 20px 0px;
+        text-transform: none;
+      }
+
+      p{
+        color: $app-mid-tone;
+        text-transform: none;
+      }
+
+      i{
+        text-align: center;
+        font-size: 40px;
+        display: block;
+        margin-top: 30px;
+      }
+    }
+  }
+
+
+  .table{
+
+    border-color: #e4e8eb;
+    box-shadow: 2px 3px 9px 0 $app-background-color;
+    border-radius: 6px;
+    font-family: $font-standard;
+    background: white;
+
+    th{
+      background: $app-light-tone;
+      color: $app-mid-tone;
+      padding: 15px;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 500;
+      border-color: #e4e8eb;
+    }
+
+    tr{
+      color: #aaa;
+      border-color: #e4e8eb;
+    }
+
+    td{
+      border-left: none;
+      border-right: none;
+      padding: 15px;
+      border-color: #e4e8eb;
+      font-size: 13px;
+      vertical-align: middle;
+      font-weight: 300;
+
+      a{
+        text-decoration: underline;
+        color: $app-dark-tone;
+        padding: 10px;
+
+        &:hover{
+          color: $app-dark-tone;
+          filter: brightness(150%);
+          cursor: pointer;
+        }
+
+      }
+
+      i{
+        display: block;
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+
+
+    }
+
+    td:first-child{
+        width: 100px;
+    }
+
+    td:nth-child(2){
+        cursor: pointer;
+
+        &:hover{
+          text-decoration: underline;
+        }
+    }
+
+    th:nth-child(4), th:nth-child(5),
+    td:nth-child(4), td:nth-child(5){
+        text-align: center;
+    }
+
+    .offerImage{
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 0px 10px;
+      cursor: pointer;
+    }
+
+    .redeemed, .inprogress{
+      color: #9a9a9a;
+      width: 180px;
+    }
+
+    .complete{
+      color: #86c652;
+      width: 180px;
+    }
+
+    .failed{
+      color: #a00000;
+      width: 180px;
+    }
+
+
+  }
+
+
+
+  button{
+    background-color: rgba(134, 198, 82, 0.1);
+    border: 1px solid #86c652;
+    border-radius: 5px;
+    color: #86c652;
+    font-weight: 500;
+    min-width: 185px;
+    vertical-align: middle;
+    text-align: left;
+    font-family: $font-standard;
+    padding: 7px 12px;
+    position: relative;
+    margin: auto;
+    display: block;
+
+    &:hover, &:focus, &:active{
+      outline: none;
+      color: #86c652;
+      filter: brightness(110%);
+    }
+
+    i{
+      display: inline-block;
+      vertical-align: middle;
+      position: absolute;
+      top: 6px;
+      right: 7px;
+    }
+  }

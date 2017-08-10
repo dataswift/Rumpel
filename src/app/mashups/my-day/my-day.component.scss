@@ -16,7 +16,6 @@
 }
 
 .view-body {
-  //height: $min-private-window-height;
   position: relative;
 
   .timeline-view{
@@ -43,7 +42,6 @@
 .mixpad .day-view {
   background-color: rgba(0, 0, 0, 0.6);
   position: absolute;
-  //height: $min-private-window-height;
   top: 0;
   left: 0;
   z-index: 5551;
@@ -68,7 +66,7 @@
   }
 
   span {
-    color: $rump-color;
+    color: $app-mid-tone;
     font-size: 1.25em;
   }
 }

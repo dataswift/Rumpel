@@ -11,15 +11,15 @@
 
 body {
   font-size: 12px;
-  font-family: $font-regular;
+  font-family: $font-standard;
   min-width: 320px;
-  background-color: $app-background-color !important;
+  background-color: $app-background-color;
 }
 
-h1, h2, h3, h4, h5, h6,
+h1, h2, h3, h4, h5, h6, div, p, a, ul, ol, li, blockquote, span
 .tile-header,
 .section-title {
-  font-family: $font-condensed;
+  font-family: $font-standard;
 }
 
 i{
@@ -32,7 +32,7 @@ i{
 }
 
 .notifications-wrapper{
-    background-color: $app-accent-color;
+    background-color: $app-mid-tone;
     height: 100px;
     width: 100%;
     top: -100px;
@@ -69,10 +69,6 @@ i{
 }
 
 
-.content-main {
-  background-color: $app-background-color !important;
-}
-
 .responsive {
   @include make-xs-column(12);
   @include make-sm-column(10);
@@ -83,7 +79,7 @@ i{
 
 .login-form {
   text-align: center;
-  font-family: "Open Sans", sans-serif;
+  font-family: $font-standard;
   font-weight: 300;
 
   .logo {
@@ -94,7 +90,7 @@ i{
   }
 
   p {
-    color: #ffffff;
+    color: white;
     font-size: 1.8em;
     margin-top: 1.5em;
 
@@ -112,7 +108,7 @@ button.btn-view-header {
   background-color: transparent;
   margin: 0;
   padding: 0;
-  border: 2px solid #ffffff;
+  border: 2px solid white;
   outline: none;
   float: left;
 
@@ -125,7 +121,7 @@ button.btn-view-header {
 
   &.empty {
     padding: 0.75em 2em;
-    color: $app-header-color;
+    color: $app-dark-tone;
   }
 
   &:hover {
@@ -142,7 +138,7 @@ button.btn-view-header {
 .view-header {
   min-height: 5em;
   background-color: #37474F;
-  color: #eeeeee;
+  color: $app-background-color;
   padding: 1em;
   font-size: 1em;
 
@@ -178,7 +174,7 @@ button.btn-view-header {
 }
 
 .btn {
-  font-family: $font-display;
+  font-family: $font-standard;
   border-radius: 0;
 
   -webkit-box-shadow: none !important;
@@ -194,15 +190,15 @@ button.btn-view-header {
 }
 
 .btn-rump {
-  background-color: $rump-color;
-  border: 2px solid $rump-color;
+  background-color: $app-mid-tone;
+  border: 2px solid $app-mid-tone;
   color: white;
 
   &:active,
   &:focus,
   &:hover {
-    background-color: lighten($rump-color, 5%);
-    border: 2px solid lighten($rump-color, 5%);
+    background-color: lighten($app-mid-tone, 5%);
+    border: 2px solid lighten($app-mid-tone, 5%);
     color: white;
     outline: none;
   }
@@ -234,8 +230,8 @@ button.btn-view-header {
 
 .btn-cancel {
   background-color: transparent;
-  border: 2px solid $material-bg-700;
-  color: $material-bg-700;
+  border: 2px solid $app-dark-tone;
+  color: $app-dark-tone;
 
   &.sm {
     font-size: 1em;
@@ -278,7 +274,7 @@ button.btn-view-header {
   }
 
   &:focus {
-    box-shadow: 0 0 5px $rump-color;
+    box-shadow: 0 0 5px $app-mid-tone;
   }
 
   &.lg {
@@ -316,8 +312,8 @@ button.btn-view-header {
 }
 
 .badge{
-  background-color: $app-notification-color;
-  color: $app-header-color;
+  background-color: $app-contrast-color;
+  color: $app-dark-tone;
 
   float: right;
   margin-top: 4px;
@@ -327,99 +323,43 @@ button.btn-view-header {
 }
 
 .notif-badge{
-  min-width: 24px !important;
-  min-height: 24px !important;
+  min-width: 24px;
+  min-height: 24px;
   padding: 3px;
   position: relative;
   top: -50px;
   right: 0px;
-  border: 3px solid $app-header-color;
-  border-radius: 50%;
+  border: 3px solid $app-dark-tone;
+  border-radius: 12px;
 }
 
 
-.customIntroHighlight {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  border: 3px dashed $app-accent-color;
-  box-shadow: none;
-}
 
 
-.introjs-overlay{
-  opacity: 0 !important;
-}
 
-.introjs-arrow.left {
-  border-right-color: $app-accent-color;
-}
-.introjs-arrow.right {
-  border-left-color: $app-accent-color;
-}
-.introjs-arrow.up {
-  border-bottom-color: $app-accent-color;
-}
-.introjs-arrow.down {
-  border-top-color: $app-accent-color;
-}
 
-.introjs-tooltip{
-  padding: 30px;
-  width: 250px;
-}
-
-.introjs-tooltiptext{
-  font-size: 14px;
-}
-
-.introjs-tooltipbuttons {
-    text-align: center;
-}
-
-.introjs-button{
-  padding: 15px;
-  &:hover{
-    color: $app-accent-color;
-  }
-}
-
-.introjs-bullets ul li {
-    margin: 4px 4px;
-}
-
-.introjs-bullets{
-  padding: 15px;
-  a{
-    background: white !important;
-    width: 10px !important;
-    height: 10px !important;
-  }
-
-  a.active{
-    background: $app-header-color !important;
-  }
-}
 
 .popover{
-  z-index: 9000 !important;
+  z-index: 9000;
 }
 
 .popover-content{
-  color: $app-header-color;
-  z-index: 9999 !important;
+  color: $app-dark-tone;
+  z-index: 9999;
 }
 
 
 .content-bg{
-  background-color: $app-lighter-background-color;
+  background-color: $app-light-background-color;
 
   @media screen and (max-width: $screen-sm) {
-      background-color: unset !important;
+      background-color: unset;
   }
 }
 
 .content-header{
-  background-color: $app-tile-header-color !important;
-  color: $app-tile-title-color;
+  background-color:$app-light-tone ;
+  color: $app-mid-tone;
   border-top-right-radius: 8px;
   border-top-left-radius: 8px;
 
@@ -434,17 +374,17 @@ button.btn-view-header {
 }
 
 .view-header{
-  background-color: unset !important;
+  background-color: unset;
   h4{
-    color: $app-tile-title-color;
-    text-transform: none !important;
-    font-family: $font-display;
+    color: $app-mid-tone;
+    text-transform: none;
+    font-family: $font-standard;
     display: inline-block;
     margin-left: 5px;
   }
 
   .info-button{
-    color: $app-tile-title-color !important;
+    color: $app-mid-tone;
     margin-left: 10px;
     top: 6px;
     position: relative;
@@ -455,21 +395,40 @@ button.btn-view-header {
     }
 
     &:hover{
-      color: $app-tile-title-color !important;
+      color: $app-mid-tone;
     }
   }
 }
 
 .switch-label{
-  color: $app-tile-title-color;
-  text-transform: none !important;
-  font-family: $font-display;
+  color: $app-mid-tone;
+  text-transform: none;
+  font-family: $font-standard;
 }
 
-.tile-body  {
-  padding: 30px !important;
+
+
+.no-scroll{
+  overflow-y: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
-.tile-body-tight{
-  padding: 10px 30px !important;
+
+
+
+rump-offer-modal{
+   position: relative;
+   z-index: 2000;
+}
+
+rump-confirm-box, rump-info-box, rump-dialog-box{
+   position: relative;
+   z-index: 3000;
+}
+
+
+.popover-content{
+  font-size: 12px;
 }

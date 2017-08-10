@@ -9,7 +9,7 @@
 @import "../../style/variables";
 
 .editor-header {
-  font-family: $font-condensed;
+  font-family: $font-standard;
 
   h3 {
     font-size: 2em;
@@ -18,7 +18,7 @@
   }
 
   .notes-tab {
-    background-color: $rump-color;
+    background-color: $app-mid-tone;
     color: white;
     padding: 0.5em 0.8em;
     font-size: 1.5em;
@@ -60,7 +60,7 @@
 
 .options-bar {
   position: relative;
-  background-color: $rump-color;
+  background-color: $app-mid-tone;
   padding: 1.5em 1em;
   padding-bottom: 1em;
 
@@ -102,7 +102,7 @@
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
 
-    border-top: 10px solid #ffffff;
+    border-top: 10px solid white;
 
     &.sharing-on {
       border-top-color: #DBDBDB;
@@ -115,13 +115,13 @@
 }
 
 .share-for-bubble {
-  border: 1px solid #ffffff;
+  border: 1px solid white;
   border-radius: 1em;
   padding-left: 0.5em;
   padding-right: 0.5em;
 
   &.selected {
     background-color: white;
-    color: #009688;
+    color: $app-mid-tone;
   }
 }

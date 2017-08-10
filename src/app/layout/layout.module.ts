@@ -25,6 +25,8 @@ import {NotificationsService} from './notifications.service';
 import {BaseDataService} from '../services/base-data.service';
 import {MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
 
+import { DataOfferService } from './../offers/data-offer.service';
+
 @NgModule({
   imports: [ SharedModule ],
   declarations: [ HeaderComponent,
@@ -41,6 +43,6 @@ import {MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
             FooterComponent,
             NotificationCentreComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, NotificationsService, MarkdownToHtmlPipe ]
+  providers: [ DialogService, NotificationsService, MarkdownToHtmlPipe, DataOfferService ]
 })
 export class LayoutModule {}

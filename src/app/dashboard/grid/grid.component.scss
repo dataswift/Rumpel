@@ -25,14 +25,22 @@
     border-bottom-left-radius: 8px;
   }
 
-  .tile-body {
+  .tile-body, .tile-body-tight {
     overflow-x: hidden;
     overflow-y: auto;
     height: 290px;
     background-color: white;
-    padding: 30px 20px;
+    padding: 30px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+  }
+
+  .tile-body-tight{
+    padding: 20px 30px;
+  }
+
+  .tile-body.no-padding{
+    padding: 0;
   }
 }
 
@@ -80,10 +88,10 @@
 }
 
 .filter {
-  background-color: $app-header-color;
+  background-color: $app-dark-tone;
   position: absolute;
   z-index: 1002;
-  color: #ffffff;
+  color: white;
   text-align: center;
   width: 300px;
   height: 290px;
@@ -120,7 +128,7 @@
 }
 
 .modal {
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: $font-standard;
   z-index: 10000;
 
   h4 {
@@ -136,6 +144,6 @@
   }
 
   .btn-primary {
-    background-color: #009688;
+    background-color: $app-mid-tone;
   }
 }

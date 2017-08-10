@@ -4,21 +4,21 @@
 .notable-item{
 
     h1, h2, h3, h4, h5, h6, p, a, div{
-      font-size: 12px !important;
+      font-size: 12px;
       margin-left: 0px;
       margin-top: 0px;
       margin-bottom: 4px;
-      color: #878787;
+      color: $text-dark;
       pointer-events: none;
       padding: 0;
       border-top: none;
 
       h1, h2, h3, h4, h5, h6, p, a, div{
-        font-size: 12px !important;
+        font-size: 12px;
         margin-left: 0px;
         margin-top: 0px;
         margin-bottom: 4px;
-        color: #878787;
+        color: $text-dark;
         pointer-events: none;
         padding: 0;
         border-top: none;

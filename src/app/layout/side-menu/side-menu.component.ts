@@ -10,9 +10,10 @@ import {Component, OnInit, Output, EventEmitter, Inject} from '@angular/core';
 import { UiStateService, UserService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
+import { DataOfferService } from '../../offers/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
 import { MarketSquareService } from '../../market-square/market-square.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, Observable } from 'rxjs/Rx';
 import { DataTable } from '../../shared/interfaces/data-table.interface';
 
 import { Router, NavigationEnd } from '@angular/router';
@@ -36,6 +37,9 @@ export class SideMenuComponent implements OnInit {
   public mobileMode = false;
   public profile: any;
   public isPublicPage = false;
+  public availableOffers = 0;
+  private offersSub: Subscription;
+  public offers: any = [];
 
 
   // hack: uiState service needs to be injected before Auth component,
@@ -48,9 +52,13 @@ export class SideMenuComponent implements OnInit {
               private userSvc: UserService,
               private hatSvc: HatApiService,
               private dataplugSvc: DataPlugService,
+              private dataOfferSvc: DataOfferService,
               private marketSvc: MarketSquareService ) {}
 
   ngOnInit() {
+
+    this.selectedItem = window.location.pathname;
+
     this.state = { dataSources: [], dataTypes: [] };
     this.userAuthenticated = false;
     this.menu = this.config.menuItems.public;
@@ -61,6 +69,31 @@ export class SideMenuComponent implements OnInit {
       }
     });
 
+
+
+    this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
+      this.offers = offers.filter(function(offer) {
+
+          let claimStatus = 'untouched';
+          if (offer.claim && offer.claim.status) {
+            claimStatus = offer.claim.status;
+          }
+
+          let moreUsersRequired = false;
+          if (offer.requiredMaxUser === 0) {
+            moreUsersRequired = true;
+          } else {
+            moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
+          }
+
+          return (  claimStatus === 'untouched' &&
+                    moreUsersRequired &&
+                    offer.expires > Date.now()
+                  )
+      });
+      this.availableOffers = this.offers.length;
+    },
+    error => { console.log(error); });
 
     this.router.events
         .filter(event => event instanceof NavigationEnd)
@@ -85,6 +118,10 @@ export class SideMenuComponent implements OnInit {
     this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
       this.menu = user.authenticated ? this.config.menuItems.private : this.config.menuItems.public;
+
+      if (user.authenticated) {
+        this.dataOfferSvc.fetchUserAwareOfferListSubscription();
+      }
     });
 
 

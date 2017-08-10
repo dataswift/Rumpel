@@ -20,9 +20,9 @@
   right: 0;
   height: 100px;
   color: white;
-  background-color: $app-accent-color;
+  background-color: $app-mid-tone;
   text-align: center;
-  font-family: $font-display;
+  font-family: $font-standard;
   font-weight: 500;
   font-size: 1.2em;
   overflow: hidden;
@@ -62,12 +62,12 @@
     margin-top: 0px;
 
     a{
-      color: $app-header-color;
+      color: $app-dark-tone;
     }
   }
 
   .notif-time{
-    font-family: $font-display;
+    font-family: $font-standard;
     color: rgba(255, 255, 255, 0.7);
   }
 
@@ -115,7 +115,7 @@
 
   h6 {
     text-align: left;
-    font-family: $font-display;
+    font-family: $font-standard;
   }
 
   span{
@@ -127,7 +127,6 @@
   .notif-nav{
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 6px;
-    //top: -55px;
     position: relative;
     margin-left: 10px;
     padding: 1px 10px 3px 18px;
@@ -136,7 +135,7 @@
     user-select: none;
 
     @media screen and (max-width: 1000px) {
-        padding: 1px 10px 3px 10px !important;
+        padding-left: 10px;
     }
 
     i{

@@ -23,9 +23,9 @@
     font-size: 20px;
     font-style: italic;
     font-weight: 300;
-    font-family: "Roboto", sans-serif;
+    font-family: $font-standard;
     text-align: center;
-    color: #878787;
+    color: $text-dark;
     width: 50px;
     margin-top: 3px;
     text-transform: none;
@@ -46,7 +46,7 @@
   .activity{
     background-color: #f5f5f5;
     margin-bottom: 2px;
-    color: #878787;
+    color: $text-dark;
     width: 200px;
     margin-right: 20px;
     font-size: 12px;
@@ -56,7 +56,7 @@
       font-size: 12px;
       margin-left: 0px;
       margin-top: 0px;
-      color: #878787;
+      color: $text-dark;
       pointer-events: none;
       margin-bottom: 4px;
       word-wrap: break-word;
@@ -82,7 +82,7 @@
 
       div{
         flex: 1;
-        max-width: 134px !important;
+        max-width: 134px;
       }
 
       i, img{
@@ -91,7 +91,6 @@
       }
 
       .icon-rounded, i{
-        background-color: white;
         border-radius: 50%;
         padding: 6px;
         font-size: 16px;
@@ -104,7 +103,7 @@
 
     .notable{
       i{
-        color: $app-accent-color;
+        color: $app-mid-tone;
       }
     }
   }
@@ -152,14 +151,14 @@
 
   i{
     color: white;
-    background-color: $app-accent-color !important;
+    background-color: $app-mid-tone;
   }
 
   .notable-type {
     position: absolute;
     top: 0;
     right: 0;
-    font-family: $font-condensed;
+    font-family: $font-standard;
     background-color: #515151;
     text-transform: uppercase;
     padding: 0.5em 1em;
@@ -239,7 +238,7 @@ box-shadow: inset 0 0 0 1000px rgba(80, 82, 117, 0.7);
 .photo-description{
   min-height: 100px;
   h4, p{
-    color: white !important;
+    color: white;
   }
 }
 }
@@ -252,7 +251,7 @@ box-shadow: inset 0 0 0 1000px rgba(80, 82, 117, 0.7);
   border-bottom: 1px solid #a8c5d4;
 
   h2{
-    color: #6297b1;
+    color: $app-mid-tone;
     font-weight: 400;
   }
 

@@ -16,8 +16,8 @@
   left: 0px;
   z-index: 1020;
   color: $app-dark-grey;
-  font-family: $font-display;
-  background-color: $app-background-color !important;
+  font-family: $font-standard;
+  background-color: $app-background-color;
 
   @media screen and (max-width: 1113px) {
       left: -345px;
@@ -26,7 +26,13 @@
   .menu-scroll{
     overflow-x: hidden;
     overflow-y: auto;
-    height: calc(100% - 200px);
+
+    @if $showLogoInSidebar {
+        height: calc(100% - 320px);
+    }
+    @else {
+        height: calc(100% - 200px);
+    }
   }
 }
 
@@ -59,47 +65,119 @@
 .data-plugs-title{
   text-transform: uppercase;
   font-weight: lighter;
-  font-family: $font-regular;
+  font-family: $font-standard;
   font-size: 12px;
   color: #bdbdbd;
   margin: 35px 0px 10px 45px;
 }
 
-.data-plugs-list{
-  a{
-    text-transform: capitalize;
-    cursor: pointer;
+ul.center {
+  list-style: none;
+  padding: 0;
+  font-family: $font-standard;
 
-    .icon-grey{
-      display: inline-block !important;
+  li {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    font-size: 1.2em;
+
+    .icon, .icon img {
+      font-size: 1.6em;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      vertical-align: bottom;
+      margin-right: 20px;
+      position: relative;
+      top: 1px;
     }
 
-    .icon-color{
-      display: none !important;
+    .icon img{
+      vertical-align: baseline;
     }
 
-    .plus-icon{
-      color: #ddd;
-      float: right;
-    }
+    a {
+      text-decoration: none;
+      display: block;
+      color: $app-dark-grey;
+      padding: 13px 15px 13px 45px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
 
-    &:hover{
-      .plus-icon{
+      &:hover {
         color: $app-dark-grey;
       }
+    }
 
-      .icon-grey{
-        display: none !important;
-      }
+    &.selected {
+      background-color: $app-hover-grey;
 
-      .icon-color{
-        display: inline-block !important;
+      a {
+        color: $app-accent-color;
       }
     }
+
+    &:hover {
+      background-color: $app-hover-grey;
+    }
+
+
+    &.data-plugs-list{
+      a{
+        text-transform: capitalize;
+        cursor: pointer;
+
+        .plus-icon{
+          color: #ddd;
+          float: right;
+        }
+
+        .icon-grey{
+          display: inline-block;
+        }
+
+        .icon-color{
+          display: none;
+        }
+
+        &:hover{
+          .plus-icon{
+            color: $app-dark-grey;
+          }
+
+          .icon-grey{
+            display: none;
+          }
+
+          .icon-color{
+            display: inline-block;
+          }
+        }
+
+      }
+
+
+    }
+
   }
 
+  .disable {
+    position: absolute;
+    text-transform: uppercase;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
 
+    .text {
+      margin-top: 2em;
+    }
+  }
 }
+
+
 
 .data-plugs-more{
 
@@ -135,76 +213,31 @@
   }
 }
 
-ul.center {
-  list-style: none;
-  padding: 0;
-  font-family: $font-display;
 
-  li {
-    position: relative;
-    width: 100%;
-    height: 50px;
-    font-size: 1.2em;
-
-    .icon, .icon img {
-      font-size: 1.6em;
-      display: inline-block;
-      width: 24px;
-      height: 24px;
-      vertical-align: bottom;
-      margin-right: 20px;
-      position: relative;
-      top: 2px;
-    }
-
-    .icon img{
-      vertical-align: baseline !important;
-    }
-
-    a {
-      text-decoration: none;
-      display: block;
-      color: $app-dark-grey;
-      padding: 13px 15px 13px 45px;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-
-      &:hover {
-        color: $app-dark-grey;
-      }
-    }
-
-    &.selected {
-      background-color: $app-hover-grey;
-
-      a {
-        color: $rump-color;
-      }
-    }
-
-    &:hover {
-      background-color: $app-hover-grey;
-    }
-
-  }
-
-  .disable {
-    position: absolute;
-    text-transform: uppercase;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-
-    .text {
-      margin-top: 2em;
-    }
-  }
-}
 
 .plug-menu{
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 200px;
+}
+
+.badge{
+  padding: 2px 7px 4px;
+}
+
+
+.client-logo{
+  background-image: url($logo);
+  background-repeat: no-repeat;
+  background-size: auto 60px;
+  border-bottom: 1px solid #e4e4e4;
+  margin: 20px 0px 30px 45px;
+  height: 90px;
+
+  @if $showLogoInSidebar {
+      display: block;
+  }
+  @else {
+      display: none;
+  }
 }
