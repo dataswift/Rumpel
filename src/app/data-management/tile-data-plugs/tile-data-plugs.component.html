@@ -9,11 +9,11 @@
 <ng-content></ng-content>
 
 <div class="scroll-mask" id="intro-step18">
-  <div class="tile-body">
+  <div class="tile-body tile-body-tight">
     <ul>
       <li *ngFor="let plug of dataplugs | async" (click)="openPlugPopup(plug)">
         <div class="row vertical-align">
-          <div class="col-xs-2">
+          <div class="col-xs-2 plugimg">
             <img src="assets/icons/{{plug.icon}}" class="img img-responsive">
           </div>
           <div class="col-xs-8">

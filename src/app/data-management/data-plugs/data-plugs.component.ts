@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import {DataPlugService} from '../data-plug.service';
 import {MarketSquareService} from '../../market-square/market-square.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'rump-data-plugs',
@@ -20,25 +21,37 @@ export class DataPlugsComponent implements OnInit {
   public dataplugs: Observable<Array<any>>;
 
   constructor(private dataplugsSvc: DataPlugService,
-              private marketSvc: MarketSquareService) { }
+              private marketSvc: MarketSquareService,
+              private router: Router) { }
 
   ngOnInit() {
     this.dataplugs = this.dataplugsSvc.dataplugs$;
   }
 
   openPlugPopup(plug: any) {
-    const loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
 
-    const w = window.innerWidth;
-    const h = window.innerHeight;
+    if (plug.activated === false) {
+        const loginName = this.formatPlugName(plug.name);
 
-    const popupWidth = w * 0.6; const left = w * 0.2;
-    const popupHeight = h * 0.7; const top = h * 0.15;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
 
-    const windowRef = window.open(
-      `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
-      `Setting up ${plug.name} data plug`,
-      `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
-    );
+        const popupWidth = w * 0.6; const left = w * 0.2;
+        const popupHeight = h * 0.7; const top = h * 0.15;
+
+        const windowRef = window.open(
+          `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
+          `Setting up ${plug.name} data plug`,
+          `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
+        );
+    } else {
+      this.router.navigate([plug.page]);
+    }
   }
+
+  formatPlugName(name): string {
+    return (name.charAt(0).toUpperCase() + name.slice(1));
+  }
+
+
 }

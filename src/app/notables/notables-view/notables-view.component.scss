@@ -19,17 +19,33 @@
 }
 
 .filter-header {
-  font-family: $font-condensed;
+  font-family: $font-display;
   font-size: 2em;
   margin-top: 2em;
-  padding: 0.5em 1em;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  margin-top: 100px;
+
+
+  .filters{
+
+  }
 
   .filter {
-    float: right;
-    font-size: 0.75em;
-    margin-top: 0.2em;
-    margin-left: 1em;
+    font-size: 16px;
+    padding: 14px 0px 14px 14px;
+    margin-left: 4px;
     cursor: pointer;
+    display: inline-block;
+
+
+    i{
+      vertical-align: middle;
+      margin-right: 5px;
+      font-size: 18px;
+    }
 
     span {
       margin-top: 0.1em;
@@ -66,6 +82,15 @@ li.removed-item {
     opacity: 0;
     transform: translateX(-800px);
   }
+}
+
+.notable-item{
+  background-color: white;
+  margin-bottom: 50px;
+}
+
+.notable-controls{
+  height: 50px;
 }
 
 .notable-item .notable-content /deep/ {

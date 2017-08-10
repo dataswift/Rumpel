@@ -1,0 +1,23 @@
+<!--
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
+  -->
+
+
+
+<div class="tweet" *ngIf="!tweet.media">
+  <h4 [innerHTML]="tweet.text | safeHtml"></h4>
+  <p>{{tweet.createdTime | moment: "h:mma"}}</p>
+  <p>Favourited: {{tweet.favorite_count}}  | Retweeted: {{tweet.retweet_count}}</p>
+</div>
+
+<div class="media-tweet photo-box" *ngIf="tweet.media" [style.background-image]="'url('+ tweet.media.media_url_https +')'">
+    <div class="photo-description">
+      <h4 [innerHTML]="tweet.text | safeHtml"></h4>
+      <p>{{tweet.createdTime | moment: "h:mma"}}</p>
+      <p>Favourited: {{tweet.favorite_count}}  | Retweeted: {{tweet.retweet_count}}</p>
+    </div>
+</div>

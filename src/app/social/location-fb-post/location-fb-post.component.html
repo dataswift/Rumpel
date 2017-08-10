@@ -1,0 +1,59 @@
+<!--
+  ~ Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+  -->
+
+
+
+<div [ngSwitch]="post.type">
+
+  <div *ngSwitchCase="'status'" >
+      <h4>{{post.content.message ? post.content.message : post.story}}</h4>
+      <p>{{post.createdTime | moment}}</p>
+  </div>
+
+
+
+  <div *ngSwitchCase="'music.listens'" >
+    <h4>Via Spotify:</h4>
+    <p>You've listened to
+      <a href="{{post.data.song.url}}" target="_blank">{{post.data.song.title}}</a>
+      <span *ngIf="post.data.musician">
+        by <a href="{{post.data.musician.url}}" target="_blank">{{post.data.musician.title}}</a>
+      </span>
+      <span *ngIf="post.data.playlist">
+        from the
+        <a href="{{post.data.playlist.url}}" target="_blank">{{post.data.playlist.title}}</a>
+        playlist
+      </span>.
+    </p>
+  </div>
+
+  <div *ngSwitchCase="'photo'" >
+    <div class="photo-description">
+      <h4 >{{post.content?.message}}</h4>
+      <p>{{post.content?.name}}</p>
+      <p>{{post.createdTime | moment}}</p>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'video'" >
+      <h4>Video post</h4>
+      <p>{{post.content?.name}}</p>
+      <p>{{post.createdTime | moment}}</p>
+  </div>
+
+  <div *ngSwitchCase="'link'" >
+    <div class="photo-description">
+      <h4>{{post.content?.link}}</h4>
+      <p>{{post.content?.name}}</p>
+      <p>{{post.content?.description}}</p>
+      <p>{{post.createdTime | moment}}</p>
+    </div>
+  </div>
+
+
+</div>

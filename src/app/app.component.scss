@@ -6,23 +6,22 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-.content-main {
-  background: rgb(1, 1, 1);
+  @import "style/variables";
 
-  .menubar-left {
-    min-width: 6em;
-    background: rgb(1, 1, 1);
-    color: white;
-    float: left;
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-weight: lighter;
-  }
+
+
+.content-main {
+
 
   .content-grid {
     overflow: hidden;
-    background: #f3f3f3;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 42px;
+    padding-right: 42px;
+
+    @media (max-width: 674px) {
+      padding-left: 37px;
+      padding-right: 37px;
+    }
   }
 
   .grid {

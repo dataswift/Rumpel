@@ -6,29 +6,47 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService } from '../dialog.service';
+import { NotificationsService } from '../notifications.service';
+import { ExternalNotification } from '../../shared/interfaces/index';
+import { Profile } from '../../shared/interfaces';
+import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 import { UserService } from '../../services/index';
 import { User } from '../../shared/interfaces/index';
 import { Subscription } from 'rxjs/Rx';
+import { AccountStatus } from '../../user/account-status.interface';
+import { APP_CONFIG, IAppConfig } from '../../app.config';
 
 declare var introJs: any;
+declare var $: any;
 
 @Component({
   selector: 'rump-header',
   templateUrl: 'header.component.html'
 })
 export class HeaderComponent implements OnInit {
+  @Output() clickNotifications = new EventEmitter<string>();
   public hatDomain: string;
   private sub: Subscription;
   public marketSquareLink: string;
   private intro: any;
+  public userAuthenticated = false;
+  public profile: { photo: { url: string; shared: boolean; }, first_name: string };
+  public accountStatus: AccountStatus;
+  public showNotifications: boolean;
 
-  constructor(private router: Router,
+  public unreadNotifications: number;
+  public totalNotifications: number;
+
+  constructor(@Inject(APP_CONFIG) public config: IAppConfig,
+              private router: Router,
               private dialogSvc: DialogService,
-              private userSvc: UserService) {
+              private userSvc: UserService,
+              private _notificationsSvc: NotificationsService,
+              private profilesSvc: ProfilesService) {
 
     this.intro = introJs();
     this.intro.setOptions({
@@ -52,13 +70,9 @@ export class HeaderComponent implements OnInit {
           'intro': 'The dashboard is where you have an overview of Rumpel.',
           'position': 'auto'
         },
+
         {
           'element': '#intro-step4',
-          'intro': 'The full version of Notables is accessible here.',
-          'position': 'auto'
-        },
-        {
-          'element': '#intro-step5',
           'intro': 'You can view and edit the details of your profile and decide what information is private and'
                  + ' what is to be shared.',
           'position': 'auto'
@@ -156,6 +170,11 @@ export class HeaderComponent implements OnInit {
           'intro': `Here you can view a list of your HAT's data debits. `
                  + `This gives you the information on what data you are currently sharing and with whom.`,
           'position': 'auto'
+        },
+        {
+          'element': '#intro-step24',
+          'intro': 'The full version of Notables is accessible here.',
+          'position': 'auto'
         }
       ]
     });
@@ -163,8 +182,20 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.marketSquareLink = 'https://marketsquare.hubofallthings.com';
+    this.userAuthenticated = false;
+    this.showNotifications = false;
+
     this.sub = this.userSvc.user$.subscribe((user: User) => {
+      this.userAuthenticated = user.authenticated;
       if (user.authenticated) {
+        this._notificationsSvc.getAllNotifications();
+
+        this.profilesSvc.getPicture().subscribe(result => {
+          if (result && result.url) {
+            this.profile.photo.url = result.url;
+          }
+        });
+
         this.hatDomain = user.fullDomain;
         this.marketSquareLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&` +
                                 `redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
@@ -173,14 +204,46 @@ export class HeaderComponent implements OnInit {
         this.marketSquareLink = 'https://marketsquare.hubofallthings.com/';
       }
     });
+
+
+
+    this.totalNotifications = 0;
+
+    this._notificationsSvc.stats$.subscribe(stats => {
+      this.totalNotifications = stats.total;
+      this.unreadNotifications = stats.unread;
+    });
+
+    this._notificationsSvc.showNotifs$.subscribe(status => this.showNotificationsBar(status));
+
+
+    this.profile = {
+      photo: { url: '', shared: false }, first_name: ''
+    };
+
+    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+      const latestSnapshot = profileSnapshots[0];
+
+      if (latestSnapshot && latestSnapshot.personal.first_name) {
+        this.profile.first_name = latestSnapshot.personal.first_name;
+      }
+
+      if (latestSnapshot && latestSnapshot.fb_profile_photo) {
+        this.profile.photo.shared = !latestSnapshot.fb_profile_photo.private;
+      }
+    });
+
+    this.userSvc.getAccountStatus().subscribe((accountStatus: AccountStatus) => this.accountStatus = accountStatus);
+
+
   }
 
   showInfoModal() {
     this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
-      title: 'Who can see this page?',
-      message: `This page is only seen by you (and whoever is looking over your shoulder).
-               Rumpel is your PERSONAL hyperdata browser for your HAT data.
-               You should treat this page like the way you would treat your bank statement page online.`
+      title: 'Help',
+      message: `HATs are distributed systems and being private also means no one will know if you have a problem.<br><br>
+      If you have an issue with your HAT or this dashboard, please report it <a href="mailto:contact@HATDeX.org?subject=Support%20for%20`
+      + window.location.hostname + `">here</a>`
     });
   }
 
@@ -206,12 +269,43 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/user/login']);
   }
 
+  showNotificationsCentre() {
+    if (this.totalNotifications > 0) {
+      this._notificationsSvc.toggleShow();
+    }
+  }
+
+
+
   navigateTo(link: string) {
     window.location.href = link;
   }
 
   startIntro() {
-    this.router.navigate(['']);
+    this.router.navigate(['/dashboard']);
     setTimeout(() => this.intro.start(), 50);
+  }
+
+  showPopover() {
+    $('[data-toggle="popover"]').popover();
+  }
+
+  showAccountOptions() {
+    $('.dropdown-toggle').dropdown();
+  }
+
+
+  showNotificationsBar(bool: boolean): void {
+    this.showNotifications = bool;
+
+    const duration = 400;
+    let barHeight = 64;
+
+    if (bool === false) {
+      barHeight = 0;
+    }
+
+    $('.navbar, .menubar-left, .burger, .content-main').stop().animate({ marginTop: barHeight }, duration);
+    $('.notifications-wrapper').stop().animate({ top: (barHeight - 100) }, duration);
   }
 }

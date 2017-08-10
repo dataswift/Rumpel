@@ -9,12 +9,37 @@
 <div class="view-body">
   <div *ngFor="let plug of dataplugs | async" (click)="openPlugPopup(plug)" class="dataplug-tile-wrapper">
     <div class="dataplug-tile">
+      <i class="material-icons" *ngIf="plug.activated">check</i>
+      <i class="material-icons add" *ngIf="!plug.activated">add</i>
       <img src="assets/icons/{{plug.icon}}" class="img img-responsive dataplug-image">
       <div>
-        <h3 class="header">{{plug.name}} plug</h3>
+        <h3 class="header">{{formatPlugName(plug.name)}} plug</h3>
         <p class="text">{{plug.description}}</p>
+        <a class="cta" *ngIf="plug.activated" >View my data</a>
+        <a class="cta" *ngIf="!plug.activated"  >Add this data plug</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dataplug-tile-wrapper hidden-xs" style="visibility: hidden"> <!-- phantom item to make flexbox align properly -->
+    <div class="dataplug-tile">
+      <img src="assets/icons/facebook-plug.svg" class="img img-responsive dataplug-image">
+      <div>
+        <h3 class="header">plug</h3>
+        <p class="text">description</p>
+        <a class="cta" >Add this data plug</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dataplug-tile-wrapper hidden-xs" style="visibility: hidden"> <!-- phantom item to make flexbox align properly -->
+    <div class="dataplug-tile">
+      <img src="assets/icons/facebook-plug.svg" class="img img-responsive dataplug-image">
+      <div>
+        <h3 class="header">plug</h3>
+        <p class="text">description</p>
+        <a class="cta" >Add this data plug</a>
       </div>
     </div>
   </div>
 </div>
-

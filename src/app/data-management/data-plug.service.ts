@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 import { HatApiService } from '../services/hat-api.service';
@@ -18,20 +18,30 @@ import { DataTable } from '../shared/interfaces/data-table.interface';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.interface';
 import { MarketSquareService } from '../market-square/market-square.service';
+import { EventsService } from '../dimensions/events.service';
+import { LocationsService } from '../locations/locations.service';
+
+import { APP_CONFIG, IAppConfig} from '../app.config';
+
+import { Event } from '../shared/interfaces';
+import * as moment from 'moment';
 
 @Injectable()
 export class DataPlugService {
-  private hostname: string = window.location.hostname;
-  private protocol: string = window.location.protocol;
+  private hatUrl: string;
   private services: { [key: string]: { url: string; connected: boolean; }; };
   private _dataplugs$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
+  private locationData = false;
 
-  constructor(private http: Http,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private http: Http,
               private hatSvc: HatApiService,
               private marketSvc: MarketSquareService,
               private dialogSvc: DialogService,
               private uiSvc: UiStateService,
-              private userSvc: UserService) {
+              private userSvc: UserService,
+              private eventsSvc: EventsService,
+              private locationsSvc: LocationsService) {
     this.services = {
       'Facebook': {
         url: 'https://social-plug.hubofallthings.com/api/user/token/status',
@@ -46,6 +56,8 @@ export class DataPlugService {
     this.userSvc.user$
       .filter((user: User) => user.authenticated === true)
       .subscribe((user: User) => {
+        // console.log(user);
+        this.hatUrl = user.fullDomain;
         this.getFacebookStatus();
         this.getTwitterStatus();
       });
@@ -58,7 +70,7 @@ export class DataPlugService {
   }
 
   status(plugName: string): boolean {
-    return this.services[plugName].connected;
+    return this.services[plugName[0].toUpperCase() + plugName.slice(1)].connected;
   }
 
   getTokenInfo(plugName: string): Observable<any> {
@@ -74,27 +86,91 @@ export class DataPlugService {
       });
   }
 
+
+  private getDataPlugStatus(tables, plug): boolean {
+    let plugStatus = false;
+
+    const plugList: any = this.config.menuItems.dataPlugs;
+    const plugName = plug.name.toLowerCase();
+
+    for (let i = 0; i < plugList.length; i++) {
+      if (plugName === plugList[i].display.toLowerCase()) {
+        plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
+      } else if (plugName === 'photos' && plugList[i].display === 'Dropbox photos') {
+        plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
+      }
+    }
+
+    return plugStatus;
+  }
+
+  private getDataPlugLink(plug): string {
+    const plugList: any = this.config.menuItems.dataPlugs;
+    let link = '';
+    const plugName = plug.name.toLowerCase();
+
+    for (let i = 0; i < plugList.length; i++) {
+      if (plugName === plugList[i].display.toLowerCase()) {
+        link = plugList[i].page;
+      }
+    }
+
+    return link;
+  }
+
+
   private getDataPlugList() {
-    this.marketSvc.getDataPlugs().subscribe(plugs => {
-      const displayPlugs = plugs.map(plug => {
-        const displayPlug = {
-          name: plug.name,
-          description: plug.description,
-          url: plug.url.replace('/dataplug', '/hat/authenticate'),
-          icon: plug.name.toLowerCase() + '-plug'
-        };
+    this.locationsSvc.data$.subscribe(locations => {
+      if (locations.length > 0) {
+        this.locationData = true;
+      } else {
+        this.locationData = false;
+      }
 
-        if (plug.name === 'facebook' || plug.name === 'twitter') {
-          displayPlug.icon += '.png';
-        } else {
-          displayPlug.icon += '.svg';
-        }
+      this.marketSvc.getDataPlugs().subscribe(plugs => {
 
-        return displayPlug;
-      }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
+        this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
 
-      this._dataplugs$.next(displayPlugs);
+          const displayPlugs = plugs.map(plug => {
+
+            let plugActivated: boolean;
+
+            if ( plug.name === 'location' ) {
+              plugActivated = this.locationData;
+            } else {
+              plugActivated = this.getDataPlugStatus(tables, plug);
+            }
+
+            let plugName: string = plug.name;
+            if (plugName === 'Photos') {
+              plugName = 'Dropbox photos';
+            }
+
+            let plugIcon: string = plug.name.toLowerCase() + '-plug.svg';
+            if (plugName === 'Calendar') {
+              plugIcon = 'calendar-plug.png';
+            }
+
+            const displayPlug = {
+              name: plugName,
+              description: plug.description,
+              url: plug.url.replace('/dataplug', '/hat/authenticate'),
+              icon: plugIcon,
+              activated: plugActivated,
+              page: this.getDataPlugLink(plug)
+            };
+
+            return displayPlug;
+          }).sort((p1, p2) => p1.name > p2.name ? 1 : -1);
+
+          this._dataplugs$.next(displayPlugs);
+        });
+
+
+      });
     });
+
+
   }
 
   private getFacebookStatus(): void {
@@ -109,7 +185,7 @@ export class DataPlugService {
             cancelBtnText: 'No Thanks',
             buttons: [{
               title: 'Reconnect Facebook Plug',
-              link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+              link: `//${this.hatUrl}/#/hatlogin?` +
                     `name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate/`
             }]
           });
@@ -131,7 +207,7 @@ export class DataPlugService {
                 cancelBtnText: 'Dismiss',
                 buttons: [{
                   title: 'Reconnect Facebook Plug',
-                  link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+                  link: `//${this.hatUrl}/#/hatlogin?` +
                         `name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate/`
                 }]
               });
@@ -157,7 +233,7 @@ export class DataPlugService {
 
             // If Twitter plug status endpoint gives HTTP error but table exists on the HAT => problem occurred
             // If the table hasn't been created => plug is not set up, all ok
-            if (tableFound) {
+            if (tableFound && this.dialogSvc.activeInstances === 0) {
               this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
                 title: 'Something went wrong',
                 message: 'There is a problem with your Twitter plug. If the problem persists, we suggest ' +
@@ -165,7 +241,7 @@ export class DataPlugService {
                 cancelBtnText: 'Dismiss',
                 buttons: [{
                   title: 'Reconnect Twitter Plug',
-                  link: `${this.protocol}//${this.hostname}/#/hatlogin?` +
+                  link: `//${this.hatUrl}/#/hatlogin?` +
                         `name=Twitter&redirect=https://twitter-plug.hubofallthings.com/authenticate/hat/`
                 }]
               });

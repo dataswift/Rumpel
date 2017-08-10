@@ -16,6 +16,8 @@ import * as moment from 'moment';
 import * as PouchDB from 'pouchdb';
 import { Photo } from '../shared/interfaces/index';
 
+
+
 @Injectable()
 export class PhotosService {
   private _photos$: Subject<Photo[]>;
@@ -229,4 +231,6 @@ export class PhotosService {
 
     return base64;
   }
+
+
 }

@@ -11,13 +11,16 @@
 
   .empty-tile-title {
     position: absolute;
-    top: 50%;
-    margin-top: -1.25em;
     width: 100%;
     text-align: center;
     font-size: 2.5em;
     font-family: "Open Sans Condensed", sans-serif;
     text-transform: uppercase;
+
+    span{
+      position: relative;
+      top: 80px;
+    }
 
   }
 }

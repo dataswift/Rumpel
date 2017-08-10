@@ -14,6 +14,8 @@ import { Subscription } from 'rxjs/Subscription';
 import {MediaService} from '../media.service';
 import {TwitterService} from '../twitter.service';
 
+declare var $: any;
+
 @Component({
   selector: 'rump-social',
   templateUrl: 'social.component.html',
@@ -34,7 +36,7 @@ export class SocialComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.posts = [];
-    this.filter = null;
+    this.filter = '';
     this.filterMap = {
       'Facebook': 'status,photo,music.listens,link',
       'Twitter': 'tweet'
@@ -86,5 +88,9 @@ export class SocialComponent implements OnInit, OnDestroy {
         element.scrollIntoView();
       }, 5);
     }
+  }
+
+  showPopover(event) {
+    $('[data-toggle="popover"]').popover();
   }
 }

@@ -6,3 +6,54 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+
+ #map-view{
+   position: relative;
+ }
+
+.leaflet-control, .leaflet-bottom, .leaflet-right{
+    z-index: 1 !important;
+}
+
+.leaflet-container{
+  //height: 290px !important;
+}
+
+
+.locationDate{
+  background-color: #d2dce1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 500;
+  width: 100%;
+  padding: 10px 22px;
+  max-height: 54px;
+
+  .location-icon{
+    width: 24px;
+    height: 24px;
+    background-color: rgba(74, 85, 107, 0.1);
+    padding: 6px;
+    display: inline-block;
+    border-radius: 50%;
+    top: 2px;
+    position: relative;
+    margin-right: 5px;
+
+    img{
+      height: 12px;
+      position: relative;
+      left: 2px;
+      top: -4px;
+    }
+  }
+
+  h4{
+    color: #6297b1;
+    font-size: 14px;
+    text-transform: uppercase !important;
+    font-family: "Open Sans", sans-serif;
+  }
+
+}

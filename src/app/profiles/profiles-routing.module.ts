@@ -14,7 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
 @NgModule({
     imports: [
       RouterModule.forChild([
-        { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+        { path: 'datastore', component: ProfileComponent, canActivate: [AuthGuard] }
       ])
     ],
     exports: [

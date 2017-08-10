@@ -21,6 +21,8 @@
   margin-left: 0px;
   padding-left: 0px;
   cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
 
   h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
@@ -39,6 +41,10 @@
     border: none;
     font-size: 1.5em;
   }
+}
+
+.plugimg{
+  align-items: flex-start !important;
 }
 
 .col-xs-2, .col-xs-8 {

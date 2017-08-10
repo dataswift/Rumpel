@@ -6,12 +6,11 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
   -->
 
-<div class="tile-header icon-text-valign" [style.background-color]="backColor" (click)="navigateTo(title.toLowerCase(), $event)" style="cursor: pointer">
-  <span class="tile-logo ss-{{iconName}}"></span>
-  <div class="tile-title">{{title}}</div>
+<div class="tile-header icon-text-valign">
+  <a [routerLink]="pagelink" [class.activeLink]="pagelink" class="tile-title">{{title}}</a>
   <a role="button" tabindex="0" data-toggle="popover" data-container="body"
-     [attr.data-content]="info" class="info-button"
-     data-trigger="focus"
+     [attr.data-content]="info" class="info-button popover-click"
+     data-trigger="hover focus"
      (click)="showPopover($event)"
-     data-placement="auto left"><span class="tile-expand ss-info"></span></a>
+     data-placement="auto left"><i class="material-icons">info_outline</i></a>
 </div>

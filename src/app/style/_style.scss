@@ -410,6 +410,12 @@ h1, h2, h3, h4, h5 {
             padding: 0;
             padding-top: ($strip-height - 1em)/4;
             padding-bottom: ($strip-height - 1em)/4;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            &:active, &:focus{
+              -webkit-box-shadow: none !important;
+              box-shadow: none !important; 
+            }
           }
           &:hover {
             background: inherit;

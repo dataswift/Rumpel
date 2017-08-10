@@ -33,11 +33,7 @@ export class AuthHttp extends Http {
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      return super.request(url, options)
-        .catch(err => {
-          console.log('Got an error 1', err);
-          return Observable.throw(err);
-        });
+      return super.request(url, options);
     } else {
       return Observable.throw('JWT does not exist');
     }
@@ -45,12 +41,12 @@ export class AuthHttp extends Http {
 
   get(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log('Starting request with URL', this.hatBaseUrl + path);
+      // console.log('Starting request with URL', this.hatBaseUrl + path);
 
       return super.get(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
-          console.log('Got an error 2', err);
-          return Observable.throw(err);
+          console.log('GET error: ', err);
+          return Observable.empty();
         });
     } else {
       return Observable.throw('JWT does not exist!');
@@ -59,12 +55,12 @@ export class AuthHttp extends Http {
 
   post(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log('Starting request with URL', this.hatBaseUrl + path);
+      // console.log('Starting request with URL', this.hatBaseUrl + path);
 
       return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
-          console.log('Got an error 3', err);
-          return Observable.throw(err);
+          console.log('POST error: ', err);
+          return Observable.empty();
         });
     } else {
       return Observable.throw('JWT does not exist!');
@@ -73,12 +69,12 @@ export class AuthHttp extends Http {
 
   put(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log('Starting request with URL', this.hatBaseUrl + path);
+      // console.log('Starting request with URL', this.hatBaseUrl + path);
 
-      return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
+      return super.put(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
-          console.log('Got an error 4', err);
-          return Observable.throw(err);
+          console.log('PUT error: ', err);
+          return Observable.empty();
         });
     } else {
       return Observable.throw('JWT does not exist!');
@@ -87,12 +83,12 @@ export class AuthHttp extends Http {
 
   delete(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      console.log('Starting request with URL', this.hatBaseUrl + path);
+      // console.log('Starting request with URL', this.hatBaseUrl + path);
 
       return super.delete(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
-          console.log('Got an error 5', err);
-          return Observable.throw(err);
+          console.log('DELETE error: ', err);
+          return Observable.empty();
         });
     } else {
       return Observable.throw('JWT does not exist!');

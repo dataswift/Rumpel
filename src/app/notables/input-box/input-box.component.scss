@@ -71,33 +71,35 @@ form {
   padding-top: 0.3em;
   padding-right: 0.75em;
   padding-left: 0;
-  opacity: 0.3;
+  opacity: 0.5;
+  color: white;
 
   &.on {
     opacity: 1.0;
   }
 
   &:hover {
-    color: white;
+
+    opacity: 1.0;
   }
 
   &:focus {
     outline: none;
-    color: white;
+    opacity: 1.0;
   }
 }
 
 .btn-status {
-  font-family: "Open Sans Condensed", sans-serif;
   background-color: transparent;
   border-radius: 0;
   border: 2px solid white;
-  font-weight: bold;
   float: right;
+  color: white;
+  opacity: 0.7;
 
   &:hover {
     color: white;
-    opacity: 0.7;
+    opacity: 1;
   }
 }
 

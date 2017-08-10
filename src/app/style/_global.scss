@@ -12,7 +12,8 @@
 body {
   font-size: 12px;
   font-family: $font-regular;
-  min-width: 480px;
+  min-width: 320px;
+  background-color: $app-background-color !important;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -21,15 +22,38 @@ h1, h2, h3, h4, h5, h6,
   font-family: $font-condensed;
 }
 
-.content-main {
-  background: rgb(1, 1, 1);
+i{
+  user-select: none;
+}
+
+@keyframes showNotifs {
+   from {margin-top: -100px;}
+   to {margin-top: 0px;}
+}
+
+.notifications-wrapper{
+    background-color: $app-accent-color;
+    height: 100px;
+    width: 100%;
+    top: -100px;
+}
+
+
+
+.content-main-authenticated{
+  margin-left: 345px;
+  top: 106px;
+  position: relative;
+
+  @media screen and (max-width: 1113px) {
+      margin-left: 0px;
+  }
 
   .content-grid {
     overflow: hidden;
     color: white;
     padding-left: 0;
     padding-right: 0;
-    background: url("/assets/images/tiled-bg.png");
   }
 
   .grid {
@@ -38,6 +62,15 @@ h1, h2, h3, h4, h5, h6,
     margin-right: 0;
     margin-left: 0;
   }
+}
+
+.content-main-not-authenticated{
+  margin-left: 0px !important;
+}
+
+
+.content-main {
+  background-color: $app-background-color !important;
 }
 
 .responsive {
@@ -92,6 +125,7 @@ button.btn-view-header {
 
   &.empty {
     padding: 0.75em 2em;
+    color: $app-header-color;
   }
 
   &:hover {
@@ -144,21 +178,31 @@ button.btn-view-header {
 }
 
 .btn {
-  font-family: $font-condensed;
-  text-transform: uppercase;
+  font-family: $font-display;
   border-radius: 0;
+
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+
+  &:active,
+  &:focus,
+  &:hover {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  }
+
 }
 
 .btn-rump {
   background-color: $rump-color;
   border: 2px solid $rump-color;
-  color: #dddddd;
+  color: white;
 
   &:active,
   &:focus,
   &:hover {
-    background-color: darken($rump-color, 10%);
-    border: 2px solid darken($rump-color, 10%);
+    background-color: lighten($rump-color, 5%);
+    border: 2px solid lighten($rump-color, 5%);
     color: white;
     outline: none;
   }
@@ -211,7 +255,7 @@ button.btn-view-header {
   border: 1px solid white;
 
   &.sm {
-    padding: 0.5em 1em;
+    padding: 0.5em 0.7em;
     margin: 0 0.5em;
   }
 }
@@ -239,7 +283,7 @@ button.btn-view-header {
 
   &.lg {
     font-size: 1.6em;
-    height: 3em;
+    height: 50px;
   }
 }
 
@@ -271,3 +315,161 @@ button.btn-view-header {
   }
 }
 
+.badge{
+  background-color: $app-notification-color;
+  color: $app-header-color;
+
+  float: right;
+  margin-top: 4px;
+  font-weight: normal;
+  min-width: 24px;
+
+}
+
+.notif-badge{
+  min-width: 24px !important;
+  min-height: 24px !important;
+  padding: 3px;
+  position: relative;
+  top: -50px;
+  right: 0px;
+  border: 3px solid $app-header-color;
+  border-radius: 50%;
+}
+
+
+.customIntroHighlight {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 3px dashed $app-accent-color;
+  box-shadow: none;
+}
+
+
+.introjs-overlay{
+  opacity: 0 !important;
+}
+
+.introjs-arrow.left {
+  border-right-color: $app-accent-color;
+}
+.introjs-arrow.right {
+  border-left-color: $app-accent-color;
+}
+.introjs-arrow.up {
+  border-bottom-color: $app-accent-color;
+}
+.introjs-arrow.down {
+  border-top-color: $app-accent-color;
+}
+
+.introjs-tooltip{
+  padding: 30px;
+  width: 250px;
+}
+
+.introjs-tooltiptext{
+  font-size: 14px;
+}
+
+.introjs-tooltipbuttons {
+    text-align: center;
+}
+
+.introjs-button{
+  padding: 15px;
+  &:hover{
+    color: $app-accent-color;
+  }
+}
+
+.introjs-bullets ul li {
+    margin: 4px 4px;
+}
+
+.introjs-bullets{
+  padding: 15px;
+  a{
+    background: white !important;
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  a.active{
+    background: $app-header-color !important;
+  }
+}
+
+.popover{
+  z-index: 9000 !important;
+}
+
+.popover-content{
+  color: $app-header-color;
+  z-index: 9999 !important;
+}
+
+
+.content-bg{
+  background-color: $app-lighter-background-color;
+
+  @media screen and (max-width: $screen-sm) {
+      background-color: unset !important;
+  }
+}
+
+.content-header{
+  background-color: $app-tile-header-color !important;
+  color: $app-tile-title-color;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+
+  @media screen and (max-width: $screen-sm) {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  .col-md-12{
+    padding: 0;
+  }
+}
+
+.view-header{
+  background-color: unset !important;
+  h4{
+    color: $app-tile-title-color;
+    text-transform: none !important;
+    font-family: $font-display;
+    display: inline-block;
+    margin-left: 5px;
+  }
+
+  .info-button{
+    color: $app-tile-title-color !important;
+    margin-left: 10px;
+    top: 6px;
+    position: relative;
+    margin-right: 5px;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover{
+      color: $app-tile-title-color !important;
+    }
+  }
+}
+
+.switch-label{
+  color: $app-tile-title-color;
+  text-transform: none !important;
+  font-family: $font-display;
+}
+
+.tile-body  {
+  padding: 30px !important;
+}
+
+.tile-body-tight{
+  padding: 10px 30px !important;
+}

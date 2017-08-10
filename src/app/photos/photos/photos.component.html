@@ -6,10 +6,23 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<div class="row">
+  <div class="row content-bg content-header">
+    <div class="col-md-12">
+      <div class="view-header">
+        <a role="button" class="page-info popover-click" tabindex="0" data-toggle="popover" data-container="body"
+           data-content="View your dropbox images" class="info-button"
+           data-trigger="hover focus"
+           (mouseover)="showPopover($event)"
+           data-placement="auto bottom"><i class="material-icons">info_outline</i></a>
+        <h4>Personal Photos</h4>
+      </div>
+    </div>
+  </div>
+
+
+<div class="row content-bg">
   <div class="col-md-12">
     <div class="view-header">
-      <h2>Personal Photos</h2>
 
       <div class="inline-btn-group view-controls">
         <button class="btn-view-header" [class.selected]="showTimeline">

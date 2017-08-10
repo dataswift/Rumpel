@@ -49,8 +49,9 @@ export class MarketSquareService {
     return this.getAllOffers()
       .map(offers => {
         const validOffers = offers.filter(offer => {
-          return moment(offer.offer.expires).isAfter() &&
-            (offer.offer.status === 'approved' || offer.offer.status === 'satisfied');
+          console.log('BA', offer);
+          return moment(offer.expires).isAfter() &&
+            (offer.status === 'approved' || offer.status === 'satisfied');
         });
 
         return validOffers.sort((a, b) => b.offer.rating.up - a.offer.rating.up);
@@ -62,7 +63,7 @@ export class MarketSquareService {
       return Observable.of(this.offersStore);
     }
 
-    const url = this.config.market.url + '/offers';
+    const url = this.config.exchange.url + '/offers';
     return this.http.get(url, { headers: this._headers, body: '' })
       .map(res => {
         this.offersStore = res.json();
@@ -71,7 +72,7 @@ export class MarketSquareService {
   }
 
   getOfferIdByDataDebitId(dataDebitId: string): Observable<string> {
-    const url = this.config.market.url + '/offer';
+    const url = this.config.exchange.url + '/offer';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => {
@@ -79,7 +80,7 @@ export class MarketSquareService {
         query.append('dataDebitId', dataDebitId);
 
         return this.http.get(url, { headers: headers, search: query, body: '' })
-          .map(res => res.json().offerId);
+          .map(res => res.json().offer.offerId);
       })
       .catch(err => {
         return Observable.of('Offer not found.');
@@ -87,7 +88,7 @@ export class MarketSquareService {
   }
 
   getOffer(id: string): Observable<MSUserClaim> {
-    const url = this.config.market.url + '/offer/' + id + '/userClaim';
+    const url = this.config.exchange.url + '/offer/' + id + '/userClaim';
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
       .map(res => res.json()))
@@ -95,7 +96,7 @@ export class MarketSquareService {
   }
 
   claimOffer(id: string) {
-    const url = this.config.market.url + '/offer/' + id + '/claim';
+    const url = this.config.exchange.url + '/offer/' + id + '/claim';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
@@ -107,13 +108,15 @@ export class MarketSquareService {
   }
 
   getDataPlugs(): Observable<any> {
-    const url = this.config.market.url + '/dataplugs';
+    const url = this.config.marketsquare.url + '/dataplugs';
+
     return this.http.get(url, { headers: this._headers, body: '' })
       .map(res => res.json());
+
   }
 
   getNotifications(): Observable<any> {
-    const url = this.config.market.url + '/notices';
+    const url = this.config.exchange.url + '/notices';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' }).map(res => res.json()))
@@ -121,7 +124,7 @@ export class MarketSquareService {
   }
 
   markAsRead(notificationID: number): Observable<any> {
-    const url = this.config.market.url + '/notices/' + notificationID + '/read';
+    const url = this.config.exchange.url + '/notices/' + notificationID + '/read';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.put(url, {}, { headers: headers }).map(res => res.json()))
@@ -135,7 +138,7 @@ export class MarketSquareService {
 
       return Observable.of(headers);
     } else {
-      return this.hatSvc.getApplicationToken('MarketSquare', 'https://marketsquare.hubofallthings.com')
+      return this.hatSvc.getApplicationToken('Dex', 'https://dex.hubofallthings.com')
         .map(accessToken => {
           const payload = this.jwt.decodeToken(accessToken);
           this.applicationToken = {
@@ -175,11 +178,11 @@ export class MarketSquareService {
    */
 
   connectHAT(hatDomain: string): void {
-    const url = this.config.market.url + '/dataplugs/' + this.config.market.id + '/connect';
+    const url = this.config.exchange.url + '/dataplugs/' + this.config.exchange.id + '/connect';
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('X-Auth-Token', this.config.market.accessToken);
+    headers.append('X-Auth-Token', this.config.exchange.accessToken);
 
     const query = new URLSearchParams();
     query.append('hat', hatDomain);

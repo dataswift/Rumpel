@@ -1,0 +1,13 @@
+/*!
+ * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+ *//*!
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+ */.row{background-color:white;margin-left:0px;margin-right:0px}.view-body{position:relative}.view-body .timeline-view{display:flex;justify-content:space-between}.view-body .timeline-view .map{width:100%}.view-body .timeline-view .activityList{width:100%}.timeline.fixed-right{position:fixed}.mixpad{padding:0}.mixpad .day-view{background-color:rgba(0,0,0,0.6);position:absolute;top:0;left:0;z-index:5551;color:white;overflow:auto}.loading-overlay{position:absolute;top:-54px;right:8px;z-index:1002;padding:0 1em;border-radius:4px;background:rgba(255,255,255,0.4);width:260px;height:48px}.loading-overlay *{display:inline-block;vertical-align:middle}.loading-overlay span{color:#009688;font-size:1.25em}

@@ -7,12 +7,10 @@
   -->
 
 <div class="post-type">
-    <img src="assets/icons/facebook-icon.png" class="img img-responsive source-img">
-    <span>facebook {{post.type}}</span>
+    <img src="assets/icons/facebook-plug.svg" class="img img-responsive source-img">
 </div>
 
 <div class="post-header">
-    <img src="assets/icons/facebook-plug.png" class="img img-responsive source-header">
     <div class="header-content">
         <h3>{{post.application ? post.application : post.from}}</h3>
         <span>{{post.type === 'music.listens' ? "Listened" : "Posted"}} on {{post.createdTime | moment}},</span>

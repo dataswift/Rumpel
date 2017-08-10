@@ -6,28 +6,35 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
   -->
 
-<div class="row">
+<div class="row content-bg content-header">
   <div class="col-md-12">
     <div class="view-header">
-      <h4>Social Feed</h4>
+      <a role="button" class="page-info popover-click" tabindex="0" data-toggle="popover" data-container="body"
+         data-content="What happened on social media recently? See all your recent activity in one convenient place." class="info-button"
+         data-trigger="hover focus"
+         (mouseover)="showPopover($event)"
+         data-placement="auto bottom"><i class="material-icons">info_outline</i></a>
+      <h4>Social feed</h4>
     </div>
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+  </div>
+</div>
+
+
+    <div class="row content-bg">
+      <div class="col-md-10 col-md-offset-1">
         <div class="filter-header">
-          <span>{{filter ? filter + ' only' : 'Shows all posts'}}</span>
           <div class="filter" [class.on]="filter === ''" (click)="filterBy('')">
-            <span class="ss-index ss-glyphish-filled"></span>
+            <i class="material-icons">folder</i>
             All
           </div>
           <div class="filter" [class.on]="filter === 'Facebook'" (click)="filterBy('Facebook')">
-            <span class="ss-list ss-glyphish-filled"></span>
+            <i class="material-icons">message</i>
             Facebook
           </div>
           <div class="filter" [class.on]="filter === 'Twitter'" (click)="filterBy('Twitter')">
-            <span class="ss-list ss-glyphish-filled"></span>
+            <i class="material-icons">message</i>
             Twitter
           </div>
-          <div class="filter">Filter by:</div>
         </div>
 
         <ul class="feed bulletless-list">
@@ -39,5 +46,3 @@
         </ul>
       </div>
     </div>
-  </div>
-</div>

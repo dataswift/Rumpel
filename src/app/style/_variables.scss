@@ -67,8 +67,9 @@ $base-black: black;
 $base-color: rgb(188, 51, 51); /*rgb(233, 58, 63);*/
 $base-background-color: #535353;
 
-$font-regular: "Open Sans Regular", sans-serif;
-$font-condensed: "Open Sans Condensed", sans-serif;
+$font-display: "Roboto", sans-serif;
+$font-regular: "Roboto", sans-serif;
+$font-condensed: "Roboto", sans-serif;
 
 $rump-color: #009688;
 $text-dark: black;
@@ -86,3 +87,14 @@ $material-bg-300: #90A4AE;
 $material-bg-200: #B0BEC5;
 
 $min-private-window-height: 62em;
+
+
+$app-header-color: #4A556B;
+$app-background-color: #EEEEEE;
+$app-lighter-background-color: #F3F3F3;
+$app-accent-color: #009688;
+$app-dark-grey: #939393;
+$app-hover-grey: #E8E8E8;
+$app-notification-color: #F0C400;
+$app-tile-header-color: #DEE9EE;
+$app-tile-title-color: #6297B1;

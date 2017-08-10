@@ -32,7 +32,7 @@ export class LocationsService extends BaseDataService<Location> {
       })
     };
 
-    this.ensureTableExists('locations', 'iphone');
+    this.ensureTableExists('locations', 'iphone', 250);
   }
 
   getCurrentDeviceLocation(callback) {

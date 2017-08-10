@@ -22,6 +22,8 @@ import { DialogService } from './dialog.service';
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { InfoBoxComponent } from './info-box/info-box.component';
 import {NotificationsService} from './notifications.service';
+import {BaseDataService} from '../services/base-data.service';
+import {MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
 
 @NgModule({
   imports: [ SharedModule ],
@@ -39,6 +41,6 @@ import {NotificationsService} from './notifications.service';
             FooterComponent,
             NotificationCentreComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, NotificationsService ]
+  providers: [ DialogService, NotificationsService, MarkdownToHtmlPipe ]
 })
 export class LayoutModule {}

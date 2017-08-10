@@ -9,7 +9,7 @@
 @import "variables";
 
 .modal-overlay {
-  z-index: 1000;
+  z-index: 1500;
 
   background-color: rgba(0, 0, 0, 0.7);
   position: fixed;
@@ -17,6 +17,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  cursor: pointer;
 }
 
 .rump-modal {
@@ -24,6 +25,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 10px;
 
   width: 600px;
   max-width: 90%;
@@ -31,7 +33,7 @@
   max-height: 90%;
   background-color: white;
 
-  z-index: 1010;
+  z-index: 1510;
 
   .rump-modal-content {
     position: relative;
@@ -39,24 +41,27 @@
     font-size: 1.5em;
 
     > div {
-      padding: 0.5em 1em;
+      padding: 20px 30px;
     }
 
     .close-modal {
       position: absolute;
-      top: 0.5em;
-      right: 1em;
-      padding: 0;
       cursor: pointer;
+      top: 10px;
+      right: 20px;
+      padding: 10px;
+      color: $app-accent-color;
     }
   }
 }
 
 .rump-modal-header {
   h3 {
-    text-transform: uppercase;
+    font-family: $font-display;
+    color: $app-accent-color;
     margin-top: 0.25em;
     margin-bottom: 0.25em;
+    font-size: 18px;
   }
 }
 
@@ -65,25 +70,36 @@
   border-top: 1px solid #cdcdcd;
 
   p {
-    margin-top: 1em;
-    margin-bottom: 0.5em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    a{
+      color: $app-accent-color;
+
+      &:hover{
+        color: $app-accent-color;
+        filter: brightness(110%);
+      }
+    }
   }
 }
 
 .rump-modal-footer {
   text-align: center;
-  padding-bottom: 1em;
+  padding-top: 0px !important;
 
   button {
-    background-color: transparent;
-    border: 1px solid #cdcdcd;
-    color: black;
-    padding: 0.75em 1.5em;
-    margin: 0.25em 1em;
-    border-radius: 1px;
+    background-color: $app-accent-color;
+    color: white;
+    padding: 10px 20px;
+    margin: 0.5em 1em 1em;
+    border-radius: 8px;
+    font-family: $font-display;
 
     &:hover {
-      background-color: #cdcdcd;
+      -webkit-filter: brightness(110%); /* Safari */
+      filter: brightness(110%);
+      color: white;
     }
 
     &:focus {

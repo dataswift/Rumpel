@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { MarketSquareService } from '../market-square/market-square.service';
 import { ExternalNotification } from '../shared/interfaces/index';
@@ -19,6 +19,9 @@ export class NotificationsService {
   private totalNotifications: number;
   private _stats$: BehaviorSubject<{ unread: number; total: number; }>;
   private _notification$: BehaviorSubject<ExternalNotification>;
+  public showNotifs$: EventEmitter<boolean>;
+
+  public notificationsShowing = false;
 
   constructor(private _marketSvc: MarketSquareService) {
     this.hatdexNotifications = [];
@@ -28,6 +31,8 @@ export class NotificationsService {
 
     this._notification$ = new BehaviorSubject(null);
     this._stats$ = new BehaviorSubject({ unread: 0, total: 0 });
+
+    this.showNotifs$ = new EventEmitter();
   }
 
   get notification$() {
@@ -41,6 +46,8 @@ export class NotificationsService {
   getAllNotifications() {
     if (this.totalNotifications === 0) {
       this._marketSvc.getNotifications().subscribe((notifications: Array<ExternalNotification>) => {
+
+
         if (Array.isArray(notifications)) {
           this.hatdexNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
           this.totalNotifications = notifications.length;
@@ -86,6 +93,11 @@ export class NotificationsService {
       });
     }
   }
+
+  toggleShow(): void {
+     this.notificationsShowing = !this.notificationsShowing;
+     this.showNotifs$.emit(this.notificationsShowing);
+    }
 
   private countUnread(): number {
     let unreadCount = 0;

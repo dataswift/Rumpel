@@ -13,6 +13,8 @@ import {UserService} from '../../user/user.service';
 import {User} from '../../user/user.interface';
 import {Router} from '@angular/router';
 
+declare var $: any;
+
 @Component({
   selector: 'rump-public-profile',
   templateUrl: 'public-profile.component.html',
@@ -30,9 +32,11 @@ export class PublicProfileComponent implements OnInit {
 
   ngOnInit() {
     this.hatSvc.getPublicData('profile').subscribe((profileResponse: any) => {
+      console.log(profileResponse);
       if (profileResponse['public'] === true) {
         this.shared = true;
         this.profile = profileResponse.profile;
+        console.log(this.profile);
         this.notables = profileResponse.notables.map((note: any) => new Notable(note, note.id));
       } else {
         this.shared = false;
@@ -42,6 +46,13 @@ export class PublicProfileComponent implements OnInit {
     this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
     });
+  }
+
+  openLink(link: string) {
+    if (link.indexOf('http') === -1) {
+      link = 'http://' + link;
+    }
+    window.open(link, '_blank');
   }
 
   switchView() {

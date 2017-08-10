@@ -13,6 +13,8 @@ import { Profile } from '../../shared/interfaces/profile.interface';
 import {UserService} from '../../user/user.service';
 import {User} from '../../user/user.interface';
 
+declare var $: any;
+
 @Component({
   selector: 'rump-profile',
   templateUrl: 'profile.component.html',
@@ -38,6 +40,7 @@ export class ProfileComponent implements OnInit {
     this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
       if (profileSnapshots.length > 0) {
         this.profile = profileSnapshots[0];
+        console.log(this.profile);
       }
     });
 
@@ -81,6 +84,7 @@ export class ProfileComponent implements OnInit {
 
   switchView() {
     this.router.navigate([ 'public', 'profile' ]);
+    // window.open("public/profile", "_blank");
   }
 
   submitForm(event) {
@@ -103,6 +107,10 @@ export class ProfileComponent implements OnInit {
   togglePrivacy(field: string) {
     // A bit of a hack to force Angular change detection
     setTimeout(() => this.profile[field].private = !this.profile[field].private);
+  }
+
+  showPopover(event) {
+    $('[data-toggle="popover"]').popover();
   }
 
 }

@@ -10,12 +10,12 @@
   <div class="row">
     <div class="responsive header-strip">
       <img src="/assets/icons/rumpel.svg" class="logo">
-      <p>Rumpel is a service that allows you to <span class="highlight">acquire</span>, <span class="highlight">visualise</span> and <span class="highlight">exchange</span> your HAT data.</p>
+      <p>Rumpel is a dashboard for <span class="highlight">HAT</span> data</p>
     </div>
   </div>
 
   <div class="row">
-    <form class="responsive" (submit)="onSubmit(f)" #f="ngForm">
+    <form class="col-md-12" (submit)="onSubmit(f)" #f="ngForm">
       <div class="form-group with-dropdown">
         <label for="username" hidden>Please enter your HAT password</label>
         <input type="text" class="form-control input-rump lg" id="username"
@@ -49,9 +49,8 @@
       </div>
 
       <div class="form-context">
-        <a href="https://hatters.hubofallthings.com/" target="_blank">Sign up</a> for a HAT &nbsp;| &nbsp;
-        <a href="http://www.hatdex.org/what-is-the-hat/" target="_blank">What is the HAT?</a> &nbsp;| &nbsp;
-        <a [routerLink]="['/user', 'password', 'recover']">Forgot Password?</a>
+        <a href="https://hatters.hubofallthings.com/" target="_blank">Sign up for a HAT</a> &nbsp;| &nbsp;
+        <a href="http://www.hatdex.org/what-is-the-hat/" target="_blank">What is the HAT?</a>
       </div>
     </form>
   </div>

@@ -9,8 +9,7 @@
 @import "../../style/variables";
 
 .view-body {
-  background-image: url("/assets/images/landing_bg.jpg");
-  background-repeat: repeat;
+  background-color: $app-lighter-background-color;
   text-align: center;
   min-height: 70em;
   position: relative;
@@ -28,7 +27,7 @@
   }
 
   p {
-    color: #ffffff;
+    color: $app-header-color;
     font-size: 1.8em;
     margin-top: 1.5em;
 
@@ -49,7 +48,7 @@
 
   label {
     font-family: 'Open Sans Condensed', sans-serif;
-    color: #ffffff;
+    color: $app-header-color;
     text-transform: uppercase;
     font-weight: 300;
     font-size: 1.25em;
@@ -65,21 +64,23 @@
 }
 
 a {
-  color: #ffffff;
+  color: $app-accent-color;
   font-weight: 600;
   text-decoration: underline;
+  display: inline-block;
+  cursor: pointer;
 
   &:hover {
-    color: #ffffff;
+    color: lighten($app-accent-color, 5%);
     font-weight: 600;
     text-decoration: underline;
   }
 }
 
 .form-context {
-  color: #ffffff;
+  color: $app-accent-color;
   font-size: 1.2em;
-  font-family: 'Open Sans', sans-serif;
+  font-family: $font-display;
 
   span {
     text-decoration: underline;
@@ -89,16 +90,21 @@ a {
 }
 
 .btn-rump {
-  width: 100%;
+  width: 250px;
+
 }
 
 .form-group {
   text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 
   &.with-dropdown {
     input {
-      width: 50%;
+      width: 250px;
       display: inline;
+
 
       //@media (min-width: $screen-md-min) and (max-width: 1310px), (max-width: 590px) {
       //  width: 100%;
@@ -112,10 +118,11 @@ a {
 
       button {
         background-color: white;
-        margin-left: -5px;
-        min-width: 180px;
-        width: 50%;
+
+        width: 250px;
         color: $rump-color;
+        height: 50px;
+
 
         &:focus {
           box-shadow: none;
@@ -132,7 +139,7 @@ a {
         padding: 0;
         z-index: 1001;
         position: absolute;
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255, 255, 255, 1);
         border: 1px solid #c7c7c7;
         border-radius: 0;
         list-style: none;

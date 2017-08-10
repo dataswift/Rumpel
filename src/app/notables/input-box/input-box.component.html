@@ -7,11 +7,11 @@
   -->
 
 <div class="row input-box">
-  <div class="col-xs-2 col-md-3 image-holder">
+  <div class="col-xs-3 image-holder">
     <ng-content></ng-content>
   </div>
 
-  <div class="col-xs-10 col-md-9">
+  <div class="col-xs-9">
     <form (ngSubmit)="onSubmit(f)" #f="ngForm" *ngIf="active">
       <div class="form-group small-notable">
         <label for="message" class="hidden">New Notable</label>

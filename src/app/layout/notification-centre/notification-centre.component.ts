@@ -6,11 +6,14 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../../services/index';
 import { ExternalNotification } from '../../shared/interfaces/index';
 import { NotificationsService } from '../notifications.service';
 import { User } from '../../user/user.interface';
+import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
+
+declare var $: any;
 
 @Component({
   selector: 'rump-notification-centre',
@@ -18,17 +21,21 @@ import { User } from '../../user/user.interface';
   styleUrls: ['./notification-centre.component.scss']
 })
 export class NotificationCentreComponent implements OnInit {
+  @Output() clickNotifications = new EventEmitter<string>();
   public notification: ExternalNotification;
   public totalNotifications: number;
 
   constructor(private userSvc: UserService,
-              private _notificationsSvc: NotificationsService) { }
+              private _notificationsSvc: NotificationsService,
+              private markdownPipe: MarkdownToHtmlPipe) { }
 
   ngOnInit() {
     this.totalNotifications = 0;
 
     this._notificationsSvc.notification$.subscribe(notification => {
       this.notification = notification;
+      const msg = this.markdownPipe.transform(this.notification.notice.message);
+      $('.notif-more').popover({html: true, content: msg});
     });
 
     this._notificationsSvc.stats$.subscribe(stats => {
@@ -50,5 +57,13 @@ export class NotificationCentreComponent implements OnInit {
 
   markAsRead() {
     this._notificationsSvc.markAsRead(this.notification);
+  }
+
+  closeNotifs() {
+    this._notificationsSvc.toggleShow();
+  }
+
+  showPopover(evt) {
+    $('[data-toggle="popover"]').popover();
   }
 }

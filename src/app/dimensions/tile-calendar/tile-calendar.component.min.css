@@ -1,0 +1,7 @@
+/*!
+ * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
+ */.scroll-mask{position:relative}.scroll-mask .empty-tile-title{position:absolute;width:100%;text-align:center;font-size:2.5em;font-family:"Open Sans Condensed", sans-serif;text-transform:uppercase}.scroll-mask .empty-tile-title span{position:relative;top:80px}.tile-body ul{list-style:none;margin:0;padding:0}.tile-body li{margin:0.5em 0;position:relative}.tile-entry-logo{font-size:2em}.item-expand{font-size:1.5em}.col-xs-1,.col-xs-2{padding-right:0;padding-left:0}.col-xs-1{padding-right:0.5em}.col-xs-2{padding-left:15px}.col-xs-9 p{font-size:1em;margin-bottom:0.5em}.event-time{font-family:"Open Sans Condensed", sans-serif;font-size:1.5em}.tile-body h3{text-transform:uppercase;background-color:#393939;margin:0;font-size:1.75em;padding:0.5em 0.5em}.tile-body h4{text-transform:uppercase;font-size:1.4em;margin:0;margin-bottom:0.5em;padding:0}.vertical-align{display:flex;flex-direction:row}.vertical-align>.col-xs-1,.vertical-align>.col-xs-2{display:flex;align-items:center;justify-content:center}

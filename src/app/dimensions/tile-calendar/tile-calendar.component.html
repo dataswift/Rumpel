@@ -9,8 +9,8 @@
 <ng-content></ng-content>
 
 <div class="scroll-mask" id="intro-step16">
-  <div class="empty-tile-title" *ngIf="eventsExist && !upcomingEventsExist">
-    No Upcoming Events
+  <div class="empty-tile-title tile-body" *ngIf="eventsExist && !upcomingEventsExist">
+    <span>No Upcoming Events</span>
   </div>
   <div class="tile-body" *ngIf="upcomingEventsExist">
     <div class="day-view" *ngFor="let day of events">

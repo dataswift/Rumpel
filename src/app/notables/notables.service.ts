@@ -48,16 +48,16 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
       activeIntegrations: this.config.notables.activeIntegrations
     };
 
-    userSvc.user$.subscribe((user: User) => {
-      this.notablesServiceMeta.phata = user.fullDomain;
-      this._notablesMeta$.next(this.notablesServiceMeta);
-    });
-
     this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject(1);
     this.editedNotable$ = this._editedNotable$.asObservable();
 
     this._notablesMeta$ = <BehaviorSubject<NotablesServiceMeta>>new BehaviorSubject(this.notablesServiceMeta);
     this.notablesMeta$ = this._notablesMeta$.asObservable();
+
+    userSvc.user$.subscribe((user: User) => {
+      this.notablesServiceMeta.phata = user.fullDomain;
+      this._notablesMeta$.next(this.notablesServiceMeta);
+    });
 
     this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
   }

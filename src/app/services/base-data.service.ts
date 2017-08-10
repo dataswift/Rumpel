@@ -45,22 +45,35 @@ export abstract class BaseDataService<T> {
     return this._loading$.asObservable();
   }
 
-  ensureTableExists(name: string, source: string): void {
+  ensureTableExists(name: string, source: string, limit: number = 50): void {
     this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
       const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);
       if (foundTable) {
         this.store.tableId = foundTable.id;
-        this.getRecentData();
+        this.getRecentData(0, limit);
       }
     });
   }
 
-  getRecentData(failedAttempts: number = 0): void {
+  checkTableExists(name: string, source: string): boolean {
+    let result = false;
+
+    this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
+      const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);
+      if (foundTable) {
+        result = true;
+      }
+    });
+
+    return result;
+  }
+
+  getRecentData(failedAttempts: number = 0, limit: number = 50): void {
     if (this.store.data.length > 0) {
       this.pushToStream();
     } else if (this.store.tableId) {
       this._loading$.next(true);
-      this.hat.getValuesWithLimit(this.store.tableId)
+      this.hat.getValuesWithLimit(this.store.tableId, limit)
         .map((rawData: Array<any>) => {
           if (rawData.length > 0) {
             this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format('X');
@@ -74,12 +87,13 @@ export abstract class BaseDataService<T> {
           this.pushToStream();
         });
     } else if (failedAttempts <= 10) {
+      this._loading$.next(false);
       Observable.timer(100).subscribe(() => this.getRecentData(++failedAttempts));
     }
   }
 
   getMoreData(fetchRecordCount: number = 100, totalRecordCount: number = 500): void {
-    if (this.oldestRecordTimestamp) {
+    if (this.oldestRecordTimestamp && this.store.data.length < totalRecordCount) {
       this._loading$.next(true);
       this.hat.getValuesWithLimit(this.store.tableId, fetchRecordCount, this.oldestRecordTimestamp)
         .map((rawData: Array<any>) => {
@@ -93,9 +107,9 @@ export abstract class BaseDataService<T> {
         .subscribe((data: Array<T>) => {
           this.store.data = this.store.data.concat(data);
 
-          if (this.store.data.length < totalRecordCount) {
-            this.pushToStream();
-          }
+
+          this.pushToStream();
+
 
           // if (this.store.data.length < totalRecordCount && data.length > 0) {
           //   this.getMoreData(fetchRecordCount, totalRecordCount);

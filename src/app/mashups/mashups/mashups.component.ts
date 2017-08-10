@@ -7,7 +7,9 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+
+declare var $: any;
 
 @Component({
   selector: 'rump-mashups',
@@ -20,9 +22,13 @@ export class MashupsComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.router.events.subscribe(routerEvent => {
-      this.activeTab = routerEvent.url;
-    });
+    this.router.events
+      .filter(event => event instanceof NavigationEnd)
+      .subscribe((routerEvent: NavigationEnd) => this.activeTab = routerEvent.url);
+  }
+
+  showPopover(event) {
+    $('[data-toggle="popover"]').popover();
   }
 
 }

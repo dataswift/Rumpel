@@ -6,9 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+ @import "../../style/variables";
+
 .view-body {
-  background-image: url("/assets/images/landing_bg.jpg");
-  background-repeat: repeat;
+  background-color: $app-lighter-background-color;
   text-align: center;
   min-height: 70em;
   position: relative;
@@ -26,7 +27,7 @@
   }
 
   p {
-    color: #ffffff;
+    color: $app-header-color;
     font-size: 1.8em;
     margin-top: 1.5em;
 
@@ -54,7 +55,7 @@
 
   label {
     font-family: 'Open Sans Condensed', sans-serif;
-    color: #ffffff;
+    color: $app-header-color;
     text-transform: uppercase;
     font-weight: 300;
     font-size: 1.25em;
@@ -70,21 +71,23 @@
 }
 
 a {
-color: #ffffff;
-font-weight: 600;
-text-decoration: underline;
+  color: $app-accent-color;
+  font-weight: 600;
+  text-decoration: underline;
+  display: inline-block;
+  cursor: pointer;
 
   &:hover {
-    color: #ffffff;
+    color: lighten($app-accent-color, 5%);
     font-weight: 600;
     text-decoration: underline;
   }
 }
 
 .form-context {
-  color: #ffffff;
+  color: $app-accent-color;
   font-size: 1.2em;
-  font-family: 'Open Sans', sans-serif;
+  font-family: $font-display;
 
   span {
     text-decoration: underline;

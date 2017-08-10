@@ -8,20 +8,57 @@
 
 <div class="navbar smaller">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" [routerLink]="['']"><img src="assets/icons/rumpel-titled.svg" class="img img-responsive"></a>
-    </div>
 
-    <div class="navbar-collapse collapse" id="navbar-main">
+
+    <div class="navbar-collapse" id="navbar-main">
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="!!hatDomain" class="user-nav" style="text-transform: lowercase;">
-          <a [routerLink]="['public', 'profile']">{{hatDomain}}</a>
-        </li>
-        <li *ngIf="!!hatDomain" (click)="signOut()" class="user-nav" style="cursor: pointer;"><p>Sign Out</p></li>
-        <li *ngIf="!hatDomain" [routerLink]="['user', 'login']" class="user-nav" style="cursor: pointer;"><a>Sign In</a></li>
-        <li *ngIf="!!hatDomain" class="user-nav hidden-xs"><p style="cursor: pointer;" (click)="startIntro()">New to Rumpel</p></li>
-        <li class="user-nav hidden-xs hidden-sm"><a [href]="marketSquareLink" target="_blank" style="cursor: pointer;">MarketSquare</a></li>
-        <li class="user-nav hidden-xs" style="cursor: pointer;" (click)="showInfoModal()"><p>Who Can See This?</p></li>
+
+
+      <li class="user-nav help"><a (click)="showInfoModal()"><i class="material-icons">help_outline</i><span>Help</span></a></li>
+
+      <li class="user-nav account" *ngIf="userAuthenticated">
+        <div class="user-photo" (click)="showNotificationsCentre()" id="intro-step2">
+          <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon.svg'">
+          <span class="badge notif-badge" *ngIf="unreadNotifications">{{unreadNotifications}}</span>
+        </div>
+
+
+        <div class="account-actions">
+          <div class="btn-group">
+            <div class="btn btn-secondary btn-lg dropdown-toggle account-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <h6 class="welcome">Welcome {{profile.first_name}}<br><span>Last login: {{accountStatus?.previousLogin}}</span></h6>
+              <div class="account-options"><i class="material-icons">keyboard_arrow_down</i></div>
+            </div>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" *ngIf="config.native"
+                 (click)="showNotificationsCentre()">View notifications<span class="badge" style="margin-top: 0;" *ngIf="unreadNotifications">{{unreadNotifications}}</span></a>
+              <div class="dropdown-divider" *ngIf="config.native"></div>
+              <a class="dropdown-item" *ngIf="config.native"
+                 [routerLink]="['/user', 'password', 'change']">Change password</a>
+              <div class="dropdown-divider" *ngIf="config.native"></div>
+              <a class="dropdown-item" (click)="signOut()">Sign out</a>
+            </div>
+          </div>
+
+        </div>
+      </li>
+
+      <li class="user-nav account" *ngIf="!userAuthenticated">
+        <div class="user-photo">
+          <img class="notlogged" [src]="'/assets/icons/user-account-icon.svg'">
+        </div>
+
+
+        <div class="account-actions">
+          <div class="btn-group">
+            <button class="btn btn-secondary btn-lg dropdown-toggle account-btn" type="button" [routerLink]="['/user', 'login']">
+              <h6>Sign in</h6>
+            </button>
+          </div>
+
+        </div>
+      </li>
+
       </ul>
     </div>
   </div>

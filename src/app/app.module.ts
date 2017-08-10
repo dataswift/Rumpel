@@ -35,9 +35,11 @@ import { AuthGuard } from './auth.guard';
 import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
-import { GridComponent, TileHeaderComponent, TileComingSoonComponent} from './dashboard';
+import { GridComponent, TileHeaderComponent, TileHeroComponent, TileComingSoonComponent} from './dashboard';
 import { HatApiService, UiStateService, RumpelService } from './services/index';
 import { AuthHttp } from './services/auth-http.service';
+
+// import { DatePickerModule } from 'ng2-datepicker';
 
 /* MODAL COMPONENTS */
 
@@ -48,6 +50,7 @@ import { InfoBoxComponent } from './layout/info-box/info-box.component';
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
 import { BrowserStorageService } from './services/browser-storage.service';
+import { OffersComponent } from './offers/offers.component';
 
 export function authHttpFactory(backend: XHRBackend,
                                 defaultOptions: RequestOptions,
@@ -65,8 +68,10 @@ export function cookieServiceFactory() {
     AppRootComponent,
     GridComponent,
     TileHeaderComponent,
+    TileHeroComponent,
     TileComingSoonComponent,
-    DataTypeFilterPipe
+    DataTypeFilterPipe,
+    OffersComponent
   ],
   imports: [
     BrowserModule,

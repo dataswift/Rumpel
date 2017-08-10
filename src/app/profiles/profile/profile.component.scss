@@ -16,7 +16,22 @@
 
   .view-mode-toggle {
     float: right;
-    margin-right: 1em;
+    margin-right: 0.2em;
+    margin-top: 1em;
+
+    .previewPHATA{
+      cursor: pointer;
+      color: white;
+      text-decoration: none;
+      padding: 10px;
+      background-color: $app-accent-color;
+      border-radius: 4px;
+
+      &:hover{
+        text-decoration: none;
+        filter: brightness(110%);
+      }
+    }
 
     .switch-main {
       display: inline-block;
@@ -32,15 +47,24 @@
 }
 
 .row {
-  background-color: $background-grey;
+  //background-color: $background-grey;
   color: $text-dark;
 }
 
 section {
-  margin-top: 3em;
+  margin-top: 6em;
   margin-bottom: 1em;
   padding: 0;
   text-align: left;
+
+  a{
+    color: $app-accent-color;
+
+    &:hover{
+      color: $app-accent-color;
+      filter: brightness(110%);
+    }
+  }
 }
 
 .section-title {
@@ -49,9 +73,8 @@ section {
   display: inline-block;
   width: auto;
   margin: 0;
-  padding: 0.8em 1.5em;
-  font-size: 1.7em;
-  text-transform: uppercase;
+  padding: 0.8em 1.2em;
+  font-size: 1.4em;
 }
 
 .section-body {
@@ -59,31 +82,34 @@ section {
   text-align: left;
   margin: 0;
   height: 100%;
-  padding: 1em;
-  padding-top: 2em;
-}
-
-.settings, .picture {
-  height: 20em;
+  padding: 6em 2em 4em 2em;
 }
 
 .picture {
+  height: 20em;
+  padding-top: 20px;
   text-align: center;
+
+  .switch{
+    margin-right: 30px;
+  }
 }
+
+
 
 .settings {
   .profile-privacy-switch{
-    margin-left: 0.75em;
-    margin-top: 0.75em;
+    margin: auto;
+    width: 250px;
 
     * {
       float: left;
     }
 
     span {
-      font-size: 2.5em;
-      font-family: $font-condensed;
-      text-transform: uppercase;
+      font-size: 1.5em;
+      margin-top: 7px;
+      color: $app-accent-color;
     }
 
     .main-switch {
@@ -101,6 +127,7 @@ section {
 
     p {
       font-size: 1.2em;
+      padding: 10px;
     }
   }
 }
@@ -115,6 +142,7 @@ section {
 
   p {
     font-size: 1.2em;
+    padding: 10px;
   }
 }
 
@@ -128,13 +156,13 @@ form {
   margin-right: 2em;
 
   &.field-switch {
-    margin-top: 0.4em;
+    margin-top: -0.4em;
     font-size: 7px;
   }
 
   &.group-switch {
-    margin-top: 0.4em;
     font-size: 14px;
+    margin-right: 1em;
   }
 }
 
@@ -177,13 +205,12 @@ form {
 
 .form-group {
   margin-bottom: 2em;
-  margin-left: 2em;
   text-align: left;
 
   label {
     color: #9c9c9c;
     font-weight: normal;
-    font-size: 1.3em;
+    font-size: 1.1em;
   }
 
   textarea,
@@ -227,21 +254,37 @@ form {
   border-radius: 50%;
 }
 
-.btn-cancel {
-  margin-right: 2em;
-}
+
 
 .ui-message {
   padding: 0.75em;
-  margin-bottom: 1.25em;
+  margin-top: 70px;
   z-index: 101;
   background: white;
   text-align: center;
-  font-family: $font-regular;
+  font-family: $font-display;
+  color: white;
+  background-color: $app-accent-color;
   font-weight: 500;
   font-size: 1.3em;
   overflow: hidden;
   -webkit-box-shadow: 0 0 5px black;
   -moz-box-shadow:    0 0 5px black;
   box-shadow:         0 0 5px black;
+}
+
+
+.buttons{
+  margin-top: 60px;
+  margin-bottom: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .btn{
+    margin: 10px;
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+  }
 }

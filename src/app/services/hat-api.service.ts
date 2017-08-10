@@ -121,6 +121,8 @@ export class HatApiService {
       .catch(e => {
         if (e.status === 404) {
           return Observable.of('Not Found');
+        } else if (e.status === 403) {
+          return Observable.of('Forbidden');
         }
       });
   }
@@ -155,7 +157,7 @@ export class HatApiService {
   getAllValuesOf(name: string, source: string, startTime?: string): Observable<any> {
     return this.getTable(name, source)
       .flatMap(table => {
-        if (table === 'Not Found') {
+        if (table === 'Not Found' || table === 'Forbidden') {
           return Observable.of([]);
         } else {
           if (name === 'profile' || name === 'photos' || name === 'metadata' || name === 'profile_picture') {

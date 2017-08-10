@@ -6,11 +6,21 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
   -->
 
-<div class="row">
+<div class="row content-bg content-header">
   <div class="col-md-12">
     <div class="view-header">
-      <h4>Events List</h4>
+      <a role="button" class="page-info popover-click" tabindex="0" data-toggle="popover" data-container="body"
+         data-content="View the calendars you've added via data plugs." class="info-button"
+         data-trigger="hover focus"
+         (mouseover)="showPopover($event)"
+         data-placement="auto bottom"><i class="material-icons">info_outline</i></a>
+      <h4>Calendar</h4>
     </div>
+  </div>
+</div>
+
+<div class="row content-bg">
+  <div class="col-md-12">
     <div id="calendar" class="calendar"></div>
   </div>
 </div>

@@ -6,36 +6,55 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
  */
 
+@import "../../style/variables";
+
 .grid {
-  background-image: url("/assets/images/tiled-bg.png");
-  background-repeat: repeat;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
 }
 
 :host /deep/ {
   .scroll-mask {
-    border: solid transparent;
-    border-width: 0.5em 1em;
-    height: 21em;
+    height: 290px;
     width: 100%;
     overflow: hidden;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
   }
 
   .tile-body {
-    width: 107%;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100%;
-    padding-right: 7%;
+    height: 290px;
+    background-color: white;
+    padding: 30px 20px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 }
 
 .grid-item {
-  float: left;
   padding: 0;
-  margin: 0;
-  background-color: #262626;
-  color: #ffffff;
+  margin: 0px 21px 42px 21px;
+  color: $app-dark-grey;
   overflow: hidden;
+  width: 300px;
+  height: 350px;
+
+  @media (max-width: 600px) {
+    margin: 0px 0px 42px 0px;
+  }
+}
+
+.grid-item-2{
+  width: 642px;
+
+  @media (max-width: 768px) {
+    width: 300px;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -61,19 +80,19 @@
 }
 
 .filter {
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: $app-header-color;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
   z-index: 1002;
   color: #ffffff;
   text-align: center;
+  width: 300px;
+  height: 290px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
 
   span {
     display: block;
-    margin-top: 1.5em;
+    margin-top: 50px;
     font-size: 5em;
   }
 
@@ -85,6 +104,18 @@
   p {
     font-size: 1.5em;
     text-transform: uppercase;
+  }
+}
+
+.grid-item-2{
+  .filter{
+    width: 642px;
+  }
+}
+
+.locations{
+  .filter{
+    background-color: rgba(74, 85, 107, 0.8);
   }
 }
 

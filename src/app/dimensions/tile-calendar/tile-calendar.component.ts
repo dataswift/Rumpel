@@ -27,6 +27,7 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
   public eventsExist = false;
   public upcomingEventsExist: boolean;
   private sub: Subscription;
+  private _this: any;
 
   constructor(private eventsSvc: EventsService,
               private facebookEventSvc: FacebookEventsService,
@@ -35,6 +36,9 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.events = [{ relativeTime: 'today', events: [] }, { relativeTime: 'tomorrow', events: [] }];
+
+    this._this = this;
+
     this.sub =
       Observable.merge(
         this.eventsSvc.data$,
@@ -54,21 +58,25 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+
+
+
   private handleEventAddition(events: Array<Event>): void {
-    const upcomingEvents = events
-      .filter(event => event.start.isAfter(moment().startOf('day')) && event.start.isBefore(moment().add(1, 'days').endOf('day')))
-      .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
 
-    if (upcomingEvents.length > 0) {
-      const daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
-      this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
-      this.events[1].events = this.events[1].events.concat(upcomingEvents);
+        const upcomingEvents = events
+          .filter(event => event.start.isAfter(moment().startOf('day')) && event.start.isBefore(moment().add(1, 'days').endOf('day')))
+          .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
 
-      this.upcomingEventsExist = true;
-    } else {
-      this.upcomingEventsExist = false;
-    }
 
+        if (upcomingEvents.length > 0) {
+          const daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
+          // this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
+          // this.events[1].events = this.events[1].events.concat(upcomingEvents);
+
+          this.upcomingEventsExist = true;
+        } else {
+          this.upcomingEventsExist = false;
+        }
   }
 
 }

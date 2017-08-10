@@ -6,53 +6,19 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<div class="activitylist-container" [style.height]="componentHeight" [style.width]="componentWidth">
-  <h2 class="activitylist-day-title">{{timeSelected | moment: 'dddd, Do MMMM YYYY'}}</h2>
+<div class="datePicker">
+  <h4 class="currentMonth" [innerHTML]="currentMonth"></h4>
+<!--  <ng2-datepicker [options]="options" [(ngModel)]="date" (ngModelChange)="changeDate($event)" ></ng2-datepicker> -->
+</div>
 
-  <div *ngIf="notables.length > 0">
-    <h3 class="category-title">Notables</h3>
-    <div *ngFor="let notable of notables" class="notable-item">
-      <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
-    </div>
+<div class="activitylist-container" [style.height]="componentHeight">
+
+  <h6 class="todayHeader">Today</h6>
+  <div class="date" *ngFor="let day of eventList; let i = index;">
+    <rump-activity-card [day]="day" [i]="i" (selection)="scrollToItem($event)"></rump-activity-card>
   </div>
+</div>
 
-  <div *ngIf="events.length > 0">
-    <h3 class="category-title">Events</h3>
-    <div *ngFor="let event of events" class="event">
-      <div class="row vertical-align">
-        <div class="col-xs-2 event-time">
-          <p>{{event.start | moment:'hh:mm A'}}</p>
-          <span class="ss-down"></span>
-          <p>{{event.end | moment:'hh:mm A'}}</p>
-        </div>
-
-        <div class="col-xs-10">
-          <h4>{{event.name}}</h4>
-          <p class="event-description" *ngIf="event.description">{{event.description | limitContent:140}}</p>
-          <p>From: {{event.calendarName}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="photos.length > 0">
-    <h3 class="category-title">Photos taken</h3>
-    <div class="photos">
-      <div *ngFor="let photo of photos" class="photo-box">
-        <h5>{{photo.name}}</h5>
-        <img [src]="photo.src" class="img img-responsive">
-        <div class="photo-description">
-          <div><span class="ss-folder ss-glyphish-filled"></span>{{photo.displayPath}}</div>
-          <div><span class="ss-clock ss-glyphish-filled"></span>{{photo.timestamp | moment}}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="posts.length > 0">
-    <h3 class="category-title">Social media posts</h3>
-    <div *ngFor="let post of posts" class="post">
-      <rump-fb-post [post]="post"></rump-fb-post>
-    </div>
-  </div>
+<div class="backToTop">
+  <i class="material-icons" (click)="scrollToItem(0)" data-toggle="popover" data-container=".backToTop i" data-trigger="hover" data-placement="top" data-content="Back to today's date">expand_less</i>
 </div>

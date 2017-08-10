@@ -8,71 +8,44 @@
 
 <div class="row">
   <div class="col-md-12 mixpad">
-    <div class="view-header">
-      <div class="inline-btn-group view-controls" (click)="loadMoreData()">
-        <button type="button" class="btn-view-header empty">
-          Get More Data
-        </button>
-      </div>
 
-      <div class="inline-btn-group view-controls">
-        <button class="btn-view-header" [class.selected]="shownComponents.events">
-          <input type="checkbox" name="view-toggle" id="show-activity-list" [(ngModel)]="shownComponents.events">
-          <label for="show-activity-list">Activity List</label>
-        </button>
 
-        <button class="btn-view-header" [class.selected]="shownComponents.map">
-          <input type="checkbox" name="view-toggle" id="show-map" [(ngModel)]="shownComponents.map">
-          <label for="show-map">Map</label>
-        </button>
-
-        <button class="btn-view-header" [class.selected]="shownComponents.timeline">
-          <input type="checkbox" name="view-toggle" id="show-timeline" [(ngModel)]="shownComponents.timeline">
-          <label for="show-timeline">Timeline</label>
-        </button>
-      </div>
-
-      <div class="inline-btn-group controls-overlay" (click)="selectControlsTime($event.target.value)">
-        <button type="button" class="btn-view-header empty" value="today" [class.selected]="isSelectedTime('today')">
-          Today
-        </button>
-        <button type="button" class="btn-view-header empty" value="yesterday" [class.selected]="isSelectedTime('yesterday')">
-          Yesterday
-        </button>
-      </div>
-    </div>
-
-    <div class="btn-view-header">
-
-    </div>
 
     <div class="view-body">
-      <div class="loading-overlay" *ngIf="loading">
+      <div class="loading-overlay" *ngIf="loading && hasLocationData">
         <rump-spinner [isRunning]="true"></rump-spinner>
         <span>Loading more data...</span>
       </div>
 
-      <rump-activity-list class="activitylist"
-                         [timeSelected]="selectedTime.timestamp"
-                         [componentHeight]="safeSize"
-                         [componentWidth]="shownComponents.map ? '40%' : '80%'"
-                         [events]="events | timeFilter:selectedTime:'day':'start'"
-                         [posts]="posts | timeFilter:selectedTime:'day':'createdTime'"
-                         [photos]="photos | timeFilter:selectedTime:'day':'timestamp'"
-                         [notables]="notables | timeFilter:selectedTime:'day':'created_time'"
-                         *ngIf="shownComponents.events"></rump-activity-list>
+      <div class="timeline-view">
+
+
+
       <rump-map class="map"
                 [dataPoints]="locations | timeFilter:selectedTime:'day'"
                 [mapHeight]="safeSize"
                 [mapWidth]="shownComponents.events ? '60%' : '100%'"
                 (timeSelected)="selectTime($event)"
+                [locationDate]="selectedTime"
                 *ngIf="shownComponents.map"></rump-map>
+
+      <rump-activity-list class="activitylist"
+                         [componentHeight]="safeSizeSidebar"
+                         [eventList]="eventList"
+                         [timeline]="timeline"
+                         (timeSelected)="selectTime($event)"
+                         (notifyDatesInRange)="getDatesInRange($event)"
+                         *ngIf="shownComponents.events"></rump-activity-list>
+                <!--
       <rump-timeline class="timeline"
                      rumpStick [stickMin]="160" [stickClass]="'fixed-right'"
                      [timeline]="timeline"
                      [selectedTime]="selectedTime"
                      (timeSelected)="selectTime($event)"
                      [hidden]="!shownComponents.timeline"></rump-timeline>
+                   -->
+      </div>
+
     </div>
   </div>
 </div>

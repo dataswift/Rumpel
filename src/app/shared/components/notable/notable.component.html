@@ -5,7 +5,7 @@
         <img [src]="getLogo(service)" class="shared-icon">
       </li>
     </ul>
-    <div class="notable-type icon-text-valign"><span class="ss-{{getIconName()}} ss-glyphish-filled"></span>{{notable.kind}}</div>
+    <div class="notable-type icon-text-valign"><i class="material-icons">{{getIconName()}}</i></div>
   </div>
 
   <div class="notable-header">
@@ -25,8 +25,8 @@
   <div class="notable-content" [innerHTML]="notable.message | markdownToHtml | safeHtml"></div>
 
   <div class="notable-controls" *ngIf="modifiable">
-    <div class="controls-item" (click)="remove()">Delete<span class="ss-trash"></span></div>
-    <div class="controls-item" (click)="edit()">Edit<span class="ss-compose"></span></div>
+    <div class="controls-item" (click)="remove()"><span class="ss-trash"></span>Delete</div>
+    <div class="controls-item" (click)="edit()"><span class="ss-compose"></span>Edit</div>
   </div>
 
 </div>

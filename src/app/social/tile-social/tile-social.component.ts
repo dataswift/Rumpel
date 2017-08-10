@@ -51,6 +51,7 @@ export class TileSocialComponent implements OnInit, OnDestroy {
       this.sortPostsByDate();
     });
 
+
   }
 
   ngOnDestroy(): void {
@@ -70,5 +71,6 @@ export class TileSocialComponent implements OnInit, OnDestroy {
 
   private sortPostsByDate(): void {
     this.posts = this.posts.sort((a, b) => a.createdTime.isAfter(b.createdTime) ? -1 : 1);
+    this.posts = this.posts.slice(0, 3);
   }
 }
