@@ -22,7 +22,13 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. 
+
+Use the `--target=production` and `--environment=standalone` flags for a standalone production build or
+`--target=production` and `--environment=native` flags for a HAT native production build.
+
+Also it might be necessary to update configuration parameters in the `/src/app/app.config.ts` file. Namely, `name`, 
+`exchange` and `databuyer` parameters should be updated when the app is run outside of HAT testing environment.
 
 ## Running unit tests
 
