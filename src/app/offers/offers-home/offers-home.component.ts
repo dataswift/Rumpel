@@ -30,7 +30,9 @@ export class OffersHomeComponent implements OnInit {
 
     this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
       title: 'Heads Up!',
-      message: `We are beta testing data offers from databuyers at https://databuyer.hubofallthings.com. These offers are not real ones but its fun to test - do give us feedback at <a href="mailto:contact@hatdex.org">contact@hatdex.org</a>.`
+      message: 'We are beta testing data offers from databuyers at https://databuyer.hubofallthings.com. ' +
+      'These offers are not real ones but its fun to test - do give us feedback at ' +
+      `<a href="mailto:contact@hatdex.org">contact@hatdex.org</a>.`
     });
 
     this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
