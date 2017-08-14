@@ -35,7 +35,7 @@ export class IAppConfig {
 
 export const AppConfig: IAppConfig = {
   version: '3.1.0',
-  name: 'Rumpel',
+  name: 'RumpelStaging',
   native: environment.native,
   protocol: environment.protocol,
   exchange: {
@@ -54,7 +54,7 @@ export const AppConfig: IAppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubofallthings.com'
+    url: 'https://databuyer.hubat.net'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='
