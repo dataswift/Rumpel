@@ -19,7 +19,7 @@ export class FitbitService extends BaseDataService<Fitbit> {
     // this.ensureTableExists('fitbits', 'fitbit');
 
     // remove the following when real data is available
-    this.pushMockDataToStream( MockFitbitData );
+    //this.pushMockDataToStream( MockFitbitData );
   }
 
   // this will need to be updated when data plug connected

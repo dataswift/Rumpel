@@ -18,7 +18,7 @@ export class MonzoService extends BaseDataService<Monzo> {
     // this.ensureTableExists('monzos', 'monzo');
 
     // remove the following when real data is available
-    this.pushMockDataToStream( MockMonzoData );
+    //this.pushMockDataToStream( MockMonzoData );
   }
 
   // this will need to be updated when data plug connected
