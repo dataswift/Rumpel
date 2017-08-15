@@ -5,6 +5,7 @@ import { DataOfferService } from '../data-offer.service';
 import { DialogService } from '../../layout/dialog.service';
 import { UserService } from '../../user/user.service';
 import { User } from '../../user/user.interface';
+import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
 
 @Component({
   selector: 'rump-offers-home',
@@ -26,6 +27,13 @@ export class OffersHomeComponent implements OnInit {
               private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
+
+    this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
+      title: 'Heads Up!',
+      message: 'We are beta testing data offers from databuyers at https://databuyer.hubofallthings.com. ' +
+      'These offers are not real ones but its fun to test - do give us feedback at ' +
+      `<a href="mailto:contact@hatdex.org">contact@hatdex.org</a>.`
+    });
 
     this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
       offers = this.setOfferImage(offers);
