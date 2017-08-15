@@ -48,6 +48,11 @@
                                 <img src="assets/icons/fitbit-icon.svg">
                           </div>
 
+                          <div *ngIf="activity.type === 'monzo'" class="activity-item post monzo-box">
+                                <rump-monzo-my-day [monzoData]="activity.event"></rump-monzo-my-day>
+                                <img src="assets/icons/monzo-icon.svg">
+                          </div>
+
                           <div *ngIf="activity.type === 'twitter'" class="activity-item post">
                                 <rump-location-tweet [tweet]="activity.event"></rump-location-tweet>
                                 <img src="assets/icons/twitter-icon.svg">

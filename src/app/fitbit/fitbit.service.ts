@@ -22,7 +22,7 @@ export class FitbitService extends BaseDataService<Fitbit> {
     this.pushMockDataToStream( MockFitbitData );
   }
 
-
+  // this will need to be updated when data plug connected
   mapData(rawFitbit: any): Fitbit {
     console.log('fitbit', rawFitbit);
     const fitbitContent = rawFitbit;
