@@ -5,6 +5,6 @@ import {Component, Input} from '@angular/core';
     templateUrl: './offer-requirements.component.html',
     styleUrls: ['./offer-requirements.component.scss']
 })
-export class OfferRequirements {
+export class OfferRequirementsComponent {
     @Input() requirements: Array<any>;
 }

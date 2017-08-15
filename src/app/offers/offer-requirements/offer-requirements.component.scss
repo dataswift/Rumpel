@@ -2,12 +2,14 @@
 
 
 .req{
-    padding-left: 20px;
+    padding-left: 25px;
 
     span{
       display: block;
+      margin-top: 7px;
+      font-size: 11px;
 
-      .strong{
+      strong{
         font-weight: 600;
       }
     }

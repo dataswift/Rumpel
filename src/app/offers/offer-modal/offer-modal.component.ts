@@ -3,7 +3,7 @@ import { Moment } from 'moment';
 import * as moment from 'moment';
 import { DataOfferService } from '../data-offer.service';
 import {Subscription, Observable} from 'rxjs/Rx';
-import { OfferRequirements } from '../offer-requirements/offer-requirements.component';
+import { OfferRequirementsComponent } from '../offer-requirements/offer-requirements.component';
 
 
 declare var $: any;
