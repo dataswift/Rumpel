@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
 
 import { DataOfferService } from '../data-offer.service';
@@ -6,6 +6,7 @@ import { DialogService } from '../../layout/dialog.service';
 import { UserService } from '../../user/user.service';
 import { User } from '../../user/user.interface';
 import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
+import { APP_CONFIG, IAppConfig } from '../../app.config';
 
 @Component({
   selector: 'rump-offers-home',
@@ -22,7 +23,8 @@ export class OffersHomeComponent implements OnInit {
   public offers: any = [];
   public acceptedOffers: any = [];
 
-  constructor(private dialogSvc: DialogService,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private dialogSvc: DialogService,
               private userSvc: UserService,
               private dataOfferSvc: DataOfferService) { }
 
@@ -30,7 +32,7 @@ export class OffersHomeComponent implements OnInit {
 
     this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
       title: 'Heads Up!',
-      message: 'We are beta testing data offers from databuyers at https://databuyer.hubofallthings.com. ' +
+      message: `We are beta testing data offers from databuyers at ${this.config.databuyer.url}. ` +
       'These offers are not real ones but its fun to test - do give us feedback at ' +
       `<a href="mailto:contact@hatdex.org">contact@hatdex.org</a>.`
     });
