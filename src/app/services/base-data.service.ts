@@ -148,4 +148,9 @@ export abstract class BaseDataService<T> {
     this._data$.next(this.store.data);
   }
 
+  pushMockDataToStream(data): void{
+    this._loading$.next(false);
+    this._data$.next(data);
+  }
+
 }

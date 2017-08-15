@@ -13,6 +13,8 @@ import { MashupsRoutingModule } from './mashups-routing.module';
 import { LocationsModule } from '../locations/locations.module';
 import { SharedModule } from '../shared/shared.module';
 import { SocialModule } from '../social/social.module';
+import { FitbitModule } from '../fitbit/fitbit.module';
+import { MonzoModule } from '../monzo/monzo.module';
 
 import { MyDayComponent } from './my-day/my-day.component';
 import { MashupsComponent } from './mashups/mashups.component';
@@ -22,7 +24,15 @@ import { ActivityCardComponent } from './activity-card/activity-card.component';
 // import { DatePickerModule } from 'ng2-datepicker';
 
 @NgModule({
-  imports: [ SharedModule, LocationsModule, FormsModule, SocialModule, MashupsRoutingModule ],
+  imports: [
+    SharedModule,
+    LocationsModule,
+    FormsModule,
+    SocialModule,
+    MashupsRoutingModule,
+    FitbitModule,
+    MonzoModule
+  ],
   declarations: [
     MyDayComponent,
     ActivityListComponent,
