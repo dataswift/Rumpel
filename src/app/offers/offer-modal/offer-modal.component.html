@@ -60,7 +60,10 @@
               <hr>
               <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
               <h6>Offer description</h6>
+              <span class="bold">Overview</span>
               <p [innerHTML]="offers[offer_index].shortDescription | safeHtml"></p>
+              <span class="bold">Details</span>
+              <p [innerHTML]="offers[offer_index].longDescription | safeHtml"></p>
             </div>
 
             <div class="offer-details">
@@ -68,8 +71,8 @@
               <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
               <h6>Data requested</h6>
               <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
-                <span class="bold">{{ def.source }}</span>
-                <span *ngFor="let dataset of def.datasets">{{ dataset.description }}</span>
+                <span class="bold">{{ def.source | capitalizeFirst }}</span>
+                <rump-offer-requirements *ngFor="let dataset of def.datasets" [requirements]="dataset"></rump-offer-requirements>
               </p>
             </div>
       </div>

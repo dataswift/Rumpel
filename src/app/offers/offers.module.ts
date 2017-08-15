@@ -12,6 +12,7 @@ import { OffersAcceptedComponent } from './offers-accepted/offers-accepted.compo
 import { OfferModalComponent } from './offer-modal/offer-modal.component';
 import { OffersHomeComponent } from './offers-home/offers-home.component';
 import { OfferAcceptedStatsComponent } from './offer-accepted-stats/offer-accepted-stats.component';
+import { OfferRequirementsComponent } from './offer-requirements/offer-requirements.component';
 
 
 @NgModule({
@@ -21,7 +22,14 @@ import { OfferAcceptedStatsComponent } from './offer-accepted-stats/offer-accept
     OffersRoutingModule,
     ClipboardModule
   ],
-  declarations: [ OffersComponent, OffersAcceptedComponent, OfferModalComponent, OffersHomeComponent, OfferAcceptedStatsComponent ],
+  declarations: [
+    OffersComponent,
+    OffersAcceptedComponent,
+    OfferModalComponent,
+    OffersHomeComponent,
+    OfferAcceptedStatsComponent,
+    OfferRequirementsComponent
+  ],
   entryComponents: [ OfferModalComponent ],
   providers: [ DataOfferService ]
 })

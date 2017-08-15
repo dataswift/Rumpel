@@ -3,6 +3,7 @@ import { Moment } from 'moment';
 import * as moment from 'moment';
 import { DataOfferService } from '../data-offer.service';
 import {Subscription, Observable} from 'rxjs/Rx';
+import { OfferRequirementsComponent } from '../offer-requirements/offer-requirements.component';
 
 
 declare var $: any;
@@ -43,6 +44,9 @@ export class OfferModalComponent implements OnInit {
 
     this.changeOffer(0);
     this.animateIn = true;
+
+
+    console.log(this.offers[this.offer_index]);
   }
 
   closeModal(): void {

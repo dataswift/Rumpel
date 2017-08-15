@@ -77,7 +77,7 @@ export class ActivityListComponent implements OnInit {
 
     const self = this;
 
-    setInterval(function() {
+    setInterval( () => {
 
       this.datesInRange = [];
       const dates = document.getElementsByClassName('date');
@@ -89,7 +89,8 @@ export class ActivityListComponent implements OnInit {
         const activityList = <HTMLScriptElement>document.getElementsByClassName('activitylist-container')[0];
 
         if ( $this.offsetTop < ( activityList.offsetHeight + activityList.scrollTop ) && $this.offsetTop > activityList.scrollTop ) {
-              const monthInRange = self.eventList[i].timestamp.format('MM YYYY');
+              const monthInRange = this.eventList[i].timestamp.format('MM YYYY');
+
               if (!this.datesInRange.includes(monthInRange) ) {
                 this.datesInRange.push(monthInRange);
               }
@@ -105,7 +106,7 @@ export class ActivityListComponent implements OnInit {
 
       this.currentMonth = tempMonths.join(' / ');
 
-      self.notifyDatesInRange.emit(this.datesInRange);
+      this.notifyDatesInRange.emit(this.datesInRange);
     }, 1000);
   }
 
