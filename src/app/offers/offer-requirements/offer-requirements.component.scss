@@ -1,0 +1,19 @@
+@import "../../style/variables";
+
+
+.req{
+    padding-left: 20px;
+
+    span{
+      display: block;
+
+      .strong{
+        font-weight: 600;
+      }
+    }
+
+    .fields{
+      padding-left: 20px;
+    }
+
+}

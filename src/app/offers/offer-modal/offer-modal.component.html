@@ -69,7 +69,7 @@
               <h6>Data requested</h6>
               <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
                 <span class="bold">{{ def.source }}</span>
-                <span *ngFor="let dataset of def.datasets">{{ dataset.description }}</span>
+                <rump-offer-requirements *ngFor="let dataset of def.datasets" [requirements]="dataset"></rump-offer-requirements>
               </p>
             </div>
       </div>

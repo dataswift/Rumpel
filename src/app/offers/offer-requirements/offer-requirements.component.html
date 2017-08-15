@@ -1,0 +1,8 @@
+<div class="req">
+    <span><strong>{{ requirements.name | capitalizeFirst }}</strong> - {{ requirements.description | capitalizeFirst }}</span>
+
+    <div class="fields" *ngFor="let field of requirements.fields">
+        <span><strong>{{ field.name | capitalizeFirst }}</strong> - {{ field.description | capitalizeFirst }}</span>
+        <rump-offer-requirements *ngFor="let fieldSubset of field.fields" [requirements]="fieldSubset"></rump-offer-requirements>
+    </div>
+</div>
