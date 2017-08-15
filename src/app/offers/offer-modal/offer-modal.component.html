@@ -60,10 +60,16 @@
               <hr>
               <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
               <h6>Offer description</h6>
+
+              <span class="bold">Reward</span>
+              <p *ngIf="offers[offer_index].reward.rewardType == 'Cash'">Cash - {{ offers[offer_index].reward.value | currency: offers[offer_index].reward.currency:true:'1.2-2' }}</p>
+              <p *ngIf="offers[offer_index].reward.rewardType == 'Voucher'">{{ offers[offer_index].reward.vendor }} voucher - {{ offers[offer_index].reward.value }}</p>
+              <p *ngIf="offers[offer_index].reward.rewardType == 'Service'">Service - {{ offers[offer_index].reward.vendor }} - {{ offers[offer_index].reward.value }}</p>
+
               <span class="bold">Overview</span>
-              <p [innerHTML]="offers[offer_index].shortDescription | safeHtml"></p>
+              <p [innerHTML]="offers[offer_index].shortDescription | safeHtml | capitalizeFirst"></p>
               <span class="bold">Details</span>
-              <p [innerHTML]="offers[offer_index].longDescription | safeHtml"></p>
+              <p [innerHTML]="offers[offer_index].longDescription | safeHtml | capitalizeFirst"></p>
             </div>
 
             <div class="offer-details">
