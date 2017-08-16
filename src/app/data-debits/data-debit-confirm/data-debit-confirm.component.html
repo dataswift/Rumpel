@@ -12,14 +12,14 @@
       <div class="offer-title">
         <div class="text-center">
           <h2>{{offer.title}}</h2>
-          <span class="creator-info">from {{offer.owner.firstName}} {{offer.owner.lastName}}</span>
+          <!-- <span class="creator-info">from {{offer.owner.firstName}} {{offer.owner.lastName}}</span> -->
         </div>
         <p class="text-center offer-description">{{offer.description}}</p>
-
+<!--
         <div class="offer-reward text-center" [ngSwitch]="offer.reward.rewardType">
           <h3>Reward</h3>
           <div *ngSwitchCase="'Cash'">
-            Cash: {{offer.reward.value / 100}} {{offer.reward.currency}}
+            Cash: {{offer.reward.value / 100 | currency:offer.reward.currency:true:'1.2-2' }}
           </div>
 
           <div *ngSwitchCase="'Voucher'">
@@ -31,13 +31,13 @@
             Service of <a [href]="offer.reward.vendorUrl"  target="_blank">{{offer.reward.vendor}}</a>
           </div>
         </div>
-
+-->
         <div class="offer-description text-center">
-          <p>Start date: {{offer.starts | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
-          <p>End date: {{offer.expires | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
+          <p>Start date: {{offer.starts | moment:'ddd DD MMM YYYY, h:mm a'}}</p>
+          <p>End date: {{offer.expires | moment:'ddd DD MMM YYYY, h:mm a'}}</p>
         </div>
 
-        <div class="progress-wrapper">
+        <div class="progress-wrapper" *ngIf="offer.dataRequest">
           <progress max="{{offer.dataRequest.minUsers}}" value="{{offer.offer.users}}">
             <div class="progress-bar" role="presentation">
               <span class="progress-value" [style.width]="offer.offer.users"></span>
@@ -80,7 +80,7 @@
                 (click)="acceptDataDebit()">Accept Offer</button>
         <button class="btn btn-rump"
                 (click)="rejectDataDebit()">Cancel</button>
-      </div>  
+      </div>
     </div>
     <div class="message" *ngSwitchCase="'accepted'">
       <span class="icon-alert accepted ss-info ss-glyphish-filled"></span>
