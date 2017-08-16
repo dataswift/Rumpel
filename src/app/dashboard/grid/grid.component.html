@@ -67,9 +67,9 @@
     </div>
   </rump-tile-social>
 
-  <rump-tile-fitbit lass="grid-item"></rump-tile-fitbit>
+  <rump-tile-fitbit *ngIf="showFitbitTile" class="grid-item"></rump-tile-fitbit>
 
-  <rump-tile-monzo lass="grid-item"></rump-tile-monzo>
+  <rump-tile-monzo *ngIf="showMonzoTile" class="grid-item"></rump-tile-monzo>
 
   <rump-tile-weather class="grid-item">
     <rump-tile-header [title]="'Weather'"
