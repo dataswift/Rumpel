@@ -18,7 +18,7 @@ export class MonzoService extends BaseDataService<Monzo> {
     // this.ensureTableExists('monzos', 'monzo');
 
     // remove the following when real data is available
-    //this.pushMockDataToStream( MockMonzoData );
+    // this.pushMockDataToStream( MockMonzoData );
   }
 
   // this will need to be updated when data plug connected
@@ -27,7 +27,7 @@ export class MonzoService extends BaseDataService<Monzo> {
     const monzoContent = rawMonzo;
 
     const monzo: Monzo = {
-      dateTime: moment(monzoContent.dateTime, "YYYY-MM-DDThh:mm:ssZ").toString(),
+      dateTime: moment(monzoContent.dateTime, 'YYYY-MM-DDThh:mm:ssZ').toString(),
       balance: monzoContent.balance,
       currency: monzoContent.currency,
       spend_today: monzoContent.spend_today

@@ -333,7 +333,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
       }
 
       for ( let j = 0; j < this.fitbits.length; j++) {
-        if ( moment(this.fitbits[j].dateTime, "YYYY-MM-DD").isSame(this.timeline[i].timestamp, 'day') ) {
+        if ( moment(this.fitbits[j].dateTime, 'YYYY-MM-DD').isSame(this.timeline[i].timestamp, 'day') ) {
           this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.fitbits[j], type: 'fitbit' } );
         }
       }

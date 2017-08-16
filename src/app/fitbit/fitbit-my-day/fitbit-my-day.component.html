@@ -8,7 +8,7 @@
 
 <div class="fitbitTile">
     <h4>Daily stats</h4>
-    <p class="stat steps">Total steps, <span>{{ fitbitData.steps }}</span></p>
+    <p class="stat steps">Total steps, <span>{{ fitbitData.steps | currency:'GBP':false:'1.0-0' | removeChars:"GBP" }}</span></p>
     <p class="stat heart">Resting heart rate, <span>{{ fitbitData.restingHeartRate }} bpm</span></p>
     <p class="stat sleep">Restful sleep, <span>{{ sleep }}</span></p>
 </div>

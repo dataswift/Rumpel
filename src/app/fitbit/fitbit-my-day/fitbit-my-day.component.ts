@@ -11,13 +11,12 @@ import * as moment from 'moment';
 export class FitbitMyDayComponent implements OnInit {
 
   @Input() fitbitData: Fitbit;
-  private sleep: any;
+  public sleep: any;
 
   constructor() { }
 
   ngOnInit() {
-    let sleepMoment = moment(this.fitbitData.sleep);
-    this.sleep = sleepMoment.format('h[ hrs,] m[ min]');
+    this.sleep = moment(this.fitbitData.sleep).format('h[ hrs,] m[ min]');
   }
 
 }

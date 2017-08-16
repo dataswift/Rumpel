@@ -19,7 +19,7 @@ export class FitbitService extends BaseDataService<Fitbit> {
     // this.ensureTableExists('fitbits', 'fitbit');
 
     // remove the following when real data is available
-    //this.pushMockDataToStream( MockFitbitData );
+    // this.pushMockDataToStream( MockFitbitData );
   }
 
   // this will need to be updated when data plug connected
@@ -28,7 +28,7 @@ export class FitbitService extends BaseDataService<Fitbit> {
     const fitbitContent = rawFitbit;
 
     const fitbit: Fitbit = {
-      dateTime: moment(fitbitContent.dateTime, "YYYY-MM-DD").toString(),
+      dateTime: moment(fitbitContent.dateTime, 'YYYY-MM-DD').toString(),
       steps: fitbitContent.steps,
       restingHeartRate: fitbitContent.restingHeartRate,
       sleep: fitbitContent.sleep

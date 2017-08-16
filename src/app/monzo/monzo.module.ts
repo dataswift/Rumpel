@@ -4,14 +4,15 @@ import { SharedModule } from '../shared/shared.module';
 import { MonzoMyDayComponent } from './monzo-my-day/monzo-my-day.component';
 
 import { MonzoService } from './monzo.service';
+import { TileMonzoComponent } from './tile-monzo/tile-monzo.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule
   ],
-  declarations: [MonzoMyDayComponent],
+  declarations: [MonzoMyDayComponent, TileMonzoComponent],
   providers: [ MonzoService ],
-  exports: [ MonzoMyDayComponent ]
+  exports: [ MonzoMyDayComponent, TileMonzoComponent ]
 })
 export class MonzoModule { }
