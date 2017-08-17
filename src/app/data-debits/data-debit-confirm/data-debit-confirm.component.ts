@@ -107,11 +107,11 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
     });
   }
 
-  private toggleEnabled(bool: boolean){
-    if(bool) {
-      this._hat.updateDataDebit(this.uuid, "enable");
+  private toggleEnabled(bool: boolean) {
+    if (bool) {
+      this._hat.updateDataDebit(this.uuid, 'enable');
     } else {
-      this._hat.updateDataDebit(this.uuid, "disable");
+      this._hat.updateDataDebit(this.uuid, 'disable');
     }
   }
 
