@@ -14,27 +14,75 @@
 
 .offer-title {
   background-color: #ececec;
-  border: 0.2em dashed #535353;
+  border: 0.2em dashed #999;
   color: #202020;
-  padding: 2em;
+  padding: 50px;
   position: relative;
   margin-top: 2em;
   margin-bottom: 2em;
+  text-align: center;
+  border-radius: 12px;
 
   h2 {
     margin: 0;
     display: inline-block;
     clear: both;
-    padding-top: 20px;
-    padding-bottom: 20px;
     font-size: 28px;
   }
+
+  h4{
+    display: inline-block;
+    text-align: right;
+    text-transform: uppercase;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 8px;
+    margin-left: 10px;
+    background-color: #999;
+    font-size: 12px;
+    position: relative;
+    top: -6px;
+  }
+
+
 
   .creator-info {
     margin-left: 0.5em;
     font-size: 1.2em;
     display: block;
     color: #aaa;
+  }
+
+  p{
+    margin-bottom: 20px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #999;
+
+    span{
+      display: block;
+      font-size: 14px;
+      text-transform: none;
+      color: #333;
+    }
+  }
+
+  .offer-description{
+    margin-top: 0;
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #333;
+    text-transform: none;
+  }
+
+  .enableBtn{
+    display: block;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 8px;
+    color: white;
+    display: inline-block;
+    background-color: $app-accent-color;
   }
 }
 

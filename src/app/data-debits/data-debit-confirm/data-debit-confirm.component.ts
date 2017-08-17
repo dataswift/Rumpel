@@ -32,6 +32,7 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
   public confirmMessage: boolean;
   public facebookShareLink: string;
   public twitterShareLink: string;
+  public debits: Array<any>;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private _route: ActivatedRoute,
@@ -104,6 +105,14 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
       this.offer = offerMatchedToDataDebit;
       this.updateStatus();
     });
+  }
+
+  private toggleEnabled(bool: boolean){
+    if(bool) {
+      this._hat.updateDataDebit(this.uuid, "enable");
+    } else {
+      this._hat.updateDataDebit(this.uuid, "disable");
+    }
   }
 
   private updateDataDebitInformation() {
