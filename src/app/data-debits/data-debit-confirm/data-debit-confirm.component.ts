@@ -95,7 +95,6 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
 
       // TODO: change to databuyer URL
       const offerMatchedToDataDebit = results[0].find(offer => offer.offerId === results[1]);
-      console.log(offerMatchedToDataDebit);
       this.facebookShareLink = this.config.facebook.shareUrl +
         'https://marketsquare.hubofallthings.com/offers/' + results[1];
       this.twitterShareLink = this.config.twitter.shareUrl +
