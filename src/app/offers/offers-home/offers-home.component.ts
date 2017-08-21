@@ -32,8 +32,10 @@ export class OffersHomeComponent implements OnInit {
 
     this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, {
       title: 'Heads Up!',
-      message: `We are beta testing data offers from databuyers at ${this.config.databuyer.url}. ` +
-      'These offers are not real ones but its fun to test - do give us feedback at ' +
+      message:
+      `We are beta testing data offers from DataBuyers at ${this.config.databuyer.url}. These data offers are REAL ` +
+      `(except where they indicate otherwise), but offers requesting for PIIs (personal identity identifiers) and ` +
+      `offers giving cash for data have been disabled during beta. Please give us feedback at ` +
       `<a href="mailto:contact@hatdex.org">contact@hatdex.org</a>.`
     });
 
