@@ -35,7 +35,7 @@ export class IAppConfig {
 
 export const AppConfig: IAppConfig = {
   version: '3.1.0',
-  name: 'Rumpel',
+  name: 'Tamo',
   native: environment.native,
   protocol: environment.protocol,
   exchange: {
