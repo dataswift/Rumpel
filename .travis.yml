@@ -82,6 +82,19 @@ jobs:
             branch: accept
 
         - provider: s3
+          access_key_id: AKIAIR3HIBCCANU3ZWDQ
+          secret_access_key:
+            secure: NkDynj7y/datNvPNOGkBnThoXlo5sbTKV9afRRCqzA/LcjhbuvcqjQs7p7yL3GOiqNfru8cmtkfyYkaKfZ6lTFZ4+65egb1SL50AAE6UcQFu8DhvfVwe6gHxlMGwUv8Dkg43lSsIFu5PokHa3v4JFAiFemQhW8z8bl/29SWtwQ6ZvSwnjFbTgrTKnNVK/i0LESUxNPkyT5L3UWIeiy7W18jPOfiDP5vw7/3et2++07KlHABbk7QpQJdYmhF+fHDFh8z1FayNG8JXI5pSZBqFEXl6QnIKA5CeBL6aQdkGFpuXj+Bm23i/P0k2uRgdUZZ/UQK2RHd47+NqVKaLgtnJVwTY5wmu6Y3B0lpjckvKdX8u8dbZuCNjp3Xw819LmUGA4qAOmv0pxQWndas4oPnHnPBZNVQiZKatrypBlUztN26Kk5toZSsLrrdPUfj2+XafV7uyyG2xfQnOzy4HkE/fzJCQK6XiM7hIobbRQYsxqp2WszrojydmL0Jnx+x5IBRLPnpy8d/7c9j23O88xbGTtw2YfJPHSoZRrnQC0cO2+gi/vZvHwdz9Ntaxtz6S4z/S36Qd6YzgdLr5LlxYrSr0zoTJ8AopJWCZ2dxpfLev3Uip8MOFVwsTTl41Ym3b62AfM0sSfkZ3ysyY3SwTbCysB3MYGAfBdjPqgcbcIn5r1gM=
+          bucket: tamo-rumpel.hubat.net
+          local-dir: dist
+          acl: public_read
+          skip_cleanup: true
+          region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: tamo
+
+        - provider: s3
           access_key_id: AKIAISPMI5PZ5RW6NUQQ
           secret_access_key:
             secure: nURY+vMAc9+ERrQ1q/5wuO8wHx7CJDJnKgyy0HhvbzaU7S7gd7g+zvz5VGQv1qX3yuDquuh19N4jXdh67sw5qeJ0iqBrZiQUa9Pnr1rUTXthdtxp6/mbwry34JA0RKNAF1JzjDkdVdSxJdJ5r4tunPLIqprmqYSI+Ul5mOxF0iubpSnXN+s1+6dhElTG/Czp6Fi8N0kzSULsv6LefZCZ+viEuBNRAkoALSGU7sa4+OsdN4M0sZN2sEkA1P/khoF5ipBIXz2S/PO6X9jNbRIdmmXtmQisOl0A1KTNR6J0G7ZleMDeDP/uBZkJB1CLuFWELzg6b5tRLMrydbUNS823w+Q4anbR2qd+rxknuEAwuqzqbLC21AGVLhTkapsv8t1IyejvXdTSpm+U60zqJCz4McZfehVDYEAiEYuV4tAGX2VjEAiHe9v4oEG+HbNMX/bZeNQDpUIj4J1g5PfbS0d3EK+40Y0c4cEKJ9Sd3iNqo6bG/LN/cLKDa+aPhU+iJa7bxCdw/0oIex9MDE94S1RHK9hZi1kRmPxyHBoNFWNRLfWBnbgBwgL8j7pnwJjYsrvvbwmJF1gEZgzsXgCV9+SpVl04Y6ooQQgYiAov/CXt7MPd28UXlePHZSdHAAY5rQQirEAME+U5weMx0EQ35daDuL9yBFX3Y6WkFZw7L3k5hxk=
@@ -191,3 +204,17 @@ jobs:
           on:
             repo: Hub-of-all-Things/Rumpel
             branch: accept
+
+        - provider: s3
+          access_key_id: AKIAJ4VKFGF4ZU23H4QA
+          secret_access_key:
+            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
+          bucket: rumpel-build-artifacts
+          local-dir: dist
+          upload-dir: tamo
+          acl: private
+          skip_cleanup: true
+          region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: tamo
