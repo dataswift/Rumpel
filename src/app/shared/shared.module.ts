@@ -9,6 +9,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { SwitchComponent, TreeViewComponent, TimelineComponent, DateInputComponent } from './components';
 import { OutsideClickDirective, StickDirective } from './directives';
@@ -22,7 +23,7 @@ import { LocationNotableComponent } from './components/location-notable/location
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
-  imports: [ CommonModule ],
+  imports: [ CommonModule, FormsModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
                   ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,

@@ -6,16 +6,17 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 7, 2017
  */
 
-import { Injectable } from '@angular/core';
-import { Headers, Response, URLSearchParams } from '@angular/http';
+import { Injectable, Inject } from '@angular/core';
+import { Http, Headers, Response, URLSearchParams } from '@angular/http';
 import { AuthHttp } from './auth-http.service';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { Observable } from 'rxjs/Observable';
+import { APP_CONFIG, IAppConfig } from '../app.config';
 
 @Injectable()
 export class HatApiV2Service {
 
-  constructor(private authHttp: AuthHttp) { }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private authHttp: AuthHttp, private http: Http) { }
 
   getRecords(source: string, namespace: string, limit?: number): Observable<HatRecord[]> {
     const url = `/api/v2/data/${source}/${namespace}`;
@@ -32,6 +33,47 @@ export class HatApiV2Service {
       .map((res: Response) => {
         return <HatRecord[]>res.json();
       });
+  }
+
+
+
+  // File upload
+
+  postFileUploadMetaData (file) {
+    const url = `/api/v2/files/upload`;
+    const body = `{
+            "name": "` + file.name + `",
+            "source": "userUpload"
+    }`;
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    });
+
+    this.authHttp.post(url, body, { headers: headers }).subscribe( res => {
+      this.uploadFileDirectly(res.json(), file);
+    });
+  }
+
+  uploadFileDirectly (metaDataResponse, file) {
+    console.log(file);
+    const url = metaDataResponse.contentUrl;
+    const body = file;
+    const headers = new Headers({
+      "x-amz-server-side-encryption": "AES256"
+    });
+
+    this.authHttp.put(url, body, { headers: headers }).subscribe( res => {
+      console.log( res.json() );
+      this.markFileUploadComplete(metaDataResponse.fileId);
+    });
+  }
+
+  markFileUploadComplete (fileId) {
+    const url = `/api/v2/files/file/:` + fileId + `/complete`;
+    this.authHttp.put(url, null).subscribe( res => {
+      console.log('File upload complete', res.json());
+    });
   }
 
 }

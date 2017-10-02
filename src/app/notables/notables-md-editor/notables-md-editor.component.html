@@ -8,7 +8,7 @@
 
 <a (click)="fileUpload()">Upload image</a>
 <div *ngFor="let file of uploadedFiles">
-  <img [src]="file">
+  <img [src]="[file]">
 </div>
 
 <div class="editor-header">
