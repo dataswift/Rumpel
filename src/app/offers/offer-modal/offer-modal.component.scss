@@ -336,6 +336,10 @@
 
     i{
       color: $app-contrast-color;
+
+      &.not{
+        color: #9b9b9b;
+      }
     }
   }
 

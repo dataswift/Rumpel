@@ -10,43 +10,20 @@
   <div class="col-xs-10 col-xs-offset-1">
     <div class="offer">
       <div class="offer-title">
-        <div class="text-center">
-          <h2>{{offer.title}}</h2>
-          <span class="creator-info">from {{offer.owner.firstName}} {{offer.owner.lastName}}</span>
-        </div>
+
+        <h2>{{offer.title}}</h2>
+        <h4>{{ offer.status }}</h4>
         <p class="text-center offer-description">{{offer.description}}</p>
+        <p>Available<span>{{offer.starts | moment:'ddd DD MMM YYYY, h:mm a'}} - {{offer.expires | moment:'ddd DD MMM YYYY, h:mm a'}}</span></p>
+        <p>You signed up<span>{{offer.created | moment:'ddd DD MMM YYYY, h:mm a'}}</span></p>
 
-        <div class="offer-reward text-center" [ngSwitch]="offer.reward.rewardType">
-          <h3>Reward</h3>
-          <div *ngSwitchCase="'Cash'">
-            Cash: {{offer.reward.value / 100}} {{offer.reward.currency}}
-          </div>
+        <!-- needs testing
+        <a *ngIf="dataDebit" (click)="toggleEnabled(!dataDebit.enabled)" class="enableBtn">
+          <span *ngIf="!dataDebit.enabled">Enable</span>
+          <span *ngIf="dataDebit.enabled">Enable</span>
+        </a>
+        -->
 
-          <div *ngSwitchCase="'Voucher'">
-            <a [href]="offer.reward.vendorUrl" target="_blank">{{offer.reward.vendor}}</a>
-            voucher: {{offer.reward.value}}
-          </div>
-
-          <div *ngSwitchCase="'Service'">
-            Service of <a [href]="offer.reward.vendorUrl"  target="_blank">{{offer.reward.vendor}}</a>
-          </div>
-        </div>
-
-        <div class="offer-description text-center">
-          <p>Start date: {{offer.starts | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
-          <p>End date: {{offer.expires | moment:'DD/MM/YYYY, dddd, hh:mm a'}}</p>
-        </div>
-
-        <div class="progress-wrapper">
-          <progress max="{{offer.dataRequest.minUsers}}" value="{{offer.offer.users}}">
-            <div class="progress-bar" role="presentation">
-              <span class="progress-value" [style.width]="offer.offer.users"></span>
-            </div>
-          </progress>
-          <span class="claims">{{offer.users}}
-            out of {{offer.dataRequest.minUsers}} reached
-          </span>
-        </div>
 
         <div class="share-buttons text-center">
           <h3 class="share-text">Share</h3>
@@ -60,11 +37,13 @@
             Tweet
           </a>
         </div>
+
       </div>
     </div>
   </div>
 </div>
 
+<!--
 <div class="row offer-dialog">
   <div class="text-center" [ngSwitch]="status">
     <div class="message" *ngIf="confirmMessage" style="margin-bottom: 1.5em;">
@@ -80,7 +59,7 @@
                 (click)="acceptDataDebit()">Accept Offer</button>
         <button class="btn btn-rump"
                 (click)="rejectDataDebit()">Cancel</button>
-      </div>  
+      </div>
     </div>
     <div class="message" *ngSwitchCase="'accepted'">
       <span class="icon-alert accepted ss-info ss-glyphish-filled"></span>
@@ -89,10 +68,14 @@
     <div *ngSwitchCase="'satisfied'">
       <!--<button class="btn btn-rump"-->
               <!--(click)="navigateToRewardClaim()">Collect your reward</button>-->
+
+<!--
       <div class="message">
         <span class="icon-alert accepted ss-currency ss-glyphish-filled"></span>
         Enough people have claimed the offer to collect the reward!
       </div>
+    </div>
+    <div *ngSwitchCase="'paid'">
     </div>
     <div *ngSwitchDefault>
       <div class="message">Loading... Please wait.</div>
@@ -115,6 +98,9 @@
     </div>
   </div>
 </div>
+
+-->
+
  <!--  <div class="col-md-6 offer-terms">
     <div class="panel panel-rump">
       <div class="panel-heading">Terms of Offer</div>
