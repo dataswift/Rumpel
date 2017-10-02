@@ -19,6 +19,7 @@ import { CapitalizeFirstPipe } from './pipes/capitalize-first.pipe';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NotableComponent } from './components/notable/notable.component';
 import { LocationNotableComponent } from './components/location-notable/location-notable.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
 
 @NgModule({
   imports: [ CommonModule ],
@@ -28,13 +29,13 @@ import { LocationNotableComponent } from './components/location-notable/location
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClickDirective, StickDirective,
                   SwitchComponent, TreeViewComponent, TimelineComponent, SpinnerComponent,
-                  DateInputComponent, NotableComponent, LocationNotableComponent, CapitalizeFirstPipe],
+                  DateInputComponent, NotableComponent, LocationNotableComponent, CapitalizeFirstPipe, FileUploadComponent],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              TimeFilterPipe, TimeFilterTwoPipe, CapitalizeFirstPipe, SafeHtmlPipe,
              SwitchComponent, TreeViewComponent, TimelineComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, DateInputComponent,
-             CommonModule, RouterModule, NotableComponent, LocationNotableComponent ]
+             CommonModule, RouterModule, NotableComponent, LocationNotableComponent, FileUploadComponent ]
 })
 export class SharedModule {}

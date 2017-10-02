@@ -13,6 +13,7 @@ import { Notable, Location } from '../../shared/interfaces';
 import {DialogService} from '../../layout/dialog.service';
 import {ConfirmBoxComponent} from '../../layout/confirm-box/confirm-box.component';
 import {CurrentNotableMeta} from '../../shared/interfaces/current-notable-meta.interface';
+import {FileUploadComponent} from '../../shared/components/file-upload/file-upload.component';
 
 declare var SimpleMDE: any;
 
@@ -29,6 +30,7 @@ export class NotablesMdEditorComponent implements OnInit {
   public editMode = false;
   public currentNotable: Notable;
   public cannotPostMessage: string;
+  public uploadedFiles = [];
 
   constructor(private locationSvc: LocationsService,
               public notablesSvc: NotablesService,
@@ -115,6 +117,20 @@ export class NotablesMdEditorComponent implements OnInit {
     this.currentNotableMeta.expires = 0;
     this.resetForm();
   }
+
+  fileUpload(){
+    this.dialogSvc.createDialog(FileUploadComponent, {
+      accept: (files) => {
+        this.showUploadedFiles(files);
+      }
+    });
+  }
+
+  showUploadedFiles(files){
+    console.log(files);
+    this.uploadedFiles = files;
+  }
+
 
   submit() {
     if (this.currentNotable.isShared === true && this.currentNotable.shared_on.length === 0) {
