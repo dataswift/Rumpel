@@ -16,6 +16,8 @@ import { DataPlugService } from '../../data-management/data-plug.service';
 import { LocationsService } from '../../locations/locations.service';
 import { Post, Tweet, Event, Photo, Location } from '../../shared/interfaces/index';
 import { ExpandedTime } from '../../shared/interfaces/index';
+import { Fitbit } from '../../fitbit/fitbit.interface';
+import { Monzo } from '../../monzo/monzo.interface';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import * as _ from 'lodash';
@@ -24,6 +26,8 @@ import { Notable } from '../../shared/interfaces/notable.class';
 import {Subscription, Observable} from 'rxjs/Rx';
 import {FacebookEventsService} from '../../dimensions/facebook-events.service';
 import {GoogleEventsService} from '../../dimensions/google-events.service';
+import { FitbitService } from '../../fitbit/fitbit.service';
+import { MonzoService } from '../../monzo/monzo.service';
 import {MapComponent} from '../../locations/map/map.component';
 
 declare var $: any;
@@ -46,6 +50,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
   private photoSub: Subscription;
   private socialSub: Subscription;
   private notableSub: Subscription;
+  private fitbitSub: Subscription;
+  private monzoSub: Subscription;
 
   private imgSub;
   public posts: Array<Post> = [];
@@ -54,6 +60,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
   public photos: Array<Photo> = [];
   public tweets: Array<Tweet> = [];
   public notables: Array<Notable> = [];
+  public fitbits: Array<Fitbit> = [];
+  public monzos: Array<Monzo> = [];
 
   public shownComponents: { map: boolean; events: boolean; photos: boolean; timeline: boolean;   };
   public safeSize;
@@ -79,6 +87,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
               private socialSvc: SocialService,
               private twitterSvc: TwitterService,
               private notablesSvc: NotablesService,
+              private fitbitSvc: FitbitService,
+              private monzoSvc: MonzoService,
               private dataplugsSvc: DataPlugService,
               private sanitizer: DomSanitizer) {
   }
@@ -128,6 +138,18 @@ export class MyDayComponent implements OnInit, OnDestroy {
       this.addDatesToTimeline(tweets, 'createdTime');
       this.addDataToEventsList('twitter');
       this.tweets = tweets;
+    });
+
+    this.fitbitSub = this.fitbitSvc.data$.subscribe((fitbits: Array<Fitbit>) => {
+      this.addDatesToTimeline(fitbits, 'dateTime');
+      this.addDataToEventsList('fitbit');
+      this.fitbits = fitbits;
+    });
+
+    this.monzoSub = this.monzoSvc.data$.subscribe((monzos: Array<Monzo>) => {
+      this.addDatesToTimeline(monzos, 'dateTime');
+      this.addDataToEventsList('monzo');
+      this.monzos = monzos;
     });
 
     this.locationSub = this.locationsSvc.data$.subscribe(locations => {
@@ -217,14 +239,14 @@ export class MyDayComponent implements OnInit, OnDestroy {
   addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
     // console.log(dataPoints);
     const timestamps: Array<ExpandedTime> = _.sortedUniqBy(
-      dataPoints.map(dp => new ExpandedTime(dp[timeField])).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
+      dataPoints.map(dp => new ExpandedTime(moment(dp[timeField]))).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
       'unixDayStart');
 
     this.timeline = _.unionBy(this.timeline, timestamps, 'unixDayStart')
       .sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1)
       .filter((a: ExpandedTime) => a.timestamp.isSameOrBefore(this.moment, 'day'))
       .filter((a: ExpandedTime) => a.timestamp.isValid());
-
+      // console.log('timeline', this.timeline);
   }
 
   addDataToEventsList(type: string) {
@@ -310,7 +332,18 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
+      for ( let j = 0; j < this.fitbits.length; j++) {
+        if ( moment(this.fitbits[j].dateTime, 'YYYY-MM-DD').isSame(this.timeline[i].timestamp, 'day') ) {
+          this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.fitbits[j], type: 'fitbit' } );
+        }
+      }
 
+
+      for ( let j = 0; j < this.monzos.length; j++) {
+        if ( moment(this.monzos[j].dateTime).isSame(this.timeline[i].timestamp, 'day') ) {
+          this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.monzos[j], type: 'monzo' } );
+        }
+      }
 
 
       this.locationList = this.locationList.filter(function(elem, index, self) {
@@ -345,6 +378,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     // this.timeline = _.sortedUniqBy(newTimeline.sort((a, b) => a.isAfter(b) ? -1 : 1), date => date.startOf('day').format());
     // console.log(this.timeline);
+    // console.log(this.eventList);
   }
 
 

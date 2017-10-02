@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 
 import { SwitchComponent, TreeViewComponent, TimelineComponent, DateInputComponent } from './components';
 import { OutsideClickDirective, StickDirective } from './directives';
-import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, RelativeTimePipe,
+import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, RemoveCharsPipe, RelativeTimePipe,
          MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
 import { TimeFilterTwoPipe } from './pipes/time-filter-two.pipe';
 import { CapitalizeFirstPipe } from './pipes/capitalize-first.pipe';
@@ -24,14 +24,14 @@ import { LocationNotableComponent } from './components/location-notable/location
   imports: [ CommonModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
-                  ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
+                  ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClickDirective, StickDirective,
                   SwitchComponent, TreeViewComponent, TimelineComponent, SpinnerComponent,
                   DateInputComponent, NotableComponent, LocationNotableComponent, CapitalizeFirstPipe],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
-             ReplaceCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
+             ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              TimeFilterPipe, TimeFilterTwoPipe, CapitalizeFirstPipe, SafeHtmlPipe,
              SwitchComponent, TreeViewComponent, TimelineComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, DateInputComponent,

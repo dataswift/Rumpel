@@ -22,6 +22,8 @@ import { SharedModule } from './shared/shared.module';
 import { LocationsModule } from './locations/locations.module';
 import { PhotosModule } from './photos/photos.module';
 import { SocialModule } from './social/social.module';
+import { FitbitModule } from './fitbit/fitbit.module';
+import { MonzoModule } from './monzo/monzo.module';
 import { MarketSquareModule } from './market-square/market-square.module';
 import { DataDebitsModule } from './data-debits/data-debits.module';
 import { WeatherModule } from './weather/weather.module';
@@ -86,6 +88,8 @@ export function cookieServiceFactory() {
     LayoutModule,
     UserModule,
     SocialModule,
+    FitbitModule,
+    MonzoModule,
     MarketSquareModule,
     DataManagementModule,
     DataDebitsModule,

@@ -235,12 +235,28 @@ background-size: cover;
 box-shadow: inset 0 0 0 1000px rgba(80, 82, 117, 0.7);
 
 
-.photo-description{
-  min-height: 100px;
-  h4, p{
-    color: white;
+  .photo-description{
+    min-height: 100px;
+    h4, p{
+      color: white;
+    }
   }
 }
+
+.fitbit-box{
+  background-image: url('/assets/images/fitbit-image.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.monzo-box{
+  background-color: #14223d;
+
+  &> img{
+    left: -32px;
+    position: relative;
+  }
 }
 
 

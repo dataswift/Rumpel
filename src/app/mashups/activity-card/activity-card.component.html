@@ -43,7 +43,15 @@
                                 <img src="assets/icons/facebook-f-icon.svg">
                           </div>
 
+                          <div *ngIf="activity.type === 'fitbit'" class="activity-item post fitbit-box">
+                                <rump-fitbit-my-day [fitbitData]="activity.event"></rump-fitbit-my-day>
+                                <img src="assets/icons/fitbit-icon.svg">
+                          </div>
 
+                          <div *ngIf="activity.type === 'monzo'" class="activity-item post monzo-box">
+                                <rump-monzo-my-day [monzoData]="activity.event"></rump-monzo-my-day>
+                                <img src="assets/icons/monzo-icon.svg">
+                          </div>
 
                           <div *ngIf="activity.type === 'twitter'" class="activity-item post">
                                 <rump-location-tweet [tweet]="activity.event"></rump-location-tweet>
@@ -57,6 +65,8 @@
                                 </div>
                                 <img src="assets/icons/location-icon.svg">
                           </div>
+
+
 
                         </div>
                   </div>

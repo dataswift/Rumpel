@@ -1,0 +1,46 @@
+.fitbitTile{
+    background-image: url('/assets/images/fitbit-image2.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    width: 300px;
+    height: 350px;
+    border-radius: 10px;
+
+    .icon{
+      width: 88px;
+      margin: 25px
+    }
+
+    .stat{
+      display: flex;
+      align-items: center;
+      align-content: center;
+      margin-bottom: 20px;
+      width: 166px;
+
+      img{
+        width: 32px;
+        margin-right: 18px;
+      }
+
+      h6{
+        color: #878787;
+        font-size: 18px;
+        font-weight: 300;
+        font-style: italic;
+
+        span{
+          display: block;
+          font-style: normal;
+          font-size: 12px;
+          margin-top: 3px;
+        }
+      }
+    }
+}

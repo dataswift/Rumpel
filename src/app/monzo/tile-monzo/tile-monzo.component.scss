@@ -1,0 +1,63 @@
+.monzoTile{
+    background-color: #14223d;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 300px;
+    height: 350px;
+    border-radius: 10px;
+
+    .icon{
+      width: 88px;
+      margin: 25px
+    }
+
+    .stat{
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      width: 166px;
+
+      img{
+        width: 32px;
+        margin-right: 18px;
+      }
+
+      h6{
+        color: white;
+        font-size: 20px;
+        font-weight: 300;
+        font-style: normal;
+        margin: 0 30px 30px;
+
+        span{
+          display: block;
+          font-style: italic;
+          font-size: 10px;
+          margin-top: 3px;
+          color: #878787;
+          letter-spacing: 0.6px;
+          white-space: nowrap;
+        }
+      }
+
+      &.balance{
+
+        h6{
+          margin-bottom: 50px;
+          text-align: center;
+          font-size: 36px;
+
+          span{
+            text-align: center;
+            font-size: 14px;
+            margin-top: 8px;
+          }
+        }
+
+      }
+    }
+}

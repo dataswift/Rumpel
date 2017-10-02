@@ -13,6 +13,7 @@ export { TimeFilterTwoPipe } from './time-filter-two.pipe';
 export { WithObjectPipe } from './with-object.pipe';
 export { LimitContentPipe } from './limit-content.pipe';
 export { ReplaceCharsPipe } from './replace-chars.pipe';
+export { RemoveCharsPipe } from './removeChars.pipe';
 export { RelativeTimePipe } from './relative-time.pipe';
 export { LimitMembersPipe } from './limit-members.pipe';
 export { MarkdownToHtmlPipe } from './markdown-to-html.pipe';

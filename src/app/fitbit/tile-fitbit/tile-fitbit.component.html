@@ -1,0 +1,21 @@
+<ng-content></ng-content>
+
+<div class="fitbitTile">
+  <img class="icon" src="assets/icons/fitbit-icon.svg">
+
+  <div class="stat">
+    <img src="assets/icons/fitbit-steps.svg">
+    <h6>{{ todaySteps | currency:'GBP':false:'1.0-0' | removeChars:"GBP" }}<span>Today's steps</span></h6>
+  </div>
+
+  <div class="stat">
+    <img src="assets/icons/fitbit-heart.svg">
+    <h6>{{ todayHeart }} bpm<span>Resting heart rate</span></h6>
+  </div>
+
+  <div class="stat">
+    <img src="assets/icons/fitbit-sleep.svg">
+    <h6>{{ todaySleep }}<span>Restful sleep</span></h6>
+  </div>
+
+</div>

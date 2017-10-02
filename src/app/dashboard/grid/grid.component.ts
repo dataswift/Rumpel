@@ -22,6 +22,8 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   public showLocationsTile = false;
   public showEventsTile = false;
   public showPostsTile = false;
+  public showFitbitTile = false;
+  public showMonzoTile = false;
   private sub: Subscription;
 
   constructor(private uiState: UiStateService) { }
@@ -32,6 +34,8 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showLocationsTile = tables.findIndex(this.searchHandler('locations')) > -1;
       this.showPostsTile = tables.findIndex(this.searchHandler('posts tweets music_listens')) > -1;
       this.showEventsTile = tables.findIndex(this.searchHandler('events')) > -1;
+      this.showFitbitTile = tables.findIndex(this.searchHandler('fitbit')) > -1;
+      this.showMonzoTile = tables.findIndex(this.searchHandler('monzo')) > -1;
     });
   }
 
