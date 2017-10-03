@@ -118,7 +118,7 @@ export class NotablesMdEditorComponent implements OnInit {
     this.resetForm();
   }
 
-  fileUpload(){
+  fileUpload() {
     this.dialogSvc.createDialog(FileUploadComponent, {
       accept: (files) => {
         this.showUploadedFiles(files);
@@ -126,7 +126,7 @@ export class NotablesMdEditorComponent implements OnInit {
     });
   }
 
-  showUploadedFiles(files){
+  showUploadedFiles(files) {
     console.log(files);
     this.uploadedFiles = files;
   }

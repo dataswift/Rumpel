@@ -46,8 +46,8 @@ export class HatApiV2Service {
             "source": "userUpload"
     }`;
     const headers = new Headers({
-      "Content-Type": "application/json",
-      "Accept": "application/json"
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
     });
 
     this.authHttp.post(url, body, { headers: headers }).subscribe( res => {
@@ -60,7 +60,7 @@ export class HatApiV2Service {
     const url = metaDataResponse.contentUrl;
     const body = file;
     const headers = new Headers({
-      "x-amz-server-side-encryption": "AES256"
+      'x-amz-server-side-encryption': 'AES256'
     });
 
     this.authHttp.put(url, body, { headers: headers }).subscribe( res => {

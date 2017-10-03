@@ -10,7 +10,8 @@ export class FileUploadComponent implements OnInit {
 
   private destroy: Function;
   private animateIn = false;
-  public uploadedFiles = ['https://static.comicvine.com/uploads/original/11111/111112793/3031477-nealadamsbatman.jpg', 'https://lc-www-live-s.legocdn.com/r/www/r/catalogs/-/media/catalogs/characters/lbm%20characters/detail/70900_batman_detail_1488.jpg?l.r2=1504802140'];
+  public uploadedFiles = ['https://static.comicvine.com/uploads/original/11111/111112793/3031477-nealadamsbatman.jpg',
+                          'https://static.comicvine.com/uploads/original/11111/111112793/3031477-nealadamsbatman.jpg'];
   @Input() accept: Function;
 
   constructor( private hatV2Svc: HatApiV2Service ) { }
@@ -19,7 +20,7 @@ export class FileUploadComponent implements OnInit {
     this.animateIn = true;
   }
 
-  startUpload(fileInput: any){
+  startUpload(fileInput: any) {
     if (fileInput.target.files && fileInput.target.files[0]) {
         const file = fileInput.target.files[0];
         this.hatV2Svc.postFileUploadMetaData(file);
@@ -27,13 +28,13 @@ export class FileUploadComponent implements OnInit {
   }
 
 
-  acceptUpload(){
-    if(this.accept){
+  acceptUpload() {
+    if (this.accept) {
       this.accept(this.uploadedFiles);
     }
   }
 
-  hideUI(){
+  hideUI() {
     this.animateIn = false;
 
     setTimeout(() => {
