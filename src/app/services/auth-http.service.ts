@@ -39,11 +39,20 @@ export class AuthHttp extends Http {
     }
   }
 
+  constructURL(path): string {
+    if (path.indexOf('http') !== 0) {
+      return this.hatBaseUrl + path;
+    } else {
+      return path;
+    }
+  }
+
   get(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
       // console.log('Starting request with URL', this.hatBaseUrl + path);
+      const url = this.constructURL(path);
 
-      return super.get(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
+      return super.get(url, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('GET error: ', err);
           return Observable.empty();
@@ -56,8 +65,9 @@ export class AuthHttp extends Http {
   post(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
       // console.log('Starting request with URL', this.hatBaseUrl + path);
+      const url = this.constructURL(path);
 
-      return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
+      return super.post(url, body, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('POST error: ', err);
           return Observable.empty();
@@ -70,8 +80,9 @@ export class AuthHttp extends Http {
   put(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
       // console.log('Starting request with URL', this.hatBaseUrl + path);
+      const url = this.constructURL(path);
 
-      return super.put(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
+      return super.put(url, body, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('PUT error: ', err);
           return Observable.empty();
@@ -84,8 +95,9 @@ export class AuthHttp extends Http {
   delete(path: string, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
       // console.log('Starting request with URL', this.hatBaseUrl + path);
+      const url = this.constructURL(path);
 
-      return super.delete(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
+      return super.delete(url, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('DELETE error: ', err);
           return Observable.empty();

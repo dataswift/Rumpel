@@ -56,17 +56,20 @@ export class HatApiV2Service {
   }
 
   uploadFileDirectly (metaDataResponse, file) {
-    console.log(file);
     const url = metaDataResponse.contentUrl;
-    const body = file;
     const headers = new Headers({
-      'x-amz-server-side-encryption': 'AES256'
+      'x-amz-server-side-encryption': 'AES256',
+      'Accept': 'application/json'
     });
 
-    this.authHttp.put(url, body, { headers: headers }).subscribe( res => {
-      console.log( res.json() );
-      this.markFileUploadComplete(metaDataResponse.fileId);
-    });
+    const fileReader: FileReader = new FileReader();
+    fileReader.onloadend = (e) => {
+      this.authHttp.put(url, fileReader.result, { headers: headers }).subscribe( res => {
+        console.log( res.json() );
+        this.markFileUploadComplete(metaDataResponse.fileId);
+      });
+    }
+    fileReader.readAsText(file);
   }
 
   markFileUploadComplete (fileId) {
