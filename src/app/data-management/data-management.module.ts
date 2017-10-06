@@ -6,6 +6,7 @@ import { DataPlugsComponent } from './data-plugs/data-plugs.component';
 import { TileDataPlugsComponent } from './tile-data-plugs/tile-data-plugs.component';
 
 import { DataPlugService } from './data-plug.service';
+import { DataPlugDataComponent } from './data-plug-data/data-plug-data.component';
 
 @NgModule({
   imports: [
@@ -14,9 +15,10 @@ import { DataPlugService } from './data-plug.service';
   ],
   declarations: [
     DataPlugsComponent,
-    TileDataPlugsComponent
+    TileDataPlugsComponent,
+    DataPlugDataComponent
   ],
   providers: [ DataPlugService ],
-  exports: [ TileDataPlugsComponent ]
+  exports: [ TileDataPlugsComponent, DataPlugDataComponent ]
 })
 export class DataManagementModule { }

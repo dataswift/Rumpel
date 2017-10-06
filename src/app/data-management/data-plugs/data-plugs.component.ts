@@ -28,7 +28,7 @@ export class DataPlugsComponent implements OnInit {
     this.dataplugs = this.dataplugsSvc.dataplugs$;
   }
 
-  openPlugPopup(plug: any) {
+  openPlugDataView(plug: any) {
 
     if (plug.activated === false) {
         const loginName = this.formatPlugName(plug.name);
@@ -46,6 +46,7 @@ export class DataPlugsComponent implements OnInit {
         );
     } else {
       this.router.navigate([plug.page]);
+      this.router.navigate(['/dataplugs/data/', plug.name]);
     }
   }
 

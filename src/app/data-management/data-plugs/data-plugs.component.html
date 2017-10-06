@@ -7,7 +7,7 @@
   -->
 
 <div class="view-body">
-  <div *ngFor="let plug of dataplugs | async" (click)="openPlugPopup(plug)" class="dataplug-tile-wrapper">
+  <div *ngFor="let plug of dataplugs | async" (click)="openPlugDataView(plug)" class="dataplug-tile-wrapper">
     <div class="dataplug-tile">
       <i class="material-icons" *ngIf="plug.activated">check</i>
       <i class="material-icons add" *ngIf="!plug.activated">add</i>
