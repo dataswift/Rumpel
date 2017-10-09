@@ -49,6 +49,7 @@ import { AuthHttp } from './services/auth-http.service';
 import { ConfirmBoxComponent } from './layout/confirm-box/confirm-box.component';
 import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
 import { InfoBoxComponent } from './layout/info-box/info-box.component';
+import { MapBoxComponent } from './layout/map-box/map-box.component';
 import { FileUploadComponent } from './shared/components/file-upload/file-upload.component';
 
 import { CookieService } from 'angular2-cookie/core';
@@ -103,7 +104,7 @@ export function cookieServiceFactory() {
     OffersModule
   ],
   bootstrap: [ AppRootComponent ],
-  entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, FileUploadComponent ],
+  entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: AppConfig },

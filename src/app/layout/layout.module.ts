@@ -9,6 +9,7 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
+import { LocationsModule } from '../locations/locations.module';
 
 import { HeaderComponent } from './header/header.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
@@ -21,14 +22,16 @@ import { DialogAnchorDirective } from './dialog-anchor.directive';
 import { DialogService } from './dialog.service';
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { InfoBoxComponent } from './info-box/info-box.component';
+import { MapBoxComponent } from './map-box/map-box.component';
 import {NotificationsService} from './notifications.service';
 import {BaseDataService} from '../services/base-data.service';
 import {MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
 
 import { DataOfferService } from './../offers/data-offer.service';
 
+
 @NgModule({
-  imports: [ SharedModule ],
+  imports: [ SharedModule, LocationsModule ],
   declarations: [ HeaderComponent,
                   SideMenuComponent,
                   FooterComponent,
@@ -37,7 +40,8 @@ import { DataOfferService } from './../offers/data-offer.service';
                   DialogBoxComponent,
                   ConfirmBoxComponent,
                   InfoBoxComponent,
-                  DialogAnchorDirective ],
+                  DialogAnchorDirective,
+                  MapBoxComponent ],
   exports: [ HeaderComponent,
             SideMenuComponent,
             FooterComponent,

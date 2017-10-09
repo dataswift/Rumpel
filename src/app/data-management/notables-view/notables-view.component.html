@@ -14,7 +14,7 @@
     <span *ngIf="item.updated_time" class="meta"><strong>Updated</strong><span class="date">{{ item.updated_time | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
     <span *ngIf="item.public_until" class="meta"><strong>Public until</strong><span class="date">{{ item.public_until | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
     <span *ngIf="item.kind" class="meta"><strong>Kind</strong> {{ item.kind }}</span>
-    <span *ngIf="item.locationv1" class="meta"><strong>Location</strong>{{ item.locationv1.longitude }}, {{ item.locationv1.latitude }}</span>
+    <span *ngIf="item.locationv1" class="meta"><strong>Location</strong><a (click)="showMapModal(item.locationv1)">{{ item.locationv1.longitude }}, {{ item.locationv1.latitude }}</a></span>
     <span class="meta"><strong>Shared</strong>{{ item.shared }}</span>
     <span *ngIf="item.shared_on && item.shared_on.length > 0" class="meta"><strong>Shared on</strong><span *ngFor="let share of item.shared_on">{{ share }}, </span></span>
 

@@ -9,6 +9,7 @@ import { DataPlugService } from './data-plug.service';
 import { DataPlugDataComponent } from './data-plug-data/data-plug-data.component';
 
 import { SharedModule } from '../shared/shared.module';
+import { LayoutModule } from '../layout/layout.module';
 import { LocationsModule } from '../locations/locations.module';
 import { FacebookViewComponent } from './facebook-view/facebook-view.component';
 import { TwitterViewComponent } from './twitter-view/twitter-view.component';
@@ -22,7 +23,8 @@ import { PhotosViewComponent } from './photos-view/photos-view.component';
     CommonModule,
     DataManagementRoutingModule,
     SharedModule,
-    LocationsModule
+    LocationsModule,
+    LayoutModule
   ],
   declarations: [
     DataPlugsComponent,

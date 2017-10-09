@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { Post, Tweet, Event, Photo, Location, Notable } from '../../shared/interfaces/index';
+import { DialogService } from '../../layout/dialog.service';
+import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 
 @Component({
   selector: 'rump-notables-view',
@@ -10,11 +12,17 @@ import { Post, Tweet, Event, Photo, Location, Notable } from '../../shared/inter
 })
 export class NotablesViewComponent implements OnInit {
 
-  @Input() item: Array<Notable>;
+  @Input() item: Notable;
 
-  constructor() { }
+  constructor(private dialogSvc: DialogService) { }
 
   ngOnInit() {
+  }
+
+  showMapModal(location) {
+    this.dialogSvc.createDialog<MapBoxComponent>(MapBoxComponent, {
+      datapoints: [location]
+    });
   }
 
 }

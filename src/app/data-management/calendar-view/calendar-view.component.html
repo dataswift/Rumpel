@@ -6,7 +6,7 @@
     <p *ngIf="item.start"><strong>Start: </strong>{{ item.start | moment:'ddd DD MMM YYYY, h:mm a' }}</p>
     <p *ngIf="item.end"><strong>End: </strong>{{ item.end | moment:'ddd DD MMM YYYY, h:mm a' }}</p>
     <p *ngIf="item.allDay"><strong>All day: </strong>{{ item.allDay }}</p>
-    <p *ngIf="item.location"><strong>Location: </strong>{{ item.location.longitude }}, {{ item.location.latitude }}</p>
+    <p *ngIf="item.location"><strong>Location: </strong><a (click)="showMapModal(item.location)">{{ item.location.longitude }}, {{ item.location.latitude }}</a></p>
     <p *ngIf="item.organiser"><strong>Organiser: </strong>{{ item.organiser }}</p>
     <p *ngIf="item.attendees"><strong>Attendees: </strong>{{ item.attendees }}</p>
 
