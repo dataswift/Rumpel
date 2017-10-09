@@ -1,25 +1,9 @@
 <div class="dataPlugData">
   <nav class="nav">
-    <a (click)="currentPage = 'static'" [class.current]="currentPage == 'static'">Static data</a>
     <a (click)="currentPage = 'feed'" [class.current]="currentPage == 'feed'">Feed</a>
+    <a (click)="currentPage = 'static'" [class.current]="currentPage == 'static'" *ngIf="staticData.length > 0">Static data</a>
   </nav>
 
-  <div class="static" *ngIf="currentPage == 'static'">
-    <div class="header">
-      <img *ngIf="plugMeta" [src]="'assets/icons/' + plugMeta.icon" />
-      <div>
-        <h3>{{ plugName }} static data</h3>
-        <p>All the personal data stored in this data plug</p>
-      </div>
-    </div>
-
-    <table>
-      <tr *ngFor="let static of staticData">
-        <td>{{ static.name }}</td>
-        <td>{{ static.value }}</td>
-      </tr>
-    </table>
-  </div>
 
   <div class="feed" *ngIf="currentPage == 'feed'">
     <div class="header">
@@ -80,11 +64,28 @@
       <div class="item" *ngFor="let event of events">
         <rump-calendar-view *ngIf="events.length > 0" [item]="event"></rump-calendar-view>
       </div>
-      <div class="feedloadMore">
+      <div class="loadMore">
         <p class="meta">Showing {{ events.length }} results</p>
         <a class="btn btn-default" (click)="loadMoreEventData()">Load more</a>
       </div>
     </div>
 
+  </div>
+
+  <div class="static" *ngIf="currentPage == 'static'">
+    <div class="header">
+      <img *ngIf="plugMeta" [src]="'assets/icons/' + plugMeta.icon" />
+      <div>
+        <h3>{{ plugName }} static data</h3>
+        <p>All the personal data stored in this data plug</p>
+      </div>
+    </div>
+
+    <table *ngIf="staticData.length > 0">
+      <tr *ngFor="let static of staticData">
+        <td>{{ static.name }}</td>
+        <td>{{ static.value }}</td>
+      </tr>
+    </table>
   </div>
 </div>

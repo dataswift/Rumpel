@@ -26,7 +26,7 @@ declare var $: any;
 })
 export class DataPlugDataComponent implements OnInit, OnDestroy {
 
-  private currentPage = 'static';
+  private currentPage = 'feed';
   private routerSub: any;
   private dataplugs: Observable<Array<any>>;
   private plugName = '';
@@ -36,20 +36,17 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   private feedEventSub: Subscription;
   private feedSource:any;
   private eventSource:any;
+  private feedTimeField = 'timestamp';
+  private eventsTimeField = 'start';
 
   public feed: Array<any> = [];
   public events: Array<any> = [];
   public locations: Array<Location> = [];
-
   public fromDate: Moment;
   public toDate: Moment = moment();
-
   public tabView = 'posts';
-
   public totalLocationDPs = 0;
-
   public staticData: Array<any> = [];
-  public loadBtnEnabled = true;
 
 
   constructor(private route: ActivatedRoute,
@@ -116,20 +113,35 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initFacebook() {
     this.feedPostSub = this.socialSvc.data$.subscribe((posts: Array<Post>) => {
       this.feed = posts;
-      this.sortFeed('createdTime');
+      this.feedTimeField = 'createdTime';
+      this.sortFeed();
     });
 
     this.feedEventSub = this.facebookEventsSvc.data$.subscribe((posts: Array<Event>) => {
       this.events = posts;
-      this.sortEvents('start');
+      this.eventsTimeField = 'start';
+      this.sortEvents();
     });
   }
 
 
   initTwitter() {
     this.feedPostSub = this.twitterSvc.data$.subscribe((posts: Array<Tweet>) => {
+      //set static data
+      if (posts.length > 0) {
+        this.staticData = [];
+        const keys = Object.keys( posts[0].user );
+        keys.forEach(key => {
+          this.staticData.push({name: key, value: posts[0].user[key]});
+        });
+      }
+
+      // set feed data
       this.feed = posts;
-      this.sortFeed('createdTime');
+
+      // sort feed by date
+      this.feedTimeField = 'createdTime';
+      this.sortFeed();
     });
   }
 
@@ -137,7 +149,8 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initDropbox() {
     this.feedPostSub = this.photoSvc.photos$.subscribe((posts: Array<Photo>) => {
       this.feed = posts;
-      this.sortFeed('timestamp');
+      this.feedTimeField = 'timestamp';
+      this.sortFeed();
     });
   }
 
@@ -146,7 +159,9 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       this.feed = posts;
       this.locations = posts;
       this.tabView = 'locations';
-      this.sortFeed('timestamp');
+      this.feedTimeField = 'timestamp';
+      this.sortFeed();
+      this.resizeWindow();
     });
   }
 
@@ -154,7 +169,8 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     this.feedEventSub = this.googleEventsSvc.data$.subscribe((posts: Array<Event>) => {
       this.events = posts;
       this.tabView = 'events';
-      this.sortEvents('start');
+      this.eventsTimeField = 'start';
+      this.sortEvents();
     });
   }
 
@@ -162,12 +178,14 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initRumpel() {
     this.feedPostSub = this.notablesSvc.data$.subscribe((posts: Array<Notable>) => {
       this.feed = posts;
-      this.sortFeed('timestamp');
+      this.feedTimeField = 'timestamp';
+      this.sortFeed();
     });
 
     this.feedEventSub = this.eventsSvc.data$.subscribe((posts: Array<Event>) => {
       this.events = posts;
-      this.sortEvents('start');
+      this.eventsTimeField = 'start';
+      this.sortEvents();
     });
   }
 
@@ -193,7 +211,6 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   loadMoreFeedData() {
     this.feedSource.getMoreData();
-    this.resizeWindow();
   }
 
   loadMoreEventData() {
@@ -214,34 +231,36 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       toDate = moment();
     }
 
+    const feedFormat = 'X';
     if (this.feedSource) {
       this.feedSource.clearData();
-      this.feedSource.getTimeIntervalData(fromDate.startOf('day').unix(), toDate.endOf('day').unix());
+      this.feedSource.getTimeIntervalData(fromDate.startOf('day').format(feedFormat), toDate.endOf('day').format(feedFormat));
     }
 
+    const eventFormat = 'YYYY-MM-DDTHH:mm:ssZ';
     if (this.eventSource) {
       this.eventSource.clearData();
-      this.eventSource.getTimeIntervalData(fromDate.startOf('day').unix(), toDate.endOf('day').unix());
+      this.eventSource.getTimeIntervalData(fromDate.startOf('day').format(eventFormat), toDate.endOf('day').format(eventFormat));
     }
 
     this.resizeWindow();
   }
 
 
-  sortFeed(sortBy: string) {
+  sortFeed() {
     // sort array by date - most recent first
     this.feed = this.feed.sort( (a, b) => {
-        const momentA = moment(a[sortBy]);
-        const momentB = moment(b[sortBy]);
+        const momentA = moment(a[this.feedTimeField]);
+        const momentB = moment(b[this.feedTimeField]);
         const result = momentA.isBefore(momentB) ? 1 : -1;
         return result;
     });
   }
 
-  sortEvents(sortBy: string) {
+  sortEvents() {
     this.events = this.events.sort( (a, b) => {
-        const momentA = moment(a[sortBy]);
-        const momentB = moment(b[sortBy]);
+        const momentA = moment(a[this.feedTimeField]);
+        const momentB = moment(b[this.feedTimeField]);
         const result = momentA.isBefore(momentB) ? 1 : -1;
         return result;
     });
