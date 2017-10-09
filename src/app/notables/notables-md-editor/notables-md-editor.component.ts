@@ -13,7 +13,7 @@ import { Notable, Location } from '../../shared/interfaces';
 import {DialogService} from '../../layout/dialog.service';
 import {ConfirmBoxComponent} from '../../layout/confirm-box/confirm-box.component';
 import {CurrentNotableMeta} from '../../shared/interfaces/current-notable-meta.interface';
-import {FileUploadComponent} from '../../shared/components/file-upload/file-upload.component';
+import {FileUploadComponent} from '../../layout/file-upload/file-upload.component';
 
 declare var SimpleMDE: any;
 declare var $: any;

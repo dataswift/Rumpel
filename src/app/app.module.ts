@@ -50,7 +50,7 @@ import { ConfirmBoxComponent } from './layout/confirm-box/confirm-box.component'
 import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
 import { InfoBoxComponent } from './layout/info-box/info-box.component';
 import { MapBoxComponent } from './layout/map-box/map-box.component';
-import { FileUploadComponent } from './shared/components/file-upload/file-upload.component';
+import { FileUploadComponent } from './layout/file-upload/file-upload.component';
 
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';

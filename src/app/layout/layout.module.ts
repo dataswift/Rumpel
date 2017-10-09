@@ -23,6 +23,7 @@ import { DialogService } from './dialog.service';
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { InfoBoxComponent } from './info-box/info-box.component';
 import { MapBoxComponent } from './map-box/map-box.component';
+import {FileUploadComponent } from './file-upload/file-upload.component';
 import {NotificationsService} from './notifications.service';
 import {BaseDataService} from '../services/base-data.service';
 import {MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
@@ -40,6 +41,7 @@ import { DataOfferService } from './../offers/data-offer.service';
                   DialogBoxComponent,
                   ConfirmBoxComponent,
                   InfoBoxComponent,
+                  FileUploadComponent,
                   DialogAnchorDirective,
                   MapBoxComponent ],
   exports: [ HeaderComponent,

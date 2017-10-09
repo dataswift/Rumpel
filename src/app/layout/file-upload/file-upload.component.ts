@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FileUploadService } from '../../../services/file-upload.service';
+import { FileUploadService } from '../../services/file-upload.service';
 
 @Component({
   selector: 'rump-file-upload',
