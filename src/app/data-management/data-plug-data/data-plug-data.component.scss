@@ -10,6 +10,27 @@
   width: calc(100% + 10px);
   min-height: 660px;
 
+  .loadMore{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 60px;
+
+    p{
+      margin: 0;
+      margin-right: 20px;
+      font-weight: 600;
+    }
+
+    a{
+      background: $app-dark-tone;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 14px;
+    }
+  }
+
 
   .nav{
       width: calc(100% + 60px);
@@ -117,6 +138,27 @@
 
       p{
         opacity: 0.6;
+      }
+    }
+
+    table{
+      margin: 40px 0;
+      background: $app-light-background-color;
+      width: 100%;
+      border-radius: 8px;
+
+      tr{
+
+        td{
+          padding: 20px;
+          border: 1px solid $app-light-tone;
+
+          &:first-child{
+            font-weight: 600;
+            width: 30%;
+          }
+        }
+
       }
     }
 

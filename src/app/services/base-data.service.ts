@@ -143,6 +143,11 @@ export abstract class BaseDataService<T> {
     this.pushToStream();
   }
 
+  clearData(): void {
+    this.store.data = [];
+    this.pushToStream();
+  }
+
   pushToStream(): void {
     this._loading$.next(false);
     this._data$.next(this.store.data);

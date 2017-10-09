@@ -34,9 +34,10 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   private feedPostSub: Subscription;
   private feedEventSub: Subscription;
+  private feedSource:any;
+  private eventSource:any;
 
   public feed: Array<any> = [];
-  public filteredFeed: Array<any> = [];
   public events: Array<any> = [];
   public locations: Array<Location> = [];
 
@@ -46,6 +47,9 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   public tabView = 'posts';
 
   public totalLocationDPs = 0;
+
+  public staticData: Array<any> = [];
+  public loadBtnEnabled = true;
 
 
   constructor(private route: ActivatedRoute,
@@ -74,22 +78,30 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
              switch ( plug.name.toLowerCase() ) {
                case 'facebook':
+                  this.feedSource = this.socialSvc;
+                  this.eventSource = this.facebookEventsSvc;
                   this.initFacebook();
                   break;
                case 'twitter':
+                  this.feedSource = this.twitterSvc;
                   this.initTwitter();
                   break;
                case 'dropbox photos':
+                  this.feedSource = this.photoSvc;
                   this.initDropbox();
                   break;
                case 'calendar':
+                  this.eventSource = this.googleEventsSvc;
                   this.initCalendar();
                   break;
                case 'rumpel':
+                  this.feedSource = this.notablesSvc;
+                  this.eventSource = this.eventsSvc;
                   this.initRumpel();
                   break;
                case 'location':
                   this.tabView = 'locations';
+                  this.feedSource = this.locationsSvc;
                   this.initLocations();
                   break;
              }
@@ -166,7 +178,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     } else {
       this.fromDate = moment(event.target.value);
     }
-    // this.filterAndSortFeed();
+    this.filterByDate()
   }
 
   setToDate(event: any) {
@@ -175,15 +187,22 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     } else {
       this.toDate = moment(event.target.value);
     }
-    // this.filterAndSortFeed();
+    this.filterByDate();
   }
 
 
-  sortFeed(sortBy: string) {
+  loadMoreFeedData() {
+    this.feedSource.getMoreData();
+    this.resizeWindow();
+  }
 
-    /*
+  loadMoreEventData() {
+    this.eventSource.getMoreData();
+  }
 
-    // filter by selected dates
+
+
+  filterByDate() {
     let fromDate = this.fromDate;
     let toDate = this.toDate;
 
@@ -195,18 +214,23 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       toDate = moment();
     }
 
-    */
+    if (this.feedSource) {
+      this.feedSource.clearData();
+      this.feedSource.getTimeIntervalData(fromDate.startOf('day').unix(), toDate.endOf('day').unix());
+    }
 
-    /*
+    if (this.eventSource) {
+      this.eventSource.clearData();
+      this.eventSource.getTimeIntervalData(fromDate.startOf('day').unix(), toDate.endOf('day').unix());
+    }
 
-    this.filteredFeed = this.feed.filter( item => {
-        return ( item.createdDate.isBefore(toDate) && item.createdDate.isAfter(fromDate)  );
-    });
+    this.resizeWindow();
+  }
 
-    */
 
+  sortFeed(sortBy: string) {
     // sort array by date - most recent first
-    this.filteredFeed = this.feed.sort( (a, b) => {
+    this.feed = this.feed.sort( (a, b) => {
         const momentA = moment(a[sortBy]);
         const momentB = moment(b[sortBy]);
         const result = momentA.isBefore(momentB) ? 1 : -1;
