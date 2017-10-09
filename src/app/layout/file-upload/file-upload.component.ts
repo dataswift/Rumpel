@@ -10,7 +10,11 @@ export class FileUploadComponent implements OnInit {
 
   private destroy: Function;
   private animateIn = false;
+
+  public filesToUpload: any;
   public uploadedFiles: Array<string> = [];
+
+  public fileSelected = false;
   @Input() accept: Function;
 
   constructor( private fileUploadSvc: FileUploadService ) { }
@@ -19,9 +23,14 @@ export class FileUploadComponent implements OnInit {
     this.animateIn = true;
   }
 
-  startUpload(fileInput: any) {
-    if (fileInput.target.files && fileInput.target.files[0]) {
-        const file = fileInput.target.files[0];
+  selectFile(fileInput: any) {
+    this.fileSelected = true;
+    this.filesToUpload = fileInput.target.files;
+  }
+
+  startUpload() {
+    if (this.filesToUpload && this.filesToUpload[0]) {
+        const file = this.filesToUpload[0];
         this.fileUploadSvc.postFileUploadMetaData(file);
     }
   }

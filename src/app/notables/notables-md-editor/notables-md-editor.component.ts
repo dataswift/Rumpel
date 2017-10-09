@@ -43,7 +43,11 @@ export class NotablesMdEditorComponent implements OnInit {
       status: false
     });
 
-    this.mde.toolbar[9].action = () => {this.fileUpload()};
+    this.mde.toolbar.forEach(tool => {
+      if (tool.name === 'image') {
+        tool.action = () => {this.fileUpload()};
+      }
+    });
 
     this.currentNotableMeta = {
       phata: this.notablesSvc.hatDomain,

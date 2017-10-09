@@ -4,11 +4,11 @@
     <div class="rump-modal-body white-modal-body">
       <div class="close-modal" (click)="hideUI()"><i class="material-icons">close</i></div>
       <img src="assets/icons/upload-icon.svg"><h3>Upload files</h3>
-      <input class="filePickerBtn" type="file" (change)="startUpload($event)">
+      <input class="filePickerBtn" type="file" (change)="selectFile($event)">
 
       <div class="actions">
         <button type="button" class="btn" (click)="hideUI()">Cancel</button>
-        <button type="button" class="btn accept" (click)="acceptUpload()" [disabled]="uploadedFiles.length == 0">Upload</button>
+        <button type="button" class="btn accept" (click)="startUpload()" [disabled]="!fileSelected">Upload</button>
       </div>
     </div>
 
