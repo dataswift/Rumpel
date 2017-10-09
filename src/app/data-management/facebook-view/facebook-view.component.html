@@ -1,0 +1,21 @@
+<div class="flex-basis">
+  <img *ngIf="item.content && item.content.fullPicture" [src]="item.content.fullPicture" onerror="this.style.display='none'">
+  <div>
+    <span class="meta heading" *ngIf="item.content && item.story">{{ item.story }}</span>
+    <a *ngIf="item.content && item.content.link" [href]="item.content.link" target="_blank">{{ item.content.name }}</a>
+    <p *ngIf="item.content && item.content.message">{{ item.content.message }}</p>
+    <p *ngIf="item.content && item.content.description">{{ item.content.description }}</p>
+    <p *ngIf="item.content && item.content.caption">{{ item.content.caption }}</p>
+  </div>
+</div>
+
+<div class="flex-basis start">
+    <span *ngIf="item.createdTime" class="meta"><strong>Created</strong><span class="date">{{ item.createdTime | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span *ngIf="item.updatedTime" class="meta"><strong>Updated</strong><span class="date">{{ item.updatedTime | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span *ngIf="item.statusType" class="meta"><strong>Status type</strong> {{ item.statusType }}</span>
+    <span *ngIf="item.type" class="meta"><strong>Type</strong> {{ item.type }}</span>
+    <span *ngIf="item.from" class="meta"><strong>From</strong> {{ item.from }}</span>
+    <span *ngIf="item.application" class="meta"><strong>Application</strong> {{ item.application }}</span>
+    <span *ngIf="item.privacy" class="meta"><strong>Privacy</strong> {{ item.privacy.description }}, {{ item.privacy.value }}</span>
+    <span *ngIf="item.id" class="meta"><strong>ID</strong> {{ item.id }}</span>
+</div>

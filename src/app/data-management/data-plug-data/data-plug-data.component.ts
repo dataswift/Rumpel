@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs/Rx';
-
 import { DataPlugService } from '../data-plug.service';
 import { EventsService } from '../../dimensions/events.service';
 import { LocationsService } from '../../locations/locations.service';
@@ -12,13 +11,13 @@ import { NotablesService } from '../../notables/notables.service';
 import { FacebookEventsService } from '../../dimensions/facebook-events.service';
 import { GoogleEventsService } from '../../dimensions/google-events.service';
 import { FitbitService } from '../../fitbit/fitbit.service';
-
 import { Post, Tweet, Event, Photo, Location } from '../../shared/interfaces/index';
 import { Fitbit } from '../../fitbit/fitbit.interface';
 import { Notable } from '../../shared/interfaces/notable.class';
-
 import * as moment from 'moment';
 import { Moment } from 'moment';
+
+declare var $: any;
 
 @Component({
   selector: 'rump-data-plug-data',
@@ -46,10 +45,14 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   public tabView = 'posts';
 
+  public totalLocationDPs = 0;
+
 
   constructor(private route: ActivatedRoute,
               private dataplugsSvc: DataPlugService,
               private eventsSvc: EventsService,
+              private googleEventsSvc: GoogleEventsService,
+              private facebookEventsSvc: FacebookEventsService,
               private socialSvc: SocialService,
               private twitterSvc: TwitterService,
               private photoSvc: PhotosService,
@@ -58,6 +61,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
               private locationsSvc: LocationsService) { }
 
   ngOnInit() {
+
     this.dataplugs = this.dataplugsSvc.dataplugs$;
 
     this.routerSub = this.route.params.subscribe(params => {
@@ -65,20 +69,27 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
        this.dataplugs.forEach ( plugs => {
          plugs.forEach(plug => {
-           if(plug.name === this.plugName){
+           if (plug.name === this.plugName) {
              this.plugMeta = plug;
 
              switch ( plug.name.toLowerCase() ) {
-               case "facebook":
+               case 'facebook':
                   this.initFacebook();
                   break;
-               case "twitter":
+               case 'twitter':
                   this.initTwitter();
                   break;
-               case "dropbox photos":
+               case 'dropbox photos':
                   this.initDropbox();
                   break;
-               case "location":
+               case 'calendar':
+                  this.initCalendar();
+                  break;
+               case 'rumpel':
+                  this.initRumpel();
+                  break;
+               case 'location':
+                  this.tabView = 'locations';
                   this.initLocations();
                   break;
              }
@@ -93,27 +104,11 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initFacebook() {
     this.feedPostSub = this.socialSvc.data$.subscribe((posts: Array<Post>) => {
       this.feed = posts;
-      this.filteredFeed = posts;
-      /*
-      posts.forEach(post => {
-        const item = {
-          body: post.content,
-          heading: post.story,
-          createdDate: post.createdTime,
-          updatedDate: post.updatedTime,
-          meta: [
-            {name: "Status type", value: post.statusType },
-            {name: "Type", value: post.type },
-            {name: "Author", value: post.from },
-            {name: "Application", value: post.application },
-            {name: "Privacy", value: post.privacy.description + ", " + post.privacy.value },
-            {name: "ID", value: post.id }
-          ]
-        };
-        this.feed.push(item);
-      });
-      */
+      this.filterAndSortFeed();
+    });
 
+    this.feedEventSub = this.facebookEventsSvc.data$.subscribe((posts: Array<Event>) => {
+      this.events = posts;
       this.filterAndSortFeed();
     });
   }
@@ -121,23 +116,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   initTwitter() {
     this.feedPostSub = this.twitterSvc.data$.subscribe((posts: Array<Tweet>) => {
-      this.feed = [];
-      this.filteredFeed = [];
-      posts.forEach(post => {
-        const item = {
-          body: {message: post.text},
-          createdDate: post.createdTime,
-          meta: [
-            {name: "Type", value: post.type },
-            {name: "Favorite count", value: post.favorite_count },
-            {name: "Retweet count", value: post.retweet_count },
-            {name: "User", value: post.user.screen_name },
-            {name: "ID", value: post.id }
-          ]
-        };
-        this.feed.push(item);
-      });
-
+      this.feed = posts;
       this.filterAndSortFeed();
     });
   }
@@ -145,55 +124,45 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   initDropbox() {
     this.feedPostSub = this.photoSvc.photos$.subscribe((posts: Array<Photo>) => {
-      this.feed = [];
-      this.filteredFeed = [];
-      posts.forEach(post => {
-        const item = {
-          body: {name: post.name, fullPicture: post.displayPath},
-          createdDate: post.timestamp,
-          meta: [
-            {name: "Kind", value: post.kind },
-            {name: "Path", value: post.path },
-            {name: "Size", value: post.size }
-          ]
-        };
-        this.feed.push(item);
-      });
-
+      this.feed = posts;
       this.filterAndSortFeed();
     });
   }
 
   initLocations() {
     this.feedPostSub = this.locationsSvc.data$.subscribe((posts: Array<Location>) => {
-      console.log(posts);
+      this.feed = posts;
       this.locations = posts;
-      this.feed = [];
-      this.filteredFeed = [];
-      posts.forEach(post => {
-        const item = {
-          body: {message: post.latitude + ", " + post.longitude},
-          createdDate: post.timestamp,
-          meta: [
-            {name: "Accuracy", value: post.accuracy },
-            {name: "Altitude", value: post.altitude },
-            {name: "Altitude accuracy", value: post.altitude_accuracy },
-            {name: "Heading", value: post.heading },
-            {name: "Speed", value: post.speed },
-            {name: "ID", value: post.id }
-          ]
-        };
-        this.feed.push(item);
-      });
+      this.tabView = 'locations';
+      this.filterAndSortFeed();
+    });
+  }
 
+  initCalendar() {
+    this.feedEventSub = this.googleEventsSvc.data$.subscribe((posts: Array<Event>) => {
+      this.events = posts;
+      this.tabView = 'events';
+      this.filterAndSortFeed();
+    });
+  }
+
+
+  initRumpel() {
+    this.feedPostSub = this.notablesSvc.data$.subscribe((posts: Array<Notable>) => {
+      this.feed = posts;
+      this.filterAndSortFeed();
+    });
+
+    this.feedEventSub = this.eventsSvc.data$.subscribe((posts: Array<Event>) => {
+      this.events = posts;
       this.filterAndSortFeed();
     });
   }
 
 
   setFromDate(event: any) {
-    if(event.target.value === ""){
-      this.fromDate = moment("1970-01-01");
+    if (event.target.value === '') {
+      this.fromDate = moment('1970-01-01');
     } else {
       this.fromDate = moment(event.target.value);
     }
@@ -201,7 +170,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   }
 
   setToDate(event: any) {
-    if(event.target.value === ""){
+    if (event.target.value === '') {
       this.toDate = moment();
     } else {
       this.toDate = moment(event.target.value);
@@ -215,17 +184,20 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     let fromDate = this.fromDate;
     let toDate = this.toDate;
 
-    if( !moment.isMoment(fromDate) ){
-      fromDate = moment("1970-01-01");
+    if ( !moment.isMoment(fromDate) ) {
+      fromDate = moment('1970-01-01');
     }
 
-    if( !moment.isMoment(toDate) ){
+    if ( !moment.isMoment(toDate) ) {
       toDate = moment();
     }
+
+    /*
 
     this.filteredFeed = this.feed.filter( item => {
         return ( item.createdDate.isBefore(toDate) && item.createdDate.isAfter(fromDate)  );
     });
+
 
     // sort array by date - most recent first
     this.filteredFeed = this.filteredFeed.sort( (a, b) => {
@@ -233,11 +205,29 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
         return result;
     });
 
-    //console.log(this.filteredFeed);
+    */
+
+    this.filteredFeed = this.feed;
+    console.log(this.feed);
   }
 
   ngOnDestroy() {
     this.routerSub.unsubscribe();
+
+    if (this.feedPostSub) {
+      this.feedPostSub.unsubscribe();
+    }
+
+    if (this.feedEventSub) {
+      this.feedEventSub.unsubscribe();
+    }
+  }
+
+  resizeWindow() {
+     // this is used to make the sure the map initialises properly
+     var evt = document.createEvent("HTMLEvents");
+     evt.initEvent('resize', true, false);
+     window.dispatchEvent(evt);
   }
 
 }

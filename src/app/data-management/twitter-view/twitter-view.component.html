@@ -1,0 +1,15 @@
+<div class="flex-basis">
+  <div>
+    <p *ngIf="item.text">{{ item.text }}</p>
+    <a *ngIf="item.media && item.media.type" target="_blank" [href]="item.media.media_url_https">{{ item.media.type }}</a>
+  </div>
+</div>
+
+<div class="flex-basis start">
+    <span *ngIf="item.createdTime" class="meta"><strong>Created</strong><span class="date">{{ item.createdTime | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span *ngIf="item.user && item.user.screen_name" class="meta"><strong>User</strong> {{ item.user.screen_name }}</span>
+    <span *ngIf="item.type" class="meta"><strong>Type</strong> {{ item.type }}</span>
+    <span *ngIf="item.favorite_count" class="meta"><strong>Favorite count</strong> {{ item.favorite_count }}</span>
+    <span *ngIf="item.retweet_count" class="meta"><strong>Retweet count</strong> {{ item.retweet_count }}</span>
+    <span *ngIf="item.id" class="meta"><strong>ID</strong> {{ item.id }}</span>
+</div>

@@ -43,45 +43,37 @@
     </div>
 
     <ul class="nav nav-tabs">
+      <li *ngIf="locations.length > 0" [class.active]="tabView == 'locations'"><a (click)="tabView = 'locations'; resizeWindow()">Map view</a></li>
       <li *ngIf="filteredFeed.length > 0" [class.active]="tabView == 'posts'"><a (click)="tabView = 'posts'">Posts</a></li>
       <li *ngIf="events.length > 0" [class.active]="tabView == 'events'"><a (click)="tabView = 'events'">Events</a></li>
-      <li *ngIf="locations.length > 0" [class.active]="tabView == 'locations'"><a (click)="tabView = 'locations'">Map view</a></li>
     </ul>
 
     <div class="feedItems" *ngIf="filteredFeed && filteredFeed.length" [class.hidden]="tabView != 'posts'">
       <div class="item" *ngFor="let item of filteredFeed">
-        <div class="flex-basis">
-          <img *ngIf="item.body && item.body.fullPicture" [src]="item.body.fullPicture" onerror="this.style.display='none'">
-          <img *ngIf="item.media && item.media.media_url_https" [src]="item.media.media_url_https" onerror="this.style.display='none'">
-          <div>
-            <span class="meta heading" *ngIf="item.body && item.heading">{{ item.heading }}</span>
-            <a *ngIf="item.body && item.body.link" [href]="item.body.link" target="_blank">{{ item.body.name }}</a>
-            <p *ngIf="item.body && item.body.message">{{ item.body.message }}</p>
-            <p *ngIf="item.body && item.body.description">{{ item.body.description }}</p>
-            <p *ngIf="item.body && item.body.caption">{{ item.body.caption }}</p>
-          </div>
-        </div>
-
-        <div class="flex-basis start">
-          <span class="meta" *ngFor="let meta of item.meta; let i = index" [class.hidden]="!meta.value">
-            <span *ngIf="meta.value"><strong>{{ meta.name }}</strong> {{ meta.value }}</span>
-          </span>
-        </div>
-
-        <div class="flex-basis start">
-          <span class="meta" *ngIf="item.createdDate"><strong>Created</strong><span class="date">{{ item.createdDate | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
-          <span class="meta" *ngIf="item.updatedDate"><strong>Updated</strong><span class="date">{{ item.updatedDate | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
-        </div>
+          <rump-facebook-view *ngIf="plugName.toLowerCase() == 'facebook'" [item]="item"></rump-facebook-view>
+          <rump-twitter-view *ngIf="plugName.toLowerCase() == 'twitter'" [item]="item"></rump-twitter-view>
+          <rump-photos-view *ngIf="plugName.toLowerCase() == 'dropbox photos'" [item]="item"></rump-photos-view>
+          <rump-locations-view *ngIf="plugName.toLowerCase() == 'location'" [item]="item"></rump-locations-view>
+          <rump-notables-view *ngIf="plugName.toLowerCase() == 'rumpel'" [item]="item"></rump-notables-view>
       </div>
     </div>
 
-    <rump-map *ngIf="locations.length > 0" [class.hidden]="tabView != 'locations'" [mapHeight]="400" [dataPoints]="locations | timeFilterTwo:fromDate:toDate"
-        [enableMapControls]="true">
-      <div class="loading-overlay" *ngIf="loading">
-        <rump-spinner [isRunning]="true"></rump-spinner>
-        <span>Loading more data...</span>
+    <div class="mapView" [class.hidden]="tabView != 'locations'">
+      <rump-map *ngIf="locations.length > 0" [mapHeight]="'400px'" [dataPoints]="locations" [enableMapControls]="true">
+        <div class="loading-overlay" *ngIf="loading">
+          <rump-spinner [isRunning]="true"></rump-spinner>
+          <span>Loading more data...</span>
+        </div>
+      </rump-map>
+    </div>
+
+
+    <div class="calendarView" [class.hidden]="tabView != 'events'">
+      <div class="item" *ngFor="let event of events">
+        <rump-calendar-view *ngIf="events.length > 0" [item]="event"></rump-calendar-view>
       </div>
-    </rump-map>
+    </div>
+
 
   </div>
 

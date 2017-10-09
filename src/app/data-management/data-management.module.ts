@@ -10,6 +10,12 @@ import { DataPlugDataComponent } from './data-plug-data/data-plug-data.component
 
 import { SharedModule } from '../shared/shared.module';
 import { LocationsModule } from '../locations/locations.module';
+import { FacebookViewComponent } from './facebook-view/facebook-view.component';
+import { TwitterViewComponent } from './twitter-view/twitter-view.component';
+import { CalendarViewComponent } from './calendar-view/calendar-view.component';
+import { NotablesViewComponent } from './notables-view/notables-view.component';
+import { LocationsViewComponent } from './locations-view/locations-view.component';
+import { PhotosViewComponent } from './photos-view/photos-view.component';
 
 @NgModule({
   imports: [
@@ -21,7 +27,13 @@ import { LocationsModule } from '../locations/locations.module';
   declarations: [
     DataPlugsComponent,
     TileDataPlugsComponent,
-    DataPlugDataComponent
+    DataPlugDataComponent,
+    FacebookViewComponent,
+    TwitterViewComponent,
+    CalendarViewComponent,
+    NotablesViewComponent,
+    LocationsViewComponent,
+    PhotosViewComponent
   ],
   providers: [ DataPlugService ],
   exports: [ TileDataPlugsComponent, DataPlugDataComponent ]

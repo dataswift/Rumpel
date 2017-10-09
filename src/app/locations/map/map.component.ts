@@ -56,19 +56,25 @@ export class MapComponent implements OnInit, OnChanges {
 
     const map = this.map;
     this.map.once('focus', () => map.scrollWheelZoom.enable());
-console.log(this.dataPoints);
+
     // WHY
     setTimeout(() => {
-      map.invalidateSize();
-      this.updateMap(this.dataPoints);
+      this.refreshMap();
     }, 400);
 
     L.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 3, maxZoom: 18 }).addTo(this.map);
   }
 
+
+  refreshMap() {
+    this.map.invalidateSize();
+    this.updateMap(this.dataPoints);
+  }
+
+
   ngOnChanges(changes: SimpleChanges) {
     if (this.map) {
-      this.updateMap(this.dataPoints);
+      this.refreshMap();
     } else {
       this.constructMap();
     }
@@ -112,7 +118,7 @@ console.log(this.dataPoints);
       marker.timestamp = loc.timestamp;
 
       const date = moment(Number(loc.timestamp));
-      marker.bindPopup('<b style="text-align: center">' + date.format('h:mm a') + '</b>').openPopup();
+      marker.bindPopup('<b style="text-align: center">' + date.format('DD MMM YYYY h:mm a') + '</b>').openPopup();
 
       /*
       marker.on('click', (e: any) => {

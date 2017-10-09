@@ -1,0 +1,22 @@
+<div class="flex-basis">
+  <div>
+    <a *ngIf="item.photov1" target="_blank" [href]="item.photov1.link"><img [src]="item.photov1.source" alt="item.photov1.caption"/></a>
+    <p *ngIf="item.message" [innerHTML]="item.message | markdownToHtml"></p>
+    <a *ngIf="item.media && item.media.type" target="_blank" [href]="item.media.media_url_https">{{ item.media.type }}</a>
+  </div>
+</div>
+
+<div class="flex-basis start">
+    <span *ngIf="item.authorv1 && item.authorv1.photo_url" class="meta"><strong>Author photo</strong><img [src]="item.authorv1.photo_url"/></span>
+    <span *ngIf="item.authorv1 && item.authorv1.name" class="meta"><strong>Author name</strong>{{ item.authorv1.name }}</span>
+    <span *ngIf="item.authorv1 && item.authorv1.phata" class="meta"><strong>Author PHATA</strong>{{ item.authorv1.phata }}</span>
+    <span *ngIf="item.created_time" class="meta"><strong>Created</strong><span class="date">{{ item.created_time | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span *ngIf="item.updated_time" class="meta"><strong>Updated</strong><span class="date">{{ item.updated_time | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span *ngIf="item.public_until" class="meta"><strong>Public until</strong><span class="date">{{ item.public_until | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span *ngIf="item.kind" class="meta"><strong>Kind</strong> {{ item.kind }}</span>
+    <span *ngIf="item.locationv1" class="meta"><strong>Location</strong>{{ item.locationv1.longitude }}, {{ item.locationv1.latitude }}</span>
+    <span class="meta"><strong>Shared</strong>{{ item.shared }}</span>
+    <span *ngIf="item.shared_on && item.shared_on.length > 0" class="meta"><strong>Shared on</strong><span *ngFor="let share of item.shared_on">{{ share }}, </span></span>
+
+    <span *ngIf="item.id" class="meta"><strong>ID</strong> {{ item.id }}</span>
+</div>

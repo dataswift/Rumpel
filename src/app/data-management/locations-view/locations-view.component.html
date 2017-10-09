@@ -1,0 +1,20 @@
+<div class="flex-basis">
+  <div>
+    <p *ngIf="item.longitude || item.latitude">
+      <span *ngIf="item.longitude"><strong>Longitude:</strong> {{ item.longitude }}</span>
+      <span *ngIf="item.longitude && item.latitude" class="pipe"> | </span>
+      <span *ngIf="item.latitude"><strong>Latitude:</strong> {{ item.latitude }}</span></p>
+  </div>
+</div>
+
+<div class="flex-basis start">
+    <span *ngIf="item.timestamp" class="meta"><strong>Timestamp</strong><span class="date">{{ item.timestamp | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span *ngIf="item.accuracy" class="meta"><strong>Accuracy</strong> {{ item.accuracy }}</span>
+    <span *ngIf="item.altitude" class="meta"><strong>Altitude</strong> {{ item.altitude }}</span>
+    <span *ngIf="item.altitude_accuracy" class="meta"><strong>Altitude accuracy</strong> {{ item.altitude_accuracy }}</span>
+    <span *ngIf="item.heading" class="meta"><strong>Heading</strong> {{ item.heading }}</span>
+    <span *ngIf="item.speed" class="meta"><strong>Speed</strong> {{ item.speed }}</span>
+    <span *ngIf="item.shared && item.shared.length > 0">
+      <span *ngFor="let share of item.shared" class="meta"><strong>Shared</strong> {{ share }}</span>
+    </span>
+</div>

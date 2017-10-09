@@ -1,0 +1,19 @@
+<div class="flex-basis">
+  <div>
+    <p *ngIf="item.title && !item.link">{{ item.title }}</p>
+    <a *ngIf="item.title && item.link" target="_blank" [href]="item.link">{{ item.title }}</a>
+    <span *ngIf="item.description" class="meta heading">{{ item.description }}</span>
+    <p *ngIf="item.start"><strong>Start: </strong>{{ item.start | moment:'ddd DD MMM YYYY, h:mm a' }}</p>
+    <p *ngIf="item.end"><strong>End: </strong>{{ item.end | moment:'ddd DD MMM YYYY, h:mm a' }}</p>
+    <p *ngIf="item.allDay"><strong>All day: </strong>{{ item.allDay }}</p>
+    <p *ngIf="item.location"><strong>Location: </strong>{{ item.location.longitude }}, {{ item.location.latitude }}</p>
+    <p *ngIf="item.organiser"><strong>Organiser: </strong>{{ item.organiser }}</p>
+    <p *ngIf="item.attendees"><strong>Attendees: </strong>{{ item.attendees }}</p>
+
+  </div>
+</div>
+
+<div class="flex-basis start">
+    <span *ngIf="item.calendarName" class="meta"><strong>Calendar name</strong> {{ item.calendarName }}</span>
+    <span *ngIf="item.id" class="meta"><strong>ID</strong> {{ item.id }}</span>
+</div>
