@@ -16,6 +16,7 @@ import {CurrentNotableMeta} from '../../shared/interfaces/current-notable-meta.i
 import {FileUploadComponent} from '../../shared/components/file-upload/file-upload.component';
 
 declare var SimpleMDE: any;
+declare var $: any;
 
 @Component({
   selector: 'rump-notables-md-editor',
@@ -69,6 +70,8 @@ export class NotablesMdEditorComponent implements OnInit {
     });
 
     this.resetForm();
+
+    $('[data-toggle="tooltip"]').tooltip();
   }
 
   switchType(typeName: string) {

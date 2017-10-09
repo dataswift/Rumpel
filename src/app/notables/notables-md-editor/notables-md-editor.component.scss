@@ -61,8 +61,7 @@
 .options-bar {
   position: relative;
   background-color: $app-mid-tone;
-  padding: 1.5em 1em;
-  padding-bottom: 1em;
+  padding: 20px;
 
   .btn {
     background-color: transparent;
@@ -72,6 +71,13 @@
   .btn-options {
     opacity: 0.3;
     font-size: 1.75em;
+    padding: 10px;
+    height: 40px;
+
+    i{
+      position: relative;
+      top: -3px;
+    }
 
     &.on {
       opacity: 1.0;

@@ -17,6 +17,8 @@
     display: inline-block;
     margin-top: 0.25em;
     margin-left: 1em;
+    color: $app-dark-tone;
+    padding: 20px;
 
     p {
       font-size: 0.9em;
@@ -24,15 +26,51 @@
     }
   }
 
+  ul{
+    padding: 10px;
+    margin-bottom: 0;
+  }
+
   li {
-    display: inline;
+    display: inline-block;
     margin: 0.5em 0.75em;
+    position: relative;
+    cursor: pointer;
+    padding-right: 30px;
+
+    span{
+      opacity: 0.3;
+    }
+
+    &:before{
+      content: '';
+      position: absolute;
+      top: 0px;
+      left: -24px;
+      background-image: url('/assets/icons/check-empty.svg');
+      width: 20px;
+      height: 20px;
+      opacity: 0.3;
+    }
+
+    &.selected{
+      span{
+        opacity: 1.0;
+      }
+
+      &:before{
+        background-image: url('/assets/icons/check-full.svg');
+        opacity: 1.0;
+      }
+    }
 
     .share-service {
       display: inline;
-      max-height: 1.5em;
-      border-radius: 50%;
+      max-height: 20px;
       opacity: 0.3;
+      margin-right: 2px;
+      position: relative;
+      top: -1px;
 
       &.on {
         opacity: 1.0;

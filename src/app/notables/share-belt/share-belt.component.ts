@@ -51,6 +51,7 @@ export class ShareBeltComponent implements OnInit {
 
     this.notablesSvc.notablesMeta$.subscribe((notablesState: NotablesServiceMeta) => {
       this.notablesState = notablesState;
+      console.log(notablesState);
       this.displayMessage = null;
     });
 

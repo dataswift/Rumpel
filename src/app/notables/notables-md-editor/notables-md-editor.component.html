@@ -27,10 +27,6 @@
 <div class="editor-wrapper">
   <textarea #editor></textarea>
 
-  <rump-switch class="privacy-options"
-               [isChecked]="currentNotable.isShared"
-               (onSwitch)="togglePrivacy()"></rump-switch>
-
   <rump-share-belt *ngIf="currentNotable.isShared" class="sharing-belt"
                    [hatDomain]="notablesSvc.hatDomain"
                    [currentNotable]="currentNotable"
@@ -39,12 +35,18 @@
 </div>
 
 <div class="options-bar">
-  <div class="arrow-down" [class.sharing-on]="currentNotable.isShared"></div>
 
   <button type="button" class="btn btn-options"
           [class.on]="currentNotableMeta.reportLocation"
-          (click)="toggleLocation()">
-    <span class="ss-location ss-glyphish-filled"></span>
+          (click)="toggleLocation()" data-toggle="tooltip" title="Share your location" data-trigger="hover">
+      <i *ngIf="currentNotableMeta.reportLocation" class="material-icons">location_on</i>
+      <i *ngIf="!currentNotableMeta.reportLocation" class="material-icons">add_location</i>
+  </button>
+
+  <button type="button" class="btn btn-options"
+          [class.on]="currentNotable.isShared"
+          (click)="togglePrivacy()" data-toggle="tooltip" title="View sharing options" data-trigger="hover">
+      <i class="material-icons">share</i>
   </button>
 
   <div class="action-buttons">

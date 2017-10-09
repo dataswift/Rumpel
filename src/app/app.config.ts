@@ -68,18 +68,18 @@ export const AppConfig: IAppConfig = {
     activeIntegrations: [
       {
         name: 'marketsquare',
-        displayName: 'MarketSquare',
-        logoUrl: 'assets/icons/marketsquare-icon.png'
+        displayName: 'HATTERS',
+        logoUrl: 'assets/icons/hatters-icon.png'
       },
       {
         name: 'facebook',
         displayName: 'Facebook',
-        logoUrl: 'assets/icons/facebook-plug.png'
+        logoUrl: 'assets/icons/facebook-plug.svg'
       },
       {
         name: 'twitter',
         displayName: 'Twitter',
-        logoUrl: 'assets/icons/twitter-plug.png'
+        logoUrl: 'assets/icons/twitter-plug.svg'
       }
     ]
   },

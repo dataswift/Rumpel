@@ -8,12 +8,13 @@
 
 <div class="belt">
   <div class="content">
-    <p>Share with...</p>
+    <p>Post to...</p>
     <ul *ngIf="notablesState.offerClaimed && (!displayMessage) && notablesState.dataDebit && notablesState.dataDebit.confirmed">
-      <li *ngFor="let provider of notablesState.activeIntegrations" (click)="toggleSharing(provider)">
+      <li *ngFor="let provider of notablesState.activeIntegrations" (click)="toggleSharing(provider)" [class.selected]="sharedOn[provider.name.toLowerCase()]">
         <img [src]="provider.logoUrl"
              class="img img-responsive share-service"
              [class.on]="sharedOn[provider.name.toLowerCase()]">
+        <span>{{ provider.displayName }}</span>
       </li>
     </ul>
   </div>
