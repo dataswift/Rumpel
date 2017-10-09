@@ -104,12 +104,12 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initFacebook() {
     this.feedPostSub = this.socialSvc.data$.subscribe((posts: Array<Post>) => {
       this.feed = posts;
-      this.filterAndSortFeed();
+      this.sortFeed('createdTime');
     });
 
     this.feedEventSub = this.facebookEventsSvc.data$.subscribe((posts: Array<Event>) => {
       this.events = posts;
-      this.filterAndSortFeed();
+      this.sortEvents('start');
     });
   }
 
@@ -117,7 +117,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initTwitter() {
     this.feedPostSub = this.twitterSvc.data$.subscribe((posts: Array<Tweet>) => {
       this.feed = posts;
-      this.filterAndSortFeed();
+      this.sortFeed('createdTime');
     });
   }
 
@@ -125,7 +125,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initDropbox() {
     this.feedPostSub = this.photoSvc.photos$.subscribe((posts: Array<Photo>) => {
       this.feed = posts;
-      this.filterAndSortFeed();
+      this.sortFeed('timestamp');
     });
   }
 
@@ -134,7 +134,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       this.feed = posts;
       this.locations = posts;
       this.tabView = 'locations';
-      this.filterAndSortFeed();
+      this.sortFeed('timestamp');
     });
   }
 
@@ -142,7 +142,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     this.feedEventSub = this.googleEventsSvc.data$.subscribe((posts: Array<Event>) => {
       this.events = posts;
       this.tabView = 'events';
-      this.filterAndSortFeed();
+      this.sortEvents('start');
     });
   }
 
@@ -150,12 +150,12 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initRumpel() {
     this.feedPostSub = this.notablesSvc.data$.subscribe((posts: Array<Notable>) => {
       this.feed = posts;
-      this.filterAndSortFeed();
+      this.sortFeed('timestamp');
     });
 
     this.feedEventSub = this.eventsSvc.data$.subscribe((posts: Array<Event>) => {
       this.events = posts;
-      this.filterAndSortFeed();
+      this.sortEvents('start');
     });
   }
 
@@ -166,7 +166,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     } else {
       this.fromDate = moment(event.target.value);
     }
-    this.filterAndSortFeed();
+    // this.filterAndSortFeed();
   }
 
   setToDate(event: any) {
@@ -175,11 +175,14 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     } else {
       this.toDate = moment(event.target.value);
     }
-    this.filterAndSortFeed();
+    // this.filterAndSortFeed();
   }
 
 
-  filterAndSortFeed() {
+  sortFeed(sortBy: string) {
+
+    /*
+
     // filter by selected dates
     let fromDate = this.fromDate;
     let toDate = this.toDate;
@@ -192,23 +195,32 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       toDate = moment();
     }
 
+    */
+
     /*
 
     this.filteredFeed = this.feed.filter( item => {
         return ( item.createdDate.isBefore(toDate) && item.createdDate.isAfter(fromDate)  );
     });
 
-
-    // sort array by date - most recent first
-    this.filteredFeed = this.filteredFeed.sort( (a, b) => {
-        const result = a.createdDate.isBefore(b.createdDate) ? 1 : -1;
-        return result;
-    });
-
     */
 
-    this.filteredFeed = this.feed;
-    console.log(this.feed);
+    // sort array by date - most recent first
+    this.filteredFeed = this.feed.sort( (a, b) => {
+        const momentA = moment(a[sortBy]);
+        const momentB = moment(b[sortBy]);
+        const result = momentA.isBefore(momentB) ? 1 : -1;
+        return result;
+    });
+  }
+
+  sortEvents(sortBy: string) {
+    this.events = this.events.sort( (a, b) => {
+        const momentA = moment(a[sortBy]);
+        const momentB = moment(b[sortBy]);
+        const result = momentA.isBefore(momentB) ? 1 : -1;
+        return result;
+    });
   }
 
   ngOnDestroy() {
@@ -225,7 +237,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   resizeWindow() {
      // this is used to make the sure the map initialises properly
-     var evt = document.createEvent("HTMLEvents");
+     const evt = document.createEvent('HTMLEvents');
      evt.initEvent('resize', true, false);
      window.dispatchEvent(evt);
   }
