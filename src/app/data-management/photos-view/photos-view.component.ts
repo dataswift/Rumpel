@@ -12,7 +12,7 @@ import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 })
 export class PhotosViewComponent implements OnInit {
 
-  @Input() item: Array<Photo>;
+  @Input() public item: any;
 
   constructor(private dialogSvc: DialogService) { }
 

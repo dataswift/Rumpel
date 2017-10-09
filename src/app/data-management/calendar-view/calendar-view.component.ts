@@ -12,7 +12,7 @@ import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 })
 export class CalendarViewComponent implements OnInit {
 
-  @Input() item: Array<Event>;
+  @Input() item: any;
 
   constructor(private dialogSvc: DialogService) { }
 

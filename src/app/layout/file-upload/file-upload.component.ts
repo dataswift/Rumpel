@@ -8,14 +8,14 @@ import { FileUploadService } from '../../services/file-upload.service';
 })
 export class FileUploadComponent implements OnInit {
 
-  private destroy: Function;
-  private animateIn = false;
+  public destroy: Function;
+  public animateIn = false;
 
   public filesToUpload: any;
   public uploadedFiles: Array<string> = [];
 
   public fileSelected = false;
-  @Input() accept: Function;
+  @Input() public accept: Function;
 
   constructor( private fileUploadSvc: FileUploadService ) { }
 

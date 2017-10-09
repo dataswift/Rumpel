@@ -26,18 +26,18 @@ declare var $: any;
 })
 export class DataPlugDataComponent implements OnInit, OnDestroy {
 
-  private currentPage = 'feed';
-  private routerSub: any;
-  private dataplugs: Observable<Array<any>>;
-  private plugName = '';
-  private plugMeta: any;
+  public currentPage = 'feed';
+  public routerSub: any;
+  public dataplugs: Observable<Array<any>>;
+  public plugName = '';
+  public plugMeta: any;
 
-  private feedPostSub: Subscription;
-  private feedEventSub: Subscription;
-  private feedSource: any;
-  private eventSource: any;
-  private feedTimeField = 'timestamp';
-  private eventsTimeField = 'start';
+  public feedPostSub: Subscription;
+  public feedEventSub: Subscription;
+  public feedSource: any;
+  public eventSource: any;
+  public feedTimeField = 'timestamp';
+  public eventsTimeField = 'start';
 
   public feed: Array<any> = [];
   public events: Array<any> = [];

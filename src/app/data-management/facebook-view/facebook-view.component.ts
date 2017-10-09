@@ -12,7 +12,7 @@ import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 })
 export class FacebookViewComponent implements OnInit {
 
-  @Input() item: Array<Post>;
+  @Input() item: any;
 
   constructor(private dialogSvc: DialogService) { }
 

@@ -15,8 +15,8 @@ export class Notable {
   public message: string;
   public kind: string;
   public created_time: Moment;
-  private updated_time: Moment;
-  private shared: boolean;
+  public updated_time: Moment;
+  public shared: boolean;
   public public_until: Moment;
   public shared_on: Array<string>;
 

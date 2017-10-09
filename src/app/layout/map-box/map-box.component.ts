@@ -17,6 +17,7 @@ export class MapBoxComponent implements OnInit {
   private destroy: Function;
   public scrollTop: number;
   public animateIn = false;
+  public loading = false;
 
   constructor() { }
 

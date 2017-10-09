@@ -12,7 +12,7 @@ import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 })
 export class NotablesViewComponent implements OnInit {
 
-  @Input() item: Notable;
+  @Input() public item: any;
 
   constructor(private dialogSvc: DialogService) { }
 

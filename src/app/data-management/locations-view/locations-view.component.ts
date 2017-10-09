@@ -10,7 +10,7 @@ import { Post, Tweet, Event, Photo, Location } from '../../shared/interfaces/ind
 })
 export class LocationsViewComponent implements OnInit {
 
-  @Input() item: Array<Location>;
+  @Input() item: any;
 
   constructor() { }
 

@@ -12,7 +12,7 @@ import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 })
 export class TwitterViewComponent implements OnInit {
 
-  @Input() item: Array<Tweet>;
+  @Input() item: any;
 
   constructor(private dialogSvc: DialogService) { }
 
