@@ -72,6 +72,7 @@ export class DataPlugService {
   }
 
   status(plugName: string): boolean {
+    console.log(this.services[plugName[0].toUpperCase() + plugName.slice(1)]);
     return this.services[plugName[0].toUpperCase() + plugName.slice(1)].connected;
   }
 

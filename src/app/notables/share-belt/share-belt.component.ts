@@ -28,7 +28,7 @@ export class ShareBeltComponent implements OnInit {
   public notablesState: NotablesServiceMeta;
   public dataPlugError: string;
   public displayMessage: string;
-  private sharedOn = { facebook: false, twitter: false, marketsquare: false };
+  private sharedOn = { facebook: false, twitter: false, marketsquare: false, phata: false };
   private dataPlugInfoMap = {
     facebook: {
       displayName: 'Facebook',
@@ -51,12 +51,11 @@ export class ShareBeltComponent implements OnInit {
 
     this.notablesSvc.notablesMeta$.subscribe((notablesState: NotablesServiceMeta) => {
       this.notablesState = notablesState;
-      console.log(notablesState);
       this.displayMessage = null;
     });
 
     this.notablesSvc.editedNotable$.subscribe((editedNotable: Notable) => {
-      this.sharedOn = { facebook: false, twitter: false, marketsquare: false };
+      this.sharedOn = { facebook: false, twitter: false, marketsquare: false, phata: false };
       for (const provider of editedNotable.shared_on) {
         this.sharedOn[provider] = true;
       }

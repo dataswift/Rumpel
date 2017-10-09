@@ -8,7 +8,7 @@
 
 <div class="belt">
   <div class="content">
-    <p>Post to...</p>
+    <p>Post publicly:</p>
     <ul *ngIf="notablesState.offerClaimed && (!displayMessage) && notablesState.dataDebit && notablesState.dataDebit.confirmed">
       <li *ngFor="let provider of notablesState.activeIntegrations" (click)="toggleSharing(provider)" [class.selected]="sharedOn[provider.name.toLowerCase()]">
         <img [src]="provider.logoUrl"
