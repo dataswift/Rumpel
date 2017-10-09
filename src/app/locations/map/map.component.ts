@@ -56,7 +56,7 @@ export class MapComponent implements OnInit, OnChanges {
 
     const map = this.map;
     this.map.once('focus', () => map.scrollWheelZoom.enable());
-
+console.log(this.dataPoints);
     // WHY
     setTimeout(() => {
       map.invalidateSize();

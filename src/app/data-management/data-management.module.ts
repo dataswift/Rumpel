@@ -8,10 +8,15 @@ import { TileDataPlugsComponent } from './tile-data-plugs/tile-data-plugs.compon
 import { DataPlugService } from './data-plug.service';
 import { DataPlugDataComponent } from './data-plug-data/data-plug-data.component';
 
+import { SharedModule } from '../shared/shared.module';
+import { LocationsModule } from '../locations/locations.module';
+
 @NgModule({
   imports: [
     CommonModule,
-    DataManagementRoutingModule
+    DataManagementRoutingModule,
+    SharedModule,
+    LocationsModule
   ],
   declarations: [
     DataPlugsComponent,

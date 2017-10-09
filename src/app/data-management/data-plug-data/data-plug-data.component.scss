@@ -1,0 +1,228 @@
+@import "../../style/variables";
+
+
+.dataPlugData{
+  background: white;
+  padding: 30px;
+  margin: 0px -42px;
+  position: absolute;
+  top: -40px;
+  width: calc(100% + 10px);
+  min-height: 660px;
+
+
+  .nav{
+      width: calc(100% + 60px);
+      border-bottom: 1px solid $app-background-color;
+      box-shadow: 0px 1px 2px $app-background-color;
+      margin: -30px -30px 0px -30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      background: white;
+
+
+
+      a{
+        padding: 13px;
+        margin: 0 12px;
+        border-top: 2px solid #fff;
+        border-bottom: 2px solid #fff;
+        text-transform: uppercase;
+        color: #999;
+        cursor: pointer;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        position: relative;
+
+        &:hover{
+          text-decoration: none;
+        }
+      }
+
+
+      a.current{
+        border-bottom: 2px solid $app-contrast-color;
+        color: $app-dark-tone;
+        font-weight: 600;
+      }
+  }
+
+
+  .nav-tabs{
+    margin: 0;
+    margin-top: 20px;
+    box-shadow: none;
+    justify-content: flex-start;
+    width: 100%;
+
+    a{
+      margin: 0;
+      margin-right: 2px;
+      border-bottom: 1px solid transparent;
+      border-top: 1px solid transparent;
+    }
+
+    .active a{
+      border-top: 1px solid #ddd;
+      color: #4a556b;
+      font-weight: 600;
+    }
+  }
+
+
+  .static, .feed{
+    color: $app-dark-tone;
+    padding: 60px;
+
+    @media screen and (max-width: 768px){
+      padding: 30px;
+    }
+
+
+    .dates{
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .datePicker{
+      margin: 20px 0px 20px 30px;
+      display: inline-block;
+
+      input[type="date"] {
+        padding: 5px 10px;
+        border-radius: 4px;
+        box-shadow: none;
+        border: 2px solid $app-light-tone;
+      }
+    }
+
+    .header{
+      display: flex;
+      align-items: center;
+      img{
+        margin-right: 20px;
+        height: 40px;
+        width: auto;
+      }
+
+      h3{
+        margin-top: 10px;
+        margin-bottom: 5px;
+        text-transform: capitalize;
+      }
+
+      p{
+        opacity: 0.6;
+      }
+    }
+
+    .feedItems{
+
+      .item{
+        background: $app-light-background-color;
+        width: 100%;
+        border: 1px solid $app-light-tone;
+        padding: 30px 30px 10px;
+        margin: 25px 0;
+        border-radius: 4px;
+
+        .flex-basis{
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 20px;
+          border-bottom: 1px solid $app-light-tone;
+
+          &:first-child{
+            padding-bottom: 20px;
+          }
+
+          &:last-child{
+            border-bottom: none;
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+          }
+
+          > div{
+            width: 100%;
+          }
+
+          @media screen and (max-width: 480px){
+            flex-wrap: wrap;
+            justify-content: center;
+          }
+
+          &.start{
+            justify-content: flex-start;
+            flex-wrap: wrap;
+          }
+        }
+
+        p{
+          font-size: 14px;
+        }
+
+        a{
+          color: $app-accent-color;
+          margin-bottom: 10px;
+          font-size: 16px;
+
+          &:hover{
+            color: $app-accent-color;
+            filter: brightness(105%);
+          }
+        }
+
+        img{
+          max-width: 200px;
+          max-height: 320px;
+          margin-right: 20px;
+          display: inline-block;
+          align-self: flex-start;
+
+          @media screen and (max-width: 480px){
+            margin-right: 0;
+            margin-bottom: 20px;
+          }
+        }
+
+        .meta{
+          font-size: 12px;
+          opacity: 0.7;
+          font-style: italic;
+          margin-bottom: 0;
+          padding: 0 30px 20px 0px;
+          width: 170px;
+
+          strong{
+            font-style: normal;
+            display: block;
+          }
+
+          &.heading{
+            display: block;
+            width: initial;
+            padding-bottom: 10px;
+          }
+
+        }
+      }
+
+      .date{
+        opacity: 0.7;
+      }
+
+      .pipe{
+        margin: 0 14px;
+
+        @media screen and (max-width: 480px){
+          display: none;
+        }
+      }
+    }
+  }
+
+}
