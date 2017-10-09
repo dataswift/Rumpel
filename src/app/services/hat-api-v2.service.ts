@@ -35,47 +35,4 @@ export class HatApiV2Service {
       });
   }
 
-
-
-  // File upload
-
-  postFileUploadMetaData (file) {
-    const url = `/api/v2/files/upload`;
-    const body = `{
-            "name": "` + file.name + `",
-            "source": "userUpload"
-    }`;
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    });
-
-    this.authHttp.post(url, body, { headers: headers }).subscribe( res => {
-      this.uploadFileDirectly(res.json(), file);
-    });
-  }
-
-  uploadFileDirectly (metaDataResponse, file) {
-    const url = metaDataResponse.contentUrl;
-    const headers = new Headers({
-      'x-amz-server-side-encryption': 'AES256'
-    });
-
-    const fileReader: FileReader = new FileReader();
-    fileReader.onloadend = (e) => {
-      this.authHttp.put(url, fileReader.result, { headers: headers }).subscribe( res => {
-        console.log( res.json() );
-        this.markFileUploadComplete(metaDataResponse.fileId);
-      });
-    }
-    fileReader.readAsArrayBuffer(file);
-  }
-
-  markFileUploadComplete (fileId) {
-    const url = `/api/v2/files/file/:` + fileId + `/complete`;
-    this.authHttp.put(url, null).subscribe( res => {
-      console.log('File upload complete', res.json());
-    });
-  }
-
 }

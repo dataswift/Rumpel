@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HatApiV2Service } from '../../../services/hat-api-v2.service';
+import { FileUploadService } from '../../../services/file-upload.service';
 
 @Component({
   selector: 'rump-file-upload',
@@ -10,11 +10,10 @@ export class FileUploadComponent implements OnInit {
 
   private destroy: Function;
   private animateIn = false;
-  public uploadedFiles = ['https://static.comicvine.com/uploads/original/11111/111112793/3031477-nealadamsbatman.jpg',
-                          'https://static.comicvine.com/uploads/original/11111/111112793/3031477-nealadamsbatman.jpg'];
+  public uploadedFiles: Array<string> = [];
   @Input() accept: Function;
 
-  constructor( private hatV2Svc: HatApiV2Service ) { }
+  constructor( private fileUploadSvc: FileUploadService ) { }
 
   ngOnInit() {
     this.animateIn = true;
@@ -23,10 +22,9 @@ export class FileUploadComponent implements OnInit {
   startUpload(fileInput: any) {
     if (fileInput.target.files && fileInput.target.files[0]) {
         const file = fileInput.target.files[0];
-        this.hatV2Svc.postFileUploadMetaData(file);
+        this.fileUploadSvc.postFileUploadMetaData(file);
     }
   }
-
 
   acceptUpload() {
     if (this.accept) {

@@ -34,8 +34,8 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   private feedPostSub: Subscription;
   private feedEventSub: Subscription;
-  private feedSource:any;
-  private eventSource:any;
+  private feedSource: any;
+  private eventSource: any;
   private feedTimeField = 'timestamp';
   private eventsTimeField = 'start';
 
@@ -127,7 +127,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   initTwitter() {
     this.feedPostSub = this.twitterSvc.data$.subscribe((posts: Array<Tweet>) => {
-      //set static data
+      // set static data
       if (posts.length > 0) {
         this.staticData = [];
         const keys = Object.keys( posts[0].user );

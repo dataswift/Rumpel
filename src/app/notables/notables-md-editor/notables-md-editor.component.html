@@ -6,11 +6,6 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<a (click)="fileUpload()">Upload image</a>
-<div *ngFor="let file of uploadedFiles">
-  <img [src]="[file]">
-</div>
-
 <div class="editor-header">
   <h3>New Notable</h3>
   <div class="notes-tab icon-text-valign" [class.active]="currentNotable.kind === 'note'" (click)="switchType('note')">
