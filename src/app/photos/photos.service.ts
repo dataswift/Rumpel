@@ -12,11 +12,9 @@ import { Subject, Observable } from 'rxjs/Rx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Http, Headers, ResponseContentType } from '@angular/http';
 import { HatApiService } from '../services/hat-api.service';
-import * as moment from 'moment';
-import * as PouchDB from 'pouchdb';
+import moment from 'moment';
+import PouchDB from 'pouchdb-browser';
 import { Photo } from '../shared/interfaces/index';
-
-
 
 @Injectable()
 export class PhotosService {

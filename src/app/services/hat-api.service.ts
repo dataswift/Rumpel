@@ -12,7 +12,8 @@ import { AuthHttp } from './auth-http.service';
 import { Observable } from 'rxjs/Rx';
 import { DataDebit } from '../shared/interfaces/index';
 import { User } from '../user/user.interface';
-import * as moment from 'moment';
+import { isMoment } from 'moment/moment';
+import moment from 'moment/moment';
 
 @Injectable()
 export class HatApiService {
@@ -22,7 +23,7 @@ export class HatApiService {
       return value;
     } else if (value === null) {
       return '';
-    } else if (moment.isMoment(value)) {
+    } else if (isMoment(value)) {
       return value.format();
     } else if (Array.isArray(value)) {
       return value.join(',');
@@ -281,7 +282,7 @@ export class HatApiService {
 
   private createValue(obj: any, hatIdMapping: any, prefix: string = 'default') {
     return Object.keys(obj).reduce((acc, key) => {
-      if (typeof obj[key] === 'object' && obj[key] !== null && !moment.isMoment(obj[key]) && !Array.isArray(obj[key])) {
+      if (typeof obj[key] === 'object' && obj[key] !== null && !isMoment(obj[key]) && !Array.isArray(obj[key])) {
         const subTreeValues = this.createValue(obj[key], hatIdMapping, prefix + '_' + key);
         acc = acc.concat(subTreeValues);
       } else {
