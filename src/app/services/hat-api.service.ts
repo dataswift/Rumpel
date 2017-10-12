@@ -237,7 +237,7 @@ export class HatApiService {
   }
 
   updateDataDebit(uuid: string, action: string): Observable<any> {
-    return this.authHttp.put(`/dataDebit/${uuid}/${action}`, {});
+    return this.authHttp.get(`/api/v2/data-debit/${uuid}/${action}`);
   }
 
   /* HAT Public API methods */

@@ -8,7 +8,8 @@ export interface Offer {
   starts: number;
   expires: number;
   collectFor: number;
-  requiredDataDefinition: DataDefinition[];
+  requiredDataDefinition: DataDefinition[] | DataBundle;
+  dataConditions?: DataBundle;
   requiredMinUser: number;
   requiredMaxUser: number;
   totalUserClaims: number;
@@ -72,4 +73,23 @@ interface DataSet {
 interface DataDefinition {
   source: string;
   datasets: DataSet[];
+}
+
+interface DataBundle {
+  name: string;
+  bundle: { [bundleVersion: string]: PropertyQuery };
+}
+
+interface PropertyQuery {
+  endpoints: EndpointQuery[];
+  orderBy?: string;
+  ordering: string;
+  limit?: number;
+}
+
+interface EndpointQuery {
+  endpoint: string;
+  mapping: { [fieldName: string]: string };
+  filters?: any;
+  links?: EndpointQuery[];
 }

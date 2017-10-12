@@ -62,7 +62,7 @@
               <h6>Offer description</h6>
 
               <span class="bold">Reward</span>
-              <p *ngIf="offers[offer_index].reward.rewardType == 'Cash'">Cash - {{ offers[offer_index].reward.value | currency: offers[offer_index].reward.currency:true:'1.2-2' }}</p>
+              <p *ngIf="offers[offer_index].reward.rewardType == 'Cash'">Cash - {{ offers[offer_index].reward.value / 100 | currency: offers[offer_index].reward.currency:true:'1.2-2' }}</p>
               <p *ngIf="offers[offer_index].reward.rewardType == 'Voucher'">{{ offers[offer_index].reward.vendor }} voucher - {{ offers[offer_index].reward.value }}</p>
               <p *ngIf="offers[offer_index].reward.rewardType == 'Service'">Service - {{ offers[offer_index].reward.vendor }} - {{ offers[offer_index].reward.value }}</p>
 
@@ -72,14 +72,25 @@
               <p [innerHTML]="offers[offer_index].longDescription | safeHtml | capitalizeFirst"></p>
             </div>
 
-            <div class="offer-details">
+            <div class="offer-details data-requirements">
               <hr>
               <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
               <h6>Data requested</h6>
-              <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
-                <span class="bold">{{ def.source | capitalizeFirst }}</span>
-                <rump-offer-requirements *ngFor="let dataset of def.datasets" [requirements]="dataset"></rump-offer-requirements>
-              </p>
+              <div *ngIf="canDisplayOldDataRequirements(); then oldFormat else newFormat"></div>
+
+              <ng-template #oldFormat>
+                <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
+                  <span class="bold">{{ def.source | capitalizeFirst }}</span>
+                  <rump-offer-requirements *ngFor="let dataset of def.datasets" [requirements]="dataset"></rump-offer-requirements>
+                </p>
+              </ng-template>
+
+              <ng-template #newFormat>
+                <div class="property" *ngFor="let property of objectToArray(offers[offer_index].requiredDataDefinition.bundle)">
+                  <span class="bold">{{ property.endpoints[0].endpoint }}</span>
+                  <div class="field" *ngFor="let field of objectToArray(property.endpoints[0].mapping)">{{ field }}</div>
+                </div>
+              </ng-template>
             </div>
       </div>
 
