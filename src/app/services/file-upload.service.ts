@@ -16,10 +16,10 @@ export class FileUploadService extends HatApiV2Service {
 
   postFileUploadMetaData (file) {
     const url = `/api/v2/files/upload`;
-    const body = `{
-            "name": "` + file.name + `",
-            "source": "userUpload"
-    }`;
+    const body = JSON.stringify({
++      name: file.name,
++      source: 'userUpload'
++    });
     const headers = new Headers({
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -39,8 +39,7 @@ export class FileUploadService extends HatApiV2Service {
 
     const fileReader: FileReader = new FileReader();
     fileReader.onloadend = (e) => {
-      this._authHttp.put(url, fileReader.result, { headers: headers }).subscribe( res => {
-        console.log( res.json() );
+      this._http.put(url, fileReader.result, { headers: headers }).subscribe( res => {
         this.markFileUploadComplete(metaDataResponse.fileId);
       });
     }
@@ -49,7 +48,7 @@ export class FileUploadService extends HatApiV2Service {
 
 
   markFileUploadComplete (fileId) {
-    const url = `/api/v2/files/file/:` + fileId + `/complete`;
+    const url = `/api/v2/files/file/` + fileId + `/complete`;
     this._authHttp.put(url, null).subscribe( res => {
       console.log('File upload complete', res.json());
     });
