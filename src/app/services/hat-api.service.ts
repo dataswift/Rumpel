@@ -335,7 +335,7 @@ export class HatApiService {
       };
     });
 
-    const processedDebit: DataDebit = {
+    const processedDebit = {
       dateCreated: moment(rawDebit.dateCreated),
       startDate: moment(rawDebit.startDate),
       endDate: moment(rawDebit.endDate),

@@ -99,7 +99,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
           // For the initial 30 mins after offer confirmation MarketSquare can report it as unconfirmed
         } else if (offerInfo && offerInfo.dataDebitId) {
           return this.hat.getSlimDataDebit(offerInfo.dataDebitId)
-            .map((ddInfo: DataDebit) => {
+            .map((ddInfo: any) => {
               offerInfo.confirmed = ddInfo.enabled;
               return offerInfo;
             });

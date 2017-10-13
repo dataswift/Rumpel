@@ -25,7 +25,7 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
   public offer: any;
   public status: any;
   private userSub: Subscription;
-  public dataDebit: DataDebit;
+  public dataDebit: any;
   private uuid: string;
   private ddConfirmed: boolean;
   private offerSatisfied: boolean;
