@@ -111,7 +111,7 @@ export function cookieServiceFactory() {
     AuthGuard,
     NativeGuard,
     HatApiService,
-    HatApiV2Service,
+    HatApiV2Service, // Supersedes original HAT API service
     GlobalMessagingService,
     UiStateService,
     RumpelService,
