@@ -10,7 +10,6 @@ import { JwtHelper } from 'angular2-jwt';
 
 import * as moment from 'moment';
 
-
 @Injectable()
 export class DataOfferService {
   private jwt: JwtHelper;
@@ -84,8 +83,8 @@ export class DataOfferService {
   }
 
   private fetchMerchantFilter(): Observable<string[]> {
-    return this.hatV2Svc.getRecords('dex', 'databuyer', 1)
-      .map((records: HatRecord[]) => {
+    return this.hatV2Svc.getDataRecords('dex', 'databuyer', 1)
+      .map((records: HatRecord<any>[]) => {
         if (records.length > 0 && records[0].data && records[0].data.merchants) {
           return records[0].data.merchants;
         } else {

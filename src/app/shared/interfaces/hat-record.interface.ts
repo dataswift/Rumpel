@@ -6,8 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 7, 2017
  */
 
-export interface HatRecord {
+export interface HatRecord<T> {
   endpoint: string;
   recordId: string;
-  data: any;
+  data: T;
 }

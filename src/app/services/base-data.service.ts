@@ -7,27 +7,26 @@
  */
 
 import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
-import { HatApiService } from './hat-api.service';
+import { HatApiV2Service } from './hat-api-v2.service';
 import { UiStateService } from './ui-state.service';
-import * as _ from 'lodash';
-import { DataTable } from '../shared/interfaces/data-table.interface';
-import * as moment from 'moment';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
 
 export abstract class BaseDataService<T> {
-  private _data$: ReplaySubject<Array<T>> = <ReplaySubject<Array<T>>>new ReplaySubject(1);
-  public hat: HatApiService;
+  private _data$: ReplaySubject<HatRecord<T>[]> = <ReplaySubject<HatRecord<T>[]>>new ReplaySubject(1);
+  public hat: HatApiV2Service;
   public uiSvc: UiStateService;
   public store: {
-    data: Array<T>;
-    tableId: number;
-    idMapping?: { [s: string]: number; };
+    data: HatRecord<T>[];
   };
 
-  private oldestRecordTimestamp: string = null;
+  private RECORDS_PER_REQUEST = 25;
+  private drop = 0;
+  private namespace: string;
+  private endpoint: string;
   private _loading$: Subject<boolean> = <Subject<boolean>>new Subject();
 
-  constructor(hat: HatApiService, uiSvc: UiStateService) {
-    this.hat = hat; this.uiSvc = uiSvc;
+  constructor(hat: HatApiV2Service, uiSvc: UiStateService, namespace: string, endpoint: string) {
+    this.hat = hat; this.uiSvc = uiSvc; this.namespace = namespace; this.endpoint = endpoint;
     this.clearLocalStore();
 
     this.uiSvc.auth$.subscribe((authenticated: boolean) => {
@@ -37,7 +36,7 @@ export abstract class BaseDataService<T> {
     });
   }
 
-  get data$(): Observable<Array<T>> {
+  get data$(): Observable<HatRecord<T>[]> {
     return this._data$.asObservable();
   }
 
@@ -45,99 +44,99 @@ export abstract class BaseDataService<T> {
     return this._loading$.asObservable();
   }
 
-  ensureTableExists(name: string, source: string, limit: number = 50): void {
-    this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-      const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);
-      if (foundTable) {
-        this.store.tableId = foundTable.id;
-        this.getRecentData(0, limit);
-      }
-    });
+  checkTableExists(): Observable<boolean> {
+    return this.hat.getDataRecords(this.namespace, this.endpoint, 1)
+      .map(data => data.length > 0)
   }
 
-  checkTableExists(name: string, source: string): boolean {
-    let result = false;
-
-    this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-      const foundTable = tables.find((table: DataTable) => table.name === name && table.source === source);
-      if (foundTable) {
-        result = true;
-      }
-    });
-
-    return result;
-  }
-
-  getRecentData(failedAttempts: number = 0, limit: number = 50): void {
+  getInitData(take: number = this.RECORDS_PER_REQUEST): void {
     if (this.store.data.length > 0) {
       this.pushToStream();
-    } else if (this.store.tableId) {
-      this._loading$.next(true);
-      this.hat.getValuesWithLimit(this.store.tableId, limit)
-        .map((rawData: Array<any>) => {
-          if (rawData.length > 0) {
-            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format('X');
-          }
-
-          const typeSafeData: Array<T> = rawData.map(this.mapData);
-          return _.uniqBy(typeSafeData, 'id');
-        })
-        .subscribe((data: Array<T>) => {
+    } else {
+      this.hat.getDataRecords(this.namespace, this.endpoint, take)
+        .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
+        .subscribe((data: HatRecord<T>[]) => {
           this.store.data = data;
+          this.drop = this.drop + data.length;
           this.pushToStream();
-        });
-    } else if (failedAttempts <= 10) {
-      this._loading$.next(false);
-      Observable.timer(100).subscribe(() => this.getRecentData(++failedAttempts));
-    }
-  }
-
-  getMoreData(fetchRecordCount: number = 100, totalRecordCount: number = 500): void {
-    if (this.oldestRecordTimestamp && this.store.data.length < totalRecordCount) {
-      this._loading$.next(true);
-      this.hat.getValuesWithLimit(this.store.tableId, fetchRecordCount, this.oldestRecordTimestamp)
-        .map((rawData: Array<any>) => {
-          if (rawData.length > 0) {
-            this.oldestRecordTimestamp = moment(rawData[rawData.length - 1].lastUpdated).format('X');
-          }
-
-          const typeSafeData: Array<T> = rawData.map(this.mapData);
-          return _.uniqBy(typeSafeData, 'id');
-        })
-        .subscribe((data: Array<T>) => {
-          this.store.data = this.store.data.concat(data);
-
-
-          this.pushToStream();
-
-
-          // if (this.store.data.length < totalRecordCount && data.length > 0) {
-          //   this.getMoreData(fetchRecordCount, totalRecordCount);
-          // }
         });
     }
   }
 
-  getTimeIntervalData(startTime: string, endTime: string): void {
-    this._loading$.next(true);
-    this.hat.getValuesWithLimit(this.store.tableId, 5000, endTime, startTime)
-      .map((rawData: Array<any>) => {
-        const typeSafeData: Array<T> = rawData.map(this.mapData);
-        return _.uniqBy(typeSafeData, 'id');
-      })
-      .subscribe((data: Array<T>) => {
+  getMoreData(take: number = this.RECORDS_PER_REQUEST, repeatUntilMinRecordNumber?: number): void {
+    this.hat.getDataRecords(this.namespace, this.endpoint, take, this.drop)
+      .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
+      .subscribe((data: HatRecord<T>[]) => {
         this.store.data = this.store.data.concat(data);
-
+        this.drop = this.drop + data.length;
         this.pushToStream();
+
+        if (repeatUntilMinRecordNumber && repeatUntilMinRecordNumber < this.drop) {
+          this.getMoreData(take, repeatUntilMinRecordNumber);
+        }
       });
   }
 
-  abstract mapData(rawDataItem: any): T
+  save(recordValue: T, callback?: () => void): void {
+    this.hat.createRecord(this.endpoint, recordValue)
+      .map(this.coerceType)
+      .subscribe((record: HatRecord<T>) => {
+        this.store.data.unshift(record);
+        this.drop += 1;
+        this.pushToStream();
+
+        if (callback) {
+          callback();
+        }
+      });
+  }
+
+  update(recordValue: HatRecord<T>): void {
+    this.hat.updateRecord(recordValue)
+      .map(this.coerceType)
+      .subscribe((updatedRecord: HatRecord<T>) => {
+        const updatedRecordIndex = this.store.data
+          .findIndex((dataPoint) => dataPoint.recordId === updatedRecord.recordId);
+
+        if (updatedRecordIndex > -1) {
+          this.store.data[updatedRecordIndex] = updatedRecord;
+          this.pushToStream();
+        }
+      });
+  }
+
+  delete(recordValue: HatRecord<T>): void {
+    this.hat.deleteRecords([recordValue.recordId])
+      .subscribe((responseCode: number) => {
+        const deletedRecordIndex = this.store.data
+          .findIndex((dataPoint) => dataPoint.recordId === recordValue.recordId);
+
+        if (deletedRecordIndex > -1) {
+          this.store.data.splice(deletedRecordIndex, 1);
+          this.pushToStream();
+        }
+      })
+  }
+
+  // getTimeIntervalData(startTime: string, endTime: string): void {
+  //   this._loading$.next(true);
+  //   this.hat.getValuesWithLimit(this.store.tableId, 5000, endTime, startTime)
+  //     .map((rawData: Array<any>) => {
+  //       const typeSafeData: Array<T> = rawData.map(this.mapData);
+  //       return _.uniqBy(typeSafeData, 'id');
+  //     })
+  //     .subscribe((data: Array<T>) => {
+  //       this.store.data = this.store.data.concat(data);
+  //
+  //       this.pushToStream();
+  //     });
+  // }
+
+  abstract coerceType(hatRecord: HatRecord<any>): HatRecord<T>
 
   clearLocalStore(): void {
     this.store = {
-      data: [],
-      tableId: null
+      data: []
     };
 
     this.pushToStream();

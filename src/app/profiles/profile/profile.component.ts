@@ -9,9 +9,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfilesService } from '../profiles.service';
+import { UserService } from '../../user/user.service';
 import { Profile } from '../../shared/interfaces/profile.interface';
-import {UserService} from '../../user/user.service';
-import {User} from '../../user/user.interface';
+import { User } from '../../user/user.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 declare var $: any;
 
@@ -37,21 +38,20 @@ export class ProfileComponent implements OnInit {
     });
 
     this.profilePhoto = {};
-    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
       if (profileSnapshots.length > 0) {
-        this.profile = profileSnapshots[0];
-        console.log(this.profile);
+        this.profile = profileSnapshots[0].data;
       }
     });
 
-    this.profilesSvc.getPicture().subscribe(
-      profilePicture => {
-        if (profilePicture) {
-          this.profilePhoto = profilePicture;
-        }
-      },
-      err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
-    );
+    // this.profilesSvc.getPicture().subscribe(
+    //   profilePicture => {
+    //     if (profilePicture) {
+    //       this.profilePhoto = profilePicture;
+    //     }
+    //   },
+    //   err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
+    // );
 
     this.profile = {
       private: true,
@@ -79,7 +79,6 @@ export class ProfileComponent implements OnInit {
                           relationship: '', private: true },
       about: { title: '', body: '', private: true }
     };
-
   }
 
   switchView() {
@@ -89,7 +88,7 @@ export class ProfileComponent implements OnInit {
 
   submitForm(event) {
     event.preventDefault();
-    this.profilesSvc.postData(this.profile, 'profile');
+    this.profilesSvc.save(this.profile);
     // TODO: UI messages should be initialized from the service
     this.uiMessageHidden = false;
     setTimeout(() => this.uiMessageHidden = true, 5000);

@@ -9,10 +9,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '../social.service';
-import { Post, MusicListen, Tweet } from '../../shared/interfaces';
+import { MediaService } from '../media.service';
+import { TwitterService } from '../twitter.service';
 import { Subscription } from 'rxjs/Subscription';
-import {MediaService} from '../media.service';
-import {TwitterService} from '../twitter.service';
+import { Post, MusicListen, Tweet } from '../../shared/interfaces';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 declare var $: any;
 
@@ -22,7 +23,7 @@ declare var $: any;
   styleUrls: ['social.component.scss']
 })
 export class SocialComponent implements OnInit, OnDestroy {
-  public posts: Array<Post|MusicListen|Tweet>;
+  public posts: HatRecord<Post|MusicListen|Tweet>[];
   public filter: string;
   public filterMap: any;
   private svcSub: Subscription;
@@ -42,21 +43,21 @@ export class SocialComponent implements OnInit, OnDestroy {
       'Twitter': 'tweet'
     };
 
-    this.svcSub = this.socialSvc.data$.subscribe((posts: Post[]) => {
+    this.svcSub = this.socialSvc.data$.subscribe((posts: HatRecord<Post>[]) => {
       this.posts = this.posts.concat(posts);
 
       this.sortPostsByDate();
       this.scrollToPost();
     });
 
-    this.musicSub = this.mediaSvc.data$.subscribe((listens: MusicListen[]) => {
+    this.musicSub = this.mediaSvc.data$.subscribe((listens: HatRecord<MusicListen>[]) => {
       this.posts = this.posts.concat(listens);
 
       this.sortPostsByDate();
       this.scrollToPost();
     });
 
-    this.twitterSub = this.twitterSvc.data$.subscribe((tweets: Tweet[]) => {
+    this.twitterSub = this.twitterSvc.data$.subscribe((tweets: HatRecord<Tweet>[]) => {
       this.posts = this.posts.concat(tweets);
 
       this.sortPostsByDate();
@@ -76,7 +77,7 @@ export class SocialComponent implements OnInit, OnDestroy {
   }
 
   private sortPostsByDate(): void {
-    this.posts = this.posts.sort((a, b) => a.createdTime.isAfter(b.createdTime) ? -1 : 1);
+    this.posts = this.posts.sort((a, b) => a.data.createdTime.isAfter(b.data.createdTime) ? -1 : 1);
   }
 
   private scrollToPost(): void {

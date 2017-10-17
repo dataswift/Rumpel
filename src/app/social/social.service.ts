@@ -7,22 +7,21 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HatApiService } from '../services/hat-api.service';
+import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { Post } from '../shared/interfaces';
 import * as moment from 'moment';
-import {BaseDataService} from '../services/base-data.service';
-import {UiStateService} from '../services/ui-state.service';
+import { BaseDataService } from '../services/base-data.service';
+import { UiStateService } from '../services/ui-state.service';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
 
 @Injectable()
 export class SocialService extends BaseDataService<Post> {
-  constructor(hatSvc: HatApiService, uiSvc: UiStateService) {
-    super(hatSvc, uiSvc);
-
-    this.ensureTableExists('posts', 'facebook');
+  constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
+    super(hat, uiSvc, 'facebook', 'posts');
   }
 
-  mapData(rawPost: any): Post {
-    const posts = rawPost.data.posts;
+  coerceType(rawPost: HatRecord<any>): HatRecord<Post> {
+    const posts = rawPost.data;
     let postContent;
 
     switch (posts.type) {
@@ -55,19 +54,23 @@ export class SocialService extends BaseDataService<Post> {
     }
 
     return {
-      id: posts.id,
-      createdTime: moment(posts.created_time),
-      updatedTime: moment(posts.updated_time),
-      statusType: posts.status_type,
-      type: posts.type,
-      privacy: {
-        value: posts.privacy.value,
-        description: posts.privacy.description
-      },
-      from: !!posts.from ? posts.from.name : null,
-      application: !!posts.application ? posts.application.name : null,
-      story: posts.story,
-      content: postContent
+      endpoint: rawPost.endpoint,
+      recordId: rawPost.recordId,
+      data: {
+        id: posts.id,
+        createdTime: moment(posts.created_time),
+        updatedTime: moment(posts.updated_time),
+        statusType: posts.status_type,
+        type: posts.type,
+        privacy: {
+          value: posts.privacy.value,
+          description: posts.privacy.description
+        },
+        from: !!posts.from ? posts.from.name : null,
+        application: !!posts.application ? posts.application.name : null,
+        story: posts.story,
+        content: postContent
+      }
     };
   }
 }

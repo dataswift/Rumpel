@@ -26,7 +26,7 @@ export class HatApiV2Service {
     this.appNamespace = config.name.toLowerCase();
   }
 
-  getRecords(namespace: string, endpoint: string, take?: number, drop?: number): Observable<HatRecord[]> {
+  getDataRecords(namespace: string, endpoint: string, take?: number, drop?: number): Observable<HatRecord<any>[]> {
     const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
     const queryParams = new URLSearchParams();
 
@@ -41,13 +41,19 @@ export class HatApiV2Service {
       queryParams.append('drop', drop.toString());
     }
 
-    return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord[]>res.json());
+    return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
   }
 
-  createRecord(endpoint: string, record: any): Observable<HatRecord> {
+  createRecord(endpoint: string, record: any): Observable<HatRecord<any>> {
     const path = `${this.pathPrefix}/data/${this.appNamespace}/${endpoint}`;
 
-    return this.authHttp.post(path, record).map((res: Response) => <HatRecord>res.json());
+    return this.authHttp.post(path, record).map((res: Response) => <HatRecord<any>>res.json());
+  }
+
+  updateRecord(hatRecord: HatRecord<any>): Observable<HatRecord<any>> {
+    const path = `${this.pathPrefix}/data`;
+
+    return this.authHttp.put(path, hatRecord).map((res: Response) => <HatRecord<any>>res.json())
   }
 
   deleteRecords(recordIds: Array<string>): Observable<number> {
