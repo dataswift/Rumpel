@@ -27,7 +27,7 @@ export class AccountStatusTileComponent implements OnInit {
       .filter((user: User) => user.authenticated === true)
       .subscribe((user: User) => this.username = user.hatId);
 
-    this.userSvc.getAccountStatus().subscribe((accountStatus: AccountStatus) => this.accountStatus = accountStatus);
+    // this.userSvc.getAccountStatus().subscribe((accountStatus: AccountStatus) => this.accountStatus = accountStatus);
   }
 
   round(value: number, decimalPlaces: number): number {

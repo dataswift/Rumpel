@@ -8,17 +8,17 @@
 
 import { Injectable } from '@angular/core';
 import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
-import { HatApiService } from '../services/hat-api.service';
-import { User } from './user.interface';
+
+import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { AuthHttp } from '../services/auth-http.service';
-import {AccountStatus} from './account-status.interface';
+import { User } from './user.interface';
 
 @Injectable()
 export class UserService {
   private _auth$: Subject<boolean> = <Subject<boolean>>new Subject();
   private _user$: ReplaySubject<User> = <ReplaySubject<User>>new ReplaySubject(1);
 
-  constructor(private hatSvc: HatApiService,
+  constructor(private hat: HatApiV2Service,
               private authHttp: AuthHttp) {
   }
 
@@ -29,14 +29,14 @@ export class UserService {
   }
 
   loginWithToken(token: string): boolean {
-    const user: User = this.hatSvc.loginWithToken(token);
+    const user: User = this.hat.loginWithToken(token);
     this._user$.next(user);
 
     return user.authenticated;
   }
 
   login(username: string, password: string): Observable<boolean> {
-    return this.hatSvc.login(username, password)
+    return this.hat.login(username, password)
       .map((user: User) => {
         this._user$.next(user);
 
@@ -45,7 +45,7 @@ export class UserService {
   }
 
   hatLogin(name: string, redirect: string): Observable<any> {
-    return this.hatSvc.hatLogin(name, redirect);
+    return this.hat.hatLogin(name, redirect);
   }
 
   logout(): void {
@@ -60,37 +60,37 @@ export class UserService {
   }
 
   recoverPassword(email: string): Observable<any> {
-    return this.hatSvc.recoverPassword({ email: email });
+    return this.hat.recoverPassword({ email: email });
   }
 
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
-    return this.hatSvc.changePassword({ password: oldPassword, newPassword: newPassword });
+    return this.hat.changePassword({ password: oldPassword, newPassword: newPassword });
   }
 
   resetPassword(resetToken: string, newPassword: string): Observable<any> {
-    return this.hatSvc.resetPassword(resetToken, { newPassword: newPassword });
+    return this.hat.resetPassword(resetToken, { newPassword: newPassword });
   }
 
-  getAccountStatus(): Observable<AccountStatus> {
-    return this.hatSvc.getAccountStatus()
-      .map((accStatus: Array<any>) => {
-        return {
-          previousLogin: accStatus[0]['kind']['metric'],
-          databaseStorage: {
-            metric: accStatus[2]['kind']['metric'],
-            units: accStatus[2]['kind']['units']
-          },
-          databaseStorageUsed: {
-            metric: accStatus[4]['kind']['metric'],
-            units: accStatus[4]['kind']['units']
-          },
-          databaseStorageUsedShare: {
-            metric: accStatus[6]['kind']['metric'],
-            units: accStatus[6]['kind']['units']
-          }
-        };
-      });
-  }
+  // getAccountStatus(): Observable<AccountStatus> {
+  //   return this.hatSvc.getAccountStatus()
+  //     .map((accStatus: Array<any>) => {
+  //       return {
+  //         previousLogin: accStatus[0]['kind']['metric'],
+  //         databaseStorage: {
+  //           metric: accStatus[2]['kind']['metric'],
+  //           units: accStatus[2]['kind']['units']
+  //         },
+  //         databaseStorageUsed: {
+  //           metric: accStatus[4]['kind']['metric'],
+  //           units: accStatus[4]['kind']['units']
+  //         },
+  //         databaseStorageUsedShare: {
+  //           metric: accStatus[6]['kind']['metric'],
+  //           units: accStatus[6]['kind']['units']
+  //         }
+  //       };
+  //     });
+  // }
 
   get user$(): Observable<User> {
     return this._user$.asObservable();

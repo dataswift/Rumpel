@@ -13,15 +13,14 @@ import { UserService } from '../user.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 
 @Component({
-  selector: 'rump-login',
-  templateUrl: 'login.component.html',
-  styleUrls: ['login.component.scss']
+  selector: 'rump-login-native',
+  templateUrl: 'login-native.component.html',
+  styleUrls: ['login-native.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginNativeComponent implements OnInit {
   public hatDomain: string;
   public error: string;
   private redirectPath: string;
-  private navExtras: NavigationExtras;
 
   constructor(@Inject(APP_CONFIG) public config: IAppConfig,
               private route: ActivatedRoute,
@@ -32,25 +31,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     const qps = this.route.snapshot.queryParams;
+    this.redirectPath = qps['target'] || 'dashboard';
 
-    if (qps['name'] && qps['redirect']) {
-      this.navExtras = { queryParams: {
-        name: qps['name'],
-        redirect: qps['redirect']
-      }};
-    } else {
-      this.navExtras = {};
-    }
-
-    if (qps['target']) {
-      this.redirectPath = qps['target'];
-    } else {
-      this.redirectPath = 'dashboard';
-    }
-
-    // Redirect user to the dashboard if she is already authenticated
+    // Skip login step if the user is already authenticated
     if (this.userSvc.isLoggedIn()) {
-      this.router.navigate(['dashboard']);
+      this.router.navigate([this.redirectPath]);
     }
   }
 
@@ -75,7 +60,7 @@ export class LoginComponent implements OnInit {
     this.storageSvc.rememberMe = form.value.rememberMe;
     this.userSvc.login(this.username, form.value.password).subscribe(
       (isAuthenticated: boolean) => {
-        this.router.navigate([this.redirectPath], this.navExtras);
+        this.router.navigate([this.redirectPath]);
       },
       err => {
         console.log('Login failed! Reason: ', err);

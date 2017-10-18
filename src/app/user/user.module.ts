@@ -10,12 +10,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
-import { LoginComponent } from './login/login.component';
+import { LoginNativeComponent } from './login-native/login-native.component';
 import { UserService } from './user.service';
 import { PasswordRecoverComponent } from './password-recover/password-recover.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';
-import { LoginHatComponent } from './login-hat/login-hat.component';
+import { LoginOauthComponent } from './login-oauth/login-oauth.component';
 import { AccountStatusTileComponent } from './account-status-tile/account-status-tile.component';
 
 @NgModule({
@@ -24,11 +24,11 @@ import { AccountStatusTileComponent } from './account-status-tile/account-status
     FormsModule
   ],
   declarations: [
-    LoginComponent,
+    LoginNativeComponent,
     PasswordRecoverComponent,
     PasswordChangeComponent,
     LoginStandaloneComponent,
-    LoginHatComponent,
+    LoginOauthComponent,
     AccountStatusTileComponent
   ],
   providers: [ UserService ],
