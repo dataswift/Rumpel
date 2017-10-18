@@ -21,6 +21,7 @@ export class ProfilesService extends BaseDataService<Profile> {
 
   coerceType(rawProfile: HatRecord<any>): HatRecord<Profile> {
     const coreData = rawProfile.data;
+
     return {
       endpoint: rawProfile.endpoint,
       recordId: rawProfile.recordId,

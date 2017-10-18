@@ -31,6 +31,7 @@ export class NotableComponent implements OnInit {
 
   getLogo(name: string): string {
     const foundIntegration = this.config.notables.activeIntegrations.find(integration => integration.name === name);
+
     return foundIntegration ? foundIntegration.logoUrl : '';
   }
 

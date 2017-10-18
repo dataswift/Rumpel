@@ -46,6 +46,7 @@ export class AuthHttp extends Http {
       return super.get(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('GET error: ', err);
+
           return Observable.empty();
         });
     } else {
@@ -60,6 +61,7 @@ export class AuthHttp extends Http {
       return super.post(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('POST error: ', err);
+
           return Observable.empty();
         });
     } else {
@@ -74,6 +76,7 @@ export class AuthHttp extends Http {
       return super.put(this.hatBaseUrl + path, body, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('PUT error: ', err);
+
           return Observable.empty();
         });
     } else {
@@ -88,6 +91,7 @@ export class AuthHttp extends Http {
       return super.delete(this.hatBaseUrl + path, this.addAuthorizationHeaders(options))
         .catch(err => {
           console.log('DELETE error: ', err);
+
           return Observable.empty();
         });
     } else {
@@ -115,6 +119,7 @@ export class AuthHttp extends Http {
       this.storageSvc.setItem('lastLoginDomain', domain);
       this.storageSvc.setAuthToken(token);
       this._auth$.next(true);
+
       return {
         hatId: hatId,
         domain: domain,
@@ -123,6 +128,7 @@ export class AuthHttp extends Http {
       };
     } else {
       this._auth$.next(false);
+
       return {
         hatId: null,
         domain: null,
@@ -150,6 +156,7 @@ export class AuthHttp extends Http {
         const fullDomain = this.jwtHelper.decodeToken(token)['iss'];
         this.hatBaseUrl = `${httpProtocol || this.config.protocol}//${fullDomain}`;
         this._auth$.next(true);
+
         return {
           hatId: fullDomain.slice(0, fullDomain.indexOf('.')),
           domain: fullDomain.slice(fullDomain.indexOf('.') + 1),
@@ -175,6 +182,7 @@ export class AuthHttp extends Http {
     if (token) {
       const expired = this.jwtHelper.isTokenExpired(token, COOKIE_EXPIRATION_CHECK_OFFSET);
       const ownerScope = this.jwtHelper.decodeToken(token)['accessScope'] === 'owner';
+
       return !expired && ownerScope;
     } else {
       return false;
@@ -189,6 +197,7 @@ export class AuthHttp extends Http {
     }
 
     options.headers.set('X-Auth-Token', this.tokenName);
+
     return options;
   }
 

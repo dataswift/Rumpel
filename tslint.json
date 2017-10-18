@@ -30,6 +30,7 @@
       "static-before-instance",
       "variables-before-functions"
     ],
+    "newline-before-return": true,
     "no-arg": true,
     "no-bitwise": true,
     "no-console": [
@@ -71,6 +72,10 @@
     "radix": true,
     "semicolon": [
       "always"
+    ],
+    "space-before-function-paren": [
+      true,
+      "never"
     ],
     "triple-equals": [
       true,

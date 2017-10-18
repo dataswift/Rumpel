@@ -98,6 +98,7 @@ export class NotablesService extends BaseDataService<Notable> {
           return this.hat.getDataDebit(offerInfo.dataDebitId)
             .map((ddInfo: any) => {
               offerInfo.confirmed = ddInfo.enabled;
+
               return offerInfo;
             });
         } else {
@@ -129,6 +130,7 @@ export class NotablesService extends BaseDataService<Notable> {
           return this.hat.updateDataDebit(offerInfo.dataDebitId, 'enable')
             .catch(err => {
               console.log('Failed to confirm Data Debit with the HAT', err);
+
               return Observable.of(null);
             });
         } else {

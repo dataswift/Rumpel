@@ -27,6 +27,7 @@ export class TimeFilterPipe implements PipeTransform {
       console.error('Error while filtering data', dataPoints, e);
       filtered = [];
     }
+
     return filtered;
   }
 

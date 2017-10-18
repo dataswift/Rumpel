@@ -25,6 +25,7 @@ export class UserService {
   isLoggedIn(): boolean {
     const user: User = this.authHttp.hasValidToken;
     this._user$.next(user);
+
     return user.authenticated;
   }
 

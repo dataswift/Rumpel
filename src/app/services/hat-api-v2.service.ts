@@ -38,6 +38,7 @@ export class HatApiV2Service {
     return this.http.get(path, { headers: headers })
       .map((res: Response) => {
         const token = res.json().accessToken;
+
         return this.loginWithToken(token);
       });
   }

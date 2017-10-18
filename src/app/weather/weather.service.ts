@@ -22,6 +22,7 @@ export class WeatherService {
 
   getCurrentWeather(country: string, city: string): Observable<any> {
     const url = `${this.baseUrl}/${this.token}/conditions/q/autoip.json`;
+
     return this.http.get(url)
       .map(res => res.json())
       .map(wunder => wunder.current_observation);

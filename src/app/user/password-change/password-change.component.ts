@@ -56,6 +56,7 @@ export class PasswordChangeComponent implements OnInit {
 
       if (passwordStrength.score <= 2) {
         this.strengthError = 'ERROR: Password is too weak. Please make it harder to guess.';
+
         return;
       }
 

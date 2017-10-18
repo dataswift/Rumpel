@@ -47,6 +47,7 @@ export class LoginOauthComponent implements OnInit {
 
   get username(): string {
     const host = window.location.hostname;
+
     return host.substring(0, host.indexOf('.'));
   }
 

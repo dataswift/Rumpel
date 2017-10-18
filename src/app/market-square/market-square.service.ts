@@ -49,7 +49,6 @@ export class MarketSquareService {
     return this.getAllOffers()
       .map(offers => {
         const validOffers = offers.filter(offer => {
-          console.log('BA', offer);
           return moment(offer.expires).isAfter() &&
             (offer.status === 'approved' || offer.status === 'satisfied');
         });
@@ -64,9 +63,11 @@ export class MarketSquareService {
     }
 
     const url = this.config.exchange.url + '/offers';
+
     return this.http.get(url, { headers: this._headers, body: '' })
       .map(res => {
         this.offersStore = res.json();
+
         return this.offersStore;
       });
   }
@@ -89,6 +90,7 @@ export class MarketSquareService {
 
   getOffer(id: string): Observable<MSUserClaim> {
     const url = this.config.exchange.url + '/offer/' + id + '/userClaim';
+
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
       .map(res => res.json()))
@@ -103,6 +105,7 @@ export class MarketSquareService {
       .map(res => res.json()))
       .catch(err => {
         console.log(`Failed to claim data offer on user's behalf`, err);
+
         return Observable.of(null);
       });
   }
@@ -205,7 +208,6 @@ export class MarketSquareService {
     const errMsg = `${error.status} - ${error.statusText || ''}
                     ${err}`;
 
-    console.warn(errMsg);
     return Observable.throw(errMsg);
   }
 }

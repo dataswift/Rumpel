@@ -55,6 +55,7 @@ export class HatApiService {
     return this.http.get('users/access_token', { headers: headers, body: '' })
       .map((res: Response) => {
         const token = res.json().accessToken;
+
         return this.authHttp.setToken(token);
       });
   }
@@ -251,6 +252,7 @@ export class HatApiService {
       .catch(err => {
         console.warn(`Could not access public data of the current HAT.
                       Reason: ${err}`);
+
         return Observable.of(endpoint === 'profile' ? { 'public': false } : []);
       });
   }
@@ -304,6 +306,7 @@ export class HatApiService {
 
     table.fields.reduce((acc, field) => {
       acc[prefix + '_' + field.name] = field.id;
+
       return acc;
     }, mapping);
 
@@ -311,6 +314,7 @@ export class HatApiService {
       const mappedSubTables = table.subTables.reduce((acc, tableNode) => {
         const mappedTable = this.mapDataSource(tableNode, prefix + '_' + tableNode.name);
         Object.assign(acc, mappedTable);
+
         return acc;
       }, mapping);
     }
@@ -366,6 +370,7 @@ export class HatApiService {
       } else {
         acc[field.name] = null;
       }
+
       return acc;
     }, values);
 

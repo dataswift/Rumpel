@@ -124,6 +124,7 @@ export class NotablesMdEditorComponent implements OnInit {
   submit() {
     if (this.currentNotable.data.isShared === true && this.currentNotable.data.shared_on.length === 0) {
       this.cannotPostMessage = 'Please select at least one shared destination.';
+
       return;
     }
 

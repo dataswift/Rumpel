@@ -35,6 +35,7 @@ export class RelativeTimesFilterPipe implements PipeTransform {
       default:
         filteredData = [];
     }
+
     return filteredData;
   }
 

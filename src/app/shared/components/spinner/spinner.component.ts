@@ -24,6 +24,7 @@ export class SpinnerComponent implements OnDestroy {
     if (!value) {
       this.cancelTimeout();
       this.isDelayedRunning = false;
+
       return;
     }
 

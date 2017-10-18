@@ -34,6 +34,7 @@ export class RumpelService {
   loadTableList(): Observable<any> {
     if (this.loaded) {
       this._state$.next(this.state);
+
       return this.state$;
     }
 
@@ -48,6 +49,7 @@ export class RumpelService {
       .subscribe(
         idMappings => {
           this.loaded = true;
+
           return this._state$.next(this.state);
         },
         err => console.log('Error setting up Rumpel data tables')

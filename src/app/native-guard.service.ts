@@ -21,6 +21,7 @@ export class NativeGuard implements CanActivate {
       return true;
     } else {
       this.router.navigate(['user', 'login', 'start']);
+
       return false;
     }
   }

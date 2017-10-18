@@ -145,6 +145,7 @@ export class OfferModalComponent implements OnInit {
               if (offer.claim && offer.claim.status) {
                 claimStatus = offer.claim.status;
               }
+
               return (  claimStatus !== 'untouched' &&
                         claimStatus !== 'rejected'
                       )
@@ -191,7 +192,7 @@ export class OfferModalComponent implements OnInit {
   }
 
 
-  claimReward (type) {
+  claimReward(type) {
      if (type === 'cash') {
        this.statsComponent.showConfirmBox();
      } else {
