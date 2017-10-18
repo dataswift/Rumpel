@@ -17,7 +17,7 @@ export interface DataDebit {
 }
 
 export interface DataDebitValues {
-  bundle: { [endpoint: string]: HatRecord[] };
+  bundle: { [endpoint: string]: HatRecord<any>[]; };
 }
 
 interface Client {

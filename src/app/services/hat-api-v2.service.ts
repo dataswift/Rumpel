@@ -10,8 +10,10 @@ import { Inject, Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { AuthHttp } from './auth-http.service';
 import { APP_CONFIG, IAppConfig } from '../app.config';
-import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { Observable } from 'rxjs/Observable';
+
+import { User } from '../user/user.interface';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { DataDebit, DataDebitValues } from '../shared/interfaces/data-debit.interface';
 import { FileMetadataReq, FileMetadataRes } from '../shared/interfaces/file.interface';
 
@@ -24,6 +26,58 @@ export class HatApiV2Service {
               private authHttp: AuthHttp,
               private http: Http) {
     this.appNamespace = config.name.toLowerCase();
+  }
+
+  login(username: string, password: string): Observable<User> {
+    const path = `/users/access_token`;
+    const headers = new Headers({
+      username: encodeURIComponent(username),
+      password: encodeURIComponent(password)
+    });
+
+    return this.http.get(path, { headers: headers })
+      .map((res: Response) => {
+        const token = res.json().accessToken;
+        return this.loginWithToken(token);
+      });
+  }
+
+  loginWithToken(token: string): User {
+    return this.authHttp.setToken(token);
+  }
+
+  hatLogin(name: string, redirect: string): Observable<string> {
+    const path = `/control/v2/auth/hatlogin`;
+    const queryParams = new URLSearchParams();
+    queryParams.append('name', name);
+    queryParams.append('redirect', redirect);
+
+    return this.authHttp.get(path, { search: queryParams })
+      .map((res: Response) => res.json().message);
+  }
+
+  recoverPassword(body: { email: string; }): Observable<any> {
+    const path = `/control/v2/auth/passwordReset`;
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.post(path, body, { headers: headers })
+      .map((res: Response) => res.json());
+  }
+
+  changePassword(body: { password: string; newPassword: string; }): Observable<any> {
+    const path = `/control/v2/auth/password`;
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.authHttp.post(path, body, { headers: headers })
+      .map((res: Response) => res.json());
+  }
+
+  resetPassword(resetToken: string, body: { newPassword: string; }): Observable<any> {
+    const path = `/control/v2/auth/passwordreset/confirm/${resetToken}`;
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.post(path, body, { headers: headers })
+      .map((res: Response) => res.json());
   }
 
   getDataRecords(namespace: string, endpoint: string, take?: number, drop?: number): Observable<HatRecord<any>[]> {

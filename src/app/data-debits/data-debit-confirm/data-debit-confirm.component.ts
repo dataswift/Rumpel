@@ -107,8 +107,8 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
   }
 
   private updateDataDebitInformation() {
-    this._ddSvc.loadDataDebit(this.uuid).subscribe(debitInfo => {
-      this.ddConfirmed = debitInfo.enabled || false;
+    this._ddSvc.loadDataDebit(this.uuid).subscribe((debitInfo: DataDebit) => {
+      this.ddConfirmed = debitInfo.bundles[0].enabled || false;
       this.dataDebit = debitInfo;
       this.updateStatus();
     });

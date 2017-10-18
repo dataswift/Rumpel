@@ -19,6 +19,7 @@ import { User } from '../../shared/interfaces/index';
 import { Subscription } from 'rxjs/Rx';
 import { AccountStatus } from '../../user/account-status.interface';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
+import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 
 declare var $: any;
 
@@ -56,12 +57,11 @@ export class HeaderComponent implements OnInit {
       if (user.authenticated) {
         this._notificationsSvc.getAllNotifications();
 
-        this.profilesSvc.getPicture().subscribe(result => {
-          if (result && result.url) {
-            this.profile.photo.url = result.url;
-          }
-        });
-
+        // this.profilesSvc.getPicture().subscribe(result => {
+        //   if (result && result.url) {
+        //     this.profile.photo.url = result.url;
+        //   }
+        // });
 
         this.hatDomain = user.fullDomain;
         this.profile.domain = user.domain;
@@ -89,19 +89,19 @@ export class HeaderComponent implements OnInit {
       photo: { url: '', shared: false }, first_name: '', hatId: '', domain: ''
     };
 
-    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
       const latestSnapshot = profileSnapshots[0];
 
-      if (latestSnapshot && latestSnapshot.personal.first_name) {
-        this.profile.first_name = latestSnapshot.personal.first_name;
+      if (latestSnapshot && latestSnapshot.data.personal.first_name) {
+        this.profile.first_name = latestSnapshot.data.personal.first_name;
       }
 
-      if (latestSnapshot && latestSnapshot.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.fb_profile_photo.private;
+      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
+        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
       }
     });
 
-    this.userSvc.getAccountStatus().subscribe((accountStatus: AccountStatus) => this.accountStatus = accountStatus);
+    // this.userSvc.getAccountStatus().subscribe((accountStatus: AccountStatus) => this.accountStatus = accountStatus);
 
   }
 
@@ -114,19 +114,6 @@ export class HeaderComponent implements OnInit {
       + window.location.hostname + `">here</a>`
     });
   }
-
-  // showLinkingModal() {
-  //   this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-  //     title: 'Report An Issue',
-  //     message: `There are 2 ways to report bugs. Post them at the
-  //              community forum or just drop us a note in the chatroom at Marketsquare.
-  //              There is already a room called feedback and bug report and you can talk to us there!`,
-  //     buttons: [
-  //       { title: 'Go To Forum', link: 'http://forum.hatcommunity.org/c/hat-users' },
-  //       { title: 'Chat To Us', link: 'https://marketsquare.hubofallthings.com' }
-  //     ]
-  //   });
-  // }
 
   signOut() {
     this.userSvc.logout();
@@ -143,12 +130,9 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
-
   navigateTo(link: string) {
     window.location.href = link;
   }
-
 
   showPopover() {
     $('[data-toggle="popover"]').popover();
@@ -157,7 +141,6 @@ export class HeaderComponent implements OnInit {
   showAccountOptions() {
     $('.dropdown-toggle').dropdown();
   }
-
 
   showNotificationsBar(bool: boolean): void {
     this.showNotifications = bool;

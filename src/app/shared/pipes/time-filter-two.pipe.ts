@@ -8,19 +8,22 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { Moment } from 'moment';
+import { HatRecord } from '../interfaces/hat-record.interface';
 
 @Pipe({
   name: 'timeFilterTwo'
 })
 export class TimeFilterTwoPipe implements PipeTransform {
 
-  transform(timedData: Array<any>, startTime: Moment, endTime: Moment): Array<any> {
+  transform(timedData: HatRecord<any>[], startTime?: Moment, endTime?: Moment): Array<any> {
+    const unpackedTimedData = timedData.map(dp => dp.data);
+
     if (startTime && endTime) {
-      return timedData.filter(dp => dp.timestamp.isAfter(startTime) && dp.timestamp.isBefore(endTime));
+      return unpackedTimedData.filter(dp => dp.timestamp.isAfter(startTime) && dp.timestamp.isBefore(endTime));
     } else if (startTime) {
-      return timedData.filter(dp => dp.timestamp.isAfter(startTime));
+      return unpackedTimedData.filter(dp => dp.timestamp.isAfter(startTime));
     } else {
-      return timedData;
+      return unpackedTimedData;
     }
   }
 

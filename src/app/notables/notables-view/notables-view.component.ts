@@ -9,9 +9,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
+import { DialogService } from '../../layout/dialog.service';
+
+import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
 import { Notable, Profile } from '../../shared/interfaces';
-import {DialogService} from '../../layout/dialog.service';
-import {ConfirmBoxComponent} from '../../layout/confirm-box/confirm-box.component';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 declare var $: any;
 
@@ -21,7 +23,7 @@ declare var $: any;
   styleUrls: ['./notables-view.component.scss']
 })
 export class NotablesViewComponent implements OnInit {
-  public notables: Array<Notable>;
+  public notables: HatRecord<Notable>[];
   public profile: { photo: { url: string; shared: boolean; }; };
   public filter: string;
 
@@ -33,7 +35,7 @@ export class NotablesViewComponent implements OnInit {
     this.filter = '';
     this.notables = [];
 
-    this.notablesSvc.data$.subscribe((notables: Notable[]) => {
+    this.notablesSvc.data$.subscribe((notables: HatRecord<Notable>[]) => {
       this.notables = notables;
     });
 
@@ -41,19 +43,18 @@ export class NotablesViewComponent implements OnInit {
       photo: { url: '', shared: false }
     };
 
-    this.profilesSvc.getPicture().subscribe(result => {
-      if (result && result.url) {
-        this.profile.photo.url = result.url;
-      }
-    });
+    // this.profilesSvc.getPicture().subscribe(result => {
+    //   if (result && result.url) {
+    //     this.profile.photo.url = result.url;
+    //   }
+    // });
 
-    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
       const latestSnapshot = profileSnapshots[0];
-      if (latestSnapshot && latestSnapshot.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.fb_profile_photo.private;
+      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
+        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
       }
     });
-
   }
 
   filterBy(category: string) {
@@ -74,12 +75,12 @@ export class NotablesViewComponent implements OnInit {
           To remove a note from the external site, first make it private. You may then choose to delete it.`,
             accept: () => {
               // event.target.parentNode.parentNode.className += " removed-item";
-              setTimeout(() => this.notablesSvc.deleteNotable(event.notable.id), 900);
+              setTimeout(() => this.notablesSvc.delete(event.notable), 900);
             }
           });
         } else {
           // event.target.parentNode.parentNode.className += " removed-item";
-          setTimeout(() => this.notablesSvc.deleteNotable(event.notable.id), 900);
+          setTimeout(() => this.notablesSvc.delete(event.notable.id), 900);
         }
         break;
     }

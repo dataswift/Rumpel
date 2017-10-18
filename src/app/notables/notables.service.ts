@@ -27,8 +27,8 @@ import {HatRecord} from '../shared/interfaces/hat-record.interface';
 export class NotablesService extends BaseDataService<Notable> {
   public notablesServiceMeta: NotablesServiceMeta;
 
-  private _editedNotable$: ReplaySubject<Notable>;
-  public editedNotable$: Observable<Notable>;
+  private _editedNotable$: ReplaySubject<HatRecord<Notable>>;
+  public editedNotable$: Observable<HatRecord<Notable>>;
 
   private _notablesMeta$: BehaviorSubject<NotablesServiceMeta>;
   public notablesMeta$: Observable<NotablesServiceMeta>;
@@ -47,7 +47,7 @@ export class NotablesService extends BaseDataService<Notable> {
       activeIntegrations: this.config.notables.activeIntegrations
     };
 
-    this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject(1);
+    this._editedNotable$ = <ReplaySubject<HatRecord<Notable>>>new ReplaySubject(1);
     this.editedNotable$ = this._editedNotable$.asObservable();
 
     this._notablesMeta$ = <BehaviorSubject<NotablesServiceMeta>>new BehaviorSubject(this.notablesServiceMeta);
@@ -110,7 +110,7 @@ export class NotablesService extends BaseDataService<Notable> {
     this.save(recordValue, () => this.market.tickle());
   }
 
-  editNotable(notable: Notable) {
+  editNotable(notable: HatRecord<Notable>) {
     this._editedNotable$.next(notable);
   }
 

@@ -6,8 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Post, Tweet, Photo, Notable } from '../../shared/interfaces/index';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { ExpandedTime } from '../../shared/interfaces/index';

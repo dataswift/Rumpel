@@ -15,9 +15,7 @@ export abstract class BaseDataService<T> {
   private _data$: ReplaySubject<HatRecord<T>[]> = <ReplaySubject<HatRecord<T>[]>>new ReplaySubject(1);
   public hat: HatApiV2Service;
   public uiSvc: UiStateService;
-  public store: {
-    data: HatRecord<T>[];
-  };
+  private store: { data: HatRecord<T>[]; } = { data: [] };
 
   private RECORDS_PER_REQUEST = 25;
   private drop = 0;
@@ -56,7 +54,7 @@ export abstract class BaseDataService<T> {
       this.hat.getDataRecords(this.namespace, this.endpoint, take)
         .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
         .subscribe((data: HatRecord<T>[]) => {
-          this.store.data = data;
+          this.store.data = this.store.data.concat(data);
           this.drop = this.drop + data.length;
           this.pushToStream();
         });
@@ -71,7 +69,7 @@ export abstract class BaseDataService<T> {
         this.drop = this.drop + data.length;
         this.pushToStream();
 
-        if (repeatUntilMinRecordNumber && repeatUntilMinRecordNumber < this.drop) {
+        if (repeatUntilMinRecordNumber && this.drop < repeatUntilMinRecordNumber) {
           this.getMoreData(take, repeatUntilMinRecordNumber);
         }
       });

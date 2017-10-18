@@ -6,23 +6,26 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit } from '@angular/core';
-import { Notable, Profile } from '../../shared/interfaces';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { NotablesService } from '../notables.service';
-import {UserService} from '../../user/user.service';
-import {User} from '../../user/user.interface';
+import { UserService } from '../../user/user.service';
+
+import { Notable, Profile } from '../../shared/interfaces';
+import { User } from '../../user/user.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'rump-tile-notables',
   templateUrl: 'tile-notables.component.html',
   styleUrls: ['tile-notables.component.scss']
 })
-export class TileNotablesComponent implements OnInit {
-  public notables: Array<Notable>;
+export class TileNotablesComponent implements OnInit, OnDestroy {
+  public notables: HatRecord<Notable>[];
   public profile: { photo: { url: string; shared: boolean; }; };
   public iconMap: any;
-  private sub: any;
+  private sub: Subscription;
 
   constructor(private notablesSvc: NotablesService,
               private profilesSvc: ProfilesService,
@@ -37,7 +40,7 @@ export class TileNotablesComponent implements OnInit {
       blog: 'write'
     };
 
-    this.notablesSvc.data$.subscribe(notables => {
+    this.sub = this.notablesSvc.data$.subscribe(notables => {
       this.notables = notables;
     });
 
@@ -47,21 +50,24 @@ export class TileNotablesComponent implements OnInit {
 
     this.userSvc.user$.subscribe((user: User) => {
       if (user.authenticated === true) {
-        this.profilesSvc.getPicture().subscribe(result => {
-          if (result && result.url) {
-            this.profile.photo.url = result.url;
-          }
-        });
+        // this.profilesSvc.getPicture().subscribe(result => {
+        //   if (result && result.url) {
+        //     this.profile.photo.url = result.url;
+        //   }
+        // });
       }
     });
 
-    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
       const latestSnapshot = profileSnapshots[0];
-      if (latestSnapshot && latestSnapshot.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.fb_profile_photo.private;
+      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
+        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
       }
     });
+  }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }

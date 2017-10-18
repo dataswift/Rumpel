@@ -14,14 +14,13 @@ import { SharedModule } from '../shared/shared.module';
 import { CalendarComponent } from './calendar/calendar.component';
 import { TileCalendarComponent } from './tile-calendar/tile-calendar.component';
 
-import { EventsService } from './events.service';
 import { FacebookEventsService } from './facebook-events.service';
 import { GoogleEventsService } from './google-events.service';
 
 @NgModule({
     imports: [ SharedModule, DimensionsRoutingModule ],
     declarations: [ CalendarComponent, TileCalendarComponent ],
-    providers: [ EventsService, FacebookEventsService, GoogleEventsService ],
+    providers: [ FacebookEventsService, GoogleEventsService ],
     exports: [ TileCalendarComponent ]
 })
 export class DimensionsModule {}

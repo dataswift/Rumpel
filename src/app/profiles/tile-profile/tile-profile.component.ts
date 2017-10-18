@@ -9,6 +9,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../profiles.service';
 import { Profile } from '../../shared/interfaces/profile.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-tile-profile',
@@ -21,9 +22,9 @@ export class TileProfileComponent implements OnInit {
   constructor(private profilesSvc: ProfilesService) {}
 
   ngOnInit() {
-    this.profilesSvc.data$.subscribe((profileSnapshots: Profile[]) => {
+    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
       if (profileSnapshots.length > 0) {
-        this.profile = profileSnapshots[0];
+        this.profile = profileSnapshots[0].data;
       }
     });
 

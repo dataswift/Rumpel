@@ -18,13 +18,9 @@ import { DataTable } from '../shared/interfaces/data-table.interface';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.interface';
 import { MarketSquareService } from '../market-square/market-square.service';
-import { EventsService } from '../dimensions/events.service';
 import { LocationsService } from '../locations/locations.service';
 
 import { APP_CONFIG, IAppConfig} from '../app.config';
-
-import { Event } from '../shared/interfaces';
-import * as moment from 'moment';
 
 @Injectable()
 export class DataPlugService {
@@ -42,7 +38,6 @@ export class DataPlugService {
               private dialogSvc: DialogService,
               private uiSvc: UiStateService,
               private userSvc: UserService,
-              private eventsSvc: EventsService,
               private locationsSvc: LocationsService) {
     this.services = {
       'Facebook': {
@@ -88,20 +83,19 @@ export class DataPlugService {
       });
   }
 
-
   private getDataPlugStatus(tables, plug): boolean {
-    let plugStatus = false;
+    const plugStatus = false;
 
     const plugList: any = this.config.menuItems.dataPlugs;
     const plugName = plug.name.toLowerCase();
 
-    for (let i = 0; i < plugList.length; i++) {
-      if (plugName === plugList[i].display.toLowerCase()) {
-        plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
-      } else if (plugName === 'photos' && plugList[i].display === 'Dropbox photos') {
-        plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
-      }
-    }
+    // for (let i = 0; i < plugList.length; i++) {
+    //   if (plugName === plugList[i].display.toLowerCase()) {
+    //     plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
+    //   } else if (plugName === 'photos' && plugList[i].display === 'Dropbox photos') {
+    //     plugStatus = this.eventsSvc.checkTableExists(plugList[i].activatedSearchName, plugList[i].activatedSearchSource);
+    //   }
+    // }
 
     return plugStatus;
   }

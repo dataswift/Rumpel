@@ -28,7 +28,7 @@ export class TwitterService extends BaseDataService<Tweet> {
     const tweet: Tweet = {
       id: tweetContent.id,
       text: tweetContent.text,
-      createdTime: moment(rawTweet.lastUpdated),
+      createdTime: moment(rawTweet.data.lastUpdated),
       type: 'tweet',
       favorite_count: tweetContent.favorite_count,
       retweet_count: tweetContent.retweet_count,

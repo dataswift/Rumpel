@@ -8,8 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
-import { PhotosService } from '../photos.service';
-import { Photo, ExpandedTime } from '../../shared/interfaces/index';
+import { ExpandedTime } from '../../shared/interfaces/index';
 import * as moment from 'moment';
 
 declare var $: any;
@@ -20,22 +19,15 @@ declare var $: any;
   styleUrls: ['photos.component.scss']
 })
 export class PhotosComponent implements OnInit {
-  public images: Array<Photo> = [];
+  public images: Array<any> = [];
   public timeline: Array<ExpandedTime> = [];
   public selectedTime: ExpandedTime = null;
   public showTimeline: boolean;
-  private _sub;
 
-  constructor(private _photosSvc: PhotosService) {}
+  constructor() {}
 
   ngOnInit() {
     this.showTimeline = true;
-    this._sub = this._photosSvc.photos$.subscribe(images => {
-      this.images = images;
-      this.addDatesToTimeline(images);
-    });
-
-    this._photosSvc.getRecentPhotos();
   }
 
   selectControlsTime(relativeTime: string) {
@@ -68,7 +60,7 @@ export class PhotosComponent implements OnInit {
     }
   }
 
-  private addDatesToTimeline(dataPoints: Array<Photo>) {
+  private addDatesToTimeline(dataPoints: Array<any>) {
     const timestamps: Array<ExpandedTime> = _.sortedUniqBy(
       dataPoints.map(dp => new ExpandedTime(dp.timestamp)).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
       'unixDayStart');

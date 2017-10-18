@@ -8,12 +8,14 @@
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Location } from '../../shared/interfaces';
 import { LocationsService } from '../locations.service';
 
-import * as moment from 'moment';
+import { Location } from '../../shared/interfaces';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { Moment } from 'moment';
 import { Subscription } from 'rxjs/Subscription';
+
+import * as moment from 'moment';
 
 declare var $: any;
 
@@ -23,7 +25,7 @@ declare var $: any;
   styleUrls: ['locations.component.scss']
 })
 export class LocationsComponent implements OnInit, OnDestroy {
-  public locations: Array<Location>;
+  public locations: HatRecord<Location>[];
   public safeSize;
   public selectedTime: string;
   public lowerTimeBound: Moment;
@@ -43,13 +45,8 @@ export class LocationsComponent implements OnInit, OnDestroy {
 
     this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
 
-    this.sub = this.locationsSvc.data$.subscribe(locations => {
+    this.sub = this.locationsSvc.data$.subscribe((locations: HatRecord<Location>[]) => {
       this.locations = locations;
-
-      if (locations.length > this.totalDP) {
-        this.totalDP = locations.length;
-        this.locationsSvc.getMoreData(500, 5000);
-      }
     });
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 350 + 'px');
@@ -58,6 +55,8 @@ export class LocationsComponent implements OnInit, OnDestroy {
     $(window).resize(function() {
       thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
     });
+
+    this.locationsSvc.getMoreData(500, 5000);
   }
 
   ngOnDestroy() {
@@ -93,9 +92,9 @@ export class LocationsComponent implements OnInit, OnDestroy {
     const startTime = moment(formContent.date).format('X');
     const endTime = moment(formContent.date).endOf('day').format('X');
 
-    this.locationsSvc.getTimeIntervalData(startTime, endTime);
-    this.lowerTimeBound = moment(formContent.date);
-    this.upperTimeBound = moment(formContent.date).endOf('day');
+    // this.locationsSvc.getTimeIntervalData(startTime, endTime);
+    // this.lowerTimeBound = moment(formContent.date);
+    // this.upperTimeBound = moment(formContent.date).endOf('day');
   }
 
   showPopover(event) {
