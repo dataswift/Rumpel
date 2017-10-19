@@ -30,7 +30,7 @@ export class DataOfferService {
   }
 
   fetchOfferList(): void {
-    const url = this.config.databuyer.url.concat('/api/v1/offers');
+    const url = this.config.databuyer.url.concat('/api/v2/offers');
 
     this.http.get(url)
       .map(res => {
@@ -53,7 +53,7 @@ export class DataOfferService {
 
 
   redeemCash(): void {
-    const url = this.config.databuyer.url.concat('/api/v1/user/redeem/cash');
+    const url = this.config.databuyer.url.concat('/api/v2/user/redeem/cash');
 
     this.getDataBuyerToken()
       .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
@@ -65,7 +65,7 @@ export class DataOfferService {
   }
 
   private fetchUserAwareOfferList(): Observable<Offer[]> {
-    const url = this.config.databuyer.url.concat('/api/v1/offersWithClaims');
+    const url = this.config.databuyer.url.concat('/api/v2/offersWithClaims');
 
     return Observable.forkJoin(this.getDataBuyerToken(), this.fetchMerchantFilter())
       .flatMap(([headers, merchants]) => {
@@ -96,7 +96,7 @@ export class DataOfferService {
   }
 
   private claimOfferWithDataBuyer(offerId: string): Observable<Claim> {
-    const url = this.config.databuyer.url.concat('/api/v1/offer/', offerId, '/claim');
+    const url = this.config.databuyer.url.concat('/api/v2/offer/', offerId, '/claim');
 
     return this.getDataBuyerToken()
       .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
