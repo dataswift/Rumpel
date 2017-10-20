@@ -19,7 +19,7 @@ import * as moment from 'moment';
 export class MediaService extends BaseDataService<MusicListen> {
 
   constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'facebook', 'music_listens');
+    super(hat, uiSvc, 'facebook', 'music_listens', 'changeme');
   }
 
   coerceType(rawMusicListen: HatRecord<any>): HatRecord<MusicListen> {

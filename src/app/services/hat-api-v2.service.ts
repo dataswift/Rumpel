@@ -81,15 +81,18 @@ export class HatApiV2Service {
       .map((res: Response) => res.json());
   }
 
-  getDataRecords(namespace: string, endpoint: string, take?: number, drop?: number): Observable<HatRecord<any>[]> {
+  getDataRecords(namespace: string, endpoint: string, take?: number, orderBy?: string, drop?: number): Observable<HatRecord<any>[]> {
     const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
     const queryParams = new URLSearchParams();
 
-    queryParams.append('orderBy', 'date');
     queryParams.append('ordering', 'descending');
 
     if (take) {
       queryParams.append('take', take.toString());
+    }
+
+    if (orderBy) {
+      queryParams.append('orderBy', orderBy);
     }
 
     if (drop) {
@@ -108,7 +111,7 @@ export class HatApiV2Service {
   updateRecord(hatRecord: HatRecord<any>): Observable<HatRecord<any>> {
     const path = `${this.pathPrefix}/data`;
 
-    return this.authHttp.put(path, hatRecord).map((res: Response) => <HatRecord<any>>res.json())
+    return this.authHttp.put(path, [hatRecord]).map((res: Response) => <HatRecord<any>>res.json())
   }
 
   deleteRecords(recordIds: Array<string>): Observable<number> {

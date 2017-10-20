@@ -39,6 +39,8 @@ export class NotablesViewComponent implements OnInit {
       this.notables = notables;
     });
 
+    this.notablesSvc.getInitData(50);
+
     this.profile = {
       photo: { url: '', shared: false }
     };

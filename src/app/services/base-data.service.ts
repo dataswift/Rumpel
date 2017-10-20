@@ -21,10 +21,11 @@ export abstract class BaseDataService<T> {
   private drop = 0;
   private namespace: string;
   private endpoint: string;
+  private orderBy: string;
   private _loading$: Subject<boolean> = <Subject<boolean>>new Subject();
 
-  constructor(hat: HatApiV2Service, uiSvc: UiStateService, namespace: string, endpoint: string) {
-    this.hat = hat; this.uiSvc = uiSvc; this.namespace = namespace; this.endpoint = endpoint;
+  constructor(hat: HatApiV2Service, uiSvc: UiStateService, namespace: string, endpoint: string, orderBy: string) {
+    this.hat = hat; this.uiSvc = uiSvc; this.namespace = namespace; this.endpoint = endpoint; this.orderBy = orderBy;
     this.clearLocalStore();
 
     this.uiSvc.auth$.subscribe((authenticated: boolean) => {
@@ -51,7 +52,7 @@ export abstract class BaseDataService<T> {
     if (this.store.data.length > 0) {
       this.pushToStream();
     } else {
-      this.hat.getDataRecords(this.namespace, this.endpoint, take)
+      this.hat.getDataRecords(this.namespace, this.endpoint, take, this.orderBy)
         .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
         .subscribe((data: HatRecord<T>[]) => {
           this.store.data = this.store.data.concat(data);
@@ -62,7 +63,7 @@ export abstract class BaseDataService<T> {
   }
 
   getMoreData(take: number = this.RECORDS_PER_REQUEST, repeatUntilMinRecordNumber?: number): void {
-    this.hat.getDataRecords(this.namespace, this.endpoint, take, this.drop)
+    this.hat.getDataRecords(this.namespace, this.endpoint, take, this.orderBy, this.drop)
       .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
       .subscribe((data: HatRecord<T>[]) => {
         this.store.data = this.store.data.concat(data);

@@ -38,10 +38,10 @@
         </div>
 
         <ul class="feed bulletless-list">
-          <li *ngFor="let post of posts | filterBy:'type':filterMap[filter]" class="post">
-            <a id="{{post.id}}"></a>
-            <rump-fb-post [post]="post" *ngIf="post.type !== 'tweet'"></rump-fb-post>
-            <rump-tweet [tweet]="post" *ngIf="post.type === 'tweet'"></rump-tweet>
+          <li *ngFor="let post of feed$ | async | filterBy:'type':filterMap[filter]" class="post">
+            <a id="{{post.data.id}}"></a>
+            <rump-fb-post [post]="post.data" *ngIf="post.data.type !== 'tweet'"></rump-fb-post>
+            <rump-tweet [tweet]="post.data" *ngIf="post.data.type === 'tweet'"></rump-tweet>
           </li>
         </ul>
       </div>

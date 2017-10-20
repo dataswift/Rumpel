@@ -7,15 +7,16 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { HatRecord } from '../interfaces/hat-record.interface';
 
 @Pipe({
   name: 'filterBy'
 })
 export class FilterByPipe implements PipeTransform {
 
-  transform(values: Array<any>, property: string, match: string = ''): any {
+  transform(values: HatRecord<any>[], property: string, match: string = ''): HatRecord<any>[] {
     if (match) {
-      return values.filter(value => match.includes(value[property]));
+      return values.filter(value => match.includes(value.data[property]));
     } else {
       return values;
     }

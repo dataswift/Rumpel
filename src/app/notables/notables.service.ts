@@ -38,7 +38,7 @@ export class NotablesService extends BaseDataService<Notable> {
               uiSvc: UiStateService,
               private market: MarketSquareService,
               private userSvc: UserService) {
-    super(hat, uiSvc, 'rumpel', 'notablesv1');
+    super(hat, uiSvc, config.name.toLowerCase(), 'notablesv1', 'updated_time');
 
     this.notablesServiceMeta = {
       phata: '',

@@ -21,7 +21,7 @@ import * as moment from 'moment';
 export class GoogleEventsService extends BaseDataService<Event> {
 
   constructor(hatSvc: HatApiV2Service, uiSvc: UiStateService) {
-    super(hatSvc, uiSvc, 'google', 'events');
+    super(hatSvc, uiSvc, 'google', 'events', 'changeme');
   }
 
   coerceType(rawEvent: HatRecord<any>): HatRecord<Event> {

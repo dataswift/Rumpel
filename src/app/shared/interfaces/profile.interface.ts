@@ -7,6 +7,7 @@
  */
 
 export interface Profile {
+  dateCreated: number;
   private: boolean;
   fb_profile_photo: {
     private: boolean

@@ -14,6 +14,8 @@ import { Profile } from '../../shared/interfaces/profile.interface';
 import { User } from '../../user/user.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
+import * as moment from 'moment';
+
 declare var $: any;
 
 @Component({
@@ -44,6 +46,8 @@ export class ProfileComponent implements OnInit {
       }
     });
 
+    this.profilesSvc.getInitData(1);
+
     // this.profilesSvc.getPicture().subscribe(
     //   profilePicture => {
     //     if (profilePicture) {
@@ -54,6 +58,7 @@ export class ProfileComponent implements OnInit {
     // );
 
     this.profile = {
+      dateCreated: 0,
       private: true,
       fb_profile_photo: { private: true },
       personal: { title: '', first_name: '', middle_name: '',
@@ -88,6 +93,7 @@ export class ProfileComponent implements OnInit {
 
   submitForm(event) {
     event.preventDefault();
+    this.profile.dateCreated = moment().valueOf();
     this.profilesSvc.save(this.profile);
     // TODO: UI messages should be initialized from the service
     this.uiMessageHidden = false;

@@ -19,11 +19,11 @@ import {HatRecord} from '../shared/interfaces/hat-record.interface';
 export class TwitterService extends BaseDataService<Tweet> {
 
   constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'twitter', 'tweets');
+    super(hat, uiSvc, 'twitter', 'tweets', 'createdTime');
   }
 
   coerceType(rawTweet: HatRecord<any>): HatRecord<Tweet> {
-    const tweetContent = rawTweet.data;
+    const tweetContent = rawTweet.data.tweets || rawTweet.data;
 
     const tweet: Tweet = {
       id: tweetContent.id,

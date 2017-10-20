@@ -35,11 +35,7 @@ export class Notable {
     caption: string;
   };
 
-  constructor(options: any = null, id: number = null) {
-    if (id) {
-      this.id = id;
-    }
-
+  constructor(options: any = null) {
     if (options) {
       this.message = options.message;
       this.kind = options.kind;

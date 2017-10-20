@@ -19,7 +19,7 @@ import * as moment from 'moment';
 export class FacebookEventsService extends BaseDataService<Event> {
 
   constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'facebook', 'events');
+    super(hat, uiSvc, 'facebook', 'events', 'changeme');
   }
 
   coerceType(rawEvent: HatRecord<any>): HatRecord<Event> {

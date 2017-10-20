@@ -11,33 +11,33 @@
 <div class="scroll-mask" id="intro-step17">
   <div class="tile-body tile-body-tight">
     <ul>
-      <li *ngFor="let post of posts" (click)="navigateToFullPost(post.id)">
-        <div class="row vertical-align" [ngSwitch]="post.type">
+      <li *ngFor="let post of feed$ | async" (click)="navigateToFullPost(post.data.id)">
+        <div class="row vertical-align" [ngSwitch]="post.data.type">
           <div class="col-xs-2 left-column media">
-            <img [src]="post.type === 'tweet' ? 'assets/icons/twitter-icon.svg' : 'assets/icons/facebook-f-icon.svg'" class="img img-responsive">
+            <img [src]="post.data.type === 'tweet' ? 'assets/icons/twitter-icon.svg' : 'assets/icons/facebook-f-icon.svg'" class="img img-responsive">
           </div>
 
           <div class="col-xs-9 center-column" *ngSwitchCase="'music.listens'">
             <h4>Music Listen</h4>
-            <p>Played {{post.data.song.title}}
-              <span *ngIf="post.data.musician">by {{post.data.musician.title}}</span>
-              <span *ngIf="post.data.playlist">from the {{post.data.playlist.title}} playlist</span>.
+            <p>Played {{post.data.data.song.title}}
+              <span *ngIf="post.data.data.musician">by {{post.data.data.musician.title}}</span>
+              <span *ngIf="post.data.data.playlist">from the {{post.data.data.playlist.title}} playlist</span>.
             </p>
-            <p>On {{post.createdTime | moment}}</p>
+            <p>On {{post.data.createdTime | moment}}</p>
           </div>
 
           <div class="col-xs-9 center-column" *ngSwitchCase="'tweet'">
-            <p>{{post.text}}</p>
+            <p>{{post.data.text}}</p>
             <div class="tweet-metadata">
-              <span>Favourited: {{post.favorite_count}}</span>
-              <span>Retweeted: {{post.retweet_count}}</span>
+              <span>Favourited: {{post.data.favorite_count}}</span>
+              <span>Retweeted: {{post.data.retweet_count}}</span>
             </div>
           </div>
 
           <div class="col-xs-9 center-column" *ngSwitchDefault>
-            <h4>{{post.story ? post.story : post.statusType | replaceChars}}</h4>
-            <p *ngIf="post.type === 'status' || post.type === 'photo'">{{post.content.message | limitContent:140}}</p>
-            <p>Posted {{post.createdTime | moment}}</p>
+            <h4>{{post.data.story ? post.data.story : post.data.statusType | replaceChars}}</h4>
+            <p *ngIf="post.data.type === 'status' || post.data.type === 'photo'">{{post.data.content.message | limitContent:140}}</p>
+            <p>Posted {{post.data.createdTime | moment}}</p>
           </div>
 
           <div class="col-xs-1 right-column">

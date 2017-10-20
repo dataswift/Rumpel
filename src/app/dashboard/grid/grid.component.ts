@@ -6,10 +6,11 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, Inject } from '@angular/core';
 import { UiStateService } from '../../services';
 import { DataTable } from '../../shared/interfaces/data-table.interface';
 import { Subscription } from 'rxjs/Subscription';
+import { APP_CONFIG, IAppConfig } from '../../app.config';
 
 declare var $: any;
 
@@ -24,7 +25,8 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   public showPostsTile = false;
   private sub: Subscription;
 
-  constructor(private uiState: UiStateService) { }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private uiState: UiStateService) { }
 
   ngOnInit() {
 
@@ -40,6 +42,10 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+  }
+
+  get appIsNative(): boolean {
+    return this.config.native;
   }
 
   private searchHandler(names: string) {

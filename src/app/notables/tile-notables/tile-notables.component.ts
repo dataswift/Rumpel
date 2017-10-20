@@ -6,7 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { NotablesService } from '../notables.service';
 import { UserService } from '../../user/user.service';
@@ -14,35 +15,30 @@ import { UserService } from '../../user/user.service';
 import { Notable, Profile } from '../../shared/interfaces';
 import { User } from '../../user/user.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'rump-tile-notables',
   templateUrl: 'tile-notables.component.html',
   styleUrls: ['tile-notables.component.scss']
 })
-export class TileNotablesComponent implements OnInit, OnDestroy {
-  public notables: HatRecord<Notable>[];
+export class TileNotablesComponent implements OnInit {
+  public notables$: Observable<HatRecord<Notable>[]>;
   public profile: { photo: { url: string; shared: boolean; }; };
   public iconMap: any;
-  private sub: Subscription;
 
   constructor(private notablesSvc: NotablesService,
               private profilesSvc: ProfilesService,
               private userSvc: UserService) {}
 
   ngOnInit() {
-    this.notables = [];
+    this.notables$ = this.notablesSvc.data$;
+    this.notablesSvc.getInitData(5);
 
     this.iconMap = {
       note: 'ellipsischat',
       list: 'list',
       blog: 'write'
     };
-
-    this.sub = this.notablesSvc.data$.subscribe(notables => {
-      this.notables = notables;
-    });
 
     this.profile = {
       photo: { url: '', shared: false }
@@ -65,9 +61,4 @@ export class TileNotablesComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
 }

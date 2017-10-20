@@ -6,14 +6,14 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
  */
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '../social.service';
 import { MediaService } from '../media.service';
 import { TwitterService } from '../twitter.service';
-import { Subscription } from 'rxjs/Subscription';
 import { Post, MusicListen, Tweet } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Observable } from 'rxjs/Observable';
 
 declare var $: any;
 
@@ -22,13 +22,13 @@ declare var $: any;
   templateUrl: 'social.component.html',
   styleUrls: ['social.component.scss']
 })
-export class SocialComponent implements OnInit, OnDestroy {
-  public posts: HatRecord<Post|MusicListen|Tweet>[];
-  public filter: string;
-  public filterMap: any;
-  private svcSub: Subscription;
-  private musicSub: Subscription;
-  private twitterSub: Subscription;
+export class SocialComponent implements OnInit {
+  public feed$: Observable<HatRecord<Post|Tweet>[]>;
+  public filter = '';
+  public filterMap = {
+    'Facebook': 'status,photo,music.listens,link',
+    'Twitter': 'tweet'
+  };
 
   constructor(private socialSvc: SocialService,
               private mediaSvc: MediaService,
@@ -36,48 +36,21 @@ export class SocialComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.posts = [];
-    this.filter = '';
-    this.filterMap = {
-      'Facebook': 'status,photo,music.listens,link',
-      'Twitter': 'tweet'
-    };
+    this.feed$ = Observable.merge(
+      this.socialSvc.data$,
+      this.twitterSvc.data$
+    )
+      .scan((acc: HatRecord<Post|Tweet>[], postsToAdd: HatRecord<Post|Tweet>[]) => {
+        return acc.concat(postsToAdd).sort((a, b) => a.data.createdTime.isAfter(b.data.createdTime) ? -1 : 1);
+      }, [])
+      .do(() => this.scrollToPost());
 
-    this.svcSub = this.socialSvc.data$.subscribe((posts: HatRecord<Post>[]) => {
-      this.posts = this.posts.concat(posts);
-
-      this.sortPostsByDate();
-      this.scrollToPost();
-    });
-
-    this.musicSub = this.mediaSvc.data$.subscribe((listens: HatRecord<MusicListen>[]) => {
-      this.posts = this.posts.concat(listens);
-
-      this.sortPostsByDate();
-      this.scrollToPost();
-    });
-
-    this.twitterSub = this.twitterSvc.data$.subscribe((tweets: HatRecord<Tweet>[]) => {
-      this.posts = this.posts.concat(tweets);
-
-      this.sortPostsByDate();
-      this.scrollToPost();
-    });
-
-  }
-
-  ngOnDestroy(): void {
-    this.svcSub.unsubscribe();
-    this.musicSub.unsubscribe();
-    this.twitterSub.unsubscribe();
+    this.socialSvc.getInitData();
+    this.twitterSvc.getInitData();
   }
 
   filterBy(source: string): void {
     this.filter = source;
-  }
-
-  private sortPostsByDate(): void {
-    this.posts = this.posts.sort((a, b) => a.data.createdTime.isAfter(b.data.createdTime) ? -1 : 1);
   }
 
   private scrollToPost(): void {

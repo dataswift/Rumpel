@@ -29,6 +29,7 @@ export class TileProfileComponent implements OnInit {
     });
 
     this.profile = {
+      dateCreated: 0,
       private: true,
       fb_profile_photo: { private: true },
       personal: { title: '', first_name: '', middle_name: '',
@@ -55,6 +56,7 @@ export class TileProfileComponent implements OnInit {
       about: { title: '', body: '', private: true }
     };
 
+    this.profilesSvc.getInitData(1);
   }
 
 }

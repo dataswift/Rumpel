@@ -18,7 +18,7 @@ export class IAppConfig {
   protocol: string;
   exchange: { url: string; id: string; accessToken: string; };
   marketsquare: { url: string };
-  databuyer: { name: string; url: string; };
+  databuyer: { name: string; url: string; pathPrefix: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
   notables: {
@@ -54,7 +54,8 @@ export const AppConfig: IAppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubat.net'
+    url: 'https://databuyer.hubat.net',
+    pathPrefix: '/api/v2'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='

@@ -17,11 +17,11 @@ import { HatRecord } from '../shared/interfaces/hat-record.interface';
 @Injectable()
 export class SocialService extends BaseDataService<Post> {
   constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'facebook', 'posts');
+    super(hat, uiSvc, 'facebook', 'posts', 'updatedTime');
   }
 
   coerceType(rawPost: HatRecord<any>): HatRecord<Post> {
-    const posts = rawPost.data;
+    const posts = rawPost.data.posts || rawPost.data;
     let postContent;
 
     switch (posts.type) {

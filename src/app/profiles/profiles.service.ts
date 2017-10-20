@@ -6,26 +6,31 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
-import { Profile } from '../shared/interfaces/profile.interface';
 import { BaseDataService } from '../services/base-data.service';
 import { UiStateService } from '../services/ui-state.service';
+
+import { Profile } from '../shared/interfaces/profile.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
+import { APP_CONFIG, IAppConfig } from '../app.config';
 
 @Injectable()
 export class ProfilesService extends BaseDataService<Profile> {
-  constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'rumpel', 'profile');
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              hat: HatApiV2Service,
+              uiSvc: UiStateService) {
+    super(hat, uiSvc, config.name.toLowerCase(), 'profile', 'dateCreated');
   }
 
   coerceType(rawProfile: HatRecord<any>): HatRecord<Profile> {
-    const coreData = rawProfile.data;
+    const coreData = rawProfile.data.profile || rawProfile.data;
 
     return {
       endpoint: rawProfile.endpoint,
       recordId: rawProfile.recordId,
       data: {
+        dateCreated: coreData.dateCreated,
         private: coreData.private === 'true',
         fb_profile_photo: { private: coreData.fb_profile_photo.private === 'true' },
         personal: {
