@@ -18,7 +18,7 @@ interface PropertyQuery {
   limit?: number;
 }
 
-interface EndpointQuery {
+export interface EndpointQuery {
   endpoint: string;
   mapping?: { [fieldName: string]: string };
   filters?: any;

@@ -10,6 +10,7 @@ import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiV2Service } from './hat-api-v2.service';
 import { UiStateService } from './ui-state.service';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
+import {EndpointQuery} from '../shared/interfaces/bundle.interface';
 
 export abstract class BaseDataService<T> {
   private _data$: ReplaySubject<HatRecord<T>[]> = <ReplaySubject<HatRecord<T>[]>>new ReplaySubject(1);
@@ -117,19 +118,22 @@ export abstract class BaseDataService<T> {
       })
   }
 
-  // getTimeIntervalData(startTime: string, endTime: string): void {
-  //   this._loading$.next(true);
-  //   this.hat.getValuesWithLimit(this.store.tableId, 5000, endTime, startTime)
-  //     .map((rawData: Array<any>) => {
-  //       const typeSafeData: Array<T> = rawData.map(this.mapData);
-  //       return _.uniqBy(typeSafeData, 'id');
-  //     })
-  //     .subscribe((data: Array<T>) => {
-  //       this.store.data = this.store.data.concat(data);
-  //
-  //       this.pushToStream();
-  //     });
-  // }
+  getTimeIntervalData(filters: any[]): void {
+    const combinatorName = `${this.namespace}/timeBound${this.endpoint}`;
+    const endpointQuery: EndpointQuery = {
+      endpoint: `${this.endpoint}/${this.namespace}`,
+      filters: filters
+    };
+
+    this.hat.proposeNewDataEndpoint(combinatorName, [endpointQuery])
+      .flatMap((resCode: number) => this.hat.getCombinatorRecords(combinatorName, this.RECORDS_PER_REQUEST))
+      .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
+      .subscribe((data: HatRecord<T>[]) => {
+        this.store.data = data;
+        this.drop = data.length;
+        this.pushToStream();
+      });
+  }
 
   abstract coerceType(hatRecord: HatRecord<any>): HatRecord<T>
 

@@ -16,6 +16,7 @@ import { User } from '../user/user.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { DataDebit, DataDebitValues } from '../shared/interfaces/data-debit.interface';
 import { FileMetadataReq, FileMetadataRes } from '../shared/interfaces/file.interface';
+import { EndpointQuery } from '../shared/interfaces/bundle.interface';
 
 @Injectable()
 export class HatApiV2Service {
@@ -125,6 +126,21 @@ export class HatApiV2Service {
     } else {
       return Observable.throw(new Error('Cannot delete. Record IDs missing.'));
     }
+  }
+
+  getCombinatorRecords(name: string, take: number): Observable<HatRecord<any>[]> {
+    const path = `${this.pathPrefix}/combinator/${name}`;
+
+    const queryParams = new URLSearchParams();
+    queryParams.append('take', take.toString())
+
+    return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
+  }
+
+  proposeNewDataEndpoint(name: string, proposedCombinator: EndpointQuery[]): Observable<number> {
+    const path = `${this.pathPrefix}/combinator/${name}`;
+
+    return this.authHttp.post(path, proposedCombinator).map((res: Response) => res.status);
   }
 
   getAllDataDebits(): Observable<DataDebit[]> {
