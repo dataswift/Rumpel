@@ -21,6 +21,25 @@ interface PropertyQuery {
 export interface EndpointQuery {
   endpoint: string;
   mapping?: { [fieldName: string]: string };
-  filters?: any;
+  filters?: Filter[];
   links?: EndpointQuery[];
+}
+
+export interface Filter {
+  field: string;
+  transformation?: Transformation;
+  operator: Operator;
+}
+
+interface Transformation {
+  transformation: string;
+  part?: string;
+}
+
+interface Operator {
+  operator: string;
+  value?: number | string;
+  lower?: number | string;
+  upper?: number | string;
+  search?: string;
 }

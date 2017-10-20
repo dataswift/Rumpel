@@ -16,6 +16,7 @@ import { Moment } from 'moment';
 import { Subscription } from 'rxjs/Subscription';
 
 import * as moment from 'moment';
+import {Filter} from '../../shared/interfaces/bundle.interface';
 
 declare var $: any;
 
@@ -89,12 +90,49 @@ export class LocationsComponent implements OnInit, OnDestroy {
 
   submitForm(form): void {
     const formContent = form.value;
-    const startTime = moment(formContent.date).format('X');
-    const endTime = moment(formContent.date).endOf('day').format('X');
+    const date = moment(formContent.date);
 
-    // this.locationsSvc.getTimeIntervalData(startTime, endTime);
-    // this.lowerTimeBound = moment(formContent.date);
-    // this.upperTimeBound = moment(formContent.date).endOf('day');
+    this.locationsSvc.getTimeIntervalData(this.generateDayFilter(date));
+    this.lowerTimeBound = moment(formContent.date);
+    this.upperTimeBound = moment(formContent.date).endOf('day');
+  }
+
+  private generateDayFilter(date: Moment): Filter[] {
+    return [
+      {
+        field: 'timestamp',
+        transformation: {
+          transformation: 'datetimeExtract',
+          part: 'day'
+        },
+        operator: {
+          operator: 'contains',
+          value: date.date()
+        }
+      },
+      {
+        field: 'timestamp',
+        transformation: {
+          transformation: 'datetimeExtract',
+          part: 'month'
+        },
+        operator: {
+          operator: 'contains',
+          value: date.month() + 1
+        }
+      },
+      {
+        field: 'timestamp',
+        transformation: {
+          transformation: 'datetimeExtract',
+          part: 'year'
+        },
+        operator: {
+          operator: 'contains',
+          value: date.year()
+        }
+      }
+    ];
   }
 
   showPopover(event) {

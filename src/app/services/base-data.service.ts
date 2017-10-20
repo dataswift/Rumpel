@@ -10,7 +10,7 @@ import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { HatApiV2Service } from './hat-api-v2.service';
 import { UiStateService } from './ui-state.service';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
-import {EndpointQuery} from '../shared/interfaces/bundle.interface';
+import { EndpointQuery, Filter } from '../shared/interfaces/bundle.interface';
 
 export abstract class BaseDataService<T> {
   private _data$: ReplaySubject<HatRecord<T>[]> = <ReplaySubject<HatRecord<T>[]>>new ReplaySubject(1);
@@ -18,7 +18,7 @@ export abstract class BaseDataService<T> {
   public uiSvc: UiStateService;
   private store: { data: HatRecord<T>[]; } = { data: [] };
 
-  private RECORDS_PER_REQUEST = 25;
+  private RECORDS_PER_REQUEST = 250;
   private drop = 0;
   private namespace: string;
   private endpoint: string;
@@ -118,10 +118,10 @@ export abstract class BaseDataService<T> {
       })
   }
 
-  getTimeIntervalData(filters: any[]): void {
-    const combinatorName = `${this.namespace}/timeBound${this.endpoint}`;
+  getTimeIntervalData(filters: Filter[]): void {
+    const combinatorName = `${this.namespace}/time-bound-${this.endpoint}`;
     const endpointQuery: EndpointQuery = {
-      endpoint: `${this.endpoint}/${this.namespace}`,
+      endpoint: `${this.namespace}/${this.endpoint}`,
       filters: filters
     };
 
