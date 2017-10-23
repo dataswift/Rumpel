@@ -8,6 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Response } from '@angular/http';
 import { UserService } from '../user.service';
 
 declare var zxcvbn: any;
@@ -55,6 +56,7 @@ export class PasswordChangeComponent implements OnInit {
 
       if (passwordStrength.score <= 2) {
         this.strengthError = 'ERROR: Password is too weak. Please make it harder to guess.';
+
         return;
       }
 
@@ -72,7 +74,7 @@ export class PasswordChangeComponent implements OnInit {
     this.loadingText = 'Saving new password';
     this.userSvc.changePassword(oldPassword, newPassword)
       .subscribe(
-        (res: any) => {
+        (res: Response) => {
           this.loadingText = null;
           this.successMessage = 'Password changed.';
         },
@@ -92,7 +94,7 @@ export class PasswordChangeComponent implements OnInit {
     this.loadingText = 'Saving new password';
     this.userSvc.resetPassword(resetToken, newPassword)
       .subscribe(
-        (res: any) => {
+        (res: Response) => {
           this.loadingText = null;
           this.successMessage = 'Password reset.';
         },

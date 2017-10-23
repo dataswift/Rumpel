@@ -5,7 +5,6 @@ import { DataOfferService } from '../data-offer.service';
 import {Subscription, Observable} from 'rxjs/Rx';
 import { OfferRequirementsComponent } from '../offer-requirements/offer-requirements.component';
 
-
 declare var $: any;
 
 @Component({
@@ -44,7 +43,6 @@ export class OfferModalComponent implements OnInit {
 
     this.changeOffer(0);
     this.animateIn = true;
-
 
     console.log(this.offers[this.offer_index]);
   }
@@ -147,6 +145,7 @@ export class OfferModalComponent implements OnInit {
               if (offer.claim && offer.claim.status) {
                 claimStatus = offer.claim.status;
               }
+
               return (  claimStatus !== 'untouched' &&
                         claimStatus !== 'rejected'
                       )
@@ -193,7 +192,7 @@ export class OfferModalComponent implements OnInit {
   }
 
 
-  claimReward (type) {
+  claimReward(type) {
      if (type === 'cash') {
        this.statsComponent.showConfirmBox();
      } else {
@@ -210,5 +209,14 @@ export class OfferModalComponent implements OnInit {
       this.scrollShadow = false;
     }
   }
+
+  canDisplayOldDataRequirements(): boolean {
+    return Array.isArray(this.offers[this.offer_index].requiredDataDefinition);
+  }
+
+  objectToArray(object): Array<any> {
+    return Object.keys(object).map(key => object[key]);
+  }
+
 
 }

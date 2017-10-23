@@ -7,34 +7,39 @@
  */
 
 import { Injectable } from '@angular/core';
-import {HatApiService} from '../services/hat-api.service';
-import {UiStateService} from '../services/ui-state.service';
-import {BaseDataService} from '../services/base-data.service';
+import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { UiStateService } from '../services/ui-state.service';
+import { BaseDataService } from '../services/base-data.service';
 
 import { Event } from '../shared/interfaces/index';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
+
+
 
 @Injectable()
 export class GoogleEventsService extends BaseDataService<Event> {
 
-  constructor(hatSvc: HatApiService, uiSvc: UiStateService) {
-    super(hatSvc, uiSvc);
-
-    this.ensureTableExists('events', 'google');
+  constructor(hatSvc: HatApiV2Service, uiSvc: UiStateService) {
+    super(hatSvc, uiSvc, 'google', 'events', 'changeme');
   }
 
-  mapData(rawEvent: any): Event {
-    const eventContent = rawEvent.data.events;
+  coerceType(rawEvent: HatRecord<any>): HatRecord<Event> {
+    const eventContent = rawEvent.data;
 
     return {
-      id: eventContent.id,
-      calendarName: 'google',
-      title: eventContent.summary,
-      description: eventContent.description,
-      start: moment(eventContent.start.dateTime || eventContent.start.date),
-      end: eventContent.end ? moment(eventContent.end.dateTime || eventContent.end.date) : null,
-      allDay: !!(eventContent.end && eventContent.end.date),
-      link: eventContent.htmlLink
+      endpoint: rawEvent.endpoint,
+      recordId: rawEvent.recordId,
+      data: {
+        id: eventContent.id,
+        calendarName: 'google',
+        title: eventContent.summary,
+        description: eventContent.description,
+        start: moment(eventContent.start.dateTime || eventContent.start.date),
+        end: eventContent.end ? moment(eventContent.end.dateTime || eventContent.end.date) : null,
+        allDay: !!(eventContent.end && eventContent.end.date),
+        link: eventContent.htmlLink
+      }
     };
   }
 }

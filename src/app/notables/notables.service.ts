@@ -8,38 +8,37 @@
 
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs/Rx';
-import { HatApiService } from '../services/hat-api.service';
+import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { DataPlugService } from '../data-management/data-plug.service';
 import { MarketSquareService } from '../market-square/market-square.service';
 
 import { APP_CONFIG, IAppConfig } from '../app.config';
-import { NotablesHatModel } from './notables.hatmodel';
 import { Notable, MSUserClaim, DataDebit } from '../shared/interfaces';
 
 import * as moment from 'moment';
-import {BaseRumpelDataService} from '../services/base-rumpel-data.service';
-import {NotablesServiceMeta} from '../shared/interfaces/notables-service-meta.interface';
+import { BaseDataService } from '../services/base-data.service';
+import { NotablesServiceMeta } from '../shared/interfaces/notables-service-meta.interface';
 import { UiStateService } from '../services/ui-state.service';
-import {UserService} from '../user/user.service';
-import {User} from '../user/user.interface';
+import { UserService } from '../user/user.service';
+import { User } from '../user/user.interface';
+import {HatRecord} from '../shared/interfaces/hat-record.interface';
 
 @Injectable()
-export class NotablesService extends BaseRumpelDataService<Notable> {
+export class NotablesService extends BaseDataService<Notable> {
   public notablesServiceMeta: NotablesServiceMeta;
 
-  private _editedNotable$: ReplaySubject<Notable>;
-  public editedNotable$: Observable<Notable>;
+  private _editedNotable$: ReplaySubject<HatRecord<Notable>>;
+  public editedNotable$: Observable<HatRecord<Notable>>;
 
   private _notablesMeta$: BehaviorSubject<NotablesServiceMeta>;
   public notablesMeta$: Observable<NotablesServiceMeta>;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-              hat: HatApiService,
+              hat: HatApiV2Service,
               uiSvc: UiStateService,
               private market: MarketSquareService,
-              private userSvc: UserService,
-              private dataPlug: DataPlugService) {
-    super(hat, uiSvc);
+              private userSvc: UserService) {
+    super(hat, uiSvc, config.name.toLowerCase(), 'notablesv1', 'updated_time');
 
     this.notablesServiceMeta = {
       phata: '',
@@ -48,7 +47,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
       activeIntegrations: this.config.notables.activeIntegrations
     };
 
-    this._editedNotable$ = <ReplaySubject<Notable>>new ReplaySubject(1);
+    this._editedNotable$ = <ReplaySubject<HatRecord<Notable>>>new ReplaySubject(1);
     this.editedNotable$ = this._editedNotable$.asObservable();
 
     this._notablesMeta$ = <BehaviorSubject<NotablesServiceMeta>>new BehaviorSubject(this.notablesServiceMeta);
@@ -58,8 +57,6 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
       this.notablesServiceMeta.phata = user.fullDomain;
       this._notablesMeta$.next(this.notablesServiceMeta);
     });
-
-    this.ensureTableExists('notablesv1', 'rumpel', NotablesHatModel.model);
   }
 
   get hatDomain(): string {
@@ -98,9 +95,10 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
           // If the MaketSquare reports offer as unconfirmed, check its status on the HAT
           // For the initial 30 mins after offer confirmation MarketSquare can report it as unconfirmed
         } else if (offerInfo && offerInfo.dataDebitId) {
-          return this.hat.getSlimDataDebit(offerInfo.dataDebitId)
-            .map((ddInfo: DataDebit) => {
+          return this.hat.getDataDebit(offerInfo.dataDebitId)
+            .map((ddInfo: any) => {
               offerInfo.confirmed = ddInfo.enabled;
+
               return offerInfo;
             });
         } else {
@@ -109,59 +107,20 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
       });
   }
 
-  updateNotable(notable: Notable): void {
-    this.hat.deleteRecord(notable.id)
-      .subscribe(responseMessage => {
-        if (responseMessage.message.indexOf('deleted') > -1) {
-          const foundNoteIndex = this.store.data.findIndex(note => note.id === notable.id);
-
-          if (foundNoteIndex > -1) {
-            this.store.data.splice(foundNoteIndex, 1);
-          }
-        }
-
-        delete notable.id;
-
-        this.postNotable(notable);
-      });
+  postNotable(recordValue: Notable): void {
+    this.save(recordValue, () => this.market.tickle());
   }
 
-  postNotable(data): void {
-    this.hat.postRecord(data, this.store.idMapping, 'notablesv1')
-      .flatMap(recordArray => this.getFirstNotable())
-      .subscribe((notables: Notable[]) => {
-        this.market.tickle();
-        this.store.data.unshift(notables[0]);
-
-        this.pushToStream();
-      });
-  }
-
-  getFirstNotable(): Observable<any> {
-    return this.hat.getValuesWithLimit(this.store.tableId, 1)
-      .map(rawNotable => rawNotable.map(this.mapData));
-  }
-
-  editNotable(notable: Notable) {
+  editNotable(notable: HatRecord<Notable>) {
     this._editedNotable$.next(notable);
   }
 
-  deleteNotable(id: number) {
-    this.hat.deleteRecord(id).subscribe(responseMessage => {
-      if (responseMessage.message.indexOf('deleted') > -1) {
-        const foundNoteIndex = this.store.data.findIndex(note => note.id === id);
-        if (foundNoteIndex > -1) {
-          this.store.data.splice(foundNoteIndex, 1);
-
-          this.market.tickle();
-          this.pushToStream();
-        }
-      }
-    });
-  }
-
-  mapData(rawNotable: any): Notable {
-    return new Notable(rawNotable.data['notablesv1'], rawNotable.id);
+  coerceType(rawNotable: HatRecord<any>): HatRecord<Notable> {
+    return {
+      endpoint: rawNotable.endpoint,
+      recordId: rawNotable.recordId,
+      data: new Notable(rawNotable.data)
+    };
   }
 
   setupNotablesService(): Observable<DataDebit> {
@@ -171,6 +130,7 @@ export class NotablesService extends BaseRumpelDataService<Notable> {
           return this.hat.updateDataDebit(offerInfo.dataDebitId, 'enable')
             .catch(err => {
               console.log('Failed to confirm Data Debit with the HAT', err);
+
               return Observable.of(null);
             });
         } else {

@@ -14,6 +14,8 @@ import { Location } from '../shared/interfaces';
 import * as moment from 'moment';
 import {BaseDataService} from '../services/base-data.service';
 import {UiStateService} from '../services/ui-state.service';
+import {HatApiV2Service} from '../services/hat-api-v2.service';
+import {HatRecord} from '../shared/interfaces/hat-record.interface';
 
 declare var L: any;
 
@@ -22,8 +24,8 @@ export class LocationsService extends BaseDataService<Location> {
   public map: any;
   public baseMaps: any;
 
-  constructor(hatSvc: HatApiService, uiSvc: UiStateService) {
-    super(hatSvc, uiSvc);
+  constructor(hatSvc: HatApiV2Service, uiSvc: UiStateService) {
+    super(hatSvc, uiSvc, 'iphone', 'locations', 'timestamp');
 
     this.baseMaps = {
       OpenStreetMap: new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -31,8 +33,6 @@ export class LocationsService extends BaseDataService<Location> {
                      `<a href='http://creativecommons.org/licenses/by-sa/2.0/'>CC-BY-SA</a>`
       })
     };
-
-    this.ensureTableExists('locations', 'iphone', 250);
   }
 
   getCurrentDeviceLocation(callback) {
@@ -51,15 +51,19 @@ export class LocationsService extends BaseDataService<Location> {
       });
   }
 
-  mapData(rawLocation: any): Location {
-    const locContent = rawLocation.data.locations;
+  coerceType(rawLocation: HatRecord<any>): HatRecord<Location> {
+    const locContent = rawLocation.data;
 
     return {
-      id: locContent.timestamp,
-      latitude: locContent.latitude,
-      longitude: locContent.longitude,
-      accuracy: null,
-      timestamp: moment(locContent.timestamp)
+      endpoint: rawLocation.endpoint,
+      recordId: rawLocation.recordId,
+      data: {
+        id: locContent.timestamp,
+        latitude: locContent.latitude,
+        longitude: locContent.longitude,
+        accuracy: null,
+        timestamp: moment(locContent.timestamp)
+      }
     };
   }
 }

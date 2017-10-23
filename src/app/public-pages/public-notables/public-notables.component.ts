@@ -22,7 +22,7 @@ export class PublicNotablesComponent implements OnInit {
 
   ngOnInit() {
     this.hatSvc.getPublicData('notables').subscribe((notables: Array<any>) => {
-      this.notables = notables.map(note => new Notable(note, note.id));
+      this.notables = notables.map(note => new Notable(note));
     });
   }
 

@@ -22,11 +22,12 @@ export class TimeFilterPipe implements PipeTransform {
     let filtered: Array<any>;
 
     try {
-      filtered = dataPoints.filter(dp => dp[field].isSame(time.timestamp, unit));
+      filtered = dataPoints.filter(dp => dp.data[field].isSame(time.timestamp, unit));
     } catch (e) {
       console.error('Error while filtering data', dataPoints, e);
       filtered = [];
     }
+
     return filtered;
   }
 

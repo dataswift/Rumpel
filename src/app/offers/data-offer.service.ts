@@ -10,7 +10,6 @@ import { JwtHelper } from 'angular2-jwt';
 
 import * as moment from 'moment';
 
-
 @Injectable()
 export class DataOfferService {
   private jwt: JwtHelper;
@@ -30,12 +29,13 @@ export class DataOfferService {
   }
 
   fetchOfferList(): void {
-    const url = this.config.databuyer.url.concat('/api/v1/offers');
+    const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/offers`;
 
     this.http.get(url)
       .map(res => {
         const resJson = res.json();
         console.log(resJson);
+
         return <Offer[]>resJson;
       }).subscribe(offers => {this._offers$.next(offers)});
   }
@@ -53,19 +53,20 @@ export class DataOfferService {
 
 
   redeemCash(): void {
-    const url = this.config.databuyer.url.concat('/api/v1/user/redeem/cash');
+    const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/user/redeem/cash`;
 
     this.getDataBuyerToken()
       .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
       .map(res => {
         const resJson = res.json();
         console.log(resJson);
+
         return <any[]>resJson;
       }).subscribe();
   }
 
   private fetchUserAwareOfferList(): Observable<Offer[]> {
-    const url = this.config.databuyer.url.concat('/api/v1/offersWithClaims');
+    const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/offersWithClaims`;
 
     return Observable.forkJoin(this.getDataBuyerToken(), this.fetchMerchantFilter())
       .flatMap(([headers, merchants]) => {
@@ -74,18 +75,20 @@ export class DataOfferService {
         for (const merchant of merchants) {
           queryParams.append('merchant', merchant);
         }
+
         return this.http.get(url, { headers: headers, search: queryParams });
       })
       .map(res => {
         const resJson = res.json();
         console.log(resJson);
+
         return <Offer[]>resJson;
       });
   }
 
   private fetchMerchantFilter(): Observable<string[]> {
-    return this.hatV2Svc.getRecords('dex', 'databuyer', 1)
-      .map((records: HatRecord[]) => {
+    return this.hatV2Svc.getDataRecords('dex', 'databuyer', 1)
+      .map((records: HatRecord<any>[]) => {
         if (records.length > 0 && records[0].data && records[0].data.merchants) {
           return records[0].data.merchants;
         } else {
@@ -96,7 +99,7 @@ export class DataOfferService {
   }
 
   private claimOfferWithDataBuyer(offerId: string): Observable<Claim> {
-    const url = this.config.databuyer.url.concat('/api/v1/offer/', offerId, '/claim');
+    const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/offer/${offerId}/claim`;
 
     return this.getDataBuyerToken()
       .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
@@ -110,6 +113,7 @@ export class DataOfferService {
   private getDataBuyerToken(): Observable<Headers | null> {
     if (this.cachedToken && this.jwt.decodeToken(this.cachedToken)['exp'] > moment().unix()) {
       const headers = new Headers({ 'X-Auth-Token': this.cachedToken });
+
       return Observable.of(headers);
     } else {
       return this.hatSvc.getApplicationToken(this.config.databuyer.name, 'https://databuyer.hubofallthings.com/')
@@ -122,6 +126,7 @@ export class DataOfferService {
             return new Headers({ 'X-Auth-Token': accessToken });
           } else {
             console.error('HAT provided erroneous Application Token', accessToken);
+
             return null;
           }
         });

@@ -12,15 +12,19 @@
   <div class="tile-body-tight">
     <ul class="bulletless-list">
       <li *ngFor="let debit of debits">
-        <a [routerLink]="['/dataDebit', debit.key, 'confirm']">
+        <a [routerLink]="['/dataDebit', debit.dataDebitKey, 'confirm']">
           <div class="row vertical-align">
             <div class="col-xs-2 icon">
               <i class="material-icons">settings_input_component</i>
             </div>
             <div class="col-xs-9">
-              <h4>{{debit.name}}</h4>
-              <p>Kind: {{debit.kind}}</p>
-              <p>Date: {{debit.dateCreated | moment}}</p>
+              <h4>{{debit.bundles[0].bundle.name}}</h4>
+              <p>Type: {{debit.bundles[0].rolling ? 'CONTINUOUS' : 'EXPIRES'}}</p>
+              <p *ngIf="!debit.bundles[0].rolling">
+                Validity period: from {{debit.bundles[0].startDate | moment:'DD/MM/YYYY'}}
+                to {{debit.bundles[0].endDate | moment:'DD/MM/YYYY'}}
+              </p>
+              <p>Status: {{debit.bundles[0].enabled ? 'ENABLED' : 'DISABLED'}}</p>
             </div>
             <div class="col-xs-1">
               <span class="ss-right"></span>

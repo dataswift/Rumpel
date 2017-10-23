@@ -12,7 +12,8 @@ import { AuthHttp } from './auth-http.service';
 import { Observable } from 'rxjs/Rx';
 import { DataDebit } from '../shared/interfaces/index';
 import { User } from '../user/user.interface';
-import * as moment from 'moment';
+import { isMoment } from 'moment/moment';
+import moment from 'moment/moment';
 
 @Injectable()
 export class HatApiService {
@@ -22,7 +23,7 @@ export class HatApiService {
       return value;
     } else if (value === null) {
       return '';
-    } else if (moment.isMoment(value)) {
+    } else if (isMoment(value)) {
       return value.format();
     } else if (Array.isArray(value)) {
       return value.join(',');
@@ -54,6 +55,7 @@ export class HatApiService {
     return this.http.get('users/access_token', { headers: headers, body: '' })
       .map((res: Response) => {
         const token = res.json().accessToken;
+
         return this.authHttp.setToken(token);
       });
   }
@@ -236,7 +238,7 @@ export class HatApiService {
   }
 
   updateDataDebit(uuid: string, action: string): Observable<any> {
-    return this.authHttp.put(`/dataDebit/${uuid}/${action}`, {});
+    return this.authHttp.get(`/api/v2/data-debit/${uuid}/${action}`);
   }
 
   /* HAT Public API methods */
@@ -250,6 +252,7 @@ export class HatApiService {
       .catch(err => {
         console.warn(`Could not access public data of the current HAT.
                       Reason: ${err}`);
+
         return Observable.of(endpoint === 'profile' ? { 'public': false } : []);
       });
   }
@@ -281,7 +284,7 @@ export class HatApiService {
 
   private createValue(obj: any, hatIdMapping: any, prefix: string = 'default') {
     return Object.keys(obj).reduce((acc, key) => {
-      if (typeof obj[key] === 'object' && obj[key] !== null && !moment.isMoment(obj[key]) && !Array.isArray(obj[key])) {
+      if (typeof obj[key] === 'object' && obj[key] !== null && !isMoment(obj[key]) && !Array.isArray(obj[key])) {
         const subTreeValues = this.createValue(obj[key], hatIdMapping, prefix + '_' + key);
         acc = acc.concat(subTreeValues);
       } else {
@@ -303,6 +306,7 @@ export class HatApiService {
 
     table.fields.reduce((acc, field) => {
       acc[prefix + '_' + field.name] = field.id;
+
       return acc;
     }, mapping);
 
@@ -310,6 +314,7 @@ export class HatApiService {
       const mappedSubTables = table.subTables.reduce((acc, tableNode) => {
         const mappedTable = this.mapDataSource(tableNode, prefix + '_' + tableNode.name);
         Object.assign(acc, mappedTable);
+
         return acc;
       }, mapping);
     }
@@ -334,7 +339,7 @@ export class HatApiService {
       };
     });
 
-    const processedDebit: DataDebit = {
+    const processedDebit = {
       dateCreated: moment(rawDebit.dateCreated),
       startDate: moment(rawDebit.startDate),
       endDate: moment(rawDebit.endDate),
@@ -365,6 +370,7 @@ export class HatApiService {
       } else {
         acc[field.name] = null;
       }
+
       return acc;
     }, values);
 

@@ -14,20 +14,20 @@
 
                           <div *ngIf="activity.type === 'event'" class="activity-item event">
                               <div>
-                                <h4>{{activity.event.title}}</h4>
-                                <p class="event-description" *ngIf="activity.event.description">{{activity.event.description | limitContent:140}}</p>
-                                <p>{{activity.event.start | moment:'hh:mm A'}} - {{activity.event.end | moment:'hh:mm A'}}</p>
+                                <h4>{{activity.event.data.title}}</h4>
+                                <p class="event-description" *ngIf="activity.event.data.description">{{activity.event.data.description | limitContent:140}}</p>
+                                <p>{{activity.event.data.start | moment:'hh:mm A'}} - {{activity.event.data.end | moment:'hh:mm A'}}</p>
                               </div>
 
-                              <img *ngIf="activity.event.calendarName == 'google'" src="assets/icons/google-calendar-plug.svg">
-                              <img *ngIf="activity.event.calendarName == 'facebook'" src="assets/icons/facebook-f-icon.svg">
-                              <img *ngIf="activity.event.calendarName != 'google' && activity.event.calendarName != 'facebook'" src="assets/icons/calendar-plug.png">
+                              <img *ngIf="activity.event.data.calendarName == 'google'" src="assets/icons/google-calendar-plug.svg">
+                              <img *ngIf="activity.event.data.calendarName == 'facebook'" src="assets/icons/facebook-f-icon.svg">
+                              <img *ngIf="activity.event.data.calendarName != 'google' && activity.event.data.calendarName != 'facebook'" src="assets/icons/calendar-plug.png">
                           </div>
 
-                          <div *ngIf="activity.type === 'photo'" class="activity-item photo-box" [style.background-image]="'url('+activity.event.src + ')'">
+                          <div *ngIf="activity.type === 'photo'" class="activity-item photo-box" [style.background-image]="'url('+activity.event.data.src + ')'">
                               <div class="photo-description" >
-                                <h4>{{activity.event.name}}</h4>
-                                <p>{{activity.event.timestamp | moment}}</p>
+                                <h4>{{activity.event.data.name}}</h4>
+                                <p>{{activity.event.data.timestamp | moment}}</p>
                               </div>
                               <img class="icon-rounded" src="assets/icons/photos-plug.svg">
                           </div>
@@ -38,7 +38,7 @@
                                 <img src="assets/icons/facebook-f-icon.svg">
                           </div>
 
-                          <div *ngIf="activity.type === 'facebook' && activity.event.type ==='photo' || activity.event.type ==='link'" class="activity-item post" [class.photo-box]="activity.event.content.fullPicture != ''" [style.background-image]="'url('+activity.event.content.fullPicture + ')'">
+                          <div *ngIf="activity.type === 'facebook' && activity.event.type ==='photo' || activity.event.type ==='link'" class="activity-item post" [class.photo-box]="activity.event.data.content.fullPicture != ''" [style.background-image]="'url('+activity.event.data.content.fullPicture + ')'">
                                 <rump-location-fb-post [post]="activity.event"></rump-location-fb-post>
                                 <img src="assets/icons/facebook-f-icon.svg">
                           </div>

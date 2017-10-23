@@ -41,7 +41,6 @@ export class SideMenuComponent implements OnInit {
   private offersSub: Subscription;
   public offers: any = [];
 
-
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
 
@@ -50,30 +49,19 @@ export class SideMenuComponent implements OnInit {
               private _dialogSvc: DialogService,
               private router: Router,
               private userSvc: UserService,
-              private hatSvc: HatApiService,
               private dataplugSvc: DataPlugService,
               private dataOfferSvc: DataOfferService,
               private marketSvc: MarketSquareService ) {}
 
   ngOnInit() {
-
     this.selectedItem = window.location.pathname;
 
     this.state = { dataSources: [], dataTypes: [] };
     this.userAuthenticated = false;
     this.menu = this.config.menuItems.public;
 
-    this.hatSvc.getPublicData('profile').subscribe((profileResponse: any) => {
-      if (profileResponse['public'] === true) {
-        this.profile = profileResponse.profile;
-      }
-    });
-
-
-
     this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
       this.offers = offers.filter(function(offer) {
-
           let claimStatus = 'untouched';
           if (offer.claim && offer.claim.status) {
             claimStatus = offer.claim.status;
@@ -134,10 +122,8 @@ export class SideMenuComponent implements OnInit {
       }
     });
 
-
     window.addEventListener('resize', this.windowResize);
     this.windowResize();
-
   }
 
   windowResize() {

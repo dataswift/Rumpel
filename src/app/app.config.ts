@@ -18,7 +18,7 @@ export class IAppConfig {
   protocol: string;
   exchange: { url: string; id: string; accessToken: string; };
   marketsquare: { url: string };
-  databuyer: { name: string; url: string; };
+  databuyer: { name: string; url: string; pathPrefix: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
   notables: {
@@ -34,8 +34,8 @@ export class IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  version: '3.1.0',
-  name: 'Rumpel',
+  version: '3.1.1',
+  name: 'RumpelStaging',
   native: environment.native,
   protocol: environment.protocol,
   exchange: {
@@ -54,7 +54,8 @@ export const AppConfig: IAppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubofallthings.com'
+    url: 'https://databuyer.hubat.net',
+    pathPrefix: '/api/v2'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='

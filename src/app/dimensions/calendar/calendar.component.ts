@@ -7,12 +7,12 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {Observable, Subscription} from 'rxjs/Rx';
-import { EventsService } from '../events.service';
-import {FacebookEventsService} from '../facebook-events.service';
-import {GoogleEventsService} from '../google-events.service';
+import { Observable, Subscription } from 'rxjs/Rx';
+import { FacebookEventsService } from '../facebook-events.service';
+import { GoogleEventsService } from '../google-events.service';
 
 import { Event } from '../../shared/interfaces';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
 
 declare var $: any;
@@ -32,8 +32,7 @@ export class CalendarComponent implements OnInit {
   private firstDay: number;
   private height: string;
 
-  constructor(private eventsSvc: EventsService,
-              private facebookEventsSvc: FacebookEventsService,
+  constructor(private facebookEventsSvc: FacebookEventsService,
               private googleEventsSvc: GoogleEventsService) {}
 
   ngOnInit() {
@@ -68,18 +67,17 @@ export class CalendarComponent implements OnInit {
 
     this.sub =
       Observable.merge(
-        this.eventsSvc.data$,
         this.facebookEventsSvc.data$,
         this.googleEventsSvc.data$
-      ).subscribe((events: Array<Event>)  => {
+      ).subscribe((events: HatRecord<Event>[])  => {
         this.events = this.events.concat(events.map(dp => {
           return {
-            id: dp.id,
-            title: dp.title,
-            start: dp.start.format(),
-            end: !!dp.end ? dp.end.format() : null,
-            allDay: dp.allDay,
-            url: dp.link
+            id: dp.data.id,
+            title: dp.data.title,
+            start: dp.data.start.format(),
+            end: !!dp.data.end ? dp.data.end.format() : null,
+            allDay: dp.data.allDay,
+            url: dp.data.link
           };
         }));
 

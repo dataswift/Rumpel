@@ -15,6 +15,7 @@ import {NotablesServiceMeta} from '../../shared/interfaces/notables-service-meta
 import {DialogService} from '../../layout/dialog.service';
 import {DialogBoxComponent} from '../../layout/dialog-box/dialog-box.component';
 import {DataPlugService} from '../../data-management/data-plug.service';
+import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-share-belt',
@@ -54,9 +55,9 @@ export class ShareBeltComponent implements OnInit {
       this.displayMessage = null;
     });
 
-    this.notablesSvc.editedNotable$.subscribe((editedNotable: Notable) => {
+    this.notablesSvc.editedNotable$.subscribe((editedNotable: HatRecord<Notable>) => {
       this.sharedOn = { facebook: false, twitter: false, marketsquare: false, phata: false };
-      for (const provider of editedNotable.shared_on) {
+      for (const provider of editedNotable.data.shared_on) {
         this.sharedOn[provider] = true;
       }
     });

@@ -21,6 +21,7 @@ export class MarkdownToHtmlPipe implements PipeTransform {
 
   transform(mdString: string): string {
     const htmlString = this.md.parse(mdString);
+
     return htmlString;
   }
 

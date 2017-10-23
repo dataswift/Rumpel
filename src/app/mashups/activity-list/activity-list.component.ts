@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { ExpandedTime } from '../../shared/interfaces/index';
@@ -46,7 +46,6 @@ export class ActivityListComponent implements OnInit {
     // this.options.maxDate = moment().toDate();
 
   }
-
 
   changeDate(e) {
     const targetDate = e.target.value;

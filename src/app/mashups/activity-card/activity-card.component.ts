@@ -13,14 +13,9 @@ export class ActivityCardComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-
-  }
-
+  ngOnInit() { }
 
   scrollToItem(num: number) {
-    this.selection.emit( num );
+    this.selection.emit(num);
   }
-
-
 }

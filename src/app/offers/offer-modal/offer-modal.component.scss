@@ -550,3 +550,17 @@ button{
     outline: none;
   }
 }
+
+.data-requirements {
+  .property:not(:first-child) {
+    margin-top: 1em;
+  }
+
+  .property {
+    padding-left: 1em;
+  }
+
+  .field {
+    text-indent: 1.5em;
+  }
+}

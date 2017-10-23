@@ -33,6 +33,7 @@ export class AuthGuard implements CanActivate {
         );
         this.router.navigate(this.redirectPath);
       }
+
       return tokenValid;
     } else if (this.userSvc.isLoggedIn()) {
       return true;
@@ -47,6 +48,7 @@ export class AuthGuard implements CanActivate {
       }
 
       this.router.navigate(this.redirectPath, navExtras);
+
       return false;
     }
 

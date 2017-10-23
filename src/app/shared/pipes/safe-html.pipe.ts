@@ -16,6 +16,7 @@ export class SafeHtmlPipe implements PipeTransform {
 
   static replaceUrlsWithHtmlLinks(message: string): string {
     const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
     return message.replace(urlRegex, `<a href='$1' target='_blank'>$1</a>`);
   }
 
@@ -23,6 +24,7 @@ export class SafeHtmlPipe implements PipeTransform {
 
   transform(message: string): SafeHtml {
     const html = SafeHtmlPipe.replaceUrlsWithHtmlLinks(message);
+
     return this.sanitizer.sanitize(SecurityContext.HTML, html);
   }
 

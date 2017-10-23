@@ -24,6 +24,7 @@ export class WithObjectPipe implements PipeTransform {
         keys.push(new Node(key, null, value[key]));
       }
     }
+
     return keys;
   }
 

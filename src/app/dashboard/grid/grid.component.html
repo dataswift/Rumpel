@@ -16,7 +16,7 @@
                       [info]="'Your words are your memories! Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists - all in one place, and lets you decide what is private to yourself and what to share!'"></rump-tile-header>
   </rump-tile-notables>
 
-  <rump-account-status-tile class="grid-item">
+  <rump-account-status-tile class="grid-item" *ngIf="appIsNative">
     <rump-tile-header [title]="'Account'"
                       [info]="'This tile lets you know how much storage space you have left on your HAT'"></rump-tile-header>
   </rump-account-status-tile>

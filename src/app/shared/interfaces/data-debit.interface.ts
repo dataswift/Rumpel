@@ -1,5 +1,3 @@
-
-
 /*
  * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
@@ -8,16 +6,34 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+import { Bundle } from './bundle.interface';
+import { HatRecord } from './hat-record.interface';
+
 export interface DataDebit {
+  dataDebitKey: string;
   dateCreated: any;
-  lastUpdated: any;
+  client: Client;
+  bundles: HatBundle[];
+}
+
+export interface DataDebitValues {
+  bundle: { [endpoint: string]: HatRecord<any>[]; };
+}
+
+interface Client {
+  userId: string;
+  email: string;
+  pass: string;
+  name: string;
+  role: string;
+  roles: string[];
+}
+
+interface HatBundle {
+  dateCreated: any;
   startDate: any;
   endDate: any;
-  enabled: boolean;
-  name: string;
-  price: number;
   rolling: boolean;
-  sell: boolean;
-  key: string;
-  dataToShare: any;
+  enabled: boolean;
+  bundle: Bundle;
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, Inject, EventEmitter } from '@angular/core';
 import { APP_CONFIG, IAppConfig } from '../../../app.config';
 import { Notable } from '../../interfaces/notable.class';
+import { HatRecord } from '../../interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-notable',
@@ -8,9 +9,9 @@ import { Notable } from '../../interfaces/notable.class';
   styleUrls: ['./notable.component.scss']
 })
 export class NotableComponent implements OnInit {
-  @Input() notable: Notable;
+  @Input() notable: HatRecord<Notable>;
   @Input() modifiable = false;
-  @Output() change: EventEmitter<{ action: string; notable: Notable; }> = new EventEmitter();
+  @Output() change: EventEmitter<{ action: string; notable: HatRecord<Notable>; }> = new EventEmitter();
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig) { }
 
@@ -26,11 +27,12 @@ export class NotableComponent implements OnInit {
   }
 
   getIconName(): string {
-    return this.config.notables.iconMap[this.notable.kind];
+    return this.config.notables.iconMap[this.notable.data.kind];
   }
 
   getLogo(name: string): string {
     const foundIntegration = this.config.notables.activeIntegrations.find(integration => integration.name === name);
+
     return foundIntegration ? foundIntegration.logoUrl : '';
   }
 

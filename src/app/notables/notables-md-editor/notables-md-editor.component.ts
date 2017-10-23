@@ -10,10 +10,11 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Notable, Location } from '../../shared/interfaces';
-import {DialogService} from '../../layout/dialog.service';
-import {ConfirmBoxComponent} from '../../layout/confirm-box/confirm-box.component';
-import {CurrentNotableMeta} from '../../shared/interfaces/current-notable-meta.interface';
-import {FileUploadComponent} from '../../layout/file-upload/file-upload.component';
+import { DialogService } from '../../layout/dialog.service';
+import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
+import { FileUploadComponent } from '../../layout/file-upload/file-upload.component';
+import { CurrentNotableMeta } from '../../shared/interfaces/current-notable-meta.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 declare var SimpleMDE: any;
 declare var $: any;
@@ -29,7 +30,7 @@ export class NotablesMdEditorComponent implements OnInit {
   private mde: any;
   public currentNotableMeta: CurrentNotableMeta;
   public editMode = false;
-  public currentNotable: Notable;
+  public currentNotable: HatRecord<Notable>;
   public cannotPostMessage: string;
   public uploadedFiles = [];
 
@@ -55,18 +56,22 @@ export class NotablesMdEditorComponent implements OnInit {
       reportLocation: false
     };
 
-    this.currentNotable = new Notable();
+    this.currentNotable = {
+      endpoint: 'rumpel/notablesv1',
+      recordId: null,
+      data: new Notable()
+    };
 
-    this.notablesSvc.editedNotable$.subscribe(notable => {
+    this.notablesSvc.editedNotable$.subscribe((notable: HatRecord<Notable>) => {
       this.currentNotable = notable;
-      if (this.currentNotable.id) {
+      if (this.currentNotable.recordId) {
         this.currentNotableMeta = {
           phata: this.notablesSvc.hatDomain,
           expires: null,
           reportLocation: false,
           initialState: {
-            isShared: notable.isShared,
-            message: notable.message
+            isShared: notable.data.isShared,
+            message: notable.data.message
           }
         };
 
@@ -81,31 +86,31 @@ export class NotablesMdEditorComponent implements OnInit {
   }
 
   switchType(typeName: string) {
-    this.currentNotable.kind = typeName;
+    this.currentNotable.data.kind = typeName;
   }
 
   setExpiration(event: Event, days: number): void {
     event.preventDefault();
     event.stopPropagation();
     this.currentNotableMeta.expires = days;
-    this.currentNotable.setExpirationDate(days);
+    this.currentNotable.data.setExpirationDate(days);
   }
 
   togglePrivacy(): void {
     // A bit of a hack to force Angular change detection
-    setTimeout(() => this.currentNotable.toggleSharing());
+    setTimeout(() => this.currentNotable.data.toggleSharing());
   }
 
   toggleLocation() {
     if (this.currentNotableMeta.reportLocation) {
-      this.currentNotable.locationv1 = null;
+      this.currentNotable.data.locationv1 = null;
       this.currentNotableMeta.reportLocation = false;
     } else {
       this.locationSvc.getCurrentDeviceLocation((err, here: Location) => {
         if (err) {
           return this.currentNotableMeta.reportLocation = false;
         }
-        this.currentNotable.locationv1 = here;
+        this.currentNotable.data.locationv1 = here;
         this.currentNotableMeta.reportLocation = true;
       });
     }
@@ -115,14 +120,14 @@ export class NotablesMdEditorComponent implements OnInit {
     this.cannotPostMessage = '';
 
     if (event.action === 'SHARE') {
-      this.currentNotable.addShareDestination(event.service);
+      this.currentNotable.data.addShareDestination(event.service);
     } else if (event.action === 'STOP') {
-      this.currentNotable.removeShareDestination(event.service);
+      this.currentNotable.data.removeShareDestination(event.service);
     }
   }
 
   discardChanges() {
-    this.currentNotable = new Notable();
+    this.currentNotable.data = new Notable();
     this.currentNotableMeta.expires = 0;
     this.resetForm();
   }
@@ -140,10 +145,10 @@ export class NotablesMdEditorComponent implements OnInit {
     this.uploadedFiles = files;
   }
 
-
   submit() {
-    if (this.currentNotable.isShared === true && this.currentNotable.shared_on.length === 0) {
+    if (this.currentNotable.data.isShared === true && this.currentNotable.data.shared_on.length === 0) {
       this.cannotPostMessage = 'Please select at least one shared destination.';
+
       return;
     }
 
@@ -155,12 +160,12 @@ export class NotablesMdEditorComponent implements OnInit {
       author['photo_url'] = this.profile.photo.url;
     }
 
-    this.currentNotable.prepareToPost(this.mde.value(), author);
+    this.currentNotable.data.prepareToPost(this.mde.value(), author);
 
-    if (this.currentNotable.id) {
+    if (this.currentNotable.recordId) {
       this.editMode = false;
 
-      if (this.currentNotable.isShared === false && this.currentNotableMeta.initialState.isShared === true) {
+      if (this.currentNotable.data.isShared === false && this.currentNotableMeta.initialState.isShared === true) {
         this.dialogSvc.createDialog(ConfirmBoxComponent, {
           message: `This will remove your post at the shared destinations.
           Warning: any comments at the destination would also be deleted.`,
@@ -168,7 +173,7 @@ export class NotablesMdEditorComponent implements OnInit {
             this.updateNotableHelper();
           }
         });
-      } else if (this.currentNotable.isShared === true && this.currentNotableMeta.initialState.isShared === false) {
+      } else if (this.currentNotable.data.isShared === true && this.currentNotableMeta.initialState.isShared === false) {
         this.dialogSvc.createDialog(ConfirmBoxComponent, {
           message: `You are about to share your post.
           Tip: to remove a note from the external site, edit the note and make it private.`,
@@ -176,8 +181,8 @@ export class NotablesMdEditorComponent implements OnInit {
             this.updateNotableHelper();
           }
         });
-      } else if (this.currentNotable.message !== this.currentNotableMeta.initialState.message &&
-                 this.currentNotable.isShared === true &&
+      } else if (this.currentNotable.data.message !== this.currentNotableMeta.initialState.message &&
+                 this.currentNotable.data.isShared === true &&
                  this.currentNotableMeta.initialState.isShared === true) {
         this.dialogSvc.createDialog(ConfirmBoxComponent, {
           message: `Your post would not be edited at the destination.`,
@@ -188,7 +193,7 @@ export class NotablesMdEditorComponent implements OnInit {
       } else {
         this.updateNotableHelper();
       }
-    } else if (this.currentNotable.isShared) {
+    } else if (this.currentNotable.data.isShared) {
       this.dialogSvc.createDialog(ConfirmBoxComponent, {
         message: `You are about to share your post.
           Tip: to remove a note from the external site, edit the note and make it private.`,
@@ -202,16 +207,24 @@ export class NotablesMdEditorComponent implements OnInit {
   }
 
   private postNotableHelper() {
-    this.notablesSvc.postNotable(this.currentNotable);
-    this.currentNotable = new Notable();
+    this.notablesSvc.postNotable(this.currentNotable.data);
+    this.currentNotable = {
+      endpoint: 'rumpel/notablesv1',
+      recordId: null,
+      data: new Notable()
+    };
     this.currentNotableMeta.expires = 0;
 
     this.resetForm();
   }
 
   private updateNotableHelper() {
-    this.notablesSvc.updateNotable(this.currentNotable);
-    this.currentNotable = new Notable();
+    this.notablesSvc.update(this.currentNotable);
+    this.currentNotable = {
+      endpoint: 'rumpel/notablesv1',
+      recordId: null,
+      data: new Notable()
+    };
     this.currentNotableMeta.expires = 0;
     this.currentNotableMeta.initialState = undefined;
 
@@ -219,9 +232,9 @@ export class NotablesMdEditorComponent implements OnInit {
   }
 
   private resetForm() {
-    this.currentNotableMeta.reportLocation = !!this.currentNotable.locationv1;
+    this.currentNotableMeta.reportLocation = !!this.currentNotable.data.locationv1;
 
-    this.mde.value(this.currentNotable.message);
+    this.mde.value(this.currentNotable.data.message);
   }
 
 }

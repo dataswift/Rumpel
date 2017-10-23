@@ -8,7 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from '../weather.service';
-import * as moment from 'moment';
+import { unix } from 'moment/moment';
 
 @Component({
   selector: 'rump-tile-weather',
@@ -36,7 +36,7 @@ export class TileWeatherComponent implements OnInit {
         this.temp = currentw.temp_c;
         this.description = currentw.weather;
         this.feelsLike = currentw.feelslike_c;
-        this.lastUpdated = moment.unix(currentw.observation_epoch).fromNow();
+        this.lastUpdated = unix(currentw.observation_epoch).fromNow();
       },
       err => console.log('Weather data could not be retrieved', err));
   }

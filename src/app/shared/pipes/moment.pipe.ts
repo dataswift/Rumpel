@@ -7,7 +7,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import { Moment } from 'moment';
+import { Moment, isMoment } from 'moment/moment';
 import * as moment from 'moment';
 
 @Pipe({
@@ -20,7 +20,7 @@ export class MomentPipe implements PipeTransform {
       return null;
     }
 
-    if (!moment.isMoment(value)) {
+    if (!isMoment(value)) {
       value = moment(value);
     }
 

@@ -1,5 +1,7 @@
+import { Moment } from 'moment';
+
 export interface Fitbit {
-  dateTime: string;
+  dateTime: Moment;
   steps: number;
   restingHeartRate: number;
   sleep: number;

@@ -1,3 +1,13 @@
+/*
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 10, 2017
+ */
+
+import { Bundle } from '../shared/interfaces/bundle.interface';
+
 export interface Offer {
   id: string;
   created: number;
@@ -8,7 +18,8 @@ export interface Offer {
   starts: number;
   expires: number;
   collectFor: number;
-  requiredDataDefinition: DataDefinition[];
+  requiredDataDefinition: DataDefinition[] | Bundle;
+  dataConditions?: Bundle;
   requiredMinUser: number;
   requiredMaxUser: number;
   totalUserClaims: number;

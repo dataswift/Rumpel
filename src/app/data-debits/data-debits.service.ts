@@ -7,14 +7,16 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HatApiService } from '../services/hat-api.service';
+import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { MarketSquareService } from '../market-square/market-square.service';
 import { Observable } from 'rxjs/Rx';
+import { DataDebit } from '../shared/interfaces/data-debit.interface';
+
 
 @Injectable()
 export class DataDebitService {
 
-  constructor(private _hatSvc: HatApiService,
+  constructor(private hat: HatApiV2Service,
               private _marketSvc: MarketSquareService) {}
 
   getDataOffer(dataDebitId: string, forceReload: boolean): Observable<any> {
@@ -22,11 +24,11 @@ export class DataDebitService {
   }
 
   loadDataDebit(uuid: string) {
-    return this._hatSvc.getDataDebit(uuid);
+    return this.hat.getDataDebit(uuid);
   }
 
-  loadAllDataDebits() {
-    return this._hatSvc.getAllDataDebits();
+  loadAllDataDebits(): Observable<DataDebit[]> {
+    return this.hat.getAllDataDebits();
   }
 
 }

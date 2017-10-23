@@ -8,8 +8,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { DataDebitService } from '../data-debits.service';
-import {UserService} from '../../user/user.service';
-import {User} from '../../user/user.interface';
+import { UserService } from '../../user/user.service';
+import { User } from '../../user/user.interface';
+import { DataDebit } from '../../shared/interfaces/data-debit.interface';
 
 @Component({
   selector: 'rump-tile-data-debit',
@@ -17,16 +18,14 @@ import {User} from '../../user/user.interface';
   styleUrls: ['tile-data-debit.component.scss']
 })
 export class TileDataDebitComponent implements OnInit {
-  public debits: Array<any>;
+  public debits: DataDebit[] = [];
 
   constructor(private ddSvc: DataDebitService, private userSvc: UserService) {}
 
   ngOnInit() {
-    this.debits = [];
-
     this.userSvc.user$.subscribe((user: User) => {
       if (user.authenticated === true) {
-        this.ddSvc.loadAllDataDebits().subscribe(dataDebits => {
+        this.ddSvc.loadAllDataDebits().subscribe((dataDebits: DataDebit[]) => {
           this.debits = dataDebits;
         });
       }

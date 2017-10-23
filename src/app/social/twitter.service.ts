@@ -7,29 +7,28 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HatApiService } from '../services/hat-api.service';
-
+import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { Tweet } from '../shared/interfaces/index';
 import * as moment from 'moment';
 import { BaseDataService } from '../services/base-data.service';
 import { UiStateService } from '../services/ui-state.service';
+import {HatRecord} from '../shared/interfaces/hat-record.interface';
+
 
 @Injectable()
 export class TwitterService extends BaseDataService<Tweet> {
 
-  constructor(hat: HatApiService, uiSvc: UiStateService) {
-    super(hat, uiSvc);
-
-    this.ensureTableExists('tweets', 'twitter');
+  constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
+    super(hat, uiSvc, 'twitter', 'tweets', 'createdTime');
   }
 
-  mapData(rawTweet: any): Tweet {
-    const tweetContent = rawTweet.data.tweets;
+  coerceType(rawTweet: HatRecord<any>): HatRecord<Tweet> {
+    const tweetContent = rawTweet.data.tweets || rawTweet.data;
 
     const tweet: Tweet = {
       id: tweetContent.id,
       text: tweetContent.text,
-      createdTime: moment(rawTweet.lastUpdated),
+      createdTime: moment(rawTweet.data.lastUpdated),
       type: 'tweet',
       favorite_count: tweetContent.favorite_count,
       retweet_count: tweetContent.retweet_count,
@@ -54,7 +53,11 @@ export class TwitterService extends BaseDataService<Tweet> {
       };
     }
 
-    return tweet;
+    return {
+      endpoint: rawTweet.endpoint,
+      recordId: rawTweet.recordId,
+      data: tweet
+    };
   }
 
 }

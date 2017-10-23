@@ -12,6 +12,7 @@ import { Notable, Location } from '../../shared/interfaces';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Router } from '@angular/router';
+import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-input-box',
@@ -25,7 +26,7 @@ export class InputBoxComponent implements OnInit {
   public active: boolean;
   public expanded: boolean;
   public inputExpanded: boolean;
-  public currentNotable: Notable;
+  public currentNotable: HatRecord<Notable>;
 
   public reportLocation: boolean;
   public shared: boolean;
@@ -43,37 +44,37 @@ export class InputBoxComponent implements OnInit {
   toggleExpiration() {
     if (this.expires) {
       this.expires = false;
-      this.currentNotable.setExpirationDate(0);
+      this.currentNotable.data.setExpirationDate(0);
     } else {
       this.expires = true;
-      this.currentNotable.setExpirationDate(7);
+      this.currentNotable.data.setExpirationDate(7);
     }
   }
 
   togglePrivacy() {
     if (this.shared) {
-      this.currentNotable.toggleSharing();
+      this.currentNotable.data.toggleSharing();
       this.shared = false;
       this.expires = false;
     } else {
-      this.currentNotable.toggleSharing();
+      this.currentNotable.data.toggleSharing();
       this.shared = true;
-      this.currentNotable.message = this.message;
+      this.currentNotable.data.message = this.message;
       this.notableSvc.editNotable(this.currentNotable);
       this.router.navigate(['notables']);
     }
   }
 
   toggleLocation() {
-    if (this.currentNotable.locationv1) {
-      this.currentNotable.locationv1 = null;
+    if (this.currentNotable.data.locationv1) {
+      this.currentNotable.data.locationv1 = null;
       this.reportLocation = false;
     } else {
       this.locationsSvc.getCurrentDeviceLocation((err, here: Location) => {
         if (err) {
           return this.reportLocation = false;
         }
-        this.currentNotable.locationv1 = here;
+        this.currentNotable.data.locationv1 = here;
         this.reportLocation = true;
       });
     }
@@ -94,9 +95,9 @@ export class InputBoxComponent implements OnInit {
       author['photo_url'] = this.profile.photo.url;
     }
 
-    this.currentNotable.prepareToPost(form.value.message, author);
+    this.currentNotable.data.prepareToPost(form.value.message, author);
 
-    this.notableSvc.postNotable(this.currentNotable);
+    this.notableSvc.postNotable(this.currentNotable.data);
 
     this.resetForm();
   }
@@ -105,7 +106,11 @@ export class InputBoxComponent implements OnInit {
     this.active = false;
     setTimeout(() => this.active = true, 0);
 
-    this.currentNotable = new Notable();
+    this.currentNotable = {
+      endpoint: 'rumpel/notablesv1',
+      recordId: null,
+      data: new Notable()
+    };
 
     this.shared = false;
     this.reportLocation = false;

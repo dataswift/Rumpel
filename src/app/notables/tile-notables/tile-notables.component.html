@@ -16,26 +16,26 @@
       <img style="max-height: 4.5em; margin: 1em; border-radius: 50%;" [src]="profile?.photo.url || '/assets/images/user-icon-white.svg'">
     </rump-input-box>
 
-    <ul class="note-list bulletless-list" *ngIf="notables.length > 0">
-      <li *ngFor="let notable of notables; let i = index" class="notable">
+    <ul class="note-list bulletless-list">
+      <li *ngFor="let notable of notables$ | async; let i = index" class="notable">
         <div class="item-header" *ngIf="i == 0">
           <div class="user-photo">
-            <img [src]="notable.authorv1 && notable.authorv1['photo_url'] ? notable.authorv1['photo_url'] : '/assets/images/user-icon-black.svg'">
+            <img [src]="notable.data.authorv1 && notable.data.authorv1['photo_url'] ? notable.data.authorv1['photo_url'] : '/assets/images/user-icon-black.svg'">
           </div>
 
           <div class="notable-type">
-            <span class="ss-maplocation" *ngIf="notable.location"></span>
-            <span class="ss-{{iconMap[notable.kind]}}"></span>
+            <span class="ss-maplocation" *ngIf="notable.data.locationv1"></span>
+            <span class="ss-{{iconMap[notable.data.kind]}}"></span>
           </div>
           <div class="header-content">
-            <h5>{{notable.authorv1 ? notable.authorv1.phata : ''}}</h5>
-            <span>Logged {{notable.created_time | moment}}</span>
+            <h5>{{notable.data.authorv1 ? notable.data.authorv1.phata : ''}}</h5>
+            <span>Logged {{notable.data.created_time | moment}}</span>
             &nbsp;&#9679;&nbsp;
-            <span>{{notable.isShared ? 'SHARED' : 'PRIVATE'}}</span>
+            <span>{{notable.data.isShared ? 'SHARED' : 'PRIVATE'}}</span>
           </div>
         </div>
 
-        <div class="notable-content" *ngIf="i == 0" [innerHTML]="notable.message | markdownToHtml"></div>
+        <div class="notable-content" *ngIf="i == 0" [innerHTML]="notable.data.message | markdownToHtml"></div>
         <!-- <div class="location" *ngIf="note.location">Location: {{note.location.latitude}} : {{note.location.longitude}}</div> -->
       </li>
     </ul>

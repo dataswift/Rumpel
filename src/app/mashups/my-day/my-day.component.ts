@@ -8,13 +8,11 @@
 
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PhotosService } from '../../photos/photos.service';
-import { EventsService } from '../../dimensions/events.service';
 import { SocialService } from '../../social/social.service';
 import { TwitterService } from '../../social/twitter.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
 import { LocationsService } from '../../locations/locations.service';
-import { Post, Tweet, Event, Photo, Location } from '../../shared/interfaces/index';
+import { Post, Tweet, Event, Location } from '../../shared/interfaces/index';
 import { ExpandedTime } from '../../shared/interfaces/index';
 import { Fitbit } from '../../fitbit/fitbit.interface';
 import { Monzo } from '../../monzo/monzo.interface';
@@ -23,12 +21,12 @@ import { Moment } from 'moment';
 import * as _ from 'lodash';
 import { NotablesService } from '../../notables/notables.service';
 import { Notable } from '../../shared/interfaces/notable.class';
-import {Subscription, Observable} from 'rxjs/Rx';
-import {FacebookEventsService} from '../../dimensions/facebook-events.service';
-import {GoogleEventsService} from '../../dimensions/google-events.service';
+import { Subscription, Observable } from 'rxjs/Rx';
+import { FacebookEventsService } from '../../dimensions/facebook-events.service';
+import { GoogleEventsService } from '../../dimensions/google-events.service';
 import { FitbitService } from '../../fitbit/fitbit.service';
 import { MonzoService } from '../../monzo/monzo.service';
-import {MapComponent} from '../../locations/map/map.component';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 declare var $: any;
 
@@ -47,21 +45,17 @@ export class MyDayComponent implements OnInit, OnDestroy {
   private eventsSub: Subscription;
   private twitterSub: Subscription;
   private locationSub: Subscription;
-  private photoSub: Subscription;
   private socialSub: Subscription;
   private notableSub: Subscription;
   private fitbitSub: Subscription;
   private monzoSub: Subscription;
-
-  private imgSub;
-  public posts: Array<Post> = [];
-  public events: Array<Event> = [];
-  public locations: Array<Location> = [];
-  public photos: Array<Photo> = [];
-  public tweets: Array<Tweet> = [];
-  public notables: Array<Notable> = [];
-  public fitbits: Array<Fitbit> = [];
-  public monzos: Array<Monzo> = [];
+  public posts: HatRecord<Post>[] = [];
+  public events: HatRecord<Event>[] = [];
+  public locations: HatRecord<Location>[] = [];
+  public tweets: HatRecord<Tweet>[] = [];
+  public notables: HatRecord<Notable>[] = [];
+  public fitbits: HatRecord<Fitbit>[] = [];
+  public monzos: HatRecord<Monzo>[] = [];
 
   public shownComponents: { map: boolean; events: boolean; photos: boolean; timeline: boolean;   };
   public safeSize;
@@ -78,12 +72,9 @@ export class MyDayComponent implements OnInit, OnDestroy {
   public hasLocationData = false;
   public dataplugs: Subscription;
 
-
   constructor(private locationsSvc: LocationsService,
-              private eventsSvc: EventsService,
               private facebookEventsSvc: FacebookEventsService,
               private googleEventsSvc: GoogleEventsService,
-              private photosSvc: PhotosService,
               private socialSvc: SocialService,
               private twitterSvc: TwitterService,
               private notablesSvc: NotablesService,
@@ -94,7 +85,6 @@ export class MyDayComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
     this.dataplugs = this.dataplugsSvc.dataplugs$.subscribe(plugs => {
       for (let i = 0; i < plugs.length; i++) {
         if (plugs[i].name === 'location') {
@@ -110,66 +100,46 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.eventsSub =
       Observable.merge(
-        this.eventsSvc.data$,
         this.facebookEventsSvc.data$,
         this.googleEventsSvc.data$
       )
-        .subscribe((events: Array<Event>) => {
+        .subscribe((events: HatRecord<Event>[]) => {
           this.addDatesToTimeline(events, 'start');
           this.addDataToEventsList('event');
-          this.events = this.events.concat(events).sort((a, b) => a.start.isBefore(b.start) ? -1 : 1);
+          this.events = this.events.concat(events).sort((a, b) => a.data.start.isBefore(b.data.start) ? -1 : 1);
         });
 
-
-
-    this.photoSub = this.photosSvc.photos$.subscribe(photos => {
-      this.addDatesToTimeline(photos, 'timestamp');
-      this.addDataToEventsList('photo');
-      this.photos = photos;
-    });
-
-    this.socialSub = this.socialSvc.data$.subscribe((posts: Array<Post>) => {
+    this.socialSub = this.socialSvc.data$.subscribe((posts: HatRecord<Post>[]) => {
       this.addDatesToTimeline(posts, 'createdTime');
       this.addDataToEventsList('facebook');
       this.posts = posts;
     });
 
-    this.twitterSub = this.twitterSvc.data$.subscribe((tweets: Array<Tweet>) => {
+    this.twitterSub = this.twitterSvc.data$.subscribe((tweets: HatRecord<Tweet>[]) => {
       this.addDatesToTimeline(tweets, 'createdTime');
       this.addDataToEventsList('twitter');
       this.tweets = tweets;
     });
 
-    this.fitbitSub = this.fitbitSvc.data$.subscribe((fitbits: Array<Fitbit>) => {
+    this.fitbitSub = this.fitbitSvc.data$.subscribe((fitbits: HatRecord<Fitbit>[]) => {
       this.addDatesToTimeline(fitbits, 'dateTime');
       this.addDataToEventsList('fitbit');
       this.fitbits = fitbits;
     });
 
-    this.monzoSub = this.monzoSvc.data$.subscribe((monzos: Array<Monzo>) => {
+    this.monzoSub = this.monzoSvc.data$.subscribe((monzos: HatRecord<Monzo>[]) => {
       this.addDatesToTimeline(monzos, 'dateTime');
       this.addDataToEventsList('monzo');
       this.monzos = monzos;
     });
 
-    this.locationSub = this.locationsSvc.data$.subscribe(locations => {
+    this.locationSub = this.locationsSvc.data$.subscribe((locations: HatRecord<Location>[]) => {
       this.addDatesToTimeline(locations, 'timestamp');
 
       this.locations = locations;
 
       this.addToLocationList(this.totalDP, this.locations.length);
-
-      if (locations.length > this.totalDP) {
-
-        this.totalDP = locations.length;
-
-        // this.locationsSvc.getMoreData(500, 5000);
-        // setTimeout( () => { this.locationsSvc.getMoreData(2000, 20000); }, 5000);
-      }
-
       this.addDataToEventsList('location');
-
-
     });
 
     this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
@@ -180,8 +150,6 @@ export class MyDayComponent implements OnInit, OnDestroy {
       this.notables = notables;
     });
 
-
-
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
     this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 259 + 'px');
     const thisScope = this;
@@ -190,10 +158,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
       thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
       thisScope.safeSizeSidebar = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 259 + 'px');
     });
-
   }
-
-
 
   getDatesInRange(array) {
     this.datesInRange = array;
@@ -201,7 +166,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     for (let j = 0; j < newMonths.length; j++) {
       for (let i = 0; i < this.locationDataDownloaded.length; i++) {
-        if ( this.locationDataDownloaded[i] === newMonths[j] ) {
+        if (this.locationDataDownloaded[i] === newMonths[j]) {
           newMonths.splice(j, 1);
         }
       }
@@ -210,24 +175,21 @@ export class MyDayComponent implements OnInit, OnDestroy {
     this.loadLocationData(newMonths);
   }
 
-
   loadLocationData(newMonths) {
     for (let k = 0; k < newMonths.length; k++) {
       this.locationDataDownloaded.push(newMonths[k]);
       const startTime = moment(newMonths[k], 'MM YYYY').startOf('month').format('X');
       const endTime = moment(newMonths[k], 'MM YYYY').endOf('month').format('X');
-      this.locationsSvc.getTimeIntervalData(startTime, endTime);
+      // this.locationsSvc.getTimeIntervalData(startTime, endTime);
     }
   }
 
-
   addToLocationList(start: number, end: number) {
-
     for (let i = 0; i < this.timeline.length; i++) {
-      for ( let j = start; j < end; j++) {
-          if ( this.locations[j].timestamp.isSame(this.timeline[i].timestamp, 'day')) {
-            if (start === 0 || !this.locations[j].timestamp.isSame(this.locationList[this.locationList.length - 1], 'day')) {
-              this.locationList.push(this.locations[j].timestamp.format('DD-MM-YYYY'));
+      for (let j = start; j < end; j++) {
+          if (this.locations[j].data.timestamp.isSame(this.timeline[i].timestamp, 'day')) {
+            if (start === 0 || !this.locations[j].data.timestamp.isSame(this.locationList[this.locationList.length - 1], 'day')) {
+              this.locationList.push(this.locations[j].data.timestamp.format('DD-MM-YYYY'));
               break;
             }
           }
@@ -235,57 +197,48 @@ export class MyDayComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  addDatesToTimeline(dataPoints: Array<any>, timeField: string) {
+  addDatesToTimeline(dataPoints: HatRecord<any>[], timeField: string) {
     // console.log(dataPoints);
     const timestamps: Array<ExpandedTime> = _.sortedUniqBy(
-      dataPoints.map(dp => new ExpandedTime(moment(dp[timeField]))).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
+      dataPoints.map(dp => new ExpandedTime(moment(dp.data[timeField]))).sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1),
       'unixDayStart');
 
     this.timeline = _.unionBy(this.timeline, timestamps, 'unixDayStart')
       .sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1)
       .filter((a: ExpandedTime) => a.timestamp.isSameOrBefore(this.moment, 'day'))
       .filter((a: ExpandedTime) => a.timestamp.isValid());
-      // console.log('timeline', this.timeline);
   }
 
   addDataToEventsList(type: string) {
-
     this.eventList = [];
 
-
     for (let i = 0; i < this.timeline.length; i++) {
-
       this.eventList.push({ timestamp: this.timeline[i].timestamp, activities: [], selected: (i === 0) });
 
-
-
-      for ( let j = 0; j < this.events.length; j++) {
-        if ( this.events[j].start.isSame(this.timeline[i].timestamp, 'day') ) {
+      for (let j = 0; j < this.events.length; j++) {
+        if (this.events[j].data.start.isSame(this.timeline[i].timestamp, 'day')) {
           this.eventList[ this.eventList.length - 1 ].activities.push( {
-            event: this.events[j],
+            event: this.events[j].data,
             type: 'event',
-            title: this.events[j].title,
-            description: this.events[j].description,
-            startTime: this.events[j].start,
-            endTime: this.events[j].end,
+            title: this.events[j].data.title,
+            description: this.events[j].data.description,
+            startTime: this.events[j].data.start,
+            endTime: this.events[j].data.end,
             image: '',
-            icon: (this.events[j].calendarName === 'google' ? 'google-calendar' :
-                    this.events[j].calendarName === 'facebook' ? 'facebook' : 'calendar')
-
+            icon: (this.events[j].data.calendarName === 'google' ? 'google-calendar' :
+              this.events[j].data.calendarName === 'facebook' ? 'facebook' : 'calendar')
           });
         }
       }
 
-
-      for ( let j = 0; j < this.notables.length; j++) {
-        if ( this.notables[j].created_time.isSame(this.timeline[i].timestamp, 'day') ) {
+      for (let j = 0; j < this.notables.length; j++) {
+        if (this.notables[j].data.created_time.isSame(this.timeline[i].timestamp, 'day')) {
           this.eventList[ this.eventList.length - 1 ].activities.push( {
             event: this.notables[j],
             type: 'notable',
-            title: this.notables[j].message,
-            description: (this.notables[j].isShared ? 'Public' : 'Private'),
-            startTime: this.notables[j].created_time,
+            title: this.notables[j].data.message,
+            description: (this.notables[j].data.isShared ? 'Public' : 'Private'),
+            startTime: this.notables[j].data.created_time,
             endTime: '',
             image: '',
             icon: 'notable'
@@ -294,30 +247,14 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      for ( let j = 0; j < this.photos.length; j++) {
-        if ( this.photos[j].timestamp.isSame(this.timeline[i].timestamp, 'day') ) {
-          this.eventList[ this.eventList.length - 1 ].activities.push( {
-            event: this.photos[j],
-            type: 'photo',
-            title: this.photos[j].name,
-            description: '',
-            startTime: this.photos[j].timestamp,
-            endTime: '',
-            image: this.photos[j].path,
-            icon: 'photo'
-
-          });
-        }
-      }
-
-      for ( let j = 0; j < this.posts.length; j++) {
-        if ( this.posts[j].createdTime.isSame(this.timeline[i].timestamp, 'day') ) {
+      for (let j = 0; j < this.posts.length; j++) {
+        if (this.posts[j].data.createdTime.isSame(this.timeline[i].timestamp, 'day')) {
           this.eventList[ this.eventList.length - 1 ].activities.push( {
             event: this.posts[j],
             type: 'facebook',
             title: '',
             description: '',
-            startTime: this.posts[j].createdTime,
+            startTime: this.posts[j].data.createdTime,
             endTime: '',
             image: '',
             icon: 'facebook'
@@ -326,31 +263,28 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
 
-      for ( let j = 0; j < this.tweets.length; j++) {
-        if ( this.tweets[j].createdTime.isSame(this.timeline[i].timestamp, 'day') ) {
-          this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.tweets[j], type: 'twitter' } );
+      for (let j = 0; j < this.tweets.length; j++) {
+        if (this.tweets[j].data.createdTime.isSame(this.timeline[i].timestamp, 'day')) {
+          this.eventList[ this.eventList.length - 1 ].activities.push({ event: this.tweets[j], type: 'twitter' });
         }
       }
 
       for ( let j = 0; j < this.fitbits.length; j++) {
-        if ( moment(this.fitbits[j].dateTime, 'YYYY-MM-DD').isSame(this.timeline[i].timestamp, 'day') ) {
+        if ( moment(this.fitbits[j].data.dateTime, 'YYYY-MM-DD').isSame(this.timeline[i].timestamp, 'day') ) {
           this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.fitbits[j], type: 'fitbit' } );
         }
       }
 
 
       for ( let j = 0; j < this.monzos.length; j++) {
-        if ( moment(this.monzos[j].dateTime).isSame(this.timeline[i].timestamp, 'day') ) {
+        if ( moment(this.monzos[j].data.dateTime).isSame(this.timeline[i].timestamp, 'day') ) {
           this.eventList[ this.eventList.length - 1 ].activities.push( { event: this.monzos[j], type: 'monzo' } );
         }
       }
 
-
       this.locationList = this.locationList.filter(function(elem, index, self) {
           return index === self.indexOf(elem);
       });
-
-
 
       for ( let j = 0; j < this.locationList.length; j++) {
         const thisActivities = this.eventList[ this.eventList.length - 1 ].activities;
@@ -358,10 +292,6 @@ export class MyDayComponent implements OnInit, OnDestroy {
           thisActivities.push( { event: this.locationList[j], type: 'location' } );
         }
       }
-
-
-
-
     }
 
     this.eventList = this.eventList.filter(function(elem, index, self) {
@@ -381,38 +311,27 @@ export class MyDayComponent implements OnInit, OnDestroy {
     // console.log(this.eventList);
   }
 
-
-
-
-
-
   ngOnDestroy(): void {
     this.eventsSub.unsubscribe();
     this.twitterSub.unsubscribe();
     this.locationSub.unsubscribe();
-    this.photoSub.unsubscribe();
     this.socialSub.unsubscribe();
     this.notableSub.unsubscribe();
   }
 
-
-
   selectTime(event) {
     this.selectedTime = event;
   }
-
-
 
   onViewReset() {
     this.selectedTime = null;
   }
 
   loadMoreData() {
-    this.socialSvc.getMoreData(50);
-    this.locationsSvc.getMoreData(1000, 15000);
-    this.eventsSvc.getMoreData(50);
-    this.facebookEventsSvc.getMoreData(50);
-    this.googleEventsSvc.getMoreData(50);
-    this.notablesSvc.getMoreData(50);
+    this.socialSvc.getMoreData(100);
+    this.locationsSvc.getMoreData(1000, 10000);
+    this.facebookEventsSvc.getMoreData(100);
+    this.googleEventsSvc.getMoreData(100);
+    this.notablesSvc.getMoreData(100);
   }
 }

@@ -8,21 +8,21 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LoginHatComponent } from './login-hat.component';
+import { LoginOauthComponent } from './login-oauth.component';
 
-describe('LoginHatComponent', () => {
-  let component: LoginHatComponent;
-  let fixture: ComponentFixture<LoginHatComponent>;
+describe('LoginOauthComponent', () => {
+  let component: LoginOauthComponent;
+  let fixture: ComponentFixture<LoginOauthComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginHatComponent ]
+      declarations: [ LoginOauthComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginHatComponent);
+    fixture = TestBed.createComponent(LoginOauthComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -7,15 +7,16 @@
  */
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventsService } from '../events.service';
-import {FacebookEventsService} from '../facebook-events.service';
-import {GoogleEventsService} from '../google-events.service';
-import { Event } from '../../shared/interfaces/index';
+import { FacebookEventsService } from '../facebook-events.service';
+import { GoogleEventsService } from '../google-events.service';
+import { UiStateService } from '../../services/ui-state.service';
+
 
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs/Rx';
-import {UiStateService} from '../../services/ui-state.service';
-import {DataTable} from '../../shared/interfaces/data-table.interface';
+import { Event } from '../../shared/interfaces/index';
+import { DataTable } from '../../shared/interfaces/data-table.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-tile-calendar',
@@ -29,8 +30,7 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
   private sub: Subscription;
   private _this: any;
 
-  constructor(private eventsSvc: EventsService,
-              private facebookEventSvc: FacebookEventsService,
+  constructor(private facebookEventSvc: FacebookEventsService,
               private googleEventsSvc: GoogleEventsService,
               private uiStateSvc: UiStateService) {}
 
@@ -41,7 +41,6 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
 
     this.sub =
       Observable.merge(
-        this.eventsSvc.data$,
         this.facebookEventSvc.data$,
         this.googleEventsSvc.data$
       ).subscribe(this.handleEventAddition);
@@ -58,25 +57,26 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  private handleEventAddition(events: HatRecord<Event>[]): void {
+    const upcomingEvents = events
+      .filter(event => {
+        return event.data.start.isAfter(moment().startOf('day')) &&
+          event.data.start.isBefore(moment().add(1, 'days').endOf('day'))
+      })
+      .sort((a, b) => a.data.start.isAfter(b.data.start) ? 1 : -1);
 
 
+    if (upcomingEvents.length > 0) {
+      const daySplitIndex = upcomingEvents.findIndex(event => {
+        return event.data.start.isAfter(moment().endOf('day'))
+      });
+      // this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
+      // this.events[1].events = this.events[1].events.concat(upcomingEvents);
 
-  private handleEventAddition(events: Array<Event>): void {
-
-        const upcomingEvents = events
-          .filter(event => event.start.isAfter(moment().startOf('day')) && event.start.isBefore(moment().add(1, 'days').endOf('day')))
-          .sort((a, b) => a.start.isAfter(b.start) ? 1 : -1);
-
-
-        if (upcomingEvents.length > 0) {
-          const daySplitIndex = upcomingEvents.findIndex(event => event.start.isAfter(moment().endOf('day')));
-          // this.events[0].events = this.events[0].events.concat(upcomingEvents.splice(0, daySplitIndex));
-          // this.events[1].events = this.events[1].events.concat(upcomingEvents);
-
-          this.upcomingEventsExist = true;
-        } else {
-          this.upcomingEventsExist = false;
-        }
+      this.upcomingEventsExist = true;
+    } else {
+      this.upcomingEventsExist = false;
+    }
   }
 
 }

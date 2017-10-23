@@ -14,6 +14,7 @@ export class BrowserStorageService {
     try {
       sessionStorage.setItem(test, test);
       sessionStorage.removeItem(test);
+
       return true;
     } catch (e) {
       return false;
@@ -25,6 +26,7 @@ export class BrowserStorageService {
     try {
       localStorage.setItem(test, test);
       localStorage.removeItem(test);
+
       return true;
     } catch (e) {
       return false;
@@ -70,6 +72,7 @@ export class BrowserStorageService {
   setItem(key: string, data: any): boolean {
     if (this.localStoreAvailable) {
       localStorage.setItem(key, JSON.stringify(data));
+
       return true;
     } else {
       return false;
@@ -79,6 +82,7 @@ export class BrowserStorageService {
   removeItem(key): boolean {
     if (this.localStoreAvailable) {
       localStorage.removeItem(key);
+
       return true;
     } else {
       return false;

@@ -7,24 +7,23 @@
  */
 
 import { Injectable } from '@angular/core';
-import {BaseDataService} from '../services/base-data.service';
-import {HatApiService} from '../services/hat-api.service';
-import {UiStateService} from '../services/ui-state.service';
+import { BaseDataService } from '../services/base-data.service';
+import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { UiStateService } from '../services/ui-state.service';
 
 import { Event } from '../shared/interfaces/index';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
 
 @Injectable()
 export class FacebookEventsService extends BaseDataService<Event> {
 
-  constructor(hatSvc: HatApiService, uiSvc: UiStateService) {
-    super(hatSvc, uiSvc);
-
-    this.ensureTableExists('events', 'facebook');
+  constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
+    super(hat, uiSvc, 'facebook', 'events', 'changeme');
   }
 
-  mapData(rawEvent: any): Event {
-    const eventContent = rawEvent.data.events;
+  coerceType(rawEvent: HatRecord<any>): HatRecord<Event> {
+    const eventContent = rawEvent.data;
 
     const event: Event = {
       id: eventContent.id,
@@ -43,7 +42,11 @@ export class FacebookEventsService extends BaseDataService<Event> {
       };
     }
 
-    return event;
+    return {
+      endpoint: rawEvent.endpoint,
+      recordId: rawEvent.recordId,
+      data: event
+    };
   }
 
 }

@@ -10,6 +10,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '../../shared/interfaces';
 import { LocationsService } from '../locations.service';
+import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-tile-map',
@@ -19,9 +20,8 @@ import { LocationsService } from '../locations.service';
 export class TileMapComponent implements OnInit, OnDestroy {
   @Input() title;
   @Input() info;
-  public locations: Array<Location>;
+  public locations: HatRecord<Location>[];
   private sub;
-  private totalDP = 0;
   public safeSize;
 
   constructor(private sanitizer: DomSanitizer,
@@ -31,15 +31,11 @@ export class TileMapComponent implements OnInit, OnDestroy {
     this.locations = [];
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('290px');
-    this.sub = this.locationsSvc.data$.subscribe(locations => {
+    this.sub = this.locationsSvc.data$.subscribe((locations: HatRecord<Location>[]) => {
       this.locations = locations;
-
-      if (locations.length > this.totalDP) {
-        this.totalDP = locations.length;
-        // this.locationsSvc.getMoreData(500, 5000);
-      }
     });
 
+    this.locationsSvc.getInitData(1000);
   }
 
   ngOnDestroy() {

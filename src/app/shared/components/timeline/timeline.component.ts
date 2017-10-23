@@ -50,13 +50,14 @@ export class TimelineComponent implements OnInit, OnChanges {
             this.selected = this.selectedTime;
           }
 
-          const grouped = this.timeline.reduce(function (acc, item) {
+          const grouped = this.timeline.reduce(function(acc, item) {
             const month = item.timestamp.format('MMMM, YYYY');
             if (month in acc) {
               acc[month].push(item);
             } else {
               acc[month] = new Array<ExpandedTime>(item);
             }
+
             return acc;
           }, {});
 

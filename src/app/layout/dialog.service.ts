@@ -50,6 +50,7 @@ export class DialogService {
 
     componentRef$.next(componentRef);
     componentRef$.complete();
+
     return componentRef$.asObservable();
   }
 }
