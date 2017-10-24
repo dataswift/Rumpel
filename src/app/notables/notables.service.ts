@@ -8,20 +8,19 @@
 
 import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs/Rx';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
-import { DataPlugService } from '../data-management/data-plug.service';
-import { MarketSquareService } from '../market-square/market-square.service';
-
-import { APP_CONFIG, IAppConfig } from '../app.config';
-import { Notable, MSUserClaim, DataDebit } from '../shared/interfaces';
-
-import * as moment from 'moment';
 import { BaseDataService } from '../services/base-data.service';
-import { NotablesServiceMeta } from '../shared/interfaces/notables-service-meta.interface';
+import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { DexApiService } from '../services/dex-api.service';
 import { UiStateService } from '../services/ui-state.service';
 import { UserService } from '../user/user.service';
+
+import { APP_CONFIG, IAppConfig } from '../app.config';
+import { Notable, DataDebit } from '../shared/interfaces';
+import { NotablesServiceMeta } from '../shared/interfaces/notables-service-meta.interface';
 import { User } from '../user/user.interface';
-import {HatRecord} from '../shared/interfaces/hat-record.interface';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
+import { DexOfferClaimRes } from '../shared/interfaces/dex-offer-claim-res.interface';
+import * as moment from 'moment';
 
 @Injectable()
 export class NotablesService extends BaseDataService<Notable> {
@@ -36,7 +35,7 @@ export class NotablesService extends BaseDataService<Notable> {
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               hat: HatApiV2Service,
               uiSvc: UiStateService,
-              private market: MarketSquareService,
+              private dex: DexApiService,
               private userSvc: UserService) {
     super(hat, uiSvc, config.name.toLowerCase(), 'notablesv1', 'updated_time');
 
@@ -63,56 +62,35 @@ export class NotablesService extends BaseDataService<Notable> {
     return this.notablesServiceMeta.phata;
   }
 
-  updateNotablesState(): void {
-    this.getUserClaim()
-      .subscribe((offerInfo: MSUserClaim) => {
-        if (offerInfo && offerInfo.dataDebitId) {
-          this.notablesServiceMeta.offerClaimed = true;
-          this.notablesServiceMeta['dataDebit'] = {
-            id: offerInfo.dataDebitId,
-            confirmed: offerInfo.confirmed,
-            dateCreated: moment(offerInfo.dateCreated)
-          };
-        } else {
-          this.notablesServiceMeta.offerClaimed = false;
-          this.notablesServiceMeta['dataDebit'] = {
-            id: null,
-            confirmed: null,
-            dateCreated: null
-          };
-        }
-
-        this._notablesMeta$.next(this.notablesServiceMeta);
-      });
-
-  }
-
-  private getUserClaim(): Observable<MSUserClaim> {
-    return this.market.getOffer(this.config.notables.marketSquareOfferId)
-      .flatMap((offerInfo: MSUserClaim)  => {
-        if (offerInfo && offerInfo.confirmed) {
-          return Observable.of(offerInfo);
+  getNotablesOfferClaimStatus(): Observable<DexOfferClaimRes> {
+    return this.dex.getOfferClaim(this.config.notables.dexOfferId)
+      .flatMap((offerClaim: DexOfferClaimRes)  => {
+        if (offerClaim.confirmed) {
+          return Observable.of(offerClaim);
           // If the MaketSquare reports offer as unconfirmed, check its status on the HAT
           // For the initial 30 mins after offer confirmation MarketSquare can report it as unconfirmed
-        } else if (offerInfo && offerInfo.dataDebitId) {
-          return this.hat.getDataDebit(offerInfo.dataDebitId)
-            .map((ddInfo: any) => {
-              offerInfo.confirmed = ddInfo.enabled;
-
-              return offerInfo;
-            });
         } else {
-          return Observable.of(null);
+          return this.hat.getDataDebit(offerClaim.dataDebitId)
+            .map((dataDebit: DataDebit) => {
+              offerClaim.confirmed = dataDebit.bundles[0].enabled;
+
+              return offerClaim;
+            });
         }
       });
   }
 
   postNotable(recordValue: Notable): void {
-    this.save(recordValue, () => this.market.tickle());
+    this.save(recordValue, () => console.log('Tickle notables service here.'));
   }
 
   editNotable(notable: HatRecord<Notable>) {
     this._editedNotable$.next(notable);
+  }
+
+  setupNotablesService(): Observable<DataDebit> {
+    return this.dex.claimOffer(this.config.notables.dexOfferId)
+      .flatMap((offerClaim: DexOfferClaimRes) => this.hat.updateDataDebit(offerClaim.dataDebitId, 'enable'))
   }
 
   coerceType(rawNotable: HatRecord<any>): HatRecord<Notable> {
@@ -121,21 +99,5 @@ export class NotablesService extends BaseDataService<Notable> {
       recordId: rawNotable.recordId,
       data: new Notable(rawNotable.data)
     };
-  }
-
-  setupNotablesService(): Observable<DataDebit> {
-    return this.market.claimOffer(this.config.notables.marketSquareOfferId)
-      .flatMap((offerInfo: MSUserClaim) => {
-        if (offerInfo) {
-          return this.hat.updateDataDebit(offerInfo.dataDebitId, 'enable')
-            .catch(err => {
-              console.log('Failed to confirm Data Debit with the HAT', err);
-
-              return Observable.of(null);
-            });
-        } else {
-          return Observable.of(null);
-        }
-      });
   }
 }

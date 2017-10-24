@@ -13,7 +13,6 @@ import { JwtHelper } from 'angular2-jwt';
 import { APP_CONFIG, IAppConfig } from '../app.config';
 
 import * as moment from 'moment';
-import {MSUserClaim} from '../shared/interfaces/MSUserClaim.interface';
 import {UserService} from '../user/user.service';
 import {User} from '../user/user.interface';
 import {HatApiService} from '../services/hat-api.service';
@@ -62,7 +61,7 @@ export class MarketSquareService {
       return Observable.of(this.offersStore);
     }
 
-    const url = this.config.exchange.url + '/offers';
+    const url = this.config.dex.url + '/offers';
 
     return this.http.get(url, { headers: this._headers, body: '' })
       .map(res => {
@@ -73,7 +72,7 @@ export class MarketSquareService {
   }
 
   getOfferIdByDataDebitId(dataDebitId: string): Observable<string> {
-    const url = this.config.exchange.url + '/offer';
+    const url = this.config.dex.url + '/offer';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => {
@@ -88,8 +87,8 @@ export class MarketSquareService {
       });
   }
 
-  getOffer(id: string): Observable<MSUserClaim> {
-    const url = this.config.exchange.url + '/offer/' + id + '/userClaim';
+  getOffer(id: string): Observable<any> {
+    const url = this.config.dex.url + '/offer/' + id + '/userClaim';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
@@ -98,7 +97,7 @@ export class MarketSquareService {
   }
 
   claimOffer(id: string) {
-    const url = this.config.exchange.url + '/offer/' + id + '/claim';
+    const url = this.config.dex.url + '/offer/' + id + '/claim';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' })
@@ -119,7 +118,7 @@ export class MarketSquareService {
   }
 
   getNotifications(): Observable<any> {
-    const url = this.config.exchange.url + '/notices';
+    const url = this.config.dex.url + '/notices';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.get(url, { headers: headers, body: '' }).map(res => res.json()))
@@ -127,7 +126,7 @@ export class MarketSquareService {
   }
 
   markAsRead(notificationID: number): Observable<any> {
-    const url = this.config.exchange.url + '/notices/' + notificationID + '/read';
+    const url = this.config.dex.url + '/notices/' + notificationID + '/read';
 
     return this.getMarketSquareApplicationToken()
       .flatMap(headers => this.http.put(url, {}, { headers: headers }).map(res => res.json()))
@@ -181,11 +180,11 @@ export class MarketSquareService {
    */
 
   connectHAT(hatDomain: string): void {
-    const url = this.config.exchange.url + '/dataplugs/' + this.config.exchange.id + '/connect';
+    const url = this.config.dex.url + '/dataplugs/' + this.config.dex.id + '/connect';
 
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('X-Auth-Token', this.config.exchange.accessToken);
+    headers.append('X-Auth-Token', this.config.dex.accessToken);
 
     const query = new URLSearchParams();
     query.append('hat', hatDomain);

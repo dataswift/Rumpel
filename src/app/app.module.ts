@@ -58,6 +58,7 @@ import { BrowserStorageService } from './services/browser-storage.service';
 import { HatApiV2Service } from './services/hat-api-v2.service';
 import { FileUploadService } from './services/file-upload.service';
 import { GlobalMessagingService } from './services/global-messaging.service';
+import { DexApiService } from './services/dex-api.service';
 
 
 export function authHttpFactory(backend: XHRBackend,
@@ -121,6 +122,7 @@ export function cookieServiceFactory() {
     FileUploadService,
     HatApiV2Service, // Supersedes original HAT API service
     GlobalMessagingService,
+    DexApiService,
     UiStateService,
     RumpelService,
     BrowserStorageService

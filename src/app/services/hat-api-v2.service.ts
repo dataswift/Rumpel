@@ -82,6 +82,16 @@ export class HatApiV2Service {
       .map((res: Response) => res.json());
   }
 
+  getApplicationToken(name: string, resource: string): Observable<string> {
+    const path = `/users/application_token`;
+    const queryParams = new URLSearchParams();
+    queryParams.append('name', name);
+    queryParams.append('resource', resource);
+
+    return this.authHttp.get(path, { search: queryParams })
+      .map((res: Response) => res.json().accessToken)
+  }
+
   getDataRecords(namespace: string, endpoint: string, take?: number, orderBy?: string, drop?: number): Observable<HatRecord<any>[]> {
     const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
     const queryParams = new URLSearchParams();

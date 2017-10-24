@@ -44,11 +44,8 @@ export class NotablesMdEditorComponent implements OnInit {
       status: false
     });
 
-    this.mde.toolbar.forEach(tool => {
-      if (tool.name === 'image') {
-        tool.action = () => {this.fileUpload()};
-      }
-    });
+    const imageButton = this.mde.toolbar.find(tool => tool.name === 'image');
+    imageButton.action = this.invokeFileUploadModal.bind(this);
 
     this.currentNotableMeta = {
       phata: this.notablesSvc.hatDomain,
@@ -116,14 +113,12 @@ export class NotablesMdEditorComponent implements OnInit {
     }
   }
 
-  updateShareOptions(event) {
-    this.cannotPostMessage = '';
-
-    if (event.action === 'SHARE') {
-      this.currentNotable.data.addShareDestination(event.service);
-    } else if (event.action === 'STOP') {
-      this.currentNotable.data.removeShareDestination(event.service);
-    }
+  updateShareOptions(notable: Notable) {
+    this.currentNotable = {
+      endpoint: this.currentNotable.endpoint,
+      recordId: this.currentNotable.recordId,
+      data: notable
+    };
   }
 
   discardChanges() {
@@ -132,7 +127,7 @@ export class NotablesMdEditorComponent implements OnInit {
     this.resetForm();
   }
 
-  fileUpload() {
+  invokeFileUploadModal() {
     this.dialogSvc.createDialog(FileUploadComponent, {
       accept: (files) => {
         this.showUploadedFiles(files);

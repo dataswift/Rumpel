@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import {Component, OnInit, Input, EventEmitter, Output, Inject} from '@angular/core';
 
 import { NotablesService } from '../notables.service';
 import { Notable } from '../../shared/interfaces/notable.class';
@@ -16,6 +16,9 @@ import {DialogService} from '../../layout/dialog.service';
 import {DialogBoxComponent} from '../../layout/dialog-box/dialog-box.component';
 import {DataPlugService} from '../../data-management/data-plug.service';
 import {HatRecord} from '../../shared/interfaces/hat-record.interface';
+import {APP_CONFIG, IAppConfig} from '../../app.config';
+import {DexOfferClaimRes} from '../../shared/interfaces/dex-offer-claim-res.interface';
+import {DataDebit} from '../../shared/interfaces/data-debit.interface';
 
 @Component({
   selector: 'rump-share-belt',
@@ -26,10 +29,10 @@ export class ShareBeltComponent implements OnInit {
   @Input() hatDomain: string;
   @Input() currentNotable: Notable;
   @Input() parentError: string;
-  public notablesState: NotablesServiceMeta;
+  @Output() notableUpdated: EventEmitter<Notable> = new EventEmitter<Notable>();
   public dataPlugError: string;
   public displayMessage: string;
-  private sharedOn = { facebook: false, twitter: false, marketsquare: false, phata: false };
+  public offerClaimIsConfirmed: boolean;
   private dataPlugInfoMap = {
     facebook: {
       displayName: 'Facebook',
@@ -41,49 +44,55 @@ export class ShareBeltComponent implements OnInit {
     }
   };
 
-  @Output() serviceToggled: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(private notablesSvc: NotablesService,
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+              private notablesSvc: NotablesService,
               private dialogSvc: DialogService,
               private dataPlugSvc: DataPlugService) { }
+
+  get activeIntegrations(): Array<{ name: string; displayName: string; logoUrl: string; }> {
+    return this.config.notables.activeIntegrations;
+  }
 
   ngOnInit() {
     this.dataPlugError = null;
 
-    this.notablesSvc.notablesMeta$.subscribe((notablesState: NotablesServiceMeta) => {
-      this.notablesState = notablesState;
-      this.displayMessage = null;
+    this.notablesSvc.getNotablesOfferClaimStatus().subscribe((offerClaim: DexOfferClaimRes) => {
+      this.offerClaimIsConfirmed = offerClaim.confirmed;
     });
-
-    this.notablesSvc.editedNotable$.subscribe((editedNotable: HatRecord<Notable>) => {
-      this.sharedOn = { facebook: false, twitter: false, marketsquare: false, phata: false };
-      for (const provider of editedNotable.data.shared_on) {
-        this.sharedOn[provider] = true;
-      }
-    });
-
-    this.notablesSvc.updateNotablesState();
   }
 
   toggleSharing(provider) {
-    if (provider.name === 'marketsquare' || this.dataPlugSvc.status(provider.name)) {
-      this.sharedOn[provider.name.toLowerCase()] = !this.sharedOn[provider.name.toLowerCase()];
-      this.serviceToggled.emit({
-        action: this.sharedOn[provider.name.toLowerCase()] ? 'SHARE' : 'STOP',
-        service: provider.name
-      });
+    if (provider.name === 'hatters' || this.dataPlugSvc.status(provider.name)) {
+      const index = this.currentNotable.shared_on.indexOf(provider.name.toLowerCase());
+      if (index > -1) {
+        this.currentNotable.shared_on.splice(index, 1);
+      } else {
+        this.currentNotable.shared_on.push(provider.name.toLowerCase());
+      }
+
+      this.notableUpdated.emit(new Notable(this.currentNotable));
     } else {
-      this.dataPlugError = provider.name;
+      this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
+        title: `${provider.name} data plug not connected`,
+        message: `Looks like your ${this.dataPlugInfoMap[provider.name].displayName} data plug is not yet connected to `
+        + `your HAT. As a result, notables cannot be shared on ${this.dataPlugInfoMap[provider.name].displayName}. `
+        + 'Do you want to set it up now?',
+        buttons: [{
+          title: `Connect ${provider.name} plug now`,
+          link: this.dataPlugInfoMap[provider.name].redirectUrl
+        }]
+      });
     }
   }
 
   claimNotablesOffer(): void {
     this.displayMessage = 'Processing... please wait.';
-    this.notablesSvc.setupNotablesService().subscribe(res => {
-      if (res) {
-        this.notablesState.offerClaimed = true;
-        this.notablesSvc.updateNotablesState();
-      } else {
+    this.notablesSvc.setupNotablesService().subscribe({
+      next: (dataDebit: DataDebit) => {
+        this.offerClaimIsConfirmed = true;
+        this.displayMessage = null;
+      },
+      error: error => {
         this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
           title: 'Something went wrong',
           message: 'There was a problem setting up your notables service. Please report the problem and try again by refreshing this page.',
@@ -92,10 +101,9 @@ export class ShareBeltComponent implements OnInit {
             link: `http://forum.hatcommunity.org/c/hat-users`
           }]
         });
-      }
 
-      this.displayMessage = null;
-    });
+        this.displayMessage = null;
+      }});
   }
 
   confirmNotablesDataDebit(): void {

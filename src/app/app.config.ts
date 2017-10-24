@@ -16,14 +16,14 @@ export class IAppConfig {
   name: string;
   native: boolean;
   protocol: string;
-  exchange: { url: string; id: string; accessToken: string; };
+  dex: { name: string; url: string; pathPrefix: string; id: string; accessToken: string; };
   marketsquare: { url: string };
   databuyer: { name: string; url: string; pathPrefix: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
   notables: {
     iconMap: { [key: string]: string; };
-    marketSquareOfferId: string;
+    dexOfferId: string;
     activeIntegrations: Array<{ name: string; displayName: string; logoUrl: string; }>;
   };
   menuItems: {
@@ -38,8 +38,10 @@ export const AppConfig: IAppConfig = {
   name: 'RumpelStaging',
   native: environment.native,
   protocol: environment.protocol,
-  exchange: {
-    url: 'https://dex.hubofallthings.com/api',
+  dex: {
+    name: 'Dex',
+    url: 'https://dex.hubofallthings.com',
+    pathPrefix: '/api/v2',
     id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
     accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLVZTUDcrb0RleldPejBTOFd6MHhWM0J2eVNOYzViNnRcLzRKXC85'
                + 'TVlIWTQrVDdsSHdUSDRXMVVEWGFSVnVQeTFPZmtNajNSNDBjeTVERFRhQjZBNE44c3FGSTJmMUE1NzZUYjhiYmhhUT0iLCJpc3MiO'
@@ -65,10 +67,10 @@ export const AppConfig: IAppConfig = {
   },
   notables: {
     iconMap: { note: 'border_color', list: 'list', blog: 'library_books' },
-    marketSquareOfferId: '32dde42f-5df9-4841-8257-5639db222e41',
+    dexOfferId: '8438fcf0-cfec-4d79-8338-f0987056352f',
     activeIntegrations: [
       {
-        name: 'marketsquare',
+        name: 'hatters',
         displayName: 'HATTERS',
         logoUrl: 'assets/icons/hatters-icon.png'
       },

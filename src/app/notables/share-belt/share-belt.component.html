@@ -9,11 +9,11 @@
 <div class="belt">
   <div class="content">
     <p>Post publicly:</p>
-    <ul *ngIf="notablesState.offerClaimed && (!displayMessage) && notablesState.dataDebit && notablesState.dataDebit.confirmed">
-      <li *ngFor="let provider of notablesState.activeIntegrations" (click)="toggleSharing(provider)" [class.selected]="sharedOn[provider.name.toLowerCase()]">
+    <ul *ngIf="offerClaimIsConfirmed && !displayMessage">
+      <li *ngFor="let provider of activeIntegrations" (click)="toggleSharing(provider)" [class.selected]="currentNotable.shared_on.indexOf(provider.name.toLowerCase()) > -1">
         <img [src]="provider.logoUrl"
              class="img img-responsive share-service"
-             [class.on]="sharedOn[provider.name.toLowerCase()]">
+             [class.on]="currentNotable.shared_on.indexOf(provider.name.toLowerCase()) > -1">
         <span>{{ provider.displayName }}</span>
       </li>
     </ul>
@@ -24,29 +24,15 @@
     {{displayMessage}}
   </div>
 
-  <div class="message" *ngIf="!notablesState.offerClaimed && (!displayMessage)">
+  <div class="message" *ngIf="!offerClaimIsConfirmed && !displayMessage">
     Notables data offer needs to be claimed in order to share this notable on other services.
     <span class="claim" (click)="claimNotablesOffer()">Claim it.</span>
-  </div>
-
-  <div class="message" *ngIf="notablesState.offerClaimed && notablesState.dataDebit && (!notablesState.dataDebit.confirmed) && (!displayMessage)">
-    To share your notable, please accept data offer from MarketSquare.
-    <span class="claim" (click)="confirmNotablesDataDebit()">Accept it here</span>.
   </div>
 
   <div class="error-message" *ngIf="parentError">
     <span class="ss-alert"></span>
     <span class="error-text">
       {{parentError}}
-    </span>
-  </div>
-
-  <div class="error-message" *ngIf="dataPlugError">
-    <span class="ss-alert"></span>
-    <span class="error-text">
-      Please renew your {{dataPlugInfoMap[dataPlugError].displayName}} access token to enable sharing.
-      <a href="https://{{hatDomain}}/hatlogin?name={{dataPlugInfoMap[dataPlugError].displayName}}&redirect={{dataPlugInfoMap[dataPlugError].redirectUrl}}"
-         target="_blank">Go to data plug</a>.
     </span>
   </div>
 </div>

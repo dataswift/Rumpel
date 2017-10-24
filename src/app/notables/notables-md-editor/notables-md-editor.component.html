@@ -21,13 +21,16 @@
 
 <div class="editor-wrapper">
   <textarea #editor></textarea>
+</div>
 
+<div class="sharing-belt">
   <rump-share-belt *ngIf="currentNotable.data.isShared" class="sharing-belt"
                    [hatDomain]="notablesSvc.hatDomain"
-                   [currentNotable]="currentNotable"
+                   [currentNotable]="currentNotable.data"
                    [parentError]="cannotPostMessage"
-                   (serviceToggled)="updateShareOptions($event)"></rump-share-belt>
+                   (notableUpdated)="updateShareOptions($event)"></rump-share-belt>
 </div>
+
 
 <div class="options-bar">
 
