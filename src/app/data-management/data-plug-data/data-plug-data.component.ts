@@ -2,20 +2,19 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, Observable } from 'rxjs/Rx';
 import { DataPlugService } from '../data-plug.service';
-import { EventsService } from '../../dimensions/events.service';
 import { LocationsService } from '../../locations/locations.service';
 import { SocialService } from '../../social/social.service';
 import { TwitterService } from '../../social/twitter.service';
-import { PhotosService } from '../../photos/photos.service';
 import { NotablesService } from '../../notables/notables.service';
 import { FacebookEventsService } from '../../dimensions/facebook-events.service';
 import { GoogleEventsService } from '../../dimensions/google-events.service';
 import { FitbitService } from '../../fitbit/fitbit.service';
-import { Post, Tweet, Event, Photo, Location } from '../../shared/interfaces/index';
+import { Post, Tweet, Event, Location } from '../../shared/interfaces/index';
 import { Fitbit } from '../../fitbit/fitbit.interface';
 import { Notable } from '../../shared/interfaces/notable.class';
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 
 declare var $: any;
 
@@ -41,7 +40,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   public feed: Array<any> = [];
   public events: Array<any> = [];
-  public locations: Array<Location> = [];
+  public locations: HatRecord<Location>[] = [];
   public fromDate: Moment;
   public toDate: Moment = moment();
   public tabView = 'posts';
@@ -51,12 +50,10 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private dataplugsSvc: DataPlugService,
-              private eventsSvc: EventsService,
               private googleEventsSvc: GoogleEventsService,
               private facebookEventsSvc: FacebookEventsService,
               private socialSvc: SocialService,
               private twitterSvc: TwitterService,
-              private photoSvc: PhotosService,
               private notablesSvc: NotablesService,
               private fitbitSvc: FitbitService,
               private locationsSvc: LocationsService) { }
@@ -83,17 +80,12 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
                   this.feedSource = this.twitterSvc;
                   this.initTwitter();
                   break;
-               case 'dropbox photos':
-                  this.feedSource = this.photoSvc;
-                  this.initDropbox();
-                  break;
                case 'calendar':
                   this.eventSource = this.googleEventsSvc;
                   this.initCalendar();
                   break;
                case 'rumpel':
                   this.feedSource = this.notablesSvc;
-                  this.eventSource = this.eventsSvc;
                   this.initRumpel();
                   break;
                case 'location':
@@ -108,31 +100,28 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
   initFacebook() {
-    this.feedPostSub = this.socialSvc.data$.subscribe((posts: Array<Post>) => {
+    this.feedPostSub = this.socialSvc.data$.subscribe((posts: HatRecord<Post>[]) => {
       this.feed = posts;
       this.feedTimeField = 'createdTime';
       this.sortFeed();
     });
 
-    this.feedEventSub = this.facebookEventsSvc.data$.subscribe((posts: Array<Event>) => {
+    this.feedEventSub = this.facebookEventsSvc.data$.subscribe((posts: HatRecord<Event>[]) => {
       this.events = posts;
       this.eventsTimeField = 'start';
       this.sortEvents();
     });
   }
 
-
   initTwitter() {
-    this.feedPostSub = this.twitterSvc.data$.subscribe((posts: Array<Tweet>) => {
+    this.feedPostSub = this.twitterSvc.data$.subscribe((posts: HatRecord<Tweet>[]) => {
       // set static data
       if (posts.length > 0) {
         this.staticData = [];
-        const keys = Object.keys( posts[0].user );
+        const keys = Object.keys(posts[0].data.user);
         keys.forEach(key => {
-          this.staticData.push({name: key, value: posts[0].user[key]});
+          this.staticData.push({name: key, value: posts[0].data.user[key]});
         });
       }
 
@@ -146,16 +135,16 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   }
 
 
-  initDropbox() {
-    this.feedPostSub = this.photoSvc.photos$.subscribe((posts: Array<Photo>) => {
-      this.feed = posts;
-      this.feedTimeField = 'timestamp';
-      this.sortFeed();
-    });
-  }
+  // initDropbox() {
+  //   this.feedPostSub = this.photoSvc.photos$.subscribe((posts: Array<Photo>) => {
+  //     this.feed = posts;
+  //     this.feedTimeField = 'timestamp';
+  //     this.sortFeed();
+  //   });
+  // }
 
   initLocations() {
-    this.feedPostSub = this.locationsSvc.data$.subscribe((posts: Array<Location>) => {
+    this.feedPostSub = this.locationsSvc.data$.subscribe((posts: HatRecord<Location>[]) => {
       this.feed = posts;
       this.locations = posts;
       this.tabView = 'locations';
@@ -166,7 +155,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   }
 
   initCalendar() {
-    this.feedEventSub = this.googleEventsSvc.data$.subscribe((posts: Array<Event>) => {
+    this.feedEventSub = this.googleEventsSvc.data$.subscribe((posts: HatRecord<Event>[]) => {
       this.events = posts;
       this.tabView = 'events';
       this.eventsTimeField = 'start';
@@ -174,21 +163,13 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     });
   }
 
-
   initRumpel() {
-    this.feedPostSub = this.notablesSvc.data$.subscribe((posts: Array<Notable>) => {
+    this.feedPostSub = this.notablesSvc.data$.subscribe((posts: HatRecord<Notable>[]) => {
       this.feed = posts;
       this.feedTimeField = 'timestamp';
       this.sortFeed();
     });
-
-    this.feedEventSub = this.eventsSvc.data$.subscribe((posts: Array<Event>) => {
-      this.events = posts;
-      this.eventsTimeField = 'start';
-      this.sortEvents();
-    });
   }
-
 
   setFromDate(event: any) {
     if (event.target.value === '') {
@@ -216,8 +197,6 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   loadMoreEventData() {
     this.eventSource.getMoreData();
   }
-
-
 
   filterByDate() {
     let fromDate = this.fromDate;
@@ -253,6 +232,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
         const momentA = moment(a[this.feedTimeField]);
         const momentB = moment(b[this.feedTimeField]);
         const result = momentA.isBefore(momentB) ? 1 : -1;
+
         return result;
     });
   }
@@ -262,6 +242,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
         const momentA = moment(a[this.feedTimeField]);
         const momentB = moment(b[this.feedTimeField]);
         const result = momentA.isBefore(momentB) ? 1 : -1;
+
         return result;
     });
   }

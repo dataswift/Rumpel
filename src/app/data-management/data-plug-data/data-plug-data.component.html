@@ -17,12 +17,12 @@
     <div class="dates">
       <div class="fromDatePicker datePicker">
         <label for="fromDate">From</label>
-        <input name="fromDate" type="date" (change)="setFromDate($event)">
+        <input id="fromDate" name="fromDate" type="date" (change)="setFromDate($event)">
       </div>
 
       <div class="toDatePicker datePicker">
         <label for="toDate">To</label>
-        <input name="toDate" type="date" [value]="toDate.format('YYYY-MM-DD')" (change)="setToDate($event)">
+        <input id="toDate" name="toDate" type="date" [value]="toDate.format('YYYY-MM-DD')" (change)="setToDate($event)">
       </div>
     </div>
 

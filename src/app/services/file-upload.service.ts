@@ -14,7 +14,7 @@ export class FileUploadService extends HatApiV2Service {
   }
 
 
-  postFileUploadMetaData (file) {
+  postFileUploadMetaData(file) {
     const url = `/api/v2/files/upload`;
     const body = JSON.stringify({
       name: file.name,
@@ -31,7 +31,7 @@ export class FileUploadService extends HatApiV2Service {
   }
 
 
-  uploadFileDirectly (metaDataResponse, file) {
+  uploadFileDirectly(metaDataResponse, file) {
     const url = metaDataResponse.contentUrl;
     const headers = new Headers({
       'x-amz-server-side-encryption': 'AES256'
@@ -47,7 +47,7 @@ export class FileUploadService extends HatApiV2Service {
   }
 
 
-  markFileUploadComplete (fileId) {
+  markFileUploadComplete(fileId) {
     const url = `/api/v2/files/file/` + fileId + `/complete`;
     this._authHttp.put(url, null).subscribe( res => {
       console.log('File upload complete', res.json());

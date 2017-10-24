@@ -1,7 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import * as moment from 'moment';
-import { Moment } from 'moment';
-import { Post, Tweet, Event, Photo, Location, Notable } from '../../shared/interfaces/index';
 import { DialogService } from '../../layout/dialog.service';
 import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 
