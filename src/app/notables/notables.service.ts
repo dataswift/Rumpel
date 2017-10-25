@@ -80,8 +80,20 @@ export class NotablesService extends BaseDataService<Notable> {
       });
   }
 
-  postNotable(recordValue: Notable): void {
-    this.save(recordValue, () => console.log('Tickle notables service here.'));
+  saveNotable(recordValue: HatRecord<Notable>): Observable<HatRecord<Notable>> {
+    const permissionKey = recordValue.data.isShared ? 'allow' : 'restrict';
+    let filePermissionUpdate$: Observable<any>;
+    const notablePost$ = recordValue.recordId ? this.update(recordValue) : this.save(recordValue.data);
+
+    if (recordValue.data.photov1) {
+      filePermissionUpdate$ = this.hat.updateFilePermissions(recordValue.data.photov1.link.split('/').pop(), permissionKey);
+    } else {
+      filePermissionUpdate$ = Observable.of(null); // Dummy observable to make subsequent forkJoin succeed
+    }
+    // TODO: add notable tickle call
+
+    return Observable.forkJoin(notablePost$, filePermissionUpdate$)
+      .map(([savedNotable, permissionUpdateResult]) => this.coerceType(savedNotable));
   }
 
   editNotable(notable: HatRecord<Notable>) {

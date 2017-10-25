@@ -31,6 +31,10 @@
                    (notableUpdated)="updateShareOptions($event)"></rump-share-belt>
 </div>
 
+<div class="sharing-belt" *ngIf="currentNotable.data.photov1">
+  Attachment: {{currentNotable.data.photov1.link}}
+</div>
+
 
 <div class="options-bar">
 

@@ -22,7 +22,10 @@
     </div>
   </div>
 
-  <div class="notable-content" [innerHTML]="notable.data.message | markdownToHtml | safeHtml"></div>
+  <div class="notable-content">
+    <div class="content-container" [innerHTML]="notable.data.message | markdownToHtml | safeHtml"></div>
+    <img [src]="notable.data.photov1.link | presignImgUrl | async" *ngIf="notable.data.photov1">
+  </div>
 
   <div class="notable-controls" *ngIf="modifiable">
     <div class="controls-item" (click)="remove()"><span class="ss-trash"></span>Delete</div>

@@ -77,24 +77,20 @@ export abstract class BaseDataService<T> {
       });
   }
 
-  save(recordValue: T, callback?: () => void): void {
-    this.hat.createRecord(this.endpoint, recordValue)
+  save(recordValue: T): Observable<HatRecord<T>> {
+    return this.hat.createRecord(this.endpoint, recordValue)
       .map(this.coerceType)
-      .subscribe((record: HatRecord<T>) => {
+      .do((record: HatRecord<T>) => {
         this.store.data.unshift(record);
         this.drop += 1;
         this.pushToStream();
-
-        if (callback) {
-          callback();
-        }
       });
   }
 
-  update(recordValue: HatRecord<T>): void {
-    this.hat.updateRecord(recordValue)
+  update(recordValue: HatRecord<T>): Observable<HatRecord<T>> {
+    return this.hat.updateRecord(recordValue)
       .map(this.coerceType)
-      .subscribe((updatedRecord: HatRecord<T>) => {
+      .do((updatedRecord: HatRecord<T>) => {
         const updatedRecordIndex = this.store.data
           .findIndex((dataPoint) => dataPoint.recordId === updatedRecord.recordId);
 

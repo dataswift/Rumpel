@@ -34,7 +34,6 @@ export class NotablesMdEditorComponent implements OnInit {
   public editMode = false;
   public currentNotable: HatRecord<Notable>;
   public cannotPostMessage: string;
-  public uploadedFiles = [];
 
   constructor(private locationSvc: LocationsService,
               private fileSvc: FileService,
@@ -63,15 +62,16 @@ export class NotablesMdEditorComponent implements OnInit {
     };
 
     this.fileSvc.file$.subscribe((fileMetadata: FileMetadataRes) => {
-      const currentValue = this.mde.value();
-      const mdFileLink =
-        `![${fileMetadata.name}](https://${this.notablesSvc.hatDomain}/api/v2/files/content/${fileMetadata.fileId})`;
+      this.currentNotable.data.photov1 = {
+        link: `https://${this.notablesSvc.hatDomain}/api/v2/files/content/${fileMetadata.fileId}`,
+        source: 'rumpel'
+      };
 
-      if (currentValue) {
-        this.mde.value(currentValue + mdFileLink);
-      } else {
-        this.mde.value(mdFileLink);
-      }
+      this.currentNotable = {
+        endpoint: this.currentNotable.endpoint,
+        recordId: this.currentNotable.recordId,
+        data: new Notable(this.currentNotable.data)
+      };
     });
 
     this.notablesSvc.editedNotable$.subscribe((notable: HatRecord<Notable>) => {
@@ -143,16 +143,7 @@ export class NotablesMdEditorComponent implements OnInit {
   }
 
   invokeFileUploadModal() {
-    this.dialogSvc.createDialog(FileUploadComponent, {
-      accept: (files) => {
-        this.showUploadedFiles(files);
-      }
-    });
-  }
-
-  showUploadedFiles(files) {
-    console.log(files);
-    this.uploadedFiles = files;
+    this.dialogSvc.createDialog(FileUploadComponent, {});
   }
 
   submit() {
@@ -180,7 +171,7 @@ export class NotablesMdEditorComponent implements OnInit {
           message: `This will remove your post at the shared destinations.
           Warning: any comments at the destination would also be deleted.`,
           accept: () => {
-            this.updateNotableHelper();
+            this.postNotableHelper();
           }
         });
       } else if (this.currentNotable.data.isShared === true && this.currentNotableMeta.initialState.isShared === false) {
@@ -188,7 +179,7 @@ export class NotablesMdEditorComponent implements OnInit {
           message: `You are about to share your post.
           Tip: to remove a note from the external site, edit the note and make it private.`,
           accept: () => {
-            this.updateNotableHelper();
+            this.postNotableHelper();
           }
         });
       } else if (this.currentNotable.data.message !== this.currentNotableMeta.initialState.message &&
@@ -197,11 +188,11 @@ export class NotablesMdEditorComponent implements OnInit {
         this.dialogSvc.createDialog(ConfirmBoxComponent, {
           message: `Your post would not be edited at the destination.`,
           accept: () => {
-            this.updateNotableHelper();
+            this.postNotableHelper();
           }
         });
       } else {
-        this.updateNotableHelper();
+        this.postNotableHelper();
       }
     } else if (this.currentNotable.data.isShared) {
       this.dialogSvc.createDialog(ConfirmBoxComponent, {
@@ -217,26 +208,15 @@ export class NotablesMdEditorComponent implements OnInit {
   }
 
   private postNotableHelper() {
-    this.notablesSvc.postNotable(this.currentNotable.data);
+    this.notablesSvc.saveNotable(this.currentNotable).subscribe(_ => {
+      console.log('Successfully saved: ', _);
+    });
     this.currentNotable = {
       endpoint: 'rumpel/notablesv1',
       recordId: null,
       data: new Notable()
     };
     this.currentNotableMeta.expires = 0;
-
-    this.resetForm();
-  }
-
-  private updateNotableHelper() {
-    this.notablesSvc.update(this.currentNotable);
-    this.currentNotable = {
-      endpoint: 'rumpel/notablesv1',
-      recordId: null,
-      data: new Notable()
-    };
-    this.currentNotableMeta.expires = 0;
-    this.currentNotableMeta.initialState = undefined;
 
     this.resetForm();
   }

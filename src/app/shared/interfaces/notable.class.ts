@@ -32,7 +32,7 @@ export class Notable {
   public photov1: {
     link: string;
     source: string;
-    caption: string;
+    caption?: string;
   };
 
   constructor(options: any = null) {
