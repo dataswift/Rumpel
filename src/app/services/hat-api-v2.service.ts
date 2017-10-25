@@ -183,15 +183,18 @@ export class HatApiV2Service {
     return this.authHttp.get(path).map((res: Response) => <FileMetadataRes>res.json());
   }
 
-  uploadFile(file: ArrayBuffer, metadata: FileMetadataReq): Observable<FileMetadataRes> {
-    const headers = new Headers({ 'x-amz-server-side-encryption': 'AES256' });
+  uploadFile(file: ArrayBuffer, metadata: FileMetadataReq, contentType?: string): Observable<FileMetadataRes> {
+    const headers = new Headers({
+      'x-amz-server-side-encryption': 'AES256',
+      'Content-Type': contentType || 'image/png'
+    });
 
     return this.uploadFileMetadata(metadata)
       .flatMap(uploadedMetadata => {
         return this.http.put(uploadedMetadata.contentUrl, file, { headers: headers })
           .map((res: Response) => uploadedMetadata)
       })
-      .flatMap(uploadedMetadata => this.markFileAsComplete(uploadedMetadata.fileId))
+      .flatMap(uploadedMetadata => this.markFileAsComplete(uploadedMetadata.fileId));
   }
 
   deleteFile(fileId: string): Observable<number> {
@@ -226,7 +229,8 @@ export class HatApiV2Service {
       'Accept': 'application/json'
     });
 
-    return this.authHttp.post(path, metadata, { headers: headers }).map((res: Response) => <FileMetadataRes>res.json());
+    return this.authHttp.post(path, metadata, { headers: headers })
+      .map((res: Response) => <FileMetadataRes>res.json());
   }
 
   private markFileAsComplete(fileId: string): Observable<FileMetadataRes> {

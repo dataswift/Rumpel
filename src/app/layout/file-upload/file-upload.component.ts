@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FileUploadService } from '../../services/file-upload.service';
+import { FileService } from '../../services/file.service';
 
 @Component({
   selector: 'rump-file-upload',
@@ -11,28 +11,30 @@ export class FileUploadComponent implements OnInit {
   public destroy: Function;
   public animateIn = false;
 
-  public filesToUpload: any;
   public uploadedFiles: Array<string> = [];
 
-  public fileSelected = false;
+  public selectedFile: File;
   @Input() public accept: Function;
 
-  constructor( private fileUploadSvc: FileUploadService ) { }
+  constructor(private fileSvc: FileService) { }
 
   ngOnInit() {
     this.animateIn = true;
+
+    this.fileSvc.file$.subscribe(_ => this.hideUI());
   }
 
-  selectFile(fileInput: any) {
-    this.fileSelected = true;
-    this.filesToUpload = fileInput.target.files;
+  selectFile(fileInput: any): void {
+    const selectedFiles: File[] = fileInput.target.files;
+
+    if (selectedFiles.length > 0) {
+      this.selectedFile = selectedFiles[0];
+      this.fileSvc.setFileReader(this.selectedFile)
+    }
   }
 
   startUpload() {
-    if (this.filesToUpload && this.filesToUpload[0]) {
-        const file = this.filesToUpload[0];
-        this.fileUploadSvc.postFileUploadMetaData(file);
-    }
+    this.fileSvc.initUpload(this.selectedFile);
   }
 
   acceptUpload() {

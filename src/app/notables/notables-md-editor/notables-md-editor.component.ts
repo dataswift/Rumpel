@@ -9,12 +9,14 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
-import { Notable, Location } from '../../shared/interfaces';
+import { FileService } from '../../services/file.service';
 import { DialogService } from '../../layout/dialog.service';
+import { Notable, Location } from '../../shared/interfaces';
 import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
 import { FileUploadComponent } from '../../layout/file-upload/file-upload.component';
 import { CurrentNotableMeta } from '../../shared/interfaces/current-notable-meta.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import {FileMetadataRes} from '../../shared/interfaces/file.interface';
 
 declare var SimpleMDE: any;
 declare var $: any;
@@ -35,6 +37,7 @@ export class NotablesMdEditorComponent implements OnInit {
   public uploadedFiles = [];
 
   constructor(private locationSvc: LocationsService,
+              private fileSvc: FileService,
               public notablesSvc: NotablesService,
               private dialogSvc: DialogService) { }
 
@@ -58,6 +61,18 @@ export class NotablesMdEditorComponent implements OnInit {
       recordId: null,
       data: new Notable()
     };
+
+    this.fileSvc.file$.subscribe((fileMetadata: FileMetadataRes) => {
+      const currentValue = this.mde.value();
+      const mdFileLink =
+        `![${fileMetadata.name}](https://${this.notablesSvc.hatDomain}/api/v2/files/content/${fileMetadata.fileId})`;
+
+      if (currentValue) {
+        this.mde.value(currentValue + mdFileLink);
+      } else {
+        this.mde.value(mdFileLink);
+      }
+    });
 
     this.notablesSvc.editedNotable$.subscribe((notable: HatRecord<Notable>) => {
       this.currentNotable = notable;
