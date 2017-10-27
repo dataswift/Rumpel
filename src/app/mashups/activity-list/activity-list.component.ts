@@ -6,10 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
-import { ExpandedTime } from '../../shared/interfaces/index';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 // import { DatePickerOptions, DateModel } from 'ng2-datepicker';
 
 declare var $: any;
@@ -19,18 +19,20 @@ declare var $: any;
   templateUrl: 'activity-list.component.html',
   styleUrls: ['activity-list.component.scss']
 })
-export class ActivityListComponent implements OnInit {
+export class ActivityListComponent implements OnInit, OnChanges {
 
   @Input() componentHeight: string;
-  @Input() eventList: Array<any>;
-  @Input() timeline: Array<ExpandedTime>;
+  @Input() cards: { [day: string]: HatRecord<any>[]; } = {};
+  @Input() selectedDate: string;
 
-  @Output() timeSelected = new EventEmitter<ExpandedTime>();
+  @Output() timeSelected = new EventEmitter<string>();
   @Output() notifyDatesInRange: EventEmitter<any> = new EventEmitter();
 
   public moment: Moment = moment();
+  public today = moment().format('YYYY-MM-DD');
+  public cardList: Array<{ day: string; dayList: HatRecord<any>[]; }> = [];
   public datesInRange = [];
-  public currentMonth: String = '';
+  public currentMonth = '';
   // public date: DateModel;
   // public options: DatePickerOptions;
 
@@ -42,64 +44,68 @@ export class ActivityListComponent implements OnInit {
     $('.backToTop i').popover({html: true, content: '<p style="text-align: center">Back to today\'s date</p>'});
 
     this.getMonthsInRange();
-
-    // this.options.maxDate = moment().toDate();
-
   }
 
-  changeDate(e) {
-    const targetDate = e.target.value;
-    // const targetDate = this.date.momentObj;
-    let closestDate = moment();
-    let closestDateDistance = Math.abs( closestDate.diff(targetDate, 'days') );
-    let targetIndex = 0;
-
-    if (targetDate.isValid() && targetDate.isSameOrBefore(this.moment) ) {
-
-      for (let i = 0; i < this.eventList.length; i++) {
-
-        const newClosestDateDistance = Math.abs( this.eventList[i].timestamp.diff( targetDate, 'days' ) );
-
-        if ( newClosestDateDistance < closestDateDistance ) {
-          closestDateDistance = Math.abs( this.eventList[i].timestamp.diff(targetDate, 'days') );
-          closestDate = this.eventList[i].timestamp;
-          targetIndex = i;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.cards && changes.cards.currentValue) {
+       this.cardList = Object.keys(changes.cards.currentValue).sort().reverse().reduce((acc, key) => {
+        if (changes.cards.currentValue.hasOwnProperty(key)) {
+          acc.push({ day: key, dayList: changes.cards.currentValue[key] });
         }
-      }
-      this.scrollToItem(targetIndex);
+
+        return acc;
+      }, []);
     }
   }
 
+  // changeDate(e) {
+  //   const targetDate = e.target.value;
+  //   // const targetDate = this.date.momentObj;
+  //   let closestDate = moment();
+  //   let closestDateDistance = Math.abs( closestDate.diff(targetDate, 'days') );
+  //   let targetIndex = 0;
+  //
+  //   if (targetDate.isValid() && targetDate.isSameOrBefore(this.moment) ) {
+  //
+  //     for (let i = 0; i < this.cardList.length; i++) {
+  //       const newClosestDateDistance = Math.abs(this.cardList[i].timestamp.diff( targetDate, 'days' ));
+  //
+  //       if ( newClosestDateDistance < closestDateDistance ) {
+  //         closestDateDistance = Math.abs( this.cardList[i].timestamp.diff(targetDate, 'days') );
+  //         closestDate = this.cardList[i].timestamp;
+  //         targetIndex = i;
+  //       }
+  //     }
+  //     this.scrollToItem(targetIndex);
+  //   }
+  // }
 
   getMonthsInRange() {
-
-    const self = this;
-
     setInterval( () => {
 
       this.datesInRange = [];
       const dates = document.getElementsByClassName('date');
 
-
       for (let i = 0; i < dates.length; i++) {
-
         const $this = <HTMLScriptElement>dates[i];
         const activityList = <HTMLScriptElement>document.getElementsByClassName('activitylist-container')[0];
 
-        if ( $this.offsetTop < ( activityList.offsetHeight + activityList.scrollTop ) && $this.offsetTop > activityList.scrollTop ) {
-              const monthInRange = this.eventList[i].timestamp.format('MM YYYY');
+        if ($this.offsetTop < (activityList.offsetHeight + activityList.scrollTop) && $this.offsetTop > activityList.scrollTop) {
+          if (this.cardList.length > 0) {
+            const monthInRange = this.cardList[i].day.split('-').slice(0, 2).join('-');
 
-              if (!this.datesInRange.includes(monthInRange) ) {
-                this.datesInRange.push(monthInRange);
-              }
+            if (!this.datesInRange.includes(monthInRange)) {
+              this.datesInRange.push(monthInRange);
+            }
+          }
         }
       }
 
       const tempMonths = [];
 
-      for ( let j = 0; j < this.datesInRange.length; j++ ) {
-        const formattedMonth = moment( this.datesInRange[j], 'MM YYYY');
-        tempMonths.push( formattedMonth.format('MMM YYYY') );
+      for (let j = 0; j < this.datesInRange.length; j++) {
+        const formattedMonth = moment(this.datesInRange[j], 'YYYY-MM');
+        tempMonths.push(formattedMonth.format('MMM YYYY'));
       }
 
       this.currentMonth = tempMonths.join(' / ');
@@ -109,15 +115,8 @@ export class ActivityListComponent implements OnInit {
   }
 
 
-  scrollToItem(index) {
-
-    for (let i = 0; i < this.eventList.length; i++) {
-      this.eventList[i].selected = false;
-    }
-
-    this.eventList[index].selected = true;
-    const time: ExpandedTime = new ExpandedTime( this.eventList[index].timestamp );
-    this.timeSelected.emit( time );
+  scrollToItem(index: number) {
+    this.timeSelected.emit(this.cardList[index].day);
 
     if (index === 0) {
       $('.activitylist-container').animate({ scrollTop: 0 }, 'slow');
@@ -125,7 +124,6 @@ export class ActivityListComponent implements OnInit {
       const targetPosition = $('.activitylist-container').children().eq(index + 1)[0].offsetTop;
       $('.activitylist-container').animate({ scrollTop: targetPosition }, 'slow');
     }
-
   }
 
 }

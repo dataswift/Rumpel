@@ -34,7 +34,6 @@ export class DataOfferService {
     this.http.get(url)
       .map(res => {
         const resJson = res.json();
-        console.log(resJson);
 
         return <Offer[]>resJson;
       }).subscribe(offers => {this._offers$.next(offers)});
@@ -44,13 +43,11 @@ export class DataOfferService {
     this.fetchUserAwareOfferList().subscribe(offers => {this._offers$.next(offers)});
   }
 
-
   claim(offerId: string): Observable<Offer[]> {
     return this.claimOfferWithDataBuyer(offerId)
       .flatMap((claim: Claim) => this.hatSvc.updateDataDebit(claim.dataDebitId, 'enable'))
       .flatMap((res: Response) => this.fetchUserAwareOfferList());
   }
-
 
   redeemCash(): void {
     const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/user/redeem/cash`;
@@ -80,7 +77,6 @@ export class DataOfferService {
       })
       .map(res => {
         const resJson = res.json();
-        console.log(resJson);
 
         return <Offer[]>resJson;
       });

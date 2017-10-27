@@ -20,7 +20,6 @@ import { NotablesServiceMeta } from '../shared/interfaces/notables-service-meta.
 import { User } from '../user/user.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { DexOfferClaimRes } from '../shared/interfaces/dex-offer-claim-res.interface';
-import * as moment from 'moment';
 
 @Injectable()
 export class NotablesService extends BaseDataService<Notable> {

@@ -1,12 +1,13 @@
 <div class="notable-item">
 
-  <h4 class="notable-content" [innerHTML]="notable.message | markdownToHtml | safeHtml"></h4>
+  <h4 class="notable-content" [innerHTML]="notable.data.message | markdownToHtml | safeHtml"></h4>
 
     <div class="header-content">
-      <p>{{notable.created_time | moment: "h:mma"}}</p>
-      <p *ngIf="!notable.isShared">PRIVATE</p>
-      <p *ngIf="notable.isShared">
-        SHARED{{notable.public_until === null ? ' forever' : notable.public_until.isBefore() ? ', expired' : ', expires ' + (notable.public_until | relativeTime) }}
+      <p>{{notable.data.created_time | moment: "h:mma"}}</p>
+      <p *ngIf="!notable.data.isShared">PRIVATE</p>
+      <p *ngIf="notable.data.isShared">
+        SHARED{{notable.data.public_until === null ? ' forever' : notable.data.public_until.isBefore() ?
+        ', expired' : ', expires ' + (notable.data.public_until | relativeTime) }}
       </p>
     </div>
 

@@ -8,6 +8,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { Tweet } from '../../shared/interfaces/index';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-location-tweet',
@@ -15,7 +16,7 @@ import { Tweet } from '../../shared/interfaces/index';
   styleUrls: ['./location-tweet.component.scss']
 })
 export class LocationTweetComponent implements OnInit {
-  @Input() tweet: Tweet;
+  @Input() tweet: HatRecord<Tweet>;
 
   constructor() { }
 

@@ -16,14 +16,12 @@ import { HatRecord } from '../interfaces/hat-record.interface';
 export class TimeFilterTwoPipe implements PipeTransform {
 
   transform(timedData: HatRecord<any>[], startTime?: Moment, endTime?: Moment): Array<any> {
-    const unpackedTimedData = timedData.map(dp => dp.data);
-
     if (startTime && endTime) {
-      return unpackedTimedData.filter(dp => dp.timestamp.isAfter(startTime) && dp.timestamp.isBefore(endTime));
+      return timedData.filter(dp => dp.data.timestamp.isAfter(startTime) && dp.data.timestamp.isBefore(endTime));
     } else if (startTime) {
-      return unpackedTimedData.filter(dp => dp.timestamp.isAfter(startTime));
+      return timedData.filter(dp => dp.data.timestamp.isAfter(startTime));
     } else {
-      return unpackedTimedData;
+      return timedData;
     }
   }
 

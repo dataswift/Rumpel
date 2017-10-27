@@ -6,18 +6,16 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
   -->
 
-
-
-<div class="tweet" *ngIf="!tweet.media">
-  <h4 [innerHTML]="tweet.text | safeHtml"></h4>
-  <p>{{tweet.createdTime | moment: "h:mma"}}</p>
-  <p>Favourited: {{tweet.favorite_count}}  | Retweeted: {{tweet.retweet_count}}</p>
+<div class="tweet" *ngIf="!tweet.data.media">
+  <h4 [innerHTML]="tweet.data.text | safeHtml"></h4>
+  <p>{{tweet.data.createdTime | moment: "h:mma"}}</p>
+  <p>Favourited: {{tweet.data.favorite_count}}  | Retweeted: {{tweet.data.retweet_count}}</p>
 </div>
 
-<div class="media-tweet photo-box" *ngIf="tweet.media" [style.background-image]="'url('+ tweet.media.media_url_https +')'">
+<div class="media-tweet photo-box" *ngIf="tweet.data.media" [style.background-image]="'url('+ tweet.data.media.media_url_https +')'">
     <div class="photo-description">
-      <h4 [innerHTML]="tweet.text | safeHtml"></h4>
-      <p>{{tweet.createdTime | moment: "h:mma"}}</p>
-      <p>Favourited: {{tweet.favorite_count}}  | Retweeted: {{tweet.retweet_count}}</p>
+      <h4 [innerHTML]="tweet.data.text | safeHtml"></h4>
+      <p>{{tweet.data.createdTime | moment: "h:mma"}}</p>
+      <p>Favourited: {{tweet.data.favorite_count}}  | Retweeted: {{tweet.data.retweet_count}}</p>
     </div>
 </div>

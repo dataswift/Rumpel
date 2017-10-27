@@ -1,4 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Moment } from 'moment';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'rump-activity-card',
@@ -6,16 +10,21 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./activity-card.component.scss']
 })
 export class ActivityCardComponent implements OnInit {
-
-  @Input() day: any;
-  @Input() i: any;
+  @Input() dayList: HatRecord<any>[];
+  @Input() date: string;
+  @Input() index: number;
+  @Input() isSelected: boolean;
   @Output() selection: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() { }
 
-  scrollToItem(num: number) {
-    this.selection.emit(num);
+  get momentDate(): Moment {
+    return moment(this.date);
+  }
+
+  scrollToItem(index: number) {
+    this.selection.emit(index);
   }
 }

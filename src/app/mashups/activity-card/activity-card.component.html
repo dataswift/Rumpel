@@ -1,74 +1,67 @@
-<div class="date-box" [class.today]="day.selected" (click)="scrollToItem(i)">
+<div class="date-box" [class.today]="isSelected" (click)="scrollToItem(index)">
+  <h2><span>{{momentDate.format("ddd")}}</span>{{momentDate.format('D')}}<span>{{momentDate.format("MMM")}}</span></h2>
 
-              <h2><span>{{day.timestamp.format("ddd")}}</span>{{day.timestamp.format('D')}}<span>{{day.timestamp.format("MMM")}}</span></h2>
+  <div>
+    <div *ngFor="let activity of dayList">
+      <div class="activity">
+        <div *ngIf="activity.endpoint.includes('notablesv1')" class="activity-item notable-item">
+            <rump-location-notable [notable]="activity"></rump-location-notable>
+            <i class="material-icons">border_color</i>
+        </div>
 
+          <div *ngIf="activity.endpoint.includes('events')" class="activity-item event">
               <div>
-                    <div *ngFor="let activity of day.activities">
-                      <div class="activity">
-
-                          <div *ngIf="activity.type === 'notable'" class="activity-item notable-item">
-                              <rump-location-notable [notable]="activity.event"></rump-location-notable>
-                              <i class="material-icons">border_color</i>
-                          </div>
-
-
-                          <div *ngIf="activity.type === 'event'" class="activity-item event">
-                              <div>
-                                <h4>{{activity.event.data.title}}</h4>
-                                <p class="event-description" *ngIf="activity.event.data.description">{{activity.event.data.description | limitContent:140}}</p>
-                                <p>{{activity.event.data.start | moment:'hh:mm A'}} - {{activity.event.data.end | moment:'hh:mm A'}}</p>
-                              </div>
-
-                              <img *ngIf="activity.event.data.calendarName == 'google'" src="assets/icons/google-calendar-plug.svg">
-                              <img *ngIf="activity.event.data.calendarName == 'facebook'" src="assets/icons/facebook-f-icon.svg">
-                              <img *ngIf="activity.event.data.calendarName != 'google' && activity.event.data.calendarName != 'facebook'" src="assets/icons/calendar-plug.png">
-                          </div>
-
-                          <div *ngIf="activity.type === 'photo'" class="activity-item photo-box" [style.background-image]="'url('+activity.event.data.src + ')'">
-                              <div class="photo-description" >
-                                <h4>{{activity.event.data.name}}</h4>
-                                <p>{{activity.event.data.timestamp | moment}}</p>
-                              </div>
-                              <img class="icon-rounded" src="assets/icons/photos-plug.svg">
-                          </div>
-
-
-                          <div *ngIf="activity.type === 'facebook' && activity.event.type !=='photo' && activity.event.type !=='link'" class="activity-item post">
-                                <rump-location-fb-post [post]="activity.event"></rump-location-fb-post>
-                                <img src="assets/icons/facebook-f-icon.svg">
-                          </div>
-
-                          <div *ngIf="activity.type === 'facebook' && activity.event.type ==='photo' || activity.event.type ==='link'" class="activity-item post" [class.photo-box]="activity.event.data.content.fullPicture != ''" [style.background-image]="'url('+activity.event.data.content.fullPicture + ')'">
-                                <rump-location-fb-post [post]="activity.event"></rump-location-fb-post>
-                                <img src="assets/icons/facebook-f-icon.svg">
-                          </div>
-
-                          <div *ngIf="activity.type === 'fitbit'" class="activity-item post fitbit-box">
-                                <rump-fitbit-my-day [fitbitData]="activity.event"></rump-fitbit-my-day>
-                                <img src="assets/icons/fitbit-icon.svg">
-                          </div>
-
-                          <div *ngIf="activity.type === 'monzo'" class="activity-item post monzo-box">
-                                <rump-monzo-my-day [monzoData]="activity.event"></rump-monzo-my-day>
-                                <img src="assets/icons/monzo-icon.svg">
-                          </div>
-
-                          <div *ngIf="activity.type === 'twitter'" class="activity-item post">
-                                <rump-location-tweet [tweet]="activity.event"></rump-location-tweet>
-                                <img src="assets/icons/twitter-icon.svg">
-                          </div>
-
-                          <div *ngIf="activity.type === 'location'" class="activity-item location">
-                                <div>
-                                  <h4>Multiple locations</h4>
-                                  <p>Click to update the map</p>
-                                </div>
-                                <img src="assets/icons/location-icon.svg">
-                          </div>
-
-
-
-                        </div>
-                  </div>
+                <h4>{{activity.data.title}}</h4>
+                <p class="event-description" *ngIf="activity.data.description">{{activity.data.description | limitContent:140}}</p>
+                <p>{{activity.data.start | moment:'hh:mm A'}} - {{activity.data.end | moment:'hh:mm A'}}</p>
               </div>
+
+              <img *ngIf="activity.data.calendarName === 'google'" src="assets/icons/google-calendar-plug.svg">
+              <img *ngIf="activity.data.calendarName === 'facebook'" src="assets/icons/facebook-f-icon.svg">
+              <img *ngIf="activity.data.calendarName !== 'google' && activity.data.calendarName !== 'facebook'" src="assets/icons/calendar-plug.png">
+          </div>
+
+          <div *ngIf="activity.endpoint.includes('photos')" class="activity-item photo-box" [style.background-image]="'url('+activity.data.src + ')'">
+              <div class="photo-description" >
+                <h4>{{activity.data.name}}</h4>
+                <p>{{activity.data.timestamp | moment}}</p>
+              </div>
+              <img class="icon-rounded" src="assets/icons/photos-plug.svg">
+          </div>
+
+          <div *ngIf="activity.endpoint.includes('facebook/posts') && activity.data.type !== 'photo' && activity.data.type !=='link'" class="activity-item post">
+                <rump-location-fb-post [post]="activity"></rump-location-fb-post>
+                <img src="assets/icons/facebook-f-icon.svg">
+          </div>
+
+          <div *ngIf="activity.endpoint.includes('facebook/posts') && activity.data.type ==='photo' || activity.data.type ==='link'" class="activity-item post" [class.photo-box]="activity.data.content.fullPicture !== ''" [style.background-image]="'url('+activity.data.content.fullPicture + ')'">
+                <rump-location-fb-post [post]="activity"></rump-location-fb-post>
+                <img src="assets/icons/facebook-f-icon.svg">
+          </div>
+
+          <div *ngIf="activity.endpoint.includes('fitbit')" class="activity-item post fitbit-box">
+                <rump-fitbit-my-day [fitbitData]="activity"></rump-fitbit-my-day>
+                <img src="assets/icons/fitbit-icon.svg">
+          </div>
+
+          <div *ngIf="activity.endpoint.includes('monzo')" class="activity-item post monzo-box">
+                <rump-monzo-my-day [monzoData]="activity"></rump-monzo-my-day>
+                <img src="assets/icons/monzo-icon.svg">
+          </div>
+
+          <div *ngIf="activity.endpoint.includes('twitter/tweets')" class="activity-item post">
+                <rump-location-tweet [tweet]="activity"></rump-location-tweet>
+                <img src="assets/icons/twitter-icon.svg">
+          </div>
+
+          <div *ngIf="activity.endpoint.includes('locations')" class="activity-item location">
+                <div>
+                  <h4>Multiple locations ({{activity.data}})</h4>
+                  <p>Click to update the map</p>
+                </div>
+                <img src="assets/icons/location-icon.svg">
+          </div>
+        </div>
     </div>
+  </div>
+</div>

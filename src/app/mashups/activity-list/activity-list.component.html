@@ -14,8 +14,12 @@
 <div class="activitylist-container" [style.height]="componentHeight">
 
   <h6 class="todayHeader">Today</h6>
-  <div class="date" *ngFor="let day of eventList; let i = index;">
-    <rump-activity-card [day]="day" [i]="i" (selection)="scrollToItem($event)"></rump-activity-card>
+  <div class="date" *ngFor="let day of cardList; let i = index;">
+    <rump-activity-card [dayList]="day.dayList"
+                        [date]="day.day"
+                        [index]="i"
+                        [isSelected]="day.day === selectedDate"
+                        (selection)="scrollToItem($event)"></rump-activity-card>
   </div>
 </div>
 

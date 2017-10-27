@@ -8,9 +8,6 @@
 
 <div class="row">
   <div class="col-md-12 mixpad">
-
-
-
     <div class="view-body">
       <div class="loading-overlay" *ngIf="loading && hasLocationData">
         <rump-spinner [isRunning]="true"></rump-spinner>
@@ -19,33 +16,19 @@
 
       <div class="timeline-view">
 
-
-
       <rump-map class="map"
-                [dataPoints]="locations | timeFilter:selectedTime:'day'"
+                [dataPoints]="locations[selectedTime]"
                 [mapHeight]="safeSize"
-                [mapWidth]="shownComponents.events ? '60%' : '100%'"
                 (timeSelected)="selectTime($event)"
-                [locationDate]="selectedTime"
-                *ngIf="shownComponents.map"></rump-map>
+                [locationDate]="selectedTime"></rump-map>
 
       <rump-activity-list class="activitylist"
                          [componentHeight]="safeSizeSidebar"
-                         [eventList]="eventList"
-                         [timeline]="timeline"
+                         [cards]="cardList"
+                         [selectedDate]="selectedTime"
                          (timeSelected)="selectTime($event)"
-                         (notifyDatesInRange)="getDatesInRange($event)"
-                         *ngIf="shownComponents.events"></rump-activity-list>
-                <!--
-      <rump-timeline class="timeline"
-                     rumpStick [stickMin]="160" [stickClass]="'fixed-right'"
-                     [timeline]="timeline"
-                     [selectedTime]="selectedTime"
-                     (timeSelected)="selectTime($event)"
-                     [hidden]="!shownComponents.timeline"></rump-timeline>
-                   -->
+                         (notifyDatesInRange)="getDatesInRange($event)"></rump-activity-list>
       </div>
-
     </div>
   </div>
 </div>

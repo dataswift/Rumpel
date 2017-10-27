@@ -7,9 +7,9 @@
  */
 
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { Moment } from 'moment';
 import * as moment from 'moment';
 import { Location } from '../../shared/interfaces';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 declare var L: any;
 
@@ -19,7 +19,7 @@ declare var L: any;
   styleUrls: ['map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input() dataPoints: Array<Location>;
+  @Input() dataPoints: HatRecord<Location>[];
   @Input() mapHeight: string;
   @Input() mapWidth: string;
   @Input() enableMapControls: boolean;
@@ -80,10 +80,10 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
-  updateMap(locations: Array<Location>) {
+  updateMap(locations: HatRecord<Location>[]) {
     if (this.map) {
       this.drawMarkers(locations);
-      if (locations.length > 0) {
+      if (locations && locations.length > 0) {
         this.map.invalidateSize();
         this.map.fitBounds([
           [this.bbox.minLat, this.bbox.minLng],
@@ -106,18 +106,18 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
 
-  drawMarkers(locations: Array<Location>) {
+  drawMarkers(locations: HatRecord<Location>[]) {
     this.map.removeLayer(this.markers);
     this.markers = L.markerClusterGroup();
     this.resetBoundingBox();
     // const pointlist = [];
-    for (const loc of locations) {
-      this.adjustBoundingBox(loc.latitude, loc.longitude);
-      const pos = new L.LatLng(loc.latitude, loc.longitude);
+    for (const loc of locations || []) {
+      this.adjustBoundingBox(loc.data.latitude, loc.data.longitude);
+      const pos = new L.LatLng(loc.data.latitude, loc.data.longitude);
       const marker = L.marker(pos);
-      marker.timestamp = loc.timestamp;
+      marker.timestamp = loc.data.timestamp;
 
-      const date = moment(Number(loc.timestamp));
+      const date = moment(Number(loc.data.timestamp));
       marker.bindPopup('<b style="text-align: center">' + date.format('DD MMM YYYY h:mm a') + '</b>').openPopup();
 
       /*
