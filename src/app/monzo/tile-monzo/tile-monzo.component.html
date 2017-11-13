@@ -4,12 +4,12 @@
   <img class="icon" src="assets/icons/monzo-icon.svg">
 
   <div class="stat balance">
-    <h6>{{ monzos[0].balance / 100 | currency:monzos[0].currency:true:'1.2-2' }}<span>Card balance</span></h6>
+    <h6>{{ monzos[0].data.balance / 100 | currency:monzos[0].data.currency:true:'1.2-2' }}<span>Card balance</span></h6>
   </div>
 
   <div class="stat">
-    <h6>{{ todaySpend / 100 | currency:monzos[0].currency:true:'1.2-2' }}<span>Spent today</span></h6>
-    <h6>{{ monthSpend / 100 | currency:monzos[0].currency:true:'1.2-2' }}<span>Spent this month</span></h6>
+    <h6>{{ todaySpend / 100 | currency:monzos[0].data.currency:true:'1.2-2' }}<span>Spent today</span></h6>
+    <h6>{{ monthSpend / 100 | currency:monzos[0].data.currency:true:'1.2-2' }}<span>Spent this month</span></h6>
   </div>
 
 </div>

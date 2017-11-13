@@ -11,7 +11,7 @@ import { Post } from '../../shared/interfaces/post.interface';
 })
 export class FacebookViewComponent implements OnInit {
 
-  @Input() item: HatRecord<Post>;
+  @Input() item: HatRecord<any>;
 
   constructor(private dialogSvc: DialogService) { }
 
