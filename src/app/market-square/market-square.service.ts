@@ -40,7 +40,7 @@ export class MarketSquareService {
       .filter((user: User) => user.authenticated === true)
       .subscribe((user: User) => {
         this.hatDomain = user.fullDomain;
-        this.connectHAT(this.hatDomain);
+        // this.connectHAT(this.hatDomain);
       });
   }
 

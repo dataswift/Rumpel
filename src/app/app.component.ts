@@ -36,7 +36,6 @@ export class AppRootComponent implements OnInit {
   private appExpireTime: moment.Moment;
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-            private _notificationsSvc: NotificationsService,
             private messagingSvc: GlobalMessagingService,
             private dialogSvc: DialogService,
             private userSvc: UserService,
@@ -76,7 +75,7 @@ export class AppRootComponent implements OnInit {
       }
     };
 
-    this._notificationsSvc.showNotifs$.subscribe(status => this.showNotifications = status);
+    // this._notificationsSvc.showNotifs$.subscribe(status => this.showNotifications = status);
 
   }
 

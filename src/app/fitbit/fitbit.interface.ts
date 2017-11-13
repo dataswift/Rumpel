@@ -1,8 +1,20 @@
-import { Moment } from 'moment';
-
-export interface Fitbit {
-  dateTime: Moment;
+export interface FitbitActivitySummary {
+  dateCreated: string;
+  activityCalories: number;
+  caloriesBMR: number;
+  caloriesOut: number;
+  distances: FitbitActivityDistance[];
+  elevation?: number;
+  fairlyActiveMinutes: number;
+  floors?: number;
+  lightlyActiveMinutes: number;
+  marginalCalories: number;
+  sedentaryMinutes: number;
   steps: number;
-  restingHeartRate: number;
-  sleep: number;
+  veryActiveMinutes: number;
+}
+
+export interface FitbitActivityDistance {
+  activity: string;
+  distance: number;
 }

@@ -7,7 +7,7 @@
 
   <div class="feed" *ngIf="currentPage == 'feed'">
     <div class="header">
-      <img *ngIf="plugMeta" [src]="'assets/icons/' + plugMeta.icon" />
+      <img *ngIf="plugMeta" [src]="'assets/icons/' + plugMeta.name.toLowerCase() + '-plug.svg'" />
       <div>
         <h3>{{ plugName }} feed</h3>
         <p>All the posts stored in this data plug</p>
@@ -15,15 +15,15 @@
     </div>
 
     <div class="dates">
-      <div class="fromDatePicker datePicker">
-        <label for="fromDate">From</label>
-        <input id="fromDate" name="fromDate" type="date" (change)="setFromDate($event)">
-      </div>
+      <!--<div class="fromDatePicker datePicker">-->
+        <!--<label for="fromDate">From</label>-->
+        <!--<input id="fromDate" name="fromDate" type="date" (change)="setFromDate($event)">-->
+      <!--</div>-->
 
-      <div class="toDatePicker datePicker">
-        <label for="toDate">To</label>
-        <input id="toDate" name="toDate" type="date" [value]="toDate.format('YYYY-MM-DD')" (change)="setToDate($event)">
-      </div>
+      <!--<div class="toDatePicker datePicker">-->
+        <!--<label for="toDate">To</label>-->
+        <!--<input id="toDate" name="toDate" type="date" [value]="toDate.format('YYYY-MM-DD')" (change)="setToDate($event)">-->
+      <!--</div>-->
     </div>
 
     <ul class="nav nav-tabs">
@@ -32,12 +32,11 @@
       <li *ngIf="events.length > 0" [class.active]="tabView == 'events'"><a (click)="tabView = 'events'">Events</a></li>
     </ul>
 
-    <div class="feedItems" *ngIf="feed && feed.length" [class.hidden]="tabView != 'posts'">
+    <div class="feedItems" *ngIf="feed && feed.length" [class.hidden]="tabView !== 'posts'">
       <div class="item" *ngFor="let item of feed">
         <rump-facebook-view *ngIf="plugName.toLowerCase() == 'facebook'" [item]="item"></rump-facebook-view>
         <rump-twitter-view *ngIf="plugName.toLowerCase() == 'twitter'" [item]="item"></rump-twitter-view>
-        <rump-photos-view *ngIf="plugName.toLowerCase() == 'dropbox photos'" [item]="item"></rump-photos-view>
-        <rump-locations-view *ngIf="plugName.toLowerCase() == 'location'" [item]="item"></rump-locations-view>
+        <rump-locations-view *ngIf="plugName.toLowerCase() == 'locations'" [item]="item"></rump-locations-view>
         <rump-notables-view *ngIf="plugName.toLowerCase() == 'rumpel'" [item]="item"></rump-notables-view>
       </div>
 
@@ -47,12 +46,12 @@
       </div>
     </div>
 
-    <div class="mapView" [class.hidden]="tabView != 'locations'">
+    <div class="mapView" [class.hidden]="tabView !== 'locations'">
       <rump-map *ngIf="locations.length > 0" [mapHeight]="'400px'" [dataPoints]="locations" [enableMapControls]="true">
-        <div class="loading-overlay" *ngIf="loading">
-          <rump-spinner [isRunning]="true"></rump-spinner>
-          <span>Loading more data...</span>
-        </div>
+        <!--<div class="loading-overlay">-->
+          <!--<rump-spinner [isRunning]="true"></rump-spinner>-->
+          <!--<span>Loading more data...</span>-->
+        <!--</div>-->
       </rump-map>
       <div class="loadMore">
         <p class="meta">Showing {{ feed.length }} results</p>
@@ -60,7 +59,7 @@
       </div>
     </div>
 
-    <div class="calendarView" [class.hidden]="tabView != 'events'">
+    <div class="calendarView" [class.hidden]="tabView !== 'events'">
       <div class="item" *ngFor="let event of events">
         <rump-calendar-view *ngIf="events.length > 0" [item]="event"></rump-calendar-view>
       </div>

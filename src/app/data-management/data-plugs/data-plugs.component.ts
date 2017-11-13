@@ -8,9 +8,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import {DataPlugService} from '../data-plug.service';
-import {MarketSquareService} from '../../market-square/market-square.service';
-import {Router} from '@angular/router';
+import { DataPlugService } from '../data-plug.service';
+import { MarketSquareService } from '../../market-square/market-square.service';
+import { Router } from '@angular/router';
+import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 
 @Component({
   selector: 'rump-data-plugs',
@@ -18,7 +19,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./data-plugs.component.scss']
 })
 export class DataPlugsComponent implements OnInit {
-  public dataplugs: Observable<Array<any>>;
+  public dataplugs: Observable<DataPlug[]>;
 
   constructor(private dataplugsSvc: DataPlugService,
               private marketSvc: MarketSquareService,
@@ -30,7 +31,7 @@ export class DataPlugsComponent implements OnInit {
 
   openPlugDataView(plug: any) {
 
-    if (plug.activated === false) {
+    if (plug.active === false) {
         const loginName = this.formatPlugName(plug.name);
 
         const w = window.innerWidth;
@@ -45,8 +46,8 @@ export class DataPlugsComponent implements OnInit {
           `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
         );
     } else {
-      this.router.navigate([plug.page]);
-      this.router.navigate(['/dataplugs/data/', plug.name]);
+      // this.router.navigate([plug.page]);
+      this.router.navigate(['/dataplugs/data/', plug.name.toLowerCase()]);
     }
   }
 

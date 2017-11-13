@@ -1,28 +1,34 @@
 import { Injectable } from '@angular/core';
-
-import { Fitbit } from './fitbit.interface';
-
-import * as moment from 'moment';
 import { BaseDataService } from '../services/base-data.service';
 import { UiStateService } from '../services/ui-state.service';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
-import {HatRecord} from '../shared/interfaces/hat-record.interface';
+
+import { FitbitActivitySummary, FitbitActivityDistance } from './fitbit.interface';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
+import * as moment from 'moment';
 
 @Injectable()
-export class FitbitService extends BaseDataService<Fitbit> {
+export class FitbitService extends BaseDataService<FitbitActivitySummary> {
 
   constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
     super(hat, uiSvc, 'fitbit', 'activity/day/summary', 'dateCreated');
   }
 
-  coerceType(rawFitbit: HatRecord<any>): HatRecord<Fitbit> {
-    const fitbitContent = rawFitbit;
+  coerceType(rawFitbit: HatRecord<any>): HatRecord<FitbitActivitySummary> {
+    const fitbitContent = rawFitbit.data;
 
-    const fitbit: Fitbit = {
-      dateTime: moment(fitbitContent.data.dateTime),
-      steps: fitbitContent.data.steps,
-      restingHeartRate: fitbitContent.data.restingHeartRate,
-      sleep: fitbitContent.data.sleep
+    const fitbit = {
+      dateCreated: fitbitContent.dateCreated,
+      activityCalories: fitbitContent.activityCalories,
+      caloriesBMR: fitbitContent.caloriesBMR,
+      caloriesOut: fitbitContent.caloriesOut,
+      distances: <FitbitActivityDistance[]>fitbitContent.distances,
+      fairlyActiveMinutes: fitbitContent.fairlyActiveMinutes,
+      lightlyActiveMinutes: fitbitContent.lightlyActiveMinutes,
+      marginalCalories: fitbitContent.marginalCalories,
+      sedentaryMinutes: fitbitContent.sedentaryMinutes,
+      steps: fitbitContent.steps,
+      veryActiveMinutes: fitbitContent.veryActiveMinutes
     };
 
     return {

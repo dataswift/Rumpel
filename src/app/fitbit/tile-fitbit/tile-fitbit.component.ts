@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { FitbitService } from '../fitbit.service';
-import { Fitbit } from '../fitbit.interface';
+
+import { FitbitActivitySummary } from '../fitbit.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
-import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-tile-fitbit',
@@ -13,7 +14,7 @@ import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 export class TileFitbitComponent implements OnInit, OnDestroy {
 
   private fitbitSub: Subscription;
-  private fitbits: HatRecord<Fitbit>[];
+  private fitbits: HatRecord<FitbitActivitySummary>[];
   public todaySteps = 0;
   public todayHeart = 0;
   public todaySleep = '0 hrs, 0 min';
@@ -21,14 +22,12 @@ export class TileFitbitComponent implements OnInit, OnDestroy {
   constructor( private fitbitSvc: FitbitService ) { }
 
   ngOnInit() {
-      this.fitbitSub = this.fitbitSvc.data$.subscribe((fitbits: HatRecord<Fitbit>[]) => {
-        this.fitbits = fitbits;
+      this.fitbitSub = this.fitbitSvc.data$.subscribe((fitbits: HatRecord<FitbitActivitySummary>[]) => {
         this.fitbits
-            .filter(fitbit => fitbit.data.dateTime.isSame(moment(), 'day'))
             .forEach( fitbit => {
             this.todaySteps = fitbit.data.steps;
-            this.todayHeart = fitbit.data.restingHeartRate;
-            this.todaySleep = moment(fitbit.data.sleep).format('h[ hrs,] m[ min]')
+            this.todayHeart = fitbit.data.steps;
+            this.todaySleep = moment(fitbit.data.steps).format('h[ hrs,] m[ min]')
             })
       });
   }

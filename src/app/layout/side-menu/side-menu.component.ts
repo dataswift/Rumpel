@@ -20,6 +20,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { APP_CONFIG, IAppConfig} from '../../app.config';
 import { User } from '../../user/user.interface';
 import {HatApiService} from '../../services/hat-api.service';
+import {DataPlug} from '../../shared/interfaces/data-plug.interface';
 
 declare var $: any;
 
@@ -33,7 +34,7 @@ export class SideMenuComponent implements OnInit {
   public state: any;
   public userAuthenticated = false;
   public menu: Array<any>;
-  public dataplugList: Array<any>;
+  public dataplugList: Observable<DataPlug[]>;
   public mobileMode = false;
   public profile: any;
   public isPublicPage = false;
@@ -55,6 +56,8 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit() {
     this.selectedItem = window.location.pathname;
+
+    this.dataplugList = this.dataplugSvc.dataplugs$;
 
     this.state = { dataSources: [], dataTypes: [] };
     this.userAuthenticated = false;
@@ -93,15 +96,6 @@ export class SideMenuComponent implements OnInit {
     this.router.events
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => this.selectedItem = event.url.slice(1));
-
-
-    this.dataplugSvc.dataplugs$.subscribe( plug => {
-      for (let i = 0; i < plug.length; i++) {
-        plug[i].icon = plug[i].icon.replace(/ /g, '-');
-      }
-      this.dataplugList = plug;
-      setTimeout(this.showPopover, 1000);
-    });
 
     this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;

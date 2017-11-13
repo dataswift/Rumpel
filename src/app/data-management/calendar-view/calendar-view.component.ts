@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DialogService } from '../../layout/dialog.service';
 import { MapBoxComponent } from '../../layout/map-box/map-box.component';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Event } from '../../shared/interfaces/event.interface';
 
 @Component({
   selector: 'rump-calendar-view',
@@ -9,7 +11,7 @@ import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 })
 export class CalendarViewComponent implements OnInit {
 
-  @Input() item: any;
+  @Input() item: HatRecord<Event>;
 
   constructor(private dialogSvc: DialogService) { }
 

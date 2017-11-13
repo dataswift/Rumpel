@@ -11,8 +11,8 @@ import { TileFitbitComponent } from './tile-fitbit/tile-fitbit.component';
     CommonModule,
     SharedModule
   ],
-  declarations: [FitbitMyDayComponent, TileFitbitComponent],
+  declarations: [ FitbitMyDayComponent, TileFitbitComponent ],
   providers: [ FitbitService ],
-  exports: [FitbitMyDayComponent, TileFitbitComponent]
+  exports: [ FitbitMyDayComponent, TileFitbitComponent ]
 })
 export class FitbitModule { }

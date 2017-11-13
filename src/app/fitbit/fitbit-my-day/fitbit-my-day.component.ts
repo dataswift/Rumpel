@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Fitbit } from '../fitbit.interface';
+import { FitbitActivitySummary } from '../fitbit.interface';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 
@@ -10,13 +10,13 @@ import * as moment from 'moment';
 })
 export class FitbitMyDayComponent implements OnInit {
 
-  @Input() fitbitData: Fitbit;
+  @Input() fitbitData: FitbitActivitySummary;
   public sleep: any;
 
   constructor() { }
 
   ngOnInit() {
-    this.sleep = moment(this.fitbitData.sleep).format('h[ hrs,] m[ min]');
+    this.sleep = moment(this.fitbitData.steps).format('h[ hrs,] m[ min]');
   }
 
 }

@@ -47,8 +47,7 @@ import { DataOfferService } from './../offers/data-offer.service';
   exports: [ HeaderComponent,
             SideMenuComponent,
             FooterComponent,
-            NotificationCentreComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, NotificationsService, MarkdownToHtmlPipe, DataOfferService ]
+  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService ]
 })
 export class LayoutModule {}

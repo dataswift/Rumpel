@@ -44,7 +44,6 @@ export class HeaderComponent implements OnInit {
               private router: Router,
               private dialogSvc: DialogService,
               private userSvc: UserService,
-              private _notificationsSvc: NotificationsService,
               private profilesSvc: ProfilesService) { }
 
   ngOnInit() {
@@ -55,7 +54,7 @@ export class HeaderComponent implements OnInit {
     this.sub = this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
       if (user.authenticated) {
-        this._notificationsSvc.getAllNotifications();
+        // this._notificationsSvc.getAllNotifications();
 
         // this.profilesSvc.getPicture().subscribe(result => {
         //   if (result && result.url) {
@@ -77,12 +76,12 @@ export class HeaderComponent implements OnInit {
 
     this.totalNotifications = 0;
 
-    this._notificationsSvc.stats$.subscribe(stats => {
-      this.totalNotifications = stats.total;
-      this.unreadNotifications = stats.unread;
-    });
-
-    this._notificationsSvc.showNotifs$.subscribe(status => this.showNotificationsBar(status));
+    // this._notificationsSvc.stats$.subscribe(stats => {
+    //   this.totalNotifications = stats.total;
+    //   this.unreadNotifications = stats.unread;
+    // });
+    //
+    // this._notificationsSvc.showNotifs$.subscribe(status => this.showNotificationsBar(status));
 
 
     this.profile = {
@@ -124,11 +123,11 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/user/login']);
   }
 
-  showNotificationsCentre() {
-    if (this.totalNotifications > 0) {
-      this._notificationsSvc.toggleShow();
-    }
-  }
+  // showNotificationsCentre() {
+  //   if (this.totalNotifications > 0) {
+  //     this._notificationsSvc.toggleShow();
+  //   }
+  // }
 
   navigateTo(link: string) {
     window.location.href = link;

@@ -10,11 +10,12 @@ import { FacebookEventsService } from '../../dimensions/facebook-events.service'
 import { GoogleEventsService } from '../../dimensions/google-events.service';
 import { FitbitService } from '../../fitbit/fitbit.service';
 import { Post, Tweet, Event, Location } from '../../shared/interfaces/index';
-import { Fitbit } from '../../fitbit/fitbit.interface';
+import { FitbitActivitySummary } from '../../fitbit/fitbit.interface';
 import { Notable } from '../../shared/interfaces/notable.class';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import {HatRecord} from '../../shared/interfaces/hat-record.interface';
+import {DataPlug} from '../../shared/interfaces/data-plug.interface';
 
 declare var $: any;
 
@@ -27,7 +28,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   public currentPage = 'feed';
   public routerSub: any;
-  public dataplugs: Observable<Array<any>>;
+  public dataplugs: Observable<DataPlug[]>;
   public plugName = '';
   public plugMeta: any;
 
@@ -65,9 +66,9 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     this.routerSub = this.route.params.subscribe(params => {
        this.plugName = params['id'];
 
-       this.dataplugs.forEach ( plugs => {
+       this.dataplugs.subscribe(plugs => {
          plugs.forEach(plug => {
-           if (plug.name === this.plugName) {
+           if (plug.name.toLowerCase() === this.plugName) {
              this.plugMeta = plug;
 
              switch ( plug.name.toLowerCase() ) {
@@ -88,7 +89,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
                   this.feedSource = this.notablesSvc;
                   this.initRumpel();
                   break;
-               case 'location':
+               case 'locations':
                   this.tabView = 'locations';
                   this.feedSource = this.locationsSvc;
                   this.initLocations();
@@ -112,6 +113,9 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       this.eventsTimeField = 'start';
       this.sortEvents();
     });
+
+    this.facebookEventsSvc.getInitData();
+    this.socialSvc.getInitData();
   }
 
   initTwitter() {
@@ -132,16 +136,9 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       this.feedTimeField = 'createdTime';
       this.sortFeed();
     });
+
+    this.twitterSvc.getInitData();
   }
-
-
-  // initDropbox() {
-  //   this.feedPostSub = this.photoSvc.photos$.subscribe((posts: Array<Photo>) => {
-  //     this.feed = posts;
-  //     this.feedTimeField = 'timestamp';
-  //     this.sortFeed();
-  //   });
-  // }
 
   initLocations() {
     this.feedPostSub = this.locationsSvc.data$.subscribe((posts: HatRecord<Location>[]) => {
@@ -152,6 +149,8 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       this.sortFeed();
       this.resizeWindow();
     });
+
+    this.locationsSvc.getInitData();
   }
 
   initCalendar() {
@@ -161,6 +160,8 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       this.eventsTimeField = 'start';
       this.sortEvents();
     });
+
+    this.googleEventsSvc.getInitData();
   }
 
   initRumpel() {
@@ -169,6 +170,8 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
       this.feedTimeField = 'timestamp';
       this.sortFeed();
     });
+
+    this.notablesSvc.getInitData();
   }
 
   setFromDate(event: any) {

@@ -14,7 +14,7 @@
       <li *ngFor="let plug of dataplugs | async" (click)="openPlugPopup(plug)">
         <div class="row vertical-align">
           <div class="col-xs-2 plugimg">
-            <img src="assets/icons/{{plug.icon}}" class="img img-responsive">
+            <img src="{{plug.icon}}/assets/logo.png" class="img img-responsive">
           </div>
           <div class="col-xs-8">
             <h3>{{plug.name}} plug</h3>

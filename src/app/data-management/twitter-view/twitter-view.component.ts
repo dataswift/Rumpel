@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DialogService } from '../../layout/dialog.service';
 import { MapBoxComponent } from '../../layout/map-box/map-box.component';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Tweet } from '../../shared/interfaces/tweet.interface';
 
 @Component({
   selector: 'rump-twitter-view',
@@ -9,7 +11,7 @@ import { MapBoxComponent } from '../../layout/map-box/map-box.component';
 })
 export class TwitterViewComponent implements OnInit {
 
-  @Input() item: any;
+  @Input() item: HatRecord<Tweet>;
 
   constructor(private dialogSvc: DialogService) { }
 

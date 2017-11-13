@@ -1,15 +1,15 @@
 <div class="flex-basis">
   <div>
-    <p *ngIf="item.text">{{ item.text }}</p>
-    <a *ngIf="item.media && item.media.type" target="_blank" [href]="item.media.media_url_https">{{ item.media.type }}</a>
+    <p *ngIf="item.data.text">{{ item.data.text }}</p>
+    <a *ngIf="item.data.media && item.data.media.type" target="_blank" [href]="item.data.media.media_url_https">{{ item.data.media.type }}</a>
   </div>
 </div>
 
 <div class="flex-basis start">
-    <span *ngIf="item.createdTime" class="meta"><strong>Created</strong><span class="date">{{ item.createdTime | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
-    <span *ngIf="item.user && item.user.screen_name" class="meta"><strong>User</strong> {{ item.user.screen_name }}</span>
-    <span *ngIf="item.type" class="meta"><strong>Type</strong> {{ item.type }}</span>
-    <span *ngIf="item.favorite_count" class="meta"><strong>Favorite count</strong> {{ item.favorite_count }}</span>
-    <span *ngIf="item.retweet_count" class="meta"><strong>Retweet count</strong> {{ item.retweet_count }}</span>
-    <span *ngIf="item.id" class="meta"><strong>ID</strong> {{ item.id }}</span>
+    <span *ngIf="item.data.createdTime" class="meta"><strong>Created</strong><span class="date">{{ item.data.createdTime | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span *ngIf="item.data.user && item.data.user.screen_name" class="meta"><strong>User</strong> {{ item.data.user.screen_name }}</span>
+    <span *ngIf="item.data.type" class="meta"><strong>Type</strong> {{ item.data.type }}</span>
+    <span *ngIf="item.data.favorite_count" class="meta"><strong>Favorite count</strong> {{ item.data.favorite_count }}</span>
+    <span *ngIf="item.data.retweet_count" class="meta"><strong>Retweet count</strong> {{ item.data.retweet_count }}</span>
+    <span *ngIf="item.data.id" class="meta"><strong>ID</strong> {{ item.data.id }}</span>
 </div>
