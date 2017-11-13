@@ -12,7 +12,7 @@ export class LoginStandaloneComponent implements OnInit {
   public lastLoginId: string;
   private redirectPath: string;
   public dropdownExpanded = false;
-  private availableDomains: Array<string> = ['.hubofallthings.net', '.hubat.net', '.savy.io'];
+  public availableDomains: Array<string> = ['.hubofallthings.net', '.hubat.net', '.savy.io'];
   public selectedDomain: string;
 
   constructor(@Inject(APP_CONFIG) public config: IAppConfig,

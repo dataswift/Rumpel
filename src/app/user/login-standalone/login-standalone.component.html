@@ -10,14 +10,13 @@
   <div class="row">
     <div class="responsive header-strip">
       <div class="logo"></div>
-      <p>Rumpel is a dashboard for <span class="highlight">HAT</span> data</p>
     </div>
   </div>
 
   <div class="row">
     <form class="col-md-12" (submit)="onSubmit(f)" #f="ngForm">
       <div class="form-group with-dropdown">
-        <label for="username" hidden>Please enter your HAT password</label>
+        <label for="username" hidden>Please enter your personal HAT address</label>
         <input type="text" class="form-control input-rump lg" id="username"
                (focus)="clearError()"
                [ngModel]="lastLoginId" name="username"
