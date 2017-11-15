@@ -23,12 +23,12 @@ import { DialogService } from './dialog.service';
 import { ConfirmBoxComponent } from './confirm-box/confirm-box.component';
 import { InfoBoxComponent } from './info-box/info-box.component';
 import { MapBoxComponent } from './map-box/map-box.component';
-import {FileUploadComponent } from './file-upload/file-upload.component';
-import {NotificationsService} from './notifications.service';
-import {BaseDataService} from '../services/base-data.service';
-import {MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
 
-import { DataOfferService } from './../offers/data-offer.service';
+import { DataOfferService } from '../offers/data-offer.service';
+import { SheFeedComponent } from './she-feed/she-feed.component';
+import { SheFeedService } from './she-feed.service';
 
 
 @NgModule({
@@ -43,11 +43,12 @@ import { DataOfferService } from './../offers/data-offer.service';
                   InfoBoxComponent,
                   FileUploadComponent,
                   DialogAnchorDirective,
-                  MapBoxComponent ],
+                  MapBoxComponent,
+                  SheFeedComponent ],
   exports: [ HeaderComponent,
             SideMenuComponent,
             FooterComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService ]
+  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService, SheFeedService ]
 })
 export class LayoutModule {}

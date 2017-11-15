@@ -13,6 +13,7 @@ import { userRoutes } from './user/user-routing.module';
 import { GridComponent } from './dashboard';
 import { AboutComponent } from './layout/about/about.component';
 import { AuthGuard } from './auth.guard';
+import {SheFeedComponent} from './layout/she-feed/she-feed.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { AuthGuard } from './auth.guard';
       { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: GridComponent, canActivate: [AuthGuard] },
+      { path: 'feed', component: SheFeedComponent, canActivate: [AuthGuard]},
       { path: 'about', component: AboutComponent },
       ...userRoutes
     ])

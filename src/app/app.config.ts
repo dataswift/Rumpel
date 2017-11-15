@@ -91,6 +91,9 @@ export const AppConfig: IAppConfig = {
       { display: 'Public profile', icon: 'account_circle', link: 'public/profile', dataType: '', disable: '' }
     ],
     'private': [
+      { display: 'SHE Feed', icon: 'line_weight', link: 'feed', dataType: '', disable: '',
+      description: 'SHE Feed' },
+
       { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '',
       description: 'The dashboard is where you have an overview of Rumpel.' },
 
