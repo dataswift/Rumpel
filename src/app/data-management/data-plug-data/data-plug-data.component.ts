@@ -104,14 +104,10 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   initFacebook() {
     this.feedPostSub = this.socialSvc.data$.subscribe((posts: HatRecord<Post>[]) => {
       this.feed = posts;
-      this.feedTimeField = 'createdTime';
-      this.sortFeed();
     });
 
     this.feedEventSub = this.facebookEventsSvc.data$.subscribe((posts: HatRecord<Event>[]) => {
       this.events = posts;
-      this.eventsTimeField = 'start';
-      this.sortEvents();
     });
 
     this.facebookEventsSvc.getInitData();
@@ -129,12 +125,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
         });
       }
 
-      // set feed data
-      this.feed = posts;
-
-      // sort feed by date
-      this.feedTimeField = 'createdTime';
-      this.sortFeed();
+      this.feed = posts.sort((a, b) => a.data.createdTime.isBefore(b.data.createdTime) ? 1 : -1);
     });
 
     this.twitterSvc.getInitData();
@@ -234,9 +225,8 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     this.feed = this.feed.sort( (a, b) => {
         const momentA = moment(a[this.feedTimeField]);
         const momentB = moment(b[this.feedTimeField]);
-        const result = momentA.isBefore(momentB) ? 1 : -1;
 
-        return result;
+        return momentA.isBefore(momentB) ? -1 : 1;
     });
   }
 

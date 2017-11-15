@@ -19,7 +19,7 @@ import {HatRecord} from '../shared/interfaces/hat-record.interface';
 export class TwitterService extends BaseDataService<Tweet> {
 
   constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'twitter', 'tweets', 'createdTime');
+    super(hat, uiSvc, 'twitter', 'tweets', 'created_at');
   }
 
   coerceType(rawTweet: HatRecord<any>): HatRecord<Tweet> {
@@ -28,7 +28,7 @@ export class TwitterService extends BaseDataService<Tweet> {
     const tweet: Tweet = {
       id: tweetContent.id,
       text: tweetContent.text,
-      createdTime: moment(rawTweet.data.lastUpdated),
+      createdTime: moment(rawTweet.data.created_at, 'ddd MMM DD HH:mm:ss ZZ YYYY'),
       type: 'tweet',
       favorite_count: tweetContent.favorite_count,
       retweet_count: tweetContent.retweet_count,

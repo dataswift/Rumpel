@@ -17,7 +17,7 @@ import { HatRecord } from '../shared/interfaces/hat-record.interface';
 @Injectable()
 export class SocialService extends BaseDataService<Post> {
   constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'facebook', 'feed', 'updatedTime');
+    super(hat, uiSvc, 'facebook', 'feed', 'updated_time');
   }
 
   coerceType(rawPost: HatRecord<any>): HatRecord<Post> {

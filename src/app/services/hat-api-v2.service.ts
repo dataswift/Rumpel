@@ -107,7 +107,7 @@ export class HatApiV2Service {
     }
 
     if (drop) {
-      queryParams.append('drop', drop.toString());
+      queryParams.append('skip', drop.toString());
     }
 
     return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());

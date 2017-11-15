@@ -44,6 +44,10 @@ export abstract class BaseDataService<T> {
     return this._loading$.asObservable();
   }
 
+  get dataListExhausted(): boolean {
+    return this.drop % this.RECORDS_PER_REQUEST !== 0;
+  }
+
   checkTableExists(): Observable<boolean> {
     return this.hat.getDataRecords(this.namespace, this.endpoint, 1)
       .map(data => data.length > 0)

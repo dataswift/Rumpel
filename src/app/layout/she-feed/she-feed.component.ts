@@ -18,7 +18,7 @@ export class SheFeedComponent implements OnInit {
   constructor(private sheFeedSvc: SheFeedService) { }
 
   ngOnInit() {
-    this.feed$ = this.sheFeedSvc.data$.do(items => console.log('WHAT', items));
+    this.feed$ = this.sheFeedSvc.data$;
 
     this.sheFeedSvc.getInitData(1000);
   }
