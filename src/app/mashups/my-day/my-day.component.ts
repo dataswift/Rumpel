@@ -21,7 +21,7 @@ import { Notable } from '../../shared/interfaces/notable.class';
 import { Subscription, Observable } from 'rxjs/Rx';
 import { FacebookEventsService } from '../../dimensions/facebook-events.service';
 import { GoogleEventsService } from '../../dimensions/google-events.service';
-import { FitbitService } from '../../fitbit/fitbit.service';
+import { FitbitActivitySummaryService } from '../../fitbit/services/fitbit-activity-summary.service';
 import { MonzoService } from '../../monzo/monzo.service';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
@@ -32,7 +32,6 @@ declare var $: any;
   templateUrl: 'my-day.component.html',
   styleUrls: ['my-day.component.scss']
 })
-
 
 export class MyDayComponent implements OnInit, OnDestroy {
   @Input() selectedTime: string;
@@ -57,7 +56,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
               private socialSvc: SocialService,
               private twitterSvc: TwitterService,
               private notablesSvc: NotablesService,
-              private fitbitSvc: FitbitService,
+              private fitbitSvc: FitbitActivitySummaryService,
               private monzoSvc: MonzoService,
               private dataplugsSvc: DataPlugService,
               private sanitizer: DomSanitizer) {

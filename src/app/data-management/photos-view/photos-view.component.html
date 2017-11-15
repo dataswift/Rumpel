@@ -1,17 +1,14 @@
 <div class="flex-basis">
-  <img *ngIf="item.displayPath" [src]="item.displayPath" onerror="this.style.display='none'">
   <div>
-    <p *ngIf="item.name">{{ item.name }}</p>
+    <p>{{ item.data.summaryDate }}</p>
   </div>
 </div>
 
 <div class="flex-basis start">
-    <span *ngIf="item.kind" class="meta"><strong>Kind</strong> {{ item.kind }}</span>
-    <span *ngIf="item.path" class="meta"><strong>Path</strong> {{ item.path }}</span>
-    <span *ngIf="item.size" class="meta"><strong>Size</strong> {{ item.size }}</span>
-    <span *ngIf="item.src" class="meta"><strong>Source</strong> {{ item.src }}</span>
-</div>
-
-<div class="flex-basis start">
-  <span class="meta" *ngIf="item.timestamp"><strong>Timestamp</strong><span class="date">{{ item.timestamp | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+    <span class="meta" *ngIf="item.data.steps" class="meta"><strong>Steps</strong> {{ item.data.steps }}</span>
+    <span *ngIf="item.data.caloriesOut" class="meta"><strong>Calories</strong> {{ item.data.caloriesOut }}</span>
+    <span *ngIf="item.data.sedentaryMinutes" class="meta"><strong>Sedentary Minutes</strong> {{ item.data.sedentaryMinutes }}</span>
+    <span *ngIf="item.data.lightlyActiveMinutes" class="meta"><strong>Lightly Active Minutes</strong> {{ item.data.lightlyActiveMinutes }}</span>
+    <span *ngIf="item.data.fairlyActiveMinutes" class="meta"><strong>Fairly Active Minutes</strong> {{ item.data.fairlyActiveMinutes }}</span>
+    <span *ngIf="item.data.veryActiveMinutes" class="meta"><strong>Very Active Minutes</strong> {{ item.data.veryActiveMinutes }}</span>
 </div>

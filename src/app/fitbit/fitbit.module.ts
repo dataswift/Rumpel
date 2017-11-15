@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { FitbitMyDayComponent } from './fitbit-my-day/fitbit-my-day.component';
 
-import { FitbitService } from './fitbit.service';
+import { FitbitActivitySummaryService } from './services/fitbit-activity-summary.service';
 import { TileFitbitComponent } from './tile-fitbit/tile-fitbit.component';
+import { FitbitProfileService } from './services/fitbit-profile.service';
+import { FitbitActivityService } from './services/fitbit-activity.service';
 
 @NgModule({
   imports: [
@@ -12,7 +14,7 @@ import { TileFitbitComponent } from './tile-fitbit/tile-fitbit.component';
     SharedModule
   ],
   declarations: [ FitbitMyDayComponent, TileFitbitComponent ],
-  providers: [ FitbitService ],
+  providers: [ FitbitActivitySummaryService, FitbitProfileService, FitbitActivityService ],
   exports: [ FitbitMyDayComponent, TileFitbitComponent ]
 })
 export class FitbitModule { }

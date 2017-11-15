@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
-import { FitbitService } from '../fitbit.service';
+import { FitbitActivitySummaryService } from '../services/fitbit-activity-summary.service';
 
-import { FitbitActivitySummary } from '../fitbit.interface';
+import { FitbitActivitySummary } from '../interfaces/fitbit-activity-summary.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
 
@@ -19,7 +19,7 @@ export class TileFitbitComponent implements OnInit, OnDestroy {
   public todayHeart = 0;
   public todaySleep = '0 hrs, 0 min';
 
-  constructor( private fitbitSvc: FitbitService ) { }
+  constructor(private fitbitSvc: FitbitActivitySummaryService) { }
 
   ngOnInit() {
       this.fitbitSub = this.fitbitSvc.data$.subscribe((fitbits: HatRecord<FitbitActivitySummary>[]) => {

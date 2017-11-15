@@ -8,14 +8,18 @@ import { TwitterService } from '../../social/twitter.service';
 import { NotablesService } from '../../notables/notables.service';
 import { FacebookEventsService } from '../../dimensions/facebook-events.service';
 import { GoogleEventsService } from '../../dimensions/google-events.service';
-import { FitbitService } from '../../fitbit/fitbit.service';
+import { FitbitActivitySummaryService } from '../../fitbit/services/fitbit-activity-summary.service';
 import { Post, Tweet, Event, Location } from '../../shared/interfaces/index';
-import { FitbitActivitySummary } from '../../fitbit/fitbit.interface';
+import { FitbitActivitySummary } from '../../fitbit/interfaces/fitbit-activity-summary.interface';
 import { Notable } from '../../shared/interfaces/notable.class';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import {HatRecord} from '../../shared/interfaces/hat-record.interface';
-import {DataPlug} from '../../shared/interfaces/data-plug.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { DataPlug } from '../../shared/interfaces/data-plug.interface';
+import { FitbitActivityService } from '../../fitbit/services/fitbit-activity.service';
+import { FitbitProfileService } from '../../fitbit/services/fitbit-profile.service';
+import {FitbitActivity} from '../../fitbit/interfaces/fitbit-activity.interface';
+import {FitbitProfile} from '../../fitbit/interfaces/fitbit-profile.interface';
 
 declare var $: any;
 
@@ -34,6 +38,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   public feedPostSub: Subscription;
   public feedEventSub: Subscription;
+  public sub: Subscription;
   public feedSource: any;
   public eventSource: any;
   public feedTimeField = 'timestamp';
@@ -56,7 +61,9 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
               private socialSvc: SocialService,
               private twitterSvc: TwitterService,
               private notablesSvc: NotablesService,
-              private fitbitSvc: FitbitService,
+              private fitbitActivitySummarySvc: FitbitActivitySummaryService,
+              private fitbitActivitySvc: FitbitActivityService,
+              private fitbitProfileSvc: FitbitProfileService,
               private locationsSvc: LocationsService) { }
 
   ngOnInit() {
@@ -71,20 +78,21 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
            if (plug.name.toLowerCase() === this.plugName) {
              this.plugMeta = plug;
 
-             switch ( plug.name.toLowerCase() ) {
+             switch (plug.name.toLowerCase()) {
                case 'facebook':
-                  this.feedSource = this.socialSvc;
-                  this.eventSource = this.facebookEventsSvc;
-                  this.initFacebook();
-                  break;
+                 this.feedSource = this.socialSvc;
+                 this.eventSource = this.facebookEventsSvc;
+                 this.initFacebook();
+                 break;
                case 'twitter':
-                  this.feedSource = this.twitterSvc;
-                  this.initTwitter();
-                  break;
-               case 'calendar':
-                  this.eventSource = this.googleEventsSvc;
-                  this.initCalendar();
-                  break;
+                 this.feedSource = this.twitterSvc;
+                 this.initTwitter();
+                 break;
+               case 'fitbit':
+                 this.feedSource = this.fitbitActivitySvc;
+                 this.eventSource = this.fitbitActivitySummarySvc;
+                 this.initFitbit();
+                 break;
                case 'rumpel':
                   this.feedSource = this.notablesSvc;
                   this.initRumpel();
@@ -144,15 +152,28 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     this.locationsSvc.getInitData();
   }
 
-  initCalendar() {
-    this.feedEventSub = this.googleEventsSvc.data$.subscribe((posts: HatRecord<Event>[]) => {
-      this.events = posts;
-      this.tabView = 'events';
-      this.eventsTimeField = 'start';
-      this.sortEvents();
+  initFitbit() {
+    this.feedPostSub = this.fitbitActivitySvc.data$.subscribe((activities: HatRecord<FitbitActivity>[]) => {
+      this.feed = activities;
     });
 
-    this.googleEventsSvc.getInitData();
+    this.feedEventSub = this.fitbitActivitySummarySvc.data$.subscribe((activitySummaries: HatRecord<FitbitActivitySummary>[]) => {
+      this.events = activitySummaries;
+    });
+
+    this.sub = this.fitbitProfileSvc.data$.subscribe((profiles: HatRecord<FitbitProfile>[]) => {
+      this.staticData = [];
+      if (profiles.length > 0) {
+        const keys = Object.keys(profiles[0].data);
+        keys.forEach(key => {
+          this.staticData.push({name: key, value: profiles[0].data[key]});
+        });
+      }
+    });
+
+    this.fitbitActivitySvc.getInitData();
+    this.fitbitActivitySummarySvc.getInitData();
+    this.fitbitProfileSvc.getInitData();
   }
 
   initRumpel() {

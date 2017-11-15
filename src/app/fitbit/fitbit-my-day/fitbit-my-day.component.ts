@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FitbitActivitySummary } from '../fitbit.interface';
-import { Moment } from 'moment';
+import { FitbitActivitySummary } from '../interfaces/fitbit-activity-summary.interface';
 import * as moment from 'moment';
 
 @Component({

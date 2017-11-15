@@ -10,6 +10,7 @@ export interface FitbitActivitySummary {
   lightlyActiveMinutes: number;
   marginalCalories: number;
   sedentaryMinutes: number;
+  summaryDate: string;
   steps: number;
   veryActiveMinutes: number;
 }

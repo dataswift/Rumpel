@@ -38,6 +38,7 @@
         <rump-twitter-view *ngIf="plugName.toLowerCase() == 'twitter'" [item]="item"></rump-twitter-view>
         <rump-locations-view *ngIf="plugName.toLowerCase() == 'locations'" [item]="item"></rump-locations-view>
         <rump-notables-view *ngIf="plugName.toLowerCase() == 'rumpel'" [item]="item"></rump-notables-view>
+        <rump-calendar-view *ngIf="plugName.toLowerCase() == 'fitbit'" [item]="item"></rump-calendar-view>
       </div>
 
       <div class="loadMore">
@@ -61,7 +62,8 @@
 
     <div class="calendarView" [class.hidden]="tabView !== 'events'">
       <div class="item" *ngFor="let event of events">
-        <rump-calendar-view *ngIf="events.length > 0" [item]="event"></rump-calendar-view>
+        <rump-calendar-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'facebook'" [item]="event"></rump-calendar-view>
+        <rump-photos-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'fitbit'" [item]="event"></rump-photos-view>
       </div>
       <div class="loadMore">
         <p class="meta">Showing {{ events.length }} results</p>
