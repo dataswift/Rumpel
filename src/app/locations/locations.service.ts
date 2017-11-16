@@ -25,7 +25,7 @@ export class LocationsService extends BaseDataService<Location> {
   public baseMaps: any;
 
   constructor(hatSvc: HatApiV2Service, uiSvc: UiStateService) {
-    super(hatSvc, uiSvc, 'iphone', 'locations', 'timestamp');
+    super(hatSvc, uiSvc, 'rumpel', 'locations/ios', 'dateCreated');
 
     this.baseMaps = {
       OpenStreetMap: new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

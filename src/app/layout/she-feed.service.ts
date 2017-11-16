@@ -11,7 +11,7 @@ export class SheFeedService extends BaseDataService<SheFeed> {
 
   constructor(hat: HatApiV2Service,
               uiSvc: UiStateService) {
-    super(hat, uiSvc, 'she', 'feed', 'date')
+    super(hat, uiSvc, 'she', 'feed', 'date.unix');
   }
 
   coerceType(rawFeedItem: HatRecord<any>): HatRecord<SheFeed> {

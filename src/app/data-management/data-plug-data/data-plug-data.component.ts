@@ -133,7 +133,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
         });
       }
 
-      this.feed = posts.sort((a, b) => a.data.createdTime.isBefore(b.data.createdTime) ? 1 : -1);
+      this.feed = posts;
     });
 
     this.twitterSvc.getInitData();
