@@ -10,7 +10,6 @@ import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
 import { Observable, ReplaySubject } from 'rxjs/Rx';
-import { DialogService } from '../layout/dialog.service';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.interface';
 import { LocationsService } from '../locations/locations.service';
@@ -18,35 +17,9 @@ import { LocationsService } from '../locations/locations.service';
 import { APP_CONFIG, IAppConfig} from '../app.config';
 import { DataPlug } from '../shared/interfaces/data-plug.interface';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { DexApiService } from '../services/dex-api.service';
 
 // TODO: replace with fetch from DEX when going to production
-
-const DATA_PLUGS: DataPlug[] = [
-  {
-    name: 'Facebook',
-    description: '',
-    url: 'https://facebook.hubat.net',
-    active: false
-  },
-  {
-    name: 'Twitter',
-    description: '',
-    url: 'https://twitter.hubat.net',
-    active: false
-  },
-  {
-    name: 'Fitbit',
-    description: '',
-    url: 'https://fitbit.hubat.net',
-    active: false
-  },
-  {
-    name: 'Locations',
-    description: '',
-    url: 'https://itunes.apple.com/gb/app/rumpel-lite/id1147137249?mt=8',
-    active: false
-  }
-];
 
 @Injectable()
 export class DataPlugService {
@@ -61,7 +34,7 @@ export class DataPlugService {
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               private http: Http,
               private hatSvc: HatApiV2Service,
-              private dialogSvc: DialogService,
+              private dexSvc: DexApiService,
               private userSvc: UserService,
               private locationsSvc: LocationsService) {
     this.services = {
@@ -124,20 +97,22 @@ export class DataPlugService {
 
 
   private getDataPlugList() {
-    this.plugs = DATA_PLUGS;
+    this.dexSvc.getAvailablePlugList().subscribe((plugs: DataPlug[]) => {
+      this.plugs = plugs;
 
-    this.plugs.forEach(plug => {
-      if (plug.name === 'Locations') {
-        this.locationsSvc.checkTableExists().subscribe(isActive => {
-          plug.active = isActive;
-          this._dataplugs$.next(this.plugs);
-        });
-      } else {
-        this.getTokenInfo(plug.name, plug.url).subscribe(isActive => {
-          plug.active = isActive;
-          this._dataplugs$.next(this.plugs);
-        });
-      }
+      this.plugs.forEach(plug => {
+        if (plug.name === 'Locations') {
+          this.locationsSvc.checkTableExists().subscribe(isActive => {
+            plug.active = isActive;
+            this._dataplugs$.next(this.plugs);
+          });
+        } else {
+          this.getTokenInfo(plug.name, plug.url).subscribe(isActive => {
+            plug.active = isActive;
+            this._dataplugs$.next(this.plugs);
+          });
+        }
+      });
     });
 
   }

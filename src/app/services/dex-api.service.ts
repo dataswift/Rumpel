@@ -1,10 +1,11 @@
-import {Inject, Injectable} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {Headers, Http, Response} from '@angular/http';
 import {APP_CONFIG, IAppConfig} from '../app.config';
 import {Observable} from 'rxjs/Observable';
 import {JwtHelper} from 'angular2-jwt';
 import {HatApiV2Service} from './hat-api-v2.service';
-import {DexOfferClaimRes} from '../shared/interfaces/dex-offer-claim-res.interface';
+import { DexOfferClaimRes } from '../shared/interfaces/dex-offer-claim-res.interface';
+import { DataPlug } from '../shared/interfaces/data-plug.interface';
 
 @Injectable()
 export class DexApiService {
@@ -32,6 +33,20 @@ export class DexApiService {
     return this.getApplicationToken()
       .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
       .map((res: Response) => <DexOfferClaimRes>res.json());
+  }
+
+  getAvailablePlugList(): Observable<DataPlug[]> {
+    const url = `${this.config.dex.url}/api/dataplugs`;
+
+    return this.http.get(url).map((res: Response) => {
+      return <DataPlug[]>res.json()
+        .filter(dataplug => 'location,facebook,twitter,fitbit'.includes(dataplug.plug.name.toLowerCase()))
+        .map(dataplug => {
+          dataplug.plug.active = false;
+
+          return dataplug.plug;
+        });
+    });
   }
 
   private getApplicationToken(): Observable<Headers> {

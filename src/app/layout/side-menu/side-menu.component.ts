@@ -142,16 +142,14 @@ export class SideMenuComponent implements OnInit {
     const popupWidth = w * 0.6; const left = w * 0.2;
     const popupHeight = h * 0.7; const top = h * 0.15;
 
+    this.windowRef = window.open(
+      '', `Setting up ${plug.name} data plug`,
+      `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`);
+
     this.dataplugSvc.getPlugRedirectUrl(loginName, plug.url)
       .subscribe(redirectUrl => {
-        console.log('redirect', redirectUrl)
+        this.windowRef.location = redirectUrl;
       });
-
-    const windowRef = window.open(
-      `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
-      `Setting up ${plug.name} data plug`,
-      `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
-      );
   }
 
   showPopover() {

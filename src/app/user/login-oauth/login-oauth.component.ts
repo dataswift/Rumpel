@@ -37,9 +37,9 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
     )
     .flatMap(([user, queryParams]: [User, Params]) => {
       const name = queryParams['name'] || '';
-      const resource = queryParams['redirect'] || '';
+      const redirect = queryParams['redirect'] || '';
 
-      return this.userSvc.hatLogin(name, resource);
+      return this.userSvc.hatLogin(name, redirect);
     })
     .subscribe(
       (redirectUrl: string) => window.location.href = redirectUrl,

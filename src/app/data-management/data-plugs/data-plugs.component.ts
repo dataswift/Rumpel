@@ -9,7 +9,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { DataPlugService } from '../data-plug.service';
-import { MarketSquareService } from '../../market-square/market-square.service';
 import { Router } from '@angular/router';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 
@@ -20,31 +19,33 @@ import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 })
 export class DataPlugsComponent implements OnInit {
   public dataplugs: Observable<DataPlug[]>;
+  private windowRef: any;
 
-  constructor(private dataplugsSvc: DataPlugService,
-              private marketSvc: MarketSquareService,
+  constructor(private dataplugSvc: DataPlugService,
               private router: Router) { }
 
   ngOnInit() {
-    this.dataplugs = this.dataplugsSvc.dataplugs$;
+    this.dataplugs = this.dataplugSvc.dataplugs$;
   }
 
-  openPlugDataView(plug: any) {
-
+  openPlugDataView(plug: DataPlug) {
     if (plug.active === false) {
-        const loginName = this.formatPlugName(plug.name);
+      const loginName = this.formatPlugName(plug.name);
 
-        const w = window.innerWidth;
-        const h = window.innerHeight;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
 
-        const popupWidth = w * 0.6; const left = w * 0.2;
-        const popupHeight = h * 0.7; const top = h * 0.15;
+      const popupWidth = w * 0.6; const left = w * 0.2;
+      const popupHeight = h * 0.7; const top = h * 0.15;
 
-        const windowRef = window.open(
-          `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
-          `Setting up ${plug.name} data plug`,
-          `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
-        );
+      this.windowRef = window.open(
+        '', `Setting up ${plug.name} data plug`,
+        `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`);
+
+      this.dataplugSvc.getPlugRedirectUrl(loginName, plug.url)
+        .subscribe(redirectUrl => {
+          this.windowRef.location = redirectUrl;
+        });
     } else {
       // this.router.navigate([plug.page]);
       this.router.navigate(['/dataplugs/data/', plug.name.toLowerCase()]);

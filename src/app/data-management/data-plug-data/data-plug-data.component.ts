@@ -204,7 +204,6 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
     this.filterByDate();
   }
 
-
   loadMoreFeedData() {
     this.feedSource.getMoreData();
   }
