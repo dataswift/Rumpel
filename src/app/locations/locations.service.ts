@@ -8,14 +8,13 @@
 
 import { Injectable } from '@angular/core';
 
-import { HatApiService } from '../services/hat-api.service';
-import { Location } from '../shared/interfaces';
+import { BaseDataService } from '../services/base-data.service';
+import { UserService } from '../user/user.service';
+import { HatApiV2Service } from '../services/hat-api-v2.service';
 
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
+import { Location } from '../shared/interfaces';
 import * as moment from 'moment';
-import {BaseDataService} from '../services/base-data.service';
-import {UiStateService} from '../services/ui-state.service';
-import {HatApiV2Service} from '../services/hat-api-v2.service';
-import {HatRecord} from '../shared/interfaces/hat-record.interface';
 
 declare var L: any;
 
@@ -24,8 +23,8 @@ export class LocationsService extends BaseDataService<Location> {
   public map: any;
   public baseMaps: any;
 
-  constructor(hatSvc: HatApiV2Service, uiSvc: UiStateService) {
-    super(hatSvc, uiSvc, 'rumpel', 'locations/ios', 'dateCreated');
+  constructor(hatSvc: HatApiV2Service, userSvc: UserService) {
+    super(hatSvc, userSvc, 'rumpel', 'locations/ios', 'dateCreated');
 
     this.baseMaps = {
       OpenStreetMap: new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

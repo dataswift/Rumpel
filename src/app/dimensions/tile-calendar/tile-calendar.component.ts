@@ -9,13 +9,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FacebookEventsService } from '../facebook-events.service';
 import { GoogleEventsService } from '../google-events.service';
-import { UiStateService } from '../../services/ui-state.service';
-
 
 import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { Event } from '../../shared/interfaces/index';
-import { DataTable } from '../../shared/interfaces/data-table.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
@@ -31,8 +28,7 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
   private _this: any;
 
   constructor(private facebookEventSvc: FacebookEventsService,
-              private googleEventsSvc: GoogleEventsService,
-              private uiStateSvc: UiStateService) {}
+              private googleEventsSvc: GoogleEventsService) {}
 
   ngOnInit() {
     this.events = [{ relativeTime: 'today', events: [] }, { relativeTime: 'tomorrow', events: [] }];
@@ -44,13 +40,6 @@ export class TileCalendarComponent implements OnInit, OnDestroy {
         this.facebookEventSvc.data$,
         this.googleEventsSvc.data$
       ).subscribe(this.handleEventAddition);
-
-    this.uiStateSvc.tables$.subscribe((tables: DataTable[]) => {
-      const foundTable = tables.find((table: DataTable) => table.name === 'events');
-      if (foundTable) {
-        this.eventsExist = true;
-      }
-    });
   }
 
   ngOnDestroy() {

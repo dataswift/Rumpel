@@ -11,9 +11,6 @@ import { Http, Headers } from '@angular/http';
 
 import { Observable, ReplaySubject } from 'rxjs/Rx';
 import { DialogService } from '../layout/dialog.service';
-import { DialogBoxComponent } from '../layout/dialog-box/dialog-box.component';
-import { UiStateService } from '../services/ui-state.service';
-import { DataTable } from '../shared/interfaces/data-table.interface';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.interface';
 import { LocationsService } from '../locations/locations.service';
@@ -65,7 +62,6 @@ export class DataPlugService {
               private http: Http,
               private hatSvc: HatApiV2Service,
               private dialogSvc: DialogService,
-              private uiSvc: UiStateService,
               private userSvc: UserService,
               private locationsSvc: LocationsService) {
     this.services = {
@@ -110,6 +106,11 @@ export class DataPlugService {
           .map(res => res.status === 200)
           .catch(err => Observable.of(false));
       });
+  }
+
+  getPlugRedirectUrl(plugName: string, baseUrl: string): Observable<string> {
+    return this.hatSvc.getApplicationToken(plugName, baseUrl)
+      .map((accessToken: string) => `${baseUrl}/authenticate/hat?token=${accessToken}`);
   }
 
   private getDataPlugStatus(tables, plug): boolean {

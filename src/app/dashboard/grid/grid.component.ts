@@ -7,8 +7,6 @@
  */
 
 import { Component, OnInit, OnDestroy, AfterViewInit, Inject } from '@angular/core';
-import { UiStateService } from '../../services';
-import { DataTable } from '../../shared/interfaces/data-table.interface';
 import { Subscription } from 'rxjs/Subscription';
 import { APP_CONFIG, IAppConfig } from '../../app.config';
 
@@ -20,29 +18,18 @@ declare var $: any;
   styleUrls: ['grid.component.scss']
 })
 export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
-  public showLocationsTile = false;
-  public showEventsTile = false;
-  public showPostsTile = false;
+  public showLocationsTile = true;
+  public showEventsTile = true;
+  public showPostsTile = true;
   public showFitbitTile = false;
   public showMonzoTile = false;
-  private sub: Subscription;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-              private uiState: UiStateService) { }
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig) { }
 
   ngOnInit() {
-
-    this.sub = this.uiState.tables$.subscribe((tables: DataTable[]) => {
-      this.showLocationsTile = tables.findIndex(this.searchHandler('locations')) > -1;
-      this.showPostsTile = tables.findIndex(this.searchHandler('posts tweets music_listens')) > -1;
-      this.showEventsTile = tables.findIndex(this.searchHandler('events')) > -1;
-      this.showFitbitTile = tables.findIndex(this.searchHandler('fitbit')) > -1;
-      this.showMonzoTile = tables.findIndex(this.searchHandler('monzo')) > -1;
-    });
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -50,9 +37,5 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
 
   get appIsNative(): boolean {
     return this.config.native;
-  }
-
-  private searchHandler(names: string) {
-    return (table: DataTable) => names.includes(table.name);
   }
 }

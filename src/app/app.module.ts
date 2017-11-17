@@ -39,7 +39,7 @@ import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
 import { GridComponent, TileHeaderComponent, TileHeroComponent, TileComingSoonComponent} from './dashboard';
-import { HatApiService, UiStateService, RumpelService } from './services/index';
+import { HatApiService, RumpelService } from './services/index';
 import { AuthHttp } from './services/auth-http.service';
 
 // import { DatePickerModule } from 'ng2-datepicker';
@@ -122,7 +122,6 @@ export function cookieServiceFactory() {
     GlobalMessagingService,
     DexApiService,
     FileService,
-    UiStateService,
     RumpelService,
     BrowserStorageService
   ]

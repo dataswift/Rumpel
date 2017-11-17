@@ -13,7 +13,6 @@ export class FileUploadService extends HatApiV2Service {
     super(_config, _authHttp, _http);
   }
 
-
   postFileUploadMetaData(file) {
     const url = `/api/v2/files/upload`;
     const body = JSON.stringify({

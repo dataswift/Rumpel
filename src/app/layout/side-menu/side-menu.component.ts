@@ -7,20 +7,18 @@
  */
 
 import {Component, OnInit, Output, EventEmitter, Inject} from '@angular/core';
-import { UiStateService, UserService } from '../../services';
+import { UserService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
-import { MarketSquareService } from '../../market-square/market-square.service';
 import { Subscription, Observable } from 'rxjs/Rx';
-import { DataTable } from '../../shared/interfaces/data-table.interface';
 
 import { Router, NavigationEnd } from '@angular/router';
 import { APP_CONFIG, IAppConfig} from '../../app.config';
 import { User } from '../../user/user.interface';
-import {HatApiService} from '../../services/hat-api.service';
-import {DataPlug} from '../../shared/interfaces/data-plug.interface';
+import { DataPlug } from '../../shared/interfaces/data-plug.interface';
+import {MarketSquareService} from '../../market-square/market-square.service';
 
 declare var $: any;
 
@@ -30,7 +28,6 @@ declare var $: any;
 })
 export class SideMenuComponent implements OnInit {
   public selectedItem: string;
-  private sub: Subscription;
   public state: any;
   public userAuthenticated = false;
   public menu: Array<any>;
@@ -41,18 +38,18 @@ export class SideMenuComponent implements OnInit {
   public availableOffers = 0;
   private offersSub: Subscription;
   public offers: any = [];
+  private windowRef: any;
 
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
-              private uiState: UiStateService,
               private _dialogSvc: DialogService,
               private router: Router,
               private userSvc: UserService,
               private dataplugSvc: DataPlugService,
               private dataOfferSvc: DataOfferService,
-              private marketSvc: MarketSquareService ) {}
+              private marketSvc: MarketSquareService) {}
 
   ngOnInit() {
     this.selectedItem = window.location.pathname;
@@ -65,22 +62,19 @@ export class SideMenuComponent implements OnInit {
 
     this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
       this.offers = offers.filter(function(offer) {
-          let claimStatus = 'untouched';
-          if (offer.claim && offer.claim.status) {
-            claimStatus = offer.claim.status;
-          }
+        let claimStatus = 'untouched';
+        if (offer.claim && offer.claim.status) {
+          claimStatus = offer.claim.status;
+        }
 
-          let moreUsersRequired = false;
-          if (offer.requiredMaxUser === 0) {
-            moreUsersRequired = true;
-          } else {
-            moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
-          }
+        let moreUsersRequired = false;
+        if (offer.requiredMaxUser === 0) {
+          moreUsersRequired = true;
+        } else {
+          moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
+        }
 
-          return (  claimStatus === 'untouched' &&
-                    moreUsersRequired &&
-                    offer.expires > Date.now()
-                  )
+        return claimStatus === 'untouched' && moreUsersRequired && offer.expires > Date.now();
       });
       this.availableOffers = this.offers.length;
     },
@@ -103,16 +97,6 @@ export class SideMenuComponent implements OnInit {
 
       if (user.authenticated) {
         this.dataOfferSvc.fetchUserAwareOfferListSubscription();
-      }
-    });
-
-
-    this.sub = this.uiState.tables$.subscribe((tables: Array<DataTable>) => {
-      for (const table of tables) {
-        const itemToActivate = this.menu.find(menuItem => menuItem.dataType.includes(table.name));
-        if (itemToActivate) {
-          itemToActivate.disable = '';
-        }
       }
     });
 
@@ -140,7 +124,6 @@ export class SideMenuComponent implements OnInit {
     }
   }
 
-
   displayConfirmDialog() {
     this._dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
       buttons: [{
@@ -149,7 +132,6 @@ export class SideMenuComponent implements OnInit {
       }]
     });
   }
-
 
   openPlugPopup(plug: any) {
     const loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
@@ -160,13 +142,17 @@ export class SideMenuComponent implements OnInit {
     const popupWidth = w * 0.6; const left = w * 0.2;
     const popupHeight = h * 0.7; const top = h * 0.15;
 
+    this.dataplugSvc.getPlugRedirectUrl(loginName, plug.url)
+      .subscribe(redirectUrl => {
+        console.log('redirect', redirectUrl)
+      });
+
     const windowRef = window.open(
       `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
       `Setting up ${plug.name} data plug`,
       `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
-    );
+      );
   }
-
 
   showPopover() {
     $('[data-toggle="popover"]').popover();

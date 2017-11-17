@@ -9,17 +9,18 @@
 import { Injectable } from '@angular/core';
 import { BaseDataService } from '../services/base-data.service';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
-import { UiStateService } from '../services/ui-state.service';
+import { UserService } from '../user/user.service';
 
 import { Event } from '../shared/interfaces/index';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
 
+
 @Injectable()
 export class FacebookEventsService extends BaseDataService<Event> {
 
-  constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'facebook', 'events', 'updated_time');
+  constructor(hat: HatApiV2Service, userSvc: UserService) {
+    super(hat, userSvc, 'facebook', 'events', 'updated_time');
   }
 
   coerceType(rawEvent: HatRecord<any>): HatRecord<Event> {

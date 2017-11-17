@@ -9,7 +9,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { BaseDataService } from '../services/base-data.service';
-import { UiStateService } from '../services/ui-state.service';
+import { UserService } from '../user/user.service';
 
 import { Profile } from '../shared/interfaces/profile.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
@@ -19,8 +19,8 @@ import { APP_CONFIG, IAppConfig } from '../app.config';
 export class ProfilesService extends BaseDataService<Profile> {
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               hat: HatApiV2Service,
-              uiSvc: UiStateService) {
-    super(hat, uiSvc, config.name.toLowerCase(), 'profile', 'dateCreated');
+              userSvc: UserService) {
+    super(hat, userSvc, config.name.toLowerCase(), 'profile', 'dateCreated');
   }
 
   coerceType(rawProfile: HatRecord<any>): HatRecord<Profile> {

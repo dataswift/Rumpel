@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { BaseDataService } from '../services/base-data.service';
-import { UiStateService } from '../services/ui-state.service';
+import { UserService } from '../user/user.service';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 
 import { Monzo } from './monzo.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
 
+
 @Injectable()
 export class MonzoService extends BaseDataService<Monzo> {
 
-  constructor(hat: HatApiV2Service, uiSvc: UiStateService) {
-    super(hat, uiSvc, 'monzo', 'transactions', 'updated');
+  constructor(hat: HatApiV2Service, userSvc: UserService) {
+    super(hat, userSvc, 'monzo', 'transactions', 'updated');
   }
 
   coerceType(rawMonzo: HatRecord<any>): HatRecord<Monzo> {

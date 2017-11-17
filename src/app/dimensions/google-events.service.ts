@@ -8,7 +8,7 @@
 
 import { Injectable } from '@angular/core';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
-import { UiStateService } from '../services/ui-state.service';
+import { UserService } from '../user/user.service';
 import { BaseDataService } from '../services/base-data.service';
 
 import { Event } from '../shared/interfaces/index';
@@ -17,11 +17,12 @@ import * as moment from 'moment';
 
 
 
+
 @Injectable()
 export class GoogleEventsService extends BaseDataService<Event> {
 
-  constructor(hatSvc: HatApiV2Service, uiSvc: UiStateService) {
-    super(hatSvc, uiSvc, 'google', 'events', 'changeme');
+  constructor(hatSvc: HatApiV2Service, userSvc: UserService) {
+    super(hatSvc, userSvc, 'google', 'events', 'changeme');
   }
 
   coerceType(rawEvent: HatRecord<any>): HatRecord<Event> {

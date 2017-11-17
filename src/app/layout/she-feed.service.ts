@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { HatApiV2Service } from '../services/hat-api-v2.service';
-import { UiStateService } from '../services/ui-state.service';
+import { UserService } from '../user/user.service';
 import { BaseDataService } from '../services/base-data.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
@@ -10,8 +11,8 @@ import { SheFeed } from './she-feed.interface';
 export class SheFeedService extends BaseDataService<SheFeed> {
 
   constructor(hat: HatApiV2Service,
-              uiSvc: UiStateService) {
-    super(hat, uiSvc, 'she', 'feed', 'date.unix');
+              userSvc: UserService) {
+    super(hat, userSvc, 'she', 'feed', 'date.unix');
   }
 
   coerceType(rawFeedItem: HatRecord<any>): HatRecord<SheFeed> {

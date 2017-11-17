@@ -11,7 +11,6 @@ import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs/Rx';
 import { BaseDataService } from '../services/base-data.service';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { DexApiService } from '../services/dex-api.service';
-import { UiStateService } from '../services/ui-state.service';
 import { UserService } from '../user/user.service';
 
 import { APP_CONFIG, IAppConfig } from '../app.config';
@@ -33,10 +32,9 @@ export class NotablesService extends BaseDataService<Notable> {
 
   constructor(@Inject(APP_CONFIG) private config: IAppConfig,
               hat: HatApiV2Service,
-              uiSvc: UiStateService,
-              private dex: DexApiService,
-              private userSvc: UserService) {
-    super(hat, uiSvc, config.name.toLowerCase(), 'notablesv1', 'updated_time');
+              userSvc: UserService,
+              private dex: DexApiService) {
+    super(hat, userSvc, config.name.toLowerCase(), 'notablesv1', 'updated_time');
 
     this.notablesServiceMeta = {
       phata: '',

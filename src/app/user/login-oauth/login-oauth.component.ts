@@ -37,7 +37,7 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
     )
     .flatMap(([user, queryParams]: [User, Params]) => {
       const name = queryParams['name'] || '';
-      const resource = queryParams['resource'] || '';
+      const resource = queryParams['redirect'] || '';
 
       return this.userSvc.hatLogin(name, resource);
     })

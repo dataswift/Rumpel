@@ -15,7 +15,6 @@ import { User } from './user.interface';
 
 @Injectable()
 export class UserService {
-  private _auth$: Subject<boolean> = <Subject<boolean>>new Subject();
   private _user$: ReplaySubject<User> = <ReplaySubject<User>>new ReplaySubject(1);
 
   constructor(private hat: HatApiV2Service,
@@ -98,7 +97,9 @@ export class UserService {
   }
 
   get auth$(): Observable<boolean> {
-    return this._auth$.asObservable();
+    return this.user$
+      .map((user: User) => user.authenticated)
+      .defaultIfEmpty(false);
   }
 
 }
