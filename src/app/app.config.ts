@@ -34,8 +34,8 @@ export class IAppConfig {
 }
 
 export const AppConfig: IAppConfig = {
-  version: '3.1.1',
-  name: 'RumpelStaging',
+  version: '3.2.0',
+  name: 'Rumpel',
   native: environment.native,
   protocol: environment.protocol,
   dex: {
