@@ -7,7 +7,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import { HatTable } from '../shared/interfaces';
 import { HatApiService } from './hat-api.service';
 import { MarketSquareService } from '../market-square/market-square.service';

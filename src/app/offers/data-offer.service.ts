@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
-import { Observable, ReplaySubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Claim, Offer } from './offer.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
-import { APP_CONFIG, IAppConfig } from '../app.config';
+import { APP_CONFIG, AppConfig } from '../app.config';
 import { HatApiService } from '../services/hat-api.service';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { JwtHelper } from 'angular2-jwt';
@@ -16,7 +17,7 @@ export class DataOfferService {
   private cachedToken: string;
   private _offers$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private hatSvc: HatApiService,
               private hatV2Svc: HatApiV2Service,
               private http: Http) {

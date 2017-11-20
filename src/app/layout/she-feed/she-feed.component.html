@@ -7,7 +7,7 @@
     <div class="feed-items">
       <div *ngFor="let item of feed$ | async" class="item">
         <div class="flex-basis">
-          <div *ngIf="item.data.content.media">
+          <div *ngIf="item.data.content && item.data.content.media">
             <img *ngFor="let mediaItem of item.data.content.media" [src]="mediaItem.url" onerror="this.style.display='none'">
           </div>
 
@@ -15,7 +15,7 @@
             <!--<span class="meta heading" *ngIf="item.data.content && item.data">{{ item.data.source }}</span>-->
             <!--<a *ngIf="item.data.title" [href]="item.data" target="_blank">{{ item.data.content }}</a>-->
             <p *ngIf="item.data.title">{{ item.data.title.text }}</p>
-            <p class="meta heading">{{ item.data.content.text }}</p>
+            <p *ngIf="item.data.content && item.data.content.text" class="meta heading">{{ item.data.content.text }}</p>
           </div>
         </div>
 

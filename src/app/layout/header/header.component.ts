@@ -9,16 +9,14 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService } from '../dialog.service';
-import { NotificationsService } from '../notifications.service';
-import { ExternalNotification } from '../../shared/interfaces/index';
 import { Profile } from '../../shared/interfaces';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 import { UserService } from '../../services/index';
 import { User } from '../../shared/interfaces/index';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 import { AccountStatus } from '../../user/account-status.interface';
-import { APP_CONFIG, IAppConfig } from '../../app.config';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 
 declare var $: any;
@@ -40,7 +38,7 @@ export class HeaderComponent implements OnInit {
   public unreadNotifications: number;
   public totalNotifications: number;
 
-  constructor(@Inject(APP_CONFIG) public config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private router: Router,
               private dialogSvc: DialogService,
               private userSvc: UserService,

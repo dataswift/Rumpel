@@ -1,9 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Moment } from 'moment';
-import * as moment from 'moment';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataOfferService } from '../data-offer.service';
-import {Subscription, Observable} from 'rxjs/Rx';
-import { OfferRequirementsComponent } from '../offer-requirements/offer-requirements.component';
+import { Subscription } from 'rxjs/Subscription';
 
 declare var $: any;
 

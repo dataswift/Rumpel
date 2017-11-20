@@ -2,6 +2,9 @@
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
+  "extends": [
+    "rxjs-tslint-rules"
+  ],
   "rules": {
     "callable-types": true,
     "class-name": true,
@@ -70,6 +73,15 @@
       "single"
     ],
     "radix": true,
+    "rxjs-add": {
+      "options": [{
+        "allowElsewhere": false,
+        "allowUnused": false,
+        "file": "./src/rxjs.imports.ts"
+      }],
+      "severity": "error"
+    },
+    "rxjs-no-wholesale": { "severity": "error" },
     "semicolon": [
       "always"
     ],

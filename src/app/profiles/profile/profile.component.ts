@@ -94,10 +94,17 @@ export class ProfileComponent implements OnInit {
   submitForm(event) {
     event.preventDefault();
     this.profile.dateCreated = moment().valueOf();
-    this.profilesSvc.save(this.profile);
-    // TODO: UI messages should be initialized from the service
-    this.uiMessageHidden = false;
-    setTimeout(() => this.uiMessageHidden = true, 5000);
+    const stringifiedProfile = JSON.parse(JSON.stringify(this.profile, (key, value) => {
+      if (typeof value === 'boolean') {
+        return value.toString();
+      }
+
+      return value;
+    }));
+    this.profilesSvc.save(stringifiedProfile).subscribe(_ => {
+      this.uiMessageHidden = false;
+      setTimeout(() => this.uiMessageHidden = true, 5000);
+    });
   }
 
   discardChanges() {

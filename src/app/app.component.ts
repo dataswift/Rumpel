@@ -7,8 +7,7 @@
  */
 
 import { Component, OnInit, Inject } from '@angular/core';
-import { APP_CONFIG, IAppConfig } from './app.config';
-import { NotificationsService } from './layout/notifications.service';
+import { APP_CONFIG, AppConfig } from './app.config';
 import { Router, NavigationEnd } from '@angular/router';
 import { User } from './user/user.interface';
 import { UserService } from './services';
@@ -35,7 +34,7 @@ export class AppRootComponent implements OnInit {
   private canHide: boolean;
   private appExpireTime: moment.Moment;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
             private messagingSvc: GlobalMessagingService,
             private dialogSvc: DialogService,
             private userSvc: UserService,

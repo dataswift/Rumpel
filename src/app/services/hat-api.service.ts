@@ -9,7 +9,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams, Response } from '@angular/http';
 import { AuthHttp } from './auth-http.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { DataDebit } from '../shared/interfaces/index';
 import { User } from '../user/user.interface';
 import { isMoment } from 'moment/moment';

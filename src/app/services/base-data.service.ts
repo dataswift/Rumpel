@@ -6,7 +6,9 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { HatApiV2Service } from './hat-api-v2.service';
 import { UserService } from '../user/user.service';
 

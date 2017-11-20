@@ -7,7 +7,8 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Subject, Observable, ReplaySubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { AuthHttp } from '../services/auth-http.service';

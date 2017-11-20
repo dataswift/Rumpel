@@ -9,16 +9,14 @@
 import {Component, OnInit, Input, EventEmitter, Output, Inject} from '@angular/core';
 
 import { NotablesService } from '../notables.service';
-import { Notable } from '../../shared/interfaces/notable.class';
+import { DialogService } from '../../layout/dialog.service';
+import { DialogBoxComponent } from '../../layout/dialog-box/dialog-box.component';
+import { DataPlugService } from '../../data-management/data-plug.service';
 
-import {NotablesServiceMeta} from '../../shared/interfaces/notables-service-meta.interface';
-import {DialogService} from '../../layout/dialog.service';
-import {DialogBoxComponent} from '../../layout/dialog-box/dialog-box.component';
-import {DataPlugService} from '../../data-management/data-plug.service';
-import {HatRecord} from '../../shared/interfaces/hat-record.interface';
-import {APP_CONFIG, IAppConfig} from '../../app.config';
-import {DexOfferClaimRes} from '../../shared/interfaces/dex-offer-claim-res.interface';
-import {DataDebit} from '../../shared/interfaces/data-debit.interface';
+import { Notable } from '../../shared/interfaces/notable.class';
+import { APP_CONFIG, AppConfig } from '../../app.config';
+import { DexOfferClaimRes } from '../../shared/interfaces/dex-offer-claim-res.interface';
+import { DataDebit } from '../../shared/interfaces/data-debit.interface';
 
 @Component({
   selector: 'rump-share-belt',
@@ -44,7 +42,7 @@ export class ShareBeltComponent implements OnInit {
     }
   };
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private notablesSvc: NotablesService,
               private dialogSvc: DialogService,
               private dataPlugSvc: DataPlugService) { }

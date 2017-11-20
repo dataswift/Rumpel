@@ -1,15 +1,13 @@
 import { HatApiV2Service } from './hat-api-v2.service';
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers, Response, URLSearchParams } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { AuthHttp } from './auth-http.service';
-import { HatRecord } from '../shared/interfaces/hat-record.interface';
-import { Observable } from 'rxjs/Observable';
-import { APP_CONFIG, IAppConfig } from '../app.config';
+import { APP_CONFIG, AppConfig } from '../app.config';
 
 @Injectable()
 export class FileUploadService extends HatApiV2Service {
 
-  constructor(@Inject(APP_CONFIG) private _config: IAppConfig, private _authHttp: AuthHttp, private _http: Http) {
+  constructor(@Inject(APP_CONFIG) private _config: AppConfig, private _authHttp: AuthHttp, private _http: Http) {
     super(_config, _authHttp, _http);
   }
 

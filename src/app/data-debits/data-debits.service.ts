@@ -9,9 +9,8 @@
 import { Injectable } from '@angular/core';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { MarketSquareService } from '../market-square/market-square.service';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { DataDebit } from '../shared/interfaces/data-debit.interface';
-
 
 @Injectable()
 export class DataDebitService {

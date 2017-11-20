@@ -7,13 +7,15 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { BaseDataService } from '../services/base-data.service';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { DexApiService } from '../services/dex-api.service';
 import { UserService } from '../user/user.service';
 
-import { APP_CONFIG, IAppConfig } from '../app.config';
+import { APP_CONFIG, AppConfig } from '../app.config';
 import { Notable, DataDebit } from '../shared/interfaces';
 import { NotablesServiceMeta } from '../shared/interfaces/notables-service-meta.interface';
 import { User } from '../user/user.interface';
@@ -30,7 +32,7 @@ export class NotablesService extends BaseDataService<Notable> {
   private _notablesMeta$: BehaviorSubject<NotablesServiceMeta>;
   public notablesMeta$: Observable<NotablesServiceMeta>;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               hat: HatApiV2Service,
               userSvc: UserService,
               private dex: DexApiService) {

@@ -7,7 +7,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { DataPlugService } from '../data-plug.service';
 import { Router } from '@angular/router';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';

@@ -7,11 +7,12 @@
 
 import { Injectable } from '@angular/core';
 import { Http, XHRBackend, Request, RequestOptions, RequestOptionsArgs, Response, Headers } from '@angular/http';
-import { ReplaySubject, Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { JwtHelper } from 'angular2-jwt';
 import { User } from '../user/user.interface';
 import { BrowserStorageService } from './browser-storage.service';
-import { IAppConfig } from '../app.config';
+import { AppConfig } from '../app.config';
 
 declare var httpProtocol: string;
 const COOKIE_EXPIRATION_CHECK_OFFSET = 600; // in seconds
@@ -25,7 +26,7 @@ export class AuthHttp extends Http {
 
   constructor(backend: XHRBackend, defaultOptions: RequestOptions,
               private storageSvc: BrowserStorageService,
-              private config: IAppConfig) {
+              private config: AppConfig) {
     super(backend, defaultOptions);
 
     this.hatBaseUrl = `${httpProtocol || config.protocol}//${window.location.hostname}`;
@@ -56,7 +57,7 @@ export class AuthHttp extends Http {
         .catch(err => {
           console.log('GET error: ', err);
 
-          return Observable.empty();
+          return Observable.throw(err);
         });
     } else {
       return Observable.throw('JWT does not exist!');
@@ -72,7 +73,7 @@ export class AuthHttp extends Http {
         .catch(err => {
           console.log('POST error: ', err);
 
-          return Observable.empty();
+          return Observable.throw(err);
         });
     } else {
       return Observable.throw('JWT does not exist!');
@@ -88,7 +89,7 @@ export class AuthHttp extends Http {
         .catch(err => {
           console.log('PUT error: ', err);
 
-          return Observable.empty();
+          return Observable.throw(err);
         });
     } else {
       return Observable.throw('JWT does not exist!');
@@ -104,7 +105,7 @@ export class AuthHttp extends Http {
         .catch(err => {
           console.log('DELETE error: ', err);
 
-          return Observable.empty();
+          return Observable.throw(err);
         });
     } else {
       return Observable.throw('JWT does not exist!');

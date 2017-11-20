@@ -8,12 +8,12 @@
 
 import { Injectable, Inject } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { APP_CONFIG, IAppConfig } from './app.config';
+import { APP_CONFIG, AppConfig } from './app.config';
 
 @Injectable()
 export class NativeGuard implements CanActivate {
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private router: Router) {}
 
   canActivate(): boolean {

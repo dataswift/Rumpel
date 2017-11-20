@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 
 import { DataOfferService } from '../data-offer.service';
 import { DialogService } from '../../layout/dialog.service';
 import { UserService } from '../../user/user.service';
 import { User } from '../../user/user.interface';
 import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
-import { APP_CONFIG, IAppConfig } from '../../app.config';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 @Component({
   selector: 'rump-offers-home',
@@ -23,7 +23,7 @@ export class OffersHomeComponent implements OnInit {
   public offers: any = [];
   public acceptedOffers: any = [];
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private dialogSvc: DialogService,
               private userSvc: UserService,
               private dataOfferSvc: DataOfferService) { }

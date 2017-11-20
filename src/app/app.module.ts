@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRootComponent } from './app.component';
 
-import {APP_CONFIG, AppConfig, IAppConfig} from './app.config';
+import { APP_CONFIG, AppConfig, configuration } from './app.config';
 
 import { LayoutModule } from './layout/layout.module';
 import { MashupsModule } from './mashups/mashups.module';
@@ -63,7 +63,7 @@ import { FileService } from './services/file.service';
 export function authHttpFactory(backend: XHRBackend,
                                 defaultOptions: RequestOptions,
                                 storageSvc: BrowserStorageService,
-                                config: IAppConfig) {
+                                config: AppConfig) {
   return new AuthHttp(backend, defaultOptions, storageSvc, config);
 }
 
@@ -108,7 +108,7 @@ export function cookieServiceFactory() {
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    { provide: APP_CONFIG, useValue: AppConfig },
+    { provide: APP_CONFIG, useValue: configuration },
     { provide: CookieService, useFactory: cookieServiceFactory },
     {
       provide: AuthHttp,

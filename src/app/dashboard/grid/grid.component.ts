@@ -7,8 +7,7 @@
  */
 
 import { Component, OnInit, OnDestroy, AfterViewInit, Inject } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { APP_CONFIG, IAppConfig } from '../../app.config';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 declare var $: any;
 
@@ -24,7 +23,7 @@ export class GridComponent implements OnInit, OnDestroy, AfterViewInit {
   public showFitbitTile = false;
   public showMonzoTile = false;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig) { }
+  constructor(@Inject(APP_CONFIG) private config: AppConfig) { }
 
   ngOnInit() {
   }

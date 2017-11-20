@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { APP_CONFIG, IAppConfig } from '../../app.config';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 import { ActivatedRoute } from '@angular/router';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 
@@ -12,17 +12,16 @@ export class LoginStandaloneComponent implements OnInit {
   public lastLoginId: string;
   private redirectPath: string;
   public dropdownExpanded = false;
-  public availableDomains: Array<string> = ['.hubofallthings.net', '.hat.direct'];
   public selectedDomain: string;
 
-  constructor(@Inject(APP_CONFIG) public config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private route: ActivatedRoute,
               private storageSvc: BrowserStorageService) { }
 
   ngOnInit() {
     this.lastLoginId = this.storageSvc.getItem('lastLoginId');
     const lastLoginDomain = this.storageSvc.getItem('lastLoginDomain');
-    this.selectedDomain = lastLoginDomain ? '.' + lastLoginDomain : this.availableDomains[0];
+    this.selectedDomain = lastLoginDomain ? '.' + lastLoginDomain : this.config.supportedDomains[0];
     this.redirectPath = this.route.snapshot.queryParams['redirect'] || 'dashboard';
   }
 

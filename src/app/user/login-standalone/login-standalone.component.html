@@ -27,7 +27,7 @@
             {{selectedDomain}} <span class="caret"></span>
           </button>
           <ul class="dropdown-menu-rump" *ngIf="dropdownExpanded">
-            <li (click)="setDomain(domain)" *ngFor="let domain of availableDomains">
+            <li (click)="setDomain(domain)" *ngFor="let domain of config.supportedDomains">
               {{domain}}
             </li>
           </ul>

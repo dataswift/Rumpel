@@ -8,9 +8,9 @@
 
 import { Injectable, Inject } from '@angular/core';
 import {Http, Headers, URLSearchParams, Response} from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
-import { APP_CONFIG, IAppConfig } from '../app.config';
+import { APP_CONFIG, AppConfig } from '../app.config';
 
 import * as moment from 'moment';
 import {UserService} from '../user/user.service';
@@ -27,7 +27,7 @@ export class MarketSquareService {
   private _headers: Headers;
   public notifications: Array<any>;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private http: Http,
               private userSvc: UserService,
               private hatSvc: HatApiService) {

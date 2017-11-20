@@ -9,12 +9,13 @@
 import { Injectable, Inject } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 
-import { Observable, ReplaySubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { UserService } from '../user/user.service';
 import { User } from '../user/user.interface';
 import { LocationsService } from '../locations/locations.service';
 
-import { APP_CONFIG, IAppConfig} from '../app.config';
+import { APP_CONFIG, AppConfig} from '../app.config';
 import { DataPlug } from '../shared/interfaces/data-plug.interface';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { DexApiService } from '../services/dex-api.service';
@@ -31,7 +32,7 @@ export class DataPlugService {
   private twitterPlugWarningShown = false;
   private facebookPlugWarningShown = false;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private http: Http,
               private hatSvc: HatApiV2Service,
               private dexSvc: DexApiService,

@@ -8,9 +8,10 @@
 
 import {
   Injectable, ViewContainerRef, ComponentRef, Injector,
-  ReflectiveInjector, ComponentFactory, ComponentFactoryResolver, Type
+  ReflectiveInjector, ComponentFactoryResolver, Type
 } from '@angular/core';
-import { ReplaySubject, Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 
 @Injectable()
 export class DialogService {

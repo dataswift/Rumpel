@@ -6,14 +6,15 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { OpaqueToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 import { environment } from '../environments/environment';
 
-export let APP_CONFIG = new OpaqueToken('app.config');
+export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
-export class IAppConfig {
+export class AppConfig {
   version: string;
   name: string;
+  supportedDomains: string[];
   native: boolean;
   protocol: string;
   dex: { name: string; url: string; pathPrefix: string; id: string; accessToken: string; };
@@ -33,9 +34,10 @@ export class IAppConfig {
   };
 }
 
-export const AppConfig: IAppConfig = {
-  version: '3.2.0',
-  name: 'Rumpel',
+export const configuration: AppConfig = {
+  version: '3.2.1',
+  name: 'RumpelStaging',
+  supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,
   dex: {

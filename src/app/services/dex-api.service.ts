@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
-import {Headers, Http, Response} from '@angular/http';
-import {APP_CONFIG, IAppConfig} from '../app.config';
-import {Observable} from 'rxjs/Observable';
-import {JwtHelper} from 'angular2-jwt';
-import {HatApiV2Service} from './hat-api-v2.service';
+import { Headers, Http, Response } from '@angular/http';
+import { APP_CONFIG, AppConfig } from '../app.config';
+import { Observable } from 'rxjs/Observable';
+import { JwtHelper } from 'angular2-jwt';
+import { HatApiV2Service } from './hat-api-v2.service';
 import { DexOfferClaimRes } from '../shared/interfaces/dex-offer-claim-res.interface';
 import { DataPlug } from '../shared/interfaces/data-plug.interface';
 
@@ -13,7 +13,7 @@ export class DexApiService {
   private cachedAppToken: string;
   private jwt: JwtHelper = new JwtHelper();
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private hat: HatApiV2Service,
               private http: Http) {
     this.baseUrl = config.dex.url + config.dex.pathPrefix;

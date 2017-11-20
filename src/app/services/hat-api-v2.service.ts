@@ -10,7 +10,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { AuthHttp } from './auth-http.service';
 import { Observable } from 'rxjs/Observable';
-import { APP_CONFIG, IAppConfig } from '../app.config';
+import { APP_CONFIG, AppConfig } from '../app.config';
 
 import { User } from '../user/user.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
@@ -23,7 +23,7 @@ export class HatApiV2Service {
   private pathPrefix = '/api/v2';
   private appNamespace: string;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private authHttp: AuthHttp,
               private http: Http) {
     this.appNamespace = config.name.toLowerCase();

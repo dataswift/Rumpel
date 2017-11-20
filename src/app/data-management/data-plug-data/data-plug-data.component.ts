@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { DataPlugService } from '../data-plug.service';
 import { LocationsService } from '../../locations/locations.service';
 import { SocialService } from '../../social/social.service';
@@ -18,8 +19,8 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 import { FitbitActivityService } from '../../fitbit/services/fitbit-activity.service';
 import { FitbitProfileService } from '../../fitbit/services/fitbit-profile.service';
-import {FitbitActivity} from '../../fitbit/interfaces/fitbit-activity.interface';
-import {FitbitProfile} from '../../fitbit/interfaces/fitbit-profile.interface';
+import { FitbitActivity } from '../../fitbit/interfaces/fitbit-activity.interface';
+import { FitbitProfile } from '../../fitbit/interfaces/fitbit-profile.interface';
 
 declare var $: any;
 

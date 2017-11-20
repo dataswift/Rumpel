@@ -7,8 +7,8 @@
  */
 
 import { Component, OnInit, Inject } from '@angular/core';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { APP_CONFIG, IAppConfig } from '../../app.config';
+import { ActivatedRoute, Router } from '@angular/router';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 import { UserService } from '../user.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 
@@ -22,7 +22,7 @@ export class LoginNativeComponent implements OnInit {
   public error: string;
   private redirectPath: string;
 
-  constructor(@Inject(APP_CONFIG) public config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private route: ActivatedRoute,
               private router: Router,
               private storageSvc: BrowserStorageService,

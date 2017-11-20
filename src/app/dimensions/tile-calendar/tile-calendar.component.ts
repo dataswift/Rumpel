@@ -11,7 +11,8 @@ import { FacebookEventsService } from '../facebook-events.service';
 import { GoogleEventsService } from '../google-events.service';
 
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Event } from '../../shared/interfaces/index';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 

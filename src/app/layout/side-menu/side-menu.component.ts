@@ -6,19 +6,20 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {Component, OnInit, Output, EventEmitter, Inject} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
 import { UserService } from '../../services';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { DialogService } from '../dialog.service';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
-import { Subscription, Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Router, NavigationEnd } from '@angular/router';
-import { APP_CONFIG, IAppConfig} from '../../app.config';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 import { User } from '../../user/user.interface';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';
-import {MarketSquareService} from '../../market-square/market-square.service';
+import { MarketSquareService } from '../../market-square/market-square.service';
 
 declare var $: any;
 
@@ -43,7 +44,7 @@ export class SideMenuComponent implements OnInit {
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private _dialogSvc: DialogService,
               private router: Router,
               private userSvc: UserService,

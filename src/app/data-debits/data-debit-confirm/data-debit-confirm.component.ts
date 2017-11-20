@@ -8,11 +8,11 @@
 
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription } from 'rxjs/Subscription';
 import { HatApiService, UserService } from '../../services/index';
 import { DataDebitService } from '../data-debits.service';
 import { DataDebit } from '../../shared/interfaces';
-import { APP_CONFIG, IAppConfig } from '../../app.config';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 import { isUndefined } from 'util';
 import { User } from '../../user/user.interface';
 
@@ -34,7 +34,7 @@ export class DataDebitConfirmComponent implements OnInit, OnDestroy {
   public twitterShareLink: string;
   public debits: Array<any>;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private _route: ActivatedRoute,
               private _ddSvc: DataDebitService,
               private _hat: HatApiService,

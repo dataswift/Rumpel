@@ -9,14 +9,14 @@
 import { Injectable, Inject } from '@angular/core';
 import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UserService } from './user/user.service';
-import { APP_CONFIG, IAppConfig } from './app.config';
+import { APP_CONFIG, AppConfig } from './app.config';
 import { GlobalMessagingService } from './services/global-messaging.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   private redirectPath: string[];
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private messagingSvc: GlobalMessagingService,
               private router: Router,
               private userSvc: UserService) {

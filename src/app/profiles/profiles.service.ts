@@ -13,11 +13,11 @@ import { UserService } from '../user/user.service';
 
 import { Profile } from '../shared/interfaces/profile.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
-import { APP_CONFIG, IAppConfig } from '../app.config';
+import { APP_CONFIG, AppConfig } from '../app.config';
 
 @Injectable()
 export class ProfilesService extends BaseDataService<Profile> {
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
               hat: HatApiV2Service,
               userSvc: UserService) {
     super(hat, userSvc, config.name.toLowerCase(), 'profile', 'dateCreated');

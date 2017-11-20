@@ -9,10 +9,10 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../user.interface';
-import { APP_CONFIG, IAppConfig } from '../../app.config';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
@@ -25,7 +25,7 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
   public error: string;
   private sub: Subscription;
 
-  constructor(@Inject(APP_CONFIG) public config: IAppConfig,
+  constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private userSvc: UserService,
               private storageSvc: BrowserStorageService,
               private route: ActivatedRoute) { }
