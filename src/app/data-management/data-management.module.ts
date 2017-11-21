@@ -17,6 +17,7 @@ import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 import { NotablesViewComponent } from './notables-view/notables-view.component';
 import { LocationsViewComponent } from './locations-view/locations-view.component';
 import { PhotosViewComponent } from './photos-view/photos-view.component';
+import { FacebookEventViewComponent } from './facebook-event-view/facebook-event-view.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { PhotosViewComponent } from './photos-view/photos-view.component';
     CalendarViewComponent,
     NotablesViewComponent,
     LocationsViewComponent,
-    PhotosViewComponent
+    PhotosViewComponent,
+    FacebookEventViewComponent
   ],
   providers: [ DataPlugService ],
   exports: [ TileDataPlugsComponent, DataPlugDataComponent ]

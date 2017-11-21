@@ -56,7 +56,7 @@ export class NotificationCentreComponent implements OnInit {
   }
 
   markAsRead() {
-    //this._notificationsSvc.markAsRead(this.notification);
+    // this._notificationsSvc.markAsRead(this.notification);
   }
 
   closeNotifs() {
