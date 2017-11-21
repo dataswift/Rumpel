@@ -89,8 +89,8 @@ export const configuration: AppConfig = {
       { display: 'Public profile', icon: 'account_circle', link: 'public/profile', dataType: '', disable: '' }
     ],
     'private': [
-      { display: 'SHE Feed', icon: 'line_weight', link: 'feed', dataType: '', disable: '',
-      description: 'SHE Feed' },
+      { display: 'My Digital Life', icon: 'line_weight', link: 'feed', dataType: '', disable: '',
+      description: 'My Digital Life' },
 
       { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '',
       description: 'The dashboard is where you have an overview of Rumpel.' },
