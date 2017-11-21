@@ -41,8 +41,7 @@ export class NotablesService extends BaseDataService<Notable> {
     this.notablesServiceMeta = {
       phata: '',
       offerClaimed: false,
-      userMessage: '',
-      activeIntegrations: this.config.notables.activeIntegrations
+      userMessage: ''
     };
 
     this._editedNotable$ = <ReplaySubject<HatRecord<Notable>>>new ReplaySubject(1);

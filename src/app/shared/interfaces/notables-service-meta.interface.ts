@@ -13,16 +13,10 @@ export interface NotablesServiceMeta {
   offerClaimed: boolean;
   userMessage: string;
   dataDebit?: DataDebitMeta;
-  activeIntegrations: Array<ActiveIntegrations>;
 }
 
 interface DataDebitMeta {
   id: string;
   confirmed: boolean;
   dateCreated: Moment;
-}
-
-interface ActiveIntegrations {
-  name: string;
-  logoUrl: string;
 }

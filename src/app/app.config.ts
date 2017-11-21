@@ -24,7 +24,6 @@ export class AppConfig {
   notables: {
     iconMap: { [key: string]: string; };
     dexOfferId: string;
-    activeIntegrations: Array<{ name: string; displayName: string; logoUrl: string; }>;
   };
   menuItems: {
     public: Array<any>;
@@ -35,8 +34,8 @@ export class AppConfig {
 
 export const configuration: AppConfig = {
   version: '3.2.1',
-  name: 'Rumpel',
-  supportedDomains: ['.hubofallthings.net', '.hat.direct'],
+  name: 'RumpelStaging',
+  supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,
   dex: {
@@ -54,8 +53,8 @@ export const configuration: AppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubofallthings.com',
-    pathPrefix: '/api/v1'
+    url: 'https://databuyer.hubat.net',
+    pathPrefix: '/api/v2'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='
@@ -65,24 +64,7 @@ export const configuration: AppConfig = {
   },
   notables: {
     iconMap: { note: 'border_color', list: 'list', blog: 'library_books' },
-    dexOfferId: '8438fcf0-cfec-4d79-8338-f0987056352f',
-    activeIntegrations: [
-      {
-        name: 'hatters',
-        displayName: 'HATTERS',
-        logoUrl: 'assets/icons/hatters-icon.png'
-      },
-      {
-        name: 'facebook',
-        displayName: 'Facebook',
-        logoUrl: 'assets/icons/facebook-plug.svg'
-      },
-      {
-        name: 'twitter',
-        displayName: 'Twitter',
-        logoUrl: 'assets/icons/twitter-plug.svg'
-      }
-    ]
+    dexOfferId: '8438fcf0-cfec-4d79-8338-f0987056352f'
   },
   menuItems: {
     'public': [

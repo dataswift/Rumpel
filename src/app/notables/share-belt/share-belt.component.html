@@ -10,11 +10,17 @@
   <div class="content">
     <p>Post publicly:</p>
     <ul *ngIf="offerClaimIsConfirmed && !displayMessage">
-      <li *ngFor="let provider of activeIntegrations" (click)="toggleSharing(provider)" [class.selected]="currentNotable.shared_on.indexOf(provider.name.toLowerCase()) > -1">
-        <img [src]="provider.logoUrl"
+      <li (click)="toggleSharing({ name: 'hatters', active: true })" [class.selected]="currentNotable.shared_on.indexOf('hatters') > -1">
+        <img src="/assets/icons/hatters-icon.png"
+             class="img img-responsive share-service"
+             [class.on]="currentNotable.shared_on.indexOf('hatters') > -1">
+        <span>HATTERS</span>
+      </li>
+      <li *ngFor="let provider of shareOptions | async" (click)="toggleSharing(provider)" [class.selected]="currentNotable.shared_on.indexOf(provider.name.toLowerCase()) > -1">
+        <img [src]="provider.illustrationUrl"
              class="img img-responsive share-service"
              [class.on]="currentNotable.shared_on.indexOf(provider.name.toLowerCase()) > -1">
-        <span>{{ provider.displayName }}</span>
+        <span>{{ provider.name }}</span>
       </li>
     </ul>
   </div>

@@ -25,10 +25,8 @@ import { DexApiService } from '../services/dex-api.service';
 @Injectable()
 export class DataPlugService {
   private hatUrl: string;
-  private services: { [key: string]: { url: string; connected: boolean; }; };
   private plugs: DataPlug[];
   private _dataplugs$: ReplaySubject<DataPlug[]> = <ReplaySubject<DataPlug[]>>new ReplaySubject(1);
-  private locationData = false;
   private twitterPlugWarningShown = false;
   private facebookPlugWarningShown = false;
 
@@ -38,34 +36,25 @@ export class DataPlugService {
               private dexSvc: DexApiService,
               private userSvc: UserService,
               private locationsSvc: LocationsService) {
-    this.services = {
-      'Facebook': {
-        url: 'https://social-plug.hubofallthings.com/api/user/token/status',
-        connected: false
-      },
-      'Twitter': {
-        url: 'https://twitter-plug.hubofallthings.com/api/status',
-        connected: false
-      }
-    };
 
     this.userSvc.user$
       .filter((user: User) => user.authenticated === true)
       .subscribe((user: User) => {
-        // console.log(user);
         this.hatUrl = user.fullDomain;
         this.getDataPlugList();
       });
   }
 
-  get dataplugs$(): Observable<any> {
+  get dataplugs$(): Observable<DataPlug[]> {
     return this._dataplugs$.asObservable();
   }
 
-  status(plugName: string): boolean {
-    console.log(this.services[plugName[0].toUpperCase() + plugName.slice(1)]);
-
-    return this.services[plugName[0].toUpperCase() + plugName.slice(1)].connected;
+  get notablesEnabledPlugs$(): Observable<DataPlug[]> {
+    return this.dataplugs$
+      .map((dps: DataPlug[]) => {
+        return dps.filter((plug: DataPlug) => plug.name.toLowerCase() === 'facebook' || plug.name.toLowerCase() === 'twitter');
+      })
+      .defaultIfEmpty([]);
   }
 
   getTokenInfo(plugName: string, baseUrl: string): Observable<boolean> {
@@ -86,16 +75,6 @@ export class DataPlugService {
     return this.hatSvc.getApplicationToken(plugName, baseUrl)
       .map((accessToken: string) => `${baseUrl}/authenticate/hat?token=${accessToken}`);
   }
-
-  private getDataPlugStatus(tables, plug): boolean {
-    const plugStatus = false;
-
-    const plugList: any = this.config.menuItems.dataPlugs;
-    const plugName = plug.name.toLowerCase();
-
-    return plugStatus;
-  }
-
 
   private getDataPlugList() {
     this.dexSvc.getAvailablePlugList().subscribe((plugs: DataPlug[]) => {

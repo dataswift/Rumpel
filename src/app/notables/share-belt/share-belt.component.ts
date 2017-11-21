@@ -17,6 +17,8 @@ import { Notable } from '../../shared/interfaces/notable.class';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { DexOfferClaimRes } from '../../shared/interfaces/dex-offer-claim-res.interface';
 import { DataDebit } from '../../shared/interfaces/data-debit.interface';
+import {Observable} from 'rxjs/Observable';
+import {DataPlug} from '../../shared/interfaces/data-plug.interface';
 
 @Component({
   selector: 'rump-share-belt',
@@ -31,28 +33,17 @@ export class ShareBeltComponent implements OnInit {
   public dataPlugError: string;
   public displayMessage: string;
   public offerClaimIsConfirmed: boolean;
-  private dataPlugInfoMap = {
-    facebook: {
-      displayName: 'Facebook',
-      redirectUrl: 'https://social-plug.hubofallthings.com/hat/authenticate'
-    },
-    twitter: {
-      displayName: 'Twitter',
-      redirectUrl: 'https://twitter-plug.hubofallthings.com/authenticate/hat'
-    }
-  };
+  public shareOptions: Observable<DataPlug[]>;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private notablesSvc: NotablesService,
               private dialogSvc: DialogService,
               private dataPlugSvc: DataPlugService) { }
 
-  get activeIntegrations(): Array<{ name: string; displayName: string; logoUrl: string; }> {
-    return this.config.notables.activeIntegrations;
-  }
-
   ngOnInit() {
     this.dataPlugError = null;
+
+    this.shareOptions = this.dataPlugSvc.notablesEnabledPlugs$;
 
     this.notablesSvc.getNotablesOfferClaimStatus().subscribe((offerClaim: DexOfferClaimRes) => {
       this.offerClaimIsConfirmed = offerClaim.confirmed;
@@ -60,7 +51,7 @@ export class ShareBeltComponent implements OnInit {
   }
 
   toggleSharing(provider) {
-    if (provider.name === 'hatters' || this.dataPlugSvc.status(provider.name)) {
+    if (provider.active === true) {
       const index = this.currentNotable.shared_on.indexOf(provider.name.toLowerCase());
       if (index > -1) {
         this.currentNotable.shared_on.splice(index, 1);
@@ -72,12 +63,12 @@ export class ShareBeltComponent implements OnInit {
     } else {
       this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
         title: `${provider.name} data plug not connected`,
-        message: `Looks like your ${this.dataPlugInfoMap[provider.name].displayName} data plug is not yet connected to `
-        + `your HAT. As a result, notables cannot be shared on ${this.dataPlugInfoMap[provider.name].displayName}. `
+        message: `Looks like your ${provider.name} data plug is not yet connected to `
+        + `your HAT. As a result, notables cannot be shared on ${provider.name}. `
         + 'Do you want to set it up now?',
         buttons: [{
           title: `Connect ${provider.name} plug now`,
-          link: this.dataPlugInfoMap[provider.name].redirectUrl
+          link: `${provider.url}/authenticate/hat`
         }]
       });
     }
