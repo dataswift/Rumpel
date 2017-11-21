@@ -35,8 +35,8 @@ export class AppConfig {
 
 export const configuration: AppConfig = {
   version: '3.2.1',
-  name: 'Rumpel',
-  supportedDomains: ['.hubofallthings.net', '.hat.direct'],
+  name: 'RumpelStaging',
+  supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,
   dex: {
@@ -54,8 +54,8 @@ export const configuration: AppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubofallthings.com',
-    pathPrefix: '/api/v1'
+    url: 'https://databuyer.hubat.net',
+    pathPrefix: '/api/v2'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='
