@@ -62,7 +62,7 @@
 
     <div class="calendarView" [class.hidden]="tabView !== 'events'">
       <div class="item" *ngFor="let event of events">
-        <rump-calendar-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'facebook'" [item]="event"></rump-calendar-view>
+        <rump-facebook-event-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'facebook'" [item]="event"></rump-facebook-event-view>
         <rump-photos-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'fitbit'" [item]="event"></rump-photos-view>
       </div>
       <div class="loadMore">
