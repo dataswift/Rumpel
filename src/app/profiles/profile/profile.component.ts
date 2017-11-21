@@ -39,30 +39,12 @@ export class ProfileComponent implements OnInit {
       this.hatUrl = `https://${user.hatId}.${user.domain}/#/public/profile`;
     });
 
-    this.profilePhoto = {};
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      if (profileSnapshots.length > 0) {
-        this.profile = profileSnapshots[0].data;
-      }
-    });
-
-    this.profilesSvc.getInitData(1);
-
-    // this.profilesSvc.getPicture().subscribe(
-    //   profilePicture => {
-    //     if (profilePicture) {
-    //       this.profilePhoto = profilePicture;
-    //     }
-    //   },
-    //   err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
-    // );
-
     this.profile = {
       dateCreated: 0,
       private: true,
       fb_profile_photo: { private: true },
       personal: { title: '', first_name: '', middle_name: '',
-                  last_name: '', preferred_name: '', private: true },
+        last_name: '', preferred_name: '', private: true },
       nick: { name: '', private: true },
       birth: { date: '', private: true },
       gender: { type: '', private: true },
@@ -81,9 +63,27 @@ export class ProfileComponent implements OnInit {
       google: { link: '', private: true },
       youtube: { link: '', private: true },
       emergency_contact: { first_name: '', last_name: '', mobile: '',
-                          relationship: '', private: true },
+        relationship: '', private: true },
       about: { title: '', body: '', private: true }
     };
+
+    this.profilePhoto = {};
+    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
+      if (profileSnapshots.length > 0) {
+        this.profile = profileSnapshots[0].data;
+      }
+    });
+
+    this.profilesSvc.getInitData(1);
+
+    // this.profilesSvc.getPicture().subscribe(
+    //   profilePicture => {
+    //     if (profilePicture) {
+    //       this.profilePhoto = profilePicture;
+    //     }
+    //   },
+    //   err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
+    // );
   }
 
   switchView() {

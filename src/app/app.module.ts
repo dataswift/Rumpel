@@ -24,7 +24,6 @@ import { PhotosModule } from './photos/photos.module';
 import { SocialModule } from './social/social.module';
 import { FitbitModule } from './fitbit/fitbit.module';
 import { MonzoModule } from './monzo/monzo.module';
-import { MarketSquareModule } from './market-square/market-square.module';
 import { DataDebitsModule } from './data-debits/data-debits.module';
 import { WeatherModule } from './weather/weather.module';
 import { PublicPagesModule } from './public-pages/public-pages.module';
@@ -93,7 +92,6 @@ export function cookieServiceFactory() {
     SocialModule,
     FitbitModule,
     MonzoModule,
-    MarketSquareModule,
     DataManagementModule,
     DataDebitsModule,
     MashupsModule,

@@ -11,7 +11,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { HatTable } from '../shared/interfaces';
 import { HatApiService } from './hat-api.service';
-import { MarketSquareService } from '../market-square/market-square.service';
 
 import * as moment from 'moment';
 
@@ -23,8 +22,7 @@ export class RumpelService {
   private _state$: Subject<any>;
   private state$: Observable<any>;
 
-  constructor(private hat: HatApiService,
-              private market: MarketSquareService) {
+  constructor(private hat: HatApiService) {
     this.state = { isAuthenticated: false, dataTables: [] };
     this.loaded = false;
 

@@ -74,7 +74,7 @@ export abstract class BaseDataService<T> {
         this.drop = this.drop + data.length;
         this.pushToStream();
 
-        if (repeatUntilMinRecordNumber && this.drop < repeatUntilMinRecordNumber) {
+        if (repeatUntilMinRecordNumber && this.drop < repeatUntilMinRecordNumber && data.length > 0) {
           this.getMoreData(take, repeatUntilMinRecordNumber);
         }
       });

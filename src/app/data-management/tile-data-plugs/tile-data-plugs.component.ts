@@ -8,7 +8,6 @@
 
 import { Component, OnInit } from '@angular/core';
 import { DataPlugService } from '../data-plug.service';
-import { MarketSquareService } from '../../market-square/market-square.service';
 import { Observable } from 'rxjs/Observable';
 
 declare var $: any;
@@ -20,9 +19,9 @@ declare var $: any;
 })
 export class TileDataPlugsComponent implements OnInit {
   public dataplugs: Observable<Array<any>>;
+  private windowRef: any;
 
-  constructor(private dataplugsSvc: DataPlugService,
-              private marketSvc: MarketSquareService) {}
+  constructor(private dataplugsSvc: DataPlugService) {}
 
   ngOnInit() {
     this.dataplugs = this.dataplugsSvc.dataplugs$;
@@ -37,11 +36,15 @@ export class TileDataPlugsComponent implements OnInit {
     const popupWidth = w * 0.6; const left = w * 0.2;
     const popupHeight = h * 0.7; const top = h * 0.15;
 
-    const windowRef = window.open(
-      `https://${this.marketSvc.hatDomain}/hatlogin?name=${loginName}&redirect=${plug.url}`,
-      `Setting up ${plug.name} data plug`,
+    this.windowRef = window.open(
+      '', `Setting up ${plug.name} data plug`,
       `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`
     );
+
+    this.dataplugsSvc.getPlugRedirectUrl(loginName, plug.url)
+      .subscribe(redirectUrl => {
+        this.windowRef.location = redirectUrl;
+      });
   }
 
 

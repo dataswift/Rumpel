@@ -18,7 +18,6 @@ export class AppConfig {
   native: boolean;
   protocol: string;
   dex: { name: string; url: string; pathPrefix: string; id: string; accessToken: string; };
-  marketsquare: { url: string };
   databuyer: { name: string; url: string; pathPrefix: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
@@ -53,13 +52,10 @@ export const configuration: AppConfig = {
                + 'N2NhODlkMDdhOTg3MmY1OTczNjdjYWQyYzA0NTdjZDhlODlmM2FlMWQ2MmRmODY3NTcwNTc3NTdiZDJjYzgzNTgyOTU4ZmZlMDVhN'
                + 'jI2NzBmNGMifQ.TvFs6Zp0E24ChFqn3rBP-cpqxZbvkhph91UILGJvM6U'
   },
-  marketsquare: {
-    url: 'https://marketsquare.hubofallthings.com/api'
-  },
   databuyer: {
     name: 'DataBuyer',
     url: 'https://databuyer.hubofallthings.com',
-    pathPrefix: '/api/v2'
+    pathPrefix: '/api/v1'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='

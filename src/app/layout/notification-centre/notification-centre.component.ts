@@ -42,9 +42,9 @@ export class NotificationCentreComponent implements OnInit {
       this.totalNotifications = stats.total;
     });
 
-    this.userSvc.user$
-      .filter((user: User) => user.authenticated === true)
-      .subscribe((user: User) => this._notificationsSvc.getAllNotifications());
+    // this.userSvc.user$
+    //   .filter((user: User) => user.authenticated === true)
+    //   .subscribe((user: User) => this._notificationsSvc.getAllNotifications());
   }
 
   nextNote() {
@@ -56,7 +56,7 @@ export class NotificationCentreComponent implements OnInit {
   }
 
   markAsRead() {
-    this._notificationsSvc.markAsRead(this.notification);
+    //this._notificationsSvc.markAsRead(this.notification);
   }
 
   closeNotifs() {

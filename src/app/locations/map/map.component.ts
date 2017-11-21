@@ -26,7 +26,6 @@ export class MapComponent implements OnInit, OnChanges {
   @Input() locationDate: any;
   @Output() timeSelected = new EventEmitter<any>();
 
-
   private map: any;
   private markers = L.markerClusterGroup();
   private bbox = {
@@ -35,7 +34,6 @@ export class MapComponent implements OnInit, OnChanges {
     minLat: 180,
     maxLat: -180
   };
-
 
   constructor() {
   }
@@ -65,12 +63,10 @@ export class MapComponent implements OnInit, OnChanges {
     L.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 3, maxZoom: 18 }).addTo(this.map);
   }
 
-
   refreshMap() {
     this.map.invalidateSize();
     this.updateMap(this.dataPoints);
   }
-
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.map) {
@@ -104,7 +100,6 @@ export class MapComponent implements OnInit, OnChanges {
     this.bbox.minLng = Math.min(this.bbox.minLng, lng);
     this.bbox.maxLng = Math.max(this.bbox.maxLng, lng);
   }
-
 
   drawMarkers(locations: HatRecord<Location>[]) {
     this.map.removeLayer(this.markers);

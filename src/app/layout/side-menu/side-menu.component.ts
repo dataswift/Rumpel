@@ -19,7 +19,6 @@ import { Router, NavigationEnd } from '@angular/router';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { User } from '../../user/user.interface';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';
-import { MarketSquareService } from '../../market-square/market-square.service';
 
 declare var $: any;
 
@@ -49,8 +48,7 @@ export class SideMenuComponent implements OnInit {
               private router: Router,
               private userSvc: UserService,
               private dataplugSvc: DataPlugService,
-              private dataOfferSvc: DataOfferService,
-              private marketSvc: MarketSquareService) {}
+              private dataOfferSvc: DataOfferService) {}
 
   ngOnInit() {
     this.selectedItem = window.location.pathname;
