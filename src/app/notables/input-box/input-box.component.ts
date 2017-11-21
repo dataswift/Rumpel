@@ -97,7 +97,9 @@ export class InputBoxComponent implements OnInit {
 
     this.currentNotable.data.prepareToPost(form.value.message, author);
 
-    this.notableSvc.saveNotable(this.currentNotable);
+    this.notableSvc.saveNotable(this.currentNotable).subscribe(_ => {
+      console.log('Successfully saved: ', _);
+    });
 
     this.resetForm();
   }
