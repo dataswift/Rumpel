@@ -56,8 +56,8 @@ export class TileNotablesComponent implements OnInit {
 
     this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
       const latestSnapshot = profileSnapshots[0];
-      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
+      if (latestSnapshot && latestSnapshot.data.profilePhoto) {
+        this.profile.photo.shared = latestSnapshot.data.profilePhoto.shared;
       }
     });
   }

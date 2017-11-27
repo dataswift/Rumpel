@@ -15,8 +15,13 @@ import { User } from '../../user/user.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 import * as moment from 'moment';
+import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 declare var $: any;
+const max = 5;
+
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 @Component({
   selector: 'rump-profile',
@@ -28,10 +33,38 @@ export class ProfileComponent implements OnInit {
   public profilePhoto: any;
   public hatUrl: string;
   public uiMessageHidden: boolean;
+  floatingLabel = 'auto';
+  color: boolean;
+  requiredField: boolean;
+  hideRequiredMarker: boolean;
+  ctrlDisabled = false;
+  textareaNgModelValue: string;
+
+  name: string;
+  errorMessageExample1: string;
+  errorMessageExample2: string;
+  errorMessageExample3: string;
+  errorMessageExample4: string;
+  dividerColorExample1: string;
+  dividerColorExample2: string;
+  dividerColorExample3: string;
+  items: any[] = [
+    { value: 10 },
+    { value: 20 },
+    { value: 30 },
+    { value: 40 },
+    { value: 50 },
+  ];
+  rows = 8;
+  formControl = new FormControl('hello', Validators.required);
+  emailFormControl = new FormControl('', [Validators.required, Validators.pattern(EMAIL_REGEX)]);
+  delayedFormControl = new FormControl('');
+  model = 'hello';
 
   constructor(private profilesSvc: ProfilesService,
               private userSvc: UserService,
-              private router: Router) {}
+              private router: Router,
+              public snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.uiMessageHidden = true;
@@ -39,42 +72,12 @@ export class ProfileComponent implements OnInit {
       this.hatUrl = `https://${user.hatId}.${user.domain}/#/public/profile`;
     });
 
-    this.profile = {
-      dateCreated: 0,
-      private: true,
-      fb_profile_photo: { private: true },
-      personal: { title: '', first_name: '', middle_name: '',
-        last_name: '', preferred_name: '', private: true },
-      nick: { name: '', private: true },
-      birth: { date: '', private: true },
-      gender: { type: '', private: true },
-      age: { group: '', private: true },
-      primary_email: { value: '', private: true },
-      alternative_email: { value: '', private: true },
-      home_phone: { no: '', private: true },
-      mobile: { no: '', private: true },
-      address_details: { no: '', street: '', postcode: '', private: true },
-      address_global: { city: '', county: '', country: '', private: true },
-      website: { link: '', private: true },
-      blog: { link: '', private: true },
-      facebook: { link: '', private: true },
-      linkedin: { link: '', private: true },
-      twitter: { link: '', private: true },
-      google: { link: '', private: true },
-      youtube: { link: '', private: true },
-      emergency_contact: { first_name: '', last_name: '', mobile: '',
-        relationship: '', private: true },
-      about: { title: '', body: '', private: true }
-    };
-
     this.profilePhoto = {};
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      if (profileSnapshots.length > 0) {
-        this.profile = profileSnapshots[0].data;
-      }
+    this.profilesSvc.profileData$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
+      this.profile = profileSnapshots[0].data;
     });
 
-    this.profilesSvc.getInitData(1);
+    // this.profilesSvc.getInitData(1);
 
     // this.profilesSvc.getPicture().subscribe(
     //   profilePicture => {
@@ -91,34 +94,43 @@ export class ProfileComponent implements OnInit {
     // window.open("public/profile", "_blank");
   }
 
-  submitForm(event) {
-    event.preventDefault();
-    this.profile.dateCreated = moment().valueOf();
-    const stringifiedProfile = JSON.parse(JSON.stringify(this.profile, (key, value) => {
-      if (typeof value === 'boolean') {
-        return value.toString();
-      }
+  submitForm() {
+    // event.preventDefault();
+    // this.profile.dateCreated = moment().valueOf();
+    // const stringifiedProfile = JSON.parse(JSON.stringify(this.profile, (key, value) => {
+    //   if (typeof value === 'boolean') {
+    //     return value.toString();
+    //   }
+    //
+    //   return value;
+    // }));
+    // this.profilesSvc.save(stringifiedProfile).subscribe(_ => {
+    //   this.uiMessageHidden = false;
+    //   setTimeout(() => this.uiMessageHidden = true, 5000);
+    // });
 
-      return value;
-    }));
-    this.profilesSvc.save(stringifiedProfile).subscribe(_ => {
-      this.uiMessageHidden = false;
-      setTimeout(() => this.uiMessageHidden = true, 5000);
-    });
+    this.snackBar.open('Profile information saved.');
+    setTimeout(() => this.snackBar.dismiss(), 1500);
   }
 
   discardChanges() {
     this.router.navigate(['']);
   }
 
-  toggleProfilePrivacy() {
+  setGroupPrivacy(groupName: string, shared: boolean) {
     // A bit of a hack to force Angular change detection
-    setTimeout(() => this.profile.private = !this.profile.private);
+    setTimeout(() => {
+      Object.keys(this.profile[groupName]).forEach((fieldName: string) => {
+        this.profile[groupName][fieldName].shared = shared;
+      });
+    });
   }
 
-  togglePrivacy(field: string) {
+  togglePrivacy([groupName, fieldName]): void {
+    console.log('a: ', groupName, 'b: ', fieldName);
+    console.log(this.profile);
     // A bit of a hack to force Angular change detection
-    setTimeout(() => this.profile[field].private = !this.profile[field].private);
+    setTimeout(() => this.profile[groupName][fieldName].shared = !this.profile[groupName][fieldName].shared);
   }
 
   showPopover(event) {

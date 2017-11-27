@@ -6,473 +6,738 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<div class="row content-bg content-header">
-  <div class="col-md-12">
-    <div class="view-header">
-      <a role="button" class="page-info popover-click" tabindex="0" data-toggle="popover" data-container="body"
-         data-content="View and edit the details of your profile and decide what information is private and what is to be shared." class="info-button"
-         data-trigger="hover focus"
-         (mouseover)="showPopover($event)"
-         data-placement="auto bottom"><i class="material-icons">info_outline</i></a>
-      <h4>My personal data</h4>
-      <div class="view-mode-toggle">
-        <a class="previewPHATA" (click)="switchView()">Preview PHATA</a>
+<form>
+  <mat-card class="demo-card demo-basic">
+    <mat-toolbar color="primary" style="display: flex;">
+      <div style="flex: 1 1 auto; text-align: left;">Personal Details</div>
+      <div style="display: flex; align-items: center; justify-content: space-around;">
+        <button mat-icon-button matTooltip="Set all fields as private" [matTooltipPosition]="'below'"
+                (click)="setGroupPrivacy('personal', false)">
+          <mat-icon>lock</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Save form" [matTooltipPosition]="'below'"
+                (click)="submitForm()">
+          <mat-icon>save</mat-icon>
+        </button>
       </div>
-    </div>
-  </div>
-</div>
+    </mat-toolbar>
+    <mat-card-content>
+      <div style="width: 100%; max-width: 40em; margin: auto;">
+        <mat-form-field style="width: 20%;">
+          <mat-select placeholder="Title" [(value)]="profile?.personal.title.value">
+            <mat-option value="Mr">Mr</mat-option>
+            <mat-option value="Mrs">Mrs</mat-option>
+          </mat-select>
+        </mat-form-field>
 
-<div class="row content-bg">
-  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-    <form #f="ngForm" (submit)="submitForm($event)">
-      <div class="row" style="margin: 0;">
-        <section class="intro">
-          <div class="section-body">
-            <div>
-              <p>Update your profile information and customise your PHATA (personal HAT address) page - your public facing personal web page online (yourhatname.hubofallthings.net).</p>
-
-              <p>Learn more <a href="http://www.hatdex.org/phata/" target="_blank">about PHATA</a>.</p>
-            </div>
-          </div>
-        </section>
-
-        <section>
-          <h3 class="section-title">Profile Settings</h3>
-
-          <div class="section-body settings">
-            <div class="profile-privacy-switch">
-              <span>Private</span>
-              <rump-switch class="main-switch" [id]="'profile-privacy'"
-                     [isChecked]="!profile.private"
-                     (onSwitch)="toggleProfilePrivacy()"></rump-switch>
-              <span>Shared</span>
-            </div>
-
-            <div class="info">
-              <p>By setting your profile to 'SHARED', you can choose which parts of your data to be shown on your PHATA page and viewable publicly. Please remember to SAVE your settings below.</p>
-
-              <p>You can see how the public would view your HAT by going to your PHATA page <a href="{{hatUrl}}/profile" target="_blank">here</a>.</p>
-            </div>
-          </div>
-        </section>
-
-        <section *ngIf="profilePhoto.url">
-          <h3 class="section-title">Profile picture</h3>
-
-          <div class="section-body picture">
-            <rump-switch class="switch field-switch" [id]="'fb_profile_photo'"
-                           [isChecked]="!profile.fb_profile_photo.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-            <div class="img-wrapper">
-              <img src="{{profilePhoto.url}}" class="img-profile img-circle">
-            </div>
-          </div>
-        </section>
+        <mat-form-field style="width: 75%;">
+          <input matInput placeholder="First Name">
+          <rump-privacy-toggle-helper matSuffix
+                                      [fieldName]="'personal.firstName'"
+                                      [field]="profile?.personal.firstName"
+                                      (privacyToggle)="togglePrivacy($event)">
+          </rump-privacy-toggle-helper>
+        </mat-form-field>
       </div>
 
-
-      <section class="personal">
-        <h3 class="section-title">Personal</h3>
-        <rump-switch class="switch group-switch" [id]="'personal'"
-                     [isChecked]="!profile.personal.private"
-                     [disabled]="profile.private"
-                     (onSwitch)="togglePrivacy($event)"></rump-switch>
-
-        <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control rump-form-input" id="title" name="title"
-                    [(ngModel)]="profile.personal.title"
-                    aria-describedby="title">
-            </div>
-
-            <div class="form-group">
-              <label for="firstName">First Name</label>
-              <input type="text" class="form-control rump-form-input" id="firstName" name="firstName"
-                    [(ngModel)]="profile.personal.first_name"
-                    aria-describedby="firstName">
-            </div>
-
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input type="text" class="form-control rump-form-input" id="lastName" name="lastName"
-                    [(ngModel)]="profile.personal.last_name"
-                    aria-describedby="lastName">
-            </div>
-          </div>
-
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
-            <div class="form-group hidden-xs hidden-sm" style="visibility: hidden;">
-              <label for="placeholder">Placeholder</label>
-              <input type="text" class="form-control rump-form-input" id="placeholder" name="placeholder">
-            </div>
-
-            <div class="form-group">
-              <label for="middleName">Middle Name</label>
-              <input type="text" class="form-control rump-form-input" id="middleName" name="middleName"
-                    [(ngModel)]="profile.personal.middle_name"
-                    aria-describedby="middleName">
-            </div>
-
-            <div class="form-group">
-              <label for="preferredName">Preferred Name</label>
-              <input type="text" class="form-control rump-form-input" id="preferredName" name="preferredName"
-                    [(ngModel)]="profile.personal.preferred_name"
-                    aria-describedby="preferredName">
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="other">
-        <h3 class="section-title">Other</h3>
-
-        <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'nick'"
-                           [isChecked]="!profile.nick.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="nickname">Nickname</label>
-
-              <input type="text" class="form-control rump-form-input" id="nickname" name="nickname"
-                    [(ngModel)]="profile.nick.name"
-                    aria-describedby="nickname">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'birth'"
-                           [isChecked]="!profile.birth.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="dob">Date of Birth</label>
-
-              <input type="text" class="form-control rump-form-input" id="dob" name="dob"
-                    [(ngModel)]="profile.birth.date"
-                    aria-describedby="dateOfBirth">
-            </div>
-          </div>
-
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'gender'"
-                           [isChecked]="!profile.gender.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="gender">Gender</label>
-
-              <input type="text" class="form-control rump-form-input" id="gender" name="gender"
-                    [(ngModel)]="profile.gender.type"
-                    aria-describedby="gender">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'age'"
-                           [isChecked]="!profile.age.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="ageGroup">Age Group</label>
-
-              <input type="text" class="form-control rump-form-input" id="ageGroup" name="ageGroup"
-                    [(ngModel)]="profile.age.group"
-                    aria-describedby="ageGroup">
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <section class="contact">
-        <h3 class="section-title">Contact</h3>
-
-        <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'primary_email'"
-                           [isChecked]="!profile.primary_email.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="primaryEmail">Primary Email</label>
-
-              <input type="text" class="form-control rump-form-input" id="primaryEmail" name="primaryEmail"
-                    [(ngModel)]="profile.primary_email.value"
-                    aria-describedby="primaryEmail">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'home_phone'"
-                           [isChecked]="!profile.home_phone.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="homePhone">Phone Number</label>
-
-              <input type="text" class="form-control rump-form-input" id="homePhone" name="homePhone"
-                    [(ngModel)]="profile.home_phone.no"
-                    aria-describedby="homePhone">
-            </div>
-          </div>
-
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'alternative_email'"
-                           [isChecked]="!profile.alternative_email.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="alternativeEmail">Alternative Email</label>
-
-              <input type="text" class="form-control rump-form-input" id="alternativeEmail" name="alternativeEmail"
-                    [(ngModel)]="profile.alternative_email.value"
-                    aria-describedby="alternativeEmail">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'mobile'"
-                           [isChecked]="!profile.mobile.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="mobile">Mobile Number</label>
-
-              <input type="text" class="form-control rump-form-input" id="mobile" name="mobile"
-                    [(ngModel)]="profile.mobile.no"
-                    aria-describedby="mobile">
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <section class="address">
-        <h3 class="section-title">Address</h3>
-
-        <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10">
-
-            <div class="form-group">
-              <label for="houseNumber">House/Flat number</label>
-              <input type="text" class="form-control rump-form-input" id="houseNumber" name="houseNumber"
-                    [(ngModel)]="profile.address_details.no"
-                    aria-describedby="houseNumber">
-            </div>
-
-            <div class="form-group">
-              <label for="street">Street name</label>
-              <input type="text" class="form-control rump-form-input" id="street" name="street"
-                    [(ngModel)]="profile.address_details.street"
-                    aria-describedby="street">
-            </div>
-
-            <div class="form-group">
-              <label for="postcode">Postcode / zip code</label>
-              <input type="text" class="form-control rump-form-input" id="postcode" name="postcode"
-                    [(ngModel)]="profile.address_details.postcode"
-                    aria-describedby="postcode">
-            </div>
-
-            <div class="form-group">
-              <label for="city">City</label>
-              <input type="text" class="form-control rump-form-input" id="city" name="city"
-                    [(ngModel)]="profile.address_global.city"
-                    aria-describedby="city">
-            </div>
-
-            <div class="form-group">
-              <label for="county">State / County</label>
-              <input type="text" class="form-control rump-form-input" id="county" name="county"
-                    [(ngModel)]="profile.address_global.county"
-                    aria-describedby="county">
-            </div>
-
-            <div class="form-group">
-              <label for="country">Country</label>
-              <input type="text" class="form-control rump-form-input" id="country" name="country"
-                    [(ngModel)]="profile.address_global.country"
-                    aria-describedby="country">
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="online-profiles">
-        <h3 class="section-title">Online Profiles</h3>
-
-        <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'website'"
-                           [isChecked]="!profile.website.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-
-              <label for="website">Website</label>
-
-              <input type="text" class="form-control rump-form-input" id="website" name="website"
-                    [(ngModel)]="profile.website.link"
-                    aria-describedby="website">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'blog'"
-                           [isChecked]="!profile.blog.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="blog">Blog</label>
-
-              <input type="text" class="form-control rump-form-input" id="blog" name="blog"
-                    [(ngModel)]="profile.blog.link"
-                    aria-describedby="blog">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'facebook'"
-                           [isChecked]="!profile.facebook.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="facebook">Facebook profile</label>
-
-              <input type="text" class="form-control rump-form-input" id="facebook" name="facebook"
-                    [(ngModel)]="profile.facebook.link"
-                    aria-describedby="facebook">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'linkedin'"
-                           [isChecked]="!profile.linkedin.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="linkedin">LinkedIn profile</label>
-
-              <input type="text" class="form-control rump-form-input" id="linkedin" name="linkedin"
-                    [(ngModel)]="profile.linkedin.link"
-                    aria-describedby="linkedin">
-            </div>
-          </div>
-
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'twitter'"
-                           [isChecked]="!profile.twitter.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="twitter">Twitter</label>
-
-              <input type="text" class="form-control rump-form-input" id="twitter" name="twitter"
-                    [(ngModel)]="profile.twitter.link"
-                    aria-describedby="twitter">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'google'"
-                           [isChecked]="!profile.google.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="google">Google+</label>
-
-              <input type="text" class="form-control rump-form-input" id="google" name="google"
-                    [(ngModel)]="profile.google.link"
-                    aria-describedby="google">
-            </div>
-
-            <div class="form-group">
-              <rump-switch class="switch field-switch" [id]="'youtube'"
-                           [isChecked]="!profile.youtube.private"
-                           [disabled]="profile.private"
-                           (onSwitch)="togglePrivacy($event)"></rump-switch>
-              <label for="youtube">Youtube channel</label>
-
-              <input type="text" class="form-control rump-form-input" id="youtube" name="youtube"
-                    [(ngModel)]="profile.youtube.link"
-                    aria-describedby="youtube">
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="emergency-contact">
-        <h3 class="section-title">Emergency Contact</h3>
-
-        <div class="row section-body">
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">
-
-            <div class="form-group">
-              <label for="emFirstName">First Name</label>
-              <input type="text" class="form-control rump-form-input" id="emFirstName" name="emFirstName"
-                  [(ngModel)]="profile.emergency_contact.first_name"
-                  aria-describedby="emFirstName">
-            </div>
-
-            <div class="form-group">
-              <label for="emLastName">Last Name</label>
-              <input type="text" class="form-control rump-form-input" id="emLastName" name="emLastName"
-                  [(ngModel)]="profile.emergency_contact.last_name"
-                  aria-describedby="emLastName">
-            </div>
-          </div>
-
-          <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">
-            <div class="form-group">
-              <label for="emMobile">Mobile number</label>
-              <input type="text" class="form-control rump-form-input" id="emMobile" name="emMobile"
-                  [(ngModel)]="profile.emergency_contact.mobile"
-                  aria-describedby="emMobile">
-            </div>
-
-            <div class="form-group">
-              <label for="relationship">Relationship</label>
-              <input type="text" class="form-control rump-form-input" id="relationship" name="relationship"
-                  [(ngModel)]="profile.emergency_contact.relationship"
-                  aria-describedby="relationship">
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="about">
-        <h3 class="section-title">About</h3>
-        <rump-switch class="switch group-switch" [id]="'about'"
-                     [isChecked]="!profile.about.private"
-                     [disabled]="profile.private"
-                     (onSwitch)="togglePrivacy($event)"></rump-switch>
-
-        <div class="row section-body">
-          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <div class="form-group">
-              <label for="aboutTitle">Title</label>
-              <input type="text" class="form-control rump-input rump-md" id="aboutTitle" name="aboutTitle"
-                  [(ngModel)]="profile.about.title"
-                  aria-describedby="aboutTitle">
-            </div>
-          </div>
-
-          <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <div class="form-group">
-              <label for="body">Body</label>
-              <textarea class="form-control rump-input" id="body" name="body" rows="5"
-                        [(ngModel)]="profile.about.body"
-                        aria-describedby="body"></textarea>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="ui-message" [hidden]="uiMessageHidden">
-        Profile information saved.
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Middle Name">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'personal.middleName'"
+                                    [field]="profile?.personal.middleName"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Last Name">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'personal.lastName'"
+                                    [field]="profile?.personal.lastName"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <div style="margin: auto; width: 100%; max-width: 40em; text-align: left;">
+        <mat-form-field style="width: 40%; max-width: 20em;">
+          <mat-select placeholder="Gender" [(value)]="profile?.personal.gender.value">
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+          </mat-select>
+
+          <rump-privacy-toggle-helper matSuffix
+                                      [fieldName]="'personal.gender'"
+                                      [field]="profile?.personal.gender"
+                                      (privacyToggle)="togglePrivacy($event)">
+          </rump-privacy-toggle-helper>
+        </mat-form-field>
       </div>
 
-      <div class="buttons">
-        <button type="button" class="btn btn-cancel md" (click)="discardChanges()">Discard</button>
-        <button type="submit" class="btn btn-rump md fading">Save Changes</button>
+      <div style="margin: auto; width: 100%; max-width: 40em;">
+        <mat-form-field style="width: 45%; max-width: 20em;">
+          <input matInput placeholder="Birthday" disabled
+                 [matDatepicker]="birdthdayDatepicker"
+                 [(value)]="profile?.personal.birthDate.value">
+          <mat-datepicker-toggle matSuffix [for]="birdthdayDatepicker"></mat-datepicker-toggle>
+          <mat-datepicker #birdthdayDatepicker startView="year" disabled="false"></mat-datepicker>
+          <rump-privacy-toggle-helper matSuffix
+                                      [fieldName]="'personal.birthDate'"
+                                      [field]="profile?.personal.birthDate"
+                                      (privacyToggle)="togglePrivacy($event)">
+          </rump-privacy-toggle-helper>
+        </mat-form-field>
+
+        <mat-form-field style="width: 55%; max-width: 20em;">
+          <mat-select placeholder="Age Group" [(value)]="profile?.personal.ageGroup.value">
+            <mat-option value="18-25">18 &ndash; 25</mat-option>
+            <mat-option value="26-35">26 &ndash; 35</mat-option>
+            <mat-option value="36-45">36 &ndash; 45</mat-option>
+            <mat-option value="46-55">46 &ndash; 55</mat-option>
+            <mat-option value="56-65">56 &ndash; 65</mat-option>
+            <mat-option value="65-">65 +</mat-option>
+          </mat-select>
+
+          <rump-privacy-toggle-helper matSuffix
+                                      [fieldName]="'personal.ageGroup'"
+                                      [field]="profile?.personal.ageGroup"
+                                      (privacyToggle)="togglePrivacy($event)">
+          </rump-privacy-toggle-helper>
+        </mat-form-field>
       </div>
 
-    </form>
-  </div>
-</div>
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Preferred Name" ([value])="profile?.personal.preferredName.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'personal.preferredName'"
+                                    [field]="profile?.personal.preferredName"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Nickname" ([value])="profile?.personal.nickName.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'personal.nickName'"
+                                    [field]="profile?.personal.nickName"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="demo-card demo-basic">
+    <mat-toolbar color="primary">
+      <div style="flex: 1 1 auto; text-align: left;">Contact Details</div>
+      <div style="display: flex; align-items: center; justify-content: space-around;">
+        <button mat-icon-button matTooltip="Set all fields as private" [matTooltipPosition]="'below'"
+                (click)="setGroupPrivacy('contact', false)">
+          <mat-icon>lock</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Save form" [matTooltipPosition]="'below'"
+                (click)="submitForm()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-card-content>
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Primary Email" ([value])="profile.contact.primaryEmail.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'contact.primaryEmail'"
+                                    [field]="profile.contact.primaryEmail"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Alternative Email" ([value])="profile.contact.alternativeEmail.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'contact.alternativeEmail'"
+                                    [field]="profile.contact.alternativeEmail"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input type="tel" matInput placeholder="Mobile" ([value])="profile.contact.mobile.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'contact.mobile'"
+                                    [field]="profile.contact.mobile"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input type="tel" matInput placeholder="Home Number" ([value])="profile.contact.landline.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'contact.landline'"
+                                    [field]="profile.contact.landline"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="demo-card demo-basic">
+    <mat-toolbar color="primary">
+      <div style="flex: 1 1 auto; text-align: left;">Home Address</div>
+      <div style="display: flex; align-items: center; justify-content: space-around;">
+        <button mat-icon-button matTooltip="Set all fields as private" [matTooltipPosition]="'below'"
+                (click)="setGroupPrivacy('address', false)">
+          <mat-icon>lock</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Save form" [matTooltipPosition]="'below'"
+                (click)="submitForm()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-card-content>
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Address Line 1" ([value])="profile.address.addressLine1.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'address.addressLine1'"
+                                    [field]="profile.address.addressLine1"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Address Line 2" ([value])="profile.address.addressLine2.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'address.addressLine2'"
+                                    [field]="profile.address.addressLine2"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="City" ([value])="profile.address.city.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'address.city'"
+                                    [field]="profile.address.city"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Postcode" ([value])="profile.address.postcode.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'address.postcode'"
+                                    [field]="profile.address.postcode"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="County" ([value])="profile.address.county.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'address.county'"
+                                    [field]="profile.address.county"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Country" ([value])="profile.address.country.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'address.country'"
+                                    [field]="profile.address.country"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="demo-card demo-basic">
+    <mat-toolbar color="primary">
+      <div style="flex: 1 1 auto; text-align: left;">About</div>
+      <div style="display: flex; align-items: center; justify-content: space-around;">
+        <button mat-icon-button matTooltip="Set all fields as private" [matTooltipPosition]="'below'"
+                (click)="setGroupPrivacy('about', false)">
+          <mat-icon>lock</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Save form" [matTooltipPosition]="'below'"
+                (click)="submitForm()">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+    <mat-card-content>
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <input matInput placeholder="Title" ([value])="profile.about.title.value">
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'about.title'"
+                                    [field]="profile.about.title"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+
+      <mat-form-field style="width: 100%; max-width: 40em;">
+        <textarea matInput matTextareaAutosize placeholder="Say something nice about yourself"
+                  ([value])="profile.about.body.value"></textarea>
+        <rump-privacy-toggle-helper matSuffix
+                                    [fieldName]="'about.body'"
+                                    [field]="profile.about.body"
+                                    (privacyToggle)="togglePrivacy($event)">
+        </rump-privacy-toggle-helper>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+</form>
+
+<!--<div class="row content-bg">-->
+  <!--<div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">-->
+
+    <!--<form #f="ngForm" (submit)="submitForm($event)">-->
+      <!--<div class="row" style="margin: 0;">-->
+        <!--<section class="intro">-->
+          <!--<div class="section-body">-->
+            <!--<div>-->
+              <!--<p>Update your profile information and customise your PHATA (personal HAT address) page - your public facing personal web page online (yourhatname.hubofallthings.net).</p>-->
+
+              <!--<p>Learn more <a href="http://www.hatdex.org/phata/" target="_blank">about PHATA</a>.</p>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</section>-->
+
+        <!--<section>-->
+          <!--<h3 class="section-title">Profile Settings</h3>-->
+
+          <!--<div class="section-body settings">-->
+            <!--<div class="profile-privacy-switch">-->
+              <!--<span>Private</span>-->
+              <!--<rump-switch class="main-switch" [id]="'profile-privacy'"-->
+                     <!--[isChecked]="!profile.private"-->
+                     <!--(onSwitch)="toggleProfilePrivacy()"></rump-switch>-->
+              <!--<span>Shared</span>-->
+            <!--</div>-->
+
+            <!--<div class="info">-->
+              <!--<p>By setting your profile to 'SHARED', you can choose which parts of your data to be shown on your PHATA page and viewable publicly. Please remember to SAVE your settings below.</p>-->
+
+              <!--<p>You can see how the public would view your HAT by going to your PHATA page <a href="{{hatUrl}}/profile" target="_blank">here</a>.</p>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</section>-->
+
+        <!--<section *ngIf="profilePhoto.url">-->
+          <!--<h3 class="section-title">Profile picture</h3>-->
+
+          <!--<div class="section-body picture">-->
+            <!--<rump-switch class="switch field-switch" [id]="'fb_profile_photo'"-->
+                           <!--[isChecked]="!profile.fb_profile_photo.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+            <!--<div class="img-wrapper">-->
+              <!--<img src="{{profilePhoto.url}}" class="img-profile img-circle">-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</section>-->
+      <!--</div>-->
+
+
+      <!--<section class="personal">-->
+        <!--<h3 class="section-title">Personal</h3>-->
+        <!--<rump-switch class="switch group-switch" [id]="'personal'"-->
+                     <!--[isChecked]="!profile.personal.private"-->
+                     <!--[disabled]="profile.private"-->
+                     <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+
+        <!--<div class="row section-body">-->
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">-->
+            <!--<div class="form-group">-->
+              <!--<label for="title">Title</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="title" name="title"-->
+                    <!--[(ngModel)]="profile.personal.title"-->
+                    <!--aria-describedby="title">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="firstName">First Name</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="firstName" name="firstName"-->
+                    <!--[(ngModel)]="profile.personal.first_name"-->
+                    <!--aria-describedby="firstName">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="lastName">Last Name</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="lastName" name="lastName"-->
+                    <!--[(ngModel)]="profile.personal.last_name"-->
+                    <!--aria-describedby="lastName">-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">-->
+            <!--<div class="form-group hidden-xs hidden-sm" style="visibility: hidden;">-->
+              <!--<label for="placeholder">Placeholder</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="placeholder" name="placeholder">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="middleName">Middle Name</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="middleName" name="middleName"-->
+                    <!--[(ngModel)]="profile.personal.middle_name"-->
+                    <!--aria-describedby="middleName">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="preferredName">Preferred Name</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="preferredName" name="preferredName"-->
+                    <!--[(ngModel)]="profile.personal.preferred_name"-->
+                    <!--aria-describedby="preferredName">-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</section>-->
+
+      <!--<section class="other">-->
+        <!--<h3 class="section-title">Other</h3>-->
+
+        <!--<div class="row section-body">-->
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'nick'"-->
+                           <!--[isChecked]="!profile.nick.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="nickname">Nickname</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="nickname" name="nickname"-->
+                    <!--[(ngModel)]="profile.nick.name"-->
+                    <!--aria-describedby="nickname">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'birth'"-->
+                           <!--[isChecked]="!profile.birth.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="dob">Date of Birth</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="dob" name="dob"-->
+                    <!--[(ngModel)]="profile.birth.date"-->
+                    <!--aria-describedby="dateOfBirth">-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'gender'"-->
+                           <!--[isChecked]="!profile.gender.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="gender">Gender</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="gender" name="gender"-->
+                    <!--[(ngModel)]="profile.gender.type"-->
+                    <!--aria-describedby="gender">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'age'"-->
+                           <!--[isChecked]="!profile.age.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="ageGroup">Age Group</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="ageGroup" name="ageGroup"-->
+                    <!--[(ngModel)]="profile.age.group"-->
+                    <!--aria-describedby="ageGroup">-->
+            <!--</div>-->
+
+          <!--</div>-->
+        <!--</div>-->
+      <!--</section>-->
+
+      <!--<section class="contact">-->
+        <!--<h3 class="section-title">Contact</h3>-->
+
+        <!--<div class="row section-body">-->
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'primary_email'"-->
+                           <!--[isChecked]="!profile.primary_email.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="primaryEmail">Primary Email</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="primaryEmail" name="primaryEmail"-->
+                    <!--[(ngModel)]="profile.primary_email.value"-->
+                    <!--aria-describedby="primaryEmail">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'home_phone'"-->
+                           <!--[isChecked]="!profile.home_phone.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="homePhone">Phone Number</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="homePhone" name="homePhone"-->
+                    <!--[(ngModel)]="profile.home_phone.no"-->
+                    <!--aria-describedby="homePhone">-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'alternative_email'"-->
+                           <!--[isChecked]="!profile.alternative_email.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="alternativeEmail">Alternative Email</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="alternativeEmail" name="alternativeEmail"-->
+                    <!--[(ngModel)]="profile.alternative_email.value"-->
+                    <!--aria-describedby="alternativeEmail">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'mobile'"-->
+                           <!--[isChecked]="!profile.mobile.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="mobile">Mobile Number</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="mobile" name="mobile"-->
+                    <!--[(ngModel)]="profile.mobile.no"-->
+                    <!--aria-describedby="mobile">-->
+            <!--</div>-->
+
+          <!--</div>-->
+        <!--</div>-->
+      <!--</section>-->
+
+      <!--<section class="address">-->
+        <!--<h3 class="section-title">Address</h3>-->
+
+        <!--<div class="row section-body">-->
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-10">-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="houseNumber">House/Flat number</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="houseNumber" name="houseNumber"-->
+                    <!--[(ngModel)]="profile.address_details.no"-->
+                    <!--aria-describedby="houseNumber">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="street">Street name</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="street" name="street"-->
+                    <!--[(ngModel)]="profile.address_details.street"-->
+                    <!--aria-describedby="street">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="postcode">Postcode / zip code</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="postcode" name="postcode"-->
+                    <!--[(ngModel)]="profile.address_details.postcode"-->
+                    <!--aria-describedby="postcode">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="city">City</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="city" name="city"-->
+                    <!--[(ngModel)]="profile.address_global.city"-->
+                    <!--aria-describedby="city">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="county">State / County</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="county" name="county"-->
+                    <!--[(ngModel)]="profile.address_global.county"-->
+                    <!--aria-describedby="county">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="country">Country</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="country" name="country"-->
+                    <!--[(ngModel)]="profile.address_global.country"-->
+                    <!--aria-describedby="country">-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</section>-->
+
+      <!--<section class="online-profiles">-->
+        <!--<h3 class="section-title">Online Profiles</h3>-->
+
+        <!--<div class="row section-body">-->
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'website'"-->
+                           <!--[isChecked]="!profile.website.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+
+              <!--<label for="website">Website</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="website" name="website"-->
+                    <!--[(ngModel)]="profile.website.link"-->
+                    <!--aria-describedby="website">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'blog'"-->
+                           <!--[isChecked]="!profile.blog.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="blog">Blog</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="blog" name="blog"-->
+                    <!--[(ngModel)]="profile.blog.link"-->
+                    <!--aria-describedby="blog">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'facebook'"-->
+                           <!--[isChecked]="!profile.facebook.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="facebook">Facebook profile</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="facebook" name="facebook"-->
+                    <!--[(ngModel)]="profile.facebook.link"-->
+                    <!--aria-describedby="facebook">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'linkedin'"-->
+                           <!--[isChecked]="!profile.linkedin.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="linkedin">LinkedIn profile</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="linkedin" name="linkedin"-->
+                    <!--[(ngModel)]="profile.linkedin.link"-->
+                    <!--aria-describedby="linkedin">-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'twitter'"-->
+                           <!--[isChecked]="!profile.twitter.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="twitter">Twitter</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="twitter" name="twitter"-->
+                    <!--[(ngModel)]="profile.twitter.link"-->
+                    <!--aria-describedby="twitter">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'google'"-->
+                           <!--[isChecked]="!profile.google.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="google">Google+</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="google" name="google"-->
+                    <!--[(ngModel)]="profile.google.link"-->
+                    <!--aria-describedby="google">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<rump-switch class="switch field-switch" [id]="'youtube'"-->
+                           <!--[isChecked]="!profile.youtube.private"-->
+                           <!--[disabled]="profile.private"-->
+                           <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+              <!--<label for="youtube">Youtube channel</label>-->
+
+              <!--<input type="text" class="form-control rump-form-input" id="youtube" name="youtube"-->
+                    <!--[(ngModel)]="profile.youtube.link"-->
+                    <!--aria-describedby="youtube">-->
+            <!--</div>-->
+          <!--</div>-->
+
+        <!--</div>-->
+      <!--</section>-->
+
+      <!--<section class="emergency-contact">-->
+        <!--<h3 class="section-title">Emergency Contact</h3>-->
+
+        <!--<div class="row section-body">-->
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-1 col-md-5">-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="emFirstName">First Name</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="emFirstName" name="emFirstName"-->
+                  <!--[(ngModel)]="profile.emergency_contact.first_name"-->
+                  <!--aria-describedby="emFirstName">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="emLastName">Last Name</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="emLastName" name="emLastName"-->
+                  <!--[(ngModel)]="profile.emergency_contact.last_name"-->
+                  <!--aria-describedby="emLastName">-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-5">-->
+            <!--<div class="form-group">-->
+              <!--<label for="emMobile">Mobile number</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="emMobile" name="emMobile"-->
+                  <!--[(ngModel)]="profile.emergency_contact.mobile"-->
+                  <!--aria-describedby="emMobile">-->
+            <!--</div>-->
+
+            <!--<div class="form-group">-->
+              <!--<label for="relationship">Relationship</label>-->
+              <!--<input type="text" class="form-control rump-form-input" id="relationship" name="relationship"-->
+                  <!--[(ngModel)]="profile.emergency_contact.relationship"-->
+                  <!--aria-describedby="relationship">-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</section>-->
+
+      <!--<section class="about">-->
+        <!--<h3 class="section-title">About</h3>-->
+        <!--<rump-switch class="switch group-switch" [id]="'about'"-->
+                     <!--[isChecked]="!profile.about.private"-->
+                     <!--[disabled]="profile.private"-->
+                     <!--(onSwitch)="togglePrivacy($event)"></rump-switch>-->
+
+        <!--<div class="row section-body">-->
+          <!--<div class="col-xs-12 col-sm-10 col-sm-offset-1">-->
+            <!--<div class="form-group">-->
+              <!--<label for="aboutTitle">Title</label>-->
+              <!--<input type="text" class="form-control rump-input rump-md" id="aboutTitle" name="aboutTitle"-->
+                  <!--[(ngModel)]="profile.about.title"-->
+                  <!--aria-describedby="aboutTitle">-->
+            <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="col-xs-12 col-sm-10 col-sm-offset-1">-->
+            <!--<div class="form-group">-->
+              <!--<label for="body">Body</label>-->
+              <!--<textarea class="form-control rump-input" id="body" name="body" rows="5"-->
+                        <!--[(ngModel)]="profile.about.body"-->
+                        <!--aria-describedby="body"></textarea>-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</section>-->
+
+      <!--<div class="ui-message" [hidden]="uiMessageHidden">-->
+        <!--Profile information saved.-->
+      <!--</div>-->
+
+      <!--<div class="buttons">-->
+        <!--<button type="button" class="btn btn-cancel md" (click)="discardChanges()">Discard</button>-->
+        <!--<button type="submit" class="btn btn-rump md fading">Save Changes</button>-->
+      <!--</div>-->
+
+    <!--</form>-->
+  <!--</div>-->
+<!--</div>-->

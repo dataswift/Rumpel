@@ -89,12 +89,12 @@ export class HeaderComponent implements OnInit {
     this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
       const latestSnapshot = profileSnapshots[0];
 
-      if (latestSnapshot && latestSnapshot.data.personal.first_name) {
-        this.profile.first_name = latestSnapshot.data.personal.first_name;
+      if (latestSnapshot && latestSnapshot.data.personal.firstName) {
+        this.profile.first_name = latestSnapshot.data.personal.firstName.value;
       }
 
-      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
+      if (latestSnapshot && latestSnapshot.data.profilePhoto) {
+        this.profile.photo.shared = latestSnapshot.data.profilePhoto.shared;
       }
     });
 

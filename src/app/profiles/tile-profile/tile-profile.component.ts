@@ -22,39 +22,9 @@ export class TileProfileComponent implements OnInit {
   constructor(private profilesSvc: ProfilesService) {}
 
   ngOnInit() {
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      if (profileSnapshots.length > 0) {
-        this.profile = profileSnapshots[0].data;
-      }
+    this.profilesSvc.profileData$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
+      this.profile = profileSnapshots[0].data;
     });
-
-    this.profile = {
-      dateCreated: 0,
-      private: true,
-      fb_profile_photo: { private: true },
-      personal: { title: '', first_name: '', middle_name: '',
-                  last_name: '', preferred_name: '', private: true },
-      nick: { name: '', private: true },
-      birth: { date: '', private: true },
-      gender: { type: '', private: true },
-      age: { group: '', private: true },
-      primary_email: { value: '', private: true },
-      alternative_email: { value: '', private: true },
-      home_phone: { no: '', private: true },
-      mobile: { no: '', private: true },
-      address_details: { no: '', street: '', postcode: '', private: true },
-      address_global: { city: '', county: '', country: '', private: true },
-      website: { link: '', private: true },
-      blog: { link: '', private: true },
-      facebook: { link: '', private: true },
-      linkedin: { link: '', private: true },
-      twitter: { link: '', private: true },
-      google: { link: '', private: true },
-      youtube: { link: '', private: true },
-      emergency_contact: { first_name: '', last_name: '', mobile: '',
-                          relationship: '', private: true },
-      about: { title: '', body: '', private: true }
-    };
 
     this.profilesSvc.getInitData(1);
   }

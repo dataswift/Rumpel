@@ -287,3 +287,33 @@ form {
     text-align: center;
   }
 }
+
+.demo-basic {
+  padding: 0;
+}
+.demo-basic .mat-card-content {
+  padding: 2em;
+}
+.demo-full-width {
+  width: 100%;
+}
+
+.demo-card {
+  margin: 4em 1em;
+}
+
+.demo-text-align-end {
+  text-align: end;
+}
+
+.demo-textarea {
+  resize: none;
+  border: none;
+  overflow: auto;
+  padding: 0;
+  background: lightblue;
+}
+
+.mat-form-field {
+  padding: 0 0.5em;
+}
