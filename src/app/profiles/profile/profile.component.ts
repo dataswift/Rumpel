@@ -14,14 +14,15 @@ import { Profile } from '../../shared/interfaces/profile.interface';
 import { User } from '../../user/user.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
-import * as moment from 'moment';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { DialogService } from '../../layout/dialog.service';
+import { FileUploadComponent } from '../../layout/file-upload/file-upload.component';
 
 declare var $: any;
-const max = 5;
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const URL_REGEX = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 
 @Component({
   selector: 'rump-profile',
@@ -56,12 +57,17 @@ export class ProfileComponent implements OnInit {
     { value: 50 },
   ];
   rows = 8;
-  formControl = new FormControl('hello', Validators.required);
-  emailFormControl = new FormControl('', [Validators.required, Validators.pattern(EMAIL_REGEX)]);
-  delayedFormControl = new FormControl('');
-  model = 'hello';
+  public emailFormControl = new FormControl('', [Validators.required, Validators.pattern(EMAIL_REGEX)]);
+  public websiteFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public blogFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public facebookFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public twitterFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public linkedinFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public googlePlusFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public youtubeFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
 
   constructor(private profilesSvc: ProfilesService,
+              private dialogSvc: DialogService,
               private userSvc: UserService,
               private router: Router,
               public snackBar: MatSnackBar) {}
@@ -76,22 +82,19 @@ export class ProfileComponent implements OnInit {
     this.profilesSvc.profileData$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
       this.profile = profileSnapshots[0].data;
     });
+  }
 
-    // this.profilesSvc.getInitData(1);
-
-    // this.profilesSvc.getPicture().subscribe(
-    //   profilePicture => {
-    //     if (profilePicture) {
-    //       this.profilePhoto = profilePicture;
-    //     }
-    //   },
-    //   err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
-    // );
+  get hostname(): string {
+    return window.location.hostname;
   }
 
   switchView() {
     this.router.navigate([ 'public', 'profile' ]);
     // window.open("public/profile", "_blank");
+  }
+
+  invokeFileUploadDialog(): void {
+    this.dialogSvc.createDialog(FileUploadComponent, {});
   }
 
   submitForm() {

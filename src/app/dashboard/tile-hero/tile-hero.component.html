@@ -6,7 +6,7 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org>
   -->
 
-<div class="dashboard-hero overlay">
+<mat-card class="dashboard-hero overlay">
   <div class="hero-content">
     <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon.svg'">
     <div class="details">
@@ -15,4 +15,4 @@
         <a (click)="showInfoModal()">Learn more</a>
   </div>
   </div>
-</div>
+</mat-card>

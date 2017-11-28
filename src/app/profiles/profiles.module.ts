@@ -7,7 +7,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ProfilesRoutingModule } from './profiles-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -36,7 +36,7 @@ import { PrivacyToggleHelperComponent } from './privacy-toggle-helper/privacy-to
 import { TileHeroComponent } from '../dashboard/tile-hero/tile-hero.component';
 
 @NgModule({
-    imports: [ SharedModule, FormsModule, ProfilesRoutingModule,
+    imports: [ SharedModule, FormsModule, ProfilesRoutingModule, ReactiveFormsModule,
                NoopAnimationsModule, MatTabsModule, MatFormFieldModule, MatInputModule, MatExpansionModule, MatCardModule,
                MatToolbarModule, MatIconModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatButtonToggleModule,
                MatButtonModule, MatTooltipModule, MatSnackBarModule ],

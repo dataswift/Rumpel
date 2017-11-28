@@ -22,9 +22,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
   styleUrls: ['tile-hero.component.scss']
 })
 export class TileHeroComponent implements OnInit {
-
   public profile: { photo: { url: string; shared: boolean; }, domainName: string };
-
   public userAuthenticated = false;
 
   constructor(private profilesSvc: ProfilesService,

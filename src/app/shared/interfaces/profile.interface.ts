@@ -27,6 +27,12 @@ export interface Profile {
     mobile: ShareableDataItem;
     landline: ShareableDataItem;
   };
+  emergencyContact: {
+    firstName: ShareableDataItem;
+    lastName: ShareableDataItem;
+    mobile: ShareableDataItem;
+    relationship: ShareableDataItem;
+  };
   address: {
     addressLine1: ShareableDataItem;
     addressLine2: ShareableDataItem;
@@ -38,7 +44,16 @@ export interface Profile {
   about: {
     title: ShareableDataItem;
     body: ShareableDataItem;
-  }
+  };
+  online: {
+    website: ShareableDataItem;
+    blog: ShareableDataItem;
+    facebook: ShareableDataItem;
+    twitter: ShareableDataItem;
+    linkedin: ShareableDataItem;
+    google: ShareableDataItem;
+    youtube: ShareableDataItem;
+  };
 }
 
 export interface ShareableDataItem {
