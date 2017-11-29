@@ -16,7 +16,7 @@ import { User } from '../user/user.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { DataDebit, DataDebitValues } from '../shared/interfaces/data-debit.interface';
 import { FileMetadataReq, FileMetadataRes } from '../shared/interfaces/file.interface';
-import { EndpointQuery } from '../shared/interfaces/bundle.interface';
+import { BundleStructure, BundleValues, EndpointQuery } from '../shared/interfaces/bundle.interface';
 
 @Injectable()
 export class HatApiV2Service {
@@ -142,7 +142,7 @@ export class HatApiV2Service {
     const path = `${this.pathPrefix}/combinator/${name}`;
 
     const queryParams = new URLSearchParams();
-    queryParams.append('take', take.toString())
+    queryParams.append('take', take.toString());
 
     return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
   }
@@ -151,6 +151,24 @@ export class HatApiV2Service {
     const path = `${this.pathPrefix}/combinator/${name}`;
 
     return this.authHttp.post(path, proposedCombinator).map((res: Response) => res.status);
+  }
+
+  getDataBundle(bundleId: string): Observable<any> {
+    const path = `${this.pathPrefix}/data-bundle/${bundleId}`;
+
+    return this.authHttp.get(path).map((res: Response) => res.json());
+  }
+
+  getDataBundeStructure(bundleId: string): Observable<BundleStructure> {
+    const path = `${this.pathPrefix}/data-bundle/${bundleId}/structure`;
+
+    return this.authHttp.get(path).map((res: Response) => <BundleStructure>res.json());
+  }
+
+  proposeNewDataBundle(bundleId: string, bundle: BundleStructure): Observable<BundleValues> {
+    const path = `${this.pathPrefix}/data-bundle/${bundleId}`;
+
+    return this.authHttp.post(path, bundle).map((res: Response) => <BundleValues>res.json());
   }
 
   getAllDataDebits(): Observable<DataDebit[]> {

@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 10, 2017
  */
 
-import { Bundle } from '../shared/interfaces/bundle.interface';
+import { BundleStructure } from '../shared/interfaces/bundle.interface';
 
 export interface Offer {
   id: string;
@@ -18,8 +18,8 @@ export interface Offer {
   starts: number;
   expires: number;
   collectFor: number;
-  requiredDataDefinition: DataDefinition[] | Bundle;
-  dataConditions?: Bundle;
+  requiredDataDefinition: DataDefinition[] | BundleStructure;
+  dataConditions?: BundleStructure;
   requiredMinUser: number;
   requiredMaxUser: number;
   totalUserClaims: number;
