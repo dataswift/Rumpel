@@ -8,8 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../profiles.service';
-import { Profile } from '../../shared/interfaces/profile.interface';
-import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 @Component({
   selector: 'rump-tile-profile',
@@ -17,16 +16,18 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
   styleUrls: ['tile-profile.component.scss']
 })
 export class TileProfileComponent implements OnInit {
-  public profile: Profile;
+  public values: Profile;
+  public shares: ProfileSharingConfig;
 
   constructor(private profilesSvc: ProfilesService) {}
 
   ngOnInit() {
-    this.profilesSvc.profileData$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      this.profile = profileSnapshots[0].data;
+    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
+      this.values = profile.values;
+      this.shares = profile.share;
     });
 
-    this.profilesSvc.getInitData(1);
+    this.profilesSvc.getProfileData();
   }
 
 }

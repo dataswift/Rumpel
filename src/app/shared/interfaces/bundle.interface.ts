@@ -17,7 +17,7 @@ export interface BundleValues {
   [bundleName: string]: HatRecord<any>[];
 }
 
-interface PropertyQuery {
+export interface PropertyQuery {
   endpoints: EndpointQuery[];
   orderBy?: string;
   ordering?: string;

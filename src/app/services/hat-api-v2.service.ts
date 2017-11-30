@@ -16,7 +16,7 @@ import { User } from '../user/user.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { DataDebit, DataDebitValues } from '../shared/interfaces/data-debit.interface';
 import { FileMetadataReq, FileMetadataRes } from '../shared/interfaces/file.interface';
-import { BundleStructure, BundleValues, EndpointQuery } from '../shared/interfaces/bundle.interface';
+import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../shared/interfaces/bundle.interface';
 
 @Injectable()
 export class HatApiV2Service {
@@ -165,7 +165,7 @@ export class HatApiV2Service {
     return this.authHttp.get(path).map((res: Response) => <BundleStructure>res.json());
   }
 
-  proposeNewDataBundle(bundleId: string, bundle: BundleStructure): Observable<BundleValues> {
+  proposeNewDataBundle(bundleId: string, bundle: { [bundleVersion: string]: PropertyQuery }): Observable<BundleValues> {
     const path = `${this.pathPrefix}/data-bundle/${bundleId}`;
 
     return this.authHttp.post(path, bundle).map((res: Response) => <BundleValues>res.json());

@@ -1,4 +1,4 @@
-<div class="info-tag">{{ field?.shared ? 'shared' : 'private' }}</div>
+<div class="info-tag">{{ shared ? 'shared' : 'private' }}</div>
 <mat-icon class="switch-icon" (click)="clicked($event)">
-  {{ field?.shared ? 'lock_open' : 'lock_outline' }}
+  {{ shared ? 'lock_open' : 'lock_outline' }}
 </mat-icon>

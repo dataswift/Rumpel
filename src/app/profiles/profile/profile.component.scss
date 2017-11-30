@@ -324,18 +324,18 @@ form {
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url('/assets/images/hero-fade.jpg');
+}
 
-  .social-links {
-    a {
-      margin: 0 7px;
+.social-links {
+  a {
+    margin: 0 7px;
 
-      img {
-        top: 0;
-        border: none;
-        width: 48px;
-        height: 48px;
-        background: $app-background-color;
-      }
+    img {
+      top: 0;
+      border: none;
+      width: 4em;
+      height: 4em;
+      background: $app-background-color;
     }
   }
 }

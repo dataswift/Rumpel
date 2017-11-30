@@ -15,8 +15,8 @@
         <mat-icon>file_upload</mat-icon>
       </button>
       <button mat-icon-button matTooltip="Toggle profile photo privacy" [matTooltipPosition]="'below'"
-              (click)="profile.profilePhoto.shared = !profile.profilePhoto.shared">
-        <mat-icon>{{ profile.profilePhoto.shared ? 'lock_open' : 'lock_outline' }}</mat-icon>
+              (click)="share.photo.avatar = !share.photo.avatar">
+        <mat-icon>{{ share.photo.avatar ? 'lock_open' : 'lock_outline' }}</mat-icon>
       </button>
       <button mat-icon-button matTooltip="Save form" [matTooltipPosition]="'below'"
               (click)="submitForm()">
@@ -29,7 +29,7 @@
     <div class="phata-box phata-name" style="margin-top: 100px;">
       <div matTooltip="Upload new profile photo" [matTooltipPosition]="'above'" style="cursor: pointer;"
            (click)="invokeFileUploadDialog()">
-        <svg *ngIf="!profile?.profilePhoto.value" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        <svg *ngIf="!values?.photo.avatar" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            width="20px" height="20px" viewBox="2 2 20 20" enable-background="new 2 2 20 20" xml:space="preserve">
           <path fill="#FFFFFF" d="M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M12,5
             c1.66,0,3,1.34,3,3s-1.34,3-3,3S9,9.66,9,8S10.34,5,12,5z M12,19.2c-2.5,0-4.71-1.28-6-3.22c0.03-1.99,4-3.08,6-3.08
@@ -37,19 +37,19 @@
           <path fill="none" d="M0,0h24v24H0V0z"/>
         </svg>
 
-        <img *ngIf="profile?.profilePhoto.value" [src]="profile?.profilePhoto.value">
+        <img *ngIf="values?.photo.avatar" [src]="values?.photo.avatar | presignImgUrl | async">
       </div>
 
-      <h1>{{hostname}}</h1>
+      <h1>{{hatDomain}}</h1>
       <p>
         <span class="social-links">
-          <a *ngIf="profile?.online.website.value" [href]="profile?.online.website.value" target="_blank"><img src="assets/icons/website-icon.svg"></a>
-          <a *ngIf="profile?.online.blog.value" [href]="profile?.online.blog.value" target="_blank"><img src="assets/icons/blog-icon.svg"></a>
-          <a *ngIf="profile?.online.facebook.value" [href]="profile?.online.facebook.value" target="_blank"><img src="assets/icons/facebook-grey-icon.svg"></a>
-          <a *ngIf="profile?.online.twitter.value" [href]="profile?.online.twitter.value" target="_blank"><img src="assets/icons/twitter-grey-icon.svg"></a>
-          <a *ngIf="profile?.online.google.value" [href]="profile?.online.google.value" target="_blank"><img src="assets/icons/google-icon.svg"></a>
-          <a *ngIf="profile?.online.linkedin.value" [href]="profile?.online.linkedin.value" target="_blank"><img src="assets/icons/linkedin-icon.svg"></a>
-          <a *ngIf="profile?.online.youtube.value" [href]="profile?.online.youtube.value" target="_blank"><img src="assets/icons/youtube-icon.svg"></a>
+          <a *ngIf="values.online.website" [href]="values.online.website" target="_blank"><img src="assets/icons/website-icon.svg"></a>
+          <a *ngIf="values.online.blog" [href]="values.online.blog" target="_blank"><img src="assets/icons/blog-icon.svg"></a>
+          <a *ngIf="values.online.facebook" [href]="values.online.facebook" target="_blank"><img src="assets/icons/facebook-grey-icon.svg"></a>
+          <a *ngIf="values.online.twitter" [href]="values.online.twitter" target="_blank"><img src="assets/icons/twitter-grey-icon.svg"></a>
+          <a *ngIf="values.online.google" [href]="values.online.google" target="_blank"><img src="assets/icons/google-icon.svg"></a>
+          <a *ngIf="values.online.linkedin" [href]="values.online.linkedin" target="_blank"><img src="assets/icons/linkedin-icon.svg"></a>
+          <a *ngIf="values.online.youtube" [href]="values.online.youtube" target="_blank"><img src="assets/icons/youtube-icon.svg"></a>
         </span>
       </p>
     </div>
@@ -74,17 +74,17 @@
     <mat-card-content>
       <div style="width: 100%; max-width: 40em; margin: auto;">
         <mat-form-field style="width: 24%;">
-          <mat-select placeholder="Title" [(value)]="profile?.personal.title.value">
+          <mat-select placeholder="Title" name="title" [(ngModel)]="values?.personal.title">
             <mat-option value="Mr">Mr</mat-option>
             <mat-option value="Mrs">Mrs</mat-option>
           </mat-select>
         </mat-form-field>
 
         <mat-form-field style="width: 75%;">
-          <input matInput placeholder="First Name">
+          <input matInput placeholder="First Name" name="firstName" [(ngModel)]="values.personal.firstName">
           <rump-privacy-toggle-helper matSuffix
                                       [fieldName]="'personal.firstName'"
-                                      [field]="profile?.personal.firstName"
+                                      [shared]="share?.personal.firstName"
                                       (privacyToggle)="togglePrivacy($event)">
           </rump-privacy-toggle-helper>
         </mat-form-field>
@@ -92,10 +92,10 @@
 
       <div>
         <mat-form-field style="width: 100%; max-width: 40em;">
-          <input matInput placeholder="Middle Name">
+          <input matInput placeholder="Middle Name" name="middleName" [(ngModel)]="values.personal.middleName">
           <rump-privacy-toggle-helper matSuffix
                                       [fieldName]="'personal.middleName'"
-                                      [field]="profile?.personal.middleName"
+                                      [shared]="share.personal.middleName"
                                       (privacyToggle)="togglePrivacy($event)">
           </rump-privacy-toggle-helper>
         </mat-form-field>
@@ -103,10 +103,10 @@
 
       <div>
         <mat-form-field style="width: 100%; max-width: 40em;">
-          <input matInput placeholder="Last Name">
+          <input matInput placeholder="Last Name" name="lastName" [(ngModel)]="values.personal.lastName">
           <rump-privacy-toggle-helper matSuffix
                                       [fieldName]="'personal.lastName'"
-                                      [field]="profile?.personal.lastName"
+                                      [shared]="share.personal.lastName"
                                       (privacyToggle)="togglePrivacy($event)">
           </rump-privacy-toggle-helper>
         </mat-form-field>
@@ -114,14 +114,14 @@
 
       <div style="margin: auto; width: 100%; max-width: 40em; text-align: left;">
         <mat-form-field style="width: 40%; max-width: 20em;">
-          <mat-select placeholder="Gender" [(value)]="profile?.personal.gender.value">
+          <mat-select placeholder="Gender" name="gender" [(ngModel)]="values.personal.gender">
             <mat-option value="male">Male</mat-option>
             <mat-option value="female">Female</mat-option>
           </mat-select>
 
           <rump-privacy-toggle-helper matSuffix
                                       [fieldName]="'personal.gender'"
-                                      [field]="profile?.personal.gender"
+                                      [shared]="share.personal.gender"
                                       (privacyToggle)="togglePrivacy($event)">
           </rump-privacy-toggle-helper>
         </mat-form-field>
@@ -129,20 +129,20 @@
 
       <div style="margin: auto; width: 100%; max-width: 40em;">
         <mat-form-field style="width: 49%;">
-          <input matInput placeholder="Birthday" disabled
+          <input matInput placeholder="Birthday" disabled name="birthday"
                  [matDatepicker]="birdthdayDatepicker"
-                 [(value)]="profile?.personal.birthDate.value">
+                 [(ngModel)]="values.personal.birthDate">
           <mat-datepicker-toggle matSuffix [for]="birdthdayDatepicker"></mat-datepicker-toggle>
           <mat-datepicker #birdthdayDatepicker startView="year" disabled="false"></mat-datepicker>
           <rump-privacy-toggle-helper matSuffix
                                       [fieldName]="'personal.birthDate'"
-                                      [field]="profile?.personal.birthDate"
+                                      [shared]="share.personal.birthDate"
                                       (privacyToggle)="togglePrivacy($event)">
           </rump-privacy-toggle-helper>
         </mat-form-field>
 
         <mat-form-field style="width: 50%;">
-          <mat-select placeholder="Age Group" [(value)]="profile?.personal.ageGroup.value">
+          <mat-select placeholder="Age Group" name="ageGroup" [(ngModel)]="values.personal.ageGroup">
             <mat-option value="18-25">18 &ndash; 25</mat-option>
             <mat-option value="26-35">26 &ndash; 35</mat-option>
             <mat-option value="36-45">36 &ndash; 45</mat-option>
@@ -153,7 +153,7 @@
 
           <rump-privacy-toggle-helper matSuffix
                                       [fieldName]="'personal.ageGroup'"
-                                      [field]="profile?.personal.ageGroup"
+                                      [shared]="share.personal.ageGroup"
                                       (privacyToggle)="togglePrivacy($event)">
           </rump-privacy-toggle-helper>
         </mat-form-field>
@@ -161,10 +161,10 @@
 
       <div>
         <mat-form-field style="width: 100%; max-width: 40em;">
-          <input matInput placeholder="Preferred Name" ([value])="profile?.personal.preferredName.value">
+          <input matInput placeholder="Preferred Name" name="preferredName" [(ngModel)]="values.personal.preferredName">
           <rump-privacy-toggle-helper matSuffix
                                       [fieldName]="'personal.preferredName'"
-                                      [field]="profile?.personal.preferredName"
+                                      [shared]="share.personal.preferredName"
                                       (privacyToggle)="togglePrivacy($event)">
           </rump-privacy-toggle-helper>
         </mat-form-field>
@@ -172,10 +172,10 @@
 
       <div>
         <mat-form-field style="width: 100%; max-width: 40em;">
-          <input matInput placeholder="Nickname" ([value])="profile?.personal.nickName.value">
+          <input matInput placeholder="Nickname" name="nickname" [(ngModel)]="values.personal.nickName">
           <rump-privacy-toggle-helper matSuffix
                                       [fieldName]="'personal.nickName'"
-                                      [field]="profile?.personal.nickName"
+                                      [shared]="share.personal.nickName"
                                       (privacyToggle)="togglePrivacy($event)">
           </rump-privacy-toggle-helper>
         </mat-form-field>
@@ -199,10 +199,11 @@
     </mat-toolbar>
     <mat-card-content>
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Personal Website" ([value])="profile.online.website.value" [formControl]="websiteFormControl">
+        <input matInput placeholder="Personal Website" name="personalWebsite"
+               [(ngModel)]="values.online.website" [formControl]="websiteFormControl">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'online.website'"
-                                    [field]="profile.online.website"
+                                    [shared]="share.online.website"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
         <mat-error *ngIf="websiteFormControl.hasError('pattern')">
@@ -211,10 +212,11 @@
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Blog" ([value])="profile.online.blog.value" [formControl]="blogFormControl">
+        <input matInput placeholder="Blog" name="blog"
+               [(ngModel)]="values.online.blog" [formControl]="blogFormControl">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'online.blog'"
-                                    [field]="profile.online.blog"
+                                    [shared]="share.online.blog"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
         <mat-error *ngIf="blogFormControl.hasError('pattern')">
@@ -223,10 +225,11 @@
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Facebook Profile" ([value])="profile.online.facebook.value" [formControl]="facebookFormControl">
+        <input matInput placeholder="Facebook Profile" name="facebookProfile"
+               [(ngModel)]="values.online.facebook" [formControl]="facebookFormControl">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'online.facebook'"
-                                    [field]="profile.online.facebook"
+                                    [shared]="share.online.facebook"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
         <mat-error *ngIf="facebookFormControl.hasError('pattern')">
@@ -235,10 +238,11 @@
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Twitter Feed" ([value])="profile.online.twitter.value" [formControl]="twitterFormControl">
+        <input matInput placeholder="Twitter Feed" name="twitterFeed"
+               [(ngModel)]="values.online.twitter" [formControl]="twitterFormControl">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'online.twitter'"
-                                    [field]="profile.online.twitter"
+                                    [shared]="share.online.twitter"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
         <mat-error *ngIf="twitterFormControl.hasError('pattern')">
@@ -247,10 +251,11 @@
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="LinkedIn Profile" ([value])="profile.online.linkedin.value" [formControl]="linkedinFormControl">
+        <input matInput placeholder="LinkedIn Profile" name="linkedInProfile"
+               [(ngModel)]="values.online.linkedin" [formControl]="linkedinFormControl">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'online.linkedin'"
-                                    [field]="profile.online.linkedin"
+                                    [shared]="share.online.linkedin"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
         <mat-error *ngIf="linkedinFormControl.hasError('pattern')">
@@ -259,10 +264,11 @@
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input type="tel" matInput placeholder="Google+ Profile" ([value])="profile.online.google.value" [formControl]="googlePlusFormControl">
+        <input type="tel" matInput placeholder="Google+ Profile" name="googlePlusProfile"
+               [(ngModel)]="values.online.google" [formControl]="googlePlusFormControl">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'online.google'"
-                                    [field]="profile.online.google"
+                                    [shared]="share.online.google"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
         <mat-error *ngIf="googlePlusFormControl.hasError('pattern')">
@@ -271,10 +277,11 @@
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input type="tel" matInput placeholder="YouTube Channel" ([value])="profile.online.youtube.value" [formControl]="youtubeFormControl">
+        <input type="tel" matInput placeholder="YouTube Channel" name="youtubeChannel"
+               [(ngModel)]="values.online.youtube" [formControl]="youtubeFormControl">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'online.youtube'"
-                                    [field]="profile.online.youtube"
+                                    [shared]="share.online.youtube"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
         <mat-error *ngIf="youtubeFormControl.hasError('pattern')">
@@ -300,37 +307,37 @@
     </mat-toolbar>
     <mat-card-content>
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Primary Email" ([value])="profile.contact.primaryEmail.value">
+        <input matInput placeholder="Primary Email" name="primaryEmail" [(ngModel)]="values.contact.primaryEmail">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'contact.primaryEmail'"
-                                    [field]="profile.contact.primaryEmail"
+                                    [shared]="share.contact.primaryEmail"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Alternative Email" ([value])="profile.contact.alternativeEmail.value">
+        <input matInput placeholder="Alternative Email" name="alternativeEmail" [(ngModel)]="values.contact.alternativeEmail">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'contact.alternativeEmail'"
-                                    [field]="profile.contact.alternativeEmail"
+                                    [shared]="share.contact.alternativeEmail"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input type="tel" matInput placeholder="Mobile" ([value])="profile.contact.mobile.value">
+        <input type="tel" matInput placeholder="Mobile" name="mobileNumber" [(ngModel)]="values.contact.mobile">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'contact.mobile'"
-                                    [field]="profile.contact.mobile"
+                                    [shared]="share.contact.mobile"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input type="tel" matInput placeholder="Home Number" ([value])="profile.contact.landline.value">
+        <input type="tel" matInput placeholder="Home Number" name="landlineNumber" [(ngModel)]="values.contact.landline">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'contact.landline'"
-                                    [field]="profile.contact.landline"
+                                    [shared]="share.contact.landline"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
@@ -353,37 +360,37 @@
     </mat-toolbar>
     <mat-card-content>
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="First Name" ([value])="profile.emergencyContact.firstName.value">
+        <input matInput placeholder="First Name" name="emergencyFirstName" [(ngModel)]="values.emergencyContact.firstName">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'emergencyContact.firstName'"
-                                    [field]="profile.emergencyContact.firstName"
+                                    [shared]="share.emergencyContact.firstName"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Last Name" ([value])="profile.emergencyContact.lastName.value">
+        <input matInput placeholder="Last Name" name="emergencyLastName" [(ngModel)]="values.emergencyContact.lastName">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'emergencyContact.lastName'"
-                                    [field]="profile.emergencyContact.lastName"
+                                    [shared]="share.emergencyContact.lastName"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input type="tel" matInput placeholder="Mobile" ([value])="profile.emergencyContact.mobile.value">
+        <input type="tel" matInput placeholder="Mobile" name="emergencyMobile" [(ngModel)]="values.emergencyContact.mobile">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'emergencyContact.mobile'"
-                                    [field]="profile.emergencyContact.mobile"
+                                    [shared]="share.emergencyContact.mobile"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input type="tel" matInput placeholder="Relationship" ([value])="profile.emergencyContact.relationship.value">
+        <input type="tel" matInput placeholder="Relationship" name="emergencyRelationship" [(ngModel)]="values.emergencyContact.relationship">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'emergencyContact.relationship'"
-                                    [field]="profile.emergencyContact.relationship"
+                                    [shared]="share.emergencyContact.relationship"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
@@ -392,7 +399,7 @@
 
   <mat-card class="demo-card demo-basic">
     <mat-toolbar color="primary" style="border-top-left-radius: 8px; border-top-right-radius: 8px;">
-      <div style="flex: 1 1 auto; text-align: left;">Home Address</div>
+      <div style="flex: 1 1 auto; text-align: left;">Location</div>
       <div style="display: flex; align-items: center; justify-content: space-around;">
         <button mat-icon-button matTooltip="Set all fields as private" [matTooltipPosition]="'below'"
                 (click)="setGroupPrivacy('address', false)">
@@ -406,55 +413,28 @@
     </mat-toolbar>
     <mat-card-content>
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Address Line 1" ([value])="profile.address.addressLine1.value">
-        <rump-privacy-toggle-helper matSuffix
-                                    [fieldName]="'address.addressLine1'"
-                                    [field]="profile.address.addressLine1"
-                                    (privacyToggle)="togglePrivacy($event)">
-        </rump-privacy-toggle-helper>
-      </mat-form-field>
-
-      <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Address Line 2" ([value])="profile.address.addressLine2.value">
-        <rump-privacy-toggle-helper matSuffix
-                                    [fieldName]="'address.addressLine2'"
-                                    [field]="profile.address.addressLine2"
-                                    (privacyToggle)="togglePrivacy($event)">
-        </rump-privacy-toggle-helper>
-      </mat-form-field>
-
-      <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="City" ([value])="profile.address.city.value">
+        <input matInput placeholder="City" name="city" [(ngModel)]="values.address.city">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'address.city'"
-                                    [field]="profile.address.city"
+                                    [shared]="share.address.city"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Postcode" ([value])="profile.address.postcode.value">
-        <rump-privacy-toggle-helper matSuffix
-                                    [fieldName]="'address.postcode'"
-                                    [field]="profile.address.postcode"
-                                    (privacyToggle)="togglePrivacy($event)">
-        </rump-privacy-toggle-helper>
-      </mat-form-field>
-
-      <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="County" ([value])="profile.address.county.value">
+        <input matInput placeholder="County" name="county" [(ngModel)]="values.address.county">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'address.county'"
-                                    [field]="profile.address.county"
+                                    [shared]="share.address.county"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Country" ([value])="profile.address.country.value">
+        <input matInput placeholder="Country" name="country" [(ngModel)]="values.address.country">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'address.country'"
-                                    [field]="profile.address.country"
+                                    [shared]="share.address.country"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
@@ -477,22 +457,22 @@
     </mat-toolbar>
     <mat-card-content>
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <input matInput placeholder="Title" ([value])="profile.about.title.value">
+        <input matInput placeholder="Title" name="aboutTitle" [(ngModel)]="values.about.title">
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'about.title'"
-                                    [field]="profile.about.title"
+                                    [shared]="share.about.title"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>
 
       <mat-form-field style="width: 100%; max-width: 40em;">
-        <textarea matInput matTextareaAutosize
+        <textarea matInput matTextareaAutosize name="aboutBody"
                   [matAutosizeMinRows]="4"
                   placeholder="Say something nice about yourself for the world to see"
-                  ([value])="profile.about.body.value"></textarea>
+                  [(ngModel)]="values.about.body"></textarea>
         <rump-privacy-toggle-helper matSuffix
                                     [fieldName]="'about.body'"
-                                    [field]="profile.about.body"
+                                    [shared]="share.about.body"
                                     (privacyToggle)="togglePrivacy($event)">
         </rump-privacy-toggle-helper>
       </mat-form-field>

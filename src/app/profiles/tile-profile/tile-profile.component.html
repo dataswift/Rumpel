@@ -17,12 +17,12 @@
         </div>
 
         <div class="col-xs-9">
-          <p>{{profile?.personal.title.value}} {{profile?.personal.firstName.value}} {{profile?.personal.lastName.value}}</p>
+          <p>{{values.personal.title}} {{values.personal.firstName}} {{values.personal.lastName}}</p>
         </div>
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="profile?.personal.lastName.shared"></span>
+            [class.privacy-color]="shares.personal.lastName"></span>
         </div>
       </li>
 

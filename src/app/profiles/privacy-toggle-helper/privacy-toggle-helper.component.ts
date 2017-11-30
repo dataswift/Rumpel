@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ShareableDataItem } from '../../shared/interfaces/profile.interface';
 
 @Component({
   selector: 'rump-privacy-toggle-helper',
@@ -8,7 +7,7 @@ import { ShareableDataItem } from '../../shared/interfaces/profile.interface';
 })
 export class PrivacyToggleHelperComponent implements OnInit {
   @Input() fieldName: string;
-  @Input() field: ShareableDataItem;
+  @Input() shared: boolean;
   @Output() privacyToggle = new EventEmitter<string[]>();
 
   constructor() { }

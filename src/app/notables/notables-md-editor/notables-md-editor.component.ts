@@ -16,7 +16,7 @@ import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.compon
 import { FileUploadComponent } from '../../layout/file-upload/file-upload.component';
 import { CurrentNotableMeta } from '../../shared/interfaces/current-notable-meta.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import {FileMetadataRes} from '../../shared/interfaces/file.interface';
+import { FileMetadataRes } from '../../shared/interfaces/file.interface';
 
 declare var SimpleMDE: any;
 declare var $: any;

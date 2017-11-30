@@ -6,57 +6,98 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-export interface Profile {
-  dateCreated: number;
-  shared: boolean;
-  profilePhoto: ShareableDataItem;
+export interface ProfileSharingConfig {
+  photo: {
+    avatar: boolean;
+  };
   personal: {
-    title: ShareableDataItem;
-    firstName: ShareableDataItem;
-    middleName: ShareableDataItem;
-    lastName: ShareableDataItem;
-    preferredName: ShareableDataItem;
-    nickName: ShareableDataItem;
-    birthDate: ShareableDataItem;
-    gender: ShareableDataItem;
-    ageGroup: ShareableDataItem;
+    title: boolean;
+    firstName: boolean;
+    middleName: boolean;
+    lastName: boolean;
+    preferredName: boolean;
+    nickName: boolean;
+    birthDate: boolean;
+    gender: boolean;
+    ageGroup: boolean;
   };
   contact: {
-    primaryEmail: ShareableDataItem;
-    alternativeEmail: ShareableDataItem;
-    mobile: ShareableDataItem;
-    landline: ShareableDataItem;
+    primaryEmail: boolean;
+    alternativeEmail: boolean;
+    mobile: boolean;
+    landline: boolean;
   };
   emergencyContact: {
-    firstName: ShareableDataItem;
-    lastName: ShareableDataItem;
-    mobile: ShareableDataItem;
-    relationship: ShareableDataItem;
+    firstName: boolean;
+    lastName: boolean;
+    mobile: boolean;
+    relationship: boolean;
   };
   address: {
-    addressLine1: ShareableDataItem;
-    addressLine2: ShareableDataItem;
-    city: ShareableDataItem;
-    postcode: ShareableDataItem;
-    county: ShareableDataItem;
-    country: ShareableDataItem;
+    city: boolean;
+    county: boolean;
+    country: boolean;
   };
   about: {
-    title: ShareableDataItem;
-    body: ShareableDataItem;
+    title: boolean;
+    body: boolean;
   };
   online: {
-    website: ShareableDataItem;
-    blog: ShareableDataItem;
-    facebook: ShareableDataItem;
-    twitter: ShareableDataItem;
-    linkedin: ShareableDataItem;
-    google: ShareableDataItem;
-    youtube: ShareableDataItem;
+    website: boolean;
+    blog: boolean;
+    facebook: boolean;
+    twitter: boolean;
+    linkedin: boolean;
+    google: boolean;
+    youtube: boolean;
   };
 }
 
-export interface ShareableDataItem {
-  value: string;
+export interface Profile {
+  dateCreated: number;
   shared: boolean;
+  photo: {
+    avatar: string;
+  };
+  personal: {
+    title: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    preferredName: string;
+    nickName: string;
+    birthDate: string;
+    gender: string;
+    ageGroup: string;
+  };
+  contact: {
+    primaryEmail: string;
+    alternativeEmail: string;
+    mobile: string;
+    landline: string;
+  };
+  emergencyContact: {
+    firstName: string;
+    lastName: string;
+    mobile: string;
+    relationship: string;
+  };
+  address: {
+    city: string;
+    county: string;
+    country: string;
+  };
+  about: {
+    title: string;
+    body: string;
+  };
+  online: {
+    website: string;
+    blog: string;
+    facebook: string;
+    twitter: string;
+    linkedin: string;
+    google: string;
+    youtube: string;
+  };
 }
