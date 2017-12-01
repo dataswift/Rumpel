@@ -11,12 +11,12 @@ import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { FileService } from '../../services/file.service';
 import { DialogService } from '../../layout/dialog.service';
-import { Notable, Location } from '../../shared/interfaces';
+import { Notable } from '../../shared/interfaces';
 import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
 import { FileUploadComponent } from '../../layout/file-upload/file-upload.component';
 import { CurrentNotableMeta } from '../../shared/interfaces/current-notable-meta.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import {FileMetadataRes} from '../../shared/interfaces/file.interface';
+import { FileMetadataRes } from '../../shared/interfaces/file.interface';
 
 declare var SimpleMDE: any;
 declare var $: any;
@@ -118,7 +118,7 @@ export class NotablesMdEditorComponent implements OnInit {
       this.currentNotable.data.locationv1 = null;
       this.currentNotableMeta.reportLocation = false;
     } else {
-      this.locationSvc.getCurrentDeviceLocation((err, here: Location) => {
+      this.locationSvc.getCurrentDeviceLocation((err, here) => {
         if (err) {
           return this.currentNotableMeta.reportLocation = false;
         }

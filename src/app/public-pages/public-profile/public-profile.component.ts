@@ -7,11 +7,13 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import {HatApiService} from '../../services/hat-api.service';
-import {Notable} from '../../shared/interfaces/notable.class';
-import {UserService} from '../../user/user.service';
-import {User} from '../../user/user.interface';
-import {Router} from '@angular/router';
+import { Notable } from '../../shared/interfaces/notable.class';
+import { UserService } from '../../user/user.service';
+import { Router } from '@angular/router';
+import { HatApiV2Service } from '../../services/hat-api-v2.service';
+import { BundleValues } from '../../shared/interfaces/bundle.interface';
+import { Profile } from '../../shared/interfaces/profile.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 declare var $: any;
 
@@ -22,49 +24,23 @@ declare var $: any;
 })
 export class PublicProfileComponent implements OnInit {
   public userAuthenticated = false;
-  public shared: boolean;
-  public profile: any;
-  public notables: Array<Notable>;
+  public profile: Profile;
+  public notables: HatRecord<Notable>[];
 
-  constructor(private hatSvc: HatApiService,
-              private userSvc: UserService,
-              private router: Router) { }
+  constructor(private hatSvc: HatApiV2Service,
+              private userSvc: UserService) { }
 
   ngOnInit() {
-    this.hatSvc.getPublicData('profile').subscribe((profileResponse: any) => {
-      console.log(profileResponse);
-      if (profileResponse['public'] === true) {
-        this.shared = true;
-        this.profile = profileResponse.profile;
-        console.log(this.profile);
-        this.notables = profileResponse.notables.map((note: any) => new Notable(note));
-      } else {
-        this.shared = false;
-      }
+    this.hatSvc.getPhataPage().subscribe((data: BundleValues) => {
+      this.profile = data.profile[0].data;
+      this.notables = data.notables;
     });
 
-    this.userSvc.user$.subscribe((user: User) => {
-      this.userAuthenticated = user.authenticated;
-    });
-  }
-
-  openLink(link: string) {
-    if (link.indexOf('http') === -1) {
-      link = 'http://' + link;
-    }
-    window.open(link, '_blank');
-  }
-
-  switchView() {
-    this.router.navigate(['profile']);
+    this.userSvc.auth$.subscribe((isAuthenticated: boolean) => this.userAuthenticated = isAuthenticated);
   }
 
   get hostname(): string {
     return window.location.hostname;
-  }
-
-  isLoading(): boolean {
-    return typeof this.shared === 'undefined';
   }
 
 }

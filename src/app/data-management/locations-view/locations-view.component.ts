@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import { Location } from '../../shared/interfaces/location.interface';
+import { LocationIos } from '../../shared/interfaces/location.interface';
 
 @Component({
   selector: 'rump-locations-view',
@@ -9,7 +9,7 @@ import { Location } from '../../shared/interfaces/location.interface';
 })
 export class LocationsViewComponent implements OnInit {
 
-  @Input() item: HatRecord<Location>;
+  @Input() item: HatRecord<LocationIos>;
 
   constructor() { }
 

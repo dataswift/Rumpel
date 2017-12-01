@@ -8,8 +8,8 @@
 
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
-import { Location } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { LocationIos } from '../../shared/interfaces/location.interface';
 
 declare var L: any;
 
@@ -19,7 +19,7 @@ declare var L: any;
   styleUrls: ['map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input() dataPoints: HatRecord<Location>[];
+  @Input() dataPoints: HatRecord<LocationIos>[];
   @Input() mapHeight: string;
   @Input() mapWidth: string;
   @Input() enableMapControls: boolean;
@@ -76,7 +76,7 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
-  updateMap(locations: HatRecord<Location>[]) {
+  updateMap(locations: HatRecord<LocationIos>[]) {
     if (this.map) {
       this.drawMarkers(locations);
       if (locations && locations.length > 0) {
@@ -101,7 +101,7 @@ export class MapComponent implements OnInit, OnChanges {
     this.bbox.maxLng = Math.max(this.bbox.maxLng, lng);
   }
 
-  drawMarkers(locations: HatRecord<Location>[]) {
+  drawMarkers(locations: HatRecord<LocationIos>[]) {
     this.map.removeLayer(this.markers);
     this.markers = L.markerClusterGroup();
     this.resetBoundingBox();
@@ -110,9 +110,9 @@ export class MapComponent implements OnInit, OnChanges {
       this.adjustBoundingBox(loc.data.latitude, loc.data.longitude);
       const pos = new L.LatLng(loc.data.latitude, loc.data.longitude);
       const marker = L.marker(pos);
-      marker.timestamp = loc.data.timestamp;
+      marker.timestamp = loc.data.dateCreated;
 
-      const date = moment(Number(loc.data.timestamp));
+      const date = moment(Number(loc.data.dateCreated));
       marker.bindPopup('<b style="text-align: center">' + date.format('DD MMM YYYY h:mm a') + '</b>').openPopup();
 
       /*

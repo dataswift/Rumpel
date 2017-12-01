@@ -23,3 +23,16 @@
 
 /* Customises appearance of libraries' components */
 @import "app/style/customised-components";
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$hat-app-primary: mat-palette($mat-blue-grey, 700, 500, 900);
+$hat-app-accent: mat-palette($mat-pink, A200, A100, A400);
+
+$hat-app-warn: mat-palette($mat-red);
+
+$hat-app-theme: mat-light-theme($hat-app-primary, $hat-app-accent, $hat-app-warn);
+
+@include angular-material-theme($hat-app-theme);

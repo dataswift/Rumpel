@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Bundle } from './bundle.interface';
+import { BundleStructure } from './bundle.interface';
 import { HatRecord } from './hat-record.interface';
 
 export interface DataDebit {
@@ -35,5 +35,5 @@ interface HatBundle {
   endDate: any;
   rolling: boolean;
   enabled: boolean;
-  bundle: Bundle;
+  bundle: BundleStructure;
 }

@@ -9,14 +9,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocationsService } from '../locations.service';
-
-import { Location } from '../../shared/interfaces';
-import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import { Moment } from 'moment';
 import { Subscription } from 'rxjs/Subscription';
 
 import * as moment from 'moment';
-import {Filter} from '../../shared/interfaces/bundle.interface';
+import { Filter } from '../../shared/interfaces/bundle.interface';
+import { LocationIos } from '../../shared/interfaces/location.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Moment } from 'moment';
 
 declare var $: any;
 
@@ -26,7 +25,7 @@ declare var $: any;
   styleUrls: ['locations.component.scss']
 })
 export class LocationsComponent implements OnInit, OnDestroy {
-  public locations: HatRecord<Location>[];
+  public locations: HatRecord<LocationIos>[];
   public safeSize;
   public selectedTime: string;
   public lowerTimeBound: Moment;
@@ -46,7 +45,7 @@ export class LocationsComponent implements OnInit, OnDestroy {
 
     this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
 
-    this.sub = this.locationsSvc.data$.subscribe((locations: HatRecord<Location>[]) => {
+    this.sub = this.locationsSvc.data$.subscribe((locations: HatRecord<LocationIos>[]) => {
       this.locations = locations;
     });
 

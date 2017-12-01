@@ -9,7 +9,6 @@
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService } from '../dialog.service';
-import { Profile } from '../../shared/interfaces';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 import { UserService } from '../../services/index';
@@ -17,7 +16,7 @@ import { User } from '../../shared/interfaces/index';
 import { Subscription } from 'rxjs/Subscription';
 import { AccountStatus } from '../../user/account-status.interface';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import {HatRecord} from '../../shared/interfaces/hat-record.interface';
+import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 declare var $: any;
 
@@ -86,15 +85,13 @@ export class HeaderComponent implements OnInit {
       photo: { url: '', shared: false }, first_name: '', hatId: '', domain: ''
     };
 
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      const latestSnapshot = profileSnapshots[0];
-
-      if (latestSnapshot && latestSnapshot.data.personal.first_name) {
-        this.profile.first_name = latestSnapshot.data.personal.first_name;
+    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
+      if (profile.values && profile.values.personal.firstName) {
+        this.profile.first_name = profile.values.personal.firstName;
       }
 
-      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
+      if (profile.share && profile.share.photo.avatar) {
+        this.profile.photo.shared = profile.share.photo.avatar;
       }
     });
 

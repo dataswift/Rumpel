@@ -10,13 +10,22 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfilesService } from '../profiles.service';
 import { UserService } from '../../user/user.service';
-import { Profile } from '../../shared/interfaces/profile.interface';
+import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 import { User } from '../../user/user.interface';
-import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+
+import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { DialogService } from '../../layout/dialog.service';
+import { FileUploadComponent } from '../../layout/file-upload/file-upload.component';
 
 import * as moment from 'moment';
+import { FileService } from '../../services/file.service';
+import { FileMetadataRes } from '../../shared/interfaces/file.interface';
 
 declare var $: any;
+
+const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+const URL_REGEX = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 
 @Component({
   selector: 'rump-profile',
@@ -24,101 +33,95 @@ declare var $: any;
   styleUrls: ['profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  public profile: Profile;
+  public values: Profile;
+  public share: ProfileSharingConfig;
   public profilePhoto: any;
   public hatUrl: string;
-  public uiMessageHidden: boolean;
+  public hatDomain: string;
+  floatingLabel = 'auto';
+  color: boolean;
+  requiredField: boolean;
+  hideRequiredMarker: boolean;
+  ctrlDisabled = false;
+  textareaNgModelValue: string;
+
+  name: string;
+  errorMessageExample1: string;
+  errorMessageExample2: string;
+  errorMessageExample3: string;
+  errorMessageExample4: string;
+  dividerColorExample1: string;
+  dividerColorExample2: string;
+  dividerColorExample3: string;
+  items: any[] = [
+    { value: 10 },
+    { value: 20 },
+    { value: 30 },
+    { value: 40 },
+    { value: 50 },
+  ];
+  public emailFormControl = new FormControl('', [Validators.required, Validators.pattern(EMAIL_REGEX)]);
+  public websiteFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public blogFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public facebookFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public twitterFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public linkedinFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public googlePlusFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
+  public youtubeFormControl = new FormControl('', [Validators.pattern(URL_REGEX)]);
 
   constructor(private profilesSvc: ProfilesService,
+              private dialogSvc: DialogService,
               private userSvc: UserService,
-              private router: Router) {}
+              private fileSvc: FileService,
+              private router: Router,
+              public snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.uiMessageHidden = true;
     this.userSvc.user$.subscribe((user: User) => {
       this.hatUrl = `https://${user.hatId}.${user.domain}/#/public/profile`;
+      this.hatDomain = user.fullDomain;
     });
-
-    this.profile = {
-      dateCreated: 0,
-      private: true,
-      fb_profile_photo: { private: true },
-      personal: { title: '', first_name: '', middle_name: '',
-        last_name: '', preferred_name: '', private: true },
-      nick: { name: '', private: true },
-      birth: { date: '', private: true },
-      gender: { type: '', private: true },
-      age: { group: '', private: true },
-      primary_email: { value: '', private: true },
-      alternative_email: { value: '', private: true },
-      home_phone: { no: '', private: true },
-      mobile: { no: '', private: true },
-      address_details: { no: '', street: '', postcode: '', private: true },
-      address_global: { city: '', county: '', country: '', private: true },
-      website: { link: '', private: true },
-      blog: { link: '', private: true },
-      facebook: { link: '', private: true },
-      linkedin: { link: '', private: true },
-      twitter: { link: '', private: true },
-      google: { link: '', private: true },
-      youtube: { link: '', private: true },
-      emergency_contact: { first_name: '', last_name: '', mobile: '',
-        relationship: '', private: true },
-      about: { title: '', body: '', private: true }
-    };
 
     this.profilePhoto = {};
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      if (profileSnapshots.length > 0) {
-        this.profile = profileSnapshots[0].data;
-      }
+    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
+      this.values = profile.values;
+      this.share = profile.share;
     });
 
-    this.profilesSvc.getInitData(1);
+    this.profilesSvc.getProfileData();
 
-    // this.profilesSvc.getPicture().subscribe(
-    //   profilePicture => {
-    //     if (profilePicture) {
-    //       this.profilePhoto = profilePicture;
-    //     }
-    //   },
-    //   err => this.profilePhoto = { url: 'avatar_placeholder.svg'}
-    // );
-  }
-
-  switchView() {
-    this.router.navigate([ 'public', 'profile' ]);
-    // window.open("public/profile", "_blank");
-  }
-
-  submitForm(event) {
-    event.preventDefault();
-    this.profile.dateCreated = moment().valueOf();
-    const stringifiedProfile = JSON.parse(JSON.stringify(this.profile, (key, value) => {
-      if (typeof value === 'boolean') {
-        return value.toString();
-      }
-
-      return value;
-    }));
-    this.profilesSvc.save(stringifiedProfile).subscribe(_ => {
-      this.uiMessageHidden = false;
-      setTimeout(() => this.uiMessageHidden = true, 5000);
+    this.fileSvc.file$.subscribe((fileMetadata: FileMetadataRes) => {
+      setTimeout(() => {
+        this.values.photo.avatar = `https://${this.hatDomain}/api/v2/files/content/${fileMetadata.fileId}`;
+      });
     });
   }
 
-  discardChanges() {
-    this.router.navigate(['']);
+  invokeFileUploadDialog(): void {
+    this.dialogSvc.createDialog(FileUploadComponent, {});
   }
 
-  toggleProfilePrivacy() {
-    // A bit of a hack to force Angular change detection
-    setTimeout(() => this.profile.private = !this.profile.private);
+  submitForm() {
+    this.values.dateCreated = moment().valueOf();
+
+    this.profilesSvc.saveProfile(this.values, this.share).subscribe(_ => {
+      this.snackBar.open('Profile information saved.');
+      setTimeout(() => this.snackBar.dismiss(), 1500);
+    });
   }
 
-  togglePrivacy(field: string) {
+  setGroupPrivacy(groupName: string, shared: boolean) {
     // A bit of a hack to force Angular change detection
-    setTimeout(() => this.profile[field].private = !this.profile[field].private);
+    setTimeout(() => {
+      Object.keys(this.share[groupName]).forEach((fieldName: string) => {
+        this.share[groupName][fieldName] = shared;
+      });
+    });
+  }
+
+  togglePrivacy([groupName, fieldName]): void {
+    // A bit of a hack to force Angular change detection
+    setTimeout(() => this.share[groupName][fieldName] = !this.share[groupName][fieldName]);
   }
 
   showPopover(event) {

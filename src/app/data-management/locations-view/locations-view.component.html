@@ -8,13 +8,10 @@
 </div>
 
 <div class="flex-basis start">
-    <span *ngIf="item.data.timestamp" class="meta"><strong>Timestamp</strong><span class="date">{{ item.data.timestamp | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
-    <span *ngIf="item.data.accuracy" class="meta"><strong>Accuracy</strong> {{ item.data.accuracy }}</span>
-    <span *ngIf="item.data.altitude" class="meta"><strong>Altitude</strong> {{ item.data.altitude }}</span>
-    <span *ngIf="item.data.altitude_accuracy" class="meta"><strong>Altitude accuracy</strong> {{ item.data.altitude_accuracy }}</span>
-    <span *ngIf="item.data.heading" class="meta"><strong>Heading</strong> {{ item.data.heading }}</span>
-    <span *ngIf="item.data.speed" class="meta"><strong>Speed</strong> {{ item.data.speed }}</span>
-    <span *ngIf="item.data.shared && item.data.shared.length > 0">
-      <span *ngFor="let share of item.data.shared" class="meta"><strong>Shared</strong> {{ share }}</span>
-    </span>
+  <span *ngIf="item.data.dateCreated" class="meta"><strong>Timestamp</strong><span class="date">{{ item.data.dateCreated | moment:'ddd DD MMM YYYY, h:mm a' }}</span></span>
+  <span *ngIf="item.data.horizontalAccuracy > -1" class="meta"><strong>Accuracy</strong> {{ item.data.horizontalAccuracy }}</span>
+  <span *ngIf="item.data.altitude" class="meta"><strong>Altitude</strong> {{ item.data.altitude }}</span>
+  <span *ngIf="item.data.verticalAccuracy > -1" class="meta"><strong>Altitude accuracy</strong> {{ item.data.verticalAccuracy }}</span>
+  <span *ngIf="item.data.course > -1" class="meta"><strong>Heading</strong> {{ item.data.course }}</span>
+  <span *ngIf="item.data.speed > -1" class="meta"><strong>Speed</strong> {{ item.data.speed }}</span>
 </div>

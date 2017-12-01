@@ -43,7 +43,7 @@ export class NotableComponent implements OnInit, OnDestroy {
   }
 
   getLogo(name: string): string {
-    if (name === 'hatters') {
+    if (name === 'phata' || name === 'hatters') {
       return '/assets/icons/hatters-icon.png';
     } else {
       return this.notablesPlugs.find(plug => plug.name.toLowerCase() === name).illustrationUrl;

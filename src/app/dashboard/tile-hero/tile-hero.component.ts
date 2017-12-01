@@ -12,9 +12,8 @@ import { UserService } from '../../services/index';
 import { DialogService } from '../../layout/dialog.service';
 import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
 
-import { Profile } from '../../shared/interfaces';
 import { User } from '../../shared/interfaces/index';
-import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 @Component({
   selector: 'rump-tile-hero',
@@ -22,9 +21,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
   styleUrls: ['tile-hero.component.scss']
 })
 export class TileHeroComponent implements OnInit {
-
   public profile: { photo: { url: string; shared: boolean; }, domainName: string };
-
   public userAuthenticated = false;
 
   constructor(private profilesSvc: ProfilesService,
@@ -50,11 +47,9 @@ export class TileHeroComponent implements OnInit {
       }
     });
 
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      const latestSnapshot = profileSnapshots[0];
-
-      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
+    this.profilesSvc.profileData$.subscribe((latestSnapshot: { values: Profile; share: ProfileSharingConfig; }) => {
+      if (latestSnapshot && latestSnapshot.share.photo.avatar) {
+        this.profile.photo.shared = latestSnapshot.share.photo.avatar;
       }
     });
   }

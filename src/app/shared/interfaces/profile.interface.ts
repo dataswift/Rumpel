@@ -6,102 +6,98 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+export interface ProfileSharingConfig {
+  photo: {
+    avatar: boolean;
+  };
+  personal: {
+    title: boolean;
+    firstName: boolean;
+    middleName: boolean;
+    lastName: boolean;
+    preferredName: boolean;
+    nickName: boolean;
+    birthDate: boolean;
+    gender: boolean;
+    ageGroup: boolean;
+  };
+  contact: {
+    primaryEmail: boolean;
+    alternativeEmail: boolean;
+    mobile: boolean;
+    landline: boolean;
+  };
+  emergencyContact: {
+    firstName: boolean;
+    lastName: boolean;
+    mobile: boolean;
+    relationship: boolean;
+  };
+  address: {
+    city: boolean;
+    county: boolean;
+    country: boolean;
+  };
+  about: {
+    title: boolean;
+    body: boolean;
+  };
+  online: {
+    website: boolean;
+    blog: boolean;
+    facebook: boolean;
+    twitter: boolean;
+    linkedin: boolean;
+    google: boolean;
+    youtube: boolean;
+  };
+}
+
 export interface Profile {
   dateCreated: number;
-  private: boolean;
-  fb_profile_photo: {
-    private: boolean
+  shared: boolean;
+  photo: {
+    avatar: string;
   };
   personal: {
     title: string;
-    first_name: string;
-    middle_name: string;
-    last_name: string;
-    preferred_name: string;
-    private: boolean;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    preferredName: string;
+    nickName: string;
+    birthDate: string;
+    gender: string;
+    ageGroup: string;
   };
-  nick: {
-    name: string;
-    private: boolean;
+  contact: {
+    primaryEmail: string;
+    alternativeEmail: string;
+    mobile: string;
+    landline: string;
   };
-  birth: {
-    date: string;
-    private: boolean;
+  emergencyContact: {
+    firstName: string;
+    lastName: string;
+    mobile: string;
+    relationship: string;
   };
-  gender: {
-    type: string;
-    private: boolean;
-  };
-  age: {
-    group: string;
-    private: boolean;
-  };
-  primary_email: {
-    value: string;
-    private: boolean;
-  };
-  alternative_email: {
-    value: string;
-    private: boolean;
-  };
-  home_phone: {
-    no: string;
-    private: boolean;
-  };
-  mobile: {
-    no: string;
-    private: boolean;
-  };
-  address_details: {
-    no: string;
-    street: string;
-    postcode: string;
-    private: boolean;
-  };
-  address_global: {
+  address: {
     city: string;
     county: string;
     country: string;
-    private: boolean;
-  };
-  website: {
-    link: string;
-    private: boolean;
-  };
-  blog: {
-    link: string;
-    private: boolean;
-  };
-  facebook: {
-    link: string;
-    private: boolean;
-  };
-  linkedin: {
-    link: string;
-    private: boolean;
-  };
-  twitter: {
-    link: string;
-    private: boolean;
-  };
-  google: {
-    link: string;
-    private: boolean;
-  };
-  youtube: {
-    link: string;
-    private: boolean;
-  };
-  emergency_contact: {
-    first_name: string;
-    last_name: string;
-    mobile: string;
-    relationship: string;
-    private: boolean;
   };
   about: {
     title: string;
     body: string;
-    private: boolean;
+  };
+  online: {
+    website: string;
+    blog: string;
+    facebook: string;
+    twitter: string;
+    linkedin: string;
+    google: string;
+    youtube: string;
   };
 }

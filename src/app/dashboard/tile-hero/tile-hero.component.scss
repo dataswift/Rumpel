@@ -9,29 +9,25 @@
  @import "../../style/variables";
 
  .dashboard-hero{
-
    background-color: $app-mid-tone;
    background-image: url('/assets/images/hero.jpg');
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;
    border-radius: 8px;
-   height: 350px;
+   padding: 0;
 
-
-   .hero-content{
+   .hero-content {
      position: relative;
      padding: 30px 0px;
 
-     h2, p, a{
+     h2, p, a {
        color: white;
        font-family: $font-standard;
        display: inline-block;
-
      }
 
-
-     h2{
+     h2 {
        font-size: 30px;
        letter-spacing: 1px;
        word-break: break-word;
@@ -49,7 +45,8 @@
           font-size: 18px;
         }
      }
-     p{
+
+     p {
        font-size: 18px;
        margin: auto;
        max-width: 360px;
@@ -62,7 +59,7 @@
         }
      }
 
-     a{
+     a {
         font-size: 14px;
         letter-spacing: 0.5px;
         opacity: 0.8;
@@ -73,7 +70,7 @@
         margin-top: -3px;
      }
 
-     img{
+     img {
        width: 140px;
        height: 140px;
        border: 6px solid white;
@@ -94,8 +91,7 @@
  .overlay {
   position: relative;
 
-
-  &:before{
+  &:before {
     position: absolute;
     content:" ";
     top:0;
