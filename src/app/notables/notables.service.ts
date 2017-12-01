@@ -36,7 +36,7 @@ export class NotablesService extends BaseDataService<Notable> {
               hat: HatApiV2Service,
               userSvc: UserService,
               private dex: DexApiService) {
-    super(hat, userSvc, config.name.toLowerCase(), 'notablesv1', 'updated_time');
+    super(hat, userSvc, 'rumpel', 'notablesv1', 'updated_time');
 
     this.notablesServiceMeta = {
       phata: '',

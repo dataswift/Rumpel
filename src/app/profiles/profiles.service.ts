@@ -26,7 +26,7 @@ export class ProfilesService extends BaseDataService<Profile> {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               hat: HatApiV2Service,
               userSvc: UserService) {
-    super(hat, userSvc, config.name.toLowerCase(), 'profile', 'dateCreated');
+    super(hat, userSvc, 'rumpel', 'profile', 'dateCreated');
   }
 
   get profileData$(): Observable<{ values: Profile; share: ProfileSharingConfig; }> {
@@ -137,7 +137,7 @@ export class ProfilesService extends BaseDataService<Profile> {
       notables: this.previousBundle.bundle.notables,
       profile: {
         endpoints: [{
-          endpoint: 'rumpelstaging/profile',
+          endpoint: 'rumpel/profile',
           mapping: mapping
         }],
         orderBy: 'dateCreated',

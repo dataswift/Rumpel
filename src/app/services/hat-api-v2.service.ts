@@ -252,7 +252,7 @@ export class HatApiV2Service {
   }
 
   getPhataPage(): Observable<BundleValues> {
-    const path = `https://testing.hubat.net${this.pathPrefix}/phata/profile`;
+    const path = `${this.pathPrefix}/phata/profile`;
 
     return this.http.get(path).map((res: Response) => res.json());
   }
