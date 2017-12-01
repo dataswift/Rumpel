@@ -13,13 +13,12 @@ import { UserService } from '../user/user.service';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
-import { Location } from '../shared/interfaces';
-import * as moment from 'moment';
+import { LocationIos } from '../shared/interfaces/location.interface';
 
 declare var L: any;
 
 @Injectable()
-export class LocationsService extends BaseDataService<Location> {
+export class LocationsService extends BaseDataService<LocationIos> {
   public map: any;
   public baseMaps: any;
 
@@ -37,7 +36,7 @@ export class LocationsService extends BaseDataService<Location> {
   getCurrentDeviceLocation(callback) {
     navigator.geolocation.getCurrentPosition(
       location => {
-        const here: Location = {
+        const here = {
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
           accuracy: location.coords.accuracy
@@ -50,19 +49,11 @@ export class LocationsService extends BaseDataService<Location> {
       });
   }
 
-  coerceType(rawLocation: HatRecord<any>): HatRecord<Location> {
-    const locContent = rawLocation.data;
-
+  coerceType(rawLocation: HatRecord<any>): HatRecord<LocationIos> {
     return {
       endpoint: rawLocation.endpoint,
       recordId: rawLocation.recordId,
-      data: {
-        id: locContent.timestamp,
-        latitude: locContent.latitude,
-        longitude: locContent.longitude,
-        accuracy: null,
-        timestamp: moment(locContent.timestamp)
-      }
+      data: <LocationIos>rawLocation.data
     };
   }
 }

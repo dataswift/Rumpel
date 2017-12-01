@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Location } from './location.interface';
+import { LocationIos } from './location.interface';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 
@@ -28,7 +28,7 @@ export class Notable {
     photo_url: string;
   };
 
-  public locationv1: Location;
+  public locationv1: LocationIos;
   public photov1: {
     link: string;
     source: string;
