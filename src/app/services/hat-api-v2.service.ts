@@ -251,6 +251,12 @@ export class HatApiV2Service {
       .map((res: Response) => <FileMetadataRes>res.json());
   }
 
+  getPhataPage(): Observable<BundleValues> {
+    const path = `https://testing.hubat.net${this.pathPrefix}/phata/profile`;
+
+    return this.http.get(path).map((res: Response) => res.json());
+  }
+
   private markFileAsComplete(fileId: string): Observable<FileMetadataRes> {
     const path = `${this.pathPrefix}/files/file/${fileId}/complete`;
 

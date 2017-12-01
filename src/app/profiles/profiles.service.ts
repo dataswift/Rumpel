@@ -93,8 +93,6 @@ export class ProfilesService extends BaseDataService<Profile> {
       filePermissionUpdate$ = Observable.of(null);
     }
 
-    console.log('Saving bundle ', this.generatePhataBundle(shares));
-
     const phataBundleUpdate$ = this.hat.proposeNewDataBundle('phata', this.generatePhataBundle(shares));
 
     return Observable.forkJoin(this.save(values), filePermissionUpdate$, phataBundleUpdate$)
@@ -105,7 +103,7 @@ export class ProfilesService extends BaseDataService<Profile> {
     let bundleMapping;
 
     try {
-      bundleMapping = Object.keys(phataBundle.bundle.profilePublic.endpoints[0].mapping);
+      bundleMapping = Object.keys(phataBundle.bundle.profile.endpoints[0].mapping);
     } catch (e) {
       bundleMapping = [];
     }

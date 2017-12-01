@@ -8,7 +8,6 @@
 
 
 <div class="phata">
-
   <div class="row no-margin no-padding">
     <div class="col-md-12 phatheader">
         <img src="assets/icons/hat_logo.png">
@@ -19,156 +18,136 @@
     </div>
   </div>
 
-
   <div class="row no-margin phathero">
     <div class="col-md-offset-3 col-md-6 ">
       <div class="phata-box phata-name">
-        <svg *ngIf="!profile?.profile.profile_picture" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        <svg *ngIf="!profile?.photo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
         	 width="20px" height="20px" viewBox="2 2 20 20" enable-background="new 2 2 20 20" xml:space="preserve">
-        <path fill="#FFFFFF" d="M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M12,5
-        	c1.66,0,3,1.34,3,3s-1.34,3-3,3S9,9.66,9,8S10.34,5,12,5z M12,19.2c-2.5,0-4.71-1.28-6-3.22c0.03-1.99,4-3.08,6-3.08
-        	c1.99,0,5.971,1.09,6,3.08C16.71,17.92,14.5,19.2,12,19.2z"/>
-        <path fill="none" d="M0,0h24v24H0V0z"/>
+          <path fill="#FFFFFF" d="M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M12,5
+            c1.66,0,3,1.34,3,3s-1.34,3-3,3S9,9.66,9,8S10.34,5,12,5z M12,19.2c-2.5,0-4.71-1.28-6-3.22c0.03-1.99,4-3.08,6-3.08
+            c1.99,0,5.971,1.09,6,3.08C16.71,17.92,14.5,19.2,12,19.2z"/>
+          <path fill="none" d="M0,0h24v24H0V0z"/>
         </svg>
 
-        <img *ngIf="profile?.profile.profile_picture" [src]="profile?.profile.profile_picture">
-
+        <img *ngIf="profile?.photo && profile.photo.avatar" [src]="profile?.photo.avatar">
 
         <h1>{{hostname}}</h1>
         <p>
-          <span class="social-links" *ngIf="profile?.links">
-            <a *ngIf="profile?.links.Web" (click)="openLink(profile?.links.Web)" target="_blank"><img src="assets/icons/website-icon.svg"></a>
-            <a *ngIf="profile?.links.Blog" (click)="openLink(profile?.links.Blog)" target="_blank"><img src="assets/icons/blog-icon.svg"></a>
-            <a *ngIf="profile?.links.Facebook" (click)="openLink(profile?.links.Facebook)" target="_blank"><img src="assets/icons/facebook-grey-icon.svg"></a>
-            <a *ngIf="profile?.links.Twitter" (click)="openLink(profile?.links.Twitter)" target="_blank"><img src="assets/icons/twitter-grey-icon.svg"></a>
-            <a *ngIf="profile?.links.Google-Plus" (click)="openLink(profile?.links.Google-Plus)" target="_blank"><img src="assets/icons/google-icon.svg"></a>
-            <a *ngIf="profile?.links.LinkedIn" (click)="openLink(profile?.links.LinkedIn)" target="_blank"><img src="assets/icons/linkedin-icon.svg"></a>
-            <a *ngIf="profile?.links.Youtube" (click)="openLink(profile?.links.Youtube)" target="_blank"><img src="assets/icons/youtube-icon.svg"></a>
+          <span class="social-links" *ngIf="profile?.online">
+            <a *ngIf="profile.online.website" [href]="profile.online.website" target="_blank"><img src="assets/icons/website-icon.svg"></a>
+            <a *ngIf="profile.online.blog" [href]="profile.online.blog" target="_blank"><img src="assets/icons/blog-icon.svg"></a>
+            <a *ngIf="profile.online.facebook" [href]="profile.online.facebook" target="_blank"><img src="assets/icons/facebook-grey-icon.svg"></a>
+            <a *ngIf="profile.online.twitter" [href]="profile.online.twitter" target="_blank"><img src="assets/icons/twitter-grey-icon.svg"></a>
+            <a *ngIf="profile.online.google" [href]="profile.online.google" target="_blank"><img src="assets/icons/google-icon.svg"></a>
+            <a *ngIf="profile.online.linkedin" [href]="profile.online.linkedin" target="_blank"><img src="assets/icons/linkedin-icon.svg"></a>
+            <a *ngIf="profile.online.youtube" [href]="profile.online.youtube" target="_blank"><img src="assets/icons/youtube-icon.svg"></a>
           </span>
         </p>
-
       </div>
     </div>
   </div>
 
-
-  <div class="row no-margin" *ngIf="shared === true">
+  <div class="row no-margin" *ngIf="profile">
     <div class="col-md-offset-3 col-md-6">
-            <div class="phata-box blue-top">
-                <div class="phatabox-header">
-                  Public Profile
-                </div>
-                <div class="phatabox-body">
+      <div class="phata-box blue-top" *ngIf="profile?.personal">
+        <div class="phatabox-header">Public Profile</div>
+        <div class="phatabox-body">
 
-                  <div class="flex-column">
-                    <div class="personal-details" *ngIf="profile?.profile">
-                      <h4 class="icon-text-valign" *ngIf="profile?.profile['personal']">&nbsp;{{ profile.profile['personal'] }}</h4>
-                      <h4 class="icon-text-valign" *ngIf="profile?.profile['gender']">&nbsp;{{ profile.profile['gender'] }}</h4>
-                      <h4 class="icon-text-valign" *ngIf="profile?.profile['age']">&nbsp;{{ profile.profile['age'] }}</h4>
-                      <h4 class="icon-text-valign" *ngIf="profile?.profile['birthDate']">&nbsp;{{ profile.profile['birthDate'] }}</h4>
-                    </div>
-
-                    <div class="contactme" *ngIf="profile?.contact">
-                      <div class="contact" *ngIf="profile?.contact['primary_email']">
-                        <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['primary_email'] }}</h4>
-                      </div>
-
-                      <div class="contact" *ngIf="profile?.contact['alternative_email']">
-                        <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact['alternative_email'] }}</h4>
-                      </div>
-
-                      <div class="contact" *ngIf="profile?.contact['mobile']">
-                        <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact['mobile'] }}</h4>
-                      </div>
-
-                      <div class="contact" *ngIf="profile?.contact['home_phone']">
-                        <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact['home_phone'] }}</h4>
-                      </div>
-                    </div>
-                  </div>
-
-
-
-                </div>
+          <div class="flex-column">
+            <div class="personal-details">
+              <h4 class="icon-text-valign" *ngIf="profile?.personal.firstName">{{profile.personal.title}}&nbsp;{{ profile.personal.firstName }}
+                <ng-container *ngIf="profile.personal.nickName">"{{profile.personal.nickName}}"</ng-container>
+                {{profile.personal.lastName}}
+              </h4>
+              <h4 class="icon-text-valign" *ngIf="profile?.personal.gender">&nbsp;{{ profile.personal.gender }}</h4>
+              <h4 class="icon-text-valign" *ngIf="profile?.personal.age">&nbsp;{{ profile.personal.age }}</h4>
+              <h4 class="icon-text-valign" *ngIf="profile?.personal.birthDate">&nbsp;{{ profile.personal.birthDate }}</h4>
             </div>
 
-            <div class="phata-box blue-top" *ngIf="profile?.about">
-                <div class="phatabox-header">
-                  About
-                </div>
-                <div class="phatabox-body">
-                  <h3>{{ profile.about.title }}</h3>
-                  <p [innerHTML]="profile.about.body | markdownToHtml | safeHtml"></p>
-                </div>
-            </div>
+            <div class="contactme" *ngIf="profile?.contact">
+              <div class="contact" *ngIf="profile?.contact.primaryEmail">
+                <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact.primaryEmail }}</h4>
+              </div>
 
-            <div class="phata-box blue-top" *ngIf="notables?.length > 0">
-                <div class="phatabox-header">
-                  Public Notables
-                </div>
-                <div class="phatabox-body">
-                  <div class="box-content notes">
-                    <ul class="bulletless-list">
-                      <li *ngFor="let notable of notables" class="notable-item placeholder">
-                        <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+              <div class="contact" *ngIf="profile?.contact.alternativeEmail">
+                <h4 class="icon-text-valign"><span class="icon ss-mail"></span>&nbsp;{{ profile.contact.alternativeEmail }}</h4>
+              </div>
+
+              <div class="contact" *ngIf="profile?.contact.mobile">
+                <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact.mobile }}</h4>
+              </div>
+
+              <div class="contact" *ngIf="profile?.contact.landline">
+                <h4 class="icon-text-valign"><span class="icon ss-phone"></span>&nbsp;{{ profile.contact.landline }}</h4>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phata-box blue-top" *ngIf="profile?.about">
+        <div class="phatabox-header">About</div>
+        <div class="phatabox-body">
+          <h3>{{ profile.about.title }}</h3>
+          <p [innerHTML]="profile.about.body | markdownToHtml | safeHtml"></p>
+        </div>
+      </div>
+
+      <div class="phata-box blue-top" *ngIf="notables?.length > 0">
+          <div class="phatabox-header">Public Notables</div>
+          <div class="phatabox-body">
+            <div class="box-content notes">
+              <ul class="bulletless-list">
+                <li *ngFor="let notable of notables" class="notable-item placeholder">
+                  <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
+                </li>
+              </ul>
+            </div>
+          </div>
+      </div>
     </div>
-
 
     <div class="col-md-3">
       <div class="phata-box more-info">
-          <div class="phatabox-body">
-            <img class="text-center" src="assets/icons/hat_logo.png">
-            <h3>What is a HAT?</h3>
-            <p>HATs are individual secure and private storage containers that are specially designed to hold the database of a user's personal data: a private 'data account' (like a savings/current account) to hold your data from the most trivial to the most precious.</p>
-            <h3>Why do I need a HAT?</h3>
-            <p>You can use a HAT to store your private information, and then use it to log in to websites or trade it for goods and services in online marketplaces.</p>
-            <a href="https://hubofallthings.com">Learn more</a>
-          </div>
+        <div class="phatabox-body">
+          <img class="text-center" src="assets/icons/hat_logo.png">
+          <h3>What is a HAT?</h3>
+          <p>HATs are individual secure and private storage containers that are specially designed to hold the database of a user's personal data: a private 'data account' (like a savings/current account) to hold your data from the most trivial to the most precious.</p>
+
+          <h3>Why do I need a HAT?</h3>
+          <p>You can use a HAT to store your private information, and then use it to log in to websites or trade it for goods and services in online marketplaces.</p>
+          <a href="https://hubofallthings.com">Learn more</a>
+        </div>
       </div>
     </div>
-
-
   </div>
 
-  <div class="row no-margin" *ngIf="shared === false">
+  <div class="row no-margin" *ngIf="!profile">
     <div class="col-md-offset-3 col-md-6">
       <div class="phata-box more-info">
-          <div class="phatabox-body">
-            <img class="text-center" src="assets/icons/hat_logo.png">
-            <h3>What is a HAT?</h3>
-            <p>HATs are individual secure and private storage containers that are specially designed to hold the database of a user's personal data: a private 'data account' (like a savings/current account) to hold your data from the most trivial to the most precious.</p>
-            <h3>Why do I need a HAT?</h3>
-            <p>You can use a HAT to store your private information, and then use it to log in to websites or trade it for goods and services in online marketplaces.</p>
-            <a href="https://hubofallthings.com">Learn more</a>
-          </div>
+        <div class="phatabox-body">
+          <img class="text-center" src="assets/icons/hat_logo.png">
+          <h3>What is a HAT?</h3>
+          <p>HATs are individual secure and private storage containers that are specially designed to hold the database of a user's personal data: a private 'data account' (like a savings/current account) to hold your data from the most trivial to the most precious.</p>
+          <h3>Why do I need a HAT?</h3>
+          <p>You can use a HAT to store your private information, and then use it to log in to websites or trade it for goods and services in online marketplaces.</p>
+          <a href="https://hubofallthings.com">Learn more</a>
+        </div>
       </div>
     </div>
-
   </div>
 
-
-
-
-
-
-<div class="row no-margin">
-  <div class="col-md-12">
-    <div class="phata-footer">
+  <div class="row no-margin">
+    <div class="col-md-12">
+      <div class="phata-footer">
         <i class="material-icons">lock_outline</i>ALL YOUR DATA IS SECURE AND PRIVATE
+      </div>
     </div>
   </div>
 </div>
 
 
-</div>
-
-
-  <!--
+<!--
 
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
