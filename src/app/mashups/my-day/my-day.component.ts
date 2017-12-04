@@ -151,7 +151,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
       case 'facebook/events':
         extractDateString = entity => entity.data.start.format('YYYY-MM-DD');
         break;
-      case 'rumpelstaging/notablesv1':
+      case 'rumpel/notablesv1':
         extractDateString = entity => entity.data.created_time.format('YYYY-MM-DD');
         break;
       case 'facebook/posts':
