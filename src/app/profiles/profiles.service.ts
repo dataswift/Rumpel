@@ -133,17 +133,23 @@ export class ProfilesService extends BaseDataService<Profile> {
       return acc;
     }, {});
 
-    return {
-      notables: this.previousBundle.bundle.notables,
-      profile: {
-        endpoints: [{
-          endpoint: 'rumpel/profile',
-          mapping: mapping
-        }],
-        orderBy: 'dateCreated',
-        ordering: 'descending',
-        limit: 1
+    const profileIsShared = Object.keys(mapping).length > 0;
+
+    if (profileIsShared) {
+      return {
+        notables: this.previousBundle.bundle.notables,
+        profile: {
+          endpoints: [{
+            endpoint: 'rumpel/profile',
+            mapping: Object.keys(mapping).length > 0 ? mapping : null
+          }],
+          orderBy: 'dateCreated',
+          ordering: 'descending',
+          limit: 1
+        }
       }
+    } else {
+      return { notables: this.previousBundle.bundle.notables };
     }
   }
 

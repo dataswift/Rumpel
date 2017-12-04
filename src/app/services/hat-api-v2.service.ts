@@ -113,8 +113,8 @@ export class HatApiV2Service {
     return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
   }
 
-  createRecord(endpoint: string, record: any): Observable<HatRecord<any>> {
-    const path = `${this.pathPrefix}/data/${this.appNamespace}/${endpoint}`;
+  createRecord(namespace: string, endpoint: string, record: any): Observable<HatRecord<any>> {
+    const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
 
     return this.authHttp.post(path, record).map((res: Response) => <HatRecord<any>>res.json());
   }

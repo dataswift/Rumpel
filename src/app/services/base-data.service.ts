@@ -81,7 +81,7 @@ export abstract class BaseDataService<T> {
   }
 
   save(recordValue: T): Observable<HatRecord<T>> {
-    return this.hat.createRecord(this.endpoint, recordValue)
+    return this.hat.createRecord(this.namespace, this.endpoint, recordValue)
       .map(this.coerceType)
       .do((record: HatRecord<T>) => {
         this.store.data.unshift(record);
