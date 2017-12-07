@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { DialogService } from '../../layout/dialog.service';
-import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
+import { DialogService } from '../../core/dialog.service';
+import { ConfirmBoxComponent } from '../../core/confirm-box/confirm-box.component';
 import { DataOfferService } from '../data-offer.service';
 
 @Component({

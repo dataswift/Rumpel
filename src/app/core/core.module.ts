@@ -27,12 +27,12 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
 
 import { DataOfferService } from '../offers/data-offer.service';
-import { SheFeedComponent } from './she-feed/she-feed.component';
-import { SheFeedService } from './she-feed.service';
+import { PrivateSpaceComponent } from './private-space/private-space.component';
+import { ProfilesModule } from '../profiles/profiles.module';
 
 
 @NgModule({
-  imports: [ SharedModule, LocationsModule ],
+  imports: [ SharedModule, LocationsModule, ProfilesModule ],
   declarations: [ HeaderComponent,
                   SideMenuComponent,
                   FooterComponent,
@@ -44,11 +44,12 @@ import { SheFeedService } from './she-feed.service';
                   FileUploadComponent,
                   DialogAnchorDirective,
                   MapBoxComponent,
-                  SheFeedComponent ],
+                  PrivateSpaceComponent
+  ],
   exports: [ HeaderComponent,
             SideMenuComponent,
             FooterComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService, SheFeedService ]
+  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService ]
 })
-export class LayoutModule {}
+export class CoreModule {}

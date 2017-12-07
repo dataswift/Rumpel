@@ -14,8 +14,8 @@ import { UserService } from './services';
 
 import * as moment from 'moment';
 import { GlobalMessagingService } from './services/global-messaging.service';
-import { InfoBoxComponent } from './layout/info-box/info-box.component';
-import { DialogService } from './layout/dialog.service';
+import { InfoBoxComponent } from './core/info-box/info-box.component';
+import { DialogService } from './core/dialog.service';
 
 declare var $: any;
 

@@ -45,20 +45,13 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.marketSquareLink = 'https://marketsquare.hubofallthings.com';
+    this.profile = { photo: { url: '', shared: false }, first_name: '', hatId: '', domain: '' };
     this.userAuthenticated = false;
     this.showNotifications = false;
 
     this.sub = this.userSvc.user$.subscribe((user: User) => {
       this.userAuthenticated = user.authenticated;
       if (user.authenticated) {
-        // this._notificationsSvc.getAllNotifications();
-
-        // this.profilesSvc.getPicture().subscribe(result => {
-        //   if (result && result.url) {
-        //     this.profile.photo.url = result.url;
-        //   }
-        // });
-
         this.hatDomain = user.fullDomain;
         this.profile.domain = user.domain;
         this.profile.hatId = user.hatId;
@@ -73,18 +66,6 @@ export class HeaderComponent implements OnInit {
 
     this.totalNotifications = 0;
 
-    // this._notificationsSvc.stats$.subscribe(stats => {
-    //   this.totalNotifications = stats.total;
-    //   this.unreadNotifications = stats.unread;
-    // });
-    //
-    // this._notificationsSvc.showNotifs$.subscribe(status => this.showNotificationsBar(status));
-
-
-    this.profile = {
-      photo: { url: '', shared: false }, first_name: '', hatId: '', domain: ''
-    };
-
     this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
       if (profile.values && profile.values.personal.firstName) {
         this.profile.first_name = profile.values.personal.firstName;
@@ -94,8 +75,6 @@ export class HeaderComponent implements OnInit {
         this.profile.photo.shared = profile.share.photo.avatar;
       }
     });
-
-    // this.userSvc.getAccountStatus().subscribe((accountStatus: AccountStatus) => this.accountStatus = accountStatus);
 
   }
 

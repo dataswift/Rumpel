@@ -7,9 +7,9 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
-import { User } from '../user.interface';
-import { AccountStatus } from '../account-status.interface';
+import { UserService } from '../../user/user.service';
+import { User } from '../../user/user.interface';
+import { AccountStatus } from '../../user/account-status.interface';
 
 @Component({
   selector: 'rump-account-status-tile',

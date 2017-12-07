@@ -9,8 +9,8 @@
 import {Component, OnInit, Input, EventEmitter, Output, Inject} from '@angular/core';
 
 import { NotablesService } from '../notables.service';
-import { DialogService } from '../../layout/dialog.service';
-import { DialogBoxComponent } from '../../layout/dialog-box/dialog-box.component';
+import { DialogService } from '../../core/dialog.service';
+import { DialogBoxComponent } from '../../core/dialog-box/dialog-box.component';
 import { DataPlugService } from '../../data-management/data-plug.service';
 
 import { Notable } from '../../shared/interfaces/notable.class';

@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-import { DataManagementRoutingModule } from './data-management-routing.module';
 import { DataPlugsComponent } from './data-plugs/data-plugs.component';
 import { TileDataPlugsComponent } from './tile-data-plugs/tile-data-plugs.component';
 
@@ -9,7 +7,7 @@ import { DataPlugService } from './data-plug.service';
 import { DataPlugDataComponent } from './data-plug-data/data-plug-data.component';
 
 import { SharedModule } from '../shared/shared.module';
-import { LayoutModule } from '../layout/layout.module';
+import { CoreModule } from '../core/core.module';
 import { LocationsModule } from '../locations/locations.module';
 import { FacebookViewComponent } from './facebook-view/facebook-view.component';
 import { TwitterViewComponent } from './twitter-view/twitter-view.component';
@@ -21,11 +19,9 @@ import { FacebookEventViewComponent } from './facebook-event-view/facebook-event
 
 @NgModule({
   imports: [
-    CommonModule,
-    DataManagementRoutingModule,
     SharedModule,
     LocationsModule,
-    LayoutModule
+    CoreModule
   ],
   declarations: [
     DataPlugsComponent,

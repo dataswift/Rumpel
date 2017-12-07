@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DialogService } from '../../layout/dialog.service';
-import { MapBoxComponent } from '../../layout/map-box/map-box.component';
+import { DialogService } from '../../core/dialog.service';
+import { MapBoxComponent } from '../../core/map-box/map-box.component';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { Tweet } from '../../shared/interfaces/tweet.interface';
 

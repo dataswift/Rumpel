@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
-import { DialogService } from '../../layout/dialog.service';
+import { DialogService } from '../../core/dialog.service';
 import { OfferModalComponent } from '../offer-modal/offer-modal.component';
-import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
+import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 import { OfferAcceptedStatsComponent } from '../offer-accepted-stats/offer-accepted-stats.component';
 
 @Component({

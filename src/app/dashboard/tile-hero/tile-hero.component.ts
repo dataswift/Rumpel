@@ -9,8 +9,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { UserService } from '../../services/index';
-import { DialogService } from '../../layout/dialog.service';
-import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
+import { DialogService } from '../../core/dialog.service';
+import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 
 import { User } from '../../shared/interfaces/index';
 import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';

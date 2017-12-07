@@ -16,7 +16,7 @@ export class NotableComponent implements OnInit, OnDestroy {
   @Input() modifiable = false;
   @Output() change: EventEmitter<{ action: string; notable: HatRecord<Notable>; }> = new EventEmitter();
 
-  private notablesPlugs: DataPlug[];
+  private notablesPlugs: DataPlug[] = [];
   private sub: Subscription;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
@@ -46,7 +46,9 @@ export class NotableComponent implements OnInit, OnDestroy {
     if (name === 'phata' || name === 'hatters') {
       return '/assets/icons/hatters-icon.png';
     } else {
-      return this.notablesPlugs.find(plug => plug.name.toLowerCase() === name).illustrationUrl;
+      const thePlug = this.notablesPlugs.find(plug => plug.name.toLowerCase() === name);
+
+      return thePlug ? thePlug.illustrationUrl : '';
     }
   }
 

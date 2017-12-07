@@ -6,15 +6,7 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<rump-header *ngIf="!isPublicPage"></rump-header>
-
-<section class="content-main" [class.content-main-authenticated]="!isPublicPage" [class.content-main-not-authenticated]="isPublicPage">
-  <rump-side-menu *ngIf="!isPublicPage" class="menubar-left"></rump-side-menu>
-
-  <div class="content-grid container-fluid">
-    <router-outlet></router-outlet>
-  </div>
-</section>
+<router-outlet></router-outlet>
 
 <!--<div class="notifications-wrapper">-->
   <!--<rump-notification-centre *ngIf="showNotifications" rumpOutsideClick></rump-notification-centre>-->

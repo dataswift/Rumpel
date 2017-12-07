@@ -71,28 +71,28 @@ export const configuration: AppConfig = {
       { display: 'Public profile', icon: 'account_circle', link: 'public/profile', dataType: '', disable: '' }
     ],
     'private': [
-      { display: 'My Digital Life', icon: 'line_weight', link: 'feed', dataType: '', disable: '',
+      { display: 'My Digital Life', icon: 'line_weight', link: '/feed', dataType: '', disable: '',
       description: 'My Digital Life' },
 
-      { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '',
+      { display: 'Dashboard', icon: 'dashboard', link: '/dashboard', dataType: '', disable: '',
       description: 'The dashboard is where you have an overview of Rumpel.' },
 
-      { display: 'My Public Profile', icon: 'security', link: 'datastore', dataType: 'profile', disable: '',
+      { display: 'My Public Profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
       description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
 
-      { display: 'Redeem Offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '',
+      { display: 'Redeem Offers', icon: 'local_offer', link: '/offers', dataType: '', disable: '',
       description: 'Allow access to your data in exchange for cash, services or vouchers.' },
 
-      { display: 'Notables', icon: 'border_color', link: 'notables', dataType: '', disable: '',
+      { display: 'Notables', icon: 'border_color', link: '/notables', dataType: '', disable: '',
       description: `Your words are your memories!
       Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists -
       all in one place, and lets you decide what is private to yourself and what to share!
       Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.` },
 
-      { display: 'My Mashups', icon: 'layers', link: 'mashups/myday', dataType: '', disable: '',
+      { display: 'My Mashups', icon: 'layers', link: '/mashups/myday', dataType: '', disable: '',
       description: 'See mashups of your data' },
 
-      { display: 'My Data Plugs', icon: 'settings_input_component', link: 'dataplugs', dataType: '', disable: '',
+      { display: 'My Data Plugs', icon: 'settings_input_component', link: '/dataplugs', dataType: '', disable: '',
       description: `Data comes into your HAT via data plugs.
       Click here to see what data plugs are available, and what data plugs are already connected.` }
     ],

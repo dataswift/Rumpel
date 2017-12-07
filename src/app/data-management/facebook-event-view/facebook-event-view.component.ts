@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MapBoxComponent } from '../../layout/map-box/map-box.component';
-import { DialogService } from '../../layout/dialog.service';
+import { MapBoxComponent } from '../../core/map-box/map-box.component';
+import { DialogService } from '../../core/dialog.service';
 
 @Component({
   selector: 'rump-facebook-event-view',

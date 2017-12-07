@@ -17,13 +17,13 @@ export class SafeHtmlPipe implements PipeTransform {
   static replaceUrlsWithHtmlLinks(message: string): string {
     const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
-    return message.replace(urlRegex, `<a href='$1' target='_blank'>$1</a>`);
+    return message ? message.replace(urlRegex, `<a href='$1' target='_blank'>$1</a>`) : message;
   }
 
   constructor(private sanitizer: Sanitizer) {}
 
-  transform(message: string): SafeHtml {
-    const html = SafeHtmlPipe.replaceUrlsWithHtmlLinks(message);
+  transform(message: string, replaceUrls: boolean = false): SafeHtml {
+    const html = replaceUrls ? SafeHtmlPipe.replaceUrlsWithHtmlLinks(message) : message;
 
     return this.sanitizer.sanitize(SecurityContext.HTML, html);
   }

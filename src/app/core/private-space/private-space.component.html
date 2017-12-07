@@ -1,0 +1,17 @@
+<!--
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2017
+  -->
+
+<rump-header *ngIf="!isPublicPage"></rump-header>
+
+<section class="content-main" [class.content-main-authenticated]="!isPublicPage" [class.content-main-not-authenticated]="isPublicPage">
+  <rump-side-menu *ngIf="!isPublicPage" class="menubar-left"></rump-side-menu>
+
+  <div class="content-grid container-fluid">
+    <router-outlet></router-outlet>
+  </div>
+</section>

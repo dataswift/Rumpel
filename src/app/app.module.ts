@@ -7,27 +7,23 @@
  */
 
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRootComponent } from './app.component';
 
 import { APP_CONFIG, AppConfig, configuration } from './app.config';
 
-import { LayoutModule } from './layout/layout.module';
-import { MashupsModule } from './mashups/mashups.module';
-import { NotablesModule } from './notables/notables.module';
+import { CoreModule } from './core/core.module';
 import { DataManagementModule } from './data-management/data-management.module';
-import { DimensionsModule } from './dimensions/dimensions.module';
-import { ProfilesModule } from './profiles/profiles.module';
 import { SharedModule } from './shared/shared.module';
 import { LocationsModule } from './locations/locations.module';
-import { PhotosModule } from './photos/photos.module';
 import { SocialModule } from './social/social.module';
 import { FitbitModule } from './fitbit/fitbit.module';
 import { MonzoModule } from './monzo/monzo.module';
-import { DataDebitsModule } from './data-debits/data-debits.module';
-import { WeatherModule } from './weather/weather.module';
 import { PublicPagesModule } from './public-pages/public-pages.module';
 import { OffersModule } from './offers/offers.module';
+import { DashboardModule } from './dashboard/dashboard.module';
+import { NotablesModule } from './notables/notables.module';
+import { MashupsModule } from './mashups/mashups.module';
 
 import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
@@ -37,7 +33,6 @@ import { AuthGuard } from './auth.guard';
 import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
-import { GridComponent, TileHeaderComponent, TileComingSoonComponent } from './dashboard';
 import { HatApiService, RumpelService } from './services/index';
 import { AuthHttp } from './services/auth-http.service';
 
@@ -45,11 +40,11 @@ import { AuthHttp } from './services/auth-http.service';
 
 /* MODAL COMPONENTS */
 
-import { ConfirmBoxComponent } from './layout/confirm-box/confirm-box.component';
-import { DialogBoxComponent } from './layout/dialog-box/dialog-box.component';
-import { InfoBoxComponent } from './layout/info-box/info-box.component';
-import { MapBoxComponent } from './layout/map-box/map-box.component';
-import { FileUploadComponent } from './layout/file-upload/file-upload.component';
+import { ConfirmBoxComponent } from './core/confirm-box/confirm-box.component';
+import { DialogBoxComponent } from './core/dialog-box/dialog-box.component';
+import { InfoBoxComponent } from './core/info-box/info-box.component';
+import { MapBoxComponent } from './core/map-box/map-box.component';
+import { FileUploadComponent } from './core/file-upload/file-upload.component';
 
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
@@ -73,33 +68,26 @@ export function cookieServiceFactory() {
 @NgModule({
   declarations: [
     AppRootComponent,
-    GridComponent,
-    TileHeaderComponent,
-    TileComingSoonComponent,
     DataTypeFilterPipe
   ],
   imports: [
-    BrowserModule,
+    NoopAnimationsModule, // Using NoopAnimationModule instead of BrowserModule to prevent double-import error
     SharedModule,
     LocationsModule,
     HttpModule,
-    PhotosModule,
     FormsModule,
-    AppRoutingModule,
-    LayoutModule,
     UserModule,
     SocialModule,
     FitbitModule,
     MonzoModule,
     DataManagementModule,
-    DataDebitsModule,
-    MashupsModule,
-    NotablesModule,
-    DimensionsModule,
-    ProfilesModule,
-    WeatherModule,
     PublicPagesModule,
-    OffersModule
+    OffersModule,
+    DashboardModule,
+    NotablesModule,
+    MashupsModule,
+    CoreModule,
+    AppRoutingModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent ],

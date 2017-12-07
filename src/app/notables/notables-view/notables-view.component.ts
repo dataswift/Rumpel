@@ -9,9 +9,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
-import { DialogService } from '../../layout/dialog.service';
+import { DialogService } from '../../core/dialog.service';
 
-import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
+import { ConfirmBoxComponent } from '../../core/confirm-box/confirm-box.component';
 import { Notable, Profile } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { ProfileSharingConfig } from '../../shared/interfaces/profile.interface';

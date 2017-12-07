@@ -2,10 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { DataOfferService } from '../data-offer.service';
-import { DialogService } from '../../layout/dialog.service';
+import { DialogService } from '../../core/dialog.service';
 import { UserService } from '../../user/user.service';
 import { User } from '../../user/user.interface';
-import { InfoBoxComponent } from '../../layout/info-box/info-box.component';
+import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
 @Component({

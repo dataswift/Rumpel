@@ -11,11 +11,13 @@ export class PresignImgUrlPipe implements PipeTransform {
   constructor(private hat: HatApiV2Service) {}
 
   transform(link: string, isPublic: boolean): Observable<string> {
-    if (isPublic) {
+    if (link && isPublic) {
       return Observable.of(link);
-    } else {
+    } else if (link) {
       return this.hat.getFileMetadata(link.split('/').pop())
         .map((fileMetadata: FileMetadataRes) => fileMetadata.contentUrl);
+    } else {
+      return Observable.empty();
     }
   }
 
