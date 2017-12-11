@@ -102,7 +102,7 @@ export class ProfileComponent implements OnInit {
   }
 
   submitForm() {
-    this.values.dateCreated = moment().valueOf();
+    this.values.dateCreated = moment().unix();
 
     this.profilesSvc.saveProfile(this.values, this.share).subscribe(_ => {
       this.snackBar.open('Profile information saved.');
