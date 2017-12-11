@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
 import { UserService } from '../user.service';
+import { PasswordChangeFailureResInterface } from '../password-change-failure-res.interface';
 
 declare var zxcvbn: any;
 
@@ -79,12 +80,13 @@ export class PasswordChangeComponent implements OnInit {
           this.successMessage = 'Password changed.';
         },
         error => {
-          console.warn('Failed to recover password. Reason: ', error);
           this.loadingText = null;
           if (error.status === 403) {
             this.unauthorizedError = true;
           } else {
-            this.strengthError = 'ERROR: Failed to request password change.';
+            const serverErrorMsg: PasswordChangeFailureResInterface = JSON.parse(error._body);
+            this.strengthError = `ERROR: ${serverErrorMsg.message['obj.newPassword'][0].msg[0]}.<br>
+            ${serverErrorMsg.message['obj.newPassword'][0].args.join('<br>')}`;
           }
         }
       );
@@ -99,15 +101,15 @@ export class PasswordChangeComponent implements OnInit {
           this.successMessage = 'Password reset.';
         },
         error => {
-          console.warn('Failed to recover password. Reason: ', error);
           this.loadingText = null;
           if (error.status === 403) {
             this.unauthorizedError = true;
           } else {
-            this.strengthError = 'ERROR: Failed to request password change.';
+            const serverErrorMsg: PasswordChangeFailureResInterface = JSON.parse(error._body);
+            this.strengthError = `ERROR: ${serverErrorMsg.message['obj.newPassword'][0].msg[0]}.<br>
+            ${serverErrorMsg.message['obj.newPassword'][0].args.join('<br>')}`;
           }
         }
       );
   }
-
 }
