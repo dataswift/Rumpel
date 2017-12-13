@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
@@ -17,14 +17,17 @@ import { Subscription } from 'rxjs/Subscription';
 import { AccountStatus } from '../../user/account-status.interface';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
+import { MatMenuTrigger } from '@angular/material';
 
 declare var $: any;
 
 @Component({
   selector: 'rump-header',
-  templateUrl: 'header.component.html'
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @ViewChild(MatMenuTrigger) accountMenuBtn: MatMenuTrigger;
   @Output() clickNotifications = new EventEmitter<string>();
   public hatDomain: string;
   private sub: Subscription;
@@ -109,6 +112,10 @@ export class HeaderComponent implements OnInit {
 
   showPopover() {
     $('[data-toggle="popover"]').popover();
+  }
+
+  toggleSideMenu() {
+    document.querySelector('.burger').click();
   }
 
   showAccountOptions() {

@@ -6,11 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+@import "app/style/branding";
+
 /* Global styles */
 @import "app/style/global";
-
-/* General header styles */
-@import "app/style/header";
 
 /* General side-menu styles */
 @import "app/style/side-menu";
@@ -28,7 +27,7 @@
 
 @include mat-core();
 
-$hat-app-primary: mat-palette($mat-blue-grey, 700, 500, 900);
+$hat-app-primary: mat-palette($hat-blue, 500, 300, 700);
 $hat-app-accent: mat-palette($mat-pink, A200, A100, A400);
 
 $hat-app-warn: mat-palette($mat-red);

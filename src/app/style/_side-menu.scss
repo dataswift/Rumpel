@@ -12,12 +12,11 @@
   width: 345px;
   height: 100%;
   position: fixed;
-  top: 106px;
+  top: 61px;
   left: 0px;
-  z-index: 1020;
   color: $app-dark-grey;
   font-family: $font-standard;
-  background-color: $app-background-color;
+  background-color: white;
 
   @media screen and (max-width: 1113px) {
       left: -345px;
@@ -186,21 +185,17 @@ ul.center {
   }
 }
 
-
-
-.poweredBy{
+.poweredBy {
   position: absolute;
   left: 45px;
-  bottom: 100px;
-  border-top: 1px solid #e4e4e4;
-  width: 300px;
+  bottom: 50px;
+  border-top: 1px solid rgba(135, 135, 135, 0.1);
+  width: 245px;
   padding-top: 22px;
   padding-bottom: 22px;
   display: block;
-  background-color: $app-background-color;
 
-
-  p{
+  p {
     display: inline-block;
     letter-spacing: 0.5px;
   }

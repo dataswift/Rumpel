@@ -8,7 +8,7 @@
 
 <rump-header *ngIf="!isPublicPage"></rump-header>
 
-<section class="content-main" [class.content-main-authenticated]="!isPublicPage" [class.content-main-not-authenticated]="isPublicPage">
+<section style="margin-top: 61px;" class="content-main" [class.content-main-authenticated]="!isPublicPage">
   <rump-side-menu *ngIf="!isPublicPage" class="menubar-left"></rump-side-menu>
 
   <div class="content-grid container-fluid">

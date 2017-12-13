@@ -29,10 +29,10 @@ import { MarkdownToHtmlPipe} from '../shared/pipes/markdown-to-html.pipe';
 import { DataOfferService } from '../offers/data-offer.service';
 import { PrivateSpaceComponent } from './private-space/private-space.component';
 import { ProfilesModule } from '../profiles/profiles.module';
-
+import { CustomAngularMaterialModule } from './custom-angular-material.module';
 
 @NgModule({
-  imports: [ SharedModule, LocationsModule, ProfilesModule ],
+  imports: [ SharedModule, LocationsModule, ProfilesModule, CustomAngularMaterialModule ],
   declarations: [ HeaderComponent,
                   SideMenuComponent,
                   FooterComponent,

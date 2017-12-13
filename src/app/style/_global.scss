@@ -38,15 +38,11 @@ i{
     top: -100px;
 }
 
-
-
 .content-main-authenticated{
   margin-left: 345px;
-  top: 106px;
-  position: relative;
 
   @media screen and (max-width: 1113px) {
-      margin-left: 0px;
+    margin-left: 0;
   }
 
   .content-grid {
@@ -63,11 +59,6 @@ i{
     margin-left: 0;
   }
 }
-
-.content-main-not-authenticated{
-  margin-left: 0px !important;
-}
-
 
 .responsive {
   @include make-xs-column(12);

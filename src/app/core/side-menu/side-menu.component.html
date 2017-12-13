@@ -17,53 +17,51 @@
 <div class="client-logo"></div>
 
 <div class="menu-scroll">
+  <h6 class="data-plugs-title">Menu</h6>
+  <ul class="center" id="intro-step1">
+    <li *ngFor="let item of menu; let i = index"
+        [class.selected]="selectedItem.indexOf(item.link) !== -1">
+      <div class="wrapper" id="intro-step{{i + 3}}">
+        <a [routerLink]="[item.link]" (click)="closeMenu()"
+          data-toggle="popover" data-container=".menubar-left"
+           [attr.data-content]="item.description"
+           data-trigger="hover"
+           data-delay='{"show": "500", "hide": "100"}'
+           (mouseover)="showPopover()">
+          <div class="icon"><i class="material-icons">{{item.icon}}</i></div>
+          {{item.display}}
+          <span class="badge" *ngIf="item.display === 'Redeem offers' && availableOffers > 0">{{ availableOffers }}</span>
+        </a>
+      </div>
+    </li>
+  </ul>
 
-    <ul class="center" id="intro-step1">
-      <li *ngFor="let item of menu; let i = index"
-          [class.selected]="selectedItem.indexOf(item.link) !== -1">
-        <div class="wrapper" id="intro-step{{i + 3}}">
-          <a [routerLink]="[item.link]" (click)="closeMenu()"
-            data-toggle="popover" data-container=".menubar-left"
-             [attr.data-content]="item.description"
-             data-trigger="hover"
-             data-delay='{"show": "500", "hide": "100"}'
-             (mouseover)="showPopover()">
-            <div class="icon"><i class="material-icons">{{item.icon}}</i></div>
-            {{item.display}}
-            <span class="badge" *ngIf="item.display === 'Redeem offers' && availableOffers > 0">{{ availableOffers }}</span>
-          </a>
-        </div>
-      </li>
-    </ul>
-
-    <div *ngIf="userAuthenticated">
-        <h6 class="data-plugs-title">Add data plugs</h6>
-        <ul class="center plug-menu">
-          <li *ngFor="let item of dataplugList | async; let i = index" class="data-plugs-list">
-            <div class="wrapper">
-              <a (click)="openPlugPopup(item); closeMenu();" class="sidebar-pop" data-toggle="popover" data-container=".menubar-left"
-                 [attr.data-content]="item.description"
-                 data-trigger="hover"
-                 (mouseover)="showPopover()">
-                <div class="icon icon-grey"><img [src]="'assets/icons/grey-' + item.name.toLowerCase() + '-plug.svg'" /></div>
-                <div class="icon icon-color"><img [src]="'assets/icons/' + item.name.toLowerCase() + '-plug.svg'" /></div>
-                {{item.name}}
-                <span class="plus-icon"><i class="material-icons">control_point</i></span>
-              </a>
-            </div>
-          </li>
-        </ul>
-          <ul class="center" >
-          <li class="data-plugs-more">
-            <div class="wrapper">
-              <a [routerLink]="['/dataplugs']">
-                <div class="icon"><i class="material-icons">more_horiz</i></div>
-                <em>More</em>
-              </a>
-            </div>
-          </li>
-        </ul>
-  </div>
+  <h6 class="data-plugs-title">Add data plugs</h6>
+  <ul class="center plug-menu">
+    <li *ngFor="let item of dataplugList | async; let i = index" class="data-plugs-list">
+      <div class="wrapper">
+        <a (click)="openPlugPopup(item); closeMenu();" class="sidebar-pop" data-toggle="popover" data-container=".menubar-left"
+           [attr.data-content]="item.description"
+           data-trigger="hover"
+           (mouseover)="showPopover()">
+          <div class="icon icon-grey"><img [src]="'assets/icons/grey-' + item.name.toLowerCase() + '-plug.svg'" /></div>
+          <div class="icon icon-color"><img [src]="'assets/icons/' + item.name.toLowerCase() + '-plug.svg'" /></div>
+          {{item.name}}
+          <span class="plus-icon"><i class="material-icons">control_point</i></span>
+        </a>
+      </div>
+    </li>
+  </ul>
+    <ul class="center" >
+    <li class="data-plugs-more">
+      <div class="wrapper">
+        <a [routerLink]="['/dataplugs']">
+          <div class="icon"><i class="material-icons">more_horiz</i></div>
+          <em>More</em>
+        </a>
+      </div>
+    </li>
+  </ul>
 
 </div>
 

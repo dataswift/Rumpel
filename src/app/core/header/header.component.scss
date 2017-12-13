@@ -1,0 +1,178 @@
+/*
+ * Copyright (C) 2016 - 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016 - 2017
+ */
+
+@import '../../style/variables';
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+
+  .rump-navbar-header {
+    background-color: $app-dark-tone;
+    display: flex;
+    padding: 1em;
+  }
+
+  .flex-spacer {
+    flex-grow: 1;
+  }
+
+  button:last-child {
+    border-left: solid 1px rgba(135,135,135, 0.5);
+    border-radius: 0;
+  }
+}
+
+/deep/ .mat-button-wrapper {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-menu-item {
+  min-width: 280px;
+  padding: 0;
+  height: auto;
+
+  &:first-child {
+    border-bottom: 1px solid rgba(135, 135, 135, 0.1);
+  }
+
+  &:last-child {
+    border-top: 1px solid rgba(135, 135, 135, 0.1);
+  }
+}
+
+.welcome {
+  color: #fff;
+  font-family: Roboto,sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: .5px;
+  line-height: 1.1;
+  padding-right: 1em;
+  text-align: left;
+
+  span {
+    font-weight: 200;
+    font-size: 11px;
+    color: #eee;
+    letter-spacing: .5px;
+    opacity: .7;
+  }
+
+  @media screen and (max-width: 510px) {
+    display: none;
+  }
+}
+
+.user-photo {
+  flex: 1 1 auto;
+  cursor: pointer;
+  margin-right: 1em;
+
+  img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  .notlogged {
+    margin-top: -13px;
+  }
+}
+
+
+  .dropdown-item {
+    cursor: pointer;
+    padding: 10px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #9a9a9a;
+    opacity: 0.9;
+    font-family: $font-standard;
+    font-size: 12px;
+    letter-spacing: 0.4px;
+    height: 43px;
+
+    p {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      color: $app-mid-tone;
+      text-decoration: none;
+    }
+  }
+
+  .accountDetails {
+    display: flex;
+    align-items: center;
+    padding: 18px 25px 18px;
+    width: 100%;
+    cursor: auto;
+
+    h6 {
+      color: $app-dark-tone;
+      margin-bottom: 0;
+      display: block;
+      font-size: 16px;
+      letter-spacing: 0.7px;
+
+      span {
+        color: $app-dark-tone;
+        font-size: 10px;
+        letter-spacing: 0.7px;
+        font-weight: 400;
+      }
+    }
+
+    img {
+      width: 70px;
+      height: 70px;
+      margin-top: 0;
+      margin-right: 15px;
+    }
+  }
+
+  .accountUsage {
+    padding: 0 25px;
+    cursor: auto;
+
+    .bar-container {
+      height: 5px;
+      border-radius: 5px;
+      background-color: $app-light-tone;
+      display: block;
+      width: 100%;
+      padding: 0;
+
+      .bar {
+        background-color: $app-accent-color;
+        display: block;
+        height: 100%;
+        border-radius: 5px;
+        width: 50%;
+      }
+    }
+
+    h6 {
+      color: #9a9a9a;
+      font-size: 10px;
+      letter-spacing: 0;
+      font-family: $font-standard;
+      margin-bottom: 25px;
+      opacity: 0.9;
+      font-weight: 200;
+    }
+  }

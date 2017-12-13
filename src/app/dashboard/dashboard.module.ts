@@ -27,6 +27,7 @@ import { DataDebitService } from './data-debits.service';
 import { TileComingSoonComponent } from './tile-coming-soon/tile-coming-soon.component';
 import { SheFeedComponent } from './she-feed/she-feed.component';
 import { SheFeedService } from './she-feed.service';
+import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { SheFeedService } from './she-feed.service';
     FitbitModule,
     MonzoModule,
     NotablesModule,
-    ProfilesModule
+    ProfilesModule,
+    CustomAngularMaterialModule
   ],
   declarations: [
     GridComponent,

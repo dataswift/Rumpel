@@ -8,8 +8,6 @@
 
 import {Component, OnInit, Inject} from '@angular/core';
 import { UserService } from '../../services';
-import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
-import { DialogService } from '../dialog.service';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
 import { Observable } from 'rxjs/Observable';
@@ -44,7 +42,6 @@ export class SideMenuComponent implements OnInit {
   // so that it can subscribe for Auth observable in time.
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private _dialogSvc: DialogService,
               private router: Router,
               private userSvc: UserService,
               private dataplugSvc: DataPlugService,
@@ -123,15 +120,6 @@ export class SideMenuComponent implements OnInit {
     }
   }
 
-  displayConfirmDialog() {
-    this._dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-      buttons: [{
-        title: 'Continue',
-        link: 'https://marketsquare.hubofallthings.com/offers'
-      }]
-    });
-  }
-
   openPlugPopup(plug: any) {
     const loginName = plug.name.charAt(0).toUpperCase() + plug.name.slice(1);
 
@@ -173,10 +161,7 @@ export class SideMenuComponent implements OnInit {
 
     $('.menubar-left').animate({ left: (sidenav_x + 'px') }, duration);
 
-
-
     this.mobileMode = (window.innerWidth < 1113);
-
 
     if (this.mobileMode === true) {
         $('.content-main-authenticated').animate({ marginLeft: '0px', left: (content_margin + 'px') }, duration);
