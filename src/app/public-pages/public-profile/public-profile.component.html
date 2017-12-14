@@ -89,7 +89,7 @@
         <div class="phatabox-header">About</div>
         <div class="phatabox-body">
           <h3>{{ profile.about.title }}</h3>
-          <p [innerHTML]="profile.about.body | markdownToHtml | safeHtml"></p>
+          <p *ngIf="profile.about.body" [innerHTML]="profile.about.body | markdownToHtml | safeHtml"></p>
         </div>
       </div>
 
