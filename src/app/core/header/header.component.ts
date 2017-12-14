@@ -115,7 +115,8 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleSideMenu() {
-    document.querySelector('.burger').click();
+    const burgerBtn = <HTMLElement>document.querySelector('.burger');
+    burgerBtn.click();
   }
 
   showAccountOptions() {

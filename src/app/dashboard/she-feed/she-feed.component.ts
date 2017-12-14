@@ -13,7 +13,7 @@ import * as moment from 'moment';
 })
 export class SheFeedComponent implements OnInit {
   public feed$: Observable<HatRecord<SheFeed>[]>;
-  public currentPage = 'feed';
+  public appliedFilter = 'all';
 
   constructor(private sheFeedSvc: SheFeedService) { }
 
