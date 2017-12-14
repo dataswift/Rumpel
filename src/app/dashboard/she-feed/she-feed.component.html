@@ -4,10 +4,10 @@
 
     <span class="fill-space"></span>
 
-    <mat-radio-group>
-      <mat-radio-button value="all" color="warn">All</mat-radio-button>
-      <mat-radio-button value="past" color="warn">Past</mat-radio-button>
-      <mat-radio-button value="future" color="warn">Future</mat-radio-button>
+    <mat-radio-group [value]="'all'" (change)="applyFilter($event)">
+      <mat-radio-button value="all" color="accent">All</mat-radio-button>
+      <mat-radio-button value="past" color="accent">Past</mat-radio-button>
+      <mat-radio-button value="future" color="accent">Future</mat-radio-button>
     </mat-radio-group>
   </mat-toolbar>
 

@@ -31,7 +31,7 @@ export class LoginNativeComponent implements OnInit {
 
   ngOnInit() {
     const qps = this.route.snapshot.queryParams;
-    this.redirectPath = qps['target'] || 'dashboard';
+    this.redirectPath = qps['target'] || 'feed';
 
     // Skip login step if the user is already authenticated
     if (this.userSvc.isLoggedIn()) {
