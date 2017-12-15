@@ -46,7 +46,9 @@ export class NotableComponent implements OnInit, OnDestroy {
     if (name === 'phata' || name === 'hatters') {
       return '/assets/icons/hatters-icon.png';
     } else {
-      return this.notablesPlugs.find(plug => plug.name.toLowerCase() === name).illustrationUrl;
+      const foundPlug = this.notablesPlugs.find(plug => plug.name.toLowerCase() === name);
+
+      return foundPlug ? foundPlug.illustrationUrl : '/assets/images/help.svg';
     }
   }
 
