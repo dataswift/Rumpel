@@ -9,11 +9,11 @@
   </div>
 
   <div class="notable-header">
-    <div class="user-photo">
+    <div class="user-photo" *ngIf="notable.data.authorv1">
       <img [src]="notable.data.authorv1['photo_url'] || '/assets/images/user-icon-black.svg'">
     </div>
     <div class="header-content">
-      <h5>{{notable.data.authorv1.phata}}</h5>
+      <h5 *ngIf="notable.data.authorv1">{{notable.data.authorv1.phata}}</h5>
       <span>Logged {{notable.data.created_time | moment}}</span>
       <span *ngIf="!notable.data.isShared">PRIVATE</span>
       <span *ngIf="notable.data.isShared">

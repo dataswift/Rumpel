@@ -6,15 +6,14 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-export interface Location {
-  id?: string;
+export interface LocationIos {
+  speed: number;
+  course: number;
+  altitude: number;
   latitude: number;
   longitude: number;
-  accuracy: number;
-  timestamp?: any;
-  altitude?: number;
-  altitude_accuracy?: number;
-  heading?: number;
-  speed?: number;
-  shared?: Array<string>;
+  dateCreated: number;
+  dateCreatedLocal: string;
+  verticalAccuracy: number;
+  horizontalAccuracy: number;
 }

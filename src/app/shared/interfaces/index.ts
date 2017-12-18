@@ -12,7 +12,6 @@ export { Post } from './post.interface';
 export { Profile } from './profile.interface';
 export { User } from '../../user/user.interface';
 export { HatTable } from './hat-table.interface';
-export { Location } from './location.interface';
 export { DataDebit } from './data-debit.interface';
 export { MusicListen } from './music-listen.interface';
 export { Node } from './node.class';

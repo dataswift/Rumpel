@@ -6,12 +6,18 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 10, 2017
  */
 
-export interface Bundle {
+import { HatRecord } from './hat-record.interface';
+
+export interface BundleStructure {
   name: string;
   bundle: { [bundleVersion: string]: PropertyQuery };
 }
 
-interface PropertyQuery {
+export interface BundleValues {
+  [bundleName: string]: HatRecord<any>[];
+}
+
+export interface PropertyQuery {
   endpoints: EndpointQuery[];
   orderBy?: string;
   ordering?: string;

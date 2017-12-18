@@ -1,8 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Moment } from 'moment';
-import * as moment from 'moment';
-import { Location } from '../../shared/interfaces';
-import { MapComponent } from '../../locations/map/map.component';
+import { LocationIos } from '../../shared/interfaces/location.interface';
 
 declare var $: any;
 
@@ -13,7 +10,7 @@ declare var $: any;
 })
 export class MapBoxComponent implements OnInit {
 
-  @Input() datapoints: Array<Location>;
+  @Input() datapoints: Array<LocationIos>;
   private destroy: Function;
   public scrollTop: number;
   public animateIn = false;

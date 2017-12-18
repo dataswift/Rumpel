@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HatApiV2Service } from '../../services/hat-api-v2.service';
-import {FileMetadataRes} from '../interfaces/file.interface';
+import { FileMetadataRes } from '../interfaces/file.interface';
 
 @Pipe({
   name: 'presignImgUrl'

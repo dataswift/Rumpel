@@ -17,12 +17,12 @@
         </div>
 
         <div class="col-xs-9">
-          <p>{{profile.personal.title}} {{profile.personal.first_name}} {{profile.personal.last_name}}</p>
+          <p>{{values.personal.title}} {{values.personal.firstName}} {{values.personal.lastName}}</p>
         </div>
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="!profile.personal.private"></span>
+            [class.privacy-color]="shares.personal.lastName"></span>
         </div>
       </li>
 
@@ -32,12 +32,12 @@
         </div>
 
         <div class="col-xs-9">
-          <p>{{profile.mobile.no}}</p>
+          <p>{{values.contact.mobile}}</p>
         </div>
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="!profile.mobile.private"></span>
+            [class.privacy-color]="shares.contact.mobile"></span>
         </div>
       </li>
 
@@ -47,12 +47,12 @@
         </div>
 
         <div class="col-xs-9">
-          <p>{{profile.primary_email.value}}</p>
+          <p>{{values.contact.primaryEmail}}</p>
         </div>
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="!profile.primary_email.private"></span>
+            [class.privacy-color]="shares.contact.primaryEmail"></span>
         </div>
       </li>
 
@@ -63,15 +63,14 @@
 
         <div class="col-xs-9">
           <div>
-            <p>{{profile.address_details.no}} {{profile.address_details.street}}</p>
-            <p>{{profile.address_global.city}} {{profile.address_details.postcode}}</p>
-            <p>{{profile.address_global.country}}</p>
+            <p>{{values.address.city}} {{values.address.county}}</p>
+            <p>{{values.address.country}}</p>
           </div>
         </div>
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="!profile.address_details.private"></span>
+            [class.privacy-color]="shares.address.city"></span>
         </div>
       </li>
 
@@ -81,12 +80,12 @@
         </div>
 
         <div class="col-xs-9">
-          <p>{{profile.website.link}}</p>
+          <p>{{values.online.website}}</p>
         </div>
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="!profile.website.private"></span>
+            [class.privacy-color]="shares.online.website"></span>
         </div>
       </li>
 
@@ -96,12 +95,12 @@
         </div>
 
         <div class="col-xs-9">
-          <p>{{profile.facebook.link}}</p>
+          <p>{{values.online.facebook}}</p>
         </div>
 
         <div class="col-xs-1">
           <span class="privacy-setting ss-view"
-            [class.privacy-color]="!profile.facebook.private"></span>
+            [class.privacy-color]="shares.online.facebook"></span>
         </div>
       </li>
     </ul>

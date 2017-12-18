@@ -8,11 +8,11 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Notable, Location } from '../../shared/interfaces';
+import { Notable } from '../../shared/interfaces';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { Router } from '@angular/router';
-import {HatRecord} from '../../shared/interfaces/hat-record.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rump-input-box',
@@ -70,7 +70,7 @@ export class InputBoxComponent implements OnInit {
       this.currentNotable.data.locationv1 = null;
       this.reportLocation = false;
     } else {
-      this.locationsSvc.getCurrentDeviceLocation((err, here: Location) => {
+      this.locationsSvc.getCurrentDeviceLocation((err, here) => {
         if (err) {
           return this.reportLocation = false;
         }

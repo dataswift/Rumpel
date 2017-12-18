@@ -8,8 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../profiles.service';
-import { Profile } from '../../shared/interfaces/profile.interface';
-import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 @Component({
   selector: 'rump-tile-profile',
@@ -17,46 +16,18 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
   styleUrls: ['tile-profile.component.scss']
 })
 export class TileProfileComponent implements OnInit {
-  public profile: Profile;
+  public values: Profile;
+  public shares: ProfileSharingConfig;
 
   constructor(private profilesSvc: ProfilesService) {}
 
   ngOnInit() {
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      if (profileSnapshots.length > 0) {
-        this.profile = profileSnapshots[0].data;
-      }
+    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
+      this.values = profile.values;
+      this.shares = profile.share;
     });
 
-    this.profile = {
-      dateCreated: 0,
-      private: true,
-      fb_profile_photo: { private: true },
-      personal: { title: '', first_name: '', middle_name: '',
-                  last_name: '', preferred_name: '', private: true },
-      nick: { name: '', private: true },
-      birth: { date: '', private: true },
-      gender: { type: '', private: true },
-      age: { group: '', private: true },
-      primary_email: { value: '', private: true },
-      alternative_email: { value: '', private: true },
-      home_phone: { no: '', private: true },
-      mobile: { no: '', private: true },
-      address_details: { no: '', street: '', postcode: '', private: true },
-      address_global: { city: '', county: '', country: '', private: true },
-      website: { link: '', private: true },
-      blog: { link: '', private: true },
-      facebook: { link: '', private: true },
-      linkedin: { link: '', private: true },
-      twitter: { link: '', private: true },
-      google: { link: '', private: true },
-      youtube: { link: '', private: true },
-      emergency_contact: { first_name: '', last_name: '', mobile: '',
-                          relationship: '', private: true },
-      about: { title: '', body: '', private: true }
-    };
-
-    this.profilesSvc.getInitData(1);
+    this.profilesSvc.getProfileData();
   }
 
 }

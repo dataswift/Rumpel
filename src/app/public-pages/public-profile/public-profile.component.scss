@@ -77,17 +77,17 @@
         }
       }
 
-      .phathero{
+      .phathero {
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
         background-image: url('/assets/images/hero-fade.jpg');
 
-        .social-links{
-          a{
+        .social-links {
+          a {
             margin: 0 7px;
 
-            img{
+            img {
               top: 0;
               border: none;
               width: 48px;
@@ -95,14 +95,10 @@
               background: $app-background-color;
             }
           }
-
         }
       }
 
-
-
-
-      .phata-box{
+      .phata-box {
         background-color: white;
         border-radius: 8px;
         position: relative;
@@ -114,7 +110,6 @@
         text-align: center;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
-
 
         img, svg{
           width: 160px;

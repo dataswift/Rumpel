@@ -8,9 +8,9 @@
 
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Location } from '../../shared/interfaces';
 import { LocationsService } from '../locations.service';
-import {HatRecord} from '../../shared/interfaces/hat-record.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { LocationIos } from '../../shared/interfaces/location.interface';
 
 @Component({
   selector: 'rump-tile-map',
@@ -20,7 +20,7 @@ import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 export class TileMapComponent implements OnInit, OnDestroy {
   @Input() title;
   @Input() info;
-  public locations: HatRecord<Location>[];
+  public locations: HatRecord<LocationIos>[];
   private sub;
   public safeSize;
 
@@ -31,7 +31,7 @@ export class TileMapComponent implements OnInit, OnDestroy {
     this.locations = [];
 
     this.safeSize = this.sanitizer.bypassSecurityTrustStyle('290px');
-    this.sub = this.locationsSvc.data$.subscribe((locations: HatRecord<Location>[]) => {
+    this.sub = this.locationsSvc.data$.subscribe((locations: HatRecord<LocationIos>[]) => {
       this.locations = locations;
     });
 

@@ -15,6 +15,7 @@ import { UserService } from '../../user/user.service';
 import { Notable, Profile } from '../../shared/interfaces';
 import { User } from '../../user/user.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 @Component({
   selector: 'rump-tile-notables',
@@ -54,10 +55,10 @@ export class TileNotablesComponent implements OnInit {
       }
     });
 
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      const latestSnapshot = profileSnapshots[0];
-      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
+    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
+      const latestSnapshot = profile;
+      if (latestSnapshot.share && latestSnapshot.share.photo.avatar) {
+        this.profile.photo.shared = latestSnapshot.share.photo.avatar;
       }
     });
   }

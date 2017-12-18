@@ -12,7 +12,7 @@ import { SocialService } from '../../social/social.service';
 import { TwitterService } from '../../social/twitter.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
 import { LocationsService } from '../../locations/locations.service';
-import { Post, Tweet, Event, Location } from '../../shared/interfaces/index';
+import { Post, Tweet, Event } from '../../shared/interfaces/index';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { mergeWith, groupBy } from 'lodash';
@@ -24,6 +24,7 @@ import { GoogleEventsService } from '../../dimensions/google-events.service';
 import { FitbitActivitySummaryService } from '../../fitbit/services/fitbit-activity-summary.service';
 import { MonzoService } from '../../monzo/monzo.service';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { LocationIos } from '../../shared/interfaces/location.interface';
 
 declare var $: any;
 
@@ -38,7 +39,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
   private locationSub: Subscription;
   private dataStreamSub: Subscription;
-  public locations: HatRecord<Location>[] = [];
+  public locations: HatRecord<LocationIos>[] = [];
   public cardList: { [date: string]: HatRecord<any>[]; };
 
   public safeSize;
@@ -85,7 +86,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
       this.cardList = mergeWith(this.cardList, groupedRecords, this.cardMergeCustomiser);
     });
 
-    this.locationSub = this.locationsSvc.data$.subscribe((locations: HatRecord<Location>[]) => {
+    this.locationSub = this.locationsSvc.data$.subscribe((locations: HatRecord<LocationIos>[]) => {
       const groupedLocations = this.groupByDate(locations);
       const squashedAndGroupedLocations = {};
 
@@ -150,7 +151,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
       case 'facebook/events':
         extractDateString = entity => entity.data.start.format('YYYY-MM-DD');
         break;
-      case 'rumpelstaging/notablesv1':
+      case 'rumpel/notablesv1':
         extractDateString = entity => entity.data.created_time.format('YYYY-MM-DD');
         break;
       case 'facebook/posts':

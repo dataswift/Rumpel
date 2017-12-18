@@ -14,6 +14,7 @@ import { DialogService } from '../../layout/dialog.service';
 import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
 import { Notable, Profile } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 declare var $: any;
 
@@ -51,10 +52,10 @@ export class NotablesViewComponent implements OnInit {
     //   }
     // });
 
-    this.profilesSvc.data$.subscribe((profileSnapshots: HatRecord<Profile>[]) => {
-      const latestSnapshot = profileSnapshots[0];
-      if (latestSnapshot && latestSnapshot.data.fb_profile_photo) {
-        this.profile.photo.shared = !latestSnapshot.data.fb_profile_photo.private;
+    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
+      const latestSnapshot = profile;
+      if (latestSnapshot.share && latestSnapshot.share.photo) {
+        this.profile.photo.shared = latestSnapshot.share.photo.avatar;
       }
     });
   }

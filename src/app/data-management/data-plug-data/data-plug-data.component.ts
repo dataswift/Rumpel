@@ -10,7 +10,7 @@ import { NotablesService } from '../../notables/notables.service';
 import { FacebookEventsService } from '../../dimensions/facebook-events.service';
 import { GoogleEventsService } from '../../dimensions/google-events.service';
 import { FitbitActivitySummaryService } from '../../fitbit/services/fitbit-activity-summary.service';
-import { Post, Tweet, Event, Location } from '../../shared/interfaces/index';
+import { Post, Tweet, Event } from '../../shared/interfaces/index';
 import { FitbitActivitySummary } from '../../fitbit/interfaces/fitbit-activity-summary.interface';
 import { Notable } from '../../shared/interfaces/notable.class';
 import * as moment from 'moment';
@@ -21,6 +21,7 @@ import { FitbitActivityService } from '../../fitbit/services/fitbit-activity.ser
 import { FitbitProfileService } from '../../fitbit/services/fitbit-profile.service';
 import { FitbitActivity } from '../../fitbit/interfaces/fitbit-activity.interface';
 import { FitbitProfile } from '../../fitbit/interfaces/fitbit-profile.interface';
+import { LocationIos } from '../../shared/interfaces/location.interface';
 
 declare var $: any;
 
@@ -47,7 +48,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
   public feed: Array<any> = [];
   public events: Array<any> = [];
-  public locations: HatRecord<Location>[] = [];
+  public locations: HatRecord<LocationIos>[] = [];
   public fromDate: Moment;
   public toDate: Moment = moment();
   public tabView = 'posts';
@@ -141,7 +142,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   }
 
   initLocations() {
-    this.feedPostSub = this.locationsSvc.data$.subscribe((posts: HatRecord<Location>[]) => {
+    this.feedPostSub = this.locationsSvc.data$.subscribe((posts: HatRecord<LocationIos>[]) => {
       this.feed = posts;
       this.locations = posts;
       this.tabView = 'locations';
