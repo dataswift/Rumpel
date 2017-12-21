@@ -9,7 +9,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
-  selector: 'rump-dialog-box',
+  selector: 'rum-dialog-box',
   templateUrl: './dialog-box.component.html'
 })
 export class DialogBoxComponent implements OnInit {

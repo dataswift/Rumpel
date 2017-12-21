@@ -12,11 +12,8 @@
       <div class="notif-center">
         <div class="notif-content">
             <div class="notification-message" [innerHTML]="notification?.notice?.message | markdownToHtml"></div>
-            <a class="notif-more popover-click" data-toggle="popover" data-container="body"
-                data-placement="bottom"
-               [attr.data-content]="notification?.notice?.message | markdownToHtml"
-               data-trigger="hover"
-               (mouseover)="showPopover($event)">More</a>
+            <a class="notif-more popover-click"
+               [attr.data-content]="notification?.notice?.message | markdownToHtml">More</a>
             <h5 class="notif-time">{{notification?.notice?.dateCreated | moment}}</h5>
         </div>
 

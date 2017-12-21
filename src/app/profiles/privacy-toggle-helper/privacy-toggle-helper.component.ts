@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'rump-privacy-toggle-helper',
+  selector: 'rum-privacy-toggle-helper',
   templateUrl: './privacy-toggle-helper.component.html',
   styleUrls: ['./privacy-toggle-helper.component.scss']
 })

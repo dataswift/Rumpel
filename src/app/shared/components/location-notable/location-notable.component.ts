@@ -4,7 +4,7 @@ import { Notable } from '../../interfaces/notable.class';
 import {HatRecord} from '../../interfaces/hat-record.interface';
 
 @Component({
-  selector: 'rump-location-notable',
+  selector: 'rum-location-notable',
   templateUrl: './location-notable.component.html',
   styleUrls: ['./location-notable.component.scss']
 })

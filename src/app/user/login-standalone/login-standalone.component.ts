@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 
 @Component({
-  selector: 'rump-login-standalone',
+  selector: 'rum-login-standalone',
   templateUrl: './login-standalone.component.html',
   styleUrls: ['./login-standalone.component.scss']
 })

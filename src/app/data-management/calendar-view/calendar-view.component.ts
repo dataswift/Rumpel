@@ -6,7 +6,7 @@ import { Event } from '../../shared/interfaces/event.interface';
 import {FitbitActivity} from '../../fitbit/interfaces/fitbit-activity.interface';
 
 @Component({
-  selector: 'rump-calendar-view',
+  selector: 'rum-calendar-view',
   templateUrl: './calendar-view.component.html',
   styleUrls: ['./calendar-view.component.scss']
 })

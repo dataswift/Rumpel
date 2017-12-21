@@ -6,12 +6,12 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
   -->
 
-<div class="rump-modal" [class.animateIn]="animateIn">
-  <div class="rump-modal-content">
-    <div class="rump-modal-header">
+<div class="rum-modal" [class.animateIn]="animateIn">
+  <div class="rum-modal-content">
+    <div class="rum-modal-header">
       <h3>Offer details</h3>
     </div>
-    <div class="rump-modal-body" (scroll)="handleScroll($event)">
+    <div class="rum-modal-body" (scroll)="handleScroll($event)" #modalBody>
       <div class="offer-nav" [class.shadow]="scrollShadow" >
           <a (click)="prevOffer()" class="swipe swipe-left" [class.swipe-disabled]="offer_index == 0 || navDisabled"><i class="material-icons">keyboard_backspace</i><span>Prev</span></a>
           <a (click)="nextOffer()" class="swipe swipe-right" [class.swipe-disabled]="offer_index >= offers.length-1 || navDisabled"><span>Next</span><i class="material-icons">keyboard_backspace</i></a>
@@ -81,7 +81,7 @@
               <ng-template #oldFormat>
                 <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
                   <span class="bold">{{ def.source | capitalizeFirst }}</span>
-                  <rump-offer-requirements *ngFor="let dataset of def.datasets" [requirements]="dataset"></rump-offer-requirements>
+                  <rum-offer-requirements *ngFor="let dataset of def.datasets" [requirements]="dataset"></rum-offer-requirements>
                 </p>
               </ng-template>
 
@@ -101,19 +101,19 @@
 
     </div>
 
-
-
-
-
-
-    <div class="rump-modal-footer" *ngIf="offerStatus == 'untouched'">
+    <div class="rum-modal-footer" *ngIf="offerStatus == 'untouched'">
       <div class="checkbox">
-        <label><input type="checkbox" class="regular-checkbox" value="" (change)="updateClaimDisabled($event)" [disabled]="btnText != 'Accept' && btnText != 'Try again'">I agree to share the data being requested</label>
+        <label>
+          <input type="checkbox" class="regular-checkbox" [value]="termsAccepted" (change)="updateClaimDisabled($event)" [disabled]="btnText != 'Accept' && btnText != 'Try again'">
+          I agree to share the data being requested
+        </label>
       </div>
-      <button type="button" class="btn" (click)="acceptOffer($event)" [disabled]='claimDisabled'><i class="material-icons">{{ btnIcon }}</i>{{ btnText }}</button>
+      <button type="button" class="btn" (click)="acceptOffer($event)" [disabled]='claimDisabled' #offerControlButton>
+        <i class="material-icons">{{ btnIcon }}</i>{{ btnText }}
+      </button>
     </div>
 
-    <div class="rump-modal-footer footer-state footer-claimed" *ngIf="offerStatus == 'claimed' || offerStatus == 'claim'">
+    <div class="rum-modal-footer footer-state footer-claimed" *ngIf="offerStatus == 'claimed' || offerStatus == 'claim'">
       <i class="material-icons">data_usage</i>
       <div *ngIf="offers[offer_index].totalUserClaims >= offers[offer_index].requiredMinUser || offers[offer_index].requiredMinUser == 0">
         <h5>Collecting data</h5>
@@ -126,7 +126,7 @@
       </div>
     </div>
 
-    <div class="rump-modal-footer footer-state footer-complete" *ngIf="offerStatus == 'completed'">
+    <div class="rum-modal-footer footer-state footer-complete" *ngIf="offerStatus == 'completed'">
       <i class="material-icons">insert_emoticon</i>
       <div>
         <h5>Offer complete</h5>
@@ -139,7 +139,7 @@
 
 
 
-    <div class="rump-modal-footer footer-state footer-redeemed" *ngIf="offerStatus == 'redeemed'">
+    <div class="rum-modal-footer footer-state footer-redeemed" *ngIf="offerStatus == 'redeemed'">
       <i class="material-icons">check_circle</i>
       <div>
         <h5>All done!</h5>
@@ -147,7 +147,7 @@
       </div>
     </div>
 
-    <div class="rump-modal-footer footer-state" *ngIf="offerStatus == 'failed'">
+    <div class="rum-modal-footer footer-state" *ngIf="offerStatus == 'failed'">
       <i class="material-icons">error</i>
       <div>
         <h5>Offer failed</h5>

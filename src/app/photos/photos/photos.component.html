@@ -6,18 +6,11 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-  <div class="row content-bg content-header">
-    <div class="col-md-12">
-      <div class="view-header">
-        <a role="button" class="page-info popover-click" tabindex="0" data-toggle="popover" data-container="body"
-           data-content="View your dropbox images" class="info-button"
-           data-trigger="hover focus"
-           (mouseover)="showPopover($event)"
-           data-placement="auto bottom"><i class="material-icons">info_outline</i></a>
-        <h4>Personal Photos</h4>
-      </div>
-    </div>
+<div class="row content-bg content-header">
+  <div class="col-md-12">
+    <rum-page-header title="Personal Photos" tooltipContent="View your dropbox images"></rum-page-header>
   </div>
+</div>
 
 
 <div class="row content-bg">
@@ -55,12 +48,12 @@
         </li>
       </ul>
 
-      <rump-timeline class="timeline"
-                     rumpStick [stickMin]="160" [stickClass]="'fixed-right'"
+      <rum-timeline class="timeline"
+                     rumStick [stickMin]="160" [stickClass]="'fixed-right'"
                      [timeline]="timeline"
                      [selectedTime]="selectedTime"
                      (timeSelected)="selectTime($event)"
-                     [hidden]="!showTimeline"></rump-timeline>
+                     [hidden]="!showTimeline"></rum-timeline>
     </div>
   </div>
 </div>

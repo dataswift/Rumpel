@@ -99,7 +99,7 @@
             <div class="box-content notes">
               <ul class="bulletless-list">
                 <li *ngFor="let notable of notables" class="notable-item placeholder">
-                  <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
+                  <rum-notable [notable]="notable" [modifiable]="false"></rum-notable>
                 </li>
               </ul>
             </div>
@@ -157,7 +157,7 @@
       <h4>Public Profile</h4>
       <div class="view-mode-toggle" *ngIf="userAuthenticated">
         <h6 class="switch-label">Edit</h6>
-        <rump-switch [isChecked]="true" (onSwitch)="switchView()" class="switch-main"></rump-switch>
+        <rum-switch [isChecked]="true" (onSwitch)="switchView()" class="switch-main"></rum-switch>
         <h6 class="switch-label">View</h6>
       </div>
     </div>
@@ -168,7 +168,7 @@
   <div class="row profile profile-private" *ngIf="isLoading()">
     <div class="col-md-offset-1 col-md-10">
       <div class="loading-animation">
-        <rump-spinner [isRunning]="true"></rump-spinner>
+        <rum-spinner [isRunning]="true"></rum-spinner>
         <span>Retrieving data...</span>
       </div>
     </div>
@@ -244,7 +244,7 @@
         <h2 class="icon-text-valign"><span class="icon ss-write"></span>&nbsp;My Public Notables</h2>
         <ul class="bulletless-list">
           <li *ngFor="let notable of notables" class="notable-item placeholder">
-            <rump-notable [notable]="notable" [modifiable]="false"></rump-notable>
+            <rum-notable [notable]="notable" [modifiable]="false"></rum-notable>
           </li>
         </ul>
       </div>

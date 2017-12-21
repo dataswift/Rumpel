@@ -1,11 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { DataOfferService } from '../data-offer.service';
 import { Subscription } from 'rxjs/Subscription';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-offer-modal',
+  selector: 'rum-offer-modal',
   templateUrl: './offer-modal.component.html',
   styleUrls: ['./offer-modal.component.scss']
 })
@@ -17,6 +15,9 @@ export class OfferModalComponent implements OnInit {
   @Input() changeModal: Function;
   @Input() statsComponent: any;
   @Input() offerMode = 'untouched';
+
+  @ViewChild('modalBody') modalBody: ElementRef;
+  @ViewChild('offerControlButton') offerButton: ElementRef;
 
   public timeNow = Date.now();
   public claimSub: Subscription;
@@ -31,22 +32,22 @@ export class OfferModalComponent implements OnInit {
   public offerStatus = 'untouched';
   public animateIn = false;
   public voucherCopied = false;
+  public termsAccepted = false;
 
-  constructor(private dataOfferSvc: DataOfferService) { }
+  constructor(private renderer: Renderer2,
+              private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
-    this.scrollTop = $('body').scrollTop();
-    $('body, html').addClass('no-scroll');
+    this.scrollTop = document.body.scrollTop;
+    this.renderer.addClass(document.body, 'no-scroll');
 
     this.changeOffer(0);
     this.animateIn = true;
-
-    console.log(this.offers[this.offer_index]);
   }
 
   closeModal(): void {
-    $('body, html').removeClass('no-scroll');
-    $('body').scrollTop(this.scrollTop);
+    this.renderer.removeClass(document.body, 'no-scroll');
+    document.body.scrollTop = this.scrollTop;
 
     this.animateIn = false;
     setTimeout(() => {
@@ -75,7 +76,7 @@ export class OfferModalComponent implements OnInit {
     this.scrollShadow = false;
     this.navDisabled = false;
     this.btnIcon = '';
-    this.btnText = 'Accept'
+    this.btnText = 'Accept';
 
     if (this.offers[this.offer_index].claim === undefined) {
       this.offerStatus = 'untouched';
@@ -83,9 +84,9 @@ export class OfferModalComponent implements OnInit {
       this.offerStatus = this.offers[this.offer_index].claim.status;
     }
 
-    $('.rump-modal-footer .btn').removeClass('processing accepted failed');
-    $('.regular-checkbox').attr('checked', false);
-    $('.rump-modal-body').scrollTop(0);
+    this.renderer.removeClass(this.offerButton, 'processing accepted failed');
+    this.termsAccepted = false;
+    this.modalBody.nativeElement.scrollTop = 0;
   }
 
   acceptOffer(evt): void {
@@ -112,8 +113,6 @@ export class OfferModalComponent implements OnInit {
 
 
   updateOffers(offers) {
-
-
     setTimeout(() => {
       if (this.offerMode === 'untouched') {
           this.offers = offers.filter(function(offer) {
@@ -160,6 +159,7 @@ export class OfferModalComponent implements OnInit {
 
   updateClaimDisabled(evt) {
     this.claimDisabled = !evt.target.checked;
+    this.termsAccepted = !this.termsAccepted;
   }
 
   showUserFeedback(btn, feedback) {

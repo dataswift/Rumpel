@@ -9,7 +9,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'rump-about',
+  selector: 'rum-about',
   templateUrl: 'about.component.html',
   styleUrls: ['about.component.scss']
 })

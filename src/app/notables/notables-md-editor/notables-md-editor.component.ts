@@ -19,10 +19,9 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { FileMetadataRes } from '../../shared/interfaces/file.interface';
 
 declare var SimpleMDE: any;
-declare var $: any;
 
 @Component({
-  selector: 'rump-notables-md-editor',
+  selector: 'rum-notables-md-editor',
   templateUrl: './notables-md-editor.component.html',
   styleUrls: ['./notables-md-editor.component.scss']
 })
@@ -93,8 +92,6 @@ export class NotablesMdEditorComponent implements OnInit {
     });
 
     this.resetForm();
-
-    $('[data-toggle="tooltip"]').tooltip();
   }
 
   switchType(typeName: string) {

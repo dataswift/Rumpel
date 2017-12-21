@@ -12,7 +12,7 @@ import { User } from '../../user/user.interface';
 import { AccountStatus } from '../../user/account-status.interface';
 
 @Component({
-  selector: 'rump-account-status-tile',
+  selector: 'rum-account-status-tile',
   templateUrl: './account-status-tile.component.html',
   styleUrls: ['./account-status-tile.component.scss']
 })

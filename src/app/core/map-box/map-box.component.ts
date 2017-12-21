@@ -1,10 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer2 } from '@angular/core';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-map-box',
+  selector: 'rum-map-box',
   templateUrl: './map-box.component.html',
   styleUrls: ['./map-box.component.scss']
 })
@@ -16,20 +14,20 @@ export class MapBoxComponent implements OnInit {
   public animateIn = false;
   public loading = false;
 
-  constructor() { }
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
-    this.scrollTop = $('body').scrollTop();
-    $('body, html').addClass('no-scroll');
+    this.scrollTop = document.body.scrollTop;
     this.animateIn = true;
+    this.renderer.addClass(document.body, 'no-scroll');
   }
 
   closeModal(): void {
-    $('body, html').removeClass('no-scroll');
-    $('body').scrollTop(this.scrollTop);
+    this.renderer.removeClass(document.body, 'no-scroll');
+    document.body.scrollTop = this.scrollTop;
 
     this.animateIn = false;
-    setTimeout( () => {
+    setTimeout(() => {
       this.destroy();
     }, 1000);
   }

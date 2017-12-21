@@ -6,12 +6,17 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2017
   -->
 
-<rump-header *ngIf="!isPublicPage"></rump-header>
+<rum-header (menuToggle)="sidenav.toggle()"></rum-header>
 
-<section style="margin-top: 61px;" class="content-main" [class.content-main-authenticated]="!isPublicPage">
-  <rump-side-menu *ngIf="!isPublicPage" class="menubar-left"></rump-side-menu>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav [opened]="!isSmallScreen()" class="sidenav" #sidenav
+               [mode]="isSmallScreen() ? 'over' : 'side'"
+               [fixedInViewport]="true"
+               fixedTopGap="60">
+    <rum-side-menu (close)="closeSideNav($event)"></rum-side-menu>
+  </mat-sidenav>
 
-  <div class="content-grid container-fluid">
+  <mat-sidenav-content class="sidenav-content">
     <router-outlet></router-outlet>
-  </div>
-</section>
+  </mat-sidenav-content>
+</mat-sidenav-container>

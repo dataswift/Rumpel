@@ -16,7 +16,7 @@ import { User } from '../../shared/interfaces/index';
 import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 @Component({
-  selector: 'rump-tile-hero',
+  selector: 'rum-tile-hero',
   templateUrl: 'tile-hero.component.html',
   styleUrls: ['tile-hero.component.scss']
 })

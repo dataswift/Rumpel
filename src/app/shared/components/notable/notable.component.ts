@@ -7,7 +7,7 @@ import { HatRecord } from '../../interfaces/hat-record.interface';
 import { DataPlug } from '../../interfaces/data-plug.interface';
 
 @Component({
-  selector: 'rump-notable',
+  selector: 'rum-notable',
   templateUrl: './notable.component.html',
   styleUrls: ['./notable.component.scss']
 })

@@ -24,11 +24,11 @@
 </div>
 
 <div class="sharing-belt">
-  <rump-share-belt *ngIf="currentNotable.data.isShared" class="sharing-belt"
+  <rum-share-belt *ngIf="currentNotable.data.isShared" class="sharing-belt"
                    [hatDomain]="notablesSvc.hatDomain"
                    [currentNotable]="currentNotable.data"
                    [parentError]="cannotPostMessage"
-                   (notableUpdated)="updateShareOptions($event)"></rump-share-belt>
+                   (notableUpdated)="updateShareOptions($event)"></rum-share-belt>
 </div>
 
 <div class="sharing-belt" *ngIf="currentNotable.data.photov1">

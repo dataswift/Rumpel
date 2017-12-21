@@ -6,7 +6,7 @@ import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 import { OfferAcceptedStatsComponent } from '../offer-accepted-stats/offer-accepted-stats.component';
 
 @Component({
-  selector: 'rump-offers-accepted',
+  selector: 'rum-offers-accepted',
   templateUrl: './offers-accepted.component.html',
   styleUrls: ['./offers-accepted.component.scss']
 })

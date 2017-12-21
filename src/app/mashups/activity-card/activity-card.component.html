@@ -5,7 +5,7 @@
     <div *ngFor="let activity of dayList">
       <div class="activity">
         <div *ngIf="activity.endpoint.includes('notablesv1')" class="activity-item notable-item">
-            <rump-location-notable [notable]="activity"></rump-location-notable>
+            <rum-location-notable [notable]="activity"></rum-location-notable>
             <i class="material-icons">border_color</i>
         </div>
 
@@ -30,27 +30,27 @@
           </div>
 
           <div *ngIf="activity.endpoint.includes('facebook/posts') && activity.data.type !== 'photo' && activity.data.type !=='link'" class="activity-item post">
-                <rump-location-fb-post [post]="activity"></rump-location-fb-post>
+                <rum-location-fb-post [post]="activity"></rum-location-fb-post>
                 <img src="assets/icons/facebook-f-icon.svg">
           </div>
 
           <div *ngIf="activity.endpoint.includes('facebook/posts') && activity.data.type ==='photo' || activity.data.type ==='link'" class="activity-item post" [class.photo-box]="activity.data.content.fullPicture !== ''" [style.background-image]="'url('+activity.data.content.fullPicture + ')'">
-                <rump-location-fb-post [post]="activity"></rump-location-fb-post>
+                <rum-location-fb-post [post]="activity"></rum-location-fb-post>
                 <img src="assets/icons/facebook-f-icon.svg">
           </div>
 
           <div *ngIf="activity.endpoint.includes('fitbit')" class="activity-item post fitbit-box">
-                <rump-fitbit-my-day [fitbitData]="activity"></rump-fitbit-my-day>
+                <rum-fitbit-my-day [fitbitData]="activity"></rum-fitbit-my-day>
                 <img src="assets/icons/fitbit-icon.svg">
           </div>
 
           <div *ngIf="activity.endpoint.includes('monzo')" class="activity-item post monzo-box">
-                <rump-monzo-my-day [monzoData]="activity"></rump-monzo-my-day>
+                <rum-monzo-my-day [monzoData]="activity"></rum-monzo-my-day>
                 <img src="assets/icons/monzo-icon.svg">
           </div>
 
           <div *ngIf="activity.endpoint.includes('twitter/tweets')" class="activity-item post">
-                <rump-location-tweet [tweet]="activity"></rump-location-tweet>
+                <rum-location-tweet [tweet]="activity"></rum-location-tweet>
                 <img src="assets/icons/twitter-icon.svg">
           </div>
 

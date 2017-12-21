@@ -9,10 +9,8 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-grid',
+  selector: 'rum-grid',
   templateUrl: 'grid.component.html',
   styleUrls: ['grid.component.scss']
 })

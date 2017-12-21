@@ -23,10 +23,8 @@ import { FitbitActivity } from '../../fitbit/interfaces/fitbit-activity.interfac
 import { FitbitProfile } from '../../fitbit/interfaces/fitbit-profile.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-data-plug-data',
+  selector: 'rum-data-plug-data',
   templateUrl: './data-plug-data.component.html',
   styleUrls: ['./data-plug-data.component.scss']
 })

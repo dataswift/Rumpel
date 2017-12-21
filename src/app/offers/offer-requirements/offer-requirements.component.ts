@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {OfferRequirement} from '../offer-requirements.interface';
 
 @Component({
-    selector: 'rump-offer-requirements',
+    selector: 'rum-offer-requirements',
     templateUrl: './offer-requirements.component.html',
     styleUrls: ['./offer-requirements.component.scss']
 })

@@ -3,7 +3,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 
 @Component({
-  selector: 'rump-locations-view',
+  selector: 'rum-locations-view',
   templateUrl: './locations-view.component.html',
   styleUrls: ['./locations-view.component.scss']
 })

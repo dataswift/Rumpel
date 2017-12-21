@@ -13,7 +13,7 @@ import { User } from '../../user/user.interface';
 import { DataDebit } from '../../shared/interfaces/data-debit.interface';
 
 @Component({
-  selector: 'rump-tile-data-debit',
+  selector: 'rum-tile-data-debit',
   templateUrl: 'tile-data-debit.component.html',
   styleUrls: ['tile-data-debit.component.scss']
 })

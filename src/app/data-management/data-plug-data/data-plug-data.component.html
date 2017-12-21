@@ -34,11 +34,11 @@
 
     <div class="feedItems" *ngIf="feed && feed.length" [class.hidden]="tabView !== 'posts'">
       <div class="item" *ngFor="let item of feed">
-        <rump-facebook-view *ngIf="plugName.toLowerCase() == 'facebook'" [item]="item"></rump-facebook-view>
-        <rump-twitter-view *ngIf="plugName.toLowerCase() == 'twitter'" [item]="item"></rump-twitter-view>
-        <rump-locations-view *ngIf="plugName.toLowerCase() == 'locations'" [item]="item"></rump-locations-view>
-        <rump-notables-view *ngIf="plugName.toLowerCase() == 'rumpel'" [item]="item"></rump-notables-view>
-        <rump-calendar-view *ngIf="plugName.toLowerCase() == 'fitbit'" [item]="item"></rump-calendar-view>
+        <rum-facebook-view *ngIf="plugName.toLowerCase() == 'facebook'" [item]="item"></rum-facebook-view>
+        <rum-twitter-view *ngIf="plugName.toLowerCase() == 'twitter'" [item]="item"></rum-twitter-view>
+        <rum-locations-view *ngIf="plugName.toLowerCase() == 'locations'" [item]="item"></rum-locations-view>
+        <rum-notables-view *ngIf="plugName.toLowerCase() == 'rumpel'" [item]="item"></rum-notables-view>
+        <rum-calendar-view *ngIf="plugName.toLowerCase() == 'fitbit'" [item]="item"></rum-calendar-view>
       </div>
 
       <div class="loadMore">
@@ -48,12 +48,12 @@
     </div>
 
     <div class="mapView" [class.hidden]="tabView !== 'locations'">
-      <rump-map *ngIf="locations.length > 0" [mapHeight]="'400px'" [dataPoints]="locations" [enableMapControls]="true">
+      <rum-map *ngIf="locations.length > 0" [mapHeight]="'400px'" [dataPoints]="locations" [enableMapControls]="true">
         <!--<div class="loading-overlay">-->
-          <!--<rump-spinner [isRunning]="true"></rump-spinner>-->
+          <!--<rum-spinner [isRunning]="true"></rum-spinner>-->
           <!--<span>Loading more data...</span>-->
         <!--</div>-->
-      </rump-map>
+      </rum-map>
       <div class="loadMore">
         <p class="meta">Showing {{ feed.length }} results</p>
         <a class="btn btn-default" (click)="loadMoreFeedData()">Load more</a>
@@ -62,8 +62,8 @@
 
     <div class="calendarView" [class.hidden]="tabView !== 'events'">
       <div class="item" *ngFor="let event of events">
-        <rump-facebook-event-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'facebook'" [item]="event"></rump-facebook-event-view>
-        <rump-photos-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'fitbit'" [item]="event"></rump-photos-view>
+        <rum-facebook-event-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'facebook'" [item]="event"></rum-facebook-event-view>
+        <rum-photos-view *ngIf="events.length > 0 && plugName.toLowerCase() === 'fitbit'" [item]="event"></rum-photos-view>
       </div>
       <div class="loadMore">
         <p class="meta">Showing {{ events.length }} results</p>

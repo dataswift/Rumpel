@@ -21,22 +21,28 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NotableComponent } from './components/notable/notable.component';
 import { LocationNotableComponent } from './components/location-notable/location-notable.component';
 import { PresignImgUrlPipe } from './pipes/presign-img-url.pipe';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 
 @NgModule({
-  imports: [ CommonModule, FormsModule ],
+  imports: [ CommonModule, FormsModule, MatToolbarModule, MatIconModule, MatTooltipModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
                   ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClickDirective, StickDirective,
                   SwitchComponent, TreeViewComponent, TimelineComponent, SpinnerComponent,
-                  DateInputComponent, NotableComponent, LocationNotableComponent, CapitalizeFirstPipe, PresignImgUrlPipe ],
+                  DateInputComponent, NotableComponent, LocationNotableComponent, CapitalizeFirstPipe, PresignImgUrlPipe,
+                  PageHeaderComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              TimeFilterPipe, TimeFilterTwoPipe, CapitalizeFirstPipe, SafeHtmlPipe,
              SwitchComponent, TreeViewComponent, TimelineComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, DateInputComponent,
-             CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe ]
+             CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent ]
 })
 export class SharedModule {}

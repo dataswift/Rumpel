@@ -21,7 +21,7 @@ import {Observable} from 'rxjs/Observable';
 import {DataPlug} from '../../shared/interfaces/data-plug.interface';
 
 @Component({
-  selector: 'rump-share-belt',
+  selector: 'rum-share-belt',
   templateUrl: './share-belt.component.html',
   styleUrls: ['./share-belt.component.scss']
 })

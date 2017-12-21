@@ -24,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatTooltipModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSidenavModule
   ],
   exports: [
     MatTabsModule,
@@ -60,7 +62,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatTooltipModule,
     MatSnackBarModule,
     MatRadioModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSidenavModule
   ]
 })
 export class CustomAngularMaterialModule {}

@@ -3,7 +3,7 @@ import { DialogService } from '../../core/dialog.service';
 import { MapBoxComponent } from '../../core/map-box/map-box.component';
 
 @Component({
-  selector: 'rump-notables-view',
+  selector: 'rum-notables-view',
   templateUrl: './notables-view.component.html',
   styleUrls: ['./notables-view.component.scss']
 })

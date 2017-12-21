@@ -15,10 +15,8 @@ import { BundleValues } from '../../shared/interfaces/bundle.interface';
 import { Profile } from '../../shared/interfaces/profile.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-public-profile',
+  selector: 'rum-public-profile',
   templateUrl: 'public-profile.component.html',
   styleUrls: ['public-profile.component.scss']
 })

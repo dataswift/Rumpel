@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
-  selector: 'rump-input-box',
+  selector: 'rum-input-box',
   templateUrl: 'input-box.component.html',
   styleUrls: ['input-box.component.scss']
 })

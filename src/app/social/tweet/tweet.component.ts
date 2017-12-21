@@ -10,7 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Tweet } from '../../shared/interfaces/index';
 
 @Component({
-  selector: 'rump-tweet',
+  selector: 'rum-tweet',
   templateUrl: './tweet.component.html',
   styleUrls: ['./tweet.component.scss']
 })

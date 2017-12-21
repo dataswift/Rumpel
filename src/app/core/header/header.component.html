@@ -7,7 +7,7 @@
   -->
 
 <header color="primary" class="app-header mat-elevation-z6">
-  <nav class="rump-navbar-header">
+  <nav class="rum-navbar-header">
     <button mat-button (click)="toggleSideMenu()">
       <mat-icon>menu</mat-icon>
     </button>
@@ -34,7 +34,7 @@
 </header>
 
 <mat-menu #accountMenu="matMenu" [overlapTrigger]="false">
-    <div mat-menu-item class="rump-menu-item">
+    <div mat-menu-item class="rum-menu-item">
       <div class="accountDetails user-photo">
         <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon-blue.svg'">
         <h6 class="welcome">{{profile?.hatId}}<br><span>&#46;{{profile?.domain}}</span></h6>

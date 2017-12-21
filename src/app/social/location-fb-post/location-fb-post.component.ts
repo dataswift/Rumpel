@@ -10,7 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../../shared/interfaces';
 
 @Component({
-  selector: 'rump-location-fb-post',
+  selector: 'rum-location-fb-post',
   templateUrl: 'location-fb-post.component.html',
   styleUrls: ['location-fb-post.component.scss']
 })

@@ -18,7 +18,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 @Component({
-  selector: 'rump-tile-notables',
+  selector: 'rum-tile-notables',
   templateUrl: 'tile-notables.component.html',
   styleUrls: ['tile-notables.component.scss']
 })

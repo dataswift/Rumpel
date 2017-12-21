@@ -5,7 +5,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { Post } from '../../shared/interfaces/post.interface';
 
 @Component({
-  selector: 'rump-facebook-view',
+  selector: 'rum-facebook-view',
   templateUrl: './facebook-view.component.html',
   styleUrls: ['./facebook-view.component.scss']
 })

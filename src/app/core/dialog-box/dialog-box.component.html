@@ -6,10 +6,10 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<div class="rump-modal" [class.animateIn]="animateIn">
-  <div class="rump-modal-content">
+<div class="rum-modal" [class.animateIn]="animateIn">
+  <div class="rum-modal-content">
 
-    <div class="rump-modal-body white-modal-body">
+    <div class="rum-modal-body white-modal-body">
       <div class="close-modal" (click)="closeModal()"><i class="material-icons">close</i></div>
       <img *ngIf="icon != '' && icon != undefined" [src]="[icon]"><h3>{{title}}</h3>
       <p>{{message}}</p>

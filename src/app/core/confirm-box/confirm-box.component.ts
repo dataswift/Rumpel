@@ -11,7 +11,7 @@ import { DialogService } from '..//dialog.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 
 @Component({
-  selector: 'rump-confirm-box',
+  selector: 'rum-confirm-box',
   templateUrl: './confirm-box.component.html'
 })
 export class ConfirmBoxComponent implements OnInit {

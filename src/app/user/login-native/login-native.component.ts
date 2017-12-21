@@ -13,7 +13,7 @@ import { UserService } from '../user.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 
 @Component({
-  selector: 'rump-login-native',
+  selector: 'rum-login-native',
   templateUrl: 'login-native.component.html',
   styleUrls: ['login-native.component.scss']
 })

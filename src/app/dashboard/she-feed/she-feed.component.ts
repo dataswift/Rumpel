@@ -9,7 +9,7 @@ import { Filter } from '../../shared/interfaces/bundle.interface';
 import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
-  selector: 'rump-she-feed',
+  selector: 'rum-she-feed',
   templateUrl: './she-feed.component.html',
   styleUrls: ['./she-feed.component.scss']
 })

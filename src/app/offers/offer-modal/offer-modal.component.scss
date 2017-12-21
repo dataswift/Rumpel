@@ -14,7 +14,7 @@
 
 
 
-.rump-modal{
+.rum-modal{
 
   transform: translate(-50%, 150%);
   opacity: 0;
@@ -38,12 +38,12 @@
   }
 
 
-  .rump-modal-content{
+  .rum-modal-content{
     height: 100%;
   }
 
 
-  .rump-modal-body{
+  .rum-modal-body{
 
     @media(max-width: 768px){
       max-height: unset;
@@ -52,7 +52,7 @@
   }
 
 
-  .rump-modal-header, .rump-modal-footer{
+  .rum-modal-header, .rum-modal-footer{
 
     @media(max-width: 768px){
       border-radius: 0;
@@ -64,7 +64,7 @@
     }
   }
 
-  .rump-modal-footer{
+  .rum-modal-footer{
 
     max-height: 81px;
     height: 81px;
@@ -79,7 +79,7 @@
 }
 
 
-.rump-modal-body{
+.rum-modal-body{
 
   max-height: 430px;
   overflow-x: hidden;
@@ -346,7 +346,7 @@
 }
 
 
-.rump-modal-footer{
+.rum-modal-footer{
   background-color: $app-mid-tone;
   color: white;
   padding: 0;

@@ -8,58 +8,17 @@
 
 @import "variables";
 
-.menubar-left {
-  width: 345px;
-  height: 100%;
-  position: fixed;
-  top: 61px;
-  left: 0px;
-  color: $app-dark-grey;
-  font-family: $font-standard;
-  background-color: white;
+.menu-scroll{
+  overflow-x: hidden;
+  overflow-y: auto;
 
-  @media screen and (max-width: 1113px) {
-      left: -345px;
+  @if $showLogoInSidebar {
+      height: calc(100% - 320px);
   }
-
-  .menu-scroll{
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    @if $showLogoInSidebar {
-        height: calc(100% - 320px);
-    }
-    @else {
-        height: calc(100% - 200px);
-    }
+  @else {
+      height: calc(100% - 60px);
   }
 }
-
-.burger{
-  color: white;
-  position: fixed;
-  top: 10px;
-  left: 35px;
-  z-index: 1030;
-  display: block;
-  width: 44px;
-  height: 44px;
-  padding: 10px;
-  cursor: pointer;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0);
-}
-
-@keyframes burger-pulse {
-    from {background-color: rgba(255, 255, 255, 0.3);}
-    to {background-color: rgba(255, 255, 255, 0);}
-}
-
-.burger-pulse-animation{
-  animation-name: burger-pulse;
-  animation-duration: 1s;
-}
-
 
 .data-plugs-title{
   text-transform: uppercase;
@@ -198,9 +157,10 @@ ul.center {
   p {
     display: inline-block;
     letter-spacing: 0.5px;
+    color: #bdbdbd;
   }
 
-  img{
+  img {
     width: 24px;
     height: 24px;
     display: inline-block;

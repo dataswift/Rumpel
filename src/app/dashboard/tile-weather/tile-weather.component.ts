@@ -11,7 +11,7 @@ import { WeatherService } from '../weather.service';
 import { unix } from 'moment/moment';
 
 @Component({
-  selector: 'rump-tile-weather',
+  selector: 'rum-tile-weather',
   templateUrl: 'tile-weather.component.html',
   styleUrls: ['tile-weather.component.scss']
 })

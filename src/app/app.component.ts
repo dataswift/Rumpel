@@ -17,10 +17,8 @@ import { GlobalMessagingService } from './services/global-messaging.service';
 import { InfoBoxComponent } from './core/info-box/info-box.component';
 import { DialogService } from './core/dialog.service';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-app',
+  selector: 'rum-app',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })

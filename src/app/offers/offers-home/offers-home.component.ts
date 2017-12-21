@@ -9,7 +9,7 @@ import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
 @Component({
-  selector: 'rump-offers-home',
+  selector: 'rum-offers-home',
   templateUrl: './offers-home.component.html',
   styleUrls: ['./offers-home.component.scss']
 })

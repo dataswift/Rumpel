@@ -10,7 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Node } from '../../interfaces/node.class';
 
 @Component({
-  selector: 'rump-tree-view',
+  selector: 'rum-tree-view',
   templateUrl: './tree-view.component.html',
   styleUrls: ['./tree-view.component.scss']
 })

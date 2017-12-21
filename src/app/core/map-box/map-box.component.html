@@ -6,18 +6,18 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
   -->
 
-<div class="rump-modal" [class.animateIn]="animateIn">
-  <div class="rump-modal-content">
+<div class="rum-modal" [class.animateIn]="animateIn">
+  <div class="rum-modal-content">
 
-    <div class="rump-modal-body white-modal-body">
+    <div class="rum-modal-body white-modal-body">
       <div class="close-modal" (click)="closeModal()"><i class="material-icons">close</i></div>
       <h3>Map</h3>
-      <rump-map [mapHeight]="'400px'" [dataPoints]="datapoints" [enableMapControls]="true">
+      <rum-map [mapHeight]="'400px'" [dataPoints]="datapoints" [enableMapControls]="true">
         <div class="loading-overlay" *ngIf="loading">
-          <rump-spinner [isRunning]="true"></rump-spinner>
+          <rum-spinner [isRunning]="true"></rum-spinner>
           <span>Loading more data...</span>
         </div>
-      </rump-map>
+      </rum-map>
     </div>
 
   </div>

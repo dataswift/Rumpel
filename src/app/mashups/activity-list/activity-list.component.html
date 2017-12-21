@@ -11,18 +11,21 @@
 <!--  <ng2-datepicker [options]="options" [(ngModel)]="date" (ngModelChange)="changeDate($event)" ></ng2-datepicker> -->
 </div>
 
-<div class="activitylist-container" [style.height]="componentHeight">
+<div class="activitylist-container" [style.height]="componentHeight" #activityList>
 
   <h6 class="todayHeader">Today</h6>
   <div class="date" *ngFor="let day of cardList; let i = index;">
-    <rump-activity-card [dayList]="day.dayList"
+    <rum-activity-card [dayList]="day.dayList"
                         [date]="day.day"
                         [index]="i"
                         [isSelected]="day.day === selectedDate"
-                        (selection)="scrollToItem($event)"></rump-activity-card>
+                        (selection)="scrollToItem($event)"></rum-activity-card>
   </div>
 </div>
 
 <div class="backToTop">
-  <i class="material-icons" (click)="scrollToItem(0)" data-toggle="popover" data-container=".backToTop i" data-trigger="hover" data-placement="top" data-content="Back to today's date">expand_less</i>
+  <mat-icon matTooltip="Back to today's date"
+            [matTooltipShowDelay]="500"
+            [matTooltipPosition]="'above'"
+            (click)="scrollToItem(0)">expand_less</mat-icon>
 </div>

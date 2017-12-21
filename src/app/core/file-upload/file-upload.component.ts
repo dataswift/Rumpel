@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FileService } from '../../services/file.service';
 
 @Component({
-  selector: 'rump-file-upload',
+  selector: 'rum-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.scss']
 })

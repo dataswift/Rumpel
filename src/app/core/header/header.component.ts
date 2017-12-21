@@ -19,16 +19,15 @@ import { APP_CONFIG, AppConfig } from '../../app.config';
 import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 import { MatMenuTrigger } from '@angular/material';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-header',
+  selector: 'rum-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
   @ViewChild(MatMenuTrigger) accountMenuBtn: MatMenuTrigger;
   @Output() clickNotifications = new EventEmitter<string>();
+  @Output() menuToggle = new EventEmitter<string>();
   public hatDomain: string;
   private sub: Subscription;
   public marketSquareLink: string;
@@ -106,21 +105,8 @@ export class HeaderComponent implements OnInit {
   //   }
   // }
 
-  navigateTo(link: string) {
-    window.location.href = link;
-  }
-
-  showPopover() {
-    $('[data-toggle="popover"]').popover();
-  }
-
   toggleSideMenu() {
-    const burgerBtn = <HTMLElement>document.querySelector('.burger');
-    burgerBtn.click();
-  }
-
-  showAccountOptions() {
-    $('.dropdown-toggle').dropdown();
+    this.menuToggle.emit('Menu button toggled');
   }
 
   showNotificationsBar(bool: boolean): void {
@@ -132,9 +118,6 @@ export class HeaderComponent implements OnInit {
     if (bool === false) {
       barHeight = 0;
     }
-
-    $('.navbar, .menubar-left, .burger, .content-main').stop().animate({ marginTop: barHeight }, duration);
-    $('.notifications-wrapper').stop().animate({ top: (barHeight - 100) }, duration);
   }
 
   round(value: number, decimalPlaces: number): number {

@@ -3,7 +3,7 @@ import { MapBoxComponent } from '../../core/map-box/map-box.component';
 import { DialogService } from '../../core/dialog.service';
 
 @Component({
-  selector: 'rump-facebook-event-view',
+  selector: 'rum-facebook-event-view',
   templateUrl: './facebook-event-view.component.html',
   styleUrls: ['./facebook-event-view.component.scss']
 })

@@ -5,7 +5,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { Tweet } from '../../shared/interfaces/tweet.interface';
 
 @Component({
-  selector: 'rump-twitter-view',
+  selector: 'rum-twitter-view',
   templateUrl: './twitter-view.component.html',
   styleUrls: ['./twitter-view.component.scss']
 })

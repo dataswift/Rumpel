@@ -5,7 +5,7 @@ import { OfferModalComponent } from '../offer-modal/offer-modal.component';
 import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 
 @Component({
-  selector: 'rump-offers',
+  selector: 'rum-offers',
   templateUrl: './offers.component.html',
   styleUrls: ['./offers.component.scss']
 })

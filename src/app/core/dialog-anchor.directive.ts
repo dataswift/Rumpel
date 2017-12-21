@@ -10,7 +10,7 @@ import {Directive, ViewContainerRef, Injector, ComponentFactoryResolver} from '@
 import { DialogService } from './dialog.service';
 
 @Directive({
-  selector: '[rumpDialogAnchor]'
+  selector: '[rumDialogAnchor]'
 })
 export class DialogAnchorDirective {
 

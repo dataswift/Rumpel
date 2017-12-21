@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {Component, OnInit, Inject} from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { UserService } from '../../services';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
@@ -18,13 +18,13 @@ import { APP_CONFIG, AppConfig } from '../../app.config';
 import { User } from '../../user/user.interface';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-side-menu',
+  selector: 'rum-side-menu',
   templateUrl: 'side-menu.component.html'
 })
 export class SideMenuComponent implements OnInit {
+  @Output() close = new EventEmitter<string>();
+
   public selectedItem: string;
   public state: any;
   public userAuthenticated = false;
@@ -80,7 +80,6 @@ export class SideMenuComponent implements OnInit {
         .filter(event => event instanceof NavigationEnd)
         .subscribe((event: NavigationEnd) => {
           this.isPublicPage = this.router.isActive('public', false);
-          this.windowResize();
         });
 
     this.router.events
@@ -95,29 +94,6 @@ export class SideMenuComponent implements OnInit {
         this.dataOfferSvc.fetchUserAwareOfferListSubscription();
       }
     });
-
-    window.addEventListener('resize', this.windowResize);
-    this.windowResize();
-  }
-
-  windowResize() {
-    if (window.innerWidth > 1113) {
-      $('.menubar-left').css('left', '0px');
-      $('.content-main-authenticated').css({marginLeft: '345px', left: '0px'});
-      $('.burger').attr('data-content', 'Hide menu');
-      this.mobileMode = false;
-    } else {
-      $('.menubar-left').css('left', '-345px');
-      $('.content-main-authenticated').css({marginLeft: '0px', left: '0px'});
-      $('.burger').attr('data-content', 'Show menu');
-      $('[data-toggle="popover"]').popover('hide');
-      this.mobileMode = true;
-    }
-
-    if ($('.burger').data('bs.popover')) {
-      $('.burger').data('bs.popover').setContent();
-      $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
-    }
   }
 
   openPlugPopup(plug: any) {
@@ -138,54 +114,4 @@ export class SideMenuComponent implements OnInit {
         this.windowRef.location = redirectUrl;
       });
   }
-
-  showPopover() {
-    $('[data-toggle="popover"]').popover();
-  }
-
-  animateMenu() {
-    let sidenav_x = 0;
-    let content_margin = 345;
-    const duration = 500;
-
-    if ( $('.menubar-left').css('left') === '0px' ) {
-        sidenav_x = -content_margin;
-        content_margin = 0;
-        $('.burger').attr('data-content', 'Show menu');
-    } else {
-      $('.burger').attr('data-content', 'Hide menu');
-    }
-
-    $('.burger').data('bs.popover').setContent();
-    $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
-
-    $('.menubar-left').animate({ left: (sidenav_x + 'px') }, duration);
-
-    this.mobileMode = (window.innerWidth < 1113);
-
-    if (this.mobileMode === true) {
-        $('.content-main-authenticated').animate({ marginLeft: '0px', left: (content_margin + 'px') }, duration);
-    } else {
-        $('.content-main-authenticated').animate({ marginLeft: (content_margin + 'px'), left: '0px' }, duration);
-    }
-
-    $('.burger').addClass('burger-pulse-animation');
-    setTimeout(function() {
-      $('.burger').removeClass('burger-pulse-animation');
-    }, 1000);
-  }
-
-  closeMenu() {
-    if (window.innerWidth < 1114) {
-      $('.burger').attr('data-content', 'Show menu');
-      $('.burger').data('bs.popover').setContent();
-      $('.burger').data('bs.popover').$tip.addClass($('.burger').data('bs.popover').options.placement);
-      $('.menubar-left').animate({ left: '-345px' }, 500);
-      $('.content-main-authenticated').animate({ marginLeft: '0px', left: '0px' }, 500);
-      $('[data-toggle="popover"]').popover('hide');
-    }
-  }
-
-
-
 }

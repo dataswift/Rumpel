@@ -6,12 +6,10 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
  */
 
-import { Component, OnInit, Input } from '@angular/core';
-
-declare var $: any;
+import { Component, OnInit, Input, Renderer2 } from '@angular/core';
 
 @Component({
-  selector: 'rump-info-box',
+  selector: 'rum-info-box',
   templateUrl: './info-box.component.html'
 })
 export class InfoBoxComponent implements OnInit {
@@ -22,20 +20,20 @@ export class InfoBoxComponent implements OnInit {
   public scrollTop: number;
   public animateIn = false;
 
-  constructor() { }
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit() {
-    this.scrollTop = $('body').scrollTop();
-    $('body, html').addClass('no-scroll');
+    this.scrollTop = document.body.scrollTop;
     this.animateIn = true;
+    this.renderer.addClass(document.body, 'no-scroll');
   }
 
   closeModal(): void {
-    $('body, html').removeClass('no-scroll');
-    $('body').scrollTop(this.scrollTop);
+    this.renderer.removeClass(document.body, 'no-scroll');
+    document.body.scrollTop = this.scrollTop;
 
     this.animateIn = false;
-    setTimeout( () => {
+    setTimeout(() => {
       this.destroy();
     }, 1000);
   }

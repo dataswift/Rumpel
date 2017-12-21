@@ -16,10 +16,8 @@ import { Notable, Profile } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-notables-view',
+  selector: 'rum-notables-view',
   templateUrl: './notables-view.component.html',
   styleUrls: ['./notables-view.component.scss']
 })
@@ -87,10 +85,6 @@ export class NotablesViewComponent implements OnInit {
         }
         break;
     }
-  }
-
-  showPopover(event) {
-    $('[data-toggle="popover"]').popover();
   }
 
 }

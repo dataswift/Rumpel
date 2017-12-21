@@ -5,7 +5,7 @@ import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 import {FitbitActivitySummary} from '../../fitbit/interfaces/fitbit-activity-summary.interface';
 
 @Component({
-  selector: 'rump-photos-view',
+  selector: 'rum-photos-view',
   templateUrl: './photos-view.component.html',
   styleUrls: ['./photos-view.component.scss']
 })

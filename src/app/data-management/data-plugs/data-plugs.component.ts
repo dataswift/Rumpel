@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 
 @Component({
-  selector: 'rump-data-plugs',
+  selector: 'rum-data-plugs',
   templateUrl: './data-plugs.component.html',
   styleUrls: ['./data-plugs.component.scss']
 })

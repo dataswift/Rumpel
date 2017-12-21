@@ -5,6 +5,6 @@
     <a (click)="currentPage = 'accepted'" [class.current]="currentPage == 'accepted'"><span class="mobile-count">{{ acceptedOffers.length }}</span>Accepted <span class="desktop-count">({{ acceptedOffers.length }})</span></a>
   </nav>
 
-  <rump-offers *ngIf="currentPage == 'available'" [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noOffers"></rump-offers>
-  <rump-offers-accepted *ngIf="currentPage == 'accepted'" [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noAcceptedOffers"></rump-offers-accepted>
+  <rum-offers *ngIf="currentPage == 'available'" [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noOffers"></rum-offers>
+  <rum-offers-accepted *ngIf="currentPage == 'accepted'" [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noAcceptedOffers"></rum-offers-accepted>
 </div>
