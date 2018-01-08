@@ -19,8 +19,8 @@ import { TweetComponent } from './tweet/tweet.component';
 import { LocationTweetComponent } from './location-tweet/location-tweet.component';
 
 import { SocialService } from './social.service';
-import {TwitterService} from './twitter.service';
-import {MediaService} from './media.service';
+import { TwitterService } from './twitter.service';
+import { MediaService } from './media.service';
 
 @NgModule({
     imports: [ SharedModule, SocialRoutingModule ],

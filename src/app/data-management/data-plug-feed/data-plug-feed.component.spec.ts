@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FacebookEventViewComponent } from './facebook-event-view.component';
+import { DataPlugFeedComponent } from './data-plug-feed.component';
 
-describe('FacebookEventViewComponent', () => {
-  let component: FacebookEventViewComponent;
-  let fixture: ComponentFixture<FacebookEventViewComponent>;
+describe('DataPlugFeedComponent', () => {
+  let component: DataPlugFeedComponent;
+  let fixture: ComponentFixture<DataPlugFeedComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FacebookEventViewComponent ]
+      declarations: [ DataPlugFeedComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FacebookEventViewComponent);
+    fixture = TestBed.createComponent(DataPlugFeedComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

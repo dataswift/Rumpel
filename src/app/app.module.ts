@@ -53,6 +53,7 @@ import { HatApiV2Service } from './services/hat-api-v2.service';
 import { GlobalMessagingService } from './services/global-messaging.service';
 import { DexApiService } from './services/dex-api.service';
 import { FileService } from './services/file.service';
+import { StaticDataService } from './services/static-data.service';
 
 export function authHttpFactory(backend: XHRBackend,
                                 defaultOptions: RequestOptions,
@@ -104,6 +105,7 @@ export function cookieServiceFactory() {
     NativeGuard,
     HatApiService,
     HatApiV2Service, // Supersedes original HAT API service
+    StaticDataService,
     GlobalMessagingService,
     DexApiService,
     FileService,

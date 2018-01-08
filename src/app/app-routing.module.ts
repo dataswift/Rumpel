@@ -31,6 +31,8 @@ import { MashupsComponent } from './mashups/mashups/mashups.component';
 import { MyDayComponent } from './mashups/my-day/my-day.component';
 import { PasswordRecoverComponent } from './user/password-recover/password-recover.component';
 import { PasswordChangeComponent } from './user/password-change/password-change.component';
+import { DataPlugFeedComponent } from './data-management/data-plug-feed/data-plug-feed.component';
+import { DataPlugStaticComponent } from './data-management/data-plug-static/data-plug-static.component';
 
 @NgModule({
   imports: [
@@ -62,7 +64,11 @@ import { PasswordChangeComponent } from './user/password-change/password-change.
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'dataplugs', component: DataPlugsComponent },
-          { path: 'dataplugs/data/:id', component: DataPlugDataComponent }
+          { path: 'dataplugs/data/:provider', component: DataPlugDataComponent,
+            children: [
+              { path: 'feed', component: DataPlugFeedComponent },
+              { path: 'static', component: DataPlugStaticComponent }
+            ]}
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [

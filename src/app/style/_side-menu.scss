@@ -62,6 +62,7 @@ ul.center {
       padding: 13px 15px 13px 45px;
       letter-spacing: 0.5px;
       cursor: pointer;
+      outline: none;
 
       &:hover {
         color: $app-dark-grey;
@@ -112,12 +113,8 @@ ul.center {
             display: inline-block;
           }
         }
-
       }
-
-
     }
-
   }
 
   .disable {
@@ -138,8 +135,7 @@ ul.center {
 
 
 .data-plugs-more{
-
-  em{
+  em {
     color: #bbb;
   }
 }
