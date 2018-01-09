@@ -10,10 +10,7 @@ import { InfoBoxComponent } from '../../core/info-box/info-box.component';
   styleUrls: ['./offers.component.scss']
 })
 
-
 export class OffersComponent implements OnInit {
-
-
   @Input() offers: any = [];
   @Input() acceptedOffers: any = [];
   @Input() noOffersMessage = '';
@@ -21,12 +18,10 @@ export class OffersComponent implements OnInit {
   public expiry: String = '';
   public timeNow: Number = Date.now();
 
-  constructor(  private dialogSvc: DialogService ) { }
+  constructor(private dialogSvc: DialogService) { }
 
   ngOnInit() {
-
   }
-
 
   showModal(offerIndex) {
     this.dialogSvc.createDialog<OfferModalComponent>(OfferModalComponent, {

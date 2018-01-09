@@ -12,7 +12,6 @@ import { OfferAcceptedStatsComponent } from '../offer-accepted-stats/offer-accep
 })
 
 export class OffersAcceptedComponent implements OnInit {
-
   @ViewChild(OfferAcceptedStatsComponent) statsComponent: OfferAcceptedStatsComponent;
   @Input() offers: any = [];
   @Input() acceptedOffers: any = [];
@@ -27,7 +26,6 @@ export class OffersAcceptedComponent implements OnInit {
   public cashEarned = 0;
   public cashClaimed = 0;
   public cashFormat = '1.2-2';
-
 
   constructor( private dialogSvc: DialogService ) { }
 

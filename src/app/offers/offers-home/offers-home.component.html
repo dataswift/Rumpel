@@ -1,8 +1,14 @@
 <div class="offers">
   <nav class="offers-nav">
-    <a (click)="currentPage = 'available'" [class.current]="currentPage == 'available'"><span class="mobile-count">{{ offers.length }}</span>Available <span class="desktop-count">({{ offers.length }})</span></a>
+    <a (click)="currentPage = 'available'" [class.current]="currentPage == 'available'">
+      <span class="mobile-count">{{ offers.length }}</span>
+      Available <span class="desktop-count">({{ offers.length }})</span>
+    </a>
     <div class="separator"></div>
-    <a (click)="currentPage = 'accepted'" [class.current]="currentPage == 'accepted'"><span class="mobile-count">{{ acceptedOffers.length }}</span>Accepted <span class="desktop-count">({{ acceptedOffers.length }})</span></a>
+    <a (click)="currentPage = 'accepted'" [class.current]="currentPage == 'accepted'">
+      <span class="mobile-count">{{ acceptedOffers.length }}</span>
+      Accepted <span class="desktop-count">({{ acceptedOffers.length }})</span>
+    </a>
   </nav>
 
   <rum-offers *ngIf="currentPage == 'available'" [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noOffers"></rum-offers>
