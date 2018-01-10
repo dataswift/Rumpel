@@ -30,7 +30,6 @@ export class HeaderComponent implements OnInit {
   @Output() menuToggle = new EventEmitter<string>();
   public hatDomain: string;
   private sub: Subscription;
-  public marketSquareLink: string;
   public userAuthenticated = false;
   public profile: { photo: { url: string; shared: boolean; }, first_name: string, hatId: string, domain: string };
   public accountStatus: AccountStatus;
@@ -46,7 +45,6 @@ export class HeaderComponent implements OnInit {
               private profilesSvc: ProfilesService) { }
 
   ngOnInit() {
-    this.marketSquareLink = 'https://marketsquare.hubofallthings.com';
     this.profile = { photo: { url: '', shared: false }, first_name: '', hatId: '', domain: '' };
     this.userAuthenticated = false;
     this.showNotifications = false;
@@ -57,23 +55,19 @@ export class HeaderComponent implements OnInit {
         this.hatDomain = user.fullDomain;
         this.profile.domain = user.domain;
         this.profile.hatId = user.hatId;
-        this.marketSquareLink = `https://${this.hatDomain}/hatlogin?name=MarketSquare&` +
-                                `redirect=https://marketsquare.hubofallthings.com/authenticate/hat`;
       } else {
         this.hatDomain = null;
-        this.marketSquareLink = 'https://marketsquare.hubofallthings.com/';
       }
     });
-
 
     this.totalNotifications = 0;
 
     this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
-      if (profile.values && profile.values.personal.firstName) {
+      if (profile.values && profile.values.personal && profile.values.personal.firstName) {
         this.profile.first_name = profile.values.personal.firstName;
       }
 
-      if (profile.share && profile.share.photo.avatar) {
+      if (profile.share && profile.share.photo && profile.share.photo.avatar) {
         this.profile.photo.shared = profile.share.photo.avatar;
       }
     });
@@ -98,12 +92,6 @@ export class HeaderComponent implements OnInit {
   signIn() {
     this.router.navigate(['/user/login']);
   }
-
-  // showNotificationsCentre() {
-  //   if (this.totalNotifications > 0) {
-  //     this._notificationsSvc.toggleShow();
-  //   }
-  // }
 
   toggleSideMenu() {
     this.menuToggle.emit('Menu button toggled');

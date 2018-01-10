@@ -6,14 +6,13 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
-import { Component, OnInit } from '@angular/core';
-import { Notable } from '../../shared/interfaces/notable.class';
+import { Component, Inject, OnInit } from '@angular/core';
 import { UserService } from '../../user/user.service';
-import { Router } from '@angular/router';
 import { HatApiV2Service } from '../../services/hat-api-v2.service';
 import { BundleValues } from '../../shared/interfaces/bundle.interface';
 import { Profile } from '../../shared/interfaces/profile.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 @Component({
   selector: 'rum-public-profile',
@@ -23,9 +22,10 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 export class PublicProfileComponent implements OnInit {
   public userAuthenticated = false;
   public profile: Profile;
-  public notables: HatRecord<Notable>[];
+  public notables: HatRecord<any>[];
 
-  constructor(private hatSvc: HatApiV2Service,
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
+              private hatSvc: HatApiV2Service,
               private userSvc: UserService) { }
 
   ngOnInit() {
@@ -39,6 +39,20 @@ export class PublicProfileComponent implements OnInit {
 
   get hostname(): string {
     return window.location.hostname;
+  }
+
+  getIconName(kind: string): string {
+    return this.config.notables.iconMap[kind];
+  }
+
+  getLogo(name: string): string {
+    if (name === 'phata' || name === 'hatters') {
+      return '/assets/icons/hatters-icon.png';
+    } else if (name === 'facebook') {
+      return '/assets/icons/facebook-icon.png';
+    } else if (name === 'twitter') {
+      return '/assets/icons/twitter-icon.png';
+    }
   }
 
 }

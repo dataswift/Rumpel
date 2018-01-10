@@ -42,6 +42,7 @@ const DEFAULT_PHATA_BUNDLE: BundleStructure = {
           message: 'message',
           author: 'authorv1',
           location: 'locationv1',
+          photo: 'photov1',
           shared_on: 'shared_on',
           created_time: 'created_time',
           public_until: 'public_until',
@@ -101,7 +102,7 @@ export class ProfilesService extends BaseDataService<Profile> {
       .map(([profiles, profileBundle]) => {
         return {
           values: this.validateProfileNewOrDefault(profiles[0].data),
-          share: this.generateProfileShare(profiles[0].data, profileBundle)
+          share: this.generateProfileShare(this.validateProfileNewOrDefault(profiles[0].data), profileBundle)
         };
       })
       .startWith({ values: defaultProfile, share: defaultProfileShareConfig });
@@ -174,7 +175,7 @@ export class ProfilesService extends BaseDataService<Profile> {
 
     if (profileIsShared) {
       return {
-        notables: this.previousBundle.bundle.notables,
+        notables: DEFAULT_PHATA_BUNDLE.bundle.notables,
         profile: {
           endpoints: [{
             endpoint: 'rumpel/profile',

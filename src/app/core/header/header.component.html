@@ -26,7 +26,9 @@
         <span class="badge notif-badge" *ngIf="unreadNotifications">{{unreadNotifications}}</span>
       </span>
 
-      <span class="welcome">Welcome {{profile.first_name}}<br><span>Last login: {{accountStatus?.previousLogin}}</span></span>
+      <span class="welcome">Welcome {{profile.hatId}}<br>
+        <span *ngIf="config.native">Last login: {{accountStatus?.previousLogin}}</span>
+      </span>
 
       <mat-icon>{{accountMenuBtn.menuOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
     </button>
@@ -40,7 +42,7 @@
         <h6 class="welcome">{{profile?.hatId}}<br><span>&#46;{{profile?.domain}}</span></h6>
       </div>
 
-      <div class="accountUsage">
+      <div class="accountUsage" *ngIf="config.native">
         <div class="bar-container"><div class="bar" [style.width]="[accountStatus?.databaseStorageUsedShare.metric + accountStatus?.databaseStorageUsedShare.units]"></div></div>
         <h6>{{accountStatus?.databaseStorageUsedShare.metric}}{{accountStatus?.databaseStorageUsedShare.units}} of {{round(accountStatus?.databaseStorage.metric, 2)}} {{accountStatus?.databaseStorage.units}} storage used</h6>
       </div>

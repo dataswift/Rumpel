@@ -11,9 +11,8 @@ import { DataPlug } from '../../shared/interfaces/data-plug.interface';
   styleUrls: ['./data-plug-data.component.scss']
 })
 export class DataPlugDataComponent implements OnInit, OnDestroy {
-
   public currentPage = 'feed';
-  public routerSub: any;
+  public rsub: Subscription;
   public dataplugs: Observable<DataPlug[]>;
   public plugName = '';
   public plugMeta: any;
@@ -33,7 +32,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
 
     this.currentPage = this.route.snapshot.firstChild.url[0].path;
 
-    this.router.events
+    this.rsub = this.router.events
       .filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
         const urlSegments = event.url.split('/');
@@ -42,7 +41,7 @@ export class DataPlugDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.routerSub.unsubscribe();
+    this.rsub.unsubscribe();
   }
 
   resizeWindow() {

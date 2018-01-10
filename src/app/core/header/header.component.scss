@@ -38,6 +38,11 @@
   align-items: center;
 }
 
+/deep/ .mat-menu-panel .mat-menu-content {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .mat-menu-item {
   min-width: 280px;
   padding: 0;
