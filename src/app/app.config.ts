@@ -24,6 +24,7 @@ export class AppConfig {
   notables: {
     iconMap: { [key: string]: string; };
     dexOfferId: string;
+    url: string;
   };
   menuItems: {
     public: Array<any>;
@@ -64,7 +65,8 @@ export const configuration: AppConfig = {
   },
   notables: {
     iconMap: { note: 'border_color', list: 'list', blog: 'library_books' },
-    dexOfferId: '8438fcf0-cfec-4d79-8338-f0987056352f'
+    dexOfferId: '92e4a135-cd81-4c5e-bbf8-57bea3b7d9e0',
+    url: 'https://notables.hubofallthings.com/api/bulletin/tickle'
   },
   menuItems: {
     'public': [

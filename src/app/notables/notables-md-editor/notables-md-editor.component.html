@@ -59,7 +59,7 @@
       <span class="share-for-bubble" [class.selected]="currentNotableMeta.expires === 14" (click)="setExpiration($event, 14)">14</span>
       <span class="share-for-bubble" [class.selected]="currentNotableMeta.expires === 30" (click)="setExpiration($event, 30)">30</span>
       Days
-    </div><br  *ngIf="currentNotable.data.isShared">
+    </div><br *ngIf="currentNotable.data.isShared">
     <div class="pull-right">
       <button type="submit" class="btn btn-white sm" (click)="submit()">
         <span *ngIf="currentNotable.data.isShared">{{editMode ? "Save Notable" : "Share Notable" }}</span>

@@ -88,9 +88,13 @@ export class NotablesService extends BaseDataService<Notable> {
     } else {
       filePermissionUpdate$ = Observable.of(null); // Dummy observable to make subsequent forkJoin succeed
     }
-    // TODO: add notable tickle call
 
     return Observable.forkJoin(notablePost$, filePermissionUpdate$)
+      .do(() => {
+        if (recordValue.data.currently_shared === true) {
+          this.dex.tickleNotables(this.hatDomain);
+        }
+      })
       .map(([savedNotable, permissionUpdateResult]) => this.coerceType(savedNotable));
   }
 
@@ -100,6 +104,13 @@ export class NotablesService extends BaseDataService<Notable> {
 
   setupNotablesService(): Observable<DataDebit> {
     return this.dex.claimOffer(this.config.notables.dexOfferId)
+      .catch(error => {
+        if (error.status === 400) {
+          return this.dex.getOfferClaim(this.config.notables.dexOfferId);
+        } else {
+          return Observable.throw(error);
+        }
+      })
       .flatMap((offerClaim: DexOfferClaimRes) => this.hat.updateDataDebit(offerClaim.dataDebitId, 'enable'))
   }
 
