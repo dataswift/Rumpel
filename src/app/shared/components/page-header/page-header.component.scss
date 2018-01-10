@@ -1,0 +1,28 @@
+@import '../../../style/variables';
+
+.rum-page-header {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  background-color: #DEE9EE;
+  height: 4em;
+
+  .rum-title-content {
+    color: $app-mid-tone;
+    font-family: $font-standard;
+    margin-left: 0.5em;
+  }
+
+  .rum-header-icon {
+    color: $app-mid-tone;
+    margin-left: 1em;
+
+    &:hover{
+      color: $app-mid-tone;
+    }
+  }
+
+  .rum-tooltip-content {
+    font-size: 1.25em;
+  }
+}

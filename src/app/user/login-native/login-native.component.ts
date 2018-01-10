@@ -13,7 +13,7 @@ import { UserService } from '../user.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 
 @Component({
-  selector: 'rump-login-native',
+  selector: 'rum-login-native',
   templateUrl: 'login-native.component.html',
   styleUrls: ['login-native.component.scss']
 })
@@ -31,7 +31,7 @@ export class LoginNativeComponent implements OnInit {
 
   ngOnInit() {
     const qps = this.route.snapshot.queryParams;
-    this.redirectPath = qps['target'] || 'dashboard';
+    this.redirectPath = qps['target'] || 'feed';
 
     // Skip login step if the user is already authenticated
     if (this.userSvc.isLoggedIn()) {

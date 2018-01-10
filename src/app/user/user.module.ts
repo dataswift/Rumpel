@@ -16,7 +16,6 @@ import { PasswordRecoverComponent } from './password-recover/password-recover.co
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';
 import { LoginOauthComponent } from './login-oauth/login-oauth.component';
-import { AccountStatusTileComponent } from './account-status-tile/account-status-tile.component';
 
 @NgModule({
   imports: [
@@ -28,10 +27,9 @@ import { AccountStatusTileComponent } from './account-status-tile/account-status
     PasswordRecoverComponent,
     PasswordChangeComponent,
     LoginStandaloneComponent,
-    LoginOauthComponent,
-    AccountStatusTileComponent
+    LoginOauthComponent
   ],
   providers: [ UserService ],
-  exports: [ AccountStatusTileComponent ]
+  exports: [ LoginOauthComponent, LoginNativeComponent, LoginStandaloneComponent ]
 })
 export class UserModule {}

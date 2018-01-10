@@ -17,10 +17,8 @@ import { LocationIos } from '../../shared/interfaces/location.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { Moment } from 'moment';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-locations',
+  selector: 'rum-locations',
   templateUrl: 'locations.component.html',
   styleUrls: ['locations.component.scss']
 })
@@ -49,11 +47,10 @@ export class LocationsComponent implements OnInit, OnDestroy {
       this.locations = locations;
     });
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 350 + 'px');
-    const thisScope = this;
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 350 + 'px');
 
-    $(window).resize(function() {
-      thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
+    window.addEventListener('resize', () => {
+      this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 180 + 'px')
     });
 
     this.locationsSvc.getMoreData(500, 5000);
@@ -132,9 +129,5 @@ export class LocationsComponent implements OnInit, OnDestroy {
         }
       }
     ];
-  }
-
-  showPopover(event) {
-    $('[data-toggle="popover"]').popover();
   }
 }

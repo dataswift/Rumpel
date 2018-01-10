@@ -15,7 +15,7 @@ import { PasswordChangeFailureResInterface } from '../password-change-failure-re
 declare var zxcvbn: any;
 
 @Component({
-  selector: 'rump-password-change',
+  selector: 'rum-password-change',
   templateUrl: './password-change.component.html',
   styleUrls: ['./password-change.component.scss']
 })

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
@@ -61,6 +61,16 @@ export class DexApiService {
         .do(token => this.cachedAppToken = token)
         .map(token => new Headers({ 'X-Auth-Token': token }));
     }
+  }
+
+  // TODO: find a better place for this method
+  tickleNotables(hatDomain: string): void {
+    const queryParams = new URLSearchParams();
+    queryParams.append('phata', hatDomain);
+
+    this.http.get(this.config.notables.url, { search: queryParams }).subscribe((res: Response) => {
+      console.log(`Notables service tickled with ${res.status} response`);
+    });
   }
 
   // connectHAT(hatDomain: string): void {

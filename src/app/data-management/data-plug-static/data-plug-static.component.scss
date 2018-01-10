@@ -1,0 +1,20 @@
+@import '../../style/_variables.scss';
+
+table {
+  margin: 40px 0;
+  background: $app-light-background-color;
+  width: 100%;
+  border-radius: 8px;
+  tr {
+    td {
+      padding: 20px;
+      border: 1px solid $app-light-tone;
+
+      &:first-child{
+        font-weight: 600;
+        width: 30%;
+      }
+    }
+
+  }
+}

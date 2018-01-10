@@ -1,6 +1,5 @@
 @import "../../style/variables";
 
-
 .modal-overlay{
   opacity: 0;
   -webkit-transition: all 1s;
@@ -12,10 +11,7 @@
   }
 }
 
-
-
-.rump-modal{
-
+.rum-modal{
   transform: translate(-50%, 150%);
   opacity: 0;
   -webkit-transition: all 1s;
@@ -28,7 +24,6 @@
     opacity: 1;
   }
 
-
   @media(max-width: 768px){
     width: 100%;
     max-width: 100%;
@@ -37,23 +32,18 @@
     border-radius: 0;
   }
 
-
-  .rump-modal-content{
+  .rum-modal-content{
     height: 100%;
   }
 
-
-  .rump-modal-body{
-
+  .rum-modal-body{
     @media(max-width: 768px){
       max-height: unset;
       height: calc(100% - 142px);
     }
   }
 
-
-  .rump-modal-header, .rump-modal-footer{
-
+  .rum-modal-header, .rum-modal-footer{
     @media(max-width: 768px){
       border-radius: 0;
 
@@ -64,8 +54,7 @@
     }
   }
 
-  .rump-modal-footer{
-
+  .rum-modal-footer{
     max-height: 81px;
     height: 81px;
 
@@ -79,7 +68,7 @@
 }
 
 
-.rump-modal-body{
+.rum-modal-body{
 
   max-height: 430px;
   overflow-x: hidden;
@@ -232,7 +221,7 @@
               }
 
               span{
-                display: block;
+                //display: block;
                 font-size: 11px;
               }
 
@@ -346,7 +335,7 @@
 }
 
 
-.rump-modal-footer{
+.rum-modal-footer{
   background-color: $app-mid-tone;
   color: white;
   padding: 0;

@@ -113,7 +113,7 @@ export class DataOfferService {
 
       return Observable.of(headers);
     } else {
-      return this.hatSvc.getApplicationToken(this.config.databuyer.name, 'https://databuyer.hubofallthings.com/')
+      return this.hatSvc.getApplicationToken(this.config.databuyer.name, this.config.databuyer.url)
         .map((accessToken: string) => {
           const payload = this.jwt.decodeToken(accessToken);
 

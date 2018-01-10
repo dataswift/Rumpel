@@ -15,20 +15,18 @@ import { User } from '../../user/user.interface';
 
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { DialogService } from '../../layout/dialog.service';
-import { FileUploadComponent } from '../../layout/file-upload/file-upload.component';
+import { DialogService } from '../../core/dialog.service';
+import { FileUploadComponent } from '../../core/file-upload/file-upload.component';
 
 import * as moment from 'moment';
 import { FileService } from '../../services/file.service';
 import { FileMetadataRes } from '../../shared/interfaces/file.interface';
 
-declare var $: any;
-
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const URL_REGEX = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
 
 @Component({
-  selector: 'rump-profile',
+  selector: 'rum-profile',
   templateUrl: 'profile.component.html',
   styleUrls: ['profile.component.scss']
 })
@@ -122,10 +120,6 @@ export class ProfileComponent implements OnInit {
   togglePrivacy([groupName, fieldName]): void {
     // A bit of a hack to force Angular change detection
     setTimeout(() => this.share[groupName][fieldName] = !this.share[groupName][fieldName]);
-  }
-
-  showPopover(event) {
-    $('[data-toggle="popover"]').popover();
   }
 
 }

@@ -11,7 +11,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'rump-date-input',
+  selector: 'rum-date-input',
   templateUrl: './date-input.component.html',
   styleUrls: ['./date-input.component.scss'],
   providers: [

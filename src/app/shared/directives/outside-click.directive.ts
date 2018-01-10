@@ -9,7 +9,7 @@
 import { Directive, Output, EventEmitter, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[rumpOutsideClick]'
+  selector: '[rumOutsideClick]'
 })
 export class OutsideClickDirective {
   @Output()

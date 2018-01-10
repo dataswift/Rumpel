@@ -32,8 +32,41 @@
  $text-dark: #878787;
  $text-light: white;
 
- $app-background-color: #EEEEEE;
+ $app-background-color: #EFEFF4;
  $app-light-background-color: #FAFAFA;
 
  $app-dark-grey: #939393;
  $app-hover-grey: #E8E8E8;
+
+$hat-blue: (
+  50: #e3f2fd,
+  100: #4a556b,
+  200: #90caf9,
+  300: #4a556b,
+  400: #42a5f5,
+  500: #4a556b,
+  600: #1e88e5,
+  700: #4a556b,
+  800: #1565c0,
+  900: #4a556b,
+  A100: #82b1ff,
+  A200: #448aff,
+  A400: #2979ff,
+  A700: #2962ff,
+  contrast: (
+    50: #4a556b,
+    100: #4a556b,
+    200: #4a556b,
+    300: #4a556b,
+    400: #4a556b,
+    500: white,
+    600: white,
+    700: white,
+    800: #4a556b,
+    900: #4a556b,
+    A100: #4a556b,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);

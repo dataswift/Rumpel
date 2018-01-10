@@ -12,9 +12,9 @@
 
 
   <div class="content tile-body no-padding">
-    <rump-input-box [profile]="profile" class="notable-input">
+    <rum-input-box [profile]="profile" class="notable-input">
       <img style="max-height: 4.5em; margin: 1em; border-radius: 50%;" [src]="profile?.photo.url || '/assets/images/user-icon-white.svg'">
-    </rump-input-box>
+    </rum-input-box>
 
     <ul class="note-list bulletless-list">
       <li *ngFor="let notable of notables$ | async; let i = index" class="notable">

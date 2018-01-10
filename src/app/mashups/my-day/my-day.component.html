@@ -10,24 +10,24 @@
   <div class="col-md-12 mixpad">
     <div class="view-body">
       <div class="loading-overlay" *ngIf="loading && hasLocationData">
-        <rump-spinner [isRunning]="true"></rump-spinner>
+        <rum-spinner [isRunning]="true"></rum-spinner>
         <span>Loading more data...</span>
       </div>
 
       <div class="timeline-view">
 
-      <rump-map class="map"
+      <rum-map class="map"
                 [dataPoints]="locations[selectedTime]"
                 [mapHeight]="safeSize"
                 (timeSelected)="selectTime($event)"
-                [locationDate]="selectedTime"></rump-map>
+                [locationDate]="selectedTime"></rum-map>
 
-      <rump-activity-list class="activitylist"
+      <rum-activity-list class="activitylist"
                          [componentHeight]="safeSizeSidebar"
                          [cards]="cardList"
                          [selectedDate]="selectedTime"
                          (timeSelected)="selectTime($event)"
-                         (notifyDatesInRange)="getDatesInRange($event)"></rump-activity-list>
+                         (notifyDatesInRange)="getDatesInRange($event)"></rum-activity-list>
       </div>
     </div>
   </div>

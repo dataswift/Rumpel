@@ -10,10 +10,8 @@ import { Component, OnInit } from '@angular/core';
 import { DataPlugService } from '../data-plug.service';
 import { Observable } from 'rxjs/Observable';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-tile-data-plugs',
+  selector: 'rum-tile-data-plugs',
   templateUrl: 'tile-data-plugs.component.html',
   styleUrls: ['tile-data-plugs.component.scss']
 })

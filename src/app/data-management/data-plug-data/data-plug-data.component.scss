@@ -1,28 +1,21 @@
 @import "../../style/variables";
 
-
-.dataPlugData{
-  background: white;
-  padding: 30px;
-  margin: 0px -42px;
-  position: absolute;
-  top: -40px;
-  width: calc(100% + 10px);
+.dataPlugData {
   min-height: 660px;
 
-  .loadMore{
+  .loadMore {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 60px;
 
-    p{
+    p {
       margin: 0;
       margin-right: 20px;
       font-weight: 600;
     }
 
-    a{
+    a {
       background: $app-dark-tone;
       color: white;
       border: none;
@@ -31,8 +24,7 @@
     }
   }
 
-
-  .nav{
+  .nav {
       width: calc(100% + 60px);
       border-bottom: 1px solid $app-background-color;
       box-shadow: 0px 1px 2px $app-background-color;
@@ -41,11 +33,8 @@
       justify-content: center;
       align-items: center;
       align-content: center;
-      background: white;
 
-
-
-      a{
+      a {
         padding: 13px;
         margin: 0 12px;
         border-top: 2px solid #fff;
@@ -57,19 +46,16 @@
         letter-spacing: 0.5px;
         position: relative;
 
-        &:hover{
+        &:hover {
           text-decoration: none;
         }
       }
 
-
-      a.current{
+      a.current {
         border-bottom: 2px solid $app-contrast-color;
-        color: $app-dark-tone;
         font-weight: 600;
       }
   }
-
 
   .nav-tabs{
     margin: 0;
@@ -85,111 +71,86 @@
       border-top: 1px solid transparent;
     }
 
-    .active a{
+    .active a {
       border-top: 1px solid #ddd;
       color: #4a556b;
       font-weight: 600;
     }
   }
+}
 
+.mapView {
+  padding: 30px 0;
+}
 
-  .static, .feed{
-    color: $app-dark-tone;
-    padding: 60px;
+/deep/ .static, .feed {
+  color: $app-dark-tone;
+  padding: 60px;
 
-    @media screen and (max-width: 768px){
-      padding: 30px;
-    }
+  @media screen and (max-width: 768px){
+    padding: 30px;
+  }
 
+  .dates {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
 
-    .dates{
-      display: flex;
-      justify-content: flex-end;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
+  .datePicker {
+    margin: 20px 0px 20px 30px;
+    display: inline-block;
 
-    .datePicker{
-      margin: 20px 0px 20px 30px;
-      display: inline-block;
-
-      input[type="date"] {
-        padding: 5px 10px;
-        border-radius: 4px;
-        box-shadow: none;
-        border: 2px solid $app-light-tone;
-      }
-    }
-
-    .header{
-      display: flex;
-      align-items: center;
-      img{
-        margin-right: 20px;
-        height: 40px;
-        width: auto;
-      }
-
-      h3{
-        margin-top: 10px;
-        margin-bottom: 5px;
-        text-transform: capitalize;
-      }
-
-      p{
-        opacity: 0.6;
-      }
-    }
-
-    table{
-      margin: 40px 0;
-      background: $app-light-background-color;
-      width: 100%;
-      border-radius: 8px;
-
-      tr{
-
-        td{
-          padding: 20px;
-          border: 1px solid $app-light-tone;
-
-          &:first-child{
-            font-weight: 600;
-            width: 30%;
-          }
-        }
-
-      }
-    }
-
-    .feedItems, .calendarView{
-
-      .item{
-        background: $app-light-background-color;
-        width: 100%;
-        border: 1px solid $app-light-tone;
-        padding: 30px 30px 10px;
-        margin: 30px 0;
-        border-radius: 4px;
-      }
-
-      .date{
-        opacity: 0.7;
-      }
-
-      .pipe{
-        margin: 0 14px;
-
-        @media screen and (max-width: 480px){
-          display: none;
-        }
-      }
+    input[type="date"] {
+      padding: 5px 10px;
+      border-radius: 4px;
+      box-shadow: none;
+      border: 2px solid $app-light-tone;
     }
   }
 
-}
+  .header {
+    display: flex;
+    align-items: center;
 
+    img {
+      margin-right: 20px;
+      height: 40px;
+      width: auto;
+    }
 
-.mapView{
-  padding: 30px 0;
+    h3 {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      text-transform: capitalize;
+    }
+
+    p {
+      opacity: 0.6;
+    }
+  }
+
+  .feedItems, .calendarView {
+    .item{
+      background: $app-light-background-color;
+      width: 100%;
+      border: 1px solid $app-light-tone;
+      padding: 30px 30px 10px;
+      margin: 30px 0;
+      border-radius: 4px;
+    }
+
+    .date {
+      opacity: 0.7;
+    }
+
+    .pipe {
+      margin: 0 14px;
+
+      @media screen and (max-width: 480px){
+        display: none;
+      }
+    }
+  }
 }

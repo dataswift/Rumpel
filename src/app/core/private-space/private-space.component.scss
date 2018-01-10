@@ -1,0 +1,28 @@
+.sidenav-container {
+  flex: 1;
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.sidenav {
+  box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
+  padding-bottom: 72px;
+  width: 325px;
+  bottom: 0;
+  overflow: auto;
+  height: 100%;
+}
+
+.sidenav-content {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  // The rule will match the element following the router-outlet which will be the routed component.
+  router-outlet + * {
+    flex-grow: 1;
+  }
+}

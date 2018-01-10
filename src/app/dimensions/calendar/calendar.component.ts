@@ -16,10 +16,8 @@ import { Event } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-calendar',
+  selector: 'rum-calendar',
   templateUrl: 'calendar.component.html',
   styleUrls: ['calendar.component.scss']
 })
@@ -49,23 +47,6 @@ export class CalendarComponent implements OnInit {
       right: this.viewChoices
     };
 
-    $('#calendar').fullCalendar('destroy');
-
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: this.viewChoices
-      },
-      defaultDate: this.defaultDate,
-      defaultView: this.defaultView,
-      firstDay: this.firstDay,
-      editable: false,
-      selectable: true,
-      events: this.events,
-      height: this.height
-    });
-
     this.sub =
       Observable.merge(
         this.facebookEventsSvc.data$,
@@ -84,16 +65,9 @@ export class CalendarComponent implements OnInit {
 
         this.updateCalendar();
       });
-
   }
 
   private updateCalendar() {
-    $('#calendar').fullCalendar('removeEvents');
-    $('#calendar').fullCalendar('addEventSource', this.events);
-  }
-
-  showPopover(event) {
-    $('[data-toggle="popover"]').popover();
   }
 
 }

@@ -13,7 +13,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 
 @Component({
-  selector: 'rump-tile-map',
+  selector: 'rum-tile-map',
   templateUrl: 'tile-map.component.html',
   styleUrls: ['tile-map.component.scss']
 })

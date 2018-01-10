@@ -17,7 +17,7 @@ import {HatRecord} from '../../shared/interfaces/hat-record.interface';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
-  selector: 'rump-tile-social',
+  selector: 'rum-tile-social',
   templateUrl: 'tile-social.component.html',
   styleUrls: ['tile-social.component.scss']
 })

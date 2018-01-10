@@ -4,7 +4,7 @@
     <div *ngIf="requirements.fields && requirements.fields.length > 0">
       <div class="fields" *ngFor="let field of requirements.fields">
           <span>{{ field.name | capitalizeFirst }}</span>
-          <rump-offer-requirements *ngFor="let fieldSubset of field.fields" [requirements]="fieldSubset"></rump-offer-requirements>
+          <rum-offer-requirements *ngFor="let fieldSubset of field.fields" [requirements]="fieldSubset"></rum-offer-requirements>
       </div>
     </div>
 </div>

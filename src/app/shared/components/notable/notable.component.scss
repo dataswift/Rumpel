@@ -38,7 +38,6 @@
     float: right;
     margin-top: 0.1em;
     font-size: 3em;
-
   }
 }
 
@@ -113,9 +112,14 @@
   }
 }
 
-.notable-content {
+/deep/ .notable-content {
   padding-left: 2em;
   padding-right: 2em;
+
+  img {
+    max-width: 80%;
+    margin: 1em 10% 2em 10%;
+  }
 }
 
 .img-profile {

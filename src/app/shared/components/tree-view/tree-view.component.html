@@ -13,7 +13,7 @@
       <div class="col-xs-{{4 - offset}} no-padding" (click)="node.toggle()">{{node.key}}</div>
       <div *ngIf="node.value" class="col-xs-4 node-value">{{node.value}}</div>
       <div class="col-xs-12" *ngIf="node.expanded && node.subTree">
-        <rump-tree-view [treeNodes]="node.subTree | withObject" [offset]="offset + 1"></rump-tree-view>
+        <rum-tree-view [treeNodes]="node.subTree | withObject" [offset]="offset + 1"></rum-tree-view>
       </div>
     </div>
   </li>

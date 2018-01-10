@@ -1,20 +1,16 @@
 @import "../../style/variables";
 
 
-.offers{
-  background: white;
+.offers {
   padding: 30px;
   margin: 0px -42px;
-  position: absolute;
+  margin-top: 0;
   top: -40px;
-  width: calc(100% + 10px);
-  min-height: 660px;
-
+  height: 100%;
 
   @media(max-width: 768px){
     background: $app-background-color;
   }
-
 
   .no-offers-text{
     width: 100%;
@@ -25,9 +21,7 @@
       text-align: center;
       line-height: 1.4;
     }
-
   }
-
 
   .offers-nav{
       width: calc(100% + 60px);

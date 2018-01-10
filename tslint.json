@@ -115,8 +115,8 @@
       "check-type"
     ],
 
-    "directive-selector": [true, "attribute", "rump", "camelCase"],
-    "component-selector": [true, "element", "rump", "kebab-case"],
+    "directive-selector": [true, "attribute", "rum", "camelCase"],
+    "component-selector": [true, "element", "rum", "kebab-case"],
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-host-property-decorator": true,

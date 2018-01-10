@@ -1,0 +1,64 @@
+<!--
+  ~ Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+  -->
+
+<div class="client-logo"></div>
+
+<div class="menu-scroll">
+  <h6 class="data-plugs-title">Menu</h6>
+  <ul class="center" id="intro-step1">
+    <li *ngFor="let item of menu; let i = index"
+        [class.selected]="selectedItem.indexOf(item.link) !== -1">
+      <div class="wrapper">
+        <a [routerLink]="[item.link]" (click)="close.emit('Close menu')"
+           [matTooltip]="item.description"
+           [matTooltipClass]="'rum-tooltip-content'"
+           [matTooltipShowDelay]="500"
+           [matTooltipPosition]="'right'">
+          <mat-icon class="icon">{{item.icon}}</mat-icon>
+          {{item.display}}
+          <span class="badge" *ngIf="item.display === 'Redeem offers' && availableOffers > 0">{{ availableOffers }}</span>
+        </a>
+      </div>
+    </li>
+  </ul>
+
+  <h6 class="data-plugs-title">Add data plugs</h6>
+  <ul class="center plug-menu">
+    <li *ngFor="let item of dataplugList | async; let i = index" class="data-plugs-list">
+      <div class="wrapper">
+        <a (click)="openPlugPopup(item); close.emit('Close menu');" class="sidebar-pop"
+           [matTooltip]="item.description"
+           [matTooltipClass]="'rum-tooltip-content'"
+           [matTooltipShowDelay]="500"
+           [matTooltipPosition]="'right'">
+          <div class="icon icon-grey"><img [src]="'assets/icons/grey-' + item.name.toLowerCase() + '-plug.svg'" /></div>
+          <div class="icon icon-color"><img [src]="'assets/icons/' + item.name.toLowerCase() + '-plug.svg'" /></div>
+          {{item.name}}
+          <mat-icon class="plus-icon">control_point</mat-icon>
+        </a>
+      </div>
+    </li>
+  </ul>
+    <ul class="center" >
+    <li class="data-plugs-more">
+      <div class="wrapper">
+        <a [routerLink]="['/dataplugs']">
+          <mat-icon class="icon">more_horiz</mat-icon>
+          <em>More</em>
+        </a>
+      </div>
+    </li>
+  </ul>
+
+</div>
+
+
+<div class="poweredBy">
+  <img src="assets/icons/grey-rumpel-plug.svg" class="img img-responsive">
+  <p>Dashboard by Rumpel</p>
+</div>

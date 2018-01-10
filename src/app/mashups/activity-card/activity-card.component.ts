@@ -5,7 +5,7 @@ import { Moment } from 'moment';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'rump-activity-card',
+  selector: 'rum-activity-card',
   templateUrl: './activity-card.component.html',
   styleUrls: ['./activity-card.component.scss']
 })

@@ -1,15 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { DataOfferService } from '../data-offer.service';
 import { Subscription } from 'rxjs/Subscription';
 
-declare var $: any;
+const BTN_TEXT = {
+  untouched: 'Accept',
+  processing: 'Processing',
+  accepted: 'Accepted',
+  failed: 'Failed',
+  tryAgain: 'Try Again'
+};
+
+const BTN_ICON = {
+  untouched: '',
+  processing: 'autorenew',
+  accepted: 'check_circle',
+  failed: 'report_problem',
+  tryAgain: ''
+};
 
 @Component({
-  selector: 'rump-offer-modal',
+  selector: 'rum-offer-modal',
   templateUrl: './offer-modal.component.html',
   styleUrls: ['./offer-modal.component.scss']
 })
-
 export class OfferModalComponent implements OnInit {
   @Input() offer_index: number;
   @Input() offers: any;
@@ -18,6 +31,9 @@ export class OfferModalComponent implements OnInit {
   @Input() statsComponent: any;
   @Input() offerMode = 'untouched';
 
+  @ViewChild('modalBody') modalBody: ElementRef;
+  @ViewChild('offerControlButton') offerButton: ElementRef;
+
   public timeNow = Date.now();
   public claimSub: Subscription;
   private destroy: Function;
@@ -25,35 +41,33 @@ export class OfferModalComponent implements OnInit {
   public scrollTop: number;
   public offerDuration: number;
   public scrollShadow = false;
-  public btnIcon = '';
-  public btnText = 'Accept';
   public navDisabled = false;
   public offerStatus = 'untouched';
   public animateIn = false;
   public voucherCopied = false;
+  public termsAccepted = false;
+  public offerUiState: 'untouched' | 'processing' | 'accepted' | 'failed' | 'tryAgain';
 
-  constructor(private dataOfferSvc: DataOfferService) { }
+  constructor(private renderer: Renderer2,
+              private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
-    this.scrollTop = $('body').scrollTop();
-    $('body, html').addClass('no-scroll');
+    this.scrollTop = document.body.scrollTop;
+    this.renderer.addClass(document.body, 'no-scroll');
 
     this.changeOffer(0);
     this.animateIn = true;
-
-    console.log(this.offers[this.offer_index]);
   }
 
   closeModal(): void {
-    $('body, html').removeClass('no-scroll');
-    $('body').scrollTop(this.scrollTop);
+    this.renderer.removeClass(document.body, 'no-scroll');
+    document.body.scrollTop = this.scrollTop;
 
     this.animateIn = false;
     setTimeout(() => {
       this.destroy();
     }, 1000);
   }
-
 
   prevOffer(): void {
     if (this.offer_index > 0 ) {
@@ -62,7 +76,7 @@ export class OfferModalComponent implements OnInit {
   }
 
   nextOffer(): void {
-    if (this.offers.length > (this.offer_index + 1) ) {
+    if (this.offers.length > (this.offer_index + 1)) {
       this.changeOffer(1);
     }
   }
@@ -74,8 +88,7 @@ export class OfferModalComponent implements OnInit {
     this.claimDisabled = true;
     this.scrollShadow = false;
     this.navDisabled = false;
-    this.btnIcon = '';
-    this.btnText = 'Accept'
+    this.offerUiState = 'untouched';
 
     if (this.offers[this.offer_index].claim === undefined) {
       this.offerStatus = 'untouched';
@@ -83,70 +96,61 @@ export class OfferModalComponent implements OnInit {
       this.offerStatus = this.offers[this.offer_index].claim.status;
     }
 
-    $('.rump-modal-footer .btn').removeClass('processing accepted failed');
-    $('.regular-checkbox').attr('checked', false);
-    $('.rump-modal-body').scrollTop(0);
+    this.termsAccepted = false;
+    this.modalBody.nativeElement.scrollTop = 0;
   }
 
   acceptOffer(evt): void {
-
     this.navDisabled = true;
 
-    if (this.btnText === 'Accept' || this.btnText === 'Try again') {
-        this.showUserFeedback(evt.target, 'Processing');
+    if (this.offerUiState === 'untouched' || this.offerUiState === 'failed') {
+      this.offerUiState = 'processing';
 
-        this.claimSub = this.dataOfferSvc.claim(this.offers[this.offer_index].id).subscribe(offers => {
-            this.navDisabled = false;
-            this.showUserFeedback(evt.target, 'Accepted');
-            this.dataOfferSvc.fetchUserAwareOfferListSubscription();
-            this.updateOffers(offers);
-          },
-          error => {
-            console.log('claim failed', error);
-            this.navDisabled = false;
-            this.showUserFeedback(evt.target, 'Failed');
-          }
-        );
+      this.claimSub = this.dataOfferSvc.claim(this.offers[this.offer_index].id).subscribe(offers => {
+          this.navDisabled = false;
+          this.offerUiState = 'accepted';
+          this.dataOfferSvc.fetchUserAwareOfferListSubscription();
+          this.updateOffers(offers);
+        },
+        error => {
+          // console.log('claim failed', error);
+          this.navDisabled = false;
+          this.offerUiState = 'failed';
+          setTimeout(() => {
+            this.offerUiState = 'tryAgain';
+          }, 5000);
+        }
+      );
     }
   }
 
-
   updateOffers(offers) {
-
-
     setTimeout(() => {
       if (this.offerMode === 'untouched') {
-          this.offers = offers.filter(function(offer) {
+        this.offers = offers.filter(function(offer) {
+          let claimStatus = 'untouched';
+          if (offer.claim && offer.claim.status) {
+            claimStatus = offer.claim.status;
+          }
 
-              let claimStatus = 'untouched';
-              if (offer.claim && offer.claim.status) {
-                claimStatus = offer.claim.status;
-              }
+          let moreUsersRequired = false;
+          if (offer.requiredMaxUser === 0) {
+            moreUsersRequired = true;
+          } else {
+            moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
+          }
 
-              let moreUsersRequired = false;
-              if (offer.requiredMaxUser === 0) {
-                moreUsersRequired = true;
-              } else {
-                moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
-              }
-
-              return (  claimStatus === 'untouched' &&
-                        moreUsersRequired &&
-                        offer.expires > Date.now()
-                      )
-          });
+          return claimStatus === 'untouched' && moreUsersRequired && offer.expires > Date.now();
+        });
       } else {
-          this.offers = offers.filter(function(offer) {
+        this.offers = offers.filter(offer => {
+          let claimStatus = 'untouched';
+          if (offer.claim && offer.claim.status) {
+            claimStatus = offer.claim.status;
+          }
 
-              let claimStatus = 'untouched';
-              if (offer.claim && offer.claim.status) {
-                claimStatus = offer.claim.status;
-              }
-
-              return (  claimStatus !== 'untouched' &&
-                        claimStatus !== 'rejected'
-                      )
-          });
+          return claimStatus !== 'untouched' && claimStatus !== 'rejected';
+        });
       }
 
       if (this.offer_index === this.offers.length) {
@@ -154,40 +158,13 @@ export class OfferModalComponent implements OnInit {
       } else {
         this.changeOffer(0);
       }
-
     }, 3000);
   }
 
   updateClaimDisabled(evt) {
     this.claimDisabled = !evt.target.checked;
+    this.termsAccepted = !this.termsAccepted;
   }
-
-  showUserFeedback(btn, feedback) {
-
-    this.btnText = feedback;
-    btn.classList.remove('processing', 'accepted', 'failed');
-
-    if (feedback !== 'Accept' && feedback !== 'Try again') {
-      btn.classList.add( feedback.toLowerCase() );
-    }
-
-
-      if (feedback === 'Processing') {
-        this.btnIcon = 'autorenew';
-      } else if (feedback === 'Accepted') {
-        this.btnIcon = 'check_circle';
-      } else if (feedback === 'Accept' || feedback === 'Try again') {
-        this.btnIcon = '';
-      } else if (feedback === 'Failed') {
-        this.btnIcon = 'report_problem';
-        setTimeout(() => {
-          this.showUserFeedback(btn, 'Accept');
-        }, 5000);
-      }
-
-
-  }
-
 
   claimReward(type) {
      if (type === 'cash') {
@@ -198,13 +175,8 @@ export class OfferModalComponent implements OnInit {
      }
   }
 
-
   handleScroll(evt) {
-    if (evt.target.scrollTop > 0) {
-      this.scrollShadow = true;
-    } else {
-      this.scrollShadow = false;
-    }
+    this.scrollShadow = evt.target.scrollTop > 0;
   }
 
   canDisplayOldDataRequirements(): boolean {
@@ -215,5 +187,11 @@ export class OfferModalComponent implements OnInit {
     return Object.keys(object).map(key => object[key]);
   }
 
+  btnText(): string {
+    return BTN_TEXT[this.offerUiState];
+  }
 
+  btnIcon(): string {
+    return BTN_ICON[this.offerUiState];
+  }
 }

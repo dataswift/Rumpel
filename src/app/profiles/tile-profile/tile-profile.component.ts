@@ -11,7 +11,7 @@ import { ProfilesService } from '../profiles.service';
 import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 
 @Component({
-  selector: 'rump-tile-profile',
+  selector: 'rum-tile-profile',
   templateUrl: 'tile-profile.component.html',
   styleUrls: ['tile-profile.component.scss']
 })

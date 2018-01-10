@@ -9,7 +9,7 @@
 import { Directive, ElementRef, Input, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[rumpStick]'
+  selector: '[rumStick]'
 })
 export class StickDirective {
 

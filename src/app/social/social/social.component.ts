@@ -15,10 +15,8 @@ import { Post, MusicListen, Tweet } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { Observable } from 'rxjs/Observable';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-social',
+  selector: 'rum-social',
   templateUrl: 'social.component.html',
   styleUrls: ['social.component.scss']
 })
@@ -62,9 +60,5 @@ export class SocialComponent implements OnInit {
         element.scrollIntoView();
       }, 5);
     }
-  }
-
-  showPopover(event) {
-    $('[data-toggle="popover"]').popover();
   }
 }

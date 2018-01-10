@@ -9,7 +9,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NotablesRoutingModule } from './notables-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { TileNotablesComponent } from './tile-notables/tile-notables.component';
@@ -21,7 +20,7 @@ import { ShareBeltComponent } from './share-belt/share-belt.component';
 import { NotablesService } from './notables.service';
 
 @NgModule({
-  imports: [ SharedModule, FormsModule, NotablesRoutingModule ],
+  imports: [ SharedModule, FormsModule ],
   declarations: [ TileNotablesComponent, InputBoxComponent, NotablesViewComponent, NotablesMdEditorComponent, ShareBeltComponent ],
   providers: [ NotablesService ],
   exports: [ TileNotablesComponent ]

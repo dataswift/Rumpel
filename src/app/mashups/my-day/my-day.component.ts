@@ -26,10 +26,8 @@ import { MonzoService } from '../../monzo/monzo.service';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-my-day',
+  selector: 'rum-my-day',
   templateUrl: 'my-day.component.html',
   styleUrls: ['my-day.component.scss']
 })
@@ -106,13 +104,12 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
-    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 259 + 'px');
-    const thisScope = this;
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 180 + 'px');
+    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 259 + 'px');
 
-    $(window).resize(function() {
-      thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
-      thisScope.safeSizeSidebar = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 259 + 'px');
+    window.addEventListener('resize', () => {
+      this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 180 + 'px');
+      this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 259 + 'px');
     });
   }
 

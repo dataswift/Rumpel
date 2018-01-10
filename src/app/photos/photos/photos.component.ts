@@ -11,10 +11,8 @@ import * as _ from 'lodash';
 import { ExpandedTime } from '../../shared/interfaces/index';
 import * as moment from 'moment';
 
-declare var $: any;
-
 @Component({
-  selector: 'rump-photos',
+  selector: 'rum-photos',
   templateUrl: 'photos.component.html',
   styleUrls: ['photos.component.scss']
 })
@@ -66,10 +64,5 @@ export class PhotosComponent implements OnInit {
       'unixDayStart');
 
     this.timeline = _.unionBy(this.timeline, timestamps, 'unixDayStart').sort((a, b) => a.unixDayStart > b.unixDayStart ? -1 : 1);
-  }
-
-
-  showPopover(event) {
-    $('[data-toggle="popover"]').popover();
   }
 }

@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 
 @Component({
-  selector: 'rump-password-recover',
+  selector: 'rum-password-recover',
   templateUrl: './password-recover.component.html',
   styleUrls: ['./password-recover.component.scss']
 })

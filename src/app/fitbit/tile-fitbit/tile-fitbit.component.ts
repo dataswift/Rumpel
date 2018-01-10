@@ -7,7 +7,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'rump-tile-fitbit',
+  selector: 'rum-tile-fitbit',
   templateUrl: './tile-fitbit.component.html',
   styleUrls: ['./tile-fitbit.component.scss']
 })
