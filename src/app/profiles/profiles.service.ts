@@ -18,6 +18,43 @@ import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { BundleStructure, PropertyQuery } from '../shared/interfaces/bundle.interface';
 
+const DEFAULT_PHATA_BUNDLE: BundleStructure = {
+  name: 'phata',
+  bundle: {
+    notables: {
+      endpoints: [{
+        filters: [{
+          field: 'shared',
+          operator: {
+            value: true,
+            operator: 'contains'
+          }
+        }, {
+          field: 'shared_on',
+          operator: {
+            value: 'phata',
+            operator: 'contains'
+          }
+        }],
+        mapping: {
+          kind: 'kind',
+          shared: 'shared',
+          message: 'message',
+          author: 'authorv1',
+          location: 'locationv1',
+          shared_on: 'shared_on',
+          created_time: 'created_time',
+          public_until: 'public_until',
+          updated_time: 'updated_time'
+        },
+        endpoint: 'rumpel/notablesv1'
+      }],
+      orderBy: 'updated_time',
+      ordering: 'descending'
+    }
+  }
+};
+
 @Injectable()
 export class ProfilesService extends BaseDataService<Profile> {
   private _bundle$: ReplaySubject<BundleStructure> = <ReplaySubject<BundleStructure>>new ReplaySubject(1);
@@ -154,10 +191,18 @@ export class ProfilesService extends BaseDataService<Profile> {
   }
 
   private getPhataBundle(): void {
-    this.hat.getDataBundeStructure('phata').subscribe((bundle: BundleStructure) => {
-      this.previousBundle = bundle;
-      this._bundle$.next(bundle);
-    });
+    this.hat.getDataBundeStructure('phata')
+      .catch(error => {
+        if (error.status === 404) {
+          return Observable.of(DEFAULT_PHATA_BUNDLE);
+        } else {
+          return Observable.throw(error);
+        }
+      })
+      .subscribe((bundle: BundleStructure) => {
+        this.previousBundle = bundle;
+        this._bundle$.next(bundle);
+      });
   }
 
   private validateProfileNewOrDefault(profile: Profile): Profile {

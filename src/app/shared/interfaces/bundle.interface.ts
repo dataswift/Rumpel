@@ -44,7 +44,7 @@ interface Transformation {
 
 interface Operator {
   operator: string;
-  value?: number | string;
+  value?: number | string | boolean;
   lower?: number | string;
   upper?: number | string;
   search?: string;
