@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { UserService } from '../../services';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
@@ -17,12 +17,13 @@ import { Router, NavigationEnd } from '@angular/router';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { User } from '../../user/user.interface';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';
+import { OffersStorage } from '../../offers/offer.interface';
 
 @Component({
   selector: 'rum-side-menu',
   templateUrl: 'side-menu.component.html'
 })
-export class SideMenuComponent implements OnInit {
+export class SideMenuComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<string>();
 
   public selectedItem: string;
@@ -30,9 +31,7 @@ export class SideMenuComponent implements OnInit {
   public userAuthenticated = false;
   public menu: Array<any>;
   public dataplugList: Observable<DataPlug[]>;
-  public mobileMode = false;
   public profile: any;
-  public isPublicPage = false;
   public availableOffers = 0;
   private offersSub: Subscription;
   public offers: any = [];
@@ -56,31 +55,10 @@ export class SideMenuComponent implements OnInit {
     this.userAuthenticated = false;
     this.menu = this.config.menuItems.public;
 
-    this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
-      this.offers = offers.filter(function(offer) {
-        let claimStatus = 'untouched';
-        if (offer.claim && offer.claim.status) {
-          claimStatus = offer.claim.status;
-        }
-
-        let moreUsersRequired = false;
-        if (offer.requiredMaxUser === 0) {
-          moreUsersRequired = true;
-        } else {
-          moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
-        }
-
-        return claimStatus === 'untouched' && moreUsersRequired && offer.expires > Date.now();
-      });
-      this.availableOffers = this.offers.length;
-    },
-    error => { console.log(error); });
-
-    this.router.events
-        .filter(event => event instanceof NavigationEnd)
-        .subscribe((event: NavigationEnd) => {
-          this.isPublicPage = this.router.isActive('public', false);
-        });
+    this.offersSub = this.dataOfferSvc.offers$.subscribe((offers: OffersStorage) => {
+      this.offers = offers.availableOffers;
+      this.availableOffers = offers.availableOffers.length;
+    });
 
     this.router.events
       .filter(event => event instanceof NavigationEnd)
@@ -91,9 +69,13 @@ export class SideMenuComponent implements OnInit {
       this.menu = user.authenticated ? this.config.menuItems.private : this.config.menuItems.public;
 
       if (user.authenticated) {
-        this.dataOfferSvc.fetchUserAwareOfferListSubscription();
+        this.dataOfferSvc.fetchUserAwareOfferList();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.offersSub.unsubscribe();
   }
 
   openPlugPopup(plug: any) {

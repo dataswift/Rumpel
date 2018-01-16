@@ -8,7 +8,7 @@ import { User } from '../../user/user.interface';
 import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
-import * as moment from 'moment';
+import {Offer, OffersStorage} from '../offer.interface';
 
 @Component({
   selector: 'rum-offers-home',
@@ -21,8 +21,8 @@ export class OffersHomeComponent implements OnInit {
   public noOffers = '';
   public noAcceptedOffers = '';
 
-  public offers: any = [];
-  public acceptedOffers: any = [];
+  public offers: Offer[] = [];
+  public acceptedOffers: Offer[] = [];
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private dialogSvc: DialogService,
@@ -39,28 +39,9 @@ export class OffersHomeComponent implements OnInit {
       `<a href="mailto:contact@hatdex.org">contact@hatdex.org</a>.`
     });
 
-    this.offersSub = this.dataOfferSvc.offers$.subscribe(offers => {
-      offers = this.setOfferImage(offers);
-
-      this.offers = offers.filter(offer => {
-        let claimStatus = 'untouched';
-        if (offer.claim && offer.claim.status) {
-          claimStatus = offer.claim.status;
-        }
-
-        const moreUsersRequired = offer.requiredMaxUser === 0 || (offer.requiredMaxUser - offer.totalUserClaims) > 0;
-
-        return claimStatus === 'untouched' && moreUsersRequired && moment(offer.expires).isAfter();
-      });
-
-      this.acceptedOffers = offers.filter(offer => {
-        let claimStatus = 'untouched';
-        if (offer.claim && offer.claim.status) {
-          claimStatus = offer.claim.status;
-        }
-
-        return claimStatus !== 'untouched' && claimStatus !== 'rejected';
-      });
+    this.offersSub = this.dataOfferSvc.offers$.subscribe((offers: OffersStorage) => {
+      this.offers = this.setOfferImage(offers.availableOffers);
+      this.acceptedOffers = this.setOfferImage(offers.acceptedOffers);
 
       if (this.offers.length === 0) {
         this.noOffers = 'Sorry, there are no offers matching the data you have made available';
@@ -73,7 +54,7 @@ export class OffersHomeComponent implements OnInit {
     error => { console.log(error); });
 
     this.userSvc.user$.filter((user: User) => user.authenticated)
-      .subscribe(() =>  this.dataOfferSvc.fetchUserAwareOfferListSubscription());
+      .subscribe(() =>  this.dataOfferSvc.fetchUserAwareOfferList());
   }
 
   setOfferImage(offers): any {

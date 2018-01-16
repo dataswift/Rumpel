@@ -37,7 +37,7 @@
           <path fill="none" d="M0,0h24v24H0V0z"/>
         </svg>
 
-        <img *ngIf="values?.photo.avatar" [src]="values?.photo.avatar | presignImgUrl | async">
+        <img *ngIf="values?.photo.avatar" src="{{values.photo.avatar | presignImgUrl | async}}">
       </div>
 
       <h1>{{hatDomain}}</h1>

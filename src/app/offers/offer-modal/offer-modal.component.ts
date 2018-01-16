@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { DataOfferService } from '../data-offer.service';
 import { Subscription } from 'rxjs/Subscription';
+import { OffersStorage } from '../offer.interface';
 
 const BTN_TEXT = {
   untouched: 'Accept',
@@ -57,6 +58,10 @@ export class OfferModalComponent implements OnInit {
 
     this.changeOffer(0);
     this.animateIn = true;
+
+    this.dataOfferSvc.offers$.subscribe((offers: OffersStorage) => {
+      this.updateOffers(offers.availableOffers);
+    });
   }
 
   closeModal(): void {
@@ -106,11 +111,9 @@ export class OfferModalComponent implements OnInit {
     if (this.offerUiState === 'untouched' || this.offerUiState === 'failed') {
       this.offerUiState = 'processing';
 
-      this.claimSub = this.dataOfferSvc.claim(this.offers[this.offer_index].id).subscribe(offers => {
+      this.claimSub = this.dataOfferSvc.claim(this.offers[this.offer_index].id).subscribe(_ => {
           this.navDisabled = false;
           this.offerUiState = 'accepted';
-          this.dataOfferSvc.fetchUserAwareOfferListSubscription();
-          this.updateOffers(offers);
         },
         error => {
           // console.log('claim failed', error);

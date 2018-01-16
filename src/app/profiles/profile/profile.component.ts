@@ -71,7 +71,6 @@ export class ProfileComponent implements OnInit {
               private dialogSvc: DialogService,
               private userSvc: UserService,
               private fileSvc: FileService,
-              private router: Router,
               public snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -87,16 +86,16 @@ export class ProfileComponent implements OnInit {
     });
 
     this.profilesSvc.getProfileData();
+  }
+
+  invokeFileUploadDialog(): void {
+    this.dialogSvc.createDialog(FileUploadComponent, {});
 
     this.fileSvc.file$.subscribe((fileMetadata: FileMetadataRes) => {
       setTimeout(() => {
         this.values.photo.avatar = `https://${this.hatDomain}/api/v2/files/content/${fileMetadata.fileId}`;
       });
     });
-  }
-
-  invokeFileUploadDialog(): void {
-    this.dialogSvc.createDialog(FileUploadComponent, {});
   }
 
   submitForm() {

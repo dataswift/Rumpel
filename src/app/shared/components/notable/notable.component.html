@@ -24,7 +24,7 @@
 
   <div class="notable-content">
     <div class="content-container" [innerHTML]="notable.data.message | markdownToHtml | safeHtml"></div>
-    <img [src]="notable.data.photov1.link | presignImgUrl | async" *ngIf="notable.data.photov1">
+    <img src="{{notable.data.photov1.link | presignImgUrl | async}}" *ngIf="notable.data.photov1">
   </div>
 
   <div class="notable-controls" *ngIf="modifiable">
