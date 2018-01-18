@@ -47,8 +47,7 @@ export class DataPlugsComponent implements OnInit {
           this.windowRef.location = redirectUrl;
         });
     } else {
-      // this.router.navigate([plug.page]);
-      this.router.navigate(['/dataplugs/data/', plug.name.toLowerCase()]);
+      this.router.navigate(['/dataplugs/data', plug.name.toLowerCase(), 'feed']);
     }
   }
 

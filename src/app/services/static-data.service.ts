@@ -38,7 +38,13 @@ export class StaticDataService {
       this.pushToStream(source);
     } else {
       this.hat.getDataRecords(source, ENDPOINT_MAP[source], 1, ORDER_BY_MAP[source])
-        .map((rawData: HatRecord<any>[]) => rawData.map(record => toPairs(record.data)))
+        .map((rawData: HatRecord<any>[]) => rawData.map(record => {
+          if (source === 'twitter') {
+            return toPairs(record.data.user);
+          } else {
+            return toPairs(record.data);
+          }
+        }))
         .subscribe(data => {
           if (data.length > 0) {
             this.store[source] = data[0];
