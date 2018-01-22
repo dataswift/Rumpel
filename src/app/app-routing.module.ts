@@ -37,10 +37,11 @@ import { DataPlugStaticComponent } from './data-management/data-plug-static/data
 @NgModule({
   imports: [
     RouterModule.forRoot([
+      { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
+      { path: 'public/profile', component: PublicProfileComponent, canActivate: [NativeGuard] },
       { path: 'hatlogin', component: LoginOauthComponent, canActivate: [NativeGuard] },
       { path: 'user/login', component: LoginNativeComponent, canActivate: [NativeGuard] },
       { path: 'user/login/start', component: LoginStandaloneComponent },
-      { path: 'public/profile', component: PublicProfileComponent, canActivate: [NativeGuard] },
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'dashboard', component: GridComponent },
@@ -74,11 +75,11 @@ import { DataPlugStaticComponent } from './data-management/data-plug-static/data
         children: [
           { path: 'datastore', component: ProfileComponent }
         ]},
-      { path: 'user/password', component: PrivateSpaceComponent, canActivate: [AuthGuard, NativeGuard],
+      { path: 'user/password/recover', component: PasswordRecoverComponent, canActivate: [NativeGuard] },
+      { path: 'user/password/change/:resetToken', component: PasswordChangeComponent, canActivate: [NativeGuard] },
+      { path: 'user/password', component: PrivateSpaceComponent, canActivate: [NativeGuard],
         children: [
-          { path: 'recover', component: PasswordRecoverComponent },
-          { path: 'change', component: PasswordChangeComponent },
-          { path: 'change/:resetToken', component: PasswordChangeComponent }
+          { path: 'change', component: PasswordChangeComponent, canActivate: [AuthGuard] }
         ]},
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'about', component: AboutComponent }
