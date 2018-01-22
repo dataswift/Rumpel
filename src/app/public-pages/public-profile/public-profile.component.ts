@@ -14,6 +14,8 @@ import { Profile } from '../../shared/interfaces/profile.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'rum-public-profile',
   templateUrl: 'public-profile.component.html',
@@ -53,6 +55,10 @@ export class PublicProfileComponent implements OnInit {
     } else if (name === 'twitter') {
       return '/assets/icons/twitter-icon.png';
     }
+  }
+
+  isNotableExpired(expiryTime: string): boolean {
+    return  moment(expiryTime).isBefore();
   }
 
 }

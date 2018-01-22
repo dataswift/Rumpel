@@ -101,7 +101,7 @@
                   <li *ngFor="let notable of notables" class="notable-item placeholder">
                     <div class="notable-item">
                       <div class="additional-info">
-                        <ul class="shared-list" *ngIf="notable.data.shared">
+                        <ul class="shared-list" *ngIf="notable.data.currently_shared">
                           <li *ngFor="let service of notable.data.shared_on" class="shared-item">
                             <img [src]="getLogo(service)" class="shared-icon">
                           </li>
@@ -116,9 +116,9 @@
                         <div class="header-content">
                           <h5 *ngIf="notable.data.author">{{notable.data.author.phata}}</h5>
                           <span>Logged {{notable.data.created_time | moment}}</span>
-                          <span *ngIf="!notable.data.shared">PRIVATE</span>
-                          <span *ngIf="notable.data.shared">SHARED
-                            {{notable.data.public_until === null ? ' forever' : notable.data.public_until.isBefore() ? ', expired' : ', expires ' + (notable.data.public_until | relativeTime) }}
+                          <span *ngIf="!notable.data.currently_shared">PRIVATE</span>
+                          <span *ngIf="notable.data.currently_shared">SHARED
+                            {{notable.data.public_until === null ? ' forever' : isNotableExpired(notable.data.public_until) ? ', expired' : ', expires ' + (notable.data.public_until | relativeTime) }}
                           </span>
                         </div>
                       </div>
