@@ -26,9 +26,9 @@
       </form>
     </div>
     <div class="map-wrapper">
-      <rum-map [dataPoints]="locations | timeFilterTwo:lowerTimeBound:upperTimeBound" [mapHeight]="safeSize"
+      <rum-map [dataPoints]="locations | async" [mapHeight]="safeSize"
                 [enableMapControls]="true">
-        <div class="controls-overlay" (click)="selectLocationTime($event)">
+        <div class="controls-overlay" (click)="applyLocationFilter($event)">
           <button type="button" class="btn-overlay" value="today" [class.selected]="selectedTime === 'today'">Today</button>
           <button type="button" class="btn-overlay" value="yesterday" [class.selected]="selectedTime === 'yesterday'">Yesterday</button>
           <button type="button" class="btn-overlay" value="last week" [class.selected]="selectedTime === 'last week'">Last Week</button>

@@ -8,7 +8,6 @@
 
 import { NgModule } from '@angular/core';
 
-import { LocationsRoutingModule } from './locations-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { LocationsComponent } from './locations/locations.component';
@@ -19,7 +18,7 @@ import { LocationsService } from './locations.service';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-    imports: [ SharedModule, LocationsRoutingModule, FormsModule ],
+    imports: [ SharedModule, FormsModule ],
     declarations: [ LocationsComponent, MapComponent, TileMapComponent ],
     providers: [ LocationsService ],
     exports: [ TileMapComponent, MapComponent ]

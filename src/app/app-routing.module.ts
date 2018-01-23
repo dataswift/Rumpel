@@ -33,6 +33,7 @@ import { PasswordRecoverComponent } from './user/password-recover/password-recov
 import { PasswordChangeComponent } from './user/password-change/password-change.component';
 import { DataPlugFeedComponent } from './data-management/data-plug-feed/data-plug-feed.component';
 import { DataPlugStaticComponent } from './data-management/data-plug-static/data-plug-static.component';
+import {LocationsComponent} from './locations/locations/locations.component';
 
 @NgModule({
   imports: [
@@ -54,6 +55,10 @@ import { DataPlugStaticComponent } from './data-management/data-plug-static/data
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'notables', component: NotablesViewComponent }
+        ]},
+      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
+        children: [
+          { path: 'locations', component: LocationsComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
