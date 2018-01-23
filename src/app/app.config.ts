@@ -17,7 +17,7 @@ export class AppConfig {
   supportedDomains: string[];
   native: boolean;
   protocol: string;
-  dex: { name: string; url: string; pathPrefix: string; id: string; accessToken: string; };
+  dex: { name: string; url: string; pathPrefix: string; };
   databuyer: { name: string; url: string; pathPrefix: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
@@ -42,15 +42,7 @@ export const configuration: AppConfig = {
   dex: {
     name: 'Dex',
     url: 'https://dex.hubofallthings.com',
-    pathPrefix: '/api/v2',
-    id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
-    accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLVZTUDcrb0RleldPejBTOFd6MHhWM0J2eVNOYzViNnRcLzRKXC85'
-               + 'TVlIWTQrVDdsSHdUSDRXMVVEWGFSVnVQeTFPZmtNajNSNDBjeTVERFRhQjZBNE44c3FGSTJmMUE1NzZUYjhiYmhhUT0iLCJpc3MiO'
-               + 'iJoYXQtbWFya2V0IiwiZXhwIjoxNTI2OTc4OTkyLCJpYXQiOjE0OTYyMjA1OTIsImp0aSI6ImY0NTQ4NzI5MGRlZTA3NDI5YmQxMG'
-               + 'ViMWZmNzJkZjZmODdiYzhhZDE0ZThjOGE3NmMyZGJlMjVhNDlmODNkOTNiMDJhMzg3NGI4NTI0NDhlODU0Y2ZmZmE0ZWQyZGY1MTY'
-               + 'yZTBiYzRhNDk2NGRhYTlhOTc1M2EyMjA1ZjIzMzc5NWY3N2JiODhlYzQwNjQxZjM4MTk4NTgwYWY0YmExZmJkMDg5ZTlhNmU3NjJj'
-               + 'N2NhODlkMDdhOTg3MmY1OTczNjdjYWQyYzA0NTdjZDhlODlmM2FlMWQ2MmRmODY3NTcwNTc3NTdiZDJjYzgzNTgyOTU4ZmZlMDVhN'
-               + 'jI2NzBmNGMifQ.TvFs6Zp0E24ChFqn3rBP-cpqxZbvkhph91UILGJvM6U'
+    pathPrefix: '/api/v2'
   },
   databuyer: {
     name: 'DataBuyer',

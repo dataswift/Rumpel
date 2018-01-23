@@ -32,7 +32,9 @@ export class PublicProfileComponent implements OnInit {
 
   ngOnInit() {
     this.hatSvc.getPhataPage().subscribe((data: BundleValues) => {
-      this.profile = data.profile[0].data;
+      if (data.profile && data.profile.length > 0) {
+        this.profile = data.profile[0].data;
+      }
       this.notables = data.notables;
     });
 
