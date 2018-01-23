@@ -53,6 +53,10 @@ export class DataPlugService {
     return this._dataplugs$.asObservable();
   }
 
+  get inactiveDataplugs$(): Observable<DataPlug[]> {
+    return this.dataplugs$.map((plugs: DataPlug[]) => plugs.filter(plug => !plug.active));
+  }
+
   get notablesEnabledPlugs$(): Observable<DataPlug[]> {
     return this.dataplugs$
       .map((dps: DataPlug[]) => {

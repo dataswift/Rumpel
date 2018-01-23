@@ -49,7 +49,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.selectedItem = window.location.pathname;
 
-    this.dataplugList = this.dataplugSvc.dataplugs$;
+    this.dataplugList = this.dataplugSvc.inactiveDataplugs$;
 
     this.state = { dataSources: [], dataTypes: [] };
     this.userAuthenticated = false;

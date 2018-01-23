@@ -34,6 +34,7 @@ import { PasswordChangeComponent } from './user/password-change/password-change.
 import { DataPlugFeedComponent } from './data-management/data-plug-feed/data-plug-feed.component';
 import { DataPlugStaticComponent } from './data-management/data-plug-static/data-plug-static.component';
 import {LocationsComponent} from './locations/locations/locations.component';
+import {SocialComponent} from './social/social/social.component';
 
 @NgModule({
   imports: [
@@ -62,6 +63,10 @@ import {LocationsComponent} from './locations/locations/locations.component';
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
+          { path: 'social', component: SocialComponent }
+        ]},
+      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
+        children: [
           { path: 'mashups', component: MashupsComponent,
             children: [
               { path: 'myday', component: MyDayComponent }
@@ -70,6 +75,7 @@ import {LocationsComponent} from './locations/locations/locations.component';
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'dataplugs', component: DataPlugsComponent },
+          { path: 'dataplugs/data/location/feed', component: LocationsComponent },
           { path: 'dataplugs/data/:provider', component: DataPlugDataComponent,
             children: [
               { path: 'feed', component: DataPlugFeedComponent },
