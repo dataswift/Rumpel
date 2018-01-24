@@ -57,7 +57,7 @@ export class OfferModalComponent implements OnInit {
     this.scrollTop = document.body.scrollTop;
     this.renderer.addClass(document.body, 'no-scroll');
 
-    //this.changeOffer(0);
+    // this.changeOffer(0);
     this.animateIn = true;
 
     this.dataOfferSvc.offers$.subscribe((offers: OffersStorage) => {
