@@ -11,32 +11,32 @@
     <div class="rum-modal-header">
       <h3>Offer details</h3>
     </div>
-    <div class="rum-modal-body" (scroll)="handleScroll($event)" #modalBody>
+    <div class="rum-modal-body" #modalBody>
       <div class="offer-nav" [class.shadow]="scrollShadow" >
           <a (click)="prevOffer()" class="swipe swipe-left" [class.swipe-disabled]="offer_index == 0 || navDisabled"><i class="material-icons">keyboard_backspace</i><span>Prev</span></a>
           <a (click)="nextOffer()" class="swipe swipe-right" [class.swipe-disabled]="offer_index >= offers.length-1 || navDisabled"><span>Next</span><i class="material-icons">keyboard_backspace</i></a>
       </div>
 
-      <div class="offer-content">
+      <div class="offer-content" *ngIf="offers.length > 0">
         <div class="offer-logo" [style.background-image]="'url(' + offers[offer_index].illustrationUrl + ')'"></div>
         <h4 class="offer-title">{{ offers[offer_index].title }}</h4>
-        <p class="offer-expires" *ngIf="offers[offer_index].expires && offers[offer_index].expires > timeNow">Expires {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
-        <p class="offer-expires" *ngIf="offers[offer_index].expires && offers[offer_index].expires < timeNow">Expired {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
+        <p class="offer-expires" *ngIf="offers[offer_index] && offers[offer_index].expires > timeNow">Expires {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
+        <p class="offer-expires" *ngIf="offers[offer_index] && offers[offer_index].expires < timeNow">Expired {{ offers[offer_index].expires | moment:'Do MMM YY' }}</p>
 
-        <div *ngIf="offers[offer_index].reward.rewardType.toLowerCase() == 'voucher' && offers[offer_index].claim && offers[offer_index].claim.status == 'completed'">
-            <div class="offer-details voucher-details">
-              <hr>
-              <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
-              <p>Use this voucher to claim your reward:</p>
-              <h4>{{ offers[offer_index].reward.codes[0] }}</h4>
-              <a ngxClipboard [cbContent]="offers[offer_index].reward.codes[0]" (cbOnSuccess)="voucherCopied = true" *ngIf="!voucherCopied"><i class="material-icons rotate">insert_link</i> Copy voucher code</a>
-              <a *ngIf="voucherCopied"><i class="material-icons">check_circle</i> Voucher code copied!</a>
-            </div>
+        <div *ngIf="offer_index && offers[offer_index].reward.rewardType.toLowerCase() == 'voucher' && offers[offer_index].claim && offers[offer_index].claim.status == 'completed'">
+          <div class="offer-details voucher-details">
+            <hr>
+            <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+            <p>Use this voucher to claim your reward:</p>
+            <h4>{{ offers[offer_index].reward.codes[0] }}</h4>
+            <a ngxClipboard [cbContent]="offers[offer_index].reward.codes[0]" (cbOnSuccess)="voucherCopied = true" *ngIf="!voucherCopied"><i class="material-icons rotate">insert_link</i> Copy voucher code</a>
+            <a *ngIf="voucherCopied"><i class="material-icons">check_circle</i> Voucher code copied!</a>
+          </div>
 
-            <div class="offer-details">
-              <hr>
-              <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
-            </div>
+          <div class="offer-details">
+            <hr>
+            <div class="circle-cutout"></div><div class="circle-cutout circle-cutout-right"></div>
+          </div>
         </div>
 
         <div class="offer-icons">
@@ -62,9 +62,9 @@
           <h6>Offer description</h6>
 
           <span class="bold">Reward</span>
-          <p *ngIf="offers[offer_index].reward.rewardType == 'Cash'">Cash - {{ offers[offer_index].reward.value / 100 | currency: offers[offer_index].reward.currency:true:'1.2-2' }}</p>
-          <p *ngIf="offers[offer_index].reward.rewardType == 'Voucher'">{{ offers[offer_index].reward.vendor }} voucher - {{ offers[offer_index].reward.value }}</p>
-          <p *ngIf="offers[offer_index].reward.rewardType == 'Service'">Service - {{ offers[offer_index].reward.vendor }} - {{ offers[offer_index].reward.value }}</p>
+          <p *ngIf="offer_index && offers[offer_index].reward.rewardType == 'Cash'">Cash - {{ offers[offer_index].reward.value / 100 | currency: offers[offer_index].reward.currency:true:'1.2-2' }}</p>
+          <p *ngIf="offer_index && offers[offer_index].reward.rewardType == 'Voucher'">{{ offers[offer_index].reward.vendor }} voucher - {{ offers[offer_index].reward.value }}</p>
+          <p *ngIf="offer_index && offers[offer_index].reward.rewardType == 'Service'">Service - {{ offers[offer_index].reward.vendor }} - {{ offers[offer_index].reward.value }}</p>
 
           <span class="bold">Overview</span>
           <p [innerHTML]="offers[offer_index].shortDescription | safeHtml | capitalizeFirst"></p>
@@ -102,7 +102,7 @@
         </div>
       </div>
 
-      <div class="PII">
+      <div class="PII" *ngIf="offers.length > 0">
         <i class="material-icons" [class.not]="!offers[offer_index].pii">accessibility</i>
         <p>Personally identifiable information (PII) is <span *ngIf="!offers[offer_index].pii">not </span>requested in this offer</p>
       </div>
@@ -142,12 +142,10 @@
         <h5>Offer complete</h5>
         <p>Claim your reward</p>
       </div>
-      <button *ngIf="offers[offer_index].reward.rewardType == 'Cash'" type="button" (click)="claimReward('cash')" class="btn">Claim {{ offers[offer_index].reward.value | currency:offers[offer_index].reward.currency:true:'1.2-2' }}</button>
-      <button *ngIf="offers[offer_index].reward.rewardType == 'Voucher'" type="button" (click)="claimReward('voucher')" class="btn">Visit website</button>
-      <button *ngIf="offers[offer_index].reward.rewardType == 'Service'" type="button" (click)="claimReward('service')" class="btn">Visit website</button>
+      <button *ngIf="offer_index && offers[offer_index].reward.rewardType == 'Cash'" type="button" (click)="claimReward('cash')" class="btn">Claim {{ offers[offer_index].reward.value | currency:offers[offer_index].reward.currency:true:'1.2-2' }}</button>
+      <button *ngIf="offer_index && offers[offer_index].reward.rewardType == 'Voucher'" type="button" (click)="claimReward('voucher')" class="btn">Visit website</button>
+      <button *ngIf="offer_index && offers[offer_index].reward.rewardType == 'Service'" type="button" (click)="claimReward('service')" class="btn">Visit website</button>
     </div>
-
-
 
     <div class="rum-modal-footer footer-state footer-redeemed" *ngIf="offerStatus == 'redeemed'">
       <i class="material-icons">check_circle</i>

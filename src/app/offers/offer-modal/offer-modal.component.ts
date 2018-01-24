@@ -26,7 +26,7 @@ const BTN_ICON = {
 })
 export class OfferModalComponent implements OnInit {
   @Input() offer_index: number;
-  @Input() offers: any;
+  @Input() offerGroup: 'availableOffers' | 'acceptedOffers';
 
   @Input() changeModal: Function;
   @Input() statsComponent: any;
@@ -35,6 +35,7 @@ export class OfferModalComponent implements OnInit {
   @ViewChild('modalBody') modalBody: ElementRef;
   @ViewChild('offerControlButton') offerButton: ElementRef;
 
+  public offers = [];
   public timeNow = Date.now();
   public claimSub: Subscription;
   private destroy: Function;
@@ -56,11 +57,12 @@ export class OfferModalComponent implements OnInit {
     this.scrollTop = document.body.scrollTop;
     this.renderer.addClass(document.body, 'no-scroll');
 
-    this.changeOffer(0);
+    //this.changeOffer(0);
     this.animateIn = true;
 
     this.dataOfferSvc.offers$.subscribe((offers: OffersStorage) => {
-      this.updateOffers(offers.availableOffers);
+      this.updateOffers(offers[this.offerGroup]);
+      this.changeOffer(0);
     });
   }
 
@@ -88,17 +90,19 @@ export class OfferModalComponent implements OnInit {
 
   changeOffer(diff: number) {
     this.offer_index = this.offer_index + diff;
-    this.offerDuration = this.offers[this.offer_index].collectFor;
+    this.offerDuration = this.offers.length > 0 ? this.offers[this.offer_index].collectFor : null;
 
     this.claimDisabled = true;
     this.scrollShadow = false;
     this.navDisabled = false;
     this.offerUiState = 'untouched';
 
-    if (this.offers[this.offer_index].claim === undefined) {
-      this.offerStatus = 'untouched';
-    } else {
-      this.offerStatus = this.offers[this.offer_index].claim.status;
+    if (this.offers.length > 0) {
+      if (this.offers[this.offer_index].claim === undefined) {
+        this.offerStatus = 'untouched';
+      } else {
+        this.offerStatus = this.offers[this.offer_index].claim.status;
+      }
     }
 
     this.termsAccepted = false;
@@ -128,40 +132,44 @@ export class OfferModalComponent implements OnInit {
   }
 
   updateOffers(offers) {
-    setTimeout(() => {
-      if (this.offerMode === 'untouched') {
-        this.offers = offers.filter(function(offer) {
-          let claimStatus = 'untouched';
-          if (offer.claim && offer.claim.status) {
-            claimStatus = offer.claim.status;
-          }
+    if (this.offerGroup === 'availableOffers') {
+      this.offers = offers;
+    } else {
+      this.offers = offers;
+    }
 
-          let moreUsersRequired = false;
-          if (offer.requiredMaxUser === 0) {
-            moreUsersRequired = true;
-          } else {
-            moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
-          }
+    // if (this.offerMode === 'untouched') {
+    //   this.offers = offers.filter(function(offer) {
+    //     let claimStatus = 'untouched';
+    //     if (offer.claim && offer.claim.status) {
+    //       claimStatus = offer.claim.status;
+    //     }
+    //
+    //     let moreUsersRequired = false;
+    //     if (offer.requiredMaxUser === 0) {
+    //       moreUsersRequired = true;
+    //     } else {
+    //       moreUsersRequired = (offer.requiredMaxUser - offer.totalUserClaims) > 0;
+    //     }
+    //
+    //     return claimStatus === 'untouched' && moreUsersRequired && offer.expires > Date.now();
+    //   });
+    // } else {
+    //   this.offers = offers.filter(offer => {
+    //     let claimStatus = 'untouched';
+    //     if (offer.claim && offer.claim.status) {
+    //       claimStatus = offer.claim.status;
+    //     }
+    //
+    //     return claimStatus !== 'untouched' && claimStatus !== 'rejected';
+    //   });
+    // }
 
-          return claimStatus === 'untouched' && moreUsersRequired && offer.expires > Date.now();
-        });
-      } else {
-        this.offers = offers.filter(offer => {
-          let claimStatus = 'untouched';
-          if (offer.claim && offer.claim.status) {
-            claimStatus = offer.claim.status;
-          }
-
-          return claimStatus !== 'untouched' && claimStatus !== 'rejected';
-        });
-      }
-
-      if (this.offer_index === this.offers.length) {
-        this.changeOffer(-1);
-      } else {
-        this.changeOffer(0);
-      }
-    }, 3000);
+    if (this.offer_index === this.offers.length) {
+      this.changeOffer(-1);
+    } else {
+      this.changeOffer(0);
+    }
   }
 
   updateClaimDisabled(evt) {
@@ -178,9 +186,9 @@ export class OfferModalComponent implements OnInit {
      }
   }
 
-  handleScroll(evt) {
-    this.scrollShadow = evt.target.scrollTop > 0;
-  }
+  // handleScroll(evt) {
+    // this.scrollShadow = evt.target.scrollTop > 0;
+  // }
 
   canDisplayOldDataRequirements(): boolean {
     return Array.isArray(this.offers[this.offer_index].requiredDataDefinition);

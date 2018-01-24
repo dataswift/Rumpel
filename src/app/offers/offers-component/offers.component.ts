@@ -26,7 +26,7 @@ export class OffersComponent implements OnInit {
   showModal(offerIndex) {
     this.dialogSvc.createDialog<OfferModalComponent>(OfferModalComponent, {
       offer_index: offerIndex,
-      offers: this.offers
+      offerGroup: 'availableOffers'
     });
   }
 
