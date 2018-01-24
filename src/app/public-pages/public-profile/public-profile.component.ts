@@ -49,16 +49,6 @@ export class PublicProfileComponent implements OnInit {
     return this.config.notables.iconMap[kind];
   }
 
-  getLogo(name: string): string {
-    if (name === 'phata' || name === 'hatters') {
-      return '/assets/icons/hatters-icon.png';
-    } else if (name === 'facebook') {
-      return '/assets/icons/facebook-icon.png';
-    } else if (name === 'twitter') {
-      return '/assets/icons/twitter-icon.png';
-    }
-  }
-
   isNotableExpired(expiryTime: string): boolean {
     return  moment(expiryTime).isBefore();
   }

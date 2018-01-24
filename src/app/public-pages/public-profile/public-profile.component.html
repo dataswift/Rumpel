@@ -101,11 +101,6 @@
                   <li *ngFor="let notable of notables" class="notable-item placeholder">
                     <div class="notable-item">
                       <div class="additional-info">
-                        <ul class="shared-list" *ngIf="notable.data.currently_shared">
-                          <li *ngFor="let service of notable.data.shared_on" class="shared-item">
-                            <img [src]="getLogo(service)" class="shared-icon">
-                          </li>
-                        </ul>
                         <div class="notable-type icon-text-valign"><i class="material-icons">{{getIconName(notable.data.kind)}}</i></div>
                       </div>
 
