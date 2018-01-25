@@ -6,16 +6,13 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef} from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-// import { DatePickerOptions, DateModel } from 'ng2-datepicker';
-
-declare var $: any;
 
 @Component({
-  selector: 'rump-activity-list',
+  selector: 'rum-activity-list',
   templateUrl: 'activity-list.component.html',
   styleUrls: ['activity-list.component.scss']
 })
@@ -27,6 +24,8 @@ export class ActivityListComponent implements OnInit, OnChanges {
 
   @Output() timeSelected = new EventEmitter<string>();
   @Output() notifyDatesInRange: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('activityList') activityListEl: ElementRef;
 
   public moment: Moment = moment();
   public today = moment().format('YYYY-MM-DD');
@@ -41,8 +40,6 @@ export class ActivityListComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    $('.backToTop i').popover({html: true, content: '<p style="text-align: center">Back to today\'s date</p>'});
-
     this.getMonthsInRange();
   }
 
@@ -119,10 +116,10 @@ export class ActivityListComponent implements OnInit, OnChanges {
     this.timeSelected.emit(this.cardList[index].day);
 
     if (index === 0) {
-      $('.activitylist-container').animate({ scrollTop: 0 }, 'slow');
+      this.activityListEl.nativeElement.scrollTop = 0;
     } else {
-      const targetPosition = $('.activitylist-container').children().eq(index + 1)[0].offsetTop;
-      $('.activitylist-container').animate({ scrollTop: targetPosition }, 'slow');
+      const targetPosition = this.activityListEl.nativeElement.children[index + 1].offsetTop;
+      this.activityListEl.nativeElement.scrollTop = targetPosition;
     }
   }
 

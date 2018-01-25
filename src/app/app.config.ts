@@ -17,13 +17,14 @@ export class AppConfig {
   supportedDomains: string[];
   native: boolean;
   protocol: string;
-  dex: { name: string; url: string; pathPrefix: string; id: string; accessToken: string; };
+  dex: { name: string; url: string; pathPrefix: string; };
   databuyer: { name: string; url: string; pathPrefix: string; };
   facebook: { shareUrl: string; };
   twitter: { shareUrl: string; };
   notables: {
     iconMap: { [key: string]: string; };
     dexOfferId: string;
+    url: string;
   };
   menuItems: {
     public: Array<any>;
@@ -33,7 +34,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.2.2',
+  version: '3.3.0',
   name: 'Rumpel',
   supportedDomains: ['.hubofallthings.net', '.hat.direct'],
   native: environment.native,
@@ -41,20 +42,12 @@ export const configuration: AppConfig = {
   dex: {
     name: 'Dex',
     url: 'https://dex.hubofallthings.com',
-    pathPrefix: '/api/v2',
-    id: 'b6673e46-9246-4135-905e-c275e01e6b5d',
-    accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxLVZTUDcrb0RleldPejBTOFd6MHhWM0J2eVNOYzViNnRcLzRKXC85'
-               + 'TVlIWTQrVDdsSHdUSDRXMVVEWGFSVnVQeTFPZmtNajNSNDBjeTVERFRhQjZBNE44c3FGSTJmMUE1NzZUYjhiYmhhUT0iLCJpc3MiO'
-               + 'iJoYXQtbWFya2V0IiwiZXhwIjoxNTI2OTc4OTkyLCJpYXQiOjE0OTYyMjA1OTIsImp0aSI6ImY0NTQ4NzI5MGRlZTA3NDI5YmQxMG'
-               + 'ViMWZmNzJkZjZmODdiYzhhZDE0ZThjOGE3NmMyZGJlMjVhNDlmODNkOTNiMDJhMzg3NGI4NTI0NDhlODU0Y2ZmZmE0ZWQyZGY1MTY'
-               + 'yZTBiYzRhNDk2NGRhYTlhOTc1M2EyMjA1ZjIzMzc5NWY3N2JiODhlYzQwNjQxZjM4MTk4NTgwYWY0YmExZmJkMDg5ZTlhNmU3NjJj'
-               + 'N2NhODlkMDdhOTg3MmY1OTczNjdjYWQyYzA0NTdjZDhlODlmM2FlMWQ2MmRmODY3NTcwNTc3NTdiZDJjYzgzNTgyOTU4ZmZlMDVhN'
-               + 'jI2NzBmNGMifQ.TvFs6Zp0E24ChFqn3rBP-cpqxZbvkhph91UILGJvM6U'
+    pathPrefix: '/api/v2'
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubofallthings.com',
-    pathPrefix: '/api/v1'
+    url: 'https://databuyer.hubat.net',
+    pathPrefix: '/api/v2'
   },
   facebook: {
     shareUrl: 'https://www.facebook.com/sharer/sharer.php?u='
@@ -64,35 +57,36 @@ export const configuration: AppConfig = {
   },
   notables: {
     iconMap: { note: 'border_color', list: 'list', blog: 'library_books' },
-    dexOfferId: '8438fcf0-cfec-4d79-8338-f0987056352f'
+    dexOfferId: '92e4a135-cd81-4c5e-bbf8-57bea3b7d9e0',
+    url: 'https://notables.hubofallthings.com/api/bulletin/tickle'
   },
   menuItems: {
     'public': [
       { display: 'Public profile', icon: 'account_circle', link: 'public/profile', dataType: '', disable: '' }
     ],
     'private': [
-      { display: 'My Digital Life', icon: 'line_weight', link: 'feed', dataType: '', disable: '',
+      { display: 'My Digital Life', icon: 'line_weight', link: '/feed', dataType: '', disable: '',
       description: 'My Digital Life' },
 
-      { display: 'Dashboard', icon: 'dashboard', link: 'dashboard', dataType: '', disable: '',
+      { display: 'Dashboard', icon: 'dashboard', link: '/dashboard', dataType: '', disable: '',
       description: 'The dashboard is where you have an overview of Rumpel.' },
 
-      { display: 'My Public Profile', icon: 'security', link: 'datastore', dataType: 'profile', disable: '',
+      { display: 'My Public Profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
       description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
 
-      { display: 'Redeem Offers', icon: 'local_offer', link: 'offers', dataType: '', disable: '',
+      { display: 'Redeem Offers', icon: 'local_offer', link: '/offers', dataType: '', disable: '',
       description: 'Allow access to your data in exchange for cash, services or vouchers.' },
 
-      { display: 'Notables', icon: 'border_color', link: 'notables', dataType: '', disable: '',
+      { display: 'Notables', icon: 'border_color', link: '/notables', dataType: '', disable: '',
       description: `Your words are your memories!
       Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists -
       all in one place, and lets you decide what is private to yourself and what to share!
       Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.` },
 
-      { display: 'My Mashups', icon: 'layers', link: 'mashups/myday', dataType: '', disable: '',
+      { display: 'My Mashups', icon: 'layers', link: '/mashups/myday', dataType: '', disable: '',
       description: 'See mashups of your data' },
 
-      { display: 'My Data Plugs', icon: 'settings_input_component', link: 'dataplugs', dataType: '', disable: '',
+      { display: 'My Data Plugs', icon: 'settings_input_component', link: '/dataplugs', dataType: '', disable: '',
       description: `Data comes into your HAT via data plugs.
       Click here to see what data plugs are available, and what data plugs are already connected.` }
     ],

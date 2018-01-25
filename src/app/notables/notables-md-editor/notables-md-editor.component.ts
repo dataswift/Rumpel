@@ -10,19 +10,18 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { LocationsService } from '../../locations/locations.service';
 import { NotablesService } from '../notables.service';
 import { FileService } from '../../services/file.service';
-import { DialogService } from '../../layout/dialog.service';
+import { DialogService } from '../../core/dialog.service';
 import { Notable } from '../../shared/interfaces';
-import { ConfirmBoxComponent } from '../../layout/confirm-box/confirm-box.component';
-import { FileUploadComponent } from '../../layout/file-upload/file-upload.component';
+import { ConfirmBoxComponent } from '../../core/confirm-box/confirm-box.component';
+import { FileUploadComponent } from '../../core/file-upload/file-upload.component';
 import { CurrentNotableMeta } from '../../shared/interfaces/current-notable-meta.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { FileMetadataRes } from '../../shared/interfaces/file.interface';
 
 declare var SimpleMDE: any;
-declare var $: any;
 
 @Component({
-  selector: 'rump-notables-md-editor',
+  selector: 'rum-notables-md-editor',
   templateUrl: './notables-md-editor.component.html',
   styleUrls: ['./notables-md-editor.component.scss']
 })
@@ -93,8 +92,6 @@ export class NotablesMdEditorComponent implements OnInit {
     });
 
     this.resetForm();
-
-    $('[data-toggle="tooltip"]').tooltip();
   }
 
   switchType(typeName: string) {

@@ -38,15 +38,11 @@ i{
     top: -100px;
 }
 
-
-
 .content-main-authenticated{
   margin-left: 345px;
-  top: 106px;
-  position: relative;
 
   @media screen and (max-width: 1113px) {
-      margin-left: 0px;
+    margin-left: 0;
   }
 
   .content-grid {
@@ -63,11 +59,6 @@ i{
     margin-left: 0;
   }
 }
-
-.content-main-not-authenticated{
-  margin-left: 0px !important;
-}
-
 
 .responsive {
   @include make-xs-column(12);
@@ -189,7 +180,7 @@ button.btn-view-header {
 
 }
 
-.btn-rump {
+.btn-rum {
   background-color: $app-mid-tone;
   border: 2px solid $app-mid-tone;
   color: white;
@@ -256,7 +247,7 @@ button.btn-view-header {
   }
 }
 
-.input-rump {
+.input-rum {
   border-radius: 0;
   border: 1px solid #c7c7c7;
   outline: none;
@@ -283,17 +274,17 @@ button.btn-view-header {
   }
 }
 
-.rump-lg {
+.rum-lg {
   font-size: 1.5em;
   height: 3em;
 }
 
-.rump-md {
+.rum-md {
   font-size: 1.25em;
   height: 3em;
 }
 
-.rump-sm {
+.rum-sm {
   font-size: 0.75em;
   height: 1.5em;
 }
@@ -375,20 +366,17 @@ button.btn-view-header {
 
 .view-header{
   background-color: unset;
-  h4{
+
+  .header-text {
     color: $app-mid-tone;
     text-transform: none;
     font-family: $font-standard;
-    display: inline-block;
-    margin-left: 5px;
+    margin-left: 0.5em;
   }
 
-  .info-button{
+  .info-button {
     color: $app-mid-tone;
-    margin-left: 10px;
-    top: 6px;
-    position: relative;
-    margin-right: 5px;
+    margin-left: 1em;
 
     &:focus {
       outline: none;
@@ -418,12 +406,12 @@ button.btn-view-header {
 
 
 
-rump-offer-modal{
+rum-offer-modal{
    position: relative;
    z-index: 2000;
 }
 
-rump-confirm-box, rump-info-box, rump-dialog-box{
+rum-confirm-box, rum-info-box, rum-dialog-box{
    position: relative;
    z-index: 3000;
 }

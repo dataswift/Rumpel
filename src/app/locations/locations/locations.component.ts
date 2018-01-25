@@ -16,74 +16,63 @@ import { Filter } from '../../shared/interfaces/bundle.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { Moment } from 'moment';
-
-declare var $: any;
+import {Observable} from 'rxjs/Observable';
 
 @Component({
-  selector: 'rump-locations',
+  selector: 'rum-locations',
   templateUrl: 'locations.component.html',
   styleUrls: ['locations.component.scss']
 })
 export class LocationsComponent implements OnInit, OnDestroy {
-  public locations: HatRecord<LocationIos>[];
+  public locations: Observable<HatRecord<LocationIos>[]>;
   public safeSize;
   public selectedTime: string;
-  public lowerTimeBound: Moment;
-  public upperTimeBound: Moment;
-  private totalDP = 0;
   public loading = false;
-  private date: any;
-
-  private sub: Subscription;
 
   constructor(private locationsSvc: LocationsService,
               private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.locations = [];
     this.selectedTime = 'all';
 
     this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
 
-    this.sub = this.locationsSvc.data$.subscribe((locations: HatRecord<LocationIos>[]) => {
-      this.locations = locations;
-    });
+    this.locations = this.locationsSvc.data$;
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle($(window).height() - 350 + 'px');
-    const thisScope = this;
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 350 + 'px');
 
-    $(window).resize(function() {
-      thisScope.safeSize = thisScope.sanitizer.bypassSecurityTrustStyle($(window).height() - 180 + 'px');
+    window.addEventListener('resize', () => {
+      this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 180 + 'px')
     });
 
     this.locationsSvc.getMoreData(500, 5000);
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
+  ngOnDestroy() { }
 
-  selectLocationTime(event) {
+  applyLocationFilter(event) {
+    let filter: Filter[];
+
     switch (event.target.value) {
       case 'today':
-        this.lowerTimeBound = moment().startOf('day');
-        this.upperTimeBound = moment();
+        filter = this.generateLocationsFilter(moment());
+        this.locationsSvc.getTimeIntervalData(filter);
         break;
       case 'yesterday':
-        this.lowerTimeBound = moment().subtract(1, 'days').startOf('day');
-        this.upperTimeBound = moment().subtract(1, 'days').endOf('day');
+        filter = this.generateLocationsFilter(
+          moment().subtract(1, 'days').startOf('day'),
+          moment().subtract(1, 'days').endOf('day'));
+        this.locationsSvc.getTimeIntervalData(filter);
         break;
       case 'last week':
-        this.lowerTimeBound = moment().subtract(7, 'days').startOf('day');
-        this.upperTimeBound = moment();
+        filter = this.generateLocationsFilter(moment().subtract(7, 'days').startOf('day'), moment());
+        this.locationsSvc.getTimeIntervalData(filter);
         break;
       case 'all':
-        this.lowerTimeBound = null;
-        this.upperTimeBound = null;
+        this.locationsSvc.getMoreData(500, 5000);
         break;
-      default:
-        this.lowerTimeBound = null; this.upperTimeBound = null;
     }
+
     this.selectedTime = event.target.value;
   }
 
@@ -91,50 +80,17 @@ export class LocationsComponent implements OnInit, OnDestroy {
     const formContent = form.value;
     const date = moment(formContent.date);
 
-    this.locationsSvc.getTimeIntervalData(this.generateDayFilter(date));
-    this.lowerTimeBound = moment(formContent.date);
-    this.upperTimeBound = moment(formContent.date).endOf('day');
+    this.locationsSvc.getTimeIntervalData(this.generateLocationsFilter(date));
   }
 
-  private generateDayFilter(date: Moment): Filter[] {
-    return [
-      {
-        field: 'timestamp',
-        transformation: {
-          transformation: 'datetimeExtract',
-          part: 'day'
-        },
-        operator: {
-          operator: 'contains',
-          value: date.date()
-        }
-      },
-      {
-        field: 'timestamp',
-        transformation: {
-          transformation: 'datetimeExtract',
-          part: 'month'
-        },
-        operator: {
-          operator: 'contains',
-          value: date.month() + 1
-        }
-      },
-      {
-        field: 'timestamp',
-        transformation: {
-          transformation: 'datetimeExtract',
-          part: 'year'
-        },
-        operator: {
-          operator: 'contains',
-          value: date.year()
-        }
+  private generateLocationsFilter(startDate: Moment, endDate?: Moment): Filter[] {
+    return [{
+      field: 'dateCreated',
+      operator: {
+        operator: 'between',
+        lower: startDate.clone().startOf('day').unix(),
+        upper: endDate ? endDate.clone().endOf('day').unix() : startDate.clone().endOf('day').unix()
       }
-    ];
-  }
-
-  showPopover(event) {
-    $('[data-toggle="popover"]').popover();
+    }];
   }
 }

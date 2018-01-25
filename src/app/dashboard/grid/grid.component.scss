@@ -9,11 +9,10 @@
 @import "../../style/variables";
 
 .grid {
-
+  margin-top: 2em;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-
 }
 
 :host /deep/ {

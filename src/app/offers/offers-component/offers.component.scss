@@ -1,21 +1,17 @@
 @import "../../style/variables";
 
+.no-offers-text {
+  width: 100%;
 
-  .no-offers-text{
-    width: 100%;
-
-    .no-offers{
-      color: $app-dark-tone;
-      text-transform: none;
-      text-align: center;
-      line-height: 1.4;
-    }
-
+  .no-offers {
+    color: $app-dark-tone;
+    text-transform: none;
+    text-align: center;
+    line-height: 1.4;
   }
+}
 
-
-
-  .offer-hero{
+  .offer-hero {
     width: 928px;
     border-radius: 10px;
     background-color: #2b313d;
@@ -27,7 +23,7 @@
     background-repeat: no-repeat;
     position: relative;
 
-    &:before{
+    &:before {
       position: absolute;
       content:" ";
       top:0;
@@ -38,7 +34,6 @@
       z-index:0;
       border-radius: 8px;
     }
-
 
     @media (max-width: 1370px) {
       width: 604px;
@@ -56,9 +51,7 @@
       width: 280px;
     }
 
-
-
-    h2, p, a{
+    h2, p, a {
       color: white;
       font-family: $font-standard;
       max-width: 60%;

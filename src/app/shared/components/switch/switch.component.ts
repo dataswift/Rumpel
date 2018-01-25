@@ -9,7 +9,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'rump-switch',
+  selector: 'rum-switch',
   templateUrl: 'switch.component.html',
   styleUrls: ['switch.component.scss']
 })

@@ -9,7 +9,9 @@
  @import "../../style/variables";
 
 .tile-header {
-  padding: 25px 15px;
+  display: flex;
+  align-items: center;
+  padding: 1em;
   height: 60px;
   line-height: 1;
   width: 100%;
@@ -21,11 +23,11 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 
-
+  .fill-space {
+    flex: 1 1 auto;
+  }
 
   a {
-    display: inline;
-    margin-left: 0.25em;
     color: $app-mid-tone;
 
     &:hover{
@@ -66,4 +68,8 @@
   &:hover {
     text-decoration: none;
   }
+}
+
+/deep/ .tile-info-tooltip {
+  font-size: 1em;
 }

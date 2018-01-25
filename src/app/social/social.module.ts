@@ -8,7 +8,6 @@
 
 import { NgModule } from '@angular/core';
 
-import { SocialRoutingModule } from './social-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { SocialComponent } from './social/social.component';
@@ -19,11 +18,11 @@ import { TweetComponent } from './tweet/tweet.component';
 import { LocationTweetComponent } from './location-tweet/location-tweet.component';
 
 import { SocialService } from './social.service';
-import {TwitterService} from './twitter.service';
-import {MediaService} from './media.service';
+import { TwitterService } from './twitter.service';
+import { MediaService } from './media.service';
 
 @NgModule({
-    imports: [ SharedModule, SocialRoutingModule ],
+    imports: [ SharedModule ],
     declarations: [ SocialComponent, TileSocialComponent, FbPostComponent,
                     LocationFbPostComponent, TweetComponent, LocationTweetComponent ],
     providers: [ SocialService, TwitterService, MediaService ],

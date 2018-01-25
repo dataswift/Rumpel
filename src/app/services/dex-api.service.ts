@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
@@ -63,25 +63,13 @@ export class DexApiService {
     }
   }
 
-  // connectHAT(hatDomain: string): void {
-  //   const url = this.config.dex.url + '/dataplugs/' + this.config.dex.id + '/connect';
-  //
-  //   const headers = new Headers();
-  //   headers.append('Content-Type', 'application/json');
-  //   headers.append('X-Auth-Token', this.config.dex.accessToken);
-  //
-  //   const query = new URLSearchParams();
-  //   query.append('hat', hatDomain);
-  //
-  //   this.http.get(url, { headers: headers, search: query, body: '' })
-  //     .map(res => res.json())
-  //     .subscribe(
-  //       registrationMessage => {
-  //         console.log('Successfully registered with MarketSquare.', registrationMessage.message);
-  //       },
-  //       error => {
-  //         console.log(`Failed to register with MarketSquare.
-  //                      Reason: ${error}`);
-  //       });
-  // }
+  // TODO: find a better place for this method
+  tickleNotables(hatDomain: string): void {
+    const queryParams = new URLSearchParams();
+    queryParams.append('phata', hatDomain);
+
+    this.http.get(this.config.notables.url, { search: queryParams }).subscribe((res: Response) => {
+      console.log(`Notables service tickled with ${res.status} response`);
+    });
+  }
 }

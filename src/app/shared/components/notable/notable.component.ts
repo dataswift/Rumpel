@@ -7,7 +7,7 @@ import { HatRecord } from '../../interfaces/hat-record.interface';
 import { DataPlug } from '../../interfaces/data-plug.interface';
 
 @Component({
-  selector: 'rump-notable',
+  selector: 'rum-notable',
   templateUrl: './notable.component.html',
   styleUrls: ['./notable.component.scss']
 })
@@ -16,7 +16,7 @@ export class NotableComponent implements OnInit, OnDestroy {
   @Input() modifiable = false;
   @Output() change: EventEmitter<{ action: string; notable: HatRecord<Notable>; }> = new EventEmitter();
 
-  private notablesPlugs: DataPlug[];
+  private notablesPlugs: DataPlug[] = [];
   private sub: Subscription;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,

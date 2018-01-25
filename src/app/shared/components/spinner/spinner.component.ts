@@ -9,7 +9,7 @@
 import { Component, OnDestroy, Input } from '@angular/core';
 
 @Component({
-  selector: 'rump-spinner',
+  selector: 'rum-spinner',
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.scss']
 })

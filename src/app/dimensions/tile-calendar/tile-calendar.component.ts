@@ -17,7 +17,7 @@ import { Event } from '../../shared/interfaces/index';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
-  selector: 'rump-tile-calendar',
+  selector: 'rum-tile-calendar',
   templateUrl: 'tile-calendar.component.html',
   styleUrls: ['tile-calendar.component.scss']
 })

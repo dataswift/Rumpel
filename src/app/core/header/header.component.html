@@ -1,0 +1,69 @@
+<!--
+  ~ Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+  -->
+
+<header color="primary" class="app-header mat-elevation-z6">
+  <nav class="rum-navbar-header">
+    <button mat-button (click)="toggleSideMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="flex-spacer"></span>
+
+    <button mat-button (click)="showInfoModal()">
+      <mat-icon style="margin-right: 0.25em;">help_outline</mat-icon>Help
+    </button>
+
+    <button mat-button class="dropdown-toggle account-btn mat-button-wrapper"
+            [matMenuTriggerFor]="accountMenu" aria-haspopup="true" aria-expanded="false">
+
+      <span class="user-photo">
+        <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon.svg'">
+        <span class="badge notif-badge" *ngIf="unreadNotifications">{{unreadNotifications}}</span>
+      </span>
+
+      <span class="welcome">Welcome {{profile.hatId}}<br>
+        <span *ngIf="config.native">Last login: {{accountStatus?.previousLogin}}</span>
+      </span>
+
+      <mat-icon>{{accountMenuBtn.menuOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+    </button>
+  </nav>
+</header>
+
+<mat-menu #accountMenu="matMenu" [overlapTrigger]="false">
+    <div mat-menu-item class="rum-menu-item">
+      <div class="accountDetails user-photo">
+        <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon-blue.svg'">
+        <h6 class="welcome">{{profile?.hatId}}<br><span>&#46;{{profile?.domain}}</span></h6>
+      </div>
+
+      <div class="accountUsage" *ngIf="config.native">
+        <div class="bar-container"><div class="bar" [style.width]="[accountStatus?.databaseStorageUsedShare.metric + accountStatus?.databaseStorageUsedShare.units]"></div></div>
+        <h6>{{accountStatus?.databaseStorageUsedShare.metric}}{{accountStatus?.databaseStorageUsedShare.units}} of {{round(accountStatus?.databaseStorage.metric, 2)}} {{accountStatus?.databaseStorage.units}} storage used</h6>
+      </div>
+    </div>
+
+    <ng-container *ngIf="config.native">
+      <div mat-menu-item class="dropdown-divider"></div>
+
+      <a mat-menu-item class="dropdown-item"
+         [routerLink]="['/datastore']">Public profile</a>
+
+      <a mat-menu-item class="dropdown-item">
+        Notifications<span class="badge" style="margin-top: 0;" *ngIf="unreadNotifications">{{unreadNotifications}}</span></a>
+
+      <a mat-menu-item class="dropdown-item"
+         [routerLink]="['/user', 'password', 'change']">Change password</a>
+    </ng-container>
+
+    <div mat-menu-item class="dropdown-divider" *ngIf="config.native"></div>
+
+    <a mat-menu-item class="dropdown-item" (click)="signOut()" style="display: flex; align-items: center;">
+      Logout <mat-icon style="color: rgba(135, 135, 135, 0.3);">exit_to_app</mat-icon>
+    </a>
+</mat-menu>

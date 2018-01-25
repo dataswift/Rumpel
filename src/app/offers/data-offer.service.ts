@@ -2,23 +2,25 @@ import { Inject, Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Claim, Offer } from './offer.interface';
+import { Claim, Offer, OffersStorage } from './offer.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, AppConfig } from '../app.config';
-import { HatApiService } from '../services/hat-api.service';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { JwtHelper } from 'angular2-jwt';
+import { groupBy } from 'lodash';
 
 import * as moment from 'moment';
+import { Moment } from 'moment';
+import { DataDebit } from '../shared/interfaces/data-debit.interface';
 
 @Injectable()
 export class DataOfferService {
   private jwt: JwtHelper;
   private cachedToken: string;
-  private _offers$: ReplaySubject<any> = <ReplaySubject<any>>new ReplaySubject(1);
+  private expires: Moment = moment().subtract(10, 'seconds');
+  private _offers$: ReplaySubject<OffersStorage> = <ReplaySubject<OffersStorage>>new ReplaySubject(1);
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private hatSvc: HatApiService,
               private hatV2Svc: HatApiV2Service,
               private http: Http) {
 
@@ -32,22 +34,19 @@ export class DataOfferService {
   fetchOfferList(): void {
     const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/offers`;
 
-    this.http.get(url)
-      .map(res => {
-        const resJson = res.json();
-
-        return <Offer[]>resJson;
-      }).subscribe(offers => {this._offers$.next(offers)});
+    if (this.expires.isBefore()) {
+      this.http.get(url)
+        .subscribe((res: Response) => {
+          this.expires = moment().add(60, 'minutes');
+          this._offers$.next({ availableOffers: res.json(), acceptedOffers: [] });
+        });
+    }
   }
 
-  fetchUserAwareOfferListSubscription(): void {
-    this.fetchUserAwareOfferList().subscribe(offers => {this._offers$.next(offers)});
-  }
-
-  claim(offerId: string): Observable<Offer[]> {
+  claim(offerId: string): Observable<DataDebit> {
     return this.claimOfferWithDataBuyer(offerId)
-      .flatMap((claim: Claim) => this.hatSvc.updateDataDebit(claim.dataDebitId, 'enable'))
-      .flatMap((res: Response) => this.fetchUserAwareOfferList());
+      .flatMap((claim: Claim) => this.hatV2Svc.updateDataDebit(claim.dataDebitId, 'enable'))
+      .do(_ => this.fetchUserAwareOfferList(true));
   }
 
   redeemCash(): void {
@@ -63,24 +62,26 @@ export class DataOfferService {
       }).subscribe();
   }
 
-  private fetchUserAwareOfferList(): Observable<Offer[]> {
+  fetchUserAwareOfferList(forceReload = false): void {
     const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/offersWithClaims`;
 
-    return Observable.forkJoin(this.getDataBuyerToken(), this.fetchMerchantFilter())
-      .flatMap(([headers, merchants]) => {
-        const queryParams = new URLSearchParams();
+    if (forceReload || this.expires.isBefore()) {
+      Observable.forkJoin(this.getDataBuyerToken(), this.fetchMerchantFilter())
+        .flatMap(([headers, merchants]) => {
+          const queryParams = new URLSearchParams();
 
-        for (const merchant of merchants) {
-          queryParams.append('merchant', merchant);
-        }
+          for (const merchant of merchants) {
+            queryParams.append('merchant', merchant);
+          }
 
-        return this.http.get(url, { headers: headers, search: queryParams });
-      })
-      .map(res => {
-        const resJson = res.json();
-
-        return <Offer[]>resJson;
-      });
+          return this.http.get(url, { headers: headers, search: queryParams });
+        })
+        .subscribe((res: Response) => {
+          const groupedOffers = this.groupOffers(res.json());
+          this.expires = moment().add(60, 'minutes');
+          this._offers$.next(groupedOffers);
+        });
+    }
   }
 
   private fetchMerchantFilter(): Observable<string[]> {
@@ -113,7 +114,7 @@ export class DataOfferService {
 
       return Observable.of(headers);
     } else {
-      return this.hatSvc.getApplicationToken(this.config.databuyer.name, 'https://databuyer.hubofallthings.com/')
+      return this.hatV2Svc.getApplicationToken(this.config.databuyer.name, this.config.databuyer.url)
         .map((accessToken: string) => {
           const payload = this.jwt.decodeToken(accessToken);
 
@@ -128,6 +129,17 @@ export class DataOfferService {
           }
         });
     }
+  }
+
+  private groupOffers(offers: Offer[]): OffersStorage {
+    const { available, accepted } = groupBy(offers, offer => {
+      return offer.claim === undefined ? 'available' : 'accepted';
+    });
+
+    return {
+      availableOffers: available || [],
+      acceptedOffers: accepted || []
+    };
   }
 
 }

@@ -16,7 +16,7 @@ import { APP_CONFIG, AppConfig } from '../../app.config';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-  selector: 'rump-login-oauth',
+  selector: 'rum-login-oauth',
   templateUrl: './login-oauth.component.html',
   styleUrls: ['./login-oauth.component.scss']
 })

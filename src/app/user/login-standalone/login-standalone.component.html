@@ -17,16 +17,16 @@
     <form class="col-md-12" (submit)="onSubmit(f)" #f="ngForm">
       <div class="form-group with-dropdown">
         <label for="username" hidden>Please enter your personal HAT address</label>
-        <input type="text" class="form-control input-rump lg" id="username"
+        <input type="text" class="form-control input-rum lg" id="username"
                (focus)="clearError()"
                [ngModel]="lastLoginId" name="username"
                placeholder="Username">
 
         <div class="dropdown-wrapper">
-          <button type="button" class="input-rump lg" (click)="dropdownExpanded = !dropdownExpanded">
+          <button type="button" class="input-rum lg" (click)="dropdownExpanded = !dropdownExpanded">
             {{selectedDomain}} <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu-rump" *ngIf="dropdownExpanded">
+          <ul class="dropdown-menu-rum" *ngIf="dropdownExpanded">
             <li (click)="setDomain(domain)" *ngFor="let domain of config.supportedDomains">
               {{domain}}
             </li>
@@ -44,7 +44,7 @@
       </div>-->
 
       <div class="form-group">
-        <button type="submit" class="btn btn-rump md fading">Login</button>
+        <button type="submit" class="btn btn-rum md fading">Login</button>
       </div>
 
       <div class="form-context">

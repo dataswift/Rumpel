@@ -10,229 +10,215 @@
 @import "../../style/bootstrap/mixins/clearfix";
 @import "../../style/variables";
 
-
-.phata{
-
-      color: #747474;
-      font-family: $font-standard;
-      margin-left: -42px;
-      margin-right: -42px;
-
-      .no-margin{
-        margin-left: 0;
-        margin-right: 0;
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-
-      .no-padding{
-        padding-left: 0px;
-        padding-right: 0px;
-      }
-
-      .phatheader{
-        background-color: white;
-        height: 75px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0px 42px;
-
-        img{
-          width: 87px;
-        }
-
-        .phatnav{
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-size: 14px;
-
-          a{
-            color: #747474;
-            min-width: 84px;
-            display: block;
-            text-align: center;
-            cursor: pointer;
-
-            @media screen and (max-width: 480px) {
-                min-width: 60px;
-            }
-          }
-
-          .btn{
-            background-color: #bc3333;
-            color: white;
-            border-radius: 10px;
-            padding: 12px 44px;
-            text-transform: uppercase;
-            font-weight: 400;
-            margin-left: 5px;
-
-            @media screen and (max-width: 480px) {
-                padding: 12px;
-                margin-left: 2px;
-            }
-          }
-        }
-      }
-
-      .phathero {
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-image: url('/assets/images/hero-fade.jpg');
-
-        .social-links {
-          a {
-            margin: 0 7px;
-
-            img {
-              top: 0;
-              border: none;
-              width: 48px;
-              height: 48px;
-              background: $app-background-color;
-            }
-          }
-        }
-      }
-
-      .phata-box {
-        background-color: white;
-        border-radius: 8px;
-        position: relative;
-        margin-top: 42px;
-      }
-
-      .phata-name{
-        margin-top: 195px;
-        text-align: center;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
-
-        img, svg{
-          width: 160px;
-          height: 160px;
-          border-radius: 50%;
-          border: 8px solid white;
-          position: relative;
-          top: -80px;
-          background-color: $app-dark-tone
-        }
-
-        h1{
-          color: #3f3f62;
-          text-align: center;
-          font-size: 36px;
-          font-family: "Lucida Grande", $font-standard;
-          margin-top: -70px;
-        }
-
-        p{
-          font-size: 14px;
-          color: #9b9b9b;
-          margin: 0px;
-          padding: 10px 10px 40px 10px;
-        }
-
-      }
-
-
-
-      .blue-top{
-
-        .phatabox-header{
-          background-color: $app-dark-tone;
-          color: white;
-          padding: 20px;
-          border-top-left-radius: 8px;
-          border-top-right-radius: 8px;
-          font-size: 14px;
-          text-transform: uppercase;
-        }
-
-      }
-
-      .phatabox-body{
-
-        h3{
-          font-size: 20px;
-          margin-top: 0;
-        }
-        padding: 35px;
-        font-size: 12px;
-        color: $text-dark;
-      }
-
-
-
-      .phata-footer{
-        margin-top: 250px;
-        margin-bottom: 40px;
-        color: #747474;
-        font-size: 14px;
-        text-align: center;
-
-        i{
-          vertical-align: bottom;
-          margin-right: 5px;
-          font-size: 22px;
-        }
-      }
-
-
-      .more-info{
-        border: solid 1px #bc3333;
-
-
-        img{
-          width: 94px;
-          text-align:center;
-          margin: auto;
-          display: block;
-        }
-
-        h3{
-          color: $text-dark;
-          font-size: 14px;
-          margin-top: 35px;
-          margin-bottom: 5px;
-        }
-
-        p{
-          font-size: 12px;
-          color: $text-dark;
-          margin-top: 0px;
-          margin-bottom: 0px;
-        }
-
-        a{
-          text-align: center;
-          display: block;
-          font-size: 14px;
-          color: rgba(188, 51, 51, 0.6);
-          margin-top: 30px;
-          font-weight: 600;
-          cursor: pointer;
-        }
-      }
-
-
-
+.content-grid {
+  overflow: hidden;
+  padding-left: 42px;
+  padding-right: 42px;
 }
 
+.phata {
+  color: #747474;
+  font-family: $font-standard;
+  margin-left: -42px;
+  margin-right: -42px;
 
+  .no-margin {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 
+  .no-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 
+  .phatheader {
+    background-color: white;
+    height: 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 42px;
 
+    img {
+      width: 87px;
+    }
 
+    .phatnav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
 
+      a {
+        color: #747474;
+        min-width: 84px;
+        display: block;
+        text-align: center;
+        cursor: pointer;
 
+        @media screen and (max-width: 480px) {
+            min-width: 60px;
+        }
+      }
 
+      .btn {
+        background-color: #bc3333;
+        color: white;
+        border-radius: 10px;
+        padding: 12px 44px;
+        text-transform: uppercase;
+        font-weight: 400;
+        margin-left: 5px;
 
+        @media screen and (max-width: 480px) {
+            padding: 12px;
+            margin-left: 2px;
+        }
+      }
+    }
+  }
 
+  .phathero {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('/assets/images/hero-fade.jpg');
 
+    .social-links {
+      a {
+        margin: 0 7px;
+
+        img {
+          top: 0;
+          border: none;
+          width: 48px;
+          height: 48px;
+          background: $app-background-color;
+        }
+      }
+    }
+  }
+
+  .phata-box {
+    background-color: white;
+    border-radius: 8px;
+    position: relative;
+    margin-top: 42px;
+  }
+
+  .phata-name {
+    margin-top: 195px;
+    text-align: center;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+    img, svg {
+      max-width: 160px;
+      max-height: 160px;
+      border-radius: 50%;
+      border: 8px solid white;
+      position: relative;
+      top: -80px;
+      background-color: $app-dark-tone
+    }
+
+    svg {
+      width: 160px;
+      height: 160px;
+    }
+
+    h1 {
+      color: #3f3f62;
+      text-align: center;
+      font-size: 36px;
+      font-family: "Lucida Grande", $font-standard;
+      margin-top: -70px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #9b9b9b;
+      margin: 0px;
+      padding: 10px 10px 40px 10px;
+    }
+
+  }
+
+  .blue-top {
+    .phatabox-header{
+      background-color: $app-dark-tone;
+      color: white;
+      padding: 20px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+  }
+
+  .phatabox-body {
+    h3 {
+      font-size: 20px;
+      margin-top: 0;
+    }
+
+    padding: 35px;
+    font-size: 12px;
+    color: $text-dark;
+  }
+
+  .phata-footer {
+    margin-top: 250px;
+    margin-bottom: 40px;
+    color: #747474;
+    font-size: 14px;
+    text-align: center;
+
+    i {
+      vertical-align: bottom;
+      margin-right: 5px;
+      font-size: 22px;
+    }
+  }
+
+  .more-info {
+    border: solid 1px #bc3333;
+
+    img {
+      width: 94px;
+      text-align:center;
+      margin: auto;
+      display: block;
+    }
+
+    h3 {
+      color: $text-dark;
+      font-size: 14px;
+      margin-top: 35px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      font-size: 12px;
+      color: $text-dark;
+      margin-top: 0px;
+      margin-bottom: 0px;
+    }
+
+    a {
+      text-align: center;
+      display: block;
+      font-size: 14px;
+      color: rgba(188, 51, 51, 0.6);
+      margin-top: 30px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
 
 .view-header {
   h4, h6 {
@@ -362,10 +348,6 @@ a:hover {
 .content-main {
   float: right;
   width: calc(100% - 7em);
-}
-
-.grid {
-  /*margin-top: 10em;*/
 }
 
 .grid-item {
@@ -503,11 +485,6 @@ a:hover {
   }
 }
 
-
-
-
-
-
 .fa-web:before {
   content: "\f0ac";
 }
@@ -621,4 +598,112 @@ a:hover {
     font-size: 1.5em;
     font-family: $font-standard;
   }
+}
+
+.notable-header {
+  padding: 1em;
+  min-height: 6em;
+
+  .user-photo {
+    float: left;
+    font-size: 0.75em;
+    margin-right: 1em;
+    margin-left: 1em;
+
+    img {
+      max-height: 4.5em;
+      opacity: 0.3;
+    }
+  }
+
+  .header-content {
+    padding-top: 0.5em;
+
+    h5 {
+      font-size: 1.3em;
+      margin-top: 0;
+      margin-bottom: 0.25em;
+    }
+
+    span {
+      font-size: 1em;
+    }
+
+    &:after {
+      clear: both;
+    }
+  }
+
+  .notable-type {
+    float: right;
+    margin-top: 0.1em;
+    font-size: 3em;
+  }
+}
+
+.notable-item {
+  border-top: 3px solid #515151;
+  margin-bottom: 2em;
+  position: relative;
+
+  .additional-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    @media screen and (max-width: $screen-xs) {
+      display: none;
+    }
+
+    .shared-list {
+      display: inline-block;
+      padding: 0.5em 0.5em;
+    }
+
+    .shared-item {
+      display: inline-block;
+      padding: 0 0.5em;
+    }
+
+    .shared-icon {
+      max-height: 2em;
+      border-radius: 50%;
+    }
+
+    .notable-type {
+      display: inline-block;
+      font-family: $font-standard;
+      background-color: #515151;
+      text-transform: uppercase;
+      padding: 0.5em 1em;
+      font-size: 1.2em;
+      color: white;
+      background-color: $app-mid-tone;
+
+      span {
+        margin-right: 0.5em;
+      }
+    }
+  }
+}
+
+/deep/ .notable-content {
+  padding-left: 2em;
+  padding-right: 2em;
+
+  img {
+    max-width: 80%;
+    margin: 1em 10% 2em 10%;
+  }
+}
+
+.img-profile {
+  float: left;
+  margin-left: 0.5em;
+  margin-right: 1em;
+  height: 4em;
+}
+
+.img-circle {
+  border-radius: 50%;
 }

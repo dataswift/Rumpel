@@ -1,35 +1,27 @@
 @import "../../style/variables";
 
-
-.offers{
-  background: white;
+.offers {
   padding: 30px;
-  margin: 0px -42px;
-  position: absolute;
+  margin-top: 0;
   top: -40px;
-  width: calc(100% + 10px);
-  min-height: 660px;
+  height: 100%;
 
-
-  @media(max-width: 768px){
+  @media(max-width: 768px) {
     background: $app-background-color;
   }
 
-
-  .no-offers-text{
+  .no-offers-text {
     width: 100%;
 
-    .no-offers{
+    .no-offers {
       color: $app-dark-tone;
       text-transform: none;
       text-align: center;
       line-height: 1.4;
     }
-
   }
 
-
-  .offers-nav{
+  .offers-nav {
       width: calc(100% + 60px);
       border-bottom: 1px solid $app-background-color;
       box-shadow: 0px 1px 2px $app-background-color;
@@ -44,7 +36,7 @@
         box-shadow: 0 1px 0 0 rgba(220, 225, 227, 0.7), 0 -1px 0 0 rgba(220, 225, 227, 0.7);
       }
 
-      .separator{
+      .separator {
         border-right: 1px solid #ced7db;
         width: 0px;
         height: 34px;
@@ -54,7 +46,7 @@
         }
       }
 
-      a{
+      a {
         padding: 13px;
         margin: 0 12px;
         border-top: 2px solid #fff;
@@ -66,7 +58,7 @@
         letter-spacing: 0.5px;
         position: relative;
 
-        @media (max-width: 768px){
+        @media (max-width: 768px) {
           font-size: 10px;
           padding: 1px 1px 5px;
           margin-top: -5px;
@@ -74,20 +66,18 @@
           margin-right: 25px;
         }
 
-        &:hover{
+        &:hover {
           text-decoration: none;
         }
       }
 
-
-      a.current{
+      a.current {
         border-bottom: 2px solid $app-contrast-color;
         color: $app-dark-tone;
         font-weight: 600;
       }
 
-
-      .mobile-count{
+      .mobile-count {
         text-align: center;
         font-size: 22px;
         font-weight: 600;
@@ -95,12 +85,12 @@
         position: relative;
         top: 3px;
 
-        @media (max-width: 768px){
+        @media (max-width: 768px) {
           display: block;
         }
       }
 
-      .desktop-count{
+      .desktop-count {
         display: inline-block;
 
         @media (max-width: 768px){
@@ -109,8 +99,7 @@
       }
   }
 
-
-  .offer-hero{
+  .offer-hero {
     width: 928px;
     border-radius: 10px;
     background-color: #2b5753;
@@ -120,7 +109,6 @@
     background-image: url('/assets/images/piggy.jpg');
     background-position: bottom right;
     background-repeat: no-repeat;
-
 
     @media (max-width: 1370px) {
       width: 604px;
@@ -140,7 +128,7 @@
 
 
 
-    h2, p, a{
+    h2, p, a {
       color: white;
       font-family: $font-standard;
       max-width: 60%;
@@ -163,17 +151,17 @@
       }
     }
 
-    h2{
+    h2 {
       font-size: 42px;
       margin-top: 0;
     }
 
-    p{
+    p {
       font-size: 18px;
       opacity: 0.7;
     }
 
-    a{
+    a {
       font-size: 12px;
       text-transform: uppercase;
       opacity: 0.7;
@@ -181,7 +169,7 @@
     }
   }
 
-  .offers-container{
+  .offers-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -192,8 +180,7 @@
     left: 50%;
     transform: translateX(-50%);
 
-
-    .offer{
+    .offer {
       display: block;
       border-radius: 6px;
       box-shadow: 0px 0px 8px #ddd;
@@ -206,7 +193,7 @@
       cursor: pointer;
       position: relative;
 
-      &.invisible{
+      &.invisible {
         visibility: hidden;
         min-height: 30px;
       }
@@ -216,11 +203,7 @@
         margin-right: 0;
       }
 
-      &:last-child{
-
-      }
-
-      .offer-img{
+      .offer-img {
         width: 100%;
         height: 90px;
         background-repeat: no-repeat;
@@ -231,26 +214,26 @@
         margin-bottom: 30px;
       }
 
-      h4, p{
+      h4, p {
         text-align: center;
         font-family: $font-standard;
         text-transform: capitalize;
         color: $app-dark-tone;
       }
 
-      h4{
+      h4 {
         line-height: 1.4;
       }
 
 
-      p{
+      p {
         font-style: italic;
         letter-spacing: 0.5px;
         font-weight: 300;
         margin-bottom: 70px;
       }
 
-      .cta{
+      .cta {
         display: block;
         padding: 20px;
         text-align: center;
@@ -267,25 +250,25 @@
       }
     }
 
-    .didYouKnow{
+    .didYouKnow {
       background-color: $app-light-tone;
       color: $app-mid-tone;
       min-height: 328px;
       cursor: default;
 
-      h4{
+      h4 {
         font-size: 24px;
         color: $app-mid-tone;
         margin: 20px 0px;
         text-transform: none;
       }
 
-      p{
+      p {
         color: $app-mid-tone;
         text-transform: none;
       }
 
-      i{
+      i {
         text-align: center;
         font-size: 40px;
         display: block;

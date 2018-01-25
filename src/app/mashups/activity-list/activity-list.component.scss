@@ -49,7 +49,7 @@ padding: 0px 15px;
   text-align: right;
   padding: 13px 30px 0px 20px;
 
-    i{
+    .mat-icon {
       border-radius: 50%;
       background-color: $app-light-tone;
       color: $app-mid-tone;
@@ -64,23 +64,5 @@ padding: 0px 15px;
       &:hover{
         color: lighten($app-mid-tone,10%);
       }
-
     }
-}
-
-
-.datePicker{
-  display: block;
-  width: 100%;
-  padding: 10px 22px;
-  background-color: $app-background-color;
-  position: relative;
-  max-height: 54px;
-
-  .currentMonth{
-    font-size: 14px;
-  }
-
-
-
 }

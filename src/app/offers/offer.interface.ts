@@ -37,6 +37,11 @@ export interface Claim {
   dataDebitId: string | null;
 }
 
+export interface OffersStorage {
+  availableOffers: Array<Offer>;
+  acceptedOffers: Array<Offer>;
+}
+
 interface Owner {
   id: string;
   email: string;

@@ -17,6 +17,7 @@ export class Notable {
   public created_time: Moment;
   public updated_time: Moment;
   public shared: boolean;
+  public currently_shared: boolean;
   public public_until: Moment;
   public shared_on: Array<string>;
 
@@ -42,7 +43,8 @@ export class Notable {
       this.created_time = moment(options.created_time);
       this.updated_time = moment(options.updated_time);
       this.public_until = options.public_until ? moment(options.public_until) : null;
-      this.shared = options.shared === 'true' || options.shared === true;
+      this.shared = options.shared || false;
+      this.currently_shared = options.currently_shared || options.shared === 'true' || false;
       if (options.shared_on) {
         this.shared_on = Array.isArray(options.shared_on) ? options.shared_on : options.shared_on.split(',');
       } else {
@@ -72,16 +74,17 @@ export class Notable {
       this.updated_time = moment();
       this.public_until = null;
       this.shared = false;
+      this.currently_shared = false;
       this.shared_on = [];
     }
   }
 
   get isShared(): boolean {
-    return this.shared;
+    return this.currently_shared;
   }
 
   toggleSharing() {
-    this.shared = !this.shared;
+    this.currently_shared = !this.currently_shared;
   }
 
   addShareDestination(destination: string) {
@@ -108,5 +111,9 @@ export class Notable {
     this.message = message;
     this.updated_time = moment();
     this.authorv1 = author;
+
+    if (this.currently_shared === true) {
+      this.shared = true;
+    }
   }
 }

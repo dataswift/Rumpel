@@ -125,7 +125,7 @@ export abstract class BaseDataService<T> {
     };
 
     this.hat.proposeNewDataEndpoint(combinatorName, [endpointQuery])
-      .flatMap((resCode: number) => this.hat.getCombinatorRecords(combinatorName, this.RECORDS_PER_REQUEST))
+      .flatMap((resCode: number) => this.hat.getCombinatorRecords(combinatorName, this.orderBy, 2 * this.RECORDS_PER_REQUEST))
       .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
       .subscribe((data: HatRecord<T>[]) => {
         this.store.data = data;

@@ -20,12 +20,16 @@ import { DataPlug } from '../shared/interfaces/data-plug.interface';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { DexApiService } from '../services/dex-api.service';
 
+import * as moment from 'moment';
+import {Moment} from 'moment';
+
 // TODO: replace with fetch from DEX when going to production
 
 @Injectable()
 export class DataPlugService {
   private hatUrl: string;
   private plugs: DataPlug[];
+  private expires: Moment = moment().subtract(10, 'seconds');
   private _dataplugs$: ReplaySubject<DataPlug[]> = <ReplaySubject<DataPlug[]>>new ReplaySubject(1);
   private twitterPlugWarningShown = false;
   private facebookPlugWarningShown = false;
@@ -47,6 +51,10 @@ export class DataPlugService {
 
   get dataplugs$(): Observable<DataPlug[]> {
     return this._dataplugs$.asObservable();
+  }
+
+  get inactiveDataplugs$(): Observable<DataPlug[]> {
+    return this.dataplugs$.map((plugs: DataPlug[]) => plugs.filter(plug => !plug.active));
   }
 
   get notablesEnabledPlugs$(): Observable<DataPlug[]> {
@@ -76,24 +84,27 @@ export class DataPlugService {
       .map((accessToken: string) => `${baseUrl}/authenticate/hat?token=${accessToken}`);
   }
 
-  private getDataPlugList() {
-    this.dexSvc.getAvailablePlugList().subscribe((plugs: DataPlug[]) => {
-      this.plugs = plugs;
+  private getDataPlugList(): void {
+    if (this.expires.isBefore()) {
+      this.dexSvc.getAvailablePlugList().subscribe((plugs: DataPlug[]) => {
+        this.plugs = plugs;
+        this.expires = moment().add(10, 'minutes');
 
-      this.plugs.forEach(plug => {
-        if (plug.name === 'Locations') {
-          this.locationsSvc.checkTableExists().subscribe(isActive => {
-            plug.active = isActive;
-            this._dataplugs$.next(this.plugs);
-          });
-        } else {
-          this.getTokenInfo(plug.name, plug.url).subscribe(isActive => {
-            plug.active = isActive;
-            this._dataplugs$.next(this.plugs);
-          });
-        }
+        this.plugs.forEach(plug => {
+          if (plug.name === 'Locations') {
+            this.locationsSvc.checkTableExists().subscribe(isActive => {
+              plug.active = isActive;
+              this._dataplugs$.next(this.plugs);
+            });
+          } else {
+            this.getTokenInfo(plug.name, plug.url).subscribe(isActive => {
+              plug.active = isActive;
+              this._dataplugs$.next(this.plugs);
+            });
+          }
+        });
       });
-    });
+    }
 
   }
 

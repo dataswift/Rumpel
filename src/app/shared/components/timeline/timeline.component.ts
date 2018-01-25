@@ -12,7 +12,7 @@ import * as moment from 'moment';
 import { ExpandedTime } from '../../interfaces/index';
 
 @Component({
-  selector: 'rump-timeline',
+  selector: 'rum-timeline',
   templateUrl: 'timeline.component.html',
   styleUrls: ['timeline.component.scss']
 })

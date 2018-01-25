@@ -11,7 +11,7 @@ import { Tweet } from '../../shared/interfaces/index';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
-  selector: 'rump-location-tweet',
+  selector: 'rum-location-tweet',
   templateUrl: './location-tweet.component.html',
   styleUrls: ['./location-tweet.component.scss']
 })

@@ -7,33 +7,18 @@
  */
 
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
-
-declare const $: any;
 
 @Component({
-  selector: 'rump-tile-header',
+  selector: 'rum-tile-header',
   templateUrl: 'tile-header.component.html',
   styleUrls: ['tile-header.component.scss']
 })
 export class TileHeaderComponent implements OnInit {
   @Input() title: string;
   @Input() info: string;
-  @Input() pagelink: string;
+  @Input() pageLink: string;
 
-  constructor(private router: Router) {}
+  constructor() { }
 
-  ngOnInit() {
-  }
-
-  showPopover(event) {
-    $('[data-toggle="popover"]').popover();
-  }
-
-  navigateTo(pageName: string, event) {
-    if (!event.target.className.includes('tile-expand')) {
-      this.router.navigate([pageName]);
-    }
-  }
-
+  ngOnInit() { }
 }

@@ -138,11 +138,13 @@ export class HatApiV2Service {
     }
   }
 
-  getCombinatorRecords(name: string, take: number): Observable<HatRecord<any>[]> {
+  getCombinatorRecords(name: string, orderBy: string, take: number): Observable<HatRecord<any>[]> {
     const path = `${this.pathPrefix}/combinator/${name}`;
 
     const queryParams = new URLSearchParams();
+    queryParams.append('orderBy', orderBy);
     queryParams.append('take', take.toString());
+    queryParams.append('ordering', 'descending');
 
     return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
   }

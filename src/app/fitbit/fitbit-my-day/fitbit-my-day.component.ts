@@ -3,7 +3,7 @@ import { FitbitActivitySummary } from '../interfaces/fitbit-activity-summary.int
 import * as moment from 'moment';
 
 @Component({
-  selector: 'rump-fitbit-my-day',
+  selector: 'rum-fitbit-my-day',
   templateUrl: './fitbit-my-day.component.html',
   styleUrls: ['./fitbit-my-day.component.scss']
 })

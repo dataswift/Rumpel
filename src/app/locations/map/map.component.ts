@@ -14,7 +14,7 @@ import { LocationIos } from '../../shared/interfaces/location.interface';
 declare var L: any;
 
 @Component({
-  selector: 'rump-map',
+  selector: 'rum-map',
   templateUrl: 'map.component.html',
   styleUrls: ['map.component.scss']
 })

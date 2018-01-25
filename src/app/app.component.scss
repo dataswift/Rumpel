@@ -6,31 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-  @import "style/variables";
-
-
-
-.content-main {
-
-
-  .content-grid {
-    overflow: hidden;
-    padding-left: 42px;
-    padding-right: 42px;
-
-    @media (max-width: 674px) {
-      padding-left: 37px;
-      padding-right: 37px;
-    }
-  }
-
-  .grid {
-    width: 100%;
-    height: auto;
-    margin-right: 0;
-    margin-left: 0;
-  }
-}
+@import "style/variables";
 
 .footer {
   background-color: #000000;

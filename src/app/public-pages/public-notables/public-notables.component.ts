@@ -11,7 +11,7 @@ import {HatApiService} from '../../services/hat-api.service';
 import {Notable} from '../../shared/interfaces/notable.class';
 
 @Component({
-  selector: 'rump-public-notables',
+  selector: 'rum-public-notables',
   templateUrl: './public-notables.component.html',
   styleUrls: ['./public-notables.component.scss']
 })
