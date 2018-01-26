@@ -1,8 +1,10 @@
 @import "../../style/variables";
 
-.she-feed {
+:host {
   background: $app-background-color;
+}
 
+.she-feed {
   .loadMore {
     display: flex;
     justify-content: center;
