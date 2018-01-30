@@ -7,6 +7,7 @@
 
 import { Injectable } from '@angular/core';
 import { Http, XHRBackend, Request, RequestOptions, RequestOptionsArgs, Response, Headers } from '@angular/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { JwtHelper } from 'angular2-jwt';
@@ -25,6 +26,7 @@ export class AuthHttp extends Http {
   private _auth$: ReplaySubject<boolean> = <ReplaySubject<boolean>>new ReplaySubject();
 
   constructor(backend: XHRBackend, defaultOptions: RequestOptions,
+              private router: Router,
               private storageSvc: BrowserStorageService,
               private config: AppConfig) {
     super(backend, defaultOptions);
@@ -34,7 +36,14 @@ export class AuthHttp extends Http {
 
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     if (this.hasValidToken) {
-      return super.request(url, options);
+      return super.request(url, options)
+        .catch(error => {
+          if (error.status === 401) {
+            this.router.navigate(this.config.native ? ['user', 'login'] : ['user', 'login', 'start']);
+          }
+
+          return Observable.throw(error);
+        });
     } else {
       return Observable.throw('JWT does not exist');
     }

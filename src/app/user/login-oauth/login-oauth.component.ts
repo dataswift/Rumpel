@@ -47,6 +47,8 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
         console.warn('Failed to login. Reason: ', error);
         this.error = 'ERROR: Failed to obtain HAT authentication. Please try again.';
       });
+
+    this.userSvc.isLoggedIn();
   }
 
   ngOnDestroy() {

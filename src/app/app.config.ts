@@ -35,8 +35,8 @@ export class AppConfig {
 
 export const configuration: AppConfig = {
   version: '3.3.0',
-  name: 'Rumpel',
-  supportedDomains: ['.hubofallthings.net', '.hat.direct'],
+  name: 'RumpelStaging',
+  supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,
   dex: {

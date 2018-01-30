@@ -14,11 +14,11 @@ import { UserService } from '../user/user.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { EndpointQuery, Filter } from '../shared/interfaces/bundle.interface';
+import {Subscription} from 'rxjs/Subscription';
 
 export abstract class BaseDataService<T> {
   private _data$: ReplaySubject<HatRecord<T>[]> = <ReplaySubject<HatRecord<T>[]>>new ReplaySubject(1);
   public hat: HatApiV2Service;
-  public userSvc: UserService;
   private store: { data: HatRecord<T>[]; } = { data: [] };
 
   private RECORDS_PER_REQUEST = 250;
@@ -26,13 +26,17 @@ export abstract class BaseDataService<T> {
   private namespace: string;
   private endpoint: string;
   private orderBy: string;
+
+  private userSub: Subscription;
   private _loading$: Subject<boolean> = <Subject<boolean>>new Subject();
 
   constructor(hat: HatApiV2Service, userSvc: UserService, namespace: string, endpoint: string, orderBy: string) {
-    this.hat = hat; this.userSvc = userSvc; this.namespace = namespace; this.endpoint = endpoint; this.orderBy = orderBy;
+    this.hat = hat; this.namespace = namespace; this.endpoint = endpoint; this.orderBy = orderBy;
     this.clearLocalStore();
 
-    this.userSvc.auth$.filter(isAuthenticated => isAuthenticated === false).subscribe(_ => this.clearLocalStore());
+    this.userSub = userSvc.auth$
+      .filter(isAuthenticated => isAuthenticated === false)
+      .subscribe(_ => this.clearLocalStore());
   }
 
   get data$(): Observable<HatRecord<T>[]> {

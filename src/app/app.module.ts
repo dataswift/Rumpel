@@ -54,12 +54,14 @@ import { GlobalMessagingService } from './services/global-messaging.service';
 import { DexApiService } from './services/dex-api.service';
 import { FileService } from './services/file.service';
 import { StaticDataService } from './services/static-data.service';
+import { Router } from '@angular/router';
 
 export function authHttpFactory(backend: XHRBackend,
                                 defaultOptions: RequestOptions,
+                                router: Router,
                                 storageSvc: BrowserStorageService,
                                 config: AppConfig) {
-  return new AuthHttp(backend, defaultOptions, storageSvc, config);
+  return new AuthHttp(backend, defaultOptions, router, storageSvc, config);
 }
 
 export function cookieServiceFactory() {
@@ -99,7 +101,7 @@ export function cookieServiceFactory() {
     {
       provide: AuthHttp,
       useFactory: authHttpFactory,
-      deps: [ XHRBackend, RequestOptions, BrowserStorageService, APP_CONFIG ]
+      deps: [ XHRBackend, RequestOptions, Router, BrowserStorageService, APP_CONFIG ]
     },
     AuthGuard,
     NativeGuard,
