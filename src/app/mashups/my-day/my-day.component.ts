@@ -81,6 +81,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
     )
     .subscribe((dataEntities: HatRecord<any>[]) => {
       const groupedRecords = this.groupByDate(dataEntities);
+
       this.cardList = mergeWith(this.cardList, groupedRecords, this.cardMergeCustomiser);
     });
 
@@ -111,6 +112,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
       this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 180 + 'px');
       this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 259 + 'px');
     });
+
+    this.loadMoreData();
   }
 
   getDatesInRange(array) {
@@ -151,14 +154,14 @@ export class MyDayComponent implements OnInit, OnDestroy {
       case 'rumpel/notablesv1':
         extractDateString = entity => entity.data.created_time.format('YYYY-MM-DD');
         break;
-      case 'facebook/posts':
+      case 'facebook/feed':
         extractDateString = entity => entity.data.createdTime.format('YYYY-MM-DD');
         break;
       case 'twitter/tweets':
         extractDateString = entity => entity.data.createdTime.format('YYYY-MM-DD');
         break;
-      case 'iphone/locations':
-        extractDateString = entity => entity.data.timestamp.format('YYYY-MM-DD');
+      case 'rumpel/locations/ios':
+        extractDateString = entity => moment.unix(entity.data.dateCreated).format('YYYY-MM-DD');
         break;
       default:
         extractDateString = entity => moment().format('YYYY-MM-DD');

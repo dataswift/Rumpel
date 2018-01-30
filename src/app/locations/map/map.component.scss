@@ -9,18 +9,19 @@
 
  @import "../../style/variables";
 
- #map-view{
-   position: relative;
- }
-
-.leaflet-control, .leaflet-bottom, .leaflet-right{
-    z-index: 1;
+#map-view{
+ position: relative;
 }
 
+.leaflet-control, .leaflet-bottom, .leaflet-right {
+  z-index: 1;
+}
 
+.location-title {
+  display: inline;
+}
 
-
-.locationDate{
+.locationDate {
   background-color: #d2dce1;
   position: absolute;
   top: 0;
@@ -30,7 +31,7 @@
   padding: 10px 22px;
   max-height: 54px;
 
-  .location-icon{
+  .location-icon {
     width: 24px;
     height: 24px;
     background-color: rgba(74, 85, 107, 0.1);
@@ -41,7 +42,7 @@
     position: relative;
     margin-right: 5px;
 
-    img{
+    img {
       height: 12px;
       position: relative;
       left: 2px;
@@ -49,11 +50,10 @@
     }
   }
 
-  h4{
+  h4 {
     color: $app-mid-tone;
     font-size: 14px;
     text-transform: uppercase;
     font-family: $font-standard;
   }
-
 }

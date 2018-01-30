@@ -29,12 +29,12 @@
               <img class="icon-rounded" src="assets/icons/photos-plug.svg">
           </div>
 
-          <div *ngIf="activity.endpoint.includes('facebook/posts') && activity.data.type !== 'photo' && activity.data.type !=='link'" class="activity-item post">
+          <div *ngIf="activity.endpoint.includes('facebook/feed') && activity.data.type !== 'photo' && activity.data.type !=='link'" class="activity-item post">
                 <rum-location-fb-post [post]="activity"></rum-location-fb-post>
                 <img src="assets/icons/facebook-f-icon.svg">
           </div>
 
-          <div *ngIf="activity.endpoint.includes('facebook/posts') && activity.data.type ==='photo' || activity.data.type ==='link'" class="activity-item post" [class.photo-box]="activity.data.content.fullPicture !== ''" [style.background-image]="'url('+activity.data.content.fullPicture + ')'">
+          <div *ngIf="activity.endpoint.includes('facebook/feed') && activity.data.type ==='photo' || activity.data.type ==='link'" class="activity-item post" [class.photo-box]="activity.data.content.fullPicture !== ''" [style.background-image]="'url('+activity.data.content.fullPicture + ')'">
                 <rum-location-fb-post [post]="activity"></rum-location-fb-post>
                 <img src="assets/icons/facebook-f-icon.svg">
           </div>
