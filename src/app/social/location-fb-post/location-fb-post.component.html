@@ -9,7 +9,7 @@
 <div [ngSwitch]="post.data.type">
   <div *ngSwitchCase="'status'" >
       <h4>{{post.data.content.message ? post.data.content.message : post.data.story}}</h4>
-      <p>{{post.createdTime | moment}}</p>
+      <p>{{post.data.createdTime | moment}}</p>
   </div>
 
   <div *ngSwitchCase="'music.listens'" >

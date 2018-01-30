@@ -8,6 +8,7 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { Post } from '../../shared/interfaces';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rum-location-fb-post',
@@ -15,7 +16,7 @@ import { Post } from '../../shared/interfaces';
   styleUrls: ['location-fb-post.component.scss']
 })
 export class LocationFbPostComponent implements OnInit {
-  @Input() post: Post;
+  @Input() post: HatRecord<Post>;
 
   constructor() {}
 
