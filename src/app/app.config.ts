@@ -27,7 +27,6 @@ export class AppConfig {
     url: string;
   };
   menuItems: {
-    public: Array<any>;
     private: Array<any>;
     dataPlugs: Array<any>;
   };
@@ -61,9 +60,6 @@ export const configuration: AppConfig = {
     url: 'https://notables.hubofallthings.com/api/bulletin/tickle'
   },
   menuItems: {
-    'public': [
-      { display: 'Public profile', icon: 'account_circle', link: 'public/profile', dataType: '', disable: '' }
-    ],
     'private': [
       { display: 'My Digital Life', icon: 'line_weight', link: '/feed', dataType: '', disable: '',
       description: 'My Digital Life' },

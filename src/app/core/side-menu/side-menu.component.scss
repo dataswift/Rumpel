@@ -6,17 +6,17 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
  */
 
-@import "variables";
+@import "../../style/branding";
 
 .menu-scroll{
   overflow-x: hidden;
   overflow-y: auto;
 
   @if $showLogoInSidebar {
-      height: calc(100% - 320px);
+    height: calc(100% - 320px);
   }
   @else {
-      height: calc(100% - 60px);
+    height: calc(100% - 60px);
   }
 }
 
@@ -51,7 +51,7 @@ ul.center {
       top: 1px;
     }
 
-    .icon img{
+    .icon img {
       vertical-align: baseline;
     }
 
@@ -69,47 +69,43 @@ ul.center {
       }
     }
 
-    &.selected {
-      background-color: $app-hover-grey;
-
-      a {
-        color: $app-accent-color;
-      }
+    .rum-sidenav-item-selected {
+      font-weight: bold;
+      color: $app-accent-color;
     }
 
     &:hover {
       background-color: $app-hover-grey;
     }
 
-
-    &.data-plugs-list{
-      a{
+    &.data-plugs-list {
+      a {
         text-transform: capitalize;
         cursor: pointer;
 
-        .plus-icon{
+        .plus-icon {
           color: #ddd;
           float: right;
         }
 
-        .icon-grey{
+        .icon-grey {
           display: inline-block;
         }
 
-        .icon-color{
+        .icon-color {
           display: none;
         }
 
-        &:hover{
-          .plus-icon{
+        &:hover {
+          .plus-icon {
             color: $app-dark-grey;
           }
 
-          .icon-grey{
+          .icon-grey {
             display: none;
           }
 
-          .icon-color{
+          .icon-color {
             display: inline-block;
           }
         }
@@ -132,9 +128,7 @@ ul.center {
   }
 }
 
-
-
-.data-plugs-more{
+.data-plugs-more {
   em {
     color: #bbb;
   }
@@ -164,20 +158,17 @@ ul.center {
   }
 }
 
-
-
-.plug-menu{
+.plug-menu {
   overflow-x: hidden;
   overflow-y: auto;
   max-height: 200px;
 }
 
-.badge{
+.badge {
   padding: 2px 7px 4px;
 }
 
-
-.client-logo{
+.client-logo {
   background-image: url($logo);
   background-repeat: no-repeat;
   background-size: auto 60px;
@@ -186,9 +177,9 @@ ul.center {
   height: 90px;
 
   @if $showLogoInSidebar {
-      display: block;
+    display: block;
   }
   @else {
-      display: none;
+    display: none;
   }
 }

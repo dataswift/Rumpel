@@ -11,17 +11,17 @@
 <div class="menu-scroll">
   <h6 class="data-plugs-title">Menu</h6>
   <ul class="center" id="intro-step1">
-    <li *ngFor="let item of menu; let i = index"
-        [class.selected]="selectedItem.indexOf(item.link) !== -1">
+    <li *ngFor="let item of menuItems; let i = index">
       <div class="wrapper">
         <a [routerLink]="[item.link]" (click)="close.emit('Close menu')"
+           routerLinkActive="rum-sidenav-item-selected"
            [matTooltip]="item.description"
            [matTooltipClass]="'rum-tooltip-content'"
            [matTooltipShowDelay]="500"
            [matTooltipPosition]="'right'">
           <mat-icon class="icon">{{item.icon}}</mat-icon>
           {{item.display}}
-          <span class="badge" *ngIf="item.display === 'Redeem offers' && availableOffers > 0">{{ availableOffers }}</span>
+          <span class="badge" *ngIf="item.link === '/offers' && availableOffersCount > 0">{{ availableOffersCount }}</span>
         </a>
       </div>
     </li>
@@ -44,7 +44,8 @@
       </div>
     </li>
   </ul>
-    <ul class="center" >
+
+  <ul class="center" >
     <li class="data-plugs-more">
       <div class="wrapper">
         <a [routerLink]="['/dataplugs']">
@@ -56,7 +57,6 @@
   </ul>
 
 </div>
-
 
 <div class="poweredBy">
   <img src="assets/icons/grey-rumpel-plug.svg" class="img img-responsive">

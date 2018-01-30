@@ -21,61 +21,39 @@ import { OffersStorage } from '../../offers/offer.interface';
 
 @Component({
   selector: 'rum-side-menu',
-  templateUrl: 'side-menu.component.html'
+  templateUrl: 'side-menu.component.html',
+  styleUrls: ['./side-menu.component.scss']
 })
 export class SideMenuComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<string>();
 
-  public selectedItem: string;
-  public state: any;
-  public userAuthenticated = false;
-  public menu: Array<any>;
   public dataplugList: Observable<DataPlug[]>;
-  public profile: any;
-  public availableOffers = 0;
+  public availableOffersCount = 0;
   private offersSub: Subscription;
-  public offers: any = [];
   private windowRef: any;
 
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private router: Router,
-              private userSvc: UserService,
               private dataplugSvc: DataPlugService,
               private dataOfferSvc: DataOfferService) {}
 
   ngOnInit() {
-    this.selectedItem = window.location.pathname;
-
     this.dataplugList = this.dataplugSvc.inactiveDataplugs$;
 
-    this.state = { dataSources: [], dataTypes: [] };
-    this.userAuthenticated = false;
-    this.menu = this.config.menuItems.public;
+    this.offersSub = this.dataOfferSvc.offers$
+      .subscribe((offers: OffersStorage) => this.availableOffersCount = offers.availableOffers.length);
 
-    this.offersSub = this.dataOfferSvc.offers$.subscribe((offers: OffersStorage) => {
-      this.offers = offers.availableOffers;
-      this.availableOffers = offers.availableOffers.length;
-    });
-
-    this.router.events
-      .filter(event => event instanceof NavigationEnd)
-      .subscribe((event: NavigationEnd) => this.selectedItem = event.url.slice(1));
-
-    this.userSvc.user$.subscribe((user: User) => {
-      this.userAuthenticated = user.authenticated;
-      this.menu = user.authenticated ? this.config.menuItems.private : this.config.menuItems.public;
-
-      if (user.authenticated) {
-        this.dataOfferSvc.fetchUserAwareOfferList();
-      }
-    });
+    this.dataOfferSvc.fetchUserAwareOfferList();
   }
 
   ngOnDestroy(): void {
     this.offersSub.unsubscribe();
+  }
+
+  get menuItems(): Array<any> {
+    return this.config.menuItems.private;
   }
 
   openPlugPopup(plug: any) {
