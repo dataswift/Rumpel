@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { DialogService } from '../../core/dialog.service';
 import { ConfirmBoxComponent } from '../../core/confirm-box/confirm-box.component';
@@ -10,92 +10,38 @@ import { DataOfferService } from '../data-offer.service';
   styleUrls: ['./offer-accepted-stats.component.scss']
 })
 export class OfferAcceptedStatsComponent implements OnInit {
-
-  @Input() acceptedOffers: any = [];
-
-  public vouchersEarned = 0;
-  public vouchersClaimed = 0;
-
-  public servicesEarned = 0;
-  public servicesClaimed = 0;
-
-  public cashEarned = 0;
-  public cashClaimed = 0;
   public cashFormat = '1.2-2';
   public claimCashEnabled = false;
 
+  public offersSummary: any;
+
   public cashWithdrawalThreshold = 20;
 
-  constructor( private dialogSvc: DialogService,
-               private dataOfferSvc: DataOfferService) { }
+  constructor(private dialogSvc: DialogService,
+              private offersSvc: DataOfferService) { }
 
   ngOnInit() {
-    this.updateStats();
+    this.offersSvc.offersSummary$.subscribe(offersSummary => this.offersSummary = offersSummary);
+
+    this.offersSvc.fetchUserAwareOfferList();
   }
 
-  updateStats() {
-
-    this.vouchersEarned = 0;
-    this.vouchersClaimed = 0;
-
-    this.servicesEarned = 0;
-    this.servicesClaimed = 0;
-
-    this.cashEarned = 0;
-    this.cashClaimed = 0;
-
-    for (let i = 0; i < this.acceptedOffers.length; i++) {
-
-      // uncomment following line to test offers with completed state
-      // this.acceptedOffers[i].claim.status = 'completed';
-
-      if ( this.acceptedOffers[i].claim.status === 'redeemed' ) {
-
-            if (this.acceptedOffers[i].reward.rewardType === 'Voucher') {
-              this.vouchersClaimed ++;
-            } else if (this.acceptedOffers[i].reward.rewardType === 'Cash') {
-              this.cashClaimed += this.acceptedOffers[i].reward.value;
-            } else if (this.acceptedOffers[i].reward.rewardType === 'Service') {
-              this.servicesClaimed ++;
-            }
-      }
-
-      if ( this.acceptedOffers[i].claim.status === 'claimed' ||
-          this.acceptedOffers[i].claim.status === 'claim' ||
-          this.acceptedOffers[i].claim.status === 'completed' ||
-          this.acceptedOffers[i].claim.status === 'redeemed' ) {
-
-            if (this.acceptedOffers[i].reward.rewardType === 'Voucher') {
-              this.vouchersEarned ++;
-            } else if (this.acceptedOffers[i].reward.rewardType === 'Cash') {
-              this.cashEarned += this.acceptedOffers[i].reward.value;
-            } else if (this.acceptedOffers[i].reward.rewardType === 'Service') {
-              this.servicesEarned ++;
-            }
-      }
-    }
-
-    if (this.cashEarned > 1000 || this.cashClaimed > 1000) {
-      this.cashFormat = '1.0-0';
-    } else {
-      this.cashFormat = '1.2-2';
-    }
-
-
-    if ((this.cashEarned - this.cashClaimed) >= this.cashWithdrawalThreshold) {
-      this.claimCashEnabled = true;
-    }
-
-
-  }
-
+  // updateStats() {
+  //   if (this.cashEarned > 1000 || this.cashClaimed > 1000) {
+  //     this.cashFormat = '1.0-0';
+  //   } else {
+  //     this.cashFormat = '1.2-2';
+  //   }
+  //
+  //   if ((this.cashEarned - this.cashClaimed) >= this.cashWithdrawalThreshold) {
+  //     this.claimCashEnabled = true;
+  //   }
+  // }
 
 
   requestCashTransfer() {
-    this.dataOfferSvc.redeemCash();
+    this.offersSvc.redeemCash();
   }
-
-
 
   showConfirmBox() {
     this.dialogSvc.createDialog<ConfirmBoxComponent>(ConfirmBoxComponent, {
@@ -103,7 +49,7 @@ export class OfferAcceptedStatsComponent implements OnInit {
       icon: 'assets/images/coin-icon-green.svg',
       acceptButtonText: 'Request transfer',
       acceptButtonEnabled: this.claimCashEnabled,
-      message: `<span class="bold-message">Current balance: £` + (this.cashEarned - this.cashClaimed) + `</span>
+      message: `<span class="bold-message">Current balance: £` + (this.offersSummary.cashClaimed) + `</span>
       <br>If your cash balance is at least £` + this.cashWithdrawalThreshold + `, you can use the button below
       to transfer your balance to your PayPal account.`,
       accept: this.requestCashTransfer,
