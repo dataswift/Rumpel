@@ -11,10 +11,10 @@
     <div class="col-xs-10 col-xs-offset-0 col-sm-8 col-sm-offset-2" (click)="markAsRead()">
       <div class="notif-center">
         <div class="notif-content">
-            <div class="notification-message" [innerHTML]="notification?.notice?.message | markdownToHtml"></div>
+            <div class="notification-message" [innerHTML]="notification?.notice.message | markdownToHtml"></div>
             <a class="notif-more popover-click"
-               [attr.data-content]="notification?.notice?.message | markdownToHtml">More</a>
-            <h5 class="notif-time">{{notification?.notice?.dateCreated | moment}}</h5>
+               [attr.data-content]="notification?.notice.message | markdownToHtml">More</a>
+            <h5 class="notif-time">{{notification?.notice.dateCreated | moment}}</h5>
         </div>
 
         <div class="notif-nav notif-nav-prev" (click)="previousNote()" *ngIf="totalNotifications > 1"><i class="material-icons">navigate_before</i><span>Prev</span></div>

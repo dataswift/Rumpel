@@ -21,21 +21,20 @@ import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.i
   styleUrls: ['tile-hero.component.scss']
 })
 export class TileHeroComponent implements OnInit {
-  public profile: { photo: { url: string; shared: boolean; }, domainName: string };
-  public userAuthenticated = false;
+  public profile: { photo: { url: string; shared: boolean; }, domainName: string } = {
+    photo: {
+      url: '',
+      shared: false
+    },
+    domainName: ''
+  };
 
   constructor(private profilesSvc: ProfilesService,
               private dialogSvc: DialogService,
               private userSvc: UserService) {}
 
   ngOnInit() {
-    this.profile = {
-      photo: { url: '', shared: false }, domainName: ''
-    };
-
-    this.userSvc.user$
-      .subscribe((user: User) => {
-      this.userAuthenticated = user.authenticated;
+    this.userSvc.user$.subscribe((user: User) => {
       if (user.authenticated) {
         // this.profilesSvc.getPicture().subscribe(result => {
         //   if (result && result.url) {

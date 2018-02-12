@@ -8,10 +8,15 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { HeaderComponent } from './header.component';
+import { MatIconModule, MatMenuModule } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG } from '../../app.config';
+import { DialogService } from '../dialog.service';
+import { UserService } from '../../user/user.service';
+import { ProfilesService } from '../../profiles/profiles.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -19,7 +24,14 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
+      imports: [ RouterTestingModule, MatMenuModule, MatIconModule ],
+      declarations: [ HeaderComponent ],
+      providers: [
+        { provide: APP_CONFIG, useValue: {} },
+        { provide: DialogService, useValue: {} },
+        { provide: UserService, useValue: { user$: Observable.of({}) } },
+        { provide: ProfilesService, useValue: { profileData$: Observable.of({}) } }
+      ]
     })
       .compileComponents();
   }));

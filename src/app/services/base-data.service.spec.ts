@@ -10,6 +10,7 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { BaseDataService } from './base-data.service';
+import { LocationIos } from '../shared/interfaces/location.interface';
 
 describe('BaseDataService', () => {
   beforeEach(() => {
@@ -18,7 +19,7 @@ describe('BaseDataService', () => {
     });
   });
 
-  it('should ...', inject([BaseDataService], (service: BaseDataService) => {
+  it('should ...', inject([BaseDataService], (service: BaseDataService<LocationIos>) => {
     expect(service).toBeTruthy();
   }));
 });

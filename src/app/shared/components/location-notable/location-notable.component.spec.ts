@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { NotableComponent } from './notable.component';
+import { LocationNotableComponent } from './location-notable.component';
 
-describe('NotableComponent', () => {
-  let component: NotableComponent;
-  let fixture: ComponentFixture<NotableComponent>;
+describe('LocationNotableComponent', () => {
+  let component: LocationNotableComponent;
+  let fixture: ComponentFixture<LocationNotableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotableComponent ]
+      declarations: [ LocationNotableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotableComponent);
+    fixture = TestBed.createComponent(LocationNotableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

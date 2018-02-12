@@ -20,7 +20,8 @@ import { DataDebit } from '../../shared/interfaces/data-debit.interface';
 export class TileDataDebitComponent implements OnInit {
   public debits: DataDebit[] = [];
 
-  constructor(private ddSvc: DataDebitService, private userSvc: UserService) {}
+  constructor(private ddSvc: DataDebitService,
+              private userSvc: UserService) {}
 
   ngOnInit() {
     this.userSvc.user$.subscribe((user: User) => {

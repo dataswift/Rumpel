@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { DataDebit } from '../shared/interfaces/index';
 import { User } from '../user/user.interface';
 import { isMoment } from 'moment/moment';
-import moment from 'moment/moment';
+import * as moment from 'moment/moment';
 
 @Injectable()
 export class HatApiService {

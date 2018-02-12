@@ -11,21 +11,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { MixpadComponent } from './my-day.component';
+import { MyDayComponent } from './my-day.component';
 
-describe('MixpadComponent', () => {
-  let component: MixpadComponent;
-  let fixture: ComponentFixture<MixpadComponent>;
+describe('MyDayComponent', () => {
+  let component: MyDayComponent;
+  let fixture: ComponentFixture<MyDayComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MixpadComponent ]
+      declarations: [ MyDayComponent ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MixpadComponent);
+    fixture = TestBed.createComponent(MyDayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

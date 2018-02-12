@@ -8,10 +8,10 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { TileHeaderComponent } from './tile-header.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 
 describe('TileHeaderComponent', () => {
   let component: TileHeaderComponent;
@@ -19,6 +19,7 @@ describe('TileHeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule, CustomAngularMaterialModule ],
       declarations: [ TileHeaderComponent ]
     })
       .compileComponents();

@@ -8,12 +8,23 @@
 
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { MashupsComponent } from './mashups.component';
+import {MashupsModule} from '../mashups.module';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('Component: Mashups', () => {
+  let fixture: ComponentFixture<MashupsComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [ MashupsModule, RouterTestingModule.withRoutes([])]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(MashupsComponent);
+  });
+
   it('should create an instance', () => {
-    const component = new MashupsComponent();
-    expect(component).toBeTruthy();
+    expect(fixture).toBeTruthy();
   });
 });

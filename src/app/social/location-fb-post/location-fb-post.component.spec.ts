@@ -11,21 +11,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { FbPostComponent } from './fb-post.component';
+import { LocationFbPostComponent } from './location-fb-post.component';
 
-describe('FbPostComponent', () => {
-  let component: FbPostComponent;
-  let fixture: ComponentFixture<FbPostComponent>;
+describe('LocationFbPostComponent', () => {
+  let component: LocationFbPostComponent;
+  let fixture: ComponentFixture<LocationFbPostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FbPostComponent ]
+      declarations: [ LocationFbPostComponent ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FbPostComponent);
+    fixture = TestBed.createComponent(LocationFbPostComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

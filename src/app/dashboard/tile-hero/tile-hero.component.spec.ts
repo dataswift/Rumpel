@@ -8,10 +8,13 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
-import { TileHeroComponent } from './tile-coming-soon.component';
+import { TileHeroComponent } from './tile-hero.component';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { ProfilesService } from '../../profiles/profiles.service';
+import { DialogService } from '../../core/dialog.service';
+import { UserService } from '../../user/user.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('TileHeroComponent', () => {
   let component: TileHeroComponent;
@@ -19,7 +22,13 @@ describe('TileHeroComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TileHeroComponent ]
+      imports: [ CustomAngularMaterialModule ],
+      declarations: [ TileHeroComponent ],
+      providers: [
+        { provide: ProfilesService, useValue: { profileData$: Observable.of(null) } },
+        { provide: DialogService, useValue: { createDialog: () => null } },
+        { provide: UserService, userValue: { user$: Observable.of({ authenticated: false, fullDomain: '' }) } }
+      ]
     })
       .compileComponents();
   }));
