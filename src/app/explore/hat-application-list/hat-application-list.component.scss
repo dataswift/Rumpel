@@ -1,0 +1,175 @@
+@import '../../style/branding';
+
+.app-list {
+  display: flex;
+  justify-content: center;
+}
+
+.app-page-header {
+  position: relative;
+  height: 25em;
+  width: 100%;
+  background-size: contain;
+  background-image: url('/assets/images/piggy.jpg');
+  background-repeat: no-repeat;
+  background-color: #2b313d;
+  // background-position: 100% 100%;
+
+  &:before {
+    position: absolute;
+    content: " ";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  .mat-toolbar {
+    background-color: transparent;
+    height: 75px;
+
+    .app-page-heading {
+      color: white;
+      text-transform: uppercase;
+      margin: 0 auto;
+      font-size: 1.25em;
+    }
+  }
+
+  .app-page-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    height: calc(25em - 75px);
+
+    .flex-spacer {
+      flex-grow: 1;
+    }
+
+    .app-page-header-icon {
+      height: auto;
+      width: auto;
+      font-size: 50px;
+      margin-top: 10px;
+      padding: 20px;
+      background-color: $app-accent-color;
+      border-radius: 50%;
+    }
+
+    .app-page-header-text {
+      max-width: 300px;
+      font-size: 1.25em;
+      text-align: center;
+    }
+  }
+}
+
+.app-link-wrapper {
+  text-decoration: none;
+  color: $text-dark;
+
+  &:hover {
+    color: $text-dark;
+  }
+}
+
+.app-status-icon {
+  border-radius: 50%;
+  padding: 3px;
+  width: 30px;
+  height: 30px;
+
+  &.check {
+    color: white;
+    background-color: $app-accent-color;
+  }
+
+  &.add {
+    color: white;
+    background-color: $app-dark-grey;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .mat-card {
+    margin: 2em;
+    padding: 0;
+    flex-basis: 100%;
+    justify-content: center;
+  }
+
+  .mat-card-content {
+    display: flex;
+    margin-bottom: 0;
+    align-items: center;
+  }
+
+  .app-link-wrapper {
+    .app-logo {
+      max-height: 7.5em;
+      margin-right: 2em;
+    }
+
+    .app-description {
+      flex: 1 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .app-name {
+        margin: 0;
+      }
+    }
+
+    .app-link-action {
+      display: none;
+    }
+
+    .app-status-icon {
+      margin: 0 1em;
+    }
+  }
+}
+
+@media screen and (min-width: 901px) {
+  .mat-card {
+    margin: 2em;
+    max-width: 25em;
+    flex: 1 1 10em;
+  }
+
+  .mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-link-wrapper {
+    .app-logo {
+      max-height: 7.5em;
+      margin: 0.5em;
+      margin-top: 3em;
+    }
+
+    .app-description {
+      flex: 3 1 10em;
+      text-align: center;
+    }
+
+    .app-link-action {
+      flex: 1 1;
+      color: $app-accent-color;
+      text-decoration: underline;
+    }
+
+    .app-status-icon {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+    }
+  }
+}

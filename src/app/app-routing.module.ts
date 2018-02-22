@@ -35,6 +35,7 @@ import { DataPlugFeedComponent } from './data-management/data-plug-feed/data-plu
 import { DataPlugStaticComponent } from './data-management/data-plug-static/data-plug-static.component';
 import {LocationsComponent} from './locations/locations/locations.component';
 import {SocialComponent} from './social/social/social.component';
+import {HatApplicationListComponent} from './explore/hat-application-list/hat-application-list.component';
 
 @NgModule({
   imports: [
@@ -64,6 +65,10 @@ import {SocialComponent} from './social/social/social.component';
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'social', component: SocialComponent }
+        ]},
+      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
+        children: [
+          { path: 'explore', component: HatApplicationListComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [

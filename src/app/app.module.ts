@@ -55,6 +55,7 @@ import { DexApiService } from './services/dex-api.service';
 import { FileService } from './services/file.service';
 import { StaticDataService } from './services/static-data.service';
 import { Router } from '@angular/router';
+import {ExploreModule} from './explore/explore.module';
 
 export function authHttpFactory(backend: XHRBackend,
                                 defaultOptions: RequestOptions,
@@ -89,6 +90,7 @@ export function cookieServiceFactory() {
     DashboardModule,
     NotablesModule,
     MashupsModule,
+    ExploreModule,
     CoreModule,
     AppRoutingModule
   ],
