@@ -29,3 +29,7 @@ $hat-app-warn: mat-palette($mat-red);
 $hat-app-theme: mat-light-theme($hat-app-primary, $hat-app-accent, $hat-app-warn);
 
 @include angular-material-theme($hat-app-theme);
+
+.flex-spacer {
+  flex-grow: 1;
+}

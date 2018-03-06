@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { HatApplication } from './hat-application.interface';
+import {HatApplication, HatApplicationContent} from './hat-application.interface';
 
-const APPLICATION_ENDPOINT_MOCK = [
-  {
+const APPLICATION_ENDPOINT_MOCK = {
+  'application': {
     'id': 'notables',
     'kind': {
       'url': 'https://itunes.apple.com/gb/app/notables/id1338778866?mt=8',
@@ -17,16 +17,31 @@ const APPLICATION_ENDPOINT_MOCK = [
       'name': 'Notables',
       'headline': 'All your words',
       'description': {
-        'text': `\n Anything you write online is your data – searches, social media posts, comments and notes.\n\n Start your notes here on Notables, where they will be stored completely privately in your HAT.\n\n Use Notables to draft and share social media posts. You can set how long they stay on Twitter or Facebook – a day, a week or a month. You can always set them back to private later: it will disappear from your social media but you won’t lose it because it’s saved in your HAT.\n\n Add images or pin locations as reminders of where you were or what you saw.\n`,
-        'markdown': `\n Anything you write online is your data – searches, social media posts, comments and notes.\n\n Start your notes here on Notables, where they will be stored completely privately in your HAT.\n\n Use Notables to draft and share social media posts. You can set how long they stay on Twitter or Facebook – a day, a week or a month. You can always set them back to private later: it will disappear from your social media but you won’t lose it because it’s saved in your HAT.\n\n Add images or pin locations as reminders of where you were or what you saw.\n `,
-        'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>\n\n <p>Start your notes here on Notables, where they will be stored completely privately in your HAT.</p>\n\n <p>Use Notables to draft and share social media posts. You can set how long they stay on Twitter or Facebook – a day, a week or a month. You can always set them back to private later: it will disappear from your social media but you won’t lose it because it’s saved in your HAT.</p>\n\n <p>Add images or pin locations as reminders of where you were or what you saw.</p>\n`
+        'text': `\n Anything you write online is your data – searches, social media posts, comments and notes.\n\n ` +
+        `Start your notes here on Notables, where they will be stored completely privately in your HAT.\n\n Use Notables`
+        + ` to draft and share social media posts. You can set how long they stay on Twitter or Facebook – a day, a week`
+        + ` or a month. You can always set them back to private later: it will disappear from your social media but you`
+        + ` won’t lose it because it’s saved in your HAT.\n\n Add images or pin locations as reminders of where you` +
+        ` were or what you saw.\n`,
+        'markdown': `\n Anything you write online is your data – searches, social media posts, comments and notes.\n\n `
+        + `Start your notes here on Notables, where they will be stored completely privately in your HAT.\n\n Use` +
+        ` Notables to draft and share social media posts. You can set how long they stay on Twitter or Facebook – a` +
+        ` day, a week or a month. You can always set them back to private later: it will disappear from your social ` +
+        `media but you won’t lose it because it’s saved in your HAT.\n\n Add images or pin locations as reminders of` +
+        ` where you were or what you saw.\n`,
+        'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>` +
+        `\n\n <p>Start your notes here on Notables, where they will be stored completely privately in your HAT.</p>` +
+        `\n\n <p>Use Notables to draft and share social media posts. You can set how long they stay on Twitter or ` +
+        `Facebook – a day, a week or a month. You can always set them back to private later: it will disappear from` +
+        ` your social media but you won’t lose it because it’s saved in your HAT.</p>\n\n <p>Add images or pin` +
+        ` locations as reminders of where you were or what you saw.</p>\n`
       },
       'dataPreview': [
         {
           'source': 'notables',
           'date': {
-            'iso': '2018-02-19T03:52:27.486Z',
-            'unix': 1519012347
+            'iso': '2018-03-05T03:51:52.862Z',
+            'unix': 1520221912
           },
           'types': [
             'note'
@@ -42,8 +57,8 @@ const APPLICATION_ENDPOINT_MOCK = [
         {
           'source': 'notables',
           'date': {
-            'iso': '2018-02-19T03:52:27.637Z',
-            'unix': 1519012347
+            'iso': '2018-03-05T03:51:52.912Z',
+            'unix': 1520221912
           },
           'types': [
             'note'
@@ -53,7 +68,7 @@ const APPLICATION_ENDPOINT_MOCK = [
             'action': 'private'
           },
           'content': {
-            'text': `And I love 'em!`
+            'text': `And I love 'em!'`
           }
         }
       ],
@@ -62,20 +77,27 @@ const APPLICATION_ENDPOINT_MOCK = [
           'normal': ''
         },
         'logo': {
-          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss.png'
+          'normal': 'https://s3-eu-west-1.amazonaws.com/' +
+                    'hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss.png'
         },
         'screenshots': [
           {
-            'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss.jpg',
-            'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-5.jpg'
+            'normal': 'https://s3-eu-west-1.amazonaws.com/' +
+                      'hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss.jpg',
+            'large': 'https://s3-eu-west-1.amazonaws.com/' +
+                      'hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-5.jpg'
           },
           {
-            'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-2.jpg',
-            'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-6.jpg'
+            'normal': 'https://s3-eu-west-1.amazonaws.com/' +
+                      'hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-2.jpg',
+            'large': 'https://s3-eu-west-1.amazonaws.com/' +
+                      'hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-6.jpg'
           },
           {
-            'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-3.jpg',
-            'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-7.jpg'
+            'normal': 'https://s3-eu-west-1.amazonaws.com/' +
+                      'hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-3.jpg',
+            'large': 'https://s3-eu-west-1.amazonaws.com/' +
+                      'hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/notablesapp/0x0ss-7.jpg'
           }
         ]
       }
@@ -97,7 +119,7 @@ const APPLICATION_ENDPOINT_MOCK = [
       ],
       'dataRequired': {
         'bundle': {
-          'name': 'notablesapp',
+          'name': 'app-notables-v100',
           'bundle': {
             'profile': {
               'endpoints': [
@@ -144,8 +166,8 @@ const APPLICATION_ENDPOINT_MOCK = [
             }
           }
         },
-        'startDate': '2018-02-19T03:52:28+0000',
-        'endDate': '2019-02-19T03:52:28+0000',
+        'startDate': '2018-03-05T03:51:54+0000',
+        'endDate': '2019-03-05T03:51:54+0000',
         'rolling': true
       }
     },
@@ -158,18 +180,25 @@ const APPLICATION_ENDPOINT_MOCK = [
       'recentDataCheckEndpoint': '/rumpel/notablesv1',
       'kind': 'Internal'
     }
-  }
-];
+  },
+  'setup': true,
+  'active': true,
+  'needsUpdating': false
+};
 
 @Injectable()
 export class HatApplicationsService {
 
   constructor(private http: Http) { }
 
-  getApplicationList(): Observable<HatApplication[]> {
-    return Observable.of(APPLICATION_ENDPOINT_MOCK);
+  getApplicationList(): Observable<HatApplicationContent[]> {
+    return Observable.of([APPLICATION_ENDPOINT_MOCK].map(res => res.application));
 
     // return this.http.get('http://dex.hubofallthings.com/api/applications')
     //   .map(res => <HatApplication[]>res.json());
+  }
+
+  getApplicationDetails(): Observable<HatApplicationContent> {
+    return Observable.of(APPLICATION_ENDPOINT_MOCK.application);
   }
 }

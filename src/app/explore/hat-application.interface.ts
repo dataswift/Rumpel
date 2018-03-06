@@ -2,6 +2,13 @@ import { SheFeed } from '../dashboard/she-feed.interface';
 import {BundleStructure} from '../shared/interfaces/bundle.interface';
 
 export interface HatApplication {
+  application: HatApplicationContent;
+  setup: boolean;
+  active: boolean;
+  needsUpdating: boolean;
+}
+
+export interface HatApplicationContent {
   id: string;
   kind: HatApplicationKind;
   info: HatApplicationInfo;

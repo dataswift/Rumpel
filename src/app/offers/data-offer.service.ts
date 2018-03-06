@@ -41,9 +41,15 @@ export class DataOfferService {
         vouchersRedeemed: groupedOffers['voucher-redeemed'] && groupedOffers['voucher-redeemed'].length || 0,
         vouchersClaimed: groupedOffers['voucher-completed'] && groupedOffers['voucher-completed'].length || 0,
         vouchersPending: groupedOffers['voucher-claimed'] && groupedOffers['voucher-claimed'].length || 0,
-        cashRedeemed: groupedOffers['cash-redeemed'] && groupedOffers['cash-redeemed'].reduce((acc, offer: Offer) => acc + (<number>offer.reward.value / 100), 0) || 0,
-        cashClaimed: groupedOffers['cash-completed'] && groupedOffers['cash-completed'].reduce((acc, offer: Offer) => acc + (<number>offer.reward.value / 100), 0) || 0,
-        cashPending: groupedOffers['cash-claimed'] && groupedOffers['cash-claimed'].reduce((acc, offer: Offer) => acc + (<number>offer.reward.value / 100), 0) || 0,
+        cashRedeemed: groupedOffers['cash-redeemed'] && groupedOffers['cash-redeemed'].reduce((acc, offer: Offer) => {
+          return acc + (<number>offer.reward.value / 100)
+        }, 0) || 0,
+        cashClaimed: groupedOffers['cash-completed'] && groupedOffers['cash-completed'].reduce((acc, offer: Offer) => {
+          return acc + (<number>offer.reward.value / 100)
+        }, 0) || 0,
+        cashPending: groupedOffers['cash-claimed'] && groupedOffers['cash-claimed'].reduce((acc, offer: Offer) => {
+          return acc + (<number>offer.reward.value / 100)
+        }, 0) || 0,
         servicesRedeemed: groupedOffers['service-redeemed'] && groupedOffers['service-redeemed'].length || 0,
         servicesClaimed: groupedOffers['service-completed'] && groupedOffers['service-completed'].length || 0,
         servicesPending: groupedOffers['service-claimed'] && groupedOffers['service-claimed'].length || 0,

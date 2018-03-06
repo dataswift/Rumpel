@@ -1,0 +1,189 @@
+@import '../../style/branding';
+
+.app-details-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 125px;
+  position: relative;
+  height: 20em;
+  width: 100%;
+  background-size: contain;
+  background-image: url('/assets/images/piggy.jpg');
+  background-repeat: no-repeat;
+  background-color: #2b313d;
+  // background-position: 100% 100%;
+
+  &:before {
+    position: absolute;
+    content: " ";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  .app-details-header-toolbar {
+    background-color: transparent;
+    display: flex;
+    align-self: flex-start;
+    z-index: 1;
+
+    .flex-spacer {
+      flex-grow: 1;
+    }
+
+    .app-details-close {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .app-details-header-card {
+    margin-bottom: -125px;
+    padding: 0 2em;
+    width: 95%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .app-logo {
+      max-height: 100px;
+      margin-top: -50px;
+      margin-bottom: 10px;
+    }
+
+    .app-details-header-headline {
+      margin: 0 30px 30px 30px;
+      color: $app-dark-grey;
+    }
+
+    .mat-button {
+      background-color: $app-accent-color;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 30px;
+      padding: 5px 40px;
+
+      .mat-icon {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.app-details-content {
+  .mat-card {
+    margin: 20px auto;
+    max-width: 500px;
+
+    &.app-details-general {
+      max-width: 900px;
+
+      @media (max-width: 900px) {
+        margin: 0;
+        max-width: none;
+      }
+    }
+
+    &:not(.app-details-general) {
+      padding: 0;
+
+      /deep/ .mat-card-header-text {
+        margin: 0;
+      }
+
+      .mat-card-header {
+        padding: 5px 15px;
+      }
+
+      .mat-card-content {
+        margin: 0;
+        padding: 20px 15px;
+      }
+
+      .mat-card-footer {
+        margin: 0;
+        padding: 0 15px 10px 0;
+        text-align: right;
+        color: $app-dark-grey;
+        font-style: italic;
+      }
+    }
+
+    .mat-card-header {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $app-light-tone;
+    }
+
+    .card-header-action, .mat-card-content {
+      color: $app-dark-grey;
+    }
+
+    .card-header-action {
+      font-style: italic;
+      text-transform: capitalize;
+    }
+  }
+
+  .app-details-heading {
+    font-weight: bold;
+    color: $app-dark-tone;
+    margin-bottom: 20px;
+  }
+
+  .app-details-description {
+    color: $app-dark-grey;
+    margin-bottom: 40px;
+  }
+
+  .app-details-screenshots {
+    margin: 30px 0;
+    height: 600px;
+    overflow-x: auto;
+
+    .img-wrapper {
+      display: inline;
+      white-space: nowrap;
+
+      &:not(:first-child):not(:last-child) {
+        margin: 0 10px;
+      }
+
+      img {
+        display: inline;
+        height: 100%;
+      }
+    }
+  }
+}
+
+/deep/ .mat-tab-header {
+  width: intrinsic;
+  margin: 30px auto;
+
+  .mat-tab-labels {
+    justify-content: center;
+
+    .mat-tab-label {
+      opacity: .5;
+
+      .mat-tab-label-content {
+        text-transform: uppercase;
+      }
+    }
+
+    .mat-tab-label-active {
+      opacity: .8;
+
+      .mat-tab-label-content {
+        color: $app-dark-tone;
+        font-weight: bold;
+      }
+    }
+  }
+}

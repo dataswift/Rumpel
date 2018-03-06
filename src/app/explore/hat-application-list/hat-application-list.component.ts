@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HatApplicationsService } from '../hat-applications.service';
-import { HatApplication } from '../hat-application.interface';
+import {HatApplication, HatApplicationContent} from '../hat-application.interface';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./hat-application-list.component.scss']
 })
 export class HatApplicationListComponent implements OnInit {
-  public hatApp$: Observable<HatApplication[]>;
+  public hatApp$: Observable<HatApplicationContent[]>;
 
   constructor(private hatAppSvc: HatApplicationsService) { }
 
