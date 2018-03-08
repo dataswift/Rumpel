@@ -39,13 +39,9 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       const navExtras: NavigationExtras = {
-        queryParams: { target: route.routeConfig.path }
+        queryParams: { target: route.routeConfig.path },
+        queryParamsHandling: 'merge'
       };
-
-      if (route.queryParams['name'] && route.queryParams['redirect']) {
-        navExtras.queryParams['name'] = route.queryParams['name'];
-        navExtras.queryParams['redirect'] = route.queryParams['redirect'];
-      }
 
       this.router.navigate(this.redirectPath, navExtras);
 

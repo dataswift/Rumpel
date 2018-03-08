@@ -13,6 +13,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { HatApiV2Service } from '../services/hat-api-v2.service';
 import { AuthHttp } from '../services/auth-http.service';
 import { User } from './user.interface';
+import {HatApplication} from '../explore/hat-application.interface';
 
 @Injectable()
 export class UserService {
@@ -45,8 +46,21 @@ export class UserService {
       });
   }
 
-  hatLogin(name: string, redirect: string): Observable<any> {
-    return this.hat.hatLogin(name, redirect);
+  getApplicationDetails(name: string, redirect: string): Observable<HatApplication> {
+    return this.hat.getApplicationById(name)
+      .map((hatApp: HatApplication) => {
+        const redirectUrlIsValid = true; // TODO: check
+
+        if (redirectUrlIsValid) {
+          return hatApp;
+        } else {
+          throw new Error('Redirect URL does not match registered value');
+        }
+      })
+  }
+
+  appLogin(name: string): Observable<string> {
+    return this.hat.getApplicationTokenNew(name);
   }
 
   logout(): void {
@@ -101,6 +115,10 @@ export class UserService {
     return this.user$
       .map((user: User) => user.authenticated)
       .defaultIfEmpty(false);
+  }
+
+  setupApplication(name: string): Observable<HatApplication> {
+    return this.hat.setupApplication(name);
   }
 
 }

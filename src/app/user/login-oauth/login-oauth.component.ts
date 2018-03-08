@@ -8,12 +8,10 @@
 
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { BrowserStorageService } from '../../services/browser-storage.service';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { User } from '../user.interface';
+import { ActivatedRoute } from '@angular/router';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { Subscription } from 'rxjs/Subscription';
+import {HatApplication, HatApplicationContent} from '../../explore/hat-application.interface';
 
 @Component({
   selector: 'rum-login-oauth',
@@ -23,32 +21,37 @@ import { Subscription } from 'rxjs/Subscription';
 export class LoginOauthComponent implements OnInit, OnDestroy {
   public hatDomain: string;
   public error: string;
+  public hatApp: HatApplicationContent;
   private sub: Subscription;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private userSvc: UserService,
-              private storageSvc: BrowserStorageService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.sub = Observable.zip(
-      this.userSvc.user$.filter((user: User) => user.authenticated),
-      this.route.queryParams
-    )
-    .flatMap(([user, queryParams]: [User, Params]) => {
-      const name = queryParams['name'] || '';
-      const redirect = queryParams['redirect'] || '';
+    const name = this.route.snapshot.queryParams['name'];
+    const redirect = this.route.snapshot.queryParams['redirect'];
 
-      return this.userSvc.hatLogin(name, redirect);
-    })
-    .subscribe(
-      (redirectUrl: string) => window.location.href = redirectUrl,
+    if (name && redirect) {
+      this.sub = this.userSvc.getApplicationDetails(name, redirect)
+        .subscribe(
+      (hatApp: HatApplication) => {
+
+        if (hatApp.setup) {
+          // this.buildRedirect(name);
+          this.hatApp = hatApp.application;
+        } else {
+          this.hatApp = hatApp.application;
+        }
+      },
       error => {
         console.warn('Failed to login. Reason: ', error);
         this.error = 'ERROR: Failed to obtain HAT authentication. Please try again.';
-      });
-
-    this.userSvc.isLoggedIn();
+        }
+      );
+    } else {
+      // TODO: show error message
+    }
   }
 
   ngOnDestroy() {
@@ -65,16 +68,22 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
     this.error = '';
   }
 
-  onSubmit(form) {
-    this.storageSvc.rememberMe = form.value.rememberMe;
-    this.userSvc.login(this.username, form.value.password).subscribe(
-      (isAuthenticated: boolean) => {
-        console.log('Authenticated successfully. ', isAuthenticated);
-      },
-      err => {
-        console.log('Login failed! Reason: ', err);
-        this.error = 'Incorrect password. Please try again.';
-      });
+  buildRedirect(appName: string): void {
+    this.userSvc.appLogin(appName).subscribe((accessToken: string) => {
+      window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
+    });
+  }
+
+  agreeTerms(appId: string): void {
+    this.userSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => this.buildRedirect(appId));
+  }
+
+  declineTerms(): void {
+    window.location.href = this.route.snapshot.queryParams['fallback'];
+  }
+
+  toggleCardExpansion(endpoint): void {
+    endpoint.expanded = !endpoint.expanded;
   }
 
 }

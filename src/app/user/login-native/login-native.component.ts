@@ -35,7 +35,7 @@ export class LoginNativeComponent implements OnInit {
 
     // Skip login step if the user is already authenticated
     if (this.userSvc.isLoggedIn()) {
-      this.router.navigate([this.redirectPath]);
+      this.navigateForward();
     }
   }
 
@@ -61,13 +61,17 @@ export class LoginNativeComponent implements OnInit {
     this.storageSvc.rememberMe = form.value.rememberMe;
     this.userSvc.login(this.username, form.value.password).subscribe(
       (isAuthenticated: boolean) => {
-        this.router.navigate([this.redirectPath]);
+        this.navigateForward();
       },
       err => {
         console.log('Login failed! Reason: ', err);
         this.error = 'Incorrect password. Please try again.';
       });
     // window.location.href = `https://${this.hatDomain}/hatlogin?name=Rumpel&redirect=${this.redirectUrl}`;
+  }
+
+  private navigateForward(): void {
+    this.router.navigate([this.redirectPath], { queryParamsHandling: 'preserve' });
   }
 
 }

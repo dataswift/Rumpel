@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
-import {HatApplication, HatApplicationContent} from '../hat-application.interface';
+import { HatApplicationContent } from '../hat-application.interface';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -18,11 +18,12 @@ export class HatApplicationDetailsComponent implements OnInit {
               private hatAppSvc: HatApplicationsService) { }
 
   ngOnInit() {
-    this.appDetails$ = this.activatedRoute.params.flatMap(pathParams => this.hatAppSvc.getApplicationDetails());
+    this.appDetails$ = this.activatedRoute.params.flatMap(pathParams => {
+      return this.hatAppSvc.getApplicationDetails(pathParams['appName']);
+    });
   }
 
   closeComponentView(): void {
-    console.log('Closing app details view');
     this.location.back();
   }
 

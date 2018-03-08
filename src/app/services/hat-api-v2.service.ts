@@ -17,6 +17,7 @@ import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { DataDebit, DataDebitValues } from '../shared/interfaces/data-debit.interface';
 import { FileMetadataReq, FileMetadataRes } from '../shared/interfaces/file.interface';
 import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../shared/interfaces/bundle.interface';
+import {HatApplication} from '../explore/hat-application.interface';
 
 @Injectable()
 export class HatApiV2Service {
@@ -48,15 +49,15 @@ export class HatApiV2Service {
     return this.authHttp.setToken(token);
   }
 
-  hatLogin(name: string, redirect: string): Observable<string> {
-    const path = `/control/v2/auth/hatlogin`;
-    const queryParams = new URLSearchParams();
-    queryParams.append('name', name);
-    queryParams.append('redirect', redirect);
-
-    return this.authHttp.get(path, { search: queryParams })
-      .map((res: Response) => res.json().message);
-  }
+  // hatLogin(name: string, redirect: string): Observable<string> {
+  //   const path = `/control/v2/auth/hatlogin`;
+  //   const queryParams = new URLSearchParams();
+  //   queryParams.append('name', name);
+  //   queryParams.append('redirect', redirect);
+  //
+  //   return this.authHttp.get(path, { search: queryParams })
+  //     .map((res: Response) => res.json().message);
+  // }
 
   recoverPassword(body: { email: string; }): Observable<any> {
     const path = `/control/v2/auth/passwordReset`;
@@ -90,6 +91,41 @@ export class HatApiV2Service {
 
     return this.authHttp.get(path, { search: queryParams })
       .map((res: Response) => res.json().accessToken)
+  }
+
+  getApplicationList(): Observable<HatApplication[]> {
+    const path = `${this.pathPrefix}/applications`;
+
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json());
+  }
+
+  getApplicationById(applicationId: string): Observable<HatApplication> {
+    const path = `${this.pathPrefix}/applications/${applicationId}`;
+
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json());
+  }
+
+  getApplicationTokenNew(applicationId: string): Observable<string> {
+    const path = `${this.pathPrefix}/applications/${applicationId}/access-token`;
+
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json().accessToken);
+  }
+
+  setupApplication(applicationId: string): Observable<HatApplication> {
+    const path = `${this.pathPrefix}/applications/${applicationId}/setup`;
+
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json());
+  }
+
+  disableApplication(applicationId: string): Observable<HatApplication> {
+    const path = `${this.pathPrefix}/applications/${applicationId}/disable`;
+
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json());
   }
 
   getDataRecords(namespace: string, endpoint: string, take?: number, orderBy?: string, drop?: number): Observable<HatRecord<any>[]> {

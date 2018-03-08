@@ -33,17 +33,17 @@ import { PasswordRecoverComponent } from './user/password-recover/password-recov
 import { PasswordChangeComponent } from './user/password-change/password-change.component';
 import { DataPlugFeedComponent } from './data-management/data-plug-feed/data-plug-feed.component';
 import { DataPlugStaticComponent } from './data-management/data-plug-static/data-plug-static.component';
-import {LocationsComponent} from './locations/locations/locations.component';
-import {SocialComponent} from './social/social/social.component';
-import {HatApplicationListComponent} from './explore/hat-application-list/hat-application-list.component';
-import {HatApplicationDetailsComponent} from './explore/hat-application-details/hat-application-details.component';
+import { LocationsComponent } from './locations/locations/locations.component';
+import { SocialComponent } from './social/social/social.component';
+import { HatApplicationListComponent } from './explore/hat-application-list/hat-application-list.component';
+import { HatApplicationDetailsComponent } from './explore/hat-application-details/hat-application-details.component';
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
       { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
       { path: 'public/profile', component: PublicProfileComponent, canActivate: [NativeGuard] },
-      { path: 'hatlogin', component: LoginOauthComponent, canActivate: [NativeGuard] },
+      { path: 'hatlogin', component: LoginOauthComponent, canActivate: [NativeGuard, AuthGuard] },
       { path: 'user/login', component: LoginNativeComponent, canActivate: [NativeGuard] },
       { path: 'user/login/start', component: LoginStandaloneComponent },
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],

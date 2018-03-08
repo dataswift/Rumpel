@@ -25,6 +25,7 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { UnbundlePipe } from './pipes/unbundle.pipe';
 
 
 @NgModule({
@@ -36,13 +37,15 @@ import { MatTooltipModule } from '@angular/material/tooltip';
                   OutsideClickDirective, StickDirective,
                   SwitchComponent, TreeViewComponent, TimelineComponent, SpinnerComponent,
                   DateInputComponent, NotableComponent, LocationNotableComponent, CapitalizeFirstPipe, PresignImgUrlPipe,
-                  PageHeaderComponent ],
+                  PageHeaderComponent,
+                  UnbundlePipe ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              TimeFilterPipe, TimeFilterTwoPipe, CapitalizeFirstPipe, SafeHtmlPipe,
              SwitchComponent, TreeViewComponent, TimelineComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, DateInputComponent,
-             CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent ]
+             CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
+             UnbundlePipe ]
 })
 export class SharedModule {}
