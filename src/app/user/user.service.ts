@@ -59,6 +59,10 @@ export class UserService {
       })
   }
 
+  hatLogin(name: string, redirect: string): Observable<string> {
+    return this.hat.legacyHatLogin(name, redirect);
+  }
+
   appLogin(name: string): Observable<string> {
     return this.hat.getApplicationTokenNew(name);
   }

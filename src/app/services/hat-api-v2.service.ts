@@ -49,15 +49,15 @@ export class HatApiV2Service {
     return this.authHttp.setToken(token);
   }
 
-  // hatLogin(name: string, redirect: string): Observable<string> {
-  //   const path = `/control/v2/auth/hatlogin`;
-  //   const queryParams = new URLSearchParams();
-  //   queryParams.append('name', name);
-  //   queryParams.append('redirect', redirect);
-  //
-  //   return this.authHttp.get(path, { search: queryParams })
-  //     .map((res: Response) => res.json().message);
-  // }
+  legacyHatLogin(name: string, redirect: string): Observable<string> {
+    const path = `/control/v2/auth/hatlogin`;
+    const queryParams = new URLSearchParams();
+    queryParams.append('name', name);
+    queryParams.append('redirect', redirect);
+
+    return this.authHttp.get(path, { search: queryParams })
+      .map((res: Response) => res.json().message);
+  }
 
   recoverPassword(body: { email: string; }): Observable<any> {
     const path = `/control/v2/auth/passwordReset`;

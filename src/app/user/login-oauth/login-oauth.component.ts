@@ -38,15 +38,15 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
       (hatApp: HatApplication) => {
 
         if (hatApp.setup) {
-          // this.buildRedirect(name);
-          this.hatApp = hatApp.application;
+          this.buildRedirect(name);
         } else {
           this.hatApp = hatApp.application;
         }
       },
-      error => {
-        console.warn('Failed to login. Reason: ', error);
-        this.error = 'ERROR: Failed to obtain HAT authentication. Please try again.';
+      error => { // App is not registered, assume legacy for testing
+        // console.warn('Failed to login. Reason: ', error);
+        // this.error = 'ERROR: Failed to obtain HAT authentication. Please try again.';
+        this.legacyLogin();
         }
       );
     } else {
@@ -84,6 +84,11 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
 
   toggleCardExpansion(endpoint): void {
     endpoint.expanded = !endpoint.expanded;
+  }
+
+  private legacyLogin(): void {
+    this.userSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
+      .subscribe((url: string) => window.location.href = url);
   }
 
 }
