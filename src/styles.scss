@@ -30,6 +30,10 @@ $hat-app-theme: mat-light-theme($hat-app-primary, $hat-app-accent, $hat-app-warn
 
 @include angular-material-theme($hat-app-theme);
 
+body {
+  background-color: $hat-background-color;
+}
+
 .flex-spacer {
   flex-grow: 1;
 }

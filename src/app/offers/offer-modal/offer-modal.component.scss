@@ -1,4 +1,4 @@
-@import "../../style/variables";
+@import "../../style/branding";
 
 .modal-overlay{
   opacity: 0;
@@ -73,7 +73,7 @@
   max-height: 430px;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: $app-background-color;
+  background-color: $hat-background-color;
   padding: 0px;
   margin: 0px;
   border: none;
@@ -87,7 +87,7 @@
 
   .offer-nav{
     position: fixed;
-    background: $app-background-color;
+    background: $hat-background-color;
     z-index: 500;
     width: 100%;
 
@@ -239,7 +239,7 @@
                 position: absolute;
                 top: -13px;
                 left: -48px;
-                background-color: $app-background-color;
+                background-color: $hat-background-color;
               }
               .circle-cutout-right{
                 left: unset;

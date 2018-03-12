@@ -6,14 +6,13 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
  */
 
-@import "variables";
 @import "bootstrap/mixins/grid";
 
 body {
   font-size: 12px;
   font-family: $font-standard;
   min-width: 320px;
-  background-color: $app-background-color;
+  background-color: $hat-background-color;
 }
 
 h1, h2, h3, h4, h5, h6, div, p, a, ul, ol, li, blockquote, span
@@ -129,7 +128,7 @@ button.btn-view-header {
 .view-header {
   min-height: 5em;
   background-color: #37474F;
-  color: $app-background-color;
+  color: $hat-background-color;
   padding: 1em;
   font-size: 1em;
 

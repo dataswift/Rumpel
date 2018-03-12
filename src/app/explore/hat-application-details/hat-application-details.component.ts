@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
-import { HatApplicationContent } from '../hat-application.interface';
+import { HatApplication } from '../hat-application.interface';
 import { Observable } from 'rxjs/Observable';
 
 @Component({
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./hat-application-details.component.scss']
 })
 export class HatApplicationDetailsComponent implements OnInit {
-  public appDetails$: Observable<HatApplicationContent>;
+  public appDetails$: Observable<HatApplication>;
 
   constructor(private activatedRoute: ActivatedRoute,
               private location: Location,

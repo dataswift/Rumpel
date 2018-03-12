@@ -6,10 +6,10 @@
     </mat-toolbar>
 
     <mat-card class="app-details-header-card">
-      <img [src]="app.info.graphics.logo.normal" height="100" class="img img-responsive app-logo" />
-      <h3>{{app.info.name}}</h3>
-      <div class="app-details-header-headline">{{app.info.headline}}</div>
-      <a mat-button href="{{app.kind.url}}">Go to app <mat-icon>input</mat-icon></a>
+      <img [src]="app.application.info.graphics.logo.normal" height="100" class="img img-responsive app-logo" />
+      <h3>{{app.application.info.name}}</h3>
+      <div class="app-details-header-headline">{{app.application.info.headline}}</div>
+      <a mat-button href="{{app.application.kind.url}}">Go to app <mat-icon>input</mat-icon></a>
     </mat-card>
   </div>
 
@@ -19,10 +19,10 @@
         <mat-card class="app-details-general">
           <mat-card-content>
             <h5 class="app-details-heading">Description</h5>
-            <p class="app-details-description">{{app.info.description.text}}</p>
+            <p class="app-details-description">{{app.application.info.description.text}}</p>
             <h5 class="app-details-heading">Screenshots</h5>
             <div class="app-details-screenshots">
-              <div class="img-wrapper" *ngFor="let screenshot of app.info.graphics.screenshots">
+              <div class="img-wrapper" *ngFor="let screenshot of app.application.info.graphics.screenshots">
                 <img src="{{screenshot.normal}}" class="img img-responsive" />
               </div>
             </div>
@@ -31,7 +31,7 @@
       </mat-tab>
 
       <mat-tab label="Data Preview">
-        <mat-card *ngFor="let dataSample of app.info.dataPreview">
+        <mat-card *ngFor="let dataSample of app.application.info.dataPreview">
           <mat-card-header>
             <h4 class="card-header-title">{{dataSample.title.text}}</h4>
             <span class="flex-spacer"></span>

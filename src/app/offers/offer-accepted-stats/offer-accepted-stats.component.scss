@@ -1,4 +1,4 @@
-@import "../../style/variables";
+@import "../../style/branding";
 
 
 .offers-container{
@@ -102,8 +102,8 @@
 .statbox{
   padding: 20px;
   color: $app-dark-tone;
-  box-shadow: 0 2px 9px 0 $app-background-color;
-  border: solid 1px $app-background-color;
+  box-shadow: 0 2px 9px 0 $hat-background-color;
+  border: solid 1px $hat-background-color;
   border-radius: 6px;
   margin: 8px;
   width: 30%;

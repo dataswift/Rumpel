@@ -1,11 +1,11 @@
- @import "../../style/variables";
+ @import "../../style/branding";
 
 
-p{
+p {
   text-align: right;
 }
 
-.filePickerBtn{
+.filePickerBtn {
   color: $app-dark-tone;
   background-color: #eee;
   padding: 20px;

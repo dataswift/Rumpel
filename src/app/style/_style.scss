@@ -8,26 +8,10 @@
 
 $icon-font-path: "/assets/fonts/";
 @import "bootstrap";
-@import "variables";
 @import "vunits.mixin";
 
 //html { font-size: calc( 12px + (24 - 12) * ( (100vw - 400px) / ( 800 - 400) )); }
 
-body {
-  //padding-bottom: 50px;
-  font-size: 12px;
-  @media (max-width: $screen-md-max) {
-    font-size: 11px;
-  }
-  @media (max-width: $screen-sm-max) {
-    font-size: 10px;
-  }
-  @media (max-width: $screen-sm-min) {
-    font-size: 12px;
-  }
-  padding-top: 10em;
-  font-family: 'Open Sans Regular', sans-serif;
-}
 
 .container, .container-fluid {
   font-size: 1em;

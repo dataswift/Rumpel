@@ -18,16 +18,17 @@
 
 <div class="app-list">
   <mat-card *ngFor="let app of hatApp$ | async">
-    <a [routerLink]="app.info.name.toLowerCase()" class="app-link-wrapper">
+    <a [routerLink]="app.application.info.name.toLowerCase()" class="app-link-wrapper">
       <mat-card-content>
-        <img [src]="app.info.graphics.logo.normal" class="img img-responsive app-logo" />
+        <img [src]="app.application.info.graphics.logo.normal" class="img img-responsive app-logo" height="60" width="60" />
         <div class="app-description">
-          <h3 class="app-name">{{ app.info.name }}</h3>
-          <div class="app-headline">{{ app.info.headline }}</div>
+          <h3 class="app-name">{{ app.application.info.name }}</h3>
+          <div class="app-headline">{{ app.application.info.headline }}</div>
         </div>
         <div class="app-link-action">View app</div>
-        <mat-icon *ngIf="false" class="app-status-icon check">check</mat-icon>
-        <mat-icon *ngIf="true" class="app-status-icon add">add</mat-icon>
+        <mat-icon class="app-status-icon">
+          {{ app.setup ? 'check_circle' : 'add_circle_outline' }}
+        </mat-icon>
       </mat-card-content>
     </a>
   </mat-card>
