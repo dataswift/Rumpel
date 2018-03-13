@@ -18,7 +18,7 @@ export class DataPlugFeedComponent implements OnInit {
 
   ngOnInit() {
     this.feed$ = this.route.parent.params.flatMap(routeParams => {
-      return this.sheSvc.filteredBy$(routeParams['provider'] || '');
+      return this.sheSvc.filteredBy$(routeParams['provider'].replace('calendar', 'google') || '');
     });
 
     this.sheSvc.getInitData(1000);
