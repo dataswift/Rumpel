@@ -101,6 +101,7 @@
 
 .title-section {
   text-align: center;
+  max-width: 500px;
   margin-bottom: 20px;
 
   .app-logo-wrapper {
@@ -124,10 +125,11 @@
   }
 
   .title-section-text {
-    color: $text-dark;
+    color: $hat-body-text;
     font-size: 13px;
     line-height: 1.38;
-    max-width: 400px;
+    width: 80%;
+    margin: auto;
   }
 }
 
@@ -146,6 +148,12 @@
     margin: 10px 0;
     box-shadow: none;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+
+    .card-img-wrapper {
+      margin-right: 20px;
+    }
 
     .card-heading {
       color: $app-dark-tone;
@@ -157,11 +165,12 @@
 
     .card-subheading {
       font-weight: bold;
+      margin-top: 0;
     }
 
     .card-text {
       letter-spacing: normal;
-      color: $text-dark;
+      color: $hat-body-text;
       font-size: 13px;
       height: 36px;
       overflow: hidden;
@@ -178,10 +187,12 @@
 
     .card-expansion-toggle {
       position: absolute;
-      bottom: 10px;
-      right: 20px;
+      bottom: 8px;
+      right: 16px;
       color: $app-accent-color;
       cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
     }
   }
 }
