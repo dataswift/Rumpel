@@ -17,7 +17,7 @@ import { LocationsService } from '../locations/locations.service';
 
 import { APP_CONFIG, AppConfig} from '../app.config';
 import { DataPlug } from '../shared/interfaces/data-plug.interface';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 import { DexApiService } from '../services/dex-api.service';
 
 import * as moment from 'moment';
@@ -36,7 +36,7 @@ export class DataPlugService {
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private http: Http,
-              private hatSvc: HatApiV2Service,
+              private hatSvc: HatApiService,
               private dexSvc: DexApiService,
               private userSvc: UserService,
               private locationsSvc: LocationsService) {

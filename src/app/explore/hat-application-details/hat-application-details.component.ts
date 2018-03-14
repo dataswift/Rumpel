@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
 import { HatApplication } from '../hat-application.interface';
 import { Observable } from 'rxjs/Observable';
+import { SheFeed } from '../../dashboard/she-feed.interface';
 
 @Component({
   selector: 'rum-hat-application-details',
@@ -19,7 +20,19 @@ export class HatApplicationDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.appDetails$ = this.activatedRoute.params.flatMap(pathParams => {
-      return this.hatAppSvc.getApplicationDetails(pathParams['appName']);
+      const appName = pathParams['appName'];
+
+      return Observable.forkJoin(
+        this.hatAppSvc.getApplicationDetails(appName),
+        this.hatAppSvc.getApplicationData(appName)
+      )
+        .map((results: [HatApplication, SheFeed[]]) => {
+          if (results[1].length > 0) {
+            results[0].application.info.dataPreview = results[1];
+          }
+
+          return results[0];
+        })
     });
   }
 

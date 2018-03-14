@@ -8,8 +8,17 @@
 
 <div id="map-view" [style.height]="mapHeight" style="flex: 1">
   <div class="locationDate" *ngIf="locationDate">
-      <div class="location-icon"><img src="assets/icons/grey-location-plug.svg"></div>
-      <h4 class="location-title">My locations: {{ locationDate.timestamp | moment:"ddd DD MMM YYYY" }}</h4>
+    <div class="location-icon"><img src="assets/icons/grey-location-plug.svg"></div>
+    <h4 class="location-title">My locations</h4>
+
+    <span class="flex-spacer"></span>
+
+    <input matInput placeholder="Select Date" readonly name="selectedTime" class="map-date-input"
+           [matDatepicker]="timeFilterDatepicker"
+           [value]="selectedTime"
+           (dateChange)="dateChanged($event)">
+    <mat-datepicker-toggle matSuffix [for]="timeFilterDatepicker"></mat-datepicker-toggle>
+    <mat-datepicker #timeFilterDatepicker disabled="false"></mat-datepicker>
   </div>
 </div>
 

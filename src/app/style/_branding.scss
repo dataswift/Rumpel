@@ -6,13 +6,12 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
-
-
 // major branding options
 
  $font-standard: "Roboto", sans-serif;
 
  $app-dark-tone: #4a556b;
+ $app-dark-tone-lighter: #4b566c; // Can keep the same as the app-dark-tone if you're not fancy
  $app-mid-tone: #6297b1;
  $app-light-tone: #DEE9EE;
 
@@ -32,8 +31,10 @@
  $text-dark: #9a9a9a;
  $text-light: white;
 
- $hat-background-color: #F8F8F8;
+ $hat-background-color: #EEEEEE;
  $app-light-background-color: $hat-background-color;
+
+ $hat-body-text: #9a9a9a;
 
  $app-dark-grey: #939393;
  $app-hover-grey: #E8E8E8;

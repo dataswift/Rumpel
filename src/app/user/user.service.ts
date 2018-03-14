@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 import { AuthHttp } from '../services/auth-http.service';
 import { User } from './user.interface';
 import {HatApplication} from '../explore/hat-application.interface';
@@ -19,7 +19,7 @@ import {HatApplication} from '../explore/hat-application.interface';
 export class UserService {
   private _user$: ReplaySubject<User> = <ReplaySubject<User>>new ReplaySubject(1);
 
-  constructor(private hat: HatApiV2Service,
+  constructor(private hat: HatApiService,
               private authHttp: AuthHttp) {
   }
 

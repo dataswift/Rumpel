@@ -16,9 +16,10 @@ import { TileMapComponent } from './tile-map/tile-map.component';
 
 import { LocationsService } from './locations.service';
 import { FormsModule } from '@angular/forms';
+import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 
 @NgModule({
-    imports: [ SharedModule, FormsModule ],
+    imports: [ SharedModule, FormsModule, CustomAngularMaterialModule ],
     declarations: [ LocationsComponent, MapComponent, TileMapComponent ],
     providers: [ LocationsService ],
     exports: [ TileMapComponent, MapComponent ]

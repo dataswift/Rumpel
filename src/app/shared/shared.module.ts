@@ -11,12 +11,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { SwitchComponent, TreeViewComponent, TimelineComponent, DateInputComponent } from './components';
+import { TreeViewComponent } from './components';
 import { OutsideClickDirective, StickDirective } from './directives';
 import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, RemoveCharsPipe, RelativeTimePipe,
          MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
 import { TimeFilterTwoPipe } from './pipes/time-filter-two.pipe';
-import { CapitalizeFirstPipe } from './pipes/capitalize-first.pipe';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NotableComponent } from './components/notable/notable.component';
 import { LocationNotableComponent } from './components/location-notable/location-notable.component';
@@ -35,16 +34,16 @@ import { UnbundlePipe } from './pipes/unbundle.pipe';
                   ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClickDirective, StickDirective,
-                  SwitchComponent, TreeViewComponent, TimelineComponent, SpinnerComponent,
-                  DateInputComponent, NotableComponent, LocationNotableComponent, CapitalizeFirstPipe, PresignImgUrlPipe,
+                  TreeViewComponent, SpinnerComponent,
+                  NotableComponent, LocationNotableComponent, PresignImgUrlPipe,
                   PageHeaderComponent,
                   UnbundlePipe ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
-             TimeFilterPipe, TimeFilterTwoPipe, CapitalizeFirstPipe, SafeHtmlPipe,
-             SwitchComponent, TreeViewComponent, TimelineComponent,
-             OutsideClickDirective, StickDirective, SpinnerComponent, DateInputComponent,
+             TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
+             TreeViewComponent,
+             OutsideClickDirective, StickDirective, SpinnerComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
              UnbundlePipe ]
 })

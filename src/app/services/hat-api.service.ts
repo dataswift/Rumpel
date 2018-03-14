@@ -1,62 +1,48 @@
 /*
- * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+ * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 7, 2017
  */
 
-import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams, Response } from '@angular/http';
+import { Inject, Injectable } from '@angular/core';
+import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { AuthHttp } from './auth-http.service';
 import { Observable } from 'rxjs/Observable';
-import { DataDebit } from '../shared/interfaces/index';
+import { APP_CONFIG, AppConfig } from '../app.config';
+
 import { User } from '../user/user.interface';
-import { isMoment } from 'moment/moment';
-import moment from 'moment/moment';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
+import { DataDebit, DataDebitValues } from '../shared/interfaces/data-debit.interface';
+import { FileMetadataReq, FileMetadataRes } from '../shared/interfaces/file.interface';
+import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../shared/interfaces/bundle.interface';
+import { HatApplication } from '../explore/hat-application.interface';
+import { SheFeed } from '../dashboard/she-feed.interface';
 
 @Injectable()
 export class HatApiService {
+  private pathPrefix = '/api/v2';
+  private appNamespace: string;
 
-  static stringify(value: any): string {
-    if (typeof value === 'string') {
-      return value;
-    } else if (value === null) {
-      return '';
-    } else if (isMoment(value)) {
-      return value.format();
-    } else if (Array.isArray(value)) {
-      return value.join(',');
-    } else {
-      return '' + value;
-    }
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
+              private authHttp: AuthHttp,
+              private http: Http) {
+    this.appNamespace = config.name.toLowerCase();
   }
 
-  constructor(private http: Http,
-              private authHttp: AuthHttp) {}
-
-  // validateToken(domain: string, token: string) {
-  //   const url = `//${domain}/users/access_token/validate`;
-  //   const headers = new Headers();
-  //   headers.append('Content-Type', 'application/json');
-  //   headers.append('X-Auth-Token', token);
-  //
-  //   return this._http.get(url, { headers: headers, body: '' }).map(res => res.json());
-  // }
-
-  /* User authentication management methods */
-
   login(username: string, password: string): Observable<User> {
+    const path = `/users/access_token`;
     const headers = new Headers({
       username: encodeURIComponent(username),
       password: encodeURIComponent(password)
     });
 
-    return this.http.get('users/access_token', { headers: headers, body: '' })
+    return this.http.get(path, { headers: headers })
       .map((res: Response) => {
         const token = res.json().accessToken;
 
-        return this.authHttp.setToken(token);
+        return this.loginWithToken(token);
       });
   }
 
@@ -64,325 +50,266 @@ export class HatApiService {
     return this.authHttp.setToken(token);
   }
 
-  hatLogin(name: string, redirect: string): Observable<any> {
+  legacyHatLogin(name: string, redirect: string): Observable<string> {
+    const path = `/control/v2/auth/hatlogin`;
     const queryParams = new URLSearchParams();
     queryParams.append('name', name);
     queryParams.append('redirect', redirect);
 
-    return this.authHttp.get('/control/v2/auth/hatlogin', { search: queryParams })
-      .map((res: Response) => res.json()['message']);
+    return this.authHttp.get(path, { search: queryParams })
+      .map((res: Response) => res.json().message);
   }
 
-  recoverPassword(body: any): Observable<any> {
+  recoverPassword(body: { email: string; }): Observable<any> {
+    const path = `/control/v2/auth/passwordReset`;
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    return this.http.post('/control/v2/auth/passwordReset', body, { headers: headers })
+    return this.http.post(path, body, { headers: headers })
       .map((res: Response) => res.json());
   }
 
-  changePassword(body: any): Observable<any> {
-    return this.authHttp.post('/control/v2/auth/password', body)
-      .map((res: Response) => res.json());
-  }
-
-  resetPassword(resetToken: string, body: any): Observable<any> {
+  changePassword(body: { password: string; newPassword: string; }): Observable<any> {
+    const path = `/control/v2/auth/password`;
     const headers = new Headers({ 'Content-Type': 'application/json' });
 
-    return this.http.post('/control/v2/auth/passwordreset/confirm/' + resetToken, body, { headers: headers })
+    return this.authHttp.post(path, body, { headers: headers })
       .map((res: Response) => res.json());
   }
 
-  /* Application authentication management methods */
+  resetPassword(resetToken: string, body: { newPassword: string; }): Observable<any> {
+    const path = `/control/v2/auth/passwordreset/confirm/${resetToken}`;
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+
+    return this.http.post(path, body, { headers: headers })
+      .map((res: Response) => res.json());
+  }
 
   getApplicationToken(name: string, resource: string): Observable<string> {
-    const query: URLSearchParams = new URLSearchParams();
-    query.append('name', name);
-    query.append('resource', resource);
+    const path = `/users/application_token`;
+    const queryParams = new URLSearchParams();
+    queryParams.append('name', name);
+    queryParams.append('resource', resource);
 
-    return this.authHttp.get('/users/application_token', { search: query })
-      .map(res => res.json().accessToken);
+    return this.authHttp.get(path, { search: queryParams })
+      .map((res: Response) => res.json().accessToken)
   }
 
-  /* Data table methods */
+  getApplicationList(): Observable<HatApplication[]> {
+    const path = `${this.pathPrefix}/applications`;
 
-  getTableList(): Observable<any> {
-    return this.authHttp.get('/data/sources').map(res => res.json());
-  }
-
-  // getDataSources(): Observable<any> {
-  //   const url = this._baseUrl + '/data/sources';
-  //
-  //   return this._http.get(url, { headers: this._headers, body: '' })
-  //     .map(res => res.json());
-  // }
-
-  getTable(name: string, source: string): Observable<any> {
-    const query: URLSearchParams = new URLSearchParams();
-    query.append('name', name);
-    query.append('source', source);
-
-    return this.authHttp.get('/data/table', { search: query })
-      .map(res => res.json())
-      .catch(e => {
-        if (e.status === 404) {
-          return Observable.of('Not Found');
-        } else if (e.status === 403) {
-          return Observable.of('Forbidden');
-        }
-      });
-  }
-
-  getModel(tableId: number): Observable<any> {
-    return this.authHttp.get(`/data/table/${tableId}`).map(res => res.json());
-  }
-
-  getModelMapping(tableId: number): Observable<any> {
-    return this.getModel(tableId)
-      .map(rawModel => {
-        return {
-          id: rawModel.id,
-          mapping: this.mapDataSource(rawModel, rawModel.name)
-        };
-      });
-  }
-
-  postModel(model: any): Observable<any> {
-    return this.authHttp.post('/data/table', model)
-      .map(res => res.json())
-      .map(rawModel => {
-        return {
-          id: rawModel.id,
-          mapping: this.mapDataSource(rawModel, rawModel.name)
-        };
-      });
-  }
-
-  /* Data record methods */
-
-  getAllValuesOf(name: string, source: string, startTime?: string): Observable<any> {
-    return this.getTable(name, source)
-      .flatMap(table => {
-        if (table === 'Not Found' || table === 'Forbidden') {
-          return Observable.of([]);
-        } else {
-          if (name === 'profile' || name === 'photos' || name === 'metadata' || name === 'profile_picture') {
-            return this.getValues(table.id, startTime, false);
-          } else {
-            return this.getValues(table.id, startTime, true);
-          }
-        }
-      });
-  }
-
-  postRecord(obj: any, hatIdMapping: any, prefix: string = 'default'): Observable<any> {
-    const hatFormattedObj = this.createRecord(obj, hatIdMapping, prefix);
-
-    return this.authHttp.post('/data/record/values', hatFormattedObj)
-        .map(res => res.json());
-  }
-
-  deleteRecord(id: number) {
-    return this.authHttp.delete(`/data/record/${id}`)
-      .map(res => res.json());
-  }
-
-  getValues(tableId: number, startTime: string = '0', pretty: boolean = false): Observable<any> {
-    const query: URLSearchParams = new URLSearchParams();
-    query.append('starttime', startTime);
-    if (pretty) {
-      query.append('pretty', pretty.toString());
-    }
-
-    const requestObservable = this.authHttp.get(`/data/table/${tableId}/values`, { search: query })
-      .map(res => res.json());
-
-    if (pretty) {
-      return requestObservable;
-    } else {
-      return requestObservable.map(table => this.transformRecord(table));
-    }
-  }
-
-  getValuesWithLimit(tableId: number, limit: number = 50, endtime: string = null, starttime: string = null): Observable<any> {
-    const query: URLSearchParams = new URLSearchParams();
-    query.append('pretty', 'true');
-    query.append('limit', limit.toString());
-    query.append('starttime', starttime || '0');
-
-    if (endtime) {
-      query.append('endtime', endtime);
-    }
-
-    return this.authHttp.get(`/data/table/${tableId}/values`, { search: query })
-      .map(res => res.json());
-  }
-
-  /* Data debit methods */
-
-  getSlimDataDebit(uuid: string): Observable<DataDebit> {
-    return this.authHttp.get(`/dataDebit/${uuid}`).map(res => res.json());
-  }
-
-  getDataDebit(uuid: string) {
-    const query: URLSearchParams = new URLSearchParams();
-    query.append('limit', '0');
-    query.append('starttime', '0');
-
-    return this.authHttp.get(`/dataDebit/${uuid}/values`, { search: query })
-      .map(res => res.json())
-      .map(debit => this.transformDataDebit(debit));
-  }
-
-  getAllDataDebits() {
-    return this.authHttp.get('/dataDebit').map(res => res.json());
-  }
-
-  updateDataDebit(uuid: string, action: string): Observable<any> {
-    return this.authHttp.get(`/api/v2/data-debit/${uuid}/${action}`);
-  }
-
-  /* HAT Public API methods */
-
-  getPublicData(endpoint: string): Observable<any> {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.get(`/api/${endpoint}`, { headers: headers, body: '' })
-      .map(res => res.json())
-      .catch(err => {
-        console.warn(`Could not access public data of the current HAT.
-                      Reason: ${err}`);
-
-        return Observable.of(endpoint === 'profile' ? { 'public': false } : []);
-      });
-  }
-
-  /* System status methods */
-
-  getAccountStatus(): Observable<any> {
-    return this.authHttp.get('/api/v2/system/status')
+    return this.authHttp.get(path)
       .map((res: Response) => res.json());
   }
 
-  /* Private helper methods */
+  getApplicationById(applicationId: string): Observable<HatApplication> {
+    const path = `${this.pathPrefix}/applications/${applicationId}`;
 
-  private createRecord(obj: any, hatIdMapping: any, prefix: string) {
-    if (Array.isArray(obj)) {
-      return obj.map(record => {
-        return {
-          record: { name: new Date() },
-          values: this.createValue(record, hatIdMapping, prefix)
-        };
-      });
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json());
+  }
+
+  getApplicationTokenNew(applicationId: string): Observable<string> {
+    const path = `${this.pathPrefix}/applications/${applicationId}/access-token`;
+
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json().accessToken);
+  }
+
+  setupApplication(applicationId: string): Observable<HatApplication> {
+    const path = `${this.pathPrefix}/applications/${applicationId}/setup`;
+
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json());
+  }
+
+  disableApplication(applicationId: string): Observable<HatApplication> {
+    const path = `${this.pathPrefix}/applications/${applicationId}/disable`;
+
+    return this.authHttp.get(path)
+      .map((res: Response) => res.json());
+  }
+
+  getDataRecords(namespace: string, endpoint: string, take?: number, orderBy?: string, drop?: number): Observable<HatRecord<any>[]> {
+    const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
+    const queryParams = new URLSearchParams();
+
+    queryParams.append('ordering', 'descending');
+
+    if (take) {
+      queryParams.append('take', take.toString());
+    }
+
+    if (orderBy) {
+      queryParams.append('orderBy', orderBy);
+    }
+
+    if (drop) {
+      queryParams.append('skip', drop.toString());
+    }
+
+    return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
+  }
+
+  getSheRecords(namespace: string, limit: number = 20): Observable<SheFeed[]> {
+    const path = `${this.pathPrefix}/she/feed/${namespace}/feed`;
+    const queryParams = new URLSearchParams();
+
+    queryParams.append('take', limit.toString());
+
+    return this.authHttp.get(path, { search: queryParams })
+      .map((res: Response) => <SheFeed[]>res.json());
+  }
+
+  createRecord(namespace: string, endpoint: string, record: any): Observable<HatRecord<any>> {
+    const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
+
+    return this.authHttp.post(path, record).map((res: Response) => <HatRecord<any>>res.json());
+  }
+
+  updateRecord(hatRecord: HatRecord<any>): Observable<HatRecord<any>> {
+    const path = `${this.pathPrefix}/data`;
+
+    return this.authHttp.put(path, [hatRecord]).map((res: Response) => <HatRecord<any>>res.json())
+  }
+
+  deleteRecords(recordIds: Array<string>): Observable<number> {
+    const path = `${this.pathPrefix}/data`;
+
+    if (recordIds.length > 0) {
+      const queryParams = new URLSearchParams();
+      recordIds.forEach(recordId => queryParams.append('records', recordId));
+
+      return this.authHttp.delete(path, { search: queryParams }).map((res: Response) => res.status);
     } else {
-      return [{
-        record: { name: new Date() },
-        values: this.createValue(obj, hatIdMapping, prefix)
-      }];
+      return Observable.throw(new Error('Cannot delete. Record IDs missing.'));
     }
   }
 
-  private createValue(obj: any, hatIdMapping: any, prefix: string = 'default') {
-    return Object.keys(obj).reduce((acc, key) => {
-      if (typeof obj[key] === 'object' && obj[key] !== null && !isMoment(obj[key]) && !Array.isArray(obj[key])) {
-        const subTreeValues = this.createValue(obj[key], hatIdMapping, prefix + '_' + key);
-        acc = acc.concat(subTreeValues);
-      } else {
-        acc.push({
-          value: HatApiService.stringify(obj[key]),
-          field: {
-            id: hatIdMapping[prefix + '_' + key],
-            name: key
-          }
-        });
-      }
+  getCombinatorRecords(name: string, orderBy: string, take: number): Observable<HatRecord<any>[]> {
+    const path = `${this.pathPrefix}/combinator/${name}`;
 
-      return acc;
-    }, []);
+    const queryParams = new URLSearchParams();
+    queryParams.append('orderBy', orderBy);
+    queryParams.append('take', take.toString());
+    queryParams.append('ordering', 'descending');
+
+    return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
   }
 
-  private mapDataSource(table: any, prefix: string = 'default') {
-    const mapping = {};
+  proposeNewDataEndpoint(name: string, proposedCombinator: EndpointQuery[]): Observable<number> {
+    const path = `${this.pathPrefix}/combinator/${name}`;
 
-    table.fields.reduce((acc, field) => {
-      acc[prefix + '_' + field.name] = field.id;
-
-      return acc;
-    }, mapping);
-
-    if (table.subTables) {
-      const mappedSubTables = table.subTables.reduce((acc, tableNode) => {
-        const mappedTable = this.mapDataSource(tableNode, prefix + '_' + tableNode.name);
-        Object.assign(acc, mappedTable);
-
-        return acc;
-      }, mapping);
-    }
-
-    return mapping;
+    return this.authHttp.post(path, proposedCombinator).map((res: Response) => res.status);
   }
 
-  private transformDataDebit(rawDebit) {
-    const dataGroups = rawDebit.bundleContextless.dataGroups;
+  getDataBundle(bundleId: string): Observable<any> {
+    const path = `${this.pathPrefix}/data-bundle/${bundleId}`;
 
-    const dataGroupsNames = Object.keys(dataGroups);
+    return this.authHttp.get(path).map((res: Response) => res.json());
+  }
 
-    const mappedDataGroups = dataGroupsNames.map(groupName => {
-      return {
-        name: groupName,
-        data: dataGroups[groupName].map(group => {
-          return {
-            name: group.name,
-            data: this.transformRecord(group.data)
-          };
-        })
-      };
+  getDataBundeStructure(bundleId: string): Observable<BundleStructure> {
+    const path = `${this.pathPrefix}/data-bundle/${bundleId}/structure`;
+
+    return this.authHttp.get(path).map((res: Response) => <BundleStructure>res.json());
+  }
+
+  proposeNewDataBundle(bundleId: string, bundle: { [bundleVersion: string]: PropertyQuery }): Observable<BundleValues> {
+    const path = `${this.pathPrefix}/data-bundle/${bundleId}`;
+
+    return this.authHttp.post(path, bundle).map((res: Response) => <BundleValues>res.json());
+  }
+
+  getAllDataDebits(): Observable<DataDebit[]> {
+    const path = `${this.pathPrefix}/data-debit`;
+
+    return this.authHttp.get(path).map((res: Response) => <DataDebit[]>res.json());
+  }
+
+  getDataDebit(debitId: string): Observable<DataDebit> {
+    const path = `${this.pathPrefix}/data-debit/${debitId}`;
+
+    return this.authHttp.get(path).map((res: Response) => <DataDebit>res.json());
+  }
+
+  getDataDebitValues(debitId: string): Observable<DataDebitValues> {
+    const path = `${this.pathPrefix}/data-debit/${debitId}/values`;
+
+    return this.authHttp.get(path).map((res: Response) => <DataDebitValues>res.json());
+  }
+
+  updateDataDebit(debitId: string, action: string): Observable<DataDebit> {
+    const path = `${this.pathPrefix}/data-debit/${debitId}/${action}`;
+
+    return this.authHttp.get(path).map((res: Response) => <DataDebit>res.json());
+  }
+
+  getFileMetadata(fileId: string): Observable<FileMetadataRes> {
+    const path = `${this.pathPrefix}/files/file/${fileId}`;
+
+    return this.authHttp.get(path).map((res: Response) => <FileMetadataRes>res.json());
+  }
+
+  uploadFile(file: ArrayBuffer, metadata: FileMetadataReq, contentType?: string): Observable<FileMetadataRes> {
+    const headers = new Headers({
+      'x-amz-server-side-encryption': 'AES256',
+      'Content-Type': contentType || 'image/png'
     });
 
-    const processedDebit = {
-      dateCreated: moment(rawDebit.dateCreated),
-      startDate: moment(rawDebit.startDate),
-      endDate: moment(rawDebit.endDate),
-      lastUpdated: moment(rawDebit.lastUpdated),
-      enabled: rawDebit.enabled,
-      name: rawDebit.name,
-      price: rawDebit.price,
-      rolling: rawDebit.rolling,
-      sell: rawDebit.sell,
-      key: rawDebit.key,
-      dataToShare: mappedDataGroups
-    };
-
-    return processedDebit;
+    return this.uploadFileMetadata(metadata)
+      .flatMap(uploadedMetadata => {
+        return this.http.put(uploadedMetadata.contentUrl, file, { headers: headers })
+          .map((res: Response) => uploadedMetadata)
+      })
+      .flatMap(uploadedMetadata => this.markFileAsComplete(uploadedMetadata.fileId));
   }
 
-  private transformRecord(raw: Array<any>) {
-    return raw.map((record) => {
-      return this.processNode(record.tables[0]);
-    });
+  deleteFile(fileId: string): Observable<number> {
+    const path = `${this.pathPrefix}/files/file/${fileId}`;
+
+    return this.authHttp.delete(path).map((res: Response) => res.status);
   }
 
-  private processNode(node) {
-    const values = {};
-    node.fields.reduce((acc, field) => {
-      if (field.values) {
-        acc[field.name] = field.values[0].value;
-      } else {
-        acc[field.name] = null;
-      }
-
-      return acc;
-    }, values);
-
-    if (node.subTables) {
-      node.subTables.reduce((acc, table) => {
-        acc[table.name] = this.processNode(table);
-
-        return acc;
-      }, values);
+  updateFilePermissions(fileId: string, permission: string, userId?: string): Observable<number> {
+    let actionIdentifier;
+    switch (permission) {
+      case 'allow':
+        actionIdentifier = 'allowAccessPublic';
+        break;
+      case 'restrict':
+        actionIdentifier = 'restrictAccessPublic';
+        break;
+      default:
+        return Observable.throw(new Error('Requested permission cannot be matched to available options.'))
     }
 
-    return values;
+    const path = `${this.pathPrefix}/files/${actionIdentifier}/${fileId}`;
+
+    return this.authHttp.get(path).map((res: Response) => res.status);
+  }
+
+  private uploadFileMetadata(metadata: FileMetadataReq): Observable<FileMetadataRes> {
+    const path = `${this.pathPrefix}/files/upload`;
+
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+
+    return this.authHttp.post(path, metadata, { headers: headers })
+      .map((res: Response) => <FileMetadataRes>res.json());
+  }
+
+  getPhataPage(): Observable<BundleValues> {
+    const path = `${this.pathPrefix}/phata/profile`;
+
+    return this.http.get(path).map((res: Response) => res.json());
+  }
+
+  private markFileAsComplete(fileId: string): Observable<FileMetadataRes> {
+    const path = `${this.pathPrefix}/files/file/${fileId}/complete`;
+
+    return this.authHttp.put(path, {}).map((res: Response) => <FileMetadataRes>res.json());
   }
 
 }

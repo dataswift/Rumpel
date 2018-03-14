@@ -8,7 +8,7 @@
 
 import { Injectable } from '@angular/core';
 import { BaseDataService } from '../services/base-data.service';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 import { UserService } from '../user/user.service';
 
 import { Event } from '../shared/interfaces/index';
@@ -19,7 +19,7 @@ import * as moment from 'moment';
 @Injectable()
 export class FacebookEventsService extends BaseDataService<Event> {
 
-  constructor(hat: HatApiV2Service, userSvc: UserService) {
+  constructor(hat: HatApiService, userSvc: UserService) {
     super(hat, userSvc, 'facebook', 'events', 'updated_time');
   }
 

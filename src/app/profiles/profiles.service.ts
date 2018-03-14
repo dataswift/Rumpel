@@ -9,7 +9,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 import { BaseDataService } from '../services/base-data.service';
 import { UserService } from '../user/user.service';
 
@@ -63,7 +63,7 @@ export class ProfilesService extends BaseDataService<Profile> {
   private previousBundle: BundleStructure;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              hat: HatApiV2Service,
+              hat: HatApiService,
               userSvc: UserService) {
     super(hat, userSvc, 'rumpel', 'profile', 'dateCreated');
   }

@@ -7,10 +7,8 @@
  */
 
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { UserService } from '../../services/index';
 import { ExternalNotification } from '../../shared/interfaces/index';
 import { NotificationsService } from '../notifications.service';
-import { User } from '../../user/user.interface';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 
 @Component({

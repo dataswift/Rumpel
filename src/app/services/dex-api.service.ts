@@ -3,7 +3,7 @@ import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { Observable } from 'rxjs/Observable';
 import { JwtHelper } from 'angular2-jwt';
-import { HatApiV2Service } from './hat-api-v2.service';
+import { HatApiService } from './hat-api.service';
 import { DexOfferClaimRes } from '../shared/interfaces/dex-offer-claim-res.interface';
 import { DataPlug } from '../shared/interfaces/data-plug.interface';
 
@@ -14,7 +14,7 @@ export class DexApiService {
   private jwt: JwtHelper = new JwtHelper();
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private hat: HatApiV2Service,
+              private hat: HatApiService,
               private http: Http) {
     this.baseUrl = config.dex.url + config.dex.pathPrefix;
   }
@@ -40,7 +40,7 @@ export class DexApiService {
 
     return this.http.get(url).map((res: Response) => {
       return <DataPlug[]>res.json()
-        .filter(dataplug => 'location,facebook,twitter,fitbit'.includes(dataplug.plug.name.toLowerCase()))
+        .filter(dataplug => 'location,facebook,twitter,fitbit,calendar'.includes(dataplug.plug.name.toLowerCase()))
         .map(dataplug => {
           dataplug.plug.active = false;
 

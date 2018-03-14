@@ -5,7 +5,7 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Claim, Offer, OffersStorage } from './offer.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, AppConfig } from '../app.config';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 import { JwtHelper } from 'angular2-jwt';
 import { groupBy } from 'lodash';
 
@@ -21,7 +21,7 @@ export class DataOfferService {
   private _offers$: ReplaySubject<OffersStorage> = <ReplaySubject<OffersStorage>>new ReplaySubject(1);
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private hatV2Svc: HatApiV2Service,
+              private hatV2Svc: HatApiService,
               private http: Http) {
 
     this.jwt = new JwtHelper();

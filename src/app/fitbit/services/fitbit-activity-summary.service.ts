@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseDataService } from '../../services/base-data.service';
 import { UserService } from '../../user/user.service';
-import { HatApiV2Service } from '../../services/hat-api-v2.service';
+import { HatApiService } from '../../services/hat-api.service';
 
 import { FitbitActivitySummary, FitbitActivityDistance } from '../interfaces/fitbit-activity-summary.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
@@ -10,7 +10,7 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 @Injectable()
 export class FitbitActivitySummaryService extends BaseDataService<FitbitActivitySummary> {
 
-  constructor(hat: HatApiV2Service, userSvc: UserService) {
+  constructor(hat: HatApiService, userSvc: UserService) {
     super(hat, userSvc, 'fitbit', 'activity/day/summary', 'summaryDate');
   }
 

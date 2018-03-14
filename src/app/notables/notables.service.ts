@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject} from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { BaseDataService } from '../services/base-data.service';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 import { DexApiService } from '../services/dex-api.service';
 import { UserService } from '../user/user.service';
 
@@ -33,7 +33,7 @@ export class NotablesService extends BaseDataService<Notable> {
   public notablesMeta$: Observable<NotablesServiceMeta>;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              hat: HatApiV2Service,
+              hat: HatApiService,
               userSvc: UserService,
               private dex: DexApiService) {
     super(hat, userSvc, 'rumpel', 'notablesv1', 'updated_time');
