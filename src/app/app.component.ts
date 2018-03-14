@@ -10,7 +10,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from './app.config';
 import { Router, NavigationEnd } from '@angular/router';
 import { User } from './user/user.interface';
-import { UserService } from './services';
+import { UserService } from './user/user.service';
 
 import * as moment from 'moment';
 import { GlobalMessagingService } from './services/global-messaging.service';

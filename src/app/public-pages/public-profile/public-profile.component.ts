@@ -8,7 +8,7 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
 import { UserService } from '../../user/user.service';
-import { HatApiV2Service } from '../../services/hat-api-v2.service';
+import { HatApiService } from '../../services/hat-api.service';
 import { BundleValues } from '../../shared/interfaces/bundle.interface';
 import { Profile } from '../../shared/interfaces/profile.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
@@ -27,7 +27,7 @@ export class PublicProfileComponent implements OnInit {
   public notables: HatRecord<any>[];
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private hatSvc: HatApiV2Service,
+              private hatSvc: HatApiService,
               private userSvc: UserService) { }
 
   ngOnInit() {

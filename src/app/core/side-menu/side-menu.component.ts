@@ -7,15 +7,12 @@
  */
 
 import { Component, OnInit, Inject, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { UserService } from '../../services';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { DataPlugService } from '../../data-management/data-plug.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Router, NavigationEnd } from '@angular/router';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { User } from '../../user/user.interface';
 import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 import { OffersStorage } from '../../offers/offer.interface';
 

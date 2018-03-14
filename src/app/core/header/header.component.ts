@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
-import { UserService } from '../../services/index';
+import { UserService } from '../../user/user.service';
 import { User } from '../../shared/interfaces/index';
 import { Subscription } from 'rxjs/Subscription';
 import { AccountStatus } from '../../user/account-status.interface';

@@ -33,7 +33,6 @@ import { AuthGuard } from './auth.guard';
 import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
-import { HatApiService, RumpelService } from './services/index';
 import { AuthHttp } from './services/auth-http.service';
 
 // import { DatePickerModule } from 'ng2-datepicker';
@@ -49,7 +48,7 @@ import { FileUploadComponent } from './core/file-upload/file-upload.component';
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
 import { BrowserStorageService } from './services/browser-storage.service';
-import { HatApiV2Service } from './services/hat-api-v2.service';
+import { HatApiService } from './services/hat-api.service';
 import { GlobalMessagingService } from './services/global-messaging.service';
 import { DexApiService } from './services/dex-api.service';
 import { FileService } from './services/file.service';
@@ -107,13 +106,11 @@ export function cookieServiceFactory() {
     },
     AuthGuard,
     NativeGuard,
-    HatApiService,
-    HatApiV2Service, // Supersedes original HAT API service
+    HatApiService, // Supersedes original HAT API service
     StaticDataService,
     GlobalMessagingService,
     DexApiService,
     FileService,
-    RumpelService,
     BrowserStorageService
   ]
 })

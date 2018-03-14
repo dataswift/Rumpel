@@ -13,7 +13,6 @@ import { LocationsModule } from '../locations/locations.module';
 
 import { HeaderComponent } from './header/header.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
-import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { NotificationCentreComponent } from './notification-centre/notification-centre.component';
@@ -35,7 +34,6 @@ import { CustomAngularMaterialModule } from './custom-angular-material.module';
   imports: [ SharedModule, LocationsModule, ProfilesModule, CustomAngularMaterialModule ],
   declarations: [ HeaderComponent,
                   SideMenuComponent,
-                  FooterComponent,
                   AboutComponent,
                   NotificationCentreComponent,
                   DialogBoxComponent,
@@ -48,7 +46,6 @@ import { CustomAngularMaterialModule } from './custom-angular-material.module';
   ],
   exports: [ HeaderComponent,
             SideMenuComponent,
-            FooterComponent,
             DialogAnchorDirective ],
   providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService ]
 })

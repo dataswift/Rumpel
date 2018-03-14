@@ -67,9 +67,9 @@
           <p *ngIf="offer_index && offers[offer_index].reward.rewardType == 'Service'">Service - {{ offers[offer_index].reward.vendor }} - {{ offers[offer_index].reward.value }}</p>
 
           <span class="bold">Overview</span>
-          <p [innerHTML]="offers[offer_index].shortDescription | safeHtml | capitalizeFirst"></p>
+          <p [innerHTML]="offers[offer_index].shortDescription | safeHtml"></p>
           <span class="bold">Details</span>
-          <p [innerHTML]="offers[offer_index].longDescription | safeHtml | capitalizeFirst"></p>
+          <p [innerHTML]="offers[offer_index].longDescription | safeHtml"></p>
         </div>
 
         <div class="offer-details data-requirements">
@@ -80,7 +80,7 @@
 
           <ng-template #oldFormat>
             <p *ngFor="let def of offers[offer_index].requiredDataDefinition">
-              <span class="bold">{{ def.source | capitalizeFirst }}</span>
+              <span class="bold">{{ def.source }}</span>
               <rum-offer-requirements *ngFor="let dataset of def.datasets" [requirements]="dataset"></rum-offer-requirements>
             </p>
           </ng-template>

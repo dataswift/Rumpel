@@ -11,11 +11,10 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 
 import { PublicProfileComponent } from './public-profile/public-profile.component';
-import { PublicNotablesComponent } from './public-notables/public-notables.component';
 
 @NgModule({
   imports: [ SharedModule ],
-  declarations: [ PublicProfileComponent, PublicNotablesComponent ],
+  declarations: [ PublicProfileComponent ],
   exports: [ PublicProfileComponent ]
 })
 export class PublicPagesModule {}
