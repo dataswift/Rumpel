@@ -150,6 +150,16 @@ export class HatApiService {
     return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
   }
 
+  getSheRecords(namespace: string, limit: number = 20): Observable<SheFeed[]> {
+    const path = `${this.pathPrefix}/she/feed/${namespace}/feed`;
+    const queryParams = new URLSearchParams();
+
+    queryParams.append('take', limit.toString());
+
+    return this.authHttp.get(path, { search: queryParams })
+      .map((res: Response) => <SheFeed[]>res.json());
+  }
+
   createRecord(namespace: string, endpoint: string, record: any): Observable<HatRecord<any>> {
     const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
 

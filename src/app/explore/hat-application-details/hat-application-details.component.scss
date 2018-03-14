@@ -86,6 +86,7 @@
       text-transform: uppercase;
       font-size: 14px;
       font-weight: bold;
+      color: white;
 
       &.require-setup {
         /deep/ .mat-button-wrapper {
@@ -120,7 +121,9 @@
     .mat-card {
       flex: 1 1;
       margin: 0;
-      margin-left: 20px;
+      margin-left: 15px;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
 
       .arrow-left {
         position: absolute;
@@ -148,6 +151,7 @@
 
     &:not(.app-details-general) {
       padding: 0;
+      max-width: 450px;
 
       /deep/ .mat-card-header-text {
         margin: 0;

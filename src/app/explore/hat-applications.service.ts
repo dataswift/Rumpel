@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { HatApiService } from '../services/hat-api.service';
 import { HatApplication } from './hat-application.interface';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { SheFeed } from '../dashboard/she-feed.interface';
 
 @Injectable()
 export class HatApplicationsService {
 
-  constructor(private hatSvc: HatApiV2Service) { }
+  constructor(private hatSvc: HatApiService) { }
 
   getApplicationList(): Observable<HatApplication[]> {
     return this.hatSvc.getApplicationList();
@@ -14,5 +15,9 @@ export class HatApplicationsService {
 
   getApplicationDetails(application: string): Observable<HatApplication> {
     return this.hatSvc.getApplicationById(application);
+  }
+
+  getApplicationData(application: string): Observable<SheFeed[]> {
+    return this.hatSvc.getSheRecords(application);
   }
 }
