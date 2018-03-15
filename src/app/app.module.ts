@@ -27,6 +27,7 @@ import { MashupsModule } from './mashups/mashups.module';
 
 import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
@@ -54,7 +55,7 @@ import { DexApiService } from './services/dex-api.service';
 import { FileService } from './services/file.service';
 import { StaticDataService } from './services/static-data.service';
 import { Router } from '@angular/router';
-import {ExploreModule} from './explore/explore.module';
+import { ExploreModule } from './explore/explore.module';
 
 export function authHttpFactory(backend: XHRBackend,
                                 defaultOptions: RequestOptions,
@@ -75,6 +76,7 @@ export function cookieServiceFactory() {
   ],
   imports: [
     NoopAnimationsModule, // Using NoopAnimationModule instead of BrowserModule to prevent double-import error
+    HttpClientModule,
     SharedModule,
     LocationsModule,
     HttpModule,

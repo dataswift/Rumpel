@@ -7,8 +7,8 @@
  */
 
 import { Inject, Injectable } from '@angular/core';
-import { Headers, Http, Response, URLSearchParams } from '@angular/http';
-import { AuthHttp } from './auth-http.service';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpBackendClient } from '../core/services/http-backend-client.service';
 import { Observable } from 'rxjs/Observable';
 import { APP_CONFIG, AppConfig } from '../app.config';
 
@@ -26,24 +26,20 @@ export class HatApiService {
   private appNamespace: string;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private authHttp: AuthHttp,
-              private http: Http) {
+              private authHttp: HttpClient,
+              private http: HttpBackendClient) {
     this.appNamespace = config.name.toLowerCase();
   }
 
   login(username: string, password: string): Observable<User> {
     const path = `/users/access_token`;
-    const headers = new Headers({
-      username: encodeURIComponent(username),
-      password: encodeURIComponent(password)
+    const headers = new HttpHeaders({
+      'username': encodeURIComponent(username),
+      'password': encodeURIComponent(password)
     });
 
-    return this.http.get(path, { headers: headers })
-      .map((res: Response) => {
-        const token = res.json().accessToken;
-
-        return this.loginWithToken(token);
-      });
+    return this.http.get<{ accessToken: string; }>(path, { headers: headers })
+      .map(resBody => this.loginWithToken(resBody.accessToken));
   }
 
   loginWithToken(token: string): User {
@@ -52,206 +48,197 @@ export class HatApiService {
 
   legacyHatLogin(name: string, redirect: string): Observable<string> {
     const path = `/control/v2/auth/hatlogin`;
-    const queryParams = new URLSearchParams();
-    queryParams.append('name', name);
-    queryParams.append('redirect', redirect);
+    const queryParams = new HttpParams()
+      .set('name', name)
+      .set('redirect', redirect);
 
-    return this.authHttp.get(path, { search: queryParams })
-      .map((res: Response) => res.json().message);
+    return this.authHttp.get<string>(path, { params: queryParams });
   }
 
   recoverPassword(body: { email: string; }): Observable<any> {
     const path = `/control/v2/auth/passwordReset`;
-    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http.post(path, body, { headers: headers })
-      .map((res: Response) => res.json());
+    return this.http.post(path, body, { headers: headers });
   }
 
   changePassword(body: { password: string; newPassword: string; }): Observable<any> {
     const path = `/control/v2/auth/password`;
-    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.authHttp.post(path, body, { headers: headers })
-      .map((res: Response) => res.json());
+    return this.authHttp.post(path, body, { headers: headers });
   }
 
   resetPassword(resetToken: string, body: { newPassword: string; }): Observable<any> {
     const path = `/control/v2/auth/passwordreset/confirm/${resetToken}`;
-    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-    return this.http.post(path, body, { headers: headers })
-      .map((res: Response) => res.json());
+    return this.http.post(path, body, { headers: headers });
   }
 
   getApplicationToken(name: string, resource: string): Observable<string> {
     const path = `/users/application_token`;
-    const queryParams = new URLSearchParams();
-    queryParams.append('name', name);
-    queryParams.append('resource', resource);
+    const queryParams = new HttpParams()
+      .set('name', name)
+      .set('resource', resource);
 
-    return this.authHttp.get(path, { search: queryParams })
-      .map((res: Response) => res.json().accessToken)
+    return this.authHttp.get<{ accessToken: string; }>(path, { params: queryParams })
+      .map(resBody => resBody.accessToken);
   }
 
   getApplicationList(): Observable<HatApplication[]> {
     const path = `${this.pathPrefix}/applications`;
 
-    return this.authHttp.get(path)
-      .map((res: Response) => res.json());
+    return this.authHttp.get<HatApplication[]>(path);
   }
 
   getApplicationById(applicationId: string): Observable<HatApplication> {
     const path = `${this.pathPrefix}/applications/${applicationId}`;
 
-    return this.authHttp.get(path)
-      .map((res: Response) => res.json());
+    return this.authHttp.get<HatApplication>(path);
   }
 
   getApplicationTokenNew(applicationId: string): Observable<string> {
     const path = `${this.pathPrefix}/applications/${applicationId}/access-token`;
 
-    return this.authHttp.get(path)
-      .map((res: Response) => res.json().accessToken);
+    return this.authHttp.get<{ accessToken: string; }>(path)
+      .map(resBody => resBody.accessToken);
   }
 
   setupApplication(applicationId: string): Observable<HatApplication> {
     const path = `${this.pathPrefix}/applications/${applicationId}/setup`;
 
-    return this.authHttp.get(path)
-      .map((res: Response) => res.json());
+    return this.authHttp.get<HatApplication>(path);
   }
 
   disableApplication(applicationId: string): Observable<HatApplication> {
     const path = `${this.pathPrefix}/applications/${applicationId}/disable`;
 
-    return this.authHttp.get(path)
-      .map((res: Response) => res.json());
+    return this.authHttp.get<HatApplication>(path);
   }
 
   getDataRecords(namespace: string, endpoint: string, take?: number, orderBy?: string, drop?: number): Observable<HatRecord<any>[]> {
     const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
-    const queryParams = new URLSearchParams();
-
-    queryParams.append('ordering', 'descending');
+    let queryParams = new HttpParams()
+      .set('ordering', 'descending');
 
     if (take) {
-      queryParams.append('take', take.toString());
+      queryParams = queryParams.set('take', take.toString());
     }
 
     if (orderBy) {
-      queryParams.append('orderBy', orderBy);
+      queryParams = queryParams.set('orderBy', orderBy);
     }
 
     if (drop) {
-      queryParams.append('skip', drop.toString());
+      queryParams = queryParams.set('skip', drop.toString());
     }
 
-    return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
+    return this.authHttp.get<HatRecord<any>[]>(path, { params: queryParams });
   }
 
   getSheRecords(namespace: string, limit: number = 20): Observable<SheFeed[]> {
     const path = `${this.pathPrefix}/she/feed/${namespace}/feed`;
-    const queryParams = new URLSearchParams();
+    const queryParams = new HttpParams()
+      .set('take', limit.toString());
 
-    queryParams.append('take', limit.toString());
-
-    return this.authHttp.get(path, { search: queryParams })
-      .map((res: Response) => <SheFeed[]>res.json());
+    return this.authHttp.get<SheFeed[]>(path, { params: queryParams });
   }
 
   createRecord(namespace: string, endpoint: string, record: any): Observable<HatRecord<any>> {
     const path = `${this.pathPrefix}/data/${namespace}/${endpoint}`;
 
-    return this.authHttp.post(path, record).map((res: Response) => <HatRecord<any>>res.json());
+    return this.authHttp.post<HatRecord<any>>(path, record);
   }
 
   updateRecord(hatRecord: HatRecord<any>): Observable<HatRecord<any>> {
     const path = `${this.pathPrefix}/data`;
 
-    return this.authHttp.put(path, [hatRecord]).map((res: Response) => <HatRecord<any>>res.json())
+    return this.authHttp.put<HatRecord<any>>(path, [hatRecord]);
   }
 
   deleteRecords(recordIds: Array<string>): Observable<number> {
     const path = `${this.pathPrefix}/data`;
 
     if (recordIds.length > 0) {
-      const queryParams = new URLSearchParams();
-      recordIds.forEach(recordId => queryParams.append('records', recordId));
+      let queryParams = new HttpParams();
+      recordIds.forEach(recordId => queryParams = queryParams.set('records', recordId));
 
-      return this.authHttp.delete(path, { search: queryParams }).map((res: Response) => res.status);
+      return this.authHttp.delete(path, { params: queryParams, observe: 'response' })
+        .map((res: HttpResponse<any>) => res.status);
     } else {
-      return Observable.throw(new Error('Cannot delete. Record IDs missing.'));
+      return Observable.throw(new Error('Cannot delete. Record ID(s) missing.'));
     }
   }
 
   getCombinatorRecords(name: string, orderBy: string, take: number): Observable<HatRecord<any>[]> {
     const path = `${this.pathPrefix}/combinator/${name}`;
 
-    const queryParams = new URLSearchParams();
-    queryParams.append('orderBy', orderBy);
-    queryParams.append('take', take.toString());
-    queryParams.append('ordering', 'descending');
+    const queryParams = new HttpParams()
+      .set('orderBy', orderBy)
+      .set('take', take.toString())
+      .set('ordering', 'descending');
 
-    return this.authHttp.get(path, { search: queryParams }).map((res: Response) => <HatRecord<any>[]>res.json());
+    return this.authHttp.get<HatRecord<any>[]>(path, { params: queryParams });
   }
 
   proposeNewDataEndpoint(name: string, proposedCombinator: EndpointQuery[]): Observable<number> {
     const path = `${this.pathPrefix}/combinator/${name}`;
 
-    return this.authHttp.post(path, proposedCombinator).map((res: Response) => res.status);
+    return this.authHttp.post(path, proposedCombinator, { observe: 'response' })
+      .map((res: HttpResponse<any>) => res.status);
   }
 
   getDataBundle(bundleId: string): Observable<any> {
     const path = `${this.pathPrefix}/data-bundle/${bundleId}`;
 
-    return this.authHttp.get(path).map((res: Response) => res.json());
+    return this.authHttp.get(path);
   }
 
   getDataBundeStructure(bundleId: string): Observable<BundleStructure> {
     const path = `${this.pathPrefix}/data-bundle/${bundleId}/structure`;
 
-    return this.authHttp.get(path).map((res: Response) => <BundleStructure>res.json());
+    return this.authHttp.get<BundleStructure>(path);
   }
 
   proposeNewDataBundle(bundleId: string, bundle: { [bundleVersion: string]: PropertyQuery }): Observable<BundleValues> {
     const path = `${this.pathPrefix}/data-bundle/${bundleId}`;
 
-    return this.authHttp.post(path, bundle).map((res: Response) => <BundleValues>res.json());
+    return this.authHttp.post<BundleValues>(path, bundle);
   }
 
   getAllDataDebits(): Observable<DataDebit[]> {
     const path = `${this.pathPrefix}/data-debit`;
 
-    return this.authHttp.get(path).map((res: Response) => <DataDebit[]>res.json());
+    return this.authHttp.get<DataDebit[]>(path);
   }
 
   getDataDebit(debitId: string): Observable<DataDebit> {
     const path = `${this.pathPrefix}/data-debit/${debitId}`;
 
-    return this.authHttp.get(path).map((res: Response) => <DataDebit>res.json());
+    return this.authHttp.get<DataDebit>(path);
   }
 
   getDataDebitValues(debitId: string): Observable<DataDebitValues> {
     const path = `${this.pathPrefix}/data-debit/${debitId}/values`;
 
-    return this.authHttp.get(path).map((res: Response) => <DataDebitValues>res.json());
+    return this.authHttp.get<DataDebitValues>(path);
   }
 
   updateDataDebit(debitId: string, action: string): Observable<DataDebit> {
     const path = `${this.pathPrefix}/data-debit/${debitId}/${action}`;
 
-    return this.authHttp.get(path).map((res: Response) => <DataDebit>res.json());
+    return this.authHttp.get<DataDebit>(path);
   }
 
   getFileMetadata(fileId: string): Observable<FileMetadataRes> {
     const path = `${this.pathPrefix}/files/file/${fileId}`;
 
-    return this.authHttp.get(path).map((res: Response) => <FileMetadataRes>res.json());
+    return this.authHttp.get<FileMetadataRes>(path);
   }
 
   uploadFile(file: ArrayBuffer, metadata: FileMetadataReq, contentType?: string): Observable<FileMetadataRes> {
-    const headers = new Headers({
+    const headers = new HttpHeaders({
       'x-amz-server-side-encryption': 'AES256',
       'Content-Type': contentType || 'image/png'
     });
@@ -259,7 +246,7 @@ export class HatApiService {
     return this.uploadFileMetadata(metadata)
       .flatMap(uploadedMetadata => {
         return this.http.put(uploadedMetadata.contentUrl, file, { headers: headers })
-          .map((res: Response) => uploadedMetadata)
+          .map(_ => uploadedMetadata)
       })
       .flatMap(uploadedMetadata => this.markFileAsComplete(uploadedMetadata.fileId));
   }
@@ -267,7 +254,8 @@ export class HatApiService {
   deleteFile(fileId: string): Observable<number> {
     const path = `${this.pathPrefix}/files/file/${fileId}`;
 
-    return this.authHttp.delete(path).map((res: Response) => res.status);
+    return this.authHttp.delete(path, { observe: 'response' })
+      .map((res: HttpResponse<any>) => res.status);
   }
 
   updateFilePermissions(fileId: string, permission: string, userId?: string): Observable<number> {
@@ -285,31 +273,31 @@ export class HatApiService {
 
     const path = `${this.pathPrefix}/files/${actionIdentifier}/${fileId}`;
 
-    return this.authHttp.get(path).map((res: Response) => res.status);
+    return this.authHttp.get(path, { observe: 'response' })
+      .map((res: HttpResponse<any>) => res.status);
   }
 
   private uploadFileMetadata(metadata: FileMetadataReq): Observable<FileMetadataRes> {
     const path = `${this.pathPrefix}/files/upload`;
 
-    const headers = new Headers({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
 
-    return this.authHttp.post(path, metadata, { headers: headers })
-      .map((res: Response) => <FileMetadataRes>res.json());
+    return this.authHttp.post<FileMetadataRes>(path, metadata, { headers: headers });
   }
 
   getPhataPage(): Observable<BundleValues> {
     const path = `${this.pathPrefix}/phata/profile`;
 
-    return this.http.get(path).map((res: Response) => res.json());
+    return this.http.get<BundleValues>(path);
   }
 
   private markFileAsComplete(fileId: string): Observable<FileMetadataRes> {
     const path = `${this.pathPrefix}/files/file/${fileId}/complete`;
 
-    return this.authHttp.put(path, {}).map((res: Response) => <FileMetadataRes>res.json());
+    return this.authHttp.put<FileMetadataRes>(path, {});
   }
 
 }
