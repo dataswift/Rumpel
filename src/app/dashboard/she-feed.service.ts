@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { HatApiService } from '../services/hat-api.service';
-import { UserService } from '../user/user.service';
+import { HatApiService } from '../core/services/hat-api.service';
+import { AuthService } from '../core/services/auth.service';
 import { BaseDataService } from '../services/base-data.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
@@ -12,8 +12,8 @@ import { Observable } from 'rxjs/Observable';
 export class SheFeedService extends BaseDataService<SheFeed> {
 
   constructor(hat: HatApiService,
-              userSvc: UserService) {
-    super(hat, userSvc, 'she', 'feed', 'date.unix');
+              authSvc: AuthService) {
+    super(hat, authSvc, 'she', 'feed', 'date.unix');
   }
 
   filteredBy$(provider: string): Observable<HatRecord<SheFeed>[]> {

@@ -30,6 +30,7 @@ import { PrivateSpaceComponent } from './private-space/private-space.component';
 import { ProfilesModule } from '../profiles/profiles.module';
 import { CustomAngularMaterialModule } from './custom-angular-material.module';
 import { HttpBackendClient } from './services/http-backend-client.service';
+import {AuthService} from './services/auth.service';
 
 @NgModule({
   imports: [ SharedModule, LocationsModule, ProfilesModule, CustomAngularMaterialModule ],
@@ -48,6 +49,6 @@ import { HttpBackendClient } from './services/http-backend-client.service';
   exports: [ HeaderComponent,
             SideMenuComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService, HttpBackendClient ]
+  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService, HttpBackendClient, AuthService ]
 })
 export class CoreModule {}

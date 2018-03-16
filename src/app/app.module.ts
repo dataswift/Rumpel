@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRootComponent } from './app.component';
 
-import { APP_CONFIG, AppConfig, configuration } from './app.config';
+import { APP_CONFIG, configuration } from './app.config';
 
 import { CoreModule } from './core/core.module';
 import { DataManagementModule } from './data-management/data-management.module';
@@ -25,7 +25,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
 
-import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
+import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -34,9 +34,6 @@ import { AuthGuard } from './auth.guard';
 import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
-import { AuthHttp } from './services/auth-http.service';
-
-// import { DatePickerModule } from 'ng2-datepicker';
 
 /* MODAL COMPONENTS */
 
@@ -49,21 +46,12 @@ import { FileUploadComponent } from './core/file-upload/file-upload.component';
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
 import { BrowserStorageService } from './services/browser-storage.service';
-import { HatApiService } from './services/hat-api.service';
+import { HatApiService } from './core/services/hat-api.service';
 import { GlobalMessagingService } from './services/global-messaging.service';
 import { DexApiService } from './services/dex-api.service';
 import { FileService } from './services/file.service';
 import { StaticDataService } from './services/static-data.service';
-import { Router } from '@angular/router';
 import { ExploreModule } from './explore/explore.module';
-
-export function authHttpFactory(backend: XHRBackend,
-                                defaultOptions: RequestOptions,
-                                router: Router,
-                                storageSvc: BrowserStorageService,
-                                config: AppConfig) {
-  return new AuthHttp(backend, defaultOptions, router, storageSvc, config);
-}
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -101,11 +89,6 @@ export function cookieServiceFactory() {
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: configuration },
     { provide: CookieService, useFactory: cookieServiceFactory },
-    {
-      provide: AuthHttp,
-      useFactory: authHttpFactory,
-      deps: [ XHRBackend, RequestOptions, Router, BrowserStorageService, APP_CONFIG ]
-    },
     AuthGuard,
     NativeGuard,
     HatApiService, // Supersedes original HAT API service

@@ -7,7 +7,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'rum-password-recover',
@@ -18,13 +18,13 @@ export class PasswordRecoverComponent implements OnInit {
   public errorMessage: string;
   public successMessage: string;
 
-  constructor(private userSvc: UserService) { }
+  constructor(private authSvc: AuthService) { }
 
   ngOnInit() {
   }
 
   onSubmit(form: any): void {
-    this.userSvc.recoverPassword(form.value.recoveryEmail)
+    this.authSvc.recoverPassword(form.value.recoveryEmail)
       .subscribe(
         (res: any) => {
           this.successMessage = 'If the email address you have entered is correct, you will shortly receive an email'

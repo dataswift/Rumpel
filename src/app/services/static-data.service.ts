@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HatApiService} from './hat-api.service';
-import {UserService} from '../user/user.service';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {HatRecord} from '../shared/interfaces/hat-record.interface';
-import {Observable} from 'rxjs/Observable';
+import { HatApiService } from '../core/services/hat-api.service';
+import { AuthService } from '../core/services/auth.service';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { HatRecord } from '../shared/interfaces/hat-record.interface';
+import { Observable } from 'rxjs/Observable';
 import { toPairs } from 'lodash';
 
 const ENDPOINT_MAP = {
@@ -27,7 +27,7 @@ export class StaticDataService {
     fitbit: []
   };
 
-  constructor(private hat: HatApiService, userSvc: UserService) { }
+  constructor(private hat: HatApiService, authSvc: AuthService) { }
 
   get data$(): Observable<Array<Array<any>>> {
     return this._data$.asObservable();

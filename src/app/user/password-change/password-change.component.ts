@@ -9,8 +9,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Response } from '@angular/http';
-import { UserService } from '../user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { PasswordChangeFailureResInterface } from '../password-change-failure-res.interface';
+
 
 declare var zxcvbn: any;
 
@@ -31,7 +32,7 @@ export class PasswordChangeComponent implements OnInit {
   public loadingText: string;
 
   constructor(private route: ActivatedRoute,
-              private userSvc: UserService) { }
+              private authSvc: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe((routeParams) => {
@@ -73,7 +74,7 @@ export class PasswordChangeComponent implements OnInit {
 
   private changePassword(oldPassword: string, newPassword: string) {
     this.loadingText = 'Saving new password';
-    this.userSvc.changePassword(oldPassword, newPassword)
+    this.authSvc.changePassword(oldPassword, newPassword)
       .subscribe(
         (res: Response) => {
           this.loadingText = null;
@@ -94,7 +95,7 @@ export class PasswordChangeComponent implements OnInit {
 
   private resetPassword(resetToken: string, newPassword: string) {
     this.loadingText = 'Saving new password';
-    this.userSvc.resetPassword(resetToken, newPassword)
+    this.authSvc.resetPassword(resetToken, newPassword)
       .subscribe(
         (res: Response) => {
           this.loadingText = null;

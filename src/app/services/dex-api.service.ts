@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { Headers, Http, Response, URLSearchParams } from '@angular/http';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { Observable } from 'rxjs/Observable';
-import { JwtHelper } from 'angular2-jwt';
-import { HatApiService } from './hat-api.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { HatApiService } from '../core/services/hat-api.service';
 import { DexOfferClaimRes } from '../shared/interfaces/dex-offer-claim-res.interface';
 import { DataPlug } from '../shared/interfaces/data-plug.interface';
 
@@ -11,7 +11,7 @@ import { DataPlug } from '../shared/interfaces/data-plug.interface';
 export class DexApiService {
   private baseUrl: string;
   private cachedAppToken: string;
-  private jwt: JwtHelper = new JwtHelper();
+  private jwt: JwtHelperService = new JwtHelperService();
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private hat: HatApiService,

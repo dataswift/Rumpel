@@ -11,13 +11,13 @@ import { Http, Headers } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../core/services/auth.service';
 import { User } from '../user/user.interface';
 import { LocationsService } from '../locations/locations.service';
 
 import { APP_CONFIG, AppConfig} from '../app.config';
 import { DataPlug } from '../shared/interfaces/data-plug.interface';
-import { HatApiService } from '../services/hat-api.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { DexApiService } from '../services/dex-api.service';
 
 import * as moment from 'moment';
@@ -38,11 +38,11 @@ export class DataPlugService {
               private http: Http,
               private hatSvc: HatApiService,
               private dexSvc: DexApiService,
-              private userSvc: UserService,
+              private authSvc: AuthService,
               private locationsSvc: LocationsService) {
 
-    this.userSvc.user$
-      .filter((user: User) => user.authenticated === true)
+    this.authSvc.user$
+      .filter((user: User) => Boolean(user.fullDomain))
       .subscribe((user: User) => {
         this.hatUrl = user.fullDomain;
         this.getDataPlugList();

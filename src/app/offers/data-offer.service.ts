@@ -5,8 +5,8 @@ import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Claim, Offer, OffersStorage } from './offer.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, AppConfig } from '../app.config';
-import { HatApiService } from '../services/hat-api.service';
-import { JwtHelper } from 'angular2-jwt';
+import { HatApiService } from '../core/services/hat-api.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { groupBy } from 'lodash';
 
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ import { DataDebit } from '../shared/interfaces/data-debit.interface';
 
 @Injectable()
 export class DataOfferService {
-  private jwt: JwtHelper;
+  private jwt: JwtHelperService;
   private cachedToken: string;
   private expires: Moment = moment().subtract(10, 'seconds');
   private _offers$: ReplaySubject<OffersStorage> = <ReplaySubject<OffersStorage>>new ReplaySubject(1);
@@ -24,7 +24,7 @@ export class DataOfferService {
               private hatV2Svc: HatApiService,
               private http: Http) {
 
-    this.jwt = new JwtHelper();
+    this.jwt = new JwtHelperService();
   }
 
   get offers$(): Observable<OffersStorage> {

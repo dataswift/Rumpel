@@ -8,9 +8,10 @@
 
 import { Injectable, Inject } from '@angular/core';
 import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { UserService } from './user/user.service';
+import { AuthService } from './core/services/auth.service';
 import { APP_CONFIG, AppConfig } from './app.config';
 import { GlobalMessagingService } from './services/global-messaging.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,32 +20,33 @@ export class AuthGuard implements CanActivate {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private messagingSvc: GlobalMessagingService,
               private router: Router,
-              private userSvc: UserService) {
+              private authSvc: AuthService) {
 
     this.redirectPath = config.native ? ['user', 'login'] : ['user', 'login', 'start'];
   }
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
+    let tokenLogin = false;
     if (route.queryParams['token']) {
-      const tokenValid = this.userSvc.loginWithToken(route.queryParams['token']);
-      if (!tokenValid) {
-        this.messagingSvc.sendMessage(
-          `Authentication with HAT failed. Either your session has expired or this app is incompatible with your HAT.`
-        );
-        this.router.navigate(this.redirectPath);
-      }
-
-      return tokenValid;
-    } else if (this.userSvc.isLoggedIn()) {
-      return true;
-    } else {
-      const navExtras: NavigationExtras = { queryParams: Object.assign({}, route.queryParams) };
-      navExtras.queryParams['target'] = route.routeConfig.path;
-
-      this.router.navigate(this.redirectPath, navExtras);
-
-      return false;
+      this.authSvc.loginWithToken(route.queryParams['token']);
+      tokenLogin = true;
     }
+
+    return this.authSvc.auth$
+      .do((authenticated: boolean) => {
+        if (!authenticated && tokenLogin) {
+          this.messagingSvc.sendMessage(
+            `Authentication with HAT failed. Either your session has expired or this app is incompatible with your HAT.`
+          );
+        }
+
+        if (!authenticated) {
+          const navExtras: NavigationExtras = { queryParams: Object.assign({}, route.queryParams) };
+          navExtras.queryParams['target'] = route.routeConfig.path;
+
+          this.router.navigate(this.redirectPath, navExtras);
+        }
+      }).take(1);
 
   }
 }

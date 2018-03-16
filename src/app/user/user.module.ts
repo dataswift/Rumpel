@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 import { LoginNativeComponent } from './login-native/login-native.component';
-import { UserService } from './user.service';
 import { PasswordRecoverComponent } from './password-recover/password-recover.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';
@@ -31,7 +30,7 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
     LoginStandaloneComponent,
     LoginOauthComponent
   ],
-  providers: [ UserService ],
+  providers: [  ],
   exports: [ LoginOauthComponent, LoginNativeComponent, LoginStandaloneComponent ]
 })
 export class UserModule {}

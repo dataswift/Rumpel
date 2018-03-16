@@ -8,17 +8,16 @@
 
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { HttpBackendClient } from '../core/services/http-backend-client.service';
+import { HttpBackendClient } from './http-backend-client.service';
 import { Observable } from 'rxjs/Observable';
-import { APP_CONFIG, AppConfig } from '../app.config';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
-import { User } from '../user/user.interface';
-import { HatRecord } from '../shared/interfaces/hat-record.interface';
-import { DataDebit, DataDebitValues } from '../shared/interfaces/data-debit.interface';
-import { FileMetadataReq, FileMetadataRes } from '../shared/interfaces/file.interface';
-import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../shared/interfaces/bundle.interface';
-import { HatApplication } from '../explore/hat-application.interface';
-import { SheFeed } from '../dashboard/she-feed.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { DataDebit, DataDebitValues } from '../../shared/interfaces/data-debit.interface';
+import { FileMetadataReq, FileMetadataRes } from '../../shared/interfaces/file.interface';
+import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../../shared/interfaces/bundle.interface';
+import { HatApplication } from '../../explore/hat-application.interface';
+import { SheFeed } from '../../dashboard/she-feed.interface';
 
 @Injectable()
 export class HatApiService {
@@ -31,7 +30,7 @@ export class HatApiService {
     this.appNamespace = config.name.toLowerCase();
   }
 
-  login(username: string, password: string): Observable<User> {
+  login(username: string, password: string): Observable<string> {
     const path = `/users/access_token`;
     const headers = new HttpHeaders({
       'username': encodeURIComponent(username),
@@ -39,11 +38,7 @@ export class HatApiService {
     });
 
     return this.http.get<{ accessToken: string; }>(path, { headers: headers })
-      .map(resBody => this.loginWithToken(resBody.accessToken));
-  }
-
-  loginWithToken(token: string): User {
-    return this.authHttp.setToken(token);
+      .map(resBody => resBody.accessToken);
   }
 
   legacyHatLogin(name: string, redirect: string): Observable<string> {

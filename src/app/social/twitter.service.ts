@@ -8,9 +8,9 @@
 
 import { Injectable } from '@angular/core';
 
-import { HatApiService } from '../services/hat-api.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { BaseDataService } from '../services/base-data.service';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../core/services/auth.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { Tweet } from '../shared/interfaces/index';
@@ -19,8 +19,8 @@ import * as moment from 'moment';
 @Injectable()
 export class TwitterService extends BaseDataService<Tweet> {
 
-  constructor(hat: HatApiService, userSvc: UserService) {
-    super(hat, userSvc, 'twitter', 'tweets', 'id');
+  constructor(hat: HatApiService, authSvc: AuthService) {
+    super(hat, authSvc, 'twitter', 'tweets', 'id');
   }
 
   coerceType(rawTweet: HatRecord<any>): HatRecord<Tweet> {

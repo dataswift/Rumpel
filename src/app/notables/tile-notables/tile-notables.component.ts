@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { NotablesService } from '../notables.service';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 
 import { Notable, Profile } from '../../shared/interfaces';
 import { User } from '../../user/user.interface';
@@ -29,7 +29,7 @@ export class TileNotablesComponent implements OnInit {
 
   constructor(private notablesSvc: NotablesService,
               private profilesSvc: ProfilesService,
-              private userSvc: UserService) {}
+              private authSvc: AuthService) {}
 
   ngOnInit() {
     this.notables$ = this.notablesSvc.data$;
@@ -45,8 +45,8 @@ export class TileNotablesComponent implements OnInit {
       photo: { url: '', shared: false }
     };
 
-    this.userSvc.user$.subscribe((user: User) => {
-      if (user.authenticated === true) {
+    this.authSvc.user$.subscribe((user: User) => {
+      if (user.fullDomain) {
         // this.profilesSvc.getPicture().subscribe(result => {
         //   if (result && result.url) {
         //     this.profile.photo.url = result.url;

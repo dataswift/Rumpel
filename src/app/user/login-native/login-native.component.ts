@@ -8,8 +8,8 @@
 
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { UserService } from '../user.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 
 @Component({
@@ -26,7 +26,7 @@ export class LoginNativeComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private storageSvc: BrowserStorageService,
-              private userSvc: UserService) {
+              private authSvc: AuthService) {
   }
 
   ngOnInit() {
@@ -34,9 +34,11 @@ export class LoginNativeComponent implements OnInit {
     this.redirectPath = qps['target'] || 'feed';
 
     // Skip login step if the user is already authenticated
-    if (this.userSvc.isLoggedIn()) {
-      this.navigateForward();
-    }
+    this.authSvc.auth$.subscribe(authenticated => {
+      if (authenticated) {
+        this.navigateForward()
+      }
+    });
   }
 
   clearError() {
@@ -59,15 +61,14 @@ export class LoginNativeComponent implements OnInit {
 
   onSubmit(form) {
     this.storageSvc.rememberMe = form.value.rememberMe;
-    this.userSvc.login(this.username, form.value.password).subscribe(
-      (isAuthenticated: boolean) => {
+    this.authSvc.login(this.username, form.value.password).subscribe(
+      (token: string) => {
         this.navigateForward();
       },
       err => {
         console.log('Login failed! Reason: ', err);
         this.error = 'Incorrect password. Please try again.';
       });
-    // window.location.href = `https://${this.hatDomain}/hatlogin?name=Rumpel&redirect=${this.redirectUrl}`;
   }
 
   private navigateForward(): void {
