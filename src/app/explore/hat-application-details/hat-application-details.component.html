@@ -1,0 +1,67 @@
+<div class="app-details" *ngIf="appDetails$ | async as app">
+  <div class="app-details-header">
+    <mat-toolbar class="app-details-header-toolbar">
+      <span class="flex-spacer"></span>
+      <mat-icon class="app-details-close" (click)="closeComponentView()">clear</mat-icon>
+    </mat-toolbar>
+
+    <mat-card class="app-details-header-card">
+      <div class="app-logo-wrapper">
+        <img [src]="app.application.info.graphics.logo.normal" height="100" class="img img-responsive app-logo" />
+      </div>
+      <h3 class="app-details-header-title">{{app.application.info.name}}</h3>
+      <div class="app-details-header-headline">{{app.application.info.headline}}</div>
+      <a mat-button [class.require-setup]="!app.setup" href="{{app.application.kind.url}}">
+        <mat-icon>{{app.setup ? 'input' : 'add_circle_outline'}}</mat-icon>
+        {{ app.setup ? 'Go to app' : 'Connect app' }}</a>
+    </mat-card>
+  </div>
+
+  <div class="app-details-content">
+    <mat-tab-group class="app-details-tab-group">
+      <mat-tab label="App Info">
+        <mat-card class="app-details-general">
+          <mat-card-content>
+            <h5 class="app-details-heading">Description</h5>
+            <p class="app-details-description">{{app.application.info.description.text}}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="app-details-general">
+          <mat-card-content>
+            <h5 class="app-details-heading">Screenshots</h5>
+            <div class="app-details-screenshots">
+              <div class="img-wrapper" *ngFor="let screenshot of app.application.info.graphics.screenshots">
+                <img src="{{screenshot.normal}}" class="img img-responsive" />
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-tab>
+
+      <mat-tab label="Data Preview">
+        <div class="card-wrapper" *ngFor="let dataSample of app.application.info.dataPreview">
+          <div class="img-wrapper">
+            <img src="{{app.application.info.graphics.logo.normal}}" height="35" width="35" />
+          </div>
+
+          <mat-card>
+            <mat-card-header>
+              <h4 class="card-header-title">{{dataSample.title.text}}</h4>
+              <span class="flex-spacer"></span>
+              <span class="card-header-action">{{dataSample.title.action}}</span>
+            </mat-card-header>
+            <mat-card-content>
+              {{dataSample.content.text}}
+            </mat-card-content>
+            <mat-card-footer>
+              Posted {{dataSample.date.iso | moment: 'DD MMM YYYY h:mma'}}
+            </mat-card-footer>
+
+            <div class="arrow-left"></div>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

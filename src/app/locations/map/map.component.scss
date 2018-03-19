@@ -7,7 +7,7 @@
  */
 
 
- @import "../../style/variables";
+ @import "../../style/branding";
 
 #map-view{
  position: relative;
@@ -30,17 +30,29 @@
   width: 100%;
   padding: 10px 22px;
   max-height: 54px;
+  display: flex;
+  align-items: center;
+
+  .map-date-input {
+    border: none;
+    background-color: transparent;
+    color: $app-mid-tone;
+    text-align: right;
+    font-size: 14px;
+  }
+
+  /deep/ .mat-datepicker-toggle .mat-button-wrapper {
+    color: $app-mid-tone;
+  }
 
   .location-icon {
     width: 24px;
     height: 24px;
     background-color: rgba(74, 85, 107, 0.1);
     padding: 6px;
-    display: inline-block;
     border-radius: 50%;
-    top: 2px;
     position: relative;
-    margin-right: 5px;
+    margin: 0 7px;
 
     img {
       height: 12px;

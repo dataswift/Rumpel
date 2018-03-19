@@ -16,18 +16,19 @@
 
       <div class="timeline-view">
 
-      <rum-map class="map"
-                [dataPoints]="locations[selectedTime]"
-                [mapHeight]="safeSize"
-                (timeSelected)="selectTime($event)"
-                [locationDate]="selectedTime"></rum-map>
+        <rum-map class="map"
+                  [dataPoints]="locations[selectedTime]"
+                  [mapHeight]="safeSize"
+                  [selectedTime]="selectedTime"
+                  (timeSelected)="selectTime($event)"
+                  [locationDate]="selectedTime"></rum-map>
 
-      <rum-activity-list class="activitylist"
-                         [componentHeight]="safeSizeSidebar"
-                         [cards]="cardList"
-                         [selectedDate]="selectedTime"
-                         (timeSelected)="selectTime($event)"
-                         (notifyDatesInRange)="getDatesInRange($event)"></rum-activity-list>
+        <rum-activity-list class="activitylist"
+                           [componentHeight]="safeSizeSidebar"
+                           [cards]="cardList"
+                           [selectedDate]="selectedTime"
+                           (timeSelected)="selectTime($event)"
+                           (notifyDatesInRange)="getDatesInRange($event)"></rum-activity-list>
       </div>
     </div>
   </div>

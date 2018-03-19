@@ -16,7 +16,7 @@
               </svg>
 
               <div class="headlines">
-                  <h2>{{ vouchersClaimed }} <span>/ <span>{{ vouchersEarned - vouchersClaimed }}</span></span></h2>
+                  <h2>{{ offersSummary?.vouchersClaimed }} <span>/ <span>{{ offersSummary?.vouchersPending }}</span></span></h2>
                   <p>Vouchers redeemed</p>
               </div>
       </div>
@@ -51,7 +51,7 @@
               </svg>
 
               <div class="headlines">
-                  <h2>{{ cashEarned | currency:"GBP":true:cashFormat }}</h2>
+                  <h2>{{ offersSummary?.cashClaimed | currency:"GBP":true:cashFormat }}</h2>
                   <p>Cash earned</p>
                   <div class="modalInfo" (click)="showConfirmBox()"><i class="material-icons">info_outline</i></div>
               </div>
@@ -79,7 +79,7 @@
               </svg>
 
               <div class="headlines">
-                  <h2>{{ servicesClaimed }} <span>/ <span>{{ servicesEarned - servicesClaimed }}</span></span></h2>
+                  <h2>{{ offersSummary?.servicesClaimed }} <span>/ <span>{{ offersSummary?.servicesPending }}</span></span></h2>
                   <p>Services unlocked</p>
               </div>
       </div>
@@ -105,7 +105,7 @@
               </svg>
 
               <div class="headlines">
-                  <h2>{{ vouchersEarned }}</h2>
+                  <h2>{{ offersSummary?.vouchersRedeemed }}</h2>
                   <p>Vouchers redeemed</p>
               </div>
       </div>
@@ -113,12 +113,12 @@
       <div class="details">
           <div class="detail">
               <p>Claimed</p>
-              <h6>{{ vouchersClaimed }}</h6>
+              <h6>{{ offersSummary?.vouchersClaimed }}</h6>
           </div>
 
           <div class="detail">
               <p>Pending</p>
-              <h6>{{ vouchersEarned - vouchersClaimed }}</h6>
+              <h6>{{ offersSummary?.vouchersPending }}</h6>
           </div>
       </div>
     </div>
@@ -155,7 +155,7 @@
               </svg>
 
               <div class="headlines">
-                  <h2>{{ cashEarned | currency:"GBP":true:cashFormat }}</h2>
+                  <h2>{{ offersSummary?.cashRedeemed | currency:"GBP":true:cashFormat }}</h2>
                   <p>Cash earned</p>
               </div>
       </div>
@@ -163,12 +163,12 @@
       <div class="details">
           <div class="detail">
               <p>Claimed</p>
-              <h6>{{ cashClaimed | currency:"GBP":true:cashFormat }}</h6>
+              <h6>{{ offersSummary?.cashClaimed | currency:"GBP":true:cashFormat }}</h6>
           </div>
 
           <div class="detail">
               <p>Pending</p>
-              <h6>{{ cashEarned - cashClaimed | currency:"GBP":true:cashFormat }}</h6>
+              <h6>{{ offersSummary?.cashPending | currency:"GBP":true:cashFormat }}</h6>
           </div>
       </div>
     </div>
@@ -196,7 +196,7 @@
               </svg>
 
               <div class="headlines">
-                  <h2>{{ servicesEarned }}</h2>
+                  <h2>{{ offersSummary?.servicesRedeemed }}</h2>
                   <p>Services unlocked</p>
               </div>
       </div>
@@ -204,12 +204,12 @@
       <div class="details">
           <div class="detail">
               <p>Claimed</p>
-              <h6>{{ servicesClaimed }}</h6>
+              <h6>{{ offersSummary?.servicesClaimed }}</h6>
           </div>
 
           <div class="detail">
               <p>Pending</p>
-              <h6>{{ servicesEarned - servicesClaimed }}</h6>
+              <h6>{{ offersSummary?.servicesPending }}</h6>
           </div>
       </div>
     </div>

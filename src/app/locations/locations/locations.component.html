@@ -16,14 +16,6 @@
   <div class="col-md-12">
     <div class="view-header map-header">
       <span>Open your HAT mobile app to synchronise your latest location data</span>
-      <form #f="ngForm" (submit)="submitForm(f)" class="date-selector">
-        <div class="form-group">
-          <rum-date-input class="form-control rum-form-input" name="date" ngModel></rum-date-input>
-        </div>
-        <div class="form-group showDay">
-          <button type="submit">Show day</button>
-        </div>
-      </form>
     </div>
     <div class="map-wrapper">
       <rum-map [dataPoints]="locations | async" [mapHeight]="safeSize"

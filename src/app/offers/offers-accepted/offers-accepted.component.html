@@ -4,8 +4,7 @@
   </div>
 </div>
 
-<rum-offer-accepted-stats class="stats" [acceptedOffers]="acceptedOffers" *ngIf="acceptedOffers.length > 0"></rum-offer-accepted-stats>
-
+<rum-offer-accepted-stats class="stats" *ngIf="acceptedOffers.length > 0"></rum-offer-accepted-stats>
 
 <div class="offers-container mobile-responsive" *ngIf="acceptedOffers.length > 0">
   <div class="offer" *ngFor="let accepted of acceptedOffers; let i = index">

@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2, 2017
  */
 
-@import "variables";
+@import "branding";
 
 .modal-overlay {
   z-index: 1500;
@@ -41,7 +41,7 @@
   max-width: 90%;
   height: auto;
   max-height: 90%;
-  background-color: $app-background-color;
+  background-color: $hat-background-color;
   z-index: 1510;
 
   opacity: 0;

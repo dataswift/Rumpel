@@ -8,16 +8,16 @@
 
 import { TestBed, inject } from '@angular/core/testing';
 
-import { HatApiV2Service } from './hat-api-v2.service';
+import { HatApiService } from './hat-api.service';
 
-describe('HatApiV2Service', () => {
+describe('HatApiService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HatApiV2Service]
+      providers: [HatApiService]
     });
   });
 
-  it('should be created', inject([HatApiV2Service], (service: HatApiV2Service) => {
+  it('should be created', inject([HatApiService], (service: HatApiService) => {
     expect(service).toBeTruthy();
   }));
 });

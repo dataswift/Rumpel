@@ -22,10 +22,6 @@
                 [class.expanded]="inputExpanded"
                 (focus)="expandView($event)"></textarea>
           <div class="arrow-down" *ngIf="expanded"></div>
-          <rum-switch class="privacy-toggle"
-                       [isChecked]="shared"
-                       (onSwitch)="togglePrivacy()"
-                       *ngIf="expanded"></rum-switch>
         </div>
       </div>
 

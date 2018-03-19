@@ -26,7 +26,7 @@
       <li [class.active]="currentPage === 'feed'">
         <a routerLink="feed">Feed</a>
       </li>
-      <li [class.active]="currentPage === 'static'">
+      <li [class.active]="currentPage === 'static'" *ngIf="plugName !== 'calendar'">
         <a routerLink="static">Static</a>
       </li>
     </ul>

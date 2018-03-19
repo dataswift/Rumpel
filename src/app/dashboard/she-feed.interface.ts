@@ -14,7 +14,7 @@ interface SheTitle {
 
 interface SheContent {
   text: string;
-  media: Array<{ url: string; }>;
+  media?: Array<{ url: string; }>;
 }
 
 interface SheLocation {

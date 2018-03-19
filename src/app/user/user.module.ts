@@ -16,11 +16,13 @@ import { PasswordRecoverComponent } from './password-recover/password-recover.co
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';
 import { LoginOauthComponent } from './login-oauth/login-oauth.component';
+import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 
 @NgModule({
   imports: [
     SharedModule,
-    FormsModule
+    FormsModule,
+    CustomAngularMaterialModule
   ],
   declarations: [
     LoginNativeComponent,

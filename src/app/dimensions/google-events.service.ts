@@ -7,7 +7,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 import { UserService } from '../user/user.service';
 import { BaseDataService } from '../services/base-data.service';
 
@@ -21,7 +21,7 @@ import * as moment from 'moment';
 @Injectable()
 export class GoogleEventsService extends BaseDataService<Event> {
 
-  constructor(hatSvc: HatApiV2Service, userSvc: UserService) {
+  constructor(hatSvc: HatApiService, userSvc: UserService) {
     super(hatSvc, userSvc, 'google', 'events', 'changeme');
   }
 

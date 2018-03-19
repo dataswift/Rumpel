@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 import { UserService } from '../user/user.service';
 import { BaseDataService } from '../services/base-data.service';
 
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class SheFeedService extends BaseDataService<SheFeed> {
 
-  constructor(hat: HatApiV2Service,
+  constructor(hat: HatApiService,
               userSvc: UserService) {
     super(hat, userSvc, 'she', 'feed', 'date.unix');
   }

@@ -129,7 +129,7 @@
 
       <div style="margin: auto; width: 100%; max-width: 40em;">
         <mat-form-field style="width: 49%;">
-          <input matInput placeholder="Birthday" disabled name="birthday"
+          <input matInput placeholder="Birthday" readonly name="birthday"
                  [matDatepicker]="birdthdayDatepicker"
                  [(ngModel)]="values.personal.birthDate">
           <mat-datepicker-toggle matSuffix [for]="birdthdayDatepicker"></mat-datepicker-toggle>

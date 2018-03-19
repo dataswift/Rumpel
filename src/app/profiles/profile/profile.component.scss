@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-@import "../../style/variables";
+@import "../../style/branding";
 
 .view-header {
   h4, h6 {
@@ -196,7 +196,7 @@ form {
 
   &:disabled {
     background-color: #cccccc;
-    color: $app-background-color;
+    color: $hat-background-color;
   }
 }
 
@@ -333,7 +333,7 @@ form {
       border: none;
       width: 4em;
       height: 4em;
-      background: $app-background-color;
+      background: $hat-background-color;
     }
   }
 }

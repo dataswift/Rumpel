@@ -10,6 +10,7 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChange
 import * as moment from 'moment';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
+import {Moment} from 'moment';
 
 declare var L: any;
 
@@ -22,6 +23,7 @@ export class MapComponent implements OnInit, OnChanges {
   @Input() dataPoints: HatRecord<LocationIos>[];
   @Input() mapHeight: string;
   @Input() mapWidth: string;
+  @Input() selectedTime: Moment;
   @Input() enableMapControls: boolean;
   @Input() locationDate: any;
   @Output() timeSelected = new EventEmitter<any>();
@@ -132,5 +134,9 @@ export class MapComponent implements OnInit, OnChanges {
 
   onMarkerSelected(e: any) {
     this.timeSelected.emit(e.target.timestamp);
+  }
+
+  dateChanged(mapEvent: any) {
+    this.timeSelected.emit(mapEvent.value.format('YYYY-MM-DD'));
   }
 }

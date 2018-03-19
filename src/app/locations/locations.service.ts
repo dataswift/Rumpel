@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 
 import { BaseDataService } from '../services/base-data.service';
 import { UserService } from '../user/user.service';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../services/hat-api.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../shared/interfaces/location.interface';
@@ -22,7 +22,7 @@ export class LocationsService extends BaseDataService<LocationIos> {
   public map: any;
   public baseMaps: any;
 
-  constructor(hatSvc: HatApiV2Service, userSvc: UserService) {
+  constructor(hatSvc: HatApiService, userSvc: UserService) {
     super(hatSvc, userSvc, 'rumpel', 'locations/ios', 'dateCreated');
 
     this.baseMaps = {

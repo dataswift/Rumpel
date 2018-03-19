@@ -33,7 +33,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.3.1',
+  version: '3.4.0',
   name: 'Rumpel',
   supportedDomains: ['.hubofallthings.net', '.hat.direct'],
   native: environment.native,
@@ -72,6 +72,9 @@ export const configuration: AppConfig = {
 
       { display: 'Redeem Offers', icon: 'local_offer', link: '/offers', dataType: '', disable: '',
       description: 'Allow access to your data in exchange for cash, services or vouchers.' },
+
+      { display: 'Explore', icon: 'touch_app', link: '/explore', dataType: '', disable: '',
+        description: 'Explore all the apps available in the HAT ecosystem.' },
 
       { display: 'Notables', icon: 'border_color', link: '/notables', dataType: '', disable: '',
       description: `Your words are your memories!

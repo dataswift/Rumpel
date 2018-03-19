@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {APP_CONFIG, AppConfig} from '../app.config';
-import {HatApiV2Service} from './hat-api-v2.service';
+import {HatApiService} from './hat-api.service';
 import {FileMetadataReq, FileMetadataRes} from '../shared/interfaces/file.interface';
 import {Observable} from 'rxjs/Observable';
 import {ReplaySubject} from 'rxjs/ReplaySubject';
@@ -13,7 +13,7 @@ export class FileService {
   private boo: Subscription;
 
   constructor(@Inject(APP_CONFIG) private _config: AppConfig,
-              private hat: HatApiV2Service) { }
+              private hat: HatApiService) { }
 
   get file$(): Observable<FileMetadataRes> {
     return this._file$.asObservable();
