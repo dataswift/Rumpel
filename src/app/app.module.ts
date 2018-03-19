@@ -25,7 +25,6 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
 
-import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -68,7 +67,6 @@ export function cookieServiceFactory() {
     HttpClientModule,
     SharedModule,
     LocationsModule,
-    HttpModule,
     FormsModule,
     UserModule,
     SocialModule,

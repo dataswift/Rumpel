@@ -8,10 +8,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
 import { AuthService } from '../../core/services/auth.service';
 import { PasswordChangeFailureResInterface } from '../password-change-failure-res.interface';
-
 
 declare var zxcvbn: any;
 
@@ -76,7 +74,7 @@ export class PasswordChangeComponent implements OnInit {
     this.loadingText = 'Saving new password';
     this.authSvc.changePassword(oldPassword, newPassword)
       .subscribe(
-        (res: Response) => {
+        _ => {
           this.loadingText = null;
           this.successMessage = 'Password changed.';
         },

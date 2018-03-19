@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { Headers, Http, Response, URLSearchParams } from '@angular/http';
+import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpBackendClient } from '../core/services/http-backend-client.service';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { Observable } from 'rxjs/Observable';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -15,7 +16,7 @@ export class DexApiService {
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private hat: HatApiService,
-              private http: Http) {
+              private http: HttpBackendClient) {
     this.baseUrl = config.dex.url + config.dex.pathPrefix;
   }
 
@@ -23,53 +24,53 @@ export class DexApiService {
     const url = `${this.baseUrl}/offer/${offerId}/claim`;
 
     return this.getApplicationToken()
-      .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
-      .map((res: Response) => <DexOfferClaimRes>res.json());
+      .flatMap((headers: HttpHeaders) => this.http.get<DexOfferClaimRes>(url, { headers: headers }));
   }
 
   getOfferClaim(offerId: string): Observable<DexOfferClaimRes> {
     const url = `${this.baseUrl}/offer/${offerId}/userClaim`;
 
     return this.getApplicationToken()
-      .flatMap((headers: Headers) => this.http.get(url, { headers: headers }))
-      .map((res: Response) => <DexOfferClaimRes>res.json());
+      .flatMap((headers: HttpHeaders) => this.http.get<DexOfferClaimRes>(url, { headers: headers }));
   }
 
   getAvailablePlugList(): Observable<DataPlug[]> {
     const url = `${this.config.dex.url}/api/dataplugs`;
 
-    return this.http.get(url).map((res: Response) => {
-      return <DataPlug[]>res.json()
-        .filter(dataplug => 'location,facebook,twitter,fitbit,calendar'.includes(dataplug.plug.name.toLowerCase()))
-        .map(dataplug => {
-          dataplug.plug.active = false;
+    return this.http.get<{ plug: DataPlug; }[]>(url)
+      .map(resBody => {
+        return resBody
+          .filter(dataplug => 'location,facebook,twitter,fitbit,calendar'.includes(dataplug.plug.name.toLowerCase()))
+          .map(dataplug => {
+            dataplug.plug.active = false;
 
-          return dataplug.plug;
-        });
-    });
+            return dataplug.plug;
+          });
+      });
   }
 
-  private getApplicationToken(): Observable<Headers> {
+  private getApplicationToken(): Observable<HttpHeaders> {
     if (this.cachedAppToken && !this.jwt.isTokenExpired(this.cachedAppToken, 30)) {
-      const headers = new Headers();
-      headers.append('X-Auth-Token', this.cachedAppToken);
-      headers.append('Content-Type', 'application/json');
+      const headers = new HttpHeaders()
+        .set('X-Auth-Token', this.cachedAppToken)
+        .set('Content-Type', 'application/json');
 
       return Observable.of(headers);
     } else {
       return this.hat.getApplicationToken(this.config.dex.name, this.config.dex.url)
         .do(token => this.cachedAppToken = token)
-        .map(token => new Headers({ 'X-Auth-Token': token }));
+        .map(token => new HttpHeaders({ 'X-Auth-Token': token }));
     }
   }
 
   // TODO: find a better place for this method
   tickleNotables(hatDomain: string): void {
-    const queryParams = new URLSearchParams();
-    queryParams.append('phata', hatDomain);
+    const queryParams = new HttpParams()
+      .set('phata', hatDomain);
 
-    this.http.get(this.config.notables.url, { search: queryParams }).subscribe((res: Response) => {
-      console.log(`Notables service tickled with ${res.status} response`);
-    });
+    this.http.get(this.config.notables.url, { params: queryParams, observe: 'response' })
+      .subscribe((res: HttpResponse<any>) => {
+        console.log(`Notables service tickled with ${res.status} response`);
+      });
   }
 }

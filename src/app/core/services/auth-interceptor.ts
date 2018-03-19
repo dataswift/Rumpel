@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../../user/user.interface';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 const TOKEN_REFRESH_INTERVAL = 600; // Measured in seconds
 
@@ -12,7 +14,9 @@ export class AuthInterceptor implements HttpInterceptor {
   private hatUrl: string;
   private lastTokenUpdate: number;
 
-  constructor(private authSvc: AuthService) {
+  constructor(@Inject(APP_CONFIG) private config: AppConfig,
+              private authSvc: AuthService,
+              private router: Router) {
     this.authSvc.token$.subscribe(token => {
       this.token = token;
       this.lastTokenUpdate = Date.now();
@@ -27,19 +31,25 @@ export class AuthInterceptor implements HttpInterceptor {
         headers: req.headers.set('X-Auth-Token', this.token)
       });
 
-      return next.handle(modReq).do(this.updateAuthToken.bind(this));
+      return next.handle(modReq).do((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          this.processResponse(event);
+        }
+      });
     } else {
       return Observable.throw('Unauthenticated!');
     }
   }
 
-  private updateAuthToken(event: HttpEvent<any>): void {
-    if (event instanceof HttpResponse && event.status === 200 && this.timeIsElapsed(TOKEN_REFRESH_INTERVAL)) {
+  private processResponse(event: HttpResponse<any>): void {
+    if (event.status === 200 && this.timeIsElapsed(TOKEN_REFRESH_INTERVAL)) {
       const freshToken = event.headers.get('x-auth-token');
 
       if (freshToken) {
         this.authSvc.loginWithToken(freshToken);
       }
+    } else if (event.status === 401) {
+      this.router.navigate(this.config.native ? ['user', 'login'] : ['user', 'login', 'start']);
     }
   }
 
