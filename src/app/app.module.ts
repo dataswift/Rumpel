@@ -27,7 +27,7 @@ import { MashupsModule } from './mashups/mashups.module';
 
 import { HttpModule } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
@@ -52,6 +52,7 @@ import { DexApiService } from './services/dex-api.service';
 import { FileService } from './services/file.service';
 import { StaticDataService } from './services/static-data.service';
 import { ExploreModule } from './explore/explore.module';
+import { AuthInterceptor } from './core/services/auth-interceptor';
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -89,6 +90,7 @@ export function cookieServiceFactory() {
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: configuration },
     { provide: CookieService, useFactory: cookieServiceFactory },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
     NativeGuard,
     HatApiService, // Supersedes original HAT API service
