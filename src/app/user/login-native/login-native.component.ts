@@ -18,7 +18,9 @@ import { BrowserStorageService } from '../../services/browser-storage.service';
   styleUrls: ['login-native.component.scss']
 })
 export class LoginNativeComponent implements OnInit {
+  public hatName: string;
   public hatDomain: string;
+  public rememberMe: boolean;
   public error: string;
   private redirectPath: string;
 
@@ -30,38 +32,34 @@ export class LoginNativeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.rememberMe = true;
     const qps = this.route.snapshot.queryParams;
     this.redirectPath = qps['target'] || 'feed';
 
     // Skip login step if the user is already authenticated
     this.authSvc.auth$.subscribe(authenticated => {
       if (authenticated) {
-        this.navigateForward()
+        this.navigateForward();
       }
     });
+
+    const host = window.location.hostname;
+
+    this.hatName = host.substring(0, host.indexOf('.'));
+    this.hatDomain = host.substring(host.indexOf('.'));
   }
 
   clearError() {
     this.error = '';
   }
 
-  get username(): string {
-    const host = window.location.hostname;
-
-    return host.substring(0, host.indexOf('.'));
-  }
-
   get protocol(): string {
     return window.location.protocol;
   }
 
-  get hostname(): string {
-    return window.location.hostname;
-  }
-
-  onSubmit(form) {
-    this.storageSvc.rememberMe = form.value.rememberMe;
-    this.authSvc.login(this.username, form.value.password).subscribe(
+  login(hatPass) {
+    this.storageSvc.rememberMe = this.rememberMe;
+    this.authSvc.login(this.hatName, hatPass.value).subscribe(
       (token: string) => {
         this.navigateForward();
       },

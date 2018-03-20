@@ -25,7 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MAT_DATE_LOCALE } from '@angular/material';
+import {MAT_DATE_LOCALE, MatCheckboxModule} from '@angular/material';
 
 @NgModule({
   imports: [
@@ -44,6 +44,7 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     MatTooltipModule,
     MatSnackBarModule,
     MatRadioModule,
+    MatCheckboxModule,
     MatMenuModule,
     MatSidenavModule
   ],
@@ -63,6 +64,7 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     MatTooltipModule,
     MatSnackBarModule,
     MatRadioModule,
+    MatCheckboxModule,
     MatMenuModule,
     MatSidenavModule
   ],

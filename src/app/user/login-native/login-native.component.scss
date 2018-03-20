@@ -6,123 +6,130 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
- @import "../../style/branding";
+@import "../../style/branding";
+@import "../../style/rumpel-mixins";
 
-.view-body {
-  text-align: center;
-  min-height: 70em;
-  position: relative;
-
-  .version-tag {
-    position: fixed;
-    bottom: 1em;
-    right: 1.5em;
-    color: $app-mid-tone;
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .title-container {
+    margin-top: 50px;
   }
+}
 
-  .logo {
-    height: 100px;
-    width: 200px;
-    background-image: url($logo);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    margin: 70px auto 20px;
-  }
+.native-login-page {
+  @include flex-container(column);
+  height: 100vh;
+  overflow: scroll;
 
-  p {
-    color: $app-dark-tone;
-    font-size: 1.8em;
-    margin-top: 1.5em;
+  .title-container {
+    display: flex;
+    margin-bottom: 50px;
 
-    &.subtext {
-      font-size: 1.4em;
+    .logo-wrapper {
+      margin-right: 15px;
+    }
+
+    .heading-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      color: $app-dark-tone;
+      letter-spacing: 1px;
+
+      .title-hat-name {
+        font-size: 24px;
+        font-weight: 500;
+        margin-top: 0;
+        margin-bottom: 5px;
+      }
+
+      .title-hat-domain {
+        font-size: 18px;
+        font-weight: 300;
+        margin: 0;
+      }
     }
   }
 
-  .highlight {
-    font-weight: 600;
-  }
-}
-
-.form-group {
-  text-align: left;
-  font-weight: 300;
-
-  &:first-child {
-    margin-top: 3em;
+  .f-g {
+    width: 100%;
+    max-width: 500px;
   }
 
-  &:not(:first-child) {
-    margin-top: 1.5em;
-  }
-
-  label {
-    font-family: $font-standard;
+  .hat-pass-input {
     color: $app-dark-tone;
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 1.25em;
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    border-radius: 0;
+    -webkit-appearance: none;
+
+    @media (min-width: 501px) {
+      font-size: 20px;
+
+      &::placeholder {
+        padding-top: 4px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      border-left: none;
+      border-right: none;
+    }
+
+    &::placeholder {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  /deep/ {
+    .mat-checkbox-label {
+      color: $app-dark-tone;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .mat-checkbox-frame {
+      border-radius: 50%;
+    }
+
+    .mat-checkbox-background {
+      border-radius: 50%;
+    }
   }
 }
 
-.error {
-  font-family: "Open Sans Regular", sans-serif;
-  font-size: 1em;
-  font-weight: 700;
-  border-radius: 0;
-  margin-top: 0.25em;
-}
+.user-actions {
+  background-color: $hat-background-color;
 
-a {
-  color: $app-mid-tone;
-  font-weight: 600;
-  text-decoration: underline;
-  display: inline-block;
-  cursor: pointer;
-
-  &:hover {
-    color: lighten($app-mid-tone, 5%);
-    font-weight: 600;
-    text-decoration: underline;
-  }
-}
-
-.form-context {
-  color: $app-mid-tone;
-  font-size: 1.2em;
-  font-family: $font-standard;
-
-  span {
-    text-decoration: underline;
-    cursor: pointer;
-    font-weight: bold;
-  }
-}
-
-.form-context2 {
-  color: white;
-  font-size: 1.2em;
-  font-family: $font-standard;
-  margin-bottom: 1em;
-}
-
-.btn-rum {
-  width: 100%;
-}
-
-.inline-checkbox {
-  text-align: center;
-  font-size: 1.25em;
-
-  .checkbox {
-    margin: 0;
-    margin-right: 0.5em;
-    display: inline-block;
-    vertical-align: text-top;
+  * {
+    display: block;
+    margin: 20px auto;
+    width: 250px;
+    text-align: center;
   }
 
-  .text {
-    text-transform: none;
+   button {
+     background-color: $app-accent-color;
+     text-transform: uppercase;
+     border-radius: 4px;
+     padding: 5px 0;
+     font-size: 14px;
+   }
+
+  a {
+    font-size: 14px;
+    color: $hat-body-text;
+    text-decoration: none;
   }
 }
