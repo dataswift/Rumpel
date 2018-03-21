@@ -25,7 +25,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import {MAT_DATE_LOCALE, MatCheckboxModule} from '@angular/material';
+import { MAT_DATE_LOCALE } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   imports: [
@@ -46,7 +49,9 @@ import {MAT_DATE_LOCALE, MatCheckboxModule} from '@angular/material';
     MatRadioModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule
   ],
   exports: [
     MatTabsModule,
@@ -66,7 +71,9 @@ import {MAT_DATE_LOCALE, MatCheckboxModule} from '@angular/material';
     MatRadioModule,
     MatCheckboxModule,
     MatMenuModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
