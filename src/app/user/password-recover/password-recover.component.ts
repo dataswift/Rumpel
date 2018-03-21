@@ -15,16 +15,22 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./password-recover.component.scss']
 })
 export class PasswordRecoverComponent implements OnInit {
+  public hatName: string;
+  public hatDomain: string;
   public errorMessage: string;
   public successMessage: string;
 
   constructor(private authSvc: AuthService) { }
 
   ngOnInit() {
+    const host = window.location.hostname;
+
+    this.hatName = host.substring(0, host.indexOf('.'));
+    this.hatDomain = host.substring(host.indexOf('.'));
   }
 
-  onSubmit(form: any): void {
-    this.authSvc.recoverPassword(form.value.recoveryEmail)
+  recoverPassword(email: string): void {
+    this.authSvc.recoverPassword(email)
       .subscribe(
         (res: any) => {
           this.successMessage = 'If the email address you have entered is correct, you will shortly receive an email'

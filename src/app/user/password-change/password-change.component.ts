@@ -6,12 +6,12 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { PasswordChangeFailureResInterface } from '../password-change-failure-res.interface';
 
-declare var zxcvbn: any;
+declare const zxcvbn: any;
 
 @Component({
   selector: 'rum-password-change',
@@ -19,6 +19,7 @@ declare var zxcvbn: any;
   styleUrls: ['./password-change.component.scss']
 })
 export class PasswordChangeComponent implements OnInit {
+  @ViewChild('currentPass') currentPass: ElementRef;
   public colorMapping = ['red', 'red', 'orange', 'green', 'green'];
   public evaluationMapping = ['Too guessable', 'Weak', 'So-so', 'Strong', 'Very Strong'];
   public resetToken: string;
@@ -28,6 +29,8 @@ export class PasswordChangeComponent implements OnInit {
   public successMessage: string;
   public passwordStrength: any;
   public loadingText: string;
+  public hatName: string;
+  public hatDomain: string;
 
   constructor(private route: ActivatedRoute,
               private authSvc: AuthService) { }
@@ -36,6 +39,11 @@ export class PasswordChangeComponent implements OnInit {
     this.route.params.subscribe((routeParams) => {
       this.resetToken = routeParams['resetToken'] || null;
     });
+
+    const host = window.location.hostname;
+
+    this.hatName = host.substring(0, host.indexOf('.'));
+    this.hatDomain = host.substring(host.indexOf('.'));
   }
 
   clearErrors() {
@@ -46,13 +54,13 @@ export class PasswordChangeComponent implements OnInit {
     this.passwordStrength = null;
   }
 
-  analysePassword(form) {
-    this.passwordStrength = zxcvbn(form.value.newPassword);
+  analysePassword(password: string): void {
+    this.passwordStrength = zxcvbn(password);
   }
 
-  onSubmit(form) {
-    if (form.value.newPassword === form.value.passwordConfirm) {
-      const passwordStrength = zxcvbn(form.value.newPassword);
+  changePass(newPass: string, confirmPass: string) {
+    if (newPass === confirmPass) {
+      const passwordStrength = zxcvbn(newPass);
 
       if (passwordStrength.score <= 2) {
         this.strengthError = 'ERROR: Password is too weak. Please make it harder to guess.';
@@ -61,9 +69,9 @@ export class PasswordChangeComponent implements OnInit {
       }
 
       if (this.resetToken) {
-        this.resetPassword(this.resetToken, form.value.newPassword);
+        this.resetPassword(this.resetToken, newPass);
       } else {
-        this.changePassword(form.value.currentPassword, form.value.newPassword);
+        this.changePassword(this.currentPass.nativeElement.value, newPass);
       }
     } else {
       this.matchError = true;
