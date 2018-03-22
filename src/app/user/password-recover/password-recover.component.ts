@@ -29,7 +29,7 @@ export class PasswordRecoverComponent implements OnInit {
     this.hatDomain = host.substring(host.indexOf('.'));
   }
 
-  recoverPassword(email: string): void {
+  resetPassword(email: string): void {
     this.authSvc.recoverPassword(email)
       .subscribe(
         (res: any) => {

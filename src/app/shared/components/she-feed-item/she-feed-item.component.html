@@ -1,0 +1,19 @@
+<div class="img-wrapper">
+  <img src="/assets/icons/she-{{feedItem.source}}.{{feedItem.source === 'notables'? 'png' : 'svg'}}" height="35" width="35" />
+</div>
+
+<mat-card>
+  <mat-card-header>
+    <h4 class="card-header-title">{{feedItem.title.text}}</h4>
+    <span class="flex-spacer"></span>
+    <span class="card-header-action">{{feedItem.title.action}}</span>
+  </mat-card-header>
+  <mat-card-content *ngIf="feedItem.content">
+    {{feedItem.content.text}}
+  </mat-card-content>
+  <mat-card-footer>
+    Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}
+  </mat-card-footer>
+
+  <div class="arrow-left"></div>
+</mat-card>

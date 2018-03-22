@@ -21,14 +21,12 @@ import { NotableComponent } from './components/notable/notable.component';
 import { LocationNotableComponent } from './components/location-notable/location-notable.component';
 import { PresignImgUrlPipe } from './pipes/presign-img-url.pipe';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { UnbundlePipe } from './pipes/unbundle.pipe';
-
+import { SheFeedItemComponent } from './components/she-feed-item/she-feed-item.component';
+import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, MatToolbarModule, MatIconModule, MatTooltipModule ],
+  imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
                   ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
@@ -37,7 +35,8 @@ import { UnbundlePipe } from './pipes/unbundle.pipe';
                   TreeViewComponent, SpinnerComponent,
                   NotableComponent, LocationNotableComponent, PresignImgUrlPipe,
                   PageHeaderComponent,
-                  UnbundlePipe ],
+                  UnbundlePipe,
+                  SheFeedItemComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
@@ -45,6 +44,6 @@ import { UnbundlePipe } from './pipes/unbundle.pipe';
              TreeViewComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
-             UnbundlePipe ]
+             UnbundlePipe, SheFeedItemComponent ]
 })
 export class SharedModule {}
