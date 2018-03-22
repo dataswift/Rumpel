@@ -37,7 +37,7 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
         .subscribe(
       (hatApp: HatApplication) => {
 
-        if (hatApp.setup) {
+        if (hatApp.setup && !hatApp.needsUpdating) {
           this.buildRedirect(name);
         } else {
           this.hatApp = hatApp.application;

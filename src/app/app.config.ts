@@ -33,7 +33,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.4.0',
+  version: '3.4.1',
   name: 'Rumpel',
   supportedDomains: ['.hubofallthings.net', '.hat.direct'],
   native: environment.native,
