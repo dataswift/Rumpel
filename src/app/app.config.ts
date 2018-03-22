@@ -33,7 +33,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.3.2',
+  version: '3.4.1',
   name: 'RumpelStaging',
   supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
