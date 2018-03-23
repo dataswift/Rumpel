@@ -14,10 +14,15 @@ import * as addDays from 'date-fns/add_days';
 
 declare const httpProtocol: string;
 
+interface TokenUser {
+  token: string;
+  user: User;
+}
+
 @Injectable()
 export class AuthService {
   private jwtHelper = new JwtHelperService();
-  private _token$: ReplaySubject<string> = <ReplaySubject<string>>new ReplaySubject(1);
+  private _token$: ReplaySubject<TokenUser> = <ReplaySubject<TokenUser>>new ReplaySubject(1);
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private storageSvc: BrowserStorageService,
@@ -26,31 +31,27 @@ export class AuthService {
     const previouslySavedToken = this.storageSvc.getAuthToken();
 
     if (previouslySavedToken) {
-      this._token$.next(previouslySavedToken);
+      this.loginWithToken(previouslySavedToken);
     }
   }
 
   get token$(): Observable<string> {
     return this._token$.asObservable()
-      .do(token => this.storageSvc.setAuthToken(token));
+      .do(({ token, user}) => {
+        this.storageSvc.setAuthToken(token);
+        this.storageSvc.setItem('lastLoginId', user.hatId);
+        this.storageSvc.setItem('lastLoginDomain', user.domain);
+      })
+      .map(({ token, user }) => token);
   }
 
   get user$(): Observable<User> {
-    return this._token$
-      .map(token => this.generateUserInfo(token))
-      .do((user: User) => {
-        this.storageSvc.setItem('lastLoginId', user.hatId);
-        this.storageSvc.setItem('lastLoginDomain', user.domain);
-      });
+    return this._token$.map(({ token, user }) => user);
   }
 
   get auth$(): Observable<boolean> {
-    return this.user$
-      .map((user: User) => {
-        console.log('new user', user);
-
-        return Boolean(user.fullDomain)
-    }).defaultIfEmpty(false);
+    return this._token$
+      .map((tokenUser: TokenUser) => Boolean(tokenUser.token)).defaultIfEmpty(false);
   }
 
   login(username: string, password: string): Observable<string> {
@@ -61,7 +62,11 @@ export class AuthService {
   loginWithToken(token: string): void {
     const decodedToken = this.jwtHelper.decodeToken(token);
 
-    this._token$.next(this.validateToken(decodedToken) ? token : null);
+    if (this.tokenIsValid(decodedToken)) {
+      this._token$.next({ token, user: this.generateUserInfo(decodedToken) });
+    } else {
+      this._token$.next({ token: null, user: this.generateUserInfo(null) });
+    }
   }
 
   logout(): void {
@@ -106,9 +111,8 @@ export class AuthService {
     return this.hatSvc.setupApplication(name);
   }
 
-  private generateUserInfo(token: string): User {
-    if (token) {
-      const decodedToken = this.jwtHelper.decodeToken(token);
+  private generateUserInfo(decodedToken: string | null): User {
+    if (decodedToken) {
       const fullDomain = decodedToken['iss'];
 
       return {
@@ -127,7 +131,7 @@ export class AuthService {
     }
   }
 
-  private validateToken(decodedToken: string): boolean {
+  private tokenIsValid(decodedToken: string): boolean {
     const expiryDate = parse(decodedToken['exp'] * 1000);
     const issuedDate = parse(decodedToken['iat'] * 1000);
 

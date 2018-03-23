@@ -73,9 +73,5 @@ export class AppRootComponent implements OnInit {
     };
 
     // this._notificationsSvc.showNotifs$.subscribe(status => this.showNotifications = status);
-
   }
-
-
-
 }
