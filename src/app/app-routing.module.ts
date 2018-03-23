@@ -37,6 +37,7 @@ import { LocationsComponent } from './locations/locations/locations.component';
 import { SocialComponent } from './social/social/social.component';
 import { HatApplicationListComponent } from './explore/hat-application-list/hat-application-list.component';
 import { HatApplicationDetailsComponent } from './explore/hat-application-details/hat-application-details.component';
+import { DataDebitListComponent } from './data-management/data-debit-list/data-debit-list.component';
 
 @NgModule({
   imports: [
@@ -66,6 +67,10 @@ import { HatApplicationDetailsComponent } from './explore/hat-application-detail
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'social', component: SocialComponent }
+        ]},
+      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
+        children: [
+          { path: 'data-debit', component: DataDebitListComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
