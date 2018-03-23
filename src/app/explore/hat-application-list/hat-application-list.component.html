@@ -26,9 +26,13 @@
           <div class="app-headline">{{ app.application.info.headline }}</div>
         </div>
         <div class="app-link-action">View app</div>
-        <mat-icon class="app-status-icon">
-          {{ app.setup ? 'check_circle' : 'add_circle_outline' }}
-        </mat-icon>
+        <ng-container *ngIf="!app.setup || app.needsUpdating else appActivityIcons">
+          <mat-icon class="app-status-icon">add_circle_outline</mat-icon>
+        </ng-container>
+
+        <ng-template #appActivityIcons>
+          <mat-icon class="app-status-icon">{{ app.active ? 'check_circle' : 'report_problem' }}</mat-icon>
+        </ng-template>
       </mat-card-content>
     </a>
   </mat-card>

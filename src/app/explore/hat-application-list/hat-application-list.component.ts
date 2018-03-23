@@ -17,9 +17,4 @@ export class HatApplicationListComponent implements OnInit {
   ngOnInit() {
     this.hatApp$ = this.hatAppSvc.getApplicationList();
   }
-
-  appStatusMock(): boolean {
-    return Math.random() < 0.5;
-  }
-
 }
