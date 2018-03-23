@@ -6,43 +6,66 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
   -->
 
-<div class="container-fluid view-body">
-  <div class="row">
-    <div class="responsive header-strip">
-      <div class="logo"></div>
-    </div>
-  </div>
+<ng-container *ngIf="hatApp else loading">
+  <div class="content-wrapper">
+    <section class="title-section">
+      <div class="app-logo-wrapper">
+        <img src="{{hatApp.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" />
+      </div>
 
-  <div class="row">
-    <form class="responsive" (submit)="onSubmit(f)" #f="ngForm">
-      <div class="form-group" [class.has-error]="error">
-        <label for="hatPassword">Please enter your HAT password</label>
-        <input type="password" class="form-control input-rum lg" id="hatPassword"
-               (focus)="clearError()"
-               ngModel name="password"
-               placeholder="Password"
-               aria-describedby="hatPassword">
-        <div *ngIf="error" class="error alert alert-danger">
-          {{error}}
+      <h3 class="title-section-heading">{{hatApp.info.name}}</h3>
+
+      <p class="title-section-text">{{hatApp.info.name}} needs access to some of your HAT data, and will have the
+      ability to take actions in your HAT. By agreeing, you confirm that you're okay with this.</p>
+    </section>
+
+    <section class="permissions-section">
+      <h4 class="section-header">{{hatApp.info.name}} will be able to:</h4>
+      <mat-card *ngFor="let role of hatApp.permissions.rolesGranted">
+        <div class="card-img-wrapper">
+          <img src="/assets/icons/hat-permissions-generic.svg" class="card-img" />
         </div>
-      </div>
 
-      <div class="form-group inline-checkbox">
-        <input type="checkbox" class="checkbox" id="rememberMe"
-               [ngModel]="true" name="rememberMe">
-        <label for="rememberMe" class="text">Remember Me</label>
-      </div>
+        <mat-card-content>
+          <h5 class="card-heading">{{role.role.replace('namespace', '')}} Access</h5>
+          <p class="card-text">The app needs to be able to {{role.role.replace('namespace', '')}} data in the {{role.detail}} namespace.</p>
+        </mat-card-content>
+      </mat-card>
+    </section>
 
-      <div class="form-group">
-        <button type="submit" class="btn btn-rum md fading">Login</button>
-      </div>
+    <section class="permissions-section" *ngIf="hatApp.permissions.dataRequired && hatApp.permissions.dataRequired.bundle">
+      <h4 class="section-header">{{hatApp.info.name}} will have access to:</h4>
+      <mat-card *ngFor="let endpoint of hatApp.permissions.dataRequired.bundle.bundle | unbundle">
+        <div class="card-img-wrapper">
+          <img src="/assets/icons/hat-permissions-generic.svg" class="card-img" />
+        </div>
 
-      <div class="form-context">&nbsp;
-        <a [routerLink]="['/user', 'password', 'recover']">Forgot Password?</a>
-      </div>
-    </form>
+        <mat-card-content>
+          <h5 class="card-heading">{{endpoint.title}}</h5>
+          <div class="card-text" [class.card-text-expanded]="endpoint.expanded">
+            <h6 class="card-subheading">Fields required</h6>
+            <ul class="card-list">
+              <li *ngFor="let field of endpoint.fields">{{field}}</li>
+            </ul>
+          </div>
+          <div *ngIf="endpoint.fields.length > 1" (click)="toggleCardExpansion(endpoint)" class="card-expansion-toggle">
+            {{endpoint.expanded ? 'Less' : 'More'}}
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </section>
   </div>
 
-  <div class="version-tag">v{{config.version}}</div>
+  <div class="user-actions">
+    <button mat-flat-button role="button" (click)="agreeTerms(hatApp.id)">Agree</button>
+    <button mat-flat-button role="link" (click)="declineTerms()">Cancel</button>
+  </div>
 
-</div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading permissions</div>
+  </div>
+</ng-template>

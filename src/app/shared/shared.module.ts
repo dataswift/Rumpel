@@ -11,38 +11,39 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { SwitchComponent, TreeViewComponent, TimelineComponent, DateInputComponent } from './components';
+import { TreeViewComponent } from './components';
 import { OutsideClickDirective, StickDirective } from './directives';
 import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, RemoveCharsPipe, RelativeTimePipe,
          MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
 import { TimeFilterTwoPipe } from './pipes/time-filter-two.pipe';
-import { CapitalizeFirstPipe } from './pipes/capitalize-first.pipe';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NotableComponent } from './components/notable/notable.component';
 import { LocationNotableComponent } from './components/location-notable/location-notable.component';
 import { PresignImgUrlPipe } from './pipes/presign-img-url.pipe';
 import { PageHeaderComponent } from './components/page-header/page-header.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { UnbundlePipe } from './pipes/unbundle.pipe';
+import { SheFeedItemComponent } from './components/she-feed-item/she-feed-item.component';
+import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, MatToolbarModule, MatIconModule, MatTooltipModule ],
+  imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
                   ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClickDirective, StickDirective,
-                  SwitchComponent, TreeViewComponent, TimelineComponent, SpinnerComponent,
-                  DateInputComponent, NotableComponent, LocationNotableComponent, CapitalizeFirstPipe, PresignImgUrlPipe,
-                  PageHeaderComponent ],
+                  TreeViewComponent, SpinnerComponent,
+                  NotableComponent, LocationNotableComponent, PresignImgUrlPipe,
+                  PageHeaderComponent,
+                  UnbundlePipe,
+                  SheFeedItemComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
-             TimeFilterPipe, TimeFilterTwoPipe, CapitalizeFirstPipe, SafeHtmlPipe,
-             SwitchComponent, TreeViewComponent, TimelineComponent,
-             OutsideClickDirective, StickDirective, SpinnerComponent, DateInputComponent,
-             CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent ]
+             TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
+             TreeViewComponent,
+             OutsideClickDirective, StickDirective, SpinnerComponent,
+             CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
+             UnbundlePipe, SheFeedItemComponent ]
 })
 export class SharedModule {}

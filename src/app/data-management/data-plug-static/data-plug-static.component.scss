@@ -1,10 +1,11 @@
-@import '../../style/_variables.scss';
+@import "../../style/branding";
 
 table {
   margin: 40px 0;
   background: $app-light-background-color;
   width: 100%;
   border-radius: 8px;
+
   tr {
     td {
       padding: 20px;
@@ -15,6 +16,5 @@ table {
         width: 30%;
       }
     }
-
   }
 }

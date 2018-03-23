@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRootComponent } from './app.component';
 
-import { APP_CONFIG, AppConfig, configuration } from './app.config';
+import { APP_CONFIG, configuration } from './app.config';
 
 import { CoreModule } from './core/core.module';
 import { DataManagementModule } from './data-management/data-management.module';
@@ -25,18 +25,14 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
 
-import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
 import { NativeGuard } from './native-guard.service';
 
 import { DataTypeFilterPipe } from './pipes';
-import { HatApiService, RumpelService } from './services/index';
-import { AuthHttp } from './services/auth-http.service';
-
-// import { DatePickerModule } from 'ng2-datepicker';
 
 /* MODAL COMPONENTS */
 
@@ -49,20 +45,13 @@ import { FileUploadComponent } from './core/file-upload/file-upload.component';
 import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
 import { BrowserStorageService } from './services/browser-storage.service';
-import { HatApiV2Service } from './services/hat-api-v2.service';
+import { HatApiService } from './core/services/hat-api.service';
 import { GlobalMessagingService } from './services/global-messaging.service';
 import { DexApiService } from './services/dex-api.service';
 import { FileService } from './services/file.service';
 import { StaticDataService } from './services/static-data.service';
-import { Router } from '@angular/router';
-
-export function authHttpFactory(backend: XHRBackend,
-                                defaultOptions: RequestOptions,
-                                router: Router,
-                                storageSvc: BrowserStorageService,
-                                config: AppConfig) {
-  return new AuthHttp(backend, defaultOptions, router, storageSvc, config);
-}
+import { ExploreModule } from './explore/explore.module';
+import { AuthInterceptor } from './core/services/auth-interceptor';
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -75,9 +64,9 @@ export function cookieServiceFactory() {
   ],
   imports: [
     NoopAnimationsModule, // Using NoopAnimationModule instead of BrowserModule to prevent double-import error
+    HttpClientModule,
     SharedModule,
     LocationsModule,
-    HttpModule,
     FormsModule,
     UserModule,
     SocialModule,
@@ -89,6 +78,7 @@ export function cookieServiceFactory() {
     DashboardModule,
     NotablesModule,
     MashupsModule,
+    ExploreModule,
     CoreModule,
     AppRoutingModule
   ],
@@ -98,20 +88,14 @@ export function cookieServiceFactory() {
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: configuration },
     { provide: CookieService, useFactory: cookieServiceFactory },
-    {
-      provide: AuthHttp,
-      useFactory: authHttpFactory,
-      deps: [ XHRBackend, RequestOptions, Router, BrowserStorageService, APP_CONFIG ]
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
     NativeGuard,
-    HatApiService,
-    HatApiV2Service, // Supersedes original HAT API service
+    HatApiService, // Supersedes original HAT API service
     StaticDataService,
     GlobalMessagingService,
     DexApiService,
     FileService,
-    RumpelService,
     BrowserStorageService
   ]
 })

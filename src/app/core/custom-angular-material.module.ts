@@ -17,7 +17,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -25,6 +25,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MAT_DATE_LOCALE } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   imports: [
@@ -37,14 +41,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatIconModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatButtonToggleModule,
     MatButtonModule,
     MatTooltipModule,
     MatSnackBarModule,
     MatRadioModule,
+    MatCheckboxModule,
     MatMenuModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule
   ],
   exports: [
     MatTabsModule,
@@ -56,14 +63,20 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatIconModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatButtonToggleModule,
     MatButtonModule,
     MatTooltipModule,
     MatSnackBarModule,
     MatRadioModule,
+    MatCheckboxModule,
     MatMenuModule,
-    MatSidenavModule
-  ]
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+  ],
 })
 export class CustomAngularMaterialModule {}

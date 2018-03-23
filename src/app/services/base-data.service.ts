@@ -9,16 +9,16 @@
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { HatApiV2Service } from './hat-api-v2.service';
-import { UserService } from '../user/user.service';
+import { HatApiService } from '../core/services/hat-api.service';
+import { AuthService } from '../core/services/auth.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { EndpointQuery, Filter } from '../shared/interfaces/bundle.interface';
-import {Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 export abstract class BaseDataService<T> {
   private _data$: ReplaySubject<HatRecord<T>[]> = <ReplaySubject<HatRecord<T>[]>>new ReplaySubject(1);
-  public hat: HatApiV2Service;
+  public hat: HatApiService;
   private store: { data: HatRecord<T>[]; } = { data: [] };
 
   private RECORDS_PER_REQUEST = 250;
@@ -30,11 +30,11 @@ export abstract class BaseDataService<T> {
   private userSub: Subscription;
   private _loading$: Subject<boolean> = <Subject<boolean>>new Subject();
 
-  constructor(hat: HatApiV2Service, userSvc: UserService, namespace: string, endpoint: string, orderBy: string) {
+  constructor(hat: HatApiService, authSvc: AuthService, namespace: string, endpoint: string, orderBy: string) {
     this.hat = hat; this.namespace = namespace; this.endpoint = endpoint; this.orderBy = orderBy;
     this.clearLocalStore();
 
-    this.userSub = userSvc.auth$
+    this.userSub = authSvc.auth$
       .filter(isAuthenticated => isAuthenticated === false)
       .subscribe(_ => this.clearLocalStore());
   }
@@ -157,10 +157,4 @@ export abstract class BaseDataService<T> {
     this._loading$.next(false);
     this._data$.next(this.store.data);
   }
-
-  pushMockDataToStream(data): void {
-    this._loading$.next(false);
-    this._data$.next(data);
-  }
-
 }

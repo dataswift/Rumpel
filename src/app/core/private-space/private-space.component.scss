@@ -1,3 +1,5 @@
+@import "../../style/branding";
+
 .sidenav-container {
   flex: 1;
   position: absolute;
@@ -25,4 +27,8 @@
   router-outlet + * {
     flex-grow: 1;
   }
+}
+
+.mat-drawer-container {
+  background-color: $hat-background-color;
 }

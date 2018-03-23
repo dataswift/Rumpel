@@ -6,9 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
-@import "../../style/bootstrap/mixins/grid";
-@import "../../style/bootstrap/mixins/clearfix";
-@import "../../style/variables";
+@import "../../style/branding";
 
 .content-grid {
   overflow: hidden;
@@ -96,7 +94,7 @@
           border: none;
           width: 48px;
           height: 48px;
-          background: $app-background-color;
+          background: $hat-background-color;
         }
       }
     }
@@ -112,22 +110,27 @@
   .phata-name {
     margin-top: 195px;
     text-align: center;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 
-    img, svg {
-      max-width: 160px;
-      max-height: 160px;
+    .photo-container {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+    }
+
+    .photo-container, svg {
+      width: 160px;
+      height: 160px;
+      margin: auto;
       border-radius: 50%;
-      border: 8px solid white;
+      border: 6px solid white;
       position: relative;
       top: -80px;
-      background-color: $app-dark-tone
     }
 
     svg {
-      width: 160px;
-      height: 160px;
+      background-color: $app-dark-tone;
     }
 
     h1 {

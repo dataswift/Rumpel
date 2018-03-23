@@ -12,6 +12,7 @@ import { LocationsModule } from '../locations/locations.module';
 import { DataPlugFeedComponent } from './data-plug-feed/data-plug-feed.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { DataPlugStaticComponent } from './data-plug-static/data-plug-static.component';
+import { DataDebitListComponent } from './data-debit-list/data-debit-list.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { DataPlugStaticComponent } from './data-plug-static/data-plug-static.com
     TileDataPlugsComponent,
     DataPlugDataComponent,
     DataPlugFeedComponent,
-    DataPlugStaticComponent
+    DataPlugStaticComponent,
+    DataDebitListComponent
   ],
   providers: [ DataPlugService ],
   exports: [ TileDataPlugsComponent, DataPlugDataComponent ]

@@ -8,7 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { DataDebitService } from '../data-debits.service';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../user/user.interface';
 import { DataDebit } from '../../shared/interfaces/data-debit.interface';
 
@@ -20,16 +20,13 @@ import { DataDebit } from '../../shared/interfaces/data-debit.interface';
 export class TileDataDebitComponent implements OnInit {
   public debits: DataDebit[] = [];
 
-  constructor(private ddSvc: DataDebitService,
-              private userSvc: UserService) {}
+  constructor(private ddSvc: DataDebitService, private authSvc: AuthService) {}
 
   ngOnInit() {
-    this.userSvc.user$.subscribe((user: User) => {
-      if (user.authenticated === true) {
+    this.authSvc.auth$.filter((authenticated: boolean) => authenticated).subscribe(_ => {
         this.ddSvc.loadAllDataDebits().subscribe((dataDebits: DataDebit[]) => {
           this.debits = dataDebits;
         });
-      }
     });
   }
 

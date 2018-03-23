@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HatApiV2Service } from '../../services/hat-api-v2.service';
+import { HatApiService } from '../../core/services/hat-api.service';
 import { FileMetadataRes } from '../interfaces/file.interface';
 
 @Pipe({
@@ -8,7 +8,7 @@ import { FileMetadataRes } from '../interfaces/file.interface';
 })
 export class PresignImgUrlPipe implements PipeTransform {
 
-  constructor(private hat: HatApiV2Service) {}
+  constructor(private hat: HatApiService) {}
 
   transform(link: string, isPublic: boolean): Observable<string> {
     if (link && isPublic) {

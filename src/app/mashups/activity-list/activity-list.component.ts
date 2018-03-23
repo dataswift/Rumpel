@@ -53,6 +53,11 @@ export class ActivityListComponent implements OnInit, OnChanges {
         return acc;
       }, []);
     }
+
+    if (changes.selectedDate.previousValue !== changes.selectedDate.currentValue) {
+      const dayIndex = this.cardList.findIndex(item => item.day === changes.selectedDate.currentValue);
+      this.scrollToItem(dayIndex);
+    }
   }
 
   // changeDate(e) {

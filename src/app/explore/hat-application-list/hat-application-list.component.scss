@@ -1,0 +1,185 @@
+@import '../../style/branding';
+@import "../../style/rumpel-mixins";
+
+.app-page-header {
+  position: relative;
+  height: 250px;
+  width: 100%;
+  background-size: contain;
+  background-image: url('/assets/images/piggy.jpg');
+  background-repeat: no-repeat;
+  background-color: #2b313d;
+  // background-position: 100% 100%;
+
+  &:before {
+    position: absolute;
+    content: " ";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  .mat-toolbar {
+    background-color: transparent;
+    height: 75px;
+    font-size: 16px;
+
+    .app-page-heading {
+      color: white;
+      text-transform: uppercase;
+      margin: 0 auto;
+      font-size: 1.25em;
+    }
+  }
+
+  .app-page-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    height: calc(250px - 75px);
+
+    .flex-spacer {
+      flex-grow: 1;
+    }
+
+    .app-page-header-icon {
+      height: auto;
+      width: auto;
+      font-size: 30px;
+      padding: 20px;
+      background-color: $app-accent-color;
+      border-radius: 50%;
+    }
+
+    .app-page-header-text {
+      max-width: 300px;
+      font-size: 14px;
+      line-height: 1.43;
+      text-align: center;
+    }
+  }
+}
+
+.app-link-wrapper {
+  text-decoration: none;
+  color: $text-dark;
+
+  &:hover {
+    color: $text-dark;
+  }
+}
+
+.app-list {
+  display: flex;
+  justify-content: center;
+
+  .mat-card {
+    box-shadow: none;
+    border-radius: 4px;
+
+    .app-logo {
+      border-radius: 50%;
+    }
+
+    .app-name {
+      margin-top: 0;
+      color: $app-dark-tone;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .app-headline {
+      color: $text-dark;
+      font-size: 13px;
+      line-height: 1.23;
+    }
+  }
+}
+
+.app-status-icon {
+  width: 24px;
+  height: 24px;
+  color: $app-accent-color;
+}
+
+@media screen and (max-width: 900px) {
+  .mat-card {
+    margin: 20px 15px;
+    padding: 20px 15px;
+    flex-basis: 100%;
+    justify-content: center;
+  }
+
+  .mat-card-content {
+    display: flex;
+    margin-bottom: 0;
+    align-items: center;
+  }
+
+  .app-link-wrapper {
+    .app-logo {
+      margin-right: 15px;
+    }
+
+    .app-description {
+      flex: 1 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .app-name {
+        margin-bottom: 5px;
+      }
+    }
+
+    .app-link-action {
+      display: none;
+    }
+
+    .app-status-icon {
+      margin-left: 15px;
+    }
+  }
+}
+
+@media screen and (min-width: 901px) {
+  .mat-card {
+    margin: 20px 15px;
+    padding: 20px 15px;
+    max-width: 250px;
+    flex: 1 1;
+  }
+
+  .mat-card-content {
+    @include flex-container(column);
+  }
+
+  .app-link-wrapper {
+    .app-logo {
+      height: 80px;
+      width: 80px;
+      margin: 20px;
+      margin-top: 30px;
+    }
+
+    .app-description {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .app-link-action {
+      color: $app-accent-color;
+      text-decoration: underline;
+    }
+
+    .app-status-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+  }
+}

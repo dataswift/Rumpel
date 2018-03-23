@@ -7,9 +7,9 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { BaseDataService } from '../services/base-data.service';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../core/services/auth.service';
 
 import { MusicListen } from '../shared/interfaces/music-listen.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
@@ -18,8 +18,8 @@ import * as moment from 'moment';
 @Injectable()
 export class MediaService extends BaseDataService<MusicListen> {
 
-  constructor(hat: HatApiV2Service, userSvc: UserService) {
-    super(hat, userSvc, 'facebook', 'music_listens', 'changeme');
+  constructor(hat: HatApiService, authSvc: AuthService) {
+    super(hat, authSvc, 'facebook', 'music_listens', 'changeme');
   }
 
   coerceType(rawMusicListen: HatRecord<any>): HatRecord<MusicListen> {

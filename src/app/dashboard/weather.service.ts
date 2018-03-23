@@ -7,7 +7,7 @@
  */
 
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpBackendClient } from '../core/services/http-backend-client.service';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class WeatherService {
   private baseUrl: string;
   private token: string;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpBackendClient) {
     this.baseUrl = 'https://api.wunderground.com/api';
     this.token = '648b0984a45bdea3';
   }
@@ -23,8 +23,7 @@ export class WeatherService {
   getCurrentWeather(country: string, city: string): Observable<any> {
     const url = `${this.baseUrl}/${this.token}/conditions/q/autoip.json`;
 
-    return this.http.get(url)
-      .map(res => res.json())
+    return this.http.get<any>(url)
       .map(wunder => wunder.current_observation);
   }
 }

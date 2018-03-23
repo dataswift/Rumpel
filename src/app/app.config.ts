@@ -14,6 +14,8 @@ export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 export class AppConfig {
   version: string;
   name: string;
+  tokenApp: string;
+  tokenExpiryTime: number;
   supportedDomains: string[];
   native: boolean;
   protocol: string;
@@ -33,8 +35,10 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.3.2',
+  version: '3.5.0',
   name: 'RumpelStaging',
+  tokenApp: 'rumpel',
+  tokenExpiryTime: 3,
   supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,
@@ -72,6 +76,9 @@ export const configuration: AppConfig = {
 
       { display: 'Redeem Offers', icon: 'local_offer', link: '/offers', dataType: '', disable: '',
       description: 'Allow access to your data in exchange for cash, services or vouchers.' },
+
+      { display: 'Explore', icon: 'touch_app', link: '/explore', dataType: '', disable: '',
+        description: 'Explore all the apps available in the HAT ecosystem.' },
 
       { display: 'Notables', icon: 'border_color', link: '/notables', dataType: '', disable: '',
       description: `Your words are your memories!

@@ -9,9 +9,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { BaseDataService } from '../services/base-data.service';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../core/services/auth.service';
 
 import { Profile, ProfileSharingConfig } from '../shared/interfaces/profile.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
@@ -63,9 +63,9 @@ export class ProfilesService extends BaseDataService<Profile> {
   private previousBundle: BundleStructure;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              hat: HatApiV2Service,
-              userSvc: UserService) {
-    super(hat, userSvc, 'rumpel', 'profile', 'dateCreated');
+              hat: HatApiService,
+              authSvc: AuthService) {
+    super(hat, authSvc, 'rumpel', 'profile', 'dateCreated');
   }
 
   get profileData$(): Observable<{ values: Profile; share: ProfileSharingConfig; }> {

@@ -6,53 +6,50 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
-import { BrowserStorageService } from '../../services/browser-storage.service';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { User } from '../user.interface';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { Subscription } from 'rxjs/Subscription';
+import { HatApplication, HatApplicationContent } from '../../explore/hat-application.interface';
 
 @Component({
   selector: 'rum-login-oauth',
   templateUrl: './login-oauth.component.html',
   styleUrls: ['./login-oauth.component.scss']
 })
-export class LoginOauthComponent implements OnInit, OnDestroy {
+export class LoginOauthComponent implements OnInit {
   public hatDomain: string;
   public error: string;
-  private sub: Subscription;
+  public hatApp: HatApplicationContent;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
-              private userSvc: UserService,
-              private storageSvc: BrowserStorageService,
+              private authSvc: AuthService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.sub = Observable.zip(
-      this.userSvc.user$.filter((user: User) => user.authenticated),
-      this.route.queryParams
-    )
-    .flatMap(([user, queryParams]: [User, Params]) => {
-      const name = queryParams['name'] || '';
-      const redirect = queryParams['redirect'] || '';
+    const name = this.route.snapshot.queryParams['name'];
+    const redirect = this.route.snapshot.queryParams['redirect'];
 
-      return this.userSvc.hatLogin(name, redirect);
-    })
-    .subscribe(
-      (redirectUrl: string) => window.location.href = redirectUrl,
-      error => {
-        console.warn('Failed to login. Reason: ', error);
-        this.error = 'ERROR: Failed to obtain HAT authentication. Please try again.';
-      });
+    if (name && redirect) {
+      this.authSvc.getApplicationDetails(name, redirect)
+        .subscribe(
+      (hatApp: HatApplication) => {
 
-    this.userSvc.isLoggedIn();
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+        if (hatApp.setup) {
+          this.buildRedirect(name);
+        } else {
+          this.hatApp = hatApp.application;
+        }
+      },
+      error => { // App is not registered, assume legacy for testing
+        // console.warn('Failed to login. Reason: ', error);
+        // this.error = 'ERROR: Failed to obtain HAT authentication. Please try again.';
+        this.legacyLogin();
+        }
+      );
+    } else {
+      // TODO: show error message
+    }
   }
 
   get username(): string {
@@ -65,16 +62,27 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
     this.error = '';
   }
 
-  onSubmit(form) {
-    this.storageSvc.rememberMe = form.value.rememberMe;
-    this.userSvc.login(this.username, form.value.password).subscribe(
-      (isAuthenticated: boolean) => {
-        console.log('Authenticated successfully. ', isAuthenticated);
-      },
-      err => {
-        console.log('Login failed! Reason: ', err);
-        this.error = 'Incorrect password. Please try again.';
-      });
+  buildRedirect(appName: string): void {
+    this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
+      window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
+    });
+  }
+
+  agreeTerms(appId: string): void {
+    this.authSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => this.buildRedirect(appId));
+  }
+
+  declineTerms(): void {
+    window.location.href = this.route.snapshot.queryParams['fallback'];
+  }
+
+  toggleCardExpansion(endpoint): void {
+    endpoint.expanded = !endpoint.expanded;
+  }
+
+  private legacyLogin(): void {
+    this.authSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
+      .subscribe((url: string) => window.location.href = url);
   }
 
 }

@@ -6,177 +6,165 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 3, 2017
  */
 
-@import "../../style/variables";
+@import "../../style/branding";
+@import "../../style/rumpel-mixins";
 
-.view-body {
-  text-align: center;
-  min-height: 70em;
-  position: relative;
-
-  .version-tag {
-    position: absolute;
-    bottom: 1em;
-    right: 3em;
-    color: white;
-  }
-
-  .logo {
-    height: 100px;
-    width: 200px;
-    background-image: url($logo);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    margin: 70px auto 20px;
-  }
-
-  p {
-    color: $app-dark-tone;
-    font-size: 1.8em;
-    margin-top: 1.5em;
-
-    &.subtext {
-      font-size: 1.4em;
-    }
-  }
-
-  .highlight {
-    font-weight: 600;
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .title-container {
+    margin-top: 50px;
   }
 }
 
-.form-group {
-  margin-top: 3em;
-  text-align: left;
-  font-weight: 300;
-
-  label {
-    font-family: $font-standard;
-    color: $app-dark-tone;
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 1.25em;
+@media (max-width: 500px) {
+  .hat-pass-input, .mat-expansion-panel {
+    border-left: none;
+    border-right: none;
   }
 }
 
-.error {
-  font-family: "Open Sans Regular", sans-serif;
-  font-size: 1em;
-  font-weight: 700;
-  border-radius: 0;
-  margin-top: 0.25em;
-}
+.native-login-page {
+  @include flex-container(column);
+  height: 100vh;
+  overflow: scroll;
 
-a {
-  color: $app-mid-tone;
-  font-weight: 600;
-  text-decoration: underline;
-  display: inline-block;
-  cursor: pointer;
+  .title-container {
+    display: flex;
+    margin-bottom: 50px;
+    max-width: 500px;
+    overflow: hidden;
 
-  &:hover {
-    color: lighten($app-mid-tone, 5%);
-    font-weight: 600;
-    text-decoration: underline;
-  }
-}
-
-.form-context {
-  color: $app-mid-tone;
-  font-size: 1.2em;
-  font-family: $font-standard;
-
-  span {
-    text-decoration: underline;
-    cursor: pointer;
-    font-weight: bold;
-  }
-}
-
-.btn-rum {
-  width: 250px;
-
-}
-
-.form-group {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  &.with-dropdown {
-    input {
-      width: 250px;
-      display: inline;
-
-
-      //@media (min-width: $screen-md-min) and (max-width: 1310px), (max-width: 590px) {
-      //  width: 100%;
-      //}
+    .logo-wrapper {
+      margin-right: 15px;
     }
 
-    .dropdown-wrapper {
-      display: inline;
-      position: relative;
-      line-height: initial;
+    .heading-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-      button {
-        background-color: white;
+      color: $app-dark-tone;
+      letter-spacing: 1px;
 
-        width: 250px;
-        color: $app-mid-tone;
-        height: 50px;
-
-
-        &:focus {
-          box-shadow: none;
-        }
-
-        //@media (min-width: $screen-md-min) and (max-width: 1310px), (max-width: 590px) {
-        //  width: 100%;
-        //  margin-left: 0;
-        //}
+      .title-hat-name {
+        font-size: 24px;
+        font-weight: 500;
+        margin-top: 0;
+        margin-bottom: 5px;
       }
 
-      .dropdown-menu-rum {
-        margin: 2px 0 0 -5px;
-        padding: 0;
-        z-index: 1001;
-        position: absolute;
-        background-color: rgba(255, 255, 255, 1);
-        border: 1px solid #c7c7c7;
-        border-radius: 0;
-        list-style: none;
-        display: block;
-        top: 3em;
-        left: 0;
-        width: 101.5%;
-        color: $app-mid-tone;
-        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+      .title-hat-domain {
+        font-size: 18px;
+        font-weight: 300;
+        margin: 0;
+      }
+    }
+  }
+
+  .f-g {
+    width: 100%;
+    max-width: 500px;
+
+    /deep/ {
+      .mat-list-item-content {
+        color: $app-dark-tone;
+        font-size: 14px;
+        width: 100%;
+      }
+
+      .mat-expansion-panel-body {
+        padding-bottom: 0;
+      }
+    }
+
+    .mat-expansion-panel-header-title {
+      color: $app-dark-tone;
+      font-size: 14px;
+    }
+
+    .mat-list {
+      width: 100%;
+
+      .mat-list-item {
         cursor: pointer;
+        display: flex;
+        align-items: center;
 
-        li {
-          font-size: 1.6em;
-          height: 3em;
-          padding: 0.7em;
-          line-height: 1.6;
-
-          &:hover {
-            background-color: rgba(232, 232, 232, 0.7);
-          }
+        .mat-icon {
+          color: $app-mid-tone;
+          font-size: 20px;
+          height: 20px;
+          width: 20px;
         }
       }
     }
   }
+
+  .hat-pass-input {
+    color: $app-dark-tone;
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 15px 20px;
+    border-radius: 0;
+    -webkit-appearance: none;
+
+    &::placeholder {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .mat-expansion-panel {
+    margin: 0;
+    margin-bottom: 24px;
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    border-top: none;
+    box-shadow: none;
+  }
+
+  .login-info {
+    margin: auto;
+    color: $hat-body-text;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.57;
+    width: 80%;
+  }
 }
 
-.caret {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: 0;
-  vertical-align: middle;
-  border-top: 4px dashed;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
+.user-actions {
+  background-color: $hat-background-color;
+
+  * {
+    display: block;
+    margin: 20px auto;
+    width: 250px;
+    text-align: center;
+  }
+
+  button {
+    background-color: $app-accent-color;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 5px 0;
+    font-size: 14px;
+
+    &:disabled {
+      background-color: #e0e0e0;
+      color: white;
+    }
+  }
+
+  a {
+    font-size: 14px;
+    color: $hat-body-text;
+    text-decoration: none;
+  }
 }

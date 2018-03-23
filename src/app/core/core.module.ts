@@ -13,7 +13,6 @@ import { LocationsModule } from '../locations/locations.module';
 
 import { HeaderComponent } from './header/header.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
-import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { NotificationCentreComponent } from './notification-centre/notification-centre.component';
@@ -30,12 +29,13 @@ import { DataOfferService } from '../offers/data-offer.service';
 import { PrivateSpaceComponent } from './private-space/private-space.component';
 import { ProfilesModule } from '../profiles/profiles.module';
 import { CustomAngularMaterialModule } from './custom-angular-material.module';
+import { HttpBackendClient } from './services/http-backend-client.service';
+import {AuthService} from './services/auth.service';
 
 @NgModule({
   imports: [ SharedModule, LocationsModule, ProfilesModule, CustomAngularMaterialModule ],
   declarations: [ HeaderComponent,
                   SideMenuComponent,
-                  FooterComponent,
                   AboutComponent,
                   NotificationCentreComponent,
                   DialogBoxComponent,
@@ -48,8 +48,7 @@ import { CustomAngularMaterialModule } from './custom-angular-material.module';
   ],
   exports: [ HeaderComponent,
             SideMenuComponent,
-            FooterComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService ]
+  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService, HttpBackendClient, AuthService ]
 })
 export class CoreModule {}

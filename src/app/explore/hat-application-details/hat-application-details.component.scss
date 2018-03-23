@@ -1,0 +1,189 @@
+@import "../../style/branding";
+@import "../../style/rumpel-mixins";
+
+.app-details-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 125px;
+  position: relative;
+  height: 234px;
+  width: 100%;
+  background-size: contain;
+  background-image: url('/assets/images/piggy.jpg');
+  background-repeat: no-repeat;
+  background-color: #2b313d;
+  // background-position: 100% 100%;
+
+  &:before {
+    position: absolute;
+    content: " ";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  .app-details-header-toolbar {
+    background-color: transparent;
+    display: flex;
+    align-self: flex-start;
+    z-index: 1;
+
+    .flex-spacer {
+      flex-grow: 1;
+    }
+
+    .app-details-close {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .app-details-header-card {
+    margin-bottom: -125px;
+    padding: 0 2em;
+    border-radius: 4px;
+    width: 95%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .app-logo-wrapper {
+      margin-top: -50px;
+      background-color: white;
+      padding: 6px;
+      border-radius: 50%;
+
+      .app-logo {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+      }
+    }
+
+    .app-details-header-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: $app-dark-tone;
+    }
+
+    .app-details-header-headline {
+      margin: 0 30px 30px 30px;
+      font-size: 13px;
+      color: $hat-body-text;
+      line-height: 1.38;
+    }
+
+    .mat-button {
+      border: 1px solid $app-accent-color;
+      text-decoration: none;
+      margin-bottom: 30px;
+      padding: 5px 20px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+
+      &.require-setup {
+        /deep/ .mat-button-wrapper {
+          color: $app-accent-color;
+        }
+      }
+
+      &:not(.require-setup) {
+        background-color: $app-accent-color;
+      }
+
+      .mat-icon {
+        margin-right: 15px;
+      }
+    }
+  }
+}
+
+.app-details-content {
+  padding: 0 12px;
+
+  .mat-card {
+    margin: 15px auto;
+    max-width: 500px;
+    box-shadow: none;
+    border-radius: 4px;
+
+    &.app-details-general {
+      max-width: 900px;
+    }
+  }
+
+  .app-details-heading {
+    font-weight: bold;
+    color: $app-dark-tone;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .app-details-description {
+    color: $hat-body-text;
+    font-size: 13px;
+    line-height: 1.54;
+  }
+
+  .app-details-screenshots {
+    margin: 30px 0;
+    height: 600px;
+    overflow-x: auto;
+
+    .img-wrapper {
+      display: inline;
+      white-space: nowrap;
+
+      &:not(:first-child):not(:last-child) {
+        margin: 0 10px;
+      }
+
+      img {
+        display: inline;
+        height: 100%;
+      }
+    }
+  }
+}
+
+/deep/ .mat-tab-header {
+  width: intrinsic;
+  margin: 30px auto;
+  border-bottom: none;
+
+  .mat-tab-labels {
+    justify-content: center;
+
+    .mat-tab-label {
+      opacity: .5;
+      padding: 0 4px;
+
+      &:not(.mat-tab-disabled):focus {
+        background-color: transparent;
+      }
+
+      .mat-tab-label-content {
+        text-transform: uppercase;
+        font-size: 12px;
+      }
+    }
+
+    .mat-tab-label-active {
+      opacity: .8;
+
+      .mat-tab-label-content {
+        color: $app-dark-tone;
+        font-weight: bold;
+        font-size: 13px;
+      }
+    }
+  }
+}

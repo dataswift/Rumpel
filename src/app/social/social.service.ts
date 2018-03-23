@@ -8,9 +8,9 @@
 
 import { Injectable } from '@angular/core';
 
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { BaseDataService } from '../services/base-data.service';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../core/services/auth.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { Post } from '../shared/interfaces';
@@ -18,8 +18,8 @@ import * as moment from 'moment';
 
 @Injectable()
 export class SocialService extends BaseDataService<Post> {
-  constructor(hat: HatApiV2Service, userSvc: UserService) {
-    super(hat, userSvc, 'facebook', 'feed', 'updated_time');
+  constructor(hat: HatApiService, authSvc: AuthService) {
+    super(hat, authSvc, 'facebook', 'feed', 'updated_time');
   }
 
   coerceType(rawPost: HatRecord<any>): HatRecord<Post> {

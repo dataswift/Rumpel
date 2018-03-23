@@ -7,14 +7,14 @@
  */
 
 import { Injectable } from '@angular/core';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { Observable } from 'rxjs/Observable';
 import { DataDebit } from '../shared/interfaces/data-debit.interface';
 
 @Injectable()
 export class DataDebitService {
 
-  constructor(private hat: HatApiV2Service) {}
+  constructor(private hat: HatApiService) {}
 
   loadAllDataDebits(): Observable<DataDebit[]> {
     return this.hat.getAllDataDebits();
