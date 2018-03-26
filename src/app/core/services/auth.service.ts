@@ -70,7 +70,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this._token$.next(null);
+    this._token$.next({ token: null, user: this.generateUserInfo(null) });
   }
 
   getApplicationDetails(name: string, redirect: string): Observable<HatApplication> {
