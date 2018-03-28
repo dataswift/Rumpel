@@ -1,7 +1,16 @@
+sudo: required
+dist: trusty
 language: node_js
 
 node_js:
   - '8'
+
+apt:
+  sources:
+    - google-chrome
+  packages:
+    - google-chrome-stable
+    - google-chrome-beta
 
 cache:
   directories:
@@ -12,22 +21,21 @@ before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
   - npm install -g @angular/cli@1.7.0
+  - sh -e /etc/init.d/xvfb start
 
 install:
   - npm install
 
-script:
-  - ng lint
-  - ng build --prod
-
 jobs:
   include:
-
     - stage: build-standalone
+      env:
+        - CHROME_BIN=chromium-browser
+        - DISPLAY=:99.0
       script:
         - ng --version
         - ng lint
-        - ng test --sourcemaps=false
+        - ng test --sourcemaps=false --watch=false
         - ng build --target=production --environment=standalone
       deploy:
         - provider: s3
@@ -110,11 +118,12 @@ jobs:
 
     - stage: build-hat
       env:
-        - FOO=foo
+        - CHROME_BIN=chromium-browser
+        - DISPLAY=:99.0
       script:
         - ng --version
         - ng lint
-        - ng test --sourcemaps=false
+        - ng test --sourcemaps=false --watch=false
         - ng build --target=production --environment=native
       after_success:
         - mv ./dist/inline.*.bundle.js ./dist/inline.bundle.js

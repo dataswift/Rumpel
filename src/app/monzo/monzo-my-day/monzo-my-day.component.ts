@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MonzoMyDayComponent implements OnInit {
 
-  @Input() monzoData: { spend_today: string; balance: string; currency: string; };
+  @Input() monzoData: { spend_today: number; balance: number; currency: string; };
 
   constructor() { }
 
