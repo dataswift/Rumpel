@@ -10,14 +10,14 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { DataDebitService } from './data-debits.service';
-import {HatApiV2Service} from '../services/hat-api-v2.service';
+import { HatApiService } from '../core/services/hat-api.service';
 
 describe('DataDebitService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         DataDebitService,
-        { provide: HatApiV2Service, useValue: {} }
+        { provide: HatApiService, useValue: {} }
       ]
     });
   });

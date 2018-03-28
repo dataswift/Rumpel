@@ -10,11 +10,25 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { NotablesService } from './notables.service';
+import { HatApiService } from '../core/services/hat-api.service';
+import { DexApiService } from '../services/dex-api.service';
+import { AuthService } from '../core/services/auth.service';
+import { APP_CONFIG } from '../app.config';
+import { Observable } from 'rxjs/Observable';
 
 describe('NotablesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NotablesService]
+      providers: [
+        NotablesService,
+        { provide: APP_CONFIG, useValue: { } },
+        { provide: HatApiService, useValue: {} },
+        { provide: DexApiService, useValue: {} },
+        { provide: AuthService, useValue: {
+          user$: Observable.of({ fullDomain: 'testing.hat.org' }),
+          auth$: Observable.of(false)
+        } }
+      ]
     });
   });
 

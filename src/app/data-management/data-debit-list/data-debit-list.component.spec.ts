@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataDebitListComponent } from './data-debit-list.component';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { HatApiService } from '../../core/services/hat-api.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('DataDebitListComponent', () => {
   let component: DataDebitListComponent;
@@ -8,7 +11,9 @@ describe('DataDebitListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataDebitListComponent ]
+      imports: [ CustomAngularMaterialModule ],
+      declarations: [ DataDebitListComponent ],
+      providers: [{ provide: HatApiService, useValue: { getAllDataDebits: () => Observable.of([]) } }]
     })
     .compileComponents();
   }));

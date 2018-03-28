@@ -1,6 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OffersHomeComponent } from './offers-home.component';
+import { OffersComponent } from '../offers-component/offers.component';
+import { OffersAcceptedComponent } from '../offers-accepted/offers-accepted.component';
+import { OfferAcceptedStatsComponent } from '../offer-accepted-stats/offer-accepted-stats.component';
+import { APP_CONFIG } from '../../app.config';
+import { AuthService } from '../../core/services/auth.service';
+import { DialogService } from '../../core/dialog.service';
+import { DataOfferService } from '../data-offer.service';
+import { Observable } from 'rxjs/Observable';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
 
 describe('OffersHomeComponent', () => {
   let component: OffersHomeComponent;
@@ -8,7 +17,21 @@ describe('OffersHomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OffersHomeComponent ]
+      declarations: [
+        OffersHomeComponent,
+        OffersComponent,
+        OffersAcceptedComponent,
+        OfferAcceptedStatsComponent,
+        MomentPipe
+      ],
+      providers: [
+        { provide: APP_CONFIG, useValue: { databuyer: { url: 'test.url' } } },
+        { provide: DialogService, useValue: { createDialog: () => null } },
+        { provide: DataOfferService, useValue: {
+          offers$: Observable.of({ availableOffers: [], acceptedOffers: [] }),
+          fetchUserAwareOfferList: () => null } },
+        { provide: AuthService, useValue: { auth$: Observable.of(false) } }
+      ]
     })
     .compileComponents();
   }));

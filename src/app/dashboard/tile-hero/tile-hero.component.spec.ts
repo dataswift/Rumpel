@@ -13,7 +13,7 @@ import { TileHeroComponent } from './tile-hero.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { DialogService } from '../../core/dialog.service';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Observable } from 'rxjs/Observable';
 
 describe('TileHeroComponent', () => {
@@ -25,9 +25,9 @@ describe('TileHeroComponent', () => {
       imports: [ CustomAngularMaterialModule ],
       declarations: [ TileHeroComponent ],
       providers: [
-        { provide: ProfilesService, useValue: { profileData$: Observable.of(null) } },
+        { provide: ProfilesService, useValue: { profileData$: Observable.of({ share: { photo: { avatar: '' } } }) } },
         { provide: DialogService, useValue: { createDialog: () => null } },
-        { provide: UserService, userValue: { user$: Observable.of({ authenticated: false, fullDomain: '' }) } }
+        { provide: AuthService, useValue: { user$: Observable.of({ fullDomain: '' }) } }
       ]
     })
       .compileComponents();

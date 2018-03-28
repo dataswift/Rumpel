@@ -23,12 +23,11 @@ export class TileFitbitComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
       this.fitbitSub = this.fitbitSvc.data$.subscribe((fitbits: HatRecord<FitbitActivitySummary>[]) => {
-        this.fitbits
-            .forEach( fitbit => {
-            this.todaySteps = fitbit.data.steps;
-            this.todayHeart = fitbit.data.steps;
-            this.todaySleep = moment(fitbit.data.steps).format('h[ hrs,] m[ min]')
-            })
+        fitbits.forEach(fitbit => {
+          this.todaySteps = fitbit.data.steps;
+          this.todayHeart = fitbit.data.steps;
+          this.todaySleep = moment(fitbit.data.steps).format('h[ hrs,] m[ min]')
+        });
       });
   }
 

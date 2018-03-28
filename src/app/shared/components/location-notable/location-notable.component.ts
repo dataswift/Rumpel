@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, Inject, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../../../app.config';
 import { Notable } from '../../interfaces/notable.class';
-import {HatRecord} from '../../interfaces/hat-record.interface';
+import { HatRecord } from '../../interfaces/hat-record.interface';
 
 @Component({
   selector: 'rum-location-notable',

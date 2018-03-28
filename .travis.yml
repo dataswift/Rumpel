@@ -11,7 +11,7 @@ cache:
 before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
-  - npm install -g @angular/cli@1.3.0-rc.2
+  - npm install -g @angular/cli@1.7.0
 
 install:
   - npm install
@@ -27,6 +27,7 @@ jobs:
       script:
         - ng --version
         - ng lint
+        - ng test --sourcemaps=false
         - ng build --target=production --environment=standalone
       deploy:
         - provider: s3
@@ -113,6 +114,7 @@ jobs:
       script:
         - ng --version
         - ng lint
+        - ng test --sourcemaps=false
         - ng build --target=production --environment=native
       after_success:
         - mv ./dist/inline.*.bundle.js ./dist/inline.bundle.js

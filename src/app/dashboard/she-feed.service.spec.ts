@@ -1,8 +1,8 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { SheFeedService } from './she-feed.service';
-import { UserService } from '../user/user.service';
-import { HatApiV2Service } from '../services/hat-api-v2.service';
+import { AuthService } from '../core/services/auth.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { Observable } from 'rxjs/Observable';
 
 describe('SheFeedService', () => {
@@ -10,8 +10,8 @@ describe('SheFeedService', () => {
     TestBed.configureTestingModule({
       providers: [
         SheFeedService,
-        { provide: UserService, useValue: { auth$: Observable.of({}) } },
-        { provide: HatApiV2Service, useValue: {} }
+        { provide: AuthService, useValue: { auth$: Observable.of({}) } },
+        { provide: HatApiService, useValue: {} }
       ]
     });
   });

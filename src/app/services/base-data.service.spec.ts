@@ -12,8 +12,9 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { BaseDataService } from './base-data.service';
 import { LocationIos } from '../shared/interfaces/location.interface';
 
-describe('BaseDataService', () => {
+xdescribe('BaseDataService', () => {
   beforeEach(() => {
+
     TestBed.configureTestingModule({
       providers: [BaseDataService]
     });

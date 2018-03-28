@@ -10,7 +10,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountStatusTileComponent } from './account-status-tile.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Observable } from 'rxjs/Observable';
 
 describe('AccountStatusTileComponent', () => {
@@ -22,7 +22,7 @@ describe('AccountStatusTileComponent', () => {
       imports: [RouterTestingModule],
       declarations: [ AccountStatusTileComponent ],
       providers: [
-        { provide: UserService, useValue: { user$: Observable.of('') } }
+        { provide: AuthService, useValue: { user$: Observable.of('') } }
       ]
     })
     .compileComponents();

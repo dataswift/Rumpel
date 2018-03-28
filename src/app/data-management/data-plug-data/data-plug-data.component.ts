@@ -13,19 +13,15 @@ import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 export class DataPlugDataComponent implements OnInit, OnDestroy {
   public currentPage = 'feed';
   public rsub: Subscription;
-  public dataplugs: Observable<DataPlug[]>;
   public plugName = '';
   public plugMeta: any;
 
   public sub: Subscription;
 
   constructor(private router: Router,
-              private route: ActivatedRoute,
-              private dataplugsSvc: DataPlugService) { }
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.dataplugs = this.dataplugsSvc.dataplugs$;
-
     this.route.params.subscribe(params => {
        this.plugName = params['provider'];
     });

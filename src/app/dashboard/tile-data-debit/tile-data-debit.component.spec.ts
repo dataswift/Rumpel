@@ -13,7 +13,7 @@ import { TileDataDebitComponent } from './tile-data-debit.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataDebitService } from '../data-debits.service';
 import { Observable } from 'rxjs/Observable';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
 
 describe('TileDataDebitComponent', () => {
@@ -26,7 +26,7 @@ describe('TileDataDebitComponent', () => {
       declarations: [ TileDataDebitComponent, MomentPipe ],
       providers: [
         { provide: DataDebitService, useValue: { loadAllDataDebits: () => Observable.of([]) } },
-        { provide: UserService, useValue: { user$: Observable.of('') } }
+        { provide: AuthService, useValue: { auth$: Observable.of('') } }
       ]
     })
       .compileComponents();

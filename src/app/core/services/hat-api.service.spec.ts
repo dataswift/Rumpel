@@ -9,11 +9,19 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { HatApiService } from './hat-api.service';
+import { APP_CONFIG } from '../../app.config';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { HttpBackendClient } from './http-backend-client.service';
 
 describe('HatApiService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HatApiService]
+      imports: [HttpClientTestingModule],
+      providers: [
+        HatApiService,
+        HttpBackendClient,
+        { provide: APP_CONFIG, useValue: { name: '' } }
+      ]
     });
   });
 

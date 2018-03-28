@@ -6,6 +6,7 @@ import { SheFeedService } from '../she-feed.service';
 import { Observable } from 'rxjs/Observable';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
+import {SheFeedItemComponent} from '../../shared/components/she-feed-item/she-feed-item.component';
 
 describe('SheFeedComponent', () => {
   let component: SheFeedComponent;
@@ -14,7 +15,7 @@ describe('SheFeedComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
-      declarations: [ SheFeedComponent, MarkdownToHtmlPipe, MomentPipe ],
+      declarations: [ SheFeedComponent, SheFeedItemComponent, MarkdownToHtmlPipe, MomentPipe ],
       providers: [ { provide: SheFeedService, useValue: { getInitData: () => null, data$: Observable.of([]) } } ]
     })
     .compileComponents();

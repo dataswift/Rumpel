@@ -10,8 +10,8 @@ import { DataPlugService } from '../../data-management/data-plug.service';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { Observable } from 'rxjs/Observable';
 import { DialogService } from '../dialog.service';
-import { UserService } from '../../user/user.service';
 import { ProfilesService } from '../../profiles/profiles.service';
+import { AuthService } from '../services/auth.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('PrivateSpaceComponent', () => {
@@ -27,7 +27,7 @@ describe('PrivateSpaceComponent', () => {
         { provide: DataPlugService, useValue: { inactiveDataplugs$: Observable.of([]) } },
         { provide: DataOfferService, useValue: { offers$: Observable.of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } },
         { provide: DialogService, useValue: {} },
-        { provide: UserService, useValue: { user$: Observable.of({}) } },
+        { provide: AuthService, useValue: { user$: Observable.of({}) } },
         { provide: ProfilesService, useValue: { profileData$: Observable.of({}) } }
       ]
     })

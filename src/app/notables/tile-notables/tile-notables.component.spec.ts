@@ -8,10 +8,18 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { TileNotablesComponent } from './tile-notables.component';
+import { InputBoxComponent } from '../input-box/input-box.component';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
+import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
+import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NotablesService } from '../notables.service';
+import { ProfilesService } from '../../profiles/profiles.service';
+import { AuthService } from '../../core/services/auth.service';
+import { LocationsService } from '../../locations/locations.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('TileNotablesComponent', () => {
   let component: TileNotablesComponent;
@@ -19,7 +27,14 @@ describe('TileNotablesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TileNotablesComponent ]
+      imports: [ RouterTestingModule, FormsModule ],
+      declarations: [ TileNotablesComponent, InputBoxComponent, MomentPipe, MarkdownToHtmlPipe ],
+      providers: [
+        { provide: NotablesService, useValue: { getInitData: () => null, data$: Observable.of([]) } },
+        { provide: ProfilesService, useValue: { profileData$: Observable.of([])} },
+        { provide: AuthService, useValue: { user$: Observable.of({ fullDomain: 'testing.hat.org' })} },
+        { provide: LocationsService, useValue: {} }
+      ]
     })
       .compileComponents();
   }));

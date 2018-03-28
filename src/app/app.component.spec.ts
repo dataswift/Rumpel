@@ -13,7 +13,7 @@ import { AppRootComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GlobalMessagingService } from './services/global-messaging.service';
 import { DialogService } from './core/dialog.service';
-import { UserService } from './user/user.service';
+import { AuthService } from './core/services/auth.service';
 import { APP_CONFIG } from './app.config';
 
 describe('AppRootComponent', () => {
@@ -27,7 +27,7 @@ describe('AppRootComponent', () => {
         { provide: APP_CONFIG, useValue: {} },
         { provide: GlobalMessagingService, useValue: {} },
         { provide: DialogService, useValue: {} },
-        { provide: UserService, useValue: {} }
+        { provide: AuthService, useValue: {} }
       ]
     }).compileComponents();
   }));

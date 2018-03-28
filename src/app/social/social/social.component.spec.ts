@@ -8,10 +8,20 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { SocialComponent } from './social.component';
+import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
+import { FilterByPipe } from '../../shared/pipes/filter-by.pipe';
+import { FbPostComponent } from '../fb-post/fb-post.component';
+import { TweetComponent } from '../tweet/tweet.component';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
+import { ReplaceCharsPipe } from '../../shared/pipes/replace-chars.pipe';
+import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
+import {SocialService} from '../social.service';
+import {TwitterService} from '../twitter.service';
+import {ActivatedRoute} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 
 describe('SocialComponent', () => {
   let component: SocialComponent;
@@ -19,7 +29,22 @@ describe('SocialComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SocialComponent ]
+      imports: [ CustomAngularMaterialModule ],
+      declarations: [
+        SocialComponent,
+        PageHeaderComponent,
+        FilterByPipe,
+        FbPostComponent,
+        TweetComponent,
+        MomentPipe,
+        ReplaceCharsPipe,
+        SafeHtmlPipe
+      ],
+      providers: [
+        { provide: SocialService, useValue: { getInitData: () => null, data$: Observable.of([]) } },
+        { provide: TwitterService, useValue: { getInitData: () => null, data$: Observable.of([]) } },
+        { provide: ActivatedRoute, useValue: { snapshot: { fragment: '1' } } }
+      ]
     })
       .compileComponents();
   }));

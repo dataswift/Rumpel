@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HatApiService } from '../core/services/hat-api.service';
-import { AuthService } from '../core/services/auth.service';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { Observable } from 'rxjs/Observable';
@@ -27,7 +26,7 @@ export class StaticDataService {
     fitbit: []
   };
 
-  constructor(private hat: HatApiService, authSvc: AuthService) { }
+  constructor(private hat: HatApiService) { }
 
   get data$(): Observable<Array<Array<any>>> {
     return this._data$.asObservable();

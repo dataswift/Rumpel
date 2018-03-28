@@ -8,10 +8,9 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { TreeViewComponent } from './tree-view.component';
+import { WithObjectPipe } from '../../pipes/with-object.pipe';
 
 describe('TreeViewComponent', () => {
   let component: TreeViewComponent;
@@ -19,7 +18,7 @@ describe('TreeViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TreeViewComponent ]
+      declarations: [ TreeViewComponent, WithObjectPipe ]
     })
       .compileComponents();
   }));

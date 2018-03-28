@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Monzo } from '../monzo.interface';
 
 @Component({
   selector: 'rum-monzo-my-day',
@@ -8,7 +7,7 @@ import { Monzo } from '../monzo.interface';
 })
 export class MonzoMyDayComponent implements OnInit {
 
-  @Input() monzoData: Monzo;
+  @Input() monzoData: { spend_today: string; balance: string; currency: string; };
 
   constructor() { }
 

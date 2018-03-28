@@ -14,8 +14,8 @@ import { MatIconModule, MatMenuModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { APP_CONFIG } from '../../app.config';
 import { DialogService } from '../dialog.service';
-import { UserService } from '../../user/user.service';
 import { ProfilesService } from '../../profiles/profiles.service';
+import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs/Observable';
 
 describe('HeaderComponent', () => {
@@ -29,7 +29,7 @@ describe('HeaderComponent', () => {
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: DialogService, useValue: {} },
-        { provide: UserService, useValue: { user$: Observable.of({}) } },
+        { provide: AuthService, useValue: { user$: Observable.of({}) } },
         { provide: ProfilesService, useValue: { profileData$: Observable.of({}) } }
       ]
     })

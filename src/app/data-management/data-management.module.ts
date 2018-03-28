@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 
 import { DataPlugsComponent } from './data-plugs/data-plugs.component';
-import { TileDataPlugsComponent } from './tile-data-plugs/tile-data-plugs.component';
 
 import { DataPlugService } from './data-plug.service';
 import { DataPlugDataComponent } from './data-plug-data/data-plug-data.component';
@@ -23,13 +22,12 @@ import { DataDebitListComponent } from './data-debit-list/data-debit-list.compon
   ],
   declarations: [
     DataPlugsComponent,
-    TileDataPlugsComponent,
     DataPlugDataComponent,
     DataPlugFeedComponent,
     DataPlugStaticComponent,
     DataDebitListComponent
   ],
   providers: [ DataPlugService ],
-  exports: [ TileDataPlugsComponent, DataPlugDataComponent ]
+  exports: [ DataPlugDataComponent ]
 })
 export class DataManagementModule { }

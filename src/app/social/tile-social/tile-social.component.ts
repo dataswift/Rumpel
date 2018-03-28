@@ -9,12 +9,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { SocialService } from '../social.service';
-import { Post, MusicListen, Tweet } from '../../shared/interfaces';
-import { MediaService } from '../media.service';
-import { Subscription } from 'rxjs/Subscription';
-import {TwitterService} from '../twitter.service';
-import {HatRecord} from '../../shared/interfaces/hat-record.interface';
-import {Observable} from 'rxjs/Observable';
+import { TwitterService } from '../twitter.service';
+import { Post, Tweet } from '../../shared/interfaces';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'rum-tile-social',
@@ -23,12 +21,8 @@ import {Observable} from 'rxjs/Observable';
 })
 export class TileSocialComponent implements OnInit {
   public feed$: Observable<HatRecord<Post|Tweet>[]>;
-  private postsSub: Subscription;
-  private musicSub: Subscription;
-  private twitterSub: Subscription;
 
   constructor(private socialSvc: SocialService,
-              private mediaSvc: MediaService,
               private twitterSvc: TwitterService,
               private router: Router) {}
 

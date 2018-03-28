@@ -13,7 +13,7 @@ import { DebugElement } from '@angular/core';
 
 import { LocationFbPostComponent } from './location-fb-post.component';
 
-describe('LocationFbPostComponent', () => {
+xdescribe('LocationFbPostComponent', () => {
   let component: LocationFbPostComponent;
   let fixture: ComponentFixture<LocationFbPostComponent>;
 
