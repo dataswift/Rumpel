@@ -6,6 +6,11 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 3, 2017
   -->
 
+<rum-info-header>
+  <span class="header-item">Don't have a HAT?</span>
+  <a mat-button href="https://hatters.hubofallthings.com/" target="_blank" class="header-item header-link">Create account</a>
+</rum-info-header>
+
 <div class="native-login-page">
   <span class="flex-spacer"></span>
 
@@ -52,10 +57,9 @@
     <p class="login-info">After pressing 'next' you will be re-directed to your HAT to enter your password</p>
   </div>
 
-  <span style="flex-grow: 2;"></span>
+  <span class="custom-flex-spacer"></span>
 
   <div class="user-actions">
     <button mat-flat-button role="link" (click)="redirectToLogin()" [disabled]="hatName.length < 4 && selectedDomain">Next</button>
-    <a role="link" target="_blank" href="https://hatters.hubofallthings.com/">Create account</a>
   </div>
 </div>

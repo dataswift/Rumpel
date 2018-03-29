@@ -6,10 +6,18 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
+<rum-info-header>
+  <span class="header-item">What can I do with my HAT?</span>
+  <a mat-button href="#" target="_blank" class="header-item header-link">Learn more</a>
+</rum-info-header>
+
 <div class="native-login-page">
   <span class="flex-spacer"></span>
 
   <div class="title-container">
+    <button mat-icon-button class="back-button">
+      <mat-icon (click)="goBack()">arrow_back</mat-icon>
+    </button>
     <div class="logo-wrapper">
       <img src="/assets/icons/hat-logo@3x.png" height="75" width="75" />
     </div>
@@ -29,7 +37,7 @@
     <mat-checkbox class="remember-me-checkbox" [(ngModel)]="rememberMe" color="primary">Remember me</mat-checkbox>
   </div>
 
-  <span style="flex-grow: 2;"></span>
+  <span class="custom-flex-spacer"></span>
 
   <div class="user-actions">
     <button mat-flat-button role="button" (click)="login(hatPass)">Login</button>

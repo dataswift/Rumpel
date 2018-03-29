@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Observable } from 'rxjs/Observable';
+import { InfoHeaderComponent } from '../info-header/info-header.component';
 
 describe('LoginNativeComponent', () => {
   let component: LoginNativeComponent;
@@ -26,7 +27,7 @@ describe('LoginNativeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ FormsModule, CustomAngularMaterialModule, RouterTestingModule ],
-      declarations: [ LoginNativeComponent ],
+      declarations: [ LoginNativeComponent, InfoHeaderComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },

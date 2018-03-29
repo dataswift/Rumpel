@@ -60,6 +60,10 @@
     }
   }
 
+  .custom-flex-spacer {
+    flex-grow: 2;
+  }
+
   .f-g {
     width: 100%;
     max-width: 500px;
@@ -161,10 +165,23 @@
       color: white;
     }
   }
+}
 
-  a {
-    font-size: 14px;
-    color: $hat-body-text;
-    text-decoration: none;
+@media (min-width: 720px) {
+  .native-login-page {
+    height: calc(100vh - 72px);
+    margin-top: 72px;
+
+    .flex-spacer {
+      flex-grow: 2;
+    }
+
+    .custom-flex-spacer {
+      flex-grow: 1;
+    }
+
+    .user-actions {
+      flex-grow: 3;
+    }
   }
 }

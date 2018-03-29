@@ -9,7 +9,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from './app.config';
 import { Router, NavigationEnd } from '@angular/router';
-import { User } from './user/user.interface';
 import { AuthService } from './core/services/auth.service';
 
 import * as moment from 'moment';

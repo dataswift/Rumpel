@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'rum-login-native',
@@ -27,6 +28,7 @@ export class LoginNativeComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private route: ActivatedRoute,
               private router: Router,
+              private location: Location,
               private storageSvc: BrowserStorageService,
               private authSvc: AuthService) {
   }
@@ -55,6 +57,10 @@ export class LoginNativeComponent implements OnInit {
 
   get protocol(): string {
     return window.location.protocol;
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   login(hatPass) {
