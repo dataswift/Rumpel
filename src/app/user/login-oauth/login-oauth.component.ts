@@ -35,7 +35,7 @@ export class LoginOauthComponent implements OnInit {
         .subscribe(
       (hatApp: HatApplication) => {
 
-        if (hatApp.setup) {
+        if (hatApp.active && !hatApp.needsUpdating) {
           this.buildRedirect(name);
         } else {
           this.hatApp = hatApp.application;
