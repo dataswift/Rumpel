@@ -30,7 +30,8 @@
   <div class="f-g">
     <label for="hatPass" hidden></label>
     <input id="hatPass" type="password" class="hat-pass-input" name="hat-pass-input"
-           placeholder="Enter HAT password" #hatPass />
+           placeholder="Enter HAT password" #hatPass
+           (keyup.enter)="login(hatPass)"/>
   </div>
 
   <div>

@@ -27,7 +27,8 @@
   <div class="f-g">
     <label for="hatName" hidden></label>
     <input id="hatName" type="text" class="hat-pass-input" name="hat-pass-input"
-           placeholder="Enter HAT name" [(ngModel)]="hatName" />
+           placeholder="Enter HAT name" [(ngModel)]="hatName"
+           (keyup.enter)="redirectToLogin()"/>
   </div>
 
   <div class="f-g">

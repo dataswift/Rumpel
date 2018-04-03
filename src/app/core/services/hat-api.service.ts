@@ -47,7 +47,7 @@ export class HatApiService {
       .set('name', name)
       .set('redirect', redirect);
 
-    return this.authHttp.get<string>(path, { params: queryParams });
+    return this.authHttp.get<{ message: string }>(path, { params: queryParams }).map(resBody => resBody.message);
   }
 
   recoverPassword(body: { email: string; }): Observable<any> {

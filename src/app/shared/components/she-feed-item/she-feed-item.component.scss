@@ -5,21 +5,36 @@
   max-width: 500px;
   display: flex;
 
-  .img-wrapper img {
-    margin-top: 5px;
-    border-radius: 50%;
+  .img-wrapper {
+    position: relative;
+
+    .arrow-left {
+      position: absolute;
+      top: 17px;
+      right: -15px;
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+
+      border-right: 6px solid white;
+    }
+
+    img {
+      margin-top: 5px;
+      border-radius: 50%;
+    }
   }
 
   .mat-card {
     flex: 1 1;
     margin: 0;
     margin-left: 15px;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
     max-width: 450px;
     box-shadow: none;
     border-radius: 4px;
     padding: 0;
+    overflow: hidden;
 
     /deep/ .mat-card-header-text {
       margin: 0;
@@ -39,6 +54,8 @@
     .mat-card-content {
       margin: 0;
       padding: 20px 15px;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
       font-size: 13px;
       color: $hat-body-text;
       line-height: 1.54;
@@ -63,18 +80,6 @@
       text-transform: capitalize;
       font-size: 13px;
       color: $hat-body-text;
-    }
-
-    .arrow-left {
-      position: absolute;
-      top: 17px;
-      left: -6px;
-      width: 0;
-      height: 0;
-      border-top: 6px solid transparent;
-      border-bottom: 6px solid transparent;
-
-      border-right: 6px solid white;
     }
   }
 }

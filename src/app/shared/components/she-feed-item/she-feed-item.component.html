@@ -1,5 +1,6 @@
 <div class="img-wrapper">
   <img src="/assets/icons/she-{{feedItem.source}}.{{feedItem.source === 'notables'? 'png' : 'svg'}}" height="35" width="35" />
+  <div class="arrow-left"></div>
 </div>
 
 <mat-card>
@@ -14,6 +15,4 @@
   <mat-card-footer>
     Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}
   </mat-card-footer>
-
-  <div class="arrow-left"></div>
 </mat-card>
