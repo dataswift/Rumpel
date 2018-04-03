@@ -5,8 +5,6 @@ import { FitbitMyDayComponent } from './fitbit-my-day/fitbit-my-day.component';
 
 import { FitbitActivitySummaryService } from './services/fitbit-activity-summary.service';
 import { TileFitbitComponent } from './tile-fitbit/tile-fitbit.component';
-import { FitbitProfileService } from './services/fitbit-profile.service';
-import { FitbitActivityService } from './services/fitbit-activity.service';
 
 @NgModule({
   imports: [
@@ -14,7 +12,7 @@ import { FitbitActivityService } from './services/fitbit-activity.service';
     SharedModule
   ],
   declarations: [ FitbitMyDayComponent, TileFitbitComponent ],
-  providers: [ FitbitActivitySummaryService, FitbitProfileService, FitbitActivityService ],
+  providers: [ FitbitActivitySummaryService ],
   exports: [ FitbitMyDayComponent, TileFitbitComponent ]
 })
 export class FitbitModule { }

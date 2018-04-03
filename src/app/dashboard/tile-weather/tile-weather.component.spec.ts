@@ -18,20 +18,11 @@ import { Observable } from 'rxjs/Observable';
 class MockWeatherService {
   getCurrentWeather() {
     return Observable.of({
-      display_location: {
-        full: 'San Francisco, CA',
-        city: 'San Francisco',
-        state: 'CA',
-        state_name: 'California',
-        country: 'US',
-        country_iso3166: 'US',
-        zip: '94102',
-        magic: '1',
-        wmo: '99999',
-        latitude: '37.77999878',
-        longitude: '-122.41999817',
-        elevation: '60.0'
-      }
+      weather: 'haze',
+      display_location: { full: 'London, UK' },
+      temp_c: '32 C',
+      feelslike_c: '29 C',
+      observation_epoch: 1234567890
     });
   }
 }

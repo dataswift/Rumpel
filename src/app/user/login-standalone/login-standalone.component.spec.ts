@@ -1,6 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginStandaloneComponent } from './login-standalone.component';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { FormsModule } from '@angular/forms';
+import { APP_CONFIG } from '../../app.config';
+import { BrowserStorageService } from '../../services/browser-storage.service';
+import { ActivatedRoute } from '@angular/router';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { InfoHeaderComponent } from '../info-header/info-header.component';
 
 describe('LoginStandaloneComponent', () => {
   let component: LoginStandaloneComponent;
@@ -8,7 +15,13 @@ describe('LoginStandaloneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginStandaloneComponent ]
+      imports: [ NoopAnimationsModule, CustomAngularMaterialModule, FormsModule ],
+      declarations: [ LoginStandaloneComponent, InfoHeaderComponent ],
+      providers: [
+        { provide: APP_CONFIG, useValue: { supportedDomains: ['.hat.org'] } },
+        { provide: BrowserStorageService, useValue: { getItem: () => null } },
+        { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } }
+      ]
     })
     .compileComponents();
   }));

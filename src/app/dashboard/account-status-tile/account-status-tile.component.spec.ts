@@ -9,6 +9,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountStatusTileComponent } from './account-status-tile.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '../../core/services/auth.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('AccountStatusTileComponent', () => {
   let component: AccountStatusTileComponent;
@@ -16,7 +19,11 @@ describe('AccountStatusTileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccountStatusTileComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ AccountStatusTileComponent ],
+      providers: [
+        { provide: AuthService, useValue: { user$: Observable.of('') } }
+      ]
     })
     .compileComponents();
   }));

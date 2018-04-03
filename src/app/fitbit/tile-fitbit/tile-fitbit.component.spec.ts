@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TileFitbitComponent } from './tile-fitbit.component';
+import { RemoveCharsPipe } from '../../shared/pipes/removeChars.pipe';
+import { FitbitActivitySummaryService } from '../services/fitbit-activity-summary.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('TileFitbitComponent', () => {
   let component: TileFitbitComponent;
@@ -8,7 +11,10 @@ describe('TileFitbitComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TileFitbitComponent ]
+      declarations: [ TileFitbitComponent, RemoveCharsPipe ],
+      providers: [
+        { provide: FitbitActivitySummaryService, useValue: { data$: Observable.of([]) } }
+      ]
     })
     .compileComponents();
   }));

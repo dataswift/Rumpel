@@ -9,6 +9,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PasswordChangeComponent } from './password-change.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthService } from '../../core/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 describe('PasswordChangeComponent', () => {
   let component: PasswordChangeComponent;
@@ -16,7 +20,12 @@ describe('PasswordChangeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PasswordChangeComponent ]
+      imports: [ RouterTestingModule ],
+      declarations: [ PasswordChangeComponent ],
+      providers: [
+        { provide: AuthService, useValue: {} },
+        { provide: ActivatedRoute, useValue: { params: Observable.of({}) } }
+      ]
     })
     .compileComponents();
   }));

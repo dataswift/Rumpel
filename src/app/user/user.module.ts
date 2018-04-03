@@ -11,12 +11,12 @@ import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 import { LoginNativeComponent } from './login-native/login-native.component';
-import { UserService } from './user.service';
 import { PasswordRecoverComponent } from './password-recover/password-recover.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';
 import { LoginOauthComponent } from './login-oauth/login-oauth.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
+import { InfoHeaderComponent } from './info-header/info-header.component';
 
 @NgModule({
   imports: [
@@ -29,9 +29,10 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
     PasswordRecoverComponent,
     PasswordChangeComponent,
     LoginStandaloneComponent,
-    LoginOauthComponent
+    LoginOauthComponent,
+    InfoHeaderComponent
   ],
-  providers: [ UserService ],
+  providers: [  ],
   exports: [ LoginOauthComponent, LoginNativeComponent, LoginStandaloneComponent ]
 })
 export class UserModule {}

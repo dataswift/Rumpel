@@ -76,7 +76,7 @@
     "rxjs-add": {
       "options": [{
         "allowElsewhere": false,
-        "allowUnused": false,
+        "allowUnused": true,
         "file": "./src/rxjs.imports.ts"
       }],
       "severity": "error"

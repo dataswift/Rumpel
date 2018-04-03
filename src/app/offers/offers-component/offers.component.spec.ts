@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OffersComponent } from './offers.component';
+import { DialogService } from '../../core/dialog.service';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
 
 describe('OffersComponent', () => {
   let component: OffersComponent;
@@ -8,7 +10,10 @@ describe('OffersComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OffersComponent ]
+      declarations: [ OffersComponent, MomentPipe ],
+      providers: [
+        { provide: DialogService, useValue: {} }
+      ]
     })
     .compileComponents();
   }));

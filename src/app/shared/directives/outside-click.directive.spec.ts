@@ -9,11 +9,12 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
-import { OutsideClick } from './outside-click.directive';
+import { OutsideClickDirective } from './outside-click.directive';
+import { ElementRef } from '@angular/core';
 
-describe('OutsideClick', () => {
+describe('OutsideClickDirective', () => {
   it('should create an instance', () => {
-    const directive = new OutsideClick();
+    const directive = new OutsideClickDirective(new ElementRef({}));
     expect(directive).toBeTruthy();
   });
 });

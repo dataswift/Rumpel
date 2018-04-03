@@ -8,10 +8,9 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { MapComponent } from './map.component';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 
 describe('MapComponent', () => {
   let component: MapComponent;
@@ -19,6 +18,7 @@ describe('MapComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ CustomAngularMaterialModule ],
       declarations: [ MapComponent ]
     })
       .compileComponents();

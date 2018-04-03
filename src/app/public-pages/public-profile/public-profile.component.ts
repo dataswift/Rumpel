@@ -7,8 +7,8 @@
  */
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { UserService } from '../../user/user.service';
-import { HatApiService } from '../../services/hat-api.service';
+import { AuthService } from '../../core/services/auth.service';
+import { HatApiService } from '../../core/services/hat-api.service';
 import { BundleValues } from '../../shared/interfaces/bundle.interface';
 import { Profile } from '../../shared/interfaces/profile.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
@@ -28,7 +28,7 @@ export class PublicProfileComponent implements OnInit {
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private hatSvc: HatApiService,
-              private userSvc: UserService) { }
+              private authSvc: AuthService) { }
 
   ngOnInit() {
     this.hatSvc.getPhataPage().subscribe((data: BundleValues) => {
@@ -38,7 +38,7 @@ export class PublicProfileComponent implements OnInit {
       this.notables = data.notables;
     });
 
-    this.userSvc.auth$.subscribe((isAuthenticated: boolean) => this.userAuthenticated = isAuthenticated);
+    this.authSvc.auth$.subscribe((isAuthenticated: boolean) => this.userAuthenticated = isAuthenticated);
   }
 
   get hostname(): string {

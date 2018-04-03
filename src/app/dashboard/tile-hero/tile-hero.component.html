@@ -10,9 +10,9 @@
   <div class="hero-content">
     <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon.svg'">
     <div class="details">
-        <h2 innerHTML="testing30<span>.</span>hubofallthings<span>.</span>net">{{ profile?.domainName }}</h2>
-        <p>All my personal data, back in my control, totally secure and private.</p><br>
-        <a (click)="showInfoModal()">Learn more</a>
+      <h2>{{ profile.domainName }}</h2>
+      <p>All my personal data, back in my control, totally secure and private.</p><br>
+      <a (click)="showInfoModal()">Learn more</a>
   </div>
   </div>
 </mat-card>

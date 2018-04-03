@@ -11,9 +11,9 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject} from 'rxjs/BehaviorSubject';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { BaseDataService } from '../services/base-data.service';
-import { HatApiService } from '../services/hat-api.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { DexApiService } from '../services/dex-api.service';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../core/services/auth.service';
 
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { Notable, DataDebit } from '../shared/interfaces';
@@ -34,9 +34,9 @@ export class NotablesService extends BaseDataService<Notable> {
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               hat: HatApiService,
-              userSvc: UserService,
+              authSvc: AuthService,
               private dex: DexApiService) {
-    super(hat, userSvc, 'rumpel', 'notablesv1', 'updated_time');
+    super(hat, authSvc, 'rumpel', 'notablesv1', 'updated_time');
 
     this.notablesServiceMeta = {
       phata: '',
@@ -50,7 +50,7 @@ export class NotablesService extends BaseDataService<Notable> {
     this._notablesMeta$ = <BehaviorSubject<NotablesServiceMeta>>new BehaviorSubject(this.notablesServiceMeta);
     this.notablesMeta$ = this._notablesMeta$.asObservable();
 
-    userSvc.user$.subscribe((user: User) => {
+    authSvc.user$.subscribe((user: User) => {
       this.notablesServiceMeta.phata = user.fullDomain;
       this._notablesMeta$.next(this.notablesServiceMeta);
     });

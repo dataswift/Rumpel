@@ -28,7 +28,7 @@ export class ConfirmBoxComponent implements OnInit {
   @Input() reject: () => void = () => {};
 
 
-  constructor(  private dialogSvc: DialogService) { }
+  constructor(private dialogSvc: DialogService) { }
 
   ngOnInit() {
     this.animateIn = true;

@@ -12,35 +12,8 @@
   </mat-toolbar>
 
   <div class="feed">
-    <div *ngFor="let item of feed$ | async" class="item-container">
-      <div class="item-source">
-        <img class="item-source-img"
-             src="/assets/icons/she-{{item.data.source}}.png"
-             alt="Data obtained from {{item.data.source}}">
-      </div>
-
-      <mat-card class="item">
-        <div class="flex-basis" *ngIf="item.data.title">
-          <h5 style="margin: 0; text-transform: uppercase; font-weight: bold; color: rgba(135, 135, 135, 0.7);">{{item.data.title.text}}</h5>
-        </div>
-
-        <div class="flex-basis">
-          <div *ngIf="item.data.content && item.data.content.media">
-            <img *ngFor="let mediaItem of item.data.content.media" [src]="mediaItem.url" onerror="this.style.display='none'">
-          </div>
-
-          <div *ngIf="item.data.content && item.data.content.text" class="markdown-content"
-               [innerHTML]="item.data.content.text | markdownToHtml">
-          </div>
-        </div>
-
-        <div class="flex-basis start">
-          <span class="meta"><strong>Created time</strong>{{ item.data.date.iso | moment:'ddd DD MMM YYYY, h:mm a' }}</span>
-          <span *ngIf="item.data.location && item.data.location.geo" class="meta"><strong>Longitude</strong> {{ item.data.location.geo.longitude }}</span>
-          <span *ngIf="item.data.location && item.data.location.geo" class="meta"><strong>Latitude</strong> {{ item.data.location.geo.latitude }}</span>
-          <span *ngIf="item.data.location && item.data.location.tags" class="meta"><strong>Tags</strong> {{ item.data.location.tags.join(', ') }}</span>
-        </div>
-      </mat-card>
-    </div>
+    <ng-container *ngFor="let item of feed$ | async">
+      <rum-she-feed-item [feedItem]="item.data"></rum-she-feed-item>
+    </ng-container>
   </div>
 </div>

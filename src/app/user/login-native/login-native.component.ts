@@ -8,9 +8,10 @@
 
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { UserService } from '../user.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'rum-login-native',
@@ -18,56 +19,60 @@ import { BrowserStorageService } from '../../services/browser-storage.service';
   styleUrls: ['login-native.component.scss']
 })
 export class LoginNativeComponent implements OnInit {
+  public hatName: string;
   public hatDomain: string;
+  public rememberMe: boolean;
   public error: string;
   private redirectPath: string;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private route: ActivatedRoute,
               private router: Router,
+              private location: Location,
               private storageSvc: BrowserStorageService,
-              private userSvc: UserService) {
+              private authSvc: AuthService) {
   }
 
   ngOnInit() {
+    this.rememberMe = true;
     const qps = this.route.snapshot.queryParams;
     this.redirectPath = qps['target'] || 'feed';
 
     // Skip login step if the user is already authenticated
-    if (this.userSvc.isLoggedIn()) {
-      this.navigateForward();
-    }
+    this.authSvc.auth$.subscribe(authenticated => {
+      if (authenticated) {
+        this.navigateForward();
+      }
+    });
+
+    const host = window.location.hostname;
+
+    this.hatName = host.substring(0, host.indexOf('.'));
+    this.hatDomain = host.substring(host.indexOf('.'));
   }
 
   clearError() {
     this.error = '';
   }
 
-  get username(): string {
-    const host = window.location.hostname;
-
-    return host.substring(0, host.indexOf('.'));
-  }
-
   get protocol(): string {
     return window.location.protocol;
   }
 
-  get hostname(): string {
-    return window.location.hostname;
+  goBack(): void {
+    this.location.back();
   }
 
-  onSubmit(form) {
-    this.storageSvc.rememberMe = form.value.rememberMe;
-    this.userSvc.login(this.username, form.value.password).subscribe(
-      (isAuthenticated: boolean) => {
+  login(hatPass) {
+    this.storageSvc.rememberMe = this.rememberMe;
+    this.authSvc.login(this.hatName, hatPass.value).subscribe(
+      (token: string) => {
         this.navigateForward();
       },
       err => {
         console.log('Login failed! Reason: ', err);
         this.error = 'Incorrect password. Please try again.';
       });
-    // window.location.href = `https://${this.hatDomain}/hatlogin?name=Rumpel&redirect=${this.redirectUrl}`;
   }
 
   private navigateForward(): void {

@@ -8,10 +8,14 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { LocationsComponent } from './locations.component';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
+import { MapComponent } from '../map/map.component';
+import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
+import { LocationsService } from '../locations.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('LocationsComponent', () => {
   let component: LocationsComponent;
@@ -19,7 +23,15 @@ describe('LocationsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationsComponent ]
+      imports: [ CustomAngularMaterialModule ],
+      declarations: [ LocationsComponent, PageHeaderComponent, MapComponent, SpinnerComponent ],
+      providers: [
+        { provide: LocationsService, useValue: {
+          loading$: Observable.of(false),
+          data$: Observable.of([]),
+          getMoreData: () => null
+        }}
+      ]
     })
       .compileComponents();
   }));

@@ -8,19 +8,15 @@
 
 import { NgModule } from '@angular/core';
 
-import { DimensionsRoutingModule } from './dimensions.routing';
 import { SharedModule } from '../shared/shared.module';
-
-import { CalendarComponent } from './calendar/calendar.component';
-import { TileCalendarComponent } from './tile-calendar/tile-calendar.component';
 
 import { FacebookEventsService } from './facebook-events.service';
 import { GoogleEventsService } from './google-events.service';
 
 @NgModule({
-    imports: [ SharedModule, DimensionsRoutingModule ],
-    declarations: [ CalendarComponent, TileCalendarComponent ],
+    imports: [ SharedModule ],
+    declarations: [ ],
     providers: [ FacebookEventsService, GoogleEventsService ],
-    exports: [ TileCalendarComponent ]
+    exports: [  ]
 })
 export class DimensionsModule {}

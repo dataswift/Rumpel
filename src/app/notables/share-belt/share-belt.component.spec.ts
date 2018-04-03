@@ -8,10 +8,13 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { ShareBeltComponent } from './share-belt.component';
+import { APP_CONFIG } from '../../app.config';
+import { NotablesService } from '../notables.service';
+import { DialogService } from '../../core/dialog.service';
+import { DataPlugService } from '../../data-management/data-plug.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('ShareBeltComponent', () => {
   let component: ShareBeltComponent;
@@ -19,7 +22,15 @@ describe('ShareBeltComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShareBeltComponent ]
+      declarations: [ ShareBeltComponent ],
+      providers: [
+        { provide: APP_CONFIG, useValue: {} },
+        { provide: NotablesService, useValue: {
+          getNotablesOfferClaimStatus: () => Observable.of({})
+        } },
+        { provide: DialogService, useValue: {} },
+        { provide: DataPlugService, useValue: {} }
+      ]
     })
       .compileComponents();
   }));

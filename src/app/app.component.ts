@@ -9,8 +9,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { APP_CONFIG, AppConfig } from './app.config';
 import { Router, NavigationEnd } from '@angular/router';
-import { User } from './user/user.interface';
-import { UserService } from './user/user.service';
+import { AuthService } from './core/services/auth.service';
 
 import * as moment from 'moment';
 import { GlobalMessagingService } from './services/global-messaging.service';
@@ -35,7 +34,7 @@ export class AppRootComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
             private messagingSvc: GlobalMessagingService,
             private dialogSvc: DialogService,
-            private userSvc: UserService,
+            private authSvc: AuthService,
             private router: Router) {
 
         router.events
@@ -61,8 +60,8 @@ export class AppRootComponent implements OnInit {
 
     this.userAuthenticated = false;
 
-    this.userSvc.user$.subscribe((user: User) => {
-      this.userAuthenticated = user.authenticated;
+    this.authSvc.auth$.subscribe((authenticated: boolean) => {
+      this.userAuthenticated = authenticated;
     });
 
 
@@ -73,9 +72,5 @@ export class AppRootComponent implements OnInit {
     };
 
     // this._notificationsSvc.showNotifs$.subscribe(status => this.showNotifications = status);
-
   }
-
-
-
 }

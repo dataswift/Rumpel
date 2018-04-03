@@ -14,6 +14,8 @@ export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 export class AppConfig {
   version: string;
   name: string;
+  tokenApp: string;
+  tokenExpiryTime: number;
   supportedDomains: string[];
   native: boolean;
   protocol: string;
@@ -33,8 +35,10 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.4.2',
+  version: '3.4.3',
   name: 'RumpelStaging',
+  tokenApp: 'rumpel',
+  tokenExpiryTime: 3,
   supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,

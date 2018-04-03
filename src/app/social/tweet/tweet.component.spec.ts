@@ -13,7 +13,7 @@ import { DebugElement } from '@angular/core';
 
 import { TweetComponent } from './tweet.component';
 
-describe('TweetComponent', () => {
+xdescribe('TweetComponent', () => {
   let component: TweetComponent;
   let fixture: ComponentFixture<TweetComponent>;
 

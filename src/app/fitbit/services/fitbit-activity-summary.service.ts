@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseDataService } from '../../services/base-data.service';
-import { UserService } from '../../user/user.service';
-import { HatApiService } from '../../services/hat-api.service';
+import { AuthService } from '../../core/services/auth.service';
+import { HatApiService } from '../../core/services/hat-api.service';
 
 import { FitbitActivitySummary, FitbitActivityDistance } from '../interfaces/fitbit-activity-summary.interface';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
@@ -10,8 +10,8 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 @Injectable()
 export class FitbitActivitySummaryService extends BaseDataService<FitbitActivitySummary> {
 
-  constructor(hat: HatApiService, userSvc: UserService) {
-    super(hat, userSvc, 'fitbit', 'activity/day/summary', 'summaryDate');
+  constructor(hat: HatApiService, authSvc: AuthService) {
+    super(hat, authSvc, 'fitbit', 'activity/day/summary', 'summaryDate');
   }
 
   coerceType(rawFitbit: HatRecord<any>): HatRecord<FitbitActivitySummary> {

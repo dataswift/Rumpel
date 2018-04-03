@@ -9,6 +9,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataPlugsComponent } from './data-plugs.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DataPlugService } from '../data-plug.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('DataPlugsComponent', () => {
   let component: DataPlugsComponent;
@@ -16,7 +19,9 @@ describe('DataPlugsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataPlugsComponent ]
+      imports: [ RouterTestingModule ],
+      declarations: [ DataPlugsComponent ],
+      providers: [{ provide: DataPlugService, useValue: { dataplugs$: Observable.of([]) } }]
     })
     .compileComponents();
   }));

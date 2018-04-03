@@ -13,7 +13,7 @@ import { DebugElement } from '@angular/core';
 
 import { NotablesViewComponent } from './notables-view.component';
 
-describe('NotablesViewComponent', () => {
+xdescribe('NotablesViewComponent', () => {
   let component: NotablesViewComponent;
   let fixture: ComponentFixture<NotablesViewComponent>;
 

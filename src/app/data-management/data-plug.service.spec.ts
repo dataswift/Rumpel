@@ -11,7 +11,7 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { DataPlugService } from './data-plug.service';
 
-describe('DataPlugService', () => {
+xdescribe('DataPlugService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [DataPlugService]

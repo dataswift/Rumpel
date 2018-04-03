@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { HatApiService } from '../services/hat-api.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { HatApplication } from './hat-application.interface';
 import { SheFeed } from '../dashboard/she-feed.interface';
 

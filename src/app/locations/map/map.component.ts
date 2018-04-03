@@ -10,9 +10,9 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChange
 import * as moment from 'moment';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
-import {Moment} from 'moment';
-
-declare var L: any;
+import * as leaflet from 'leaflet';
+import 'leaflet.markercluster';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'rum-map',
@@ -29,7 +29,7 @@ export class MapComponent implements OnInit, OnChanges {
   @Output() timeSelected = new EventEmitter<any>();
 
   private map: any;
-  private markers = L.markerClusterGroup();
+  private markers = leaflet.markerClusterGroup();
   private bbox = {
     minLng: 180,
     maxLng: -180,
@@ -48,7 +48,7 @@ export class MapComponent implements OnInit, OnChanges {
     const osmAttrib = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
       ' <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,';
 
-    this.map = L.map('map-view', {
+    this.map = leaflet.map('map-view', {
       zoomControl: this.enableMapControls,
       scrollWheelZoom: false
     })
@@ -62,7 +62,7 @@ export class MapComponent implements OnInit, OnChanges {
       this.refreshMap();
     }, 400);
 
-    L.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 3, maxZoom: 18 }).addTo(this.map);
+    leaflet.tileLayer(osmUrl, { attribution: osmAttrib, minZoom: 3, maxZoom: 18 }).addTo(this.map);
   }
 
   refreshMap() {
@@ -105,14 +105,14 @@ export class MapComponent implements OnInit, OnChanges {
 
   drawMarkers(locations: HatRecord<LocationIos>[]) {
     this.map.removeLayer(this.markers);
-    this.markers = L.markerClusterGroup();
+    this.markers = leaflet.markerClusterGroup();
     this.resetBoundingBox();
     // const pointlist = [];
     for (const loc of locations || []) {
       this.adjustBoundingBox(loc.data.latitude, loc.data.longitude);
-      const pos = new L.LatLng(loc.data.latitude, loc.data.longitude);
-      const marker = L.marker(pos);
-      marker.timestamp = loc.data.dateCreated;
+      const pos = new leaflet.LatLng(loc.data.latitude, loc.data.longitude);
+      const marker = leaflet.marker(pos);
+      // marker.timestamp = loc.data.dateCreated;
 
       const date = moment(Number(loc.data.dateCreated));
       marker.bindPopup('<b style="text-align: center">' + date.format('DD MMM YYYY h:mm a') + '</b>').openPopup();

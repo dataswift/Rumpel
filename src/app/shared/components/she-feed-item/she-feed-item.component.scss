@@ -1,0 +1,80 @@
+@import "../../../style/branding";
+
+:host {
+  margin: 15px auto;
+  max-width: 500px;
+  display: flex;
+
+  .img-wrapper img {
+    margin-top: 5px;
+    border-radius: 50%;
+  }
+
+  .mat-card {
+    flex: 1 1;
+    margin: 0;
+    margin-left: 15px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: 450px;
+    box-shadow: none;
+    border-radius: 4px;
+    padding: 0;
+
+    /deep/ .mat-card-header-text {
+      margin: 0;
+    }
+
+    .mat-card-header {
+      padding: 5px 15px;
+
+      .card-header-title {
+        font-size: 14px;
+        color: $app-dark-tone-lighter;
+        margin-top: 10px;
+        margin-bottom: 8px;
+      }
+    }
+
+    .mat-card-content {
+      margin: 0;
+      padding: 20px 15px;
+      font-size: 13px;
+      color: $hat-body-text;
+      line-height: 1.54;
+    }
+
+    .mat-card-footer {
+      margin: 0;
+      padding: 0 0 10px 15px;
+      font-size: 13px;
+      color: $hat-body-text;
+      font-style: italic;
+    }
+
+    .mat-card-header {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid $hat-background-color;
+    }
+
+    .card-header-action {
+      font-style: italic;
+      text-transform: capitalize;
+      font-size: 13px;
+      color: $hat-body-text;
+    }
+
+    .arrow-left {
+      position: absolute;
+      top: 17px;
+      left: -6px;
+      width: 0;
+      height: 0;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+
+      border-right: 6px solid white;
+    }
+  }
+}

@@ -8,10 +8,13 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { TileDataDebitComponent } from './tile-data-debit.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DataDebitService } from '../data-debits.service';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../../core/services/auth.service';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
 
 describe('TileDataDebitComponent', () => {
   let component: TileDataDebitComponent;
@@ -19,7 +22,12 @@ describe('TileDataDebitComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TileDataDebitComponent ]
+      imports: [ RouterTestingModule ],
+      declarations: [ TileDataDebitComponent, MomentPipe ],
+      providers: [
+        { provide: DataDebitService, useValue: { loadAllDataDebits: () => Observable.of([]) } },
+        { provide: AuthService, useValue: { auth$: Observable.of('') } }
+      ]
     })
       .compileComponents();
   }));

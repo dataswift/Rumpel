@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/interfaces/index';
 import { Subscription } from 'rxjs/Subscription';
 import { AccountStatus } from '../../user/account-status.interface';
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private router: Router,
               private dialogSvc: DialogService,
-              private userSvc: UserService,
+              private authSvc: AuthService,
               private profilesSvc: ProfilesService) { }
 
   ngOnInit() {
@@ -49,15 +49,11 @@ export class HeaderComponent implements OnInit {
     this.userAuthenticated = false;
     this.showNotifications = false;
 
-    this.sub = this.userSvc.user$.subscribe((user: User) => {
-      this.userAuthenticated = user.authenticated;
-      if (user.authenticated) {
-        this.hatDomain = user.fullDomain;
-        this.profile.domain = user.domain;
-        this.profile.hatId = user.hatId;
-      } else {
-        this.hatDomain = null;
-      }
+    this.sub = this.authSvc.user$.subscribe((user: User) => {
+      this.userAuthenticated = Boolean(user.fullDomain);
+      this.hatDomain = user.fullDomain;
+      this.profile.domain = user.domain;
+      this.profile.hatId = user.hatId;
     });
 
     this.totalNotifications = 0;
@@ -85,7 +81,7 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut() {
-    this.userSvc.logout();
+    this.authSvc.logout();
     this.router.navigate(['/public/profile']);
   }
 

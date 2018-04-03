@@ -8,7 +8,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ProfilesService } from '../../profiles/profiles.service';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { DialogService } from '../../core/dialog.service';
 import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 
@@ -22,30 +22,17 @@ import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.i
 })
 export class TileHeroComponent implements OnInit {
   public profile: { photo: { url: string; shared: boolean; }, domainName: string };
-  public userAuthenticated = false;
 
   constructor(private profilesSvc: ProfilesService,
               private dialogSvc: DialogService,
-              private userSvc: UserService) {}
+              private authSvc: AuthService) {}
 
   ngOnInit() {
     this.profile = {
       photo: { url: '', shared: false }, domainName: ''
     };
 
-    this.userSvc.user$
-      .subscribe((user: User) => {
-      this.userAuthenticated = user.authenticated;
-      if (user.authenticated) {
-        // this.profilesSvc.getPicture().subscribe(result => {
-        //   if (result && result.url) {
-        //     this.profile.photo.url = result.url;
-        //   }
-        // });
-
-        this.profile.domainName = user.fullDomain;
-      }
-    });
+    this.authSvc.user$.subscribe((user: User) => this.profile.domainName = user.fullDomain);
 
     this.profilesSvc.profileData$.subscribe((latestSnapshot: { values: Profile; share: ProfileSharingConfig; }) => {
       if (latestSnapshot && latestSnapshot.share.photo.avatar) {

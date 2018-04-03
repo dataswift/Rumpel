@@ -9,9 +9,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SocialService } from '../social.service';
-import { MediaService } from '../media.service';
 import { TwitterService } from '../twitter.service';
-import { Post, MusicListen, Tweet } from '../../shared/interfaces';
+import { Post, Tweet } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { Observable } from 'rxjs/Observable';
 
@@ -29,7 +28,6 @@ export class SocialComponent implements OnInit {
   };
 
   constructor(private socialSvc: SocialService,
-              private mediaSvc: MediaService,
               private twitterSvc: TwitterService,
               private route: ActivatedRoute) {}
 

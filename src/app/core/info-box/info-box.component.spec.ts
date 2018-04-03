@@ -8,10 +8,10 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { Renderer2 } from '@angular/core';
 
 import { InfoBoxComponent } from './info-box.component';
+import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
 
 describe('InfoBoxComponent', () => {
   let component: InfoBoxComponent;
@@ -19,7 +19,8 @@ describe('InfoBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfoBoxComponent ]
+      declarations: [ InfoBoxComponent, SafeHtmlPipe ],
+      providers: [ Renderer2 ]
     })
     .compileComponents();
   }));

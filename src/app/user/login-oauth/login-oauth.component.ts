@@ -6,26 +6,24 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { Subscription } from 'rxjs/Subscription';
-import {HatApplication, HatApplicationContent} from '../../explore/hat-application.interface';
+import { HatApplication, HatApplicationContent } from '../../explore/hat-application.interface';
 
 @Component({
   selector: 'rum-login-oauth',
   templateUrl: './login-oauth.component.html',
   styleUrls: ['./login-oauth.component.scss']
 })
-export class LoginOauthComponent implements OnInit, OnDestroy {
+export class LoginOauthComponent implements OnInit {
   public hatDomain: string;
   public error: string;
   public hatApp: HatApplicationContent;
-  private sub: Subscription;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
-              private userSvc: UserService,
+              private authSvc: AuthService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -33,7 +31,7 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
     const redirect = this.route.snapshot.queryParams['redirect'];
 
     if (name && redirect) {
-      this.sub = this.userSvc.getApplicationDetails(name, redirect)
+      this.authSvc.getApplicationDetails(name, redirect)
         .subscribe(
       (hatApp: HatApplication) => {
 
@@ -54,10 +52,6 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
-
   get username(): string {
     const host = window.location.hostname;
 
@@ -69,13 +63,13 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
   }
 
   buildRedirect(appName: string): void {
-    this.userSvc.appLogin(appName).subscribe((accessToken: string) => {
+    this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
       window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
     });
   }
 
   agreeTerms(appId: string): void {
-    this.userSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => this.buildRedirect(appId));
+    this.authSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => this.buildRedirect(appId));
   }
 
   declineTerms(): void {
@@ -87,7 +81,7 @@ export class LoginOauthComponent implements OnInit, OnDestroy {
   }
 
   private legacyLogin(): void {
-    this.userSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
+    this.authSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
       .subscribe((url: string) => window.location.href = url);
   }
 
