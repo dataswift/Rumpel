@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, ViewChild} from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { ActivatedRoute } from '@angular/router';
 import { BrowserStorageService } from '../../services/browser-storage.service';
@@ -12,9 +12,8 @@ import { MatExpansionPanel } from '@angular/material/expansion';
 export class LoginStandaloneComponent implements OnInit {
   @ViewChild(MatExpansionPanel) domainSelector: MatExpansionPanel;
 
-  private lastLoginId: string;
   private redirectPath: string;
-  public hatName = '';
+  public hatName: string;
   public selectedDomain: string;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
@@ -22,10 +21,11 @@ export class LoginStandaloneComponent implements OnInit {
               private storageSvc: BrowserStorageService) { }
 
   ngOnInit() {
-    this.lastLoginId = this.storageSvc.getItem('lastLoginId');
+    this.hatName = this.storageSvc.getItem('lastLoginId') || '';
+    this.redirectPath = this.route.snapshot.queryParams['redirect'] || 'feed';
+
     const lastLoginDomain = this.storageSvc.getItem('lastLoginDomain');
     this.selectedDomain = lastLoginDomain ? '.' + lastLoginDomain : this.config.supportedDomains[0];
-    this.redirectPath = this.route.snapshot.queryParams['redirect'] || 'feed';
   }
 
   selectDomain(domain: string) {

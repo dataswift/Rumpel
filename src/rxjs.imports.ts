@@ -5,8 +5,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/defaultIfEmpty';
+import 'rxjs/add/operator/timeoutWith';
 import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/take';
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/observable/zip';

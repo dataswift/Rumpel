@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApiService } from './hat-api.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable'
 import { User } from '../../user/user.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
@@ -22,7 +22,7 @@ interface TokenUser {
 @Injectable()
 export class AuthService {
   private jwtHelper = new JwtHelperService();
-  private _token$: BehaviorSubject<TokenUser> = new BehaviorSubject({ token: null, user: this.generateUserInfo(null) });
+  private _token$: ReplaySubject<TokenUser> = <ReplaySubject<TokenUser>>new ReplaySubject(1);
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private storageSvc: BrowserStorageService,

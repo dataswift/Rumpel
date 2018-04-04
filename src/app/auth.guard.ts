@@ -33,6 +33,7 @@ export class AuthGuard implements CanActivate {
     }
 
     return this.authSvc.auth$
+      .timeoutWith(50, Observable.of(false))
       .do((authenticated: boolean) => {
         if (!authenticated && tokenLogin) {
           this.messagingSvc.sendMessage(
@@ -46,6 +47,6 @@ export class AuthGuard implements CanActivate {
 
           this.router.navigate(this.redirectPath, navExtras);
         }
-      }).take(1);
+      });
   }
 }
