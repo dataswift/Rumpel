@@ -30,17 +30,21 @@ export class AuthService {
 
     const previouslySavedToken = this.storageSvc.getAuthToken();
 
-    if (previouslySavedToken) {
+    if (previouslySavedToken && previouslySavedToken !== 'null') {
       this.loginWithToken(previouslySavedToken);
     }
   }
 
   get token$(): Observable<string> {
     return this._token$.asObservable()
-      .do(({ token, user}) => {
-        this.storageSvc.setAuthToken(token);
-        this.storageSvc.setItem('lastLoginId', user.hatId);
-        this.storageSvc.setItem('lastLoginDomain', user.domain);
+      .do(({ token, user }) => {
+        if (token) {
+          this.storageSvc.setAuthToken(token);
+          this.storageSvc.setItem('lastLoginId', user.hatId);
+          this.storageSvc.setItem('lastLoginDomain', user.domain);
+        } else {
+          this.storageSvc.removeAuthToken();
+        }
       })
       .map(({ token, user }) => token);
   }
