@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApiService } from './hat-api.service';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable'
 import { User } from '../../user/user.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
@@ -22,7 +22,7 @@ interface TokenUser {
 @Injectable()
 export class AuthService {
   private jwtHelper = new JwtHelperService();
-  private _token$: ReplaySubject<TokenUser> = <ReplaySubject<TokenUser>>new ReplaySubject(1);
+  private _token$: BehaviorSubject<TokenUser> = new BehaviorSubject({ token: null, user: this.generateUserInfo(null) });
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private storageSvc: BrowserStorageService,
@@ -50,12 +50,13 @@ export class AuthService {
   }
 
   get user$(): Observable<User> {
-    return this._token$.map(({ token, user }) => user);
+    return this._token$.asObservable()
+      .map(({ token, user }) => user);
   }
 
   get auth$(): Observable<boolean> {
-    return this._token$
-      .map((tokenUser: TokenUser) => Boolean(tokenUser.token)).defaultIfEmpty(false);
+    return this._token$.asObservable()
+      .map((tokenUser: TokenUser) => Boolean(tokenUser.token));
   }
 
   login(username: string, password: string): Observable<string> {
