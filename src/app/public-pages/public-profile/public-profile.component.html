@@ -12,6 +12,7 @@
       <div class="col-md-12 phatheader">
           <img src="assets/icons/hat_logo.png">
           <div class="phatnav">
+            <a [routerLink]="['/dashboard']" *ngIf="userAuthenticated">Dashboard</a>
             <a [routerLink]="['/user/login']" *ngIf="!userAuthenticated">Sign in</a>
             <a href="https://hatters.hubofallthings.com/" class="btn">Get a HAT</a>
           </div>
