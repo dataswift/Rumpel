@@ -8,10 +8,18 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { PublicProfileComponent } from './public-profile.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { APP_CONFIG } from '../../app.config';
+import { AuthService } from '../../core/services/auth.service';
+import { HatApiService } from '../../core/services/hat-api.service';
+import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
+import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
+import { RelativeTimePipe } from '../../shared/pipes/relative-time.pipe';
+import {Observable} from 'rxjs/Observable';
+
 
 describe('PublicProfileComponent', () => {
   let component: PublicProfileComponent;
@@ -19,7 +27,17 @@ describe('PublicProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PublicProfileComponent ]
+      imports: [ RouterTestingModule ],
+      declarations: [ PublicProfileComponent, SafeHtmlPipe, MarkdownToHtmlPipe, MomentPipe, RelativeTimePipe ],
+      providers: [
+        { provide: APP_CONFIG, useValue: {} },
+        { provide: AuthService, useValue: {
+          auth$: Observable.of(false)
+        } },
+        { provide: HatApiService, useValue: {
+          getPhataPage: () => Observable.of({})
+        } }
+      ]
     })
     .compileComponents();
   }));

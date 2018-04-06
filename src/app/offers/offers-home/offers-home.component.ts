@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { DataOfferService } from '../data-offer.service';
 import { DialogService } from '../../core/dialog.service';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../user/user.interface';
 import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 import { APP_CONFIG, AppConfig } from '../../app.config';
@@ -26,7 +26,7 @@ export class OffersHomeComponent implements OnInit {
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private dialogSvc: DialogService,
-              private userSvc: UserService,
+              private authSvc: AuthService,
               private dataOfferSvc: DataOfferService) { }
 
   ngOnInit() {
@@ -53,7 +53,7 @@ export class OffersHomeComponent implements OnInit {
     },
     error => { console.log(error); });
 
-    this.userSvc.user$.filter((user: User) => user.authenticated)
+    this.authSvc.auth$.filter((authenticated: boolean) => authenticated)
       .subscribe(() =>  this.dataOfferSvc.fetchUserAwareOfferList());
   }
 

@@ -8,10 +8,72 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { TileProfileComponent } from './tile-profile.component';
+import { ProfilesService } from '../profiles.service';
+import { Observable } from 'rxjs/Observable';
+
+const PROFILE_MOCK_DATA = {
+  dateCreated: 0,
+  shared: false,
+  photo: {
+    avatar: ''
+  },
+  personal: {
+    title: '',
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    preferredName: '',
+    nickName: '',
+    birthDate: '',
+    gender: '',
+    ageGroup: ''
+  },
+  contact: {
+    primaryEmail: '',
+    alternativeEmail: '',
+    mobile: '',
+    landline: ''
+  },
+  emergencyContact: {
+    firstName: '',
+    lastName: '',
+    mobile: '',
+    relationship: ''
+  },
+  address: {
+    city: '',
+    county: '',
+    country: ''
+  },
+  about: {
+    title: '',
+    body: ''
+  },
+  online: {
+    website: '',
+    blog: '',
+    facebook: '',
+    twitter: '',
+    linkedin: '',
+    google: '',
+    youtube: ''
+  }
+};
+
+const PROFILE_SHARE_MOCK = {
+  photo: { avatar: false },
+  personal: {
+    title: false, firstName: false, middleName: false, lastName: false,
+    preferredName: false, nickName: false, birthDate: false, gender: false, ageGroup: false
+  },
+  contact: { primaryEmail: false, alternativeEmail: false, mobile: false, landline: false },
+  emergencyContact: { firstName: false, lastName: false, mobile: false, relationship: false },
+  address: { city: false, county: false, country: false },
+  about: { title: false, body: false },
+  online: { website: false, blog: false, facebook: false, twitter: false, linkedin: false, google: false, youtube: false }
+};
 
 describe('TileProfileComponent', () => {
   let component: TileProfileComponent;
@@ -19,7 +81,13 @@ describe('TileProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TileProfileComponent ]
+      declarations: [ TileProfileComponent ],
+      providers: [
+        { provide: ProfilesService, useValue: {
+          getProfileData: () => null,
+          profileData$: Observable.of({ values: PROFILE_MOCK_DATA, share: PROFILE_SHARE_MOCK })
+        } }
+      ]
     })
       .compileComponents();
   }));

@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DataPlugStaticComponent } from './data-plug-static.component';
+import { ActivatedRoute } from '@angular/router';
+import { StaticDataService } from '../../services/static-data.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('DataPlugStaticComponent', () => {
   let component: DataPlugStaticComponent;
@@ -8,7 +11,11 @@ describe('DataPlugStaticComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataPlugStaticComponent ]
+      declarations: [ DataPlugStaticComponent ],
+      providers: [
+        { provide: ActivatedRoute, useValue: { parent: { params: Observable.of({ provider: 'test' }) }} },
+        { provide: StaticDataService, useValue: { fetchData: () => null } }
+      ]
     })
     .compileComponents();
   }));

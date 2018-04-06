@@ -7,27 +7,26 @@
  */
 
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
 
-import { DialogBoxComponent } from './confirm-box.component';
+import { ConfirmBoxComponent } from './confirm-box.component';
+import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
+import { DialogService } from '../dialog.service';
 
-describe('DialogBoxComponent', () => {
-  let component: DialogBoxComponent;
-  let fixture: ComponentFixture<DialogBoxComponent>;
+describe('ConfirmBoxComponent', () => {
+  let component: ConfirmBoxComponent;
+  let fixture: ComponentFixture<ConfirmBoxComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogBoxComponent ]
-    })
-    .compileComponents();
+      declarations: [ ConfirmBoxComponent, SafeHtmlPipe ],
+      providers: [{ provide: DialogService, useValue: {} }]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogBoxComponent);
+    fixture = TestBed.createComponent(ConfirmBoxComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

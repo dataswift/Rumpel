@@ -8,10 +8,16 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { TileSocialComponent } from './tile-social.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
+import { ReplaceCharsPipe } from '../../shared/pipes/replace-chars.pipe';
+import { LimitContentPipe } from '../../shared/pipes/limit-content.pipe';
+import { SocialService } from '../social.service';
+import { TwitterService } from '../twitter.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
 describe('TileSocialComponent', () => {
   let component: TileSocialComponent;
@@ -19,7 +25,13 @@ describe('TileSocialComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TileSocialComponent ]
+      imports: [ RouterTestingModule ],
+      declarations: [ TileSocialComponent, MomentPipe, ReplaceCharsPipe, LimitContentPipe ],
+      providers: [
+        { provide: SocialService, useValue: { getInitData: () => null, data$: Observable.of([]) } },
+        { provide: TwitterService, useValue: { getInitData: () => null, data$: Observable.of([]) } },
+        { provide: ActivatedRoute, useValue: { snapshot: { fragment: '1' } } }
+      ]
     })
       .compileComponents();
   }));

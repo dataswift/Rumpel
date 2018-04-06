@@ -12,6 +12,7 @@
       <div class="col-md-12 phatheader">
           <img src="assets/icons/hat_logo.png">
           <div class="phatnav">
+            <a [routerLink]="['/dashboard']" *ngIf="userAuthenticated">Dashboard</a>
             <a [routerLink]="['/user/login']" *ngIf="!userAuthenticated">Sign in</a>
             <a href="https://hatters.hubofallthings.com/" class="btn">Get a HAT</a>
           </div>
@@ -29,7 +30,7 @@
             <path fill="none" d="M0,0h24v24H0V0z"/>
           </svg>
 
-          <img *ngIf="profile?.photo && profile.photo.avatar" [src]="profile?.photo.avatar">
+          <div *ngIf="profile?.photo && profile.photo.avatar" [ngStyle]="{ 'background-image': 'url(' + profile?.photo.avatar + ')' }" class="photo-container"></div>
 
           <h1>{{hostname}}</h1>
           <p>

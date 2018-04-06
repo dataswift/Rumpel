@@ -10,11 +10,18 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { FacebookEventsService } from './facebook-events.service';
+import { HatApiService } from '../core/services/hat-api.service';
+import { AuthService } from '../core/services/auth.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('FacebookEventsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FacebookEventsService]
+      providers: [
+        FacebookEventsService,
+        { provide: HatApiService, useValue: {} },
+        { provide: AuthService, useValue: { auth$: Observable.of(false)} }
+      ]
     });
   });
 

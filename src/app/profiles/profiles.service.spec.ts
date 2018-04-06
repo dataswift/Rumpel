@@ -10,11 +10,22 @@
 
 import { TestBed, async, inject } from '@angular/core/testing';
 import { ProfilesService } from './profiles.service';
+import { AuthService } from '../core/services/auth.service';
+import { HatApiService } from '../core/services/hat-api.service';
+import { APP_CONFIG } from '../app.config';
+import { Observable } from 'rxjs/Observable';
 
 describe('ProfilesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ProfilesService]
+      providers: [
+        ProfilesService,
+        { provide: HatApiService, useValue: {} },
+        { provide: AuthService, useValue: {
+          auth$: Observable.of(false)
+        } },
+        { provide: APP_CONFIG, useValue: {} }
+      ]
     });
   });
 

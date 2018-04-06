@@ -7,9 +7,8 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ProfilesService } from '../profiles.service';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 import { User } from '../../user/user.interface';
 
@@ -69,12 +68,12 @@ export class ProfileComponent implements OnInit {
 
   constructor(private profilesSvc: ProfilesService,
               private dialogSvc: DialogService,
-              private userSvc: UserService,
+              private authSvc: AuthService,
               private fileSvc: FileService,
               public snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.userSvc.user$.subscribe((user: User) => {
+    this.authSvc.user$.subscribe((user: User) => {
       this.hatUrl = `https://${user.hatId}.${user.domain}/#/public/profile`;
       this.hatDomain = user.fullDomain;
     });

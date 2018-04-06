@@ -6,54 +6,61 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 3, 2017
   -->
 
-<div class="container-fluid view-body">
-  <div class="row">
-    <div class="responsive header-strip">
-      <div class="logo"></div>
+<rum-info-header>
+  <span class="header-item">Don't have a HAT?</span>
+  <a mat-button href="https://hatters.hubofallthings.com/" target="_blank" class="header-item header-link">Create account</a>
+</rum-info-header>
+
+<div class="native-login-page">
+  <span class="flex-spacer"></span>
+
+  <div class="title-container">
+    <div class="logo-wrapper">
+      <img src="/assets/icons/hat-logo@3x.png" height="75" width="75" />
+    </div>
+    <div class="heading-wrapper">
+      <h2 class="title-hat-name">{{ hatName || 'yourhatname' }}</h2>
+      <h3 class="title-hat-domain">{{ selectedDomain || '.yourhatdomain' }}</h3>
     </div>
   </div>
 
-  <div class="row">
-    <form class="col-md-12" (submit)="onSubmit(f)" #f="ngForm">
-      <div class="form-group with-dropdown">
-        <label for="username" hidden>Please enter your personal HAT address</label>
-        <input type="text" class="form-control input-rum lg" id="username"
-               (focus)="clearError()"
-               [ngModel]="lastLoginId" name="username"
-               placeholder="Username">
-
-        <div class="dropdown-wrapper">
-          <button type="button" class="input-rum lg" (click)="dropdownExpanded = !dropdownExpanded">
-            {{selectedDomain}} <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu-rum" *ngIf="dropdownExpanded">
-            <li (click)="setDomain(domain)" *ngFor="let domain of config.supportedDomains">
-              {{domain}}
-            </li>
-          </ul>
-        </div>
-        <!--<div *ngIf="error" class="error alert alert-danger">-->
-          <!--{{error}}-->
-        <!--</div>-->
-      </div>
-
-      <!--<div class="form-group inline-checkbox">
-        <input type="checkbox" class="checkbox" id="rememberMe"
-               [ngModel]="true" name="rememberMe">
-        <label for="rememberMe" class="text">Remember Me</label>
-      </div>-->
-
-      <div class="form-group">
-        <button type="submit" class="btn btn-rum md fading">Login</button>
-      </div>
-
-      <div class="form-context">
-        <a href="https://hatters.hubofallthings.com/" target="_blank">Sign up for a HAT</a> &nbsp;| &nbsp;
-        <a href="https://hubofallthings.com" target="_blank">What is the HAT?</a>
-      </div>
-    </form>
+  <div class="f-g">
+    <label for="hatName" hidden></label>
+    <input id="hatName" type="text" class="hat-pass-input" name="hat-pass-input"
+           placeholder="Enter HAT name" [(ngModel)]="hatName"
+           (keyup.enter)="redirectToLogin()"/>
   </div>
 
-  <div class="version-tag">v{{config.version}}</div>
+  <div class="f-g">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ selectedDomain.slice(1) || 'Select HAT domain' }}</mat-panel-title>
+      </mat-expansion-panel-header>
 
+      <mat-panel-description>
+        <mat-list>
+          <ng-container *ngFor="let domain of config.supportedDomains">
+            <mat-divider></mat-divider>
+            <mat-list-item (click)="selectDomain(domain)">
+              {{ domain.slice(1) }}
+              <ng-container *ngIf="domain === selectedDomain">
+                <span class="flex-spacer"></span>
+                <mat-icon>check_circle</mat-icon>
+              </ng-container>
+            </mat-list-item>
+          </ng-container>
+        </mat-list>
+      </mat-panel-description>
+    </mat-expansion-panel>
+  </div>
+
+  <div class="f-g">
+    <p class="login-info">After pressing 'next' you will be re-directed to your HAT to enter your password</p>
+  </div>
+
+  <span class="custom-flex-spacer"></span>
+
+  <div class="user-actions">
+    <button mat-flat-button role="link" (click)="redirectToLogin()" [disabled]="hatName.length < 4 && selectedDomain">Next</button>
+  </div>
 </div>

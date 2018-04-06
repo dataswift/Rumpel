@@ -11,21 +11,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { TweetComponent } from './tweet.component';
+import { LocationTweetComponent } from './location-tweet.component';
 
-describe('TweetComponent', () => {
-  let component: TweetComponent;
-  let fixture: ComponentFixture<TweetComponent>;
+xdescribe('LocationTweetComponent', () => {
+  let component: LocationTweetComponent;
+  let fixture: ComponentFixture<LocationTweetComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TweetComponent ]
+      declarations: [ LocationTweetComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TweetComponent);
+    fixture = TestBed.createComponent(LocationTweetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

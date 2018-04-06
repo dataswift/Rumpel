@@ -7,23 +7,25 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { HttpHeaders } from '@angular/common/http';
+import { HttpBackendClient } from '../core/services/http-backend-client.service';
 
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../core/services/auth.service';
 import { User } from '../user/user.interface';
 import { LocationsService } from '../locations/locations.service';
 
 import { APP_CONFIG, AppConfig} from '../app.config';
 import { DataPlug } from '../shared/interfaces/data-plug.interface';
-import { HatApiService } from '../services/hat-api.service';
+import { HatApiService } from '../core/services/hat-api.service';
 import { DexApiService } from '../services/dex-api.service';
 
 import * as moment from 'moment';
-import {Moment} from 'moment';
+import { Moment } from 'moment';
 
 // TODO: replace with fetch from DEX when going to production
+// TODO: re-implement user notification in cases when active plug started failing
 
 @Injectable()
 export class DataPlugService {
@@ -31,18 +33,16 @@ export class DataPlugService {
   private plugs: DataPlug[];
   private expires: Moment = moment().subtract(10, 'seconds');
   private _dataplugs$: ReplaySubject<DataPlug[]> = <ReplaySubject<DataPlug[]>>new ReplaySubject(1);
-  private twitterPlugWarningShown = false;
-  private facebookPlugWarningShown = false;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private http: Http,
+              private http: HttpBackendClient,
               private hatSvc: HatApiService,
               private dexSvc: DexApiService,
-              private userSvc: UserService,
+              private authSvc: AuthService,
               private locationsSvc: LocationsService) {
 
-    this.userSvc.user$
-      .filter((user: User) => user.authenticated === true)
+    this.authSvc.user$
+      .filter((user: User) => Boolean(user.fullDomain))
       .subscribe((user: User) => {
         this.hatUrl = user.fullDomain;
         this.getDataPlugList();
@@ -69,11 +69,11 @@ export class DataPlugService {
     return this.hatSvc.getApplicationToken(plugName, baseUrl)
       .flatMap(accessToken => {
         const url = `${baseUrl}/api/status`;
-        const headers = new Headers();
-        headers.append('X-Auth-Token', accessToken);
-        headers.append('Content-Type', 'application/json');
+        const headers = new HttpHeaders()
+          .set('X-Auth-Token', accessToken)
+          .set('Content-Type', 'application/json');
 
-        return this.http.get(url, { headers: headers })
+        return this.http.get<any>(url, { headers: headers, observe: 'response' })
           .map(res => res.status === 200)
           .catch(err => Observable.of(false));
       });
@@ -91,7 +91,7 @@ export class DataPlugService {
         this.expires = moment().add(10, 'minutes');
 
         this.plugs.forEach(plug => {
-          if (plug.name === 'Locations') {
+          if (plug.name === 'location') {
             this.locationsSvc.checkTableExists().subscribe(isActive => {
               plug.active = isActive;
               this._dataplugs$.next(this.plugs);
@@ -105,94 +105,5 @@ export class DataPlugService {
         });
       });
     }
-
   }
-
-  // TODO: re-implement user notification in cases when active plug started failing
-
-  // private getFacebookStatus(): void {
-  //   this.getTokenInfo('Facebook').subscribe(
-  //     tokenInfo => {
-  //       this.services['Facebook'].connected = tokenInfo.canPost;
-  //       if (tokenInfo.canPost === false && this.facebookPlugWarningShown === false) {
-  //         this.facebookPlugWarningShown = true;
-  //         this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-  //           title: 'Reconnect your Facebook plug',
-  //           message: `Every two months, you need to reset your Facebook plug – it's our way of checking that ` +
-  //                    `you're still happy to pull this data into your HAT.`,
-  //           cancelBtnText: 'No Thanks',
-  //           icon: 'assets/icons/facebook-f-icon.svg',
-  //           buttons: [{
-  //             title: 'Reconnect Facebook Plug',
-  //             link: `//${this.hatUrl}/#/hatlogin?` +
-  //                   `name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate/`
-  //           }]
-  //         });
-  //       }
-  //     },
-  //     error => {
-  //       this.services['Facebook'].connected = false;
-  //       if (error.url.includes(window.location.hostname)) {
-  //         console.warn('Retrieving application token for the Facebook plug is broken.');
-  //       } else {
-  //         this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-  //           const tableFound = tables.find(table => table.name === 'posts' && table.source === 'facebook');
-  //
-  //           if (tableFound && this.facebookPlugWarningShown === false) {
-  //             this.facebookPlugWarningShown = true;
-  //             this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-  //               title: 'Something went wrong',
-  //               message: 'There is a problem with your Facebook plug. If the problem persists, we suggest ' +
-  //                        'disconnecting and re-connecting the plug.',
-  //               icon: 'assets/icons/facebook-f-icon.svg',
-  //               cancelBtnText: 'Dismiss',
-  //               buttons: [{
-  //                 title: 'Reconnect Facebook Plug',
-  //                 link: `//${this.hatUrl}/#/hatlogin?` +
-  //                       `name=Facebook&redirect=https://social-plug.hubofallthings.com/hat/authenticate/`
-  //               }]
-  //             });
-  //           }
-  //         });
-  //       }
-  //     }
-  //   );
-  // }
-  //
-  // private getTwitterStatus(): void {
-  //   this.getTokenInfo('Twitter').subscribe(
-  //     tokenInfo => {
-  //       this.services['Twitter'].connected = true;
-  //     },
-  //     error => {
-  //       this.services['Twitter'].connected = false;
-  //       if (error.url.includes(window.location.hostname)) {
-  //         console.warn('Retrieving application token for the Twitter plug is broken.');
-  //       } else {
-  //         this.uiSvc.tables$.subscribe((tables: DataTable[]) => {
-  //           const tableFound = tables.find(table => table.name === 'tweets' && table.source === 'twitter');
-  //
-  //           // If Twitter plug status endpoint gives HTTP error but table exists on the HAT => problem occurred
-  //           // If the table hasn't been created => plug is not set up, all ok
-  //           if (tableFound && this.dialogSvc.activeInstances === 0 && this.twitterPlugWarningShown === false) {
-  //             this.twitterPlugWarningShown = true;
-  //             this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-  //               title: 'Something went wrong',
-  //               icon: 'assets/icons/twitter-icon.svg',
-  //               message: 'There is a problem with your Twitter plug. If the problem persists, we suggest ' +
-  //                        'disconnecting and re-connecting the plug.',
-  //               cancelBtnText: 'Dismiss',
-  //               buttons: [{
-  //                 title: 'Reconnect Twitter Plug',
-  //                 link: `//${this.hatUrl}/#/hatlogin?` +
-  //                       `name=Twitter&redirect=https://twitter-plug.hubofallthings.com/authenticate/hat/`
-  //               }]
-  //             });
-  //           }
-  //         });
-  //       }
-  //     }
-  //   );
-  // }
-
 }

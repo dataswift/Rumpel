@@ -10,10 +10,11 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { StickDirective } from './stick.directive';
+import { ElementRef } from '@angular/core';
 
 describe('StickDirective', () => {
   it('should create an instance', () => {
-    const directive = new StickDirective();
+    const directive = new StickDirective(new ElementRef({}));
     expect(directive).toBeTruthy();
   });
 });

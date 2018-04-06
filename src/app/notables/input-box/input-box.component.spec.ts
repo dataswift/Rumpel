@@ -8,10 +8,13 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { InputBoxComponent } from './input-box.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
+import { NotablesService } from '../notables.service';
+import { LocationsService } from '../../locations/locations.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('InputBoxComponent', () => {
   let component: InputBoxComponent;
@@ -19,7 +22,12 @@ describe('InputBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InputBoxComponent ]
+      imports: [ RouterTestingModule, FormsModule ],
+      declarations: [ InputBoxComponent ],
+      providers: [
+        { provide: NotablesService, useValue: { data$: Observable.of([]) } },
+        { provide: LocationsService, userValue: { data$: Observable.of([]) } }
+      ]
     })
       .compileComponents();
   }));

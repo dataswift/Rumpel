@@ -8,10 +8,12 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 
 import { NotificationCentreComponent } from './notification-centre.component';
+import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
+import { NotificationsService } from '../notifications.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('NotificationCentreComponent', () => {
   let component: NotificationCentreComponent;
@@ -19,7 +21,13 @@ describe('NotificationCentreComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotificationCentreComponent ]
+      declarations: [ NotificationCentreComponent, MarkdownToHtmlPipe, MomentPipe ],
+      providers: [
+        { provide: NotificationsService, useValue: {
+          notification$: Observable.of({ notice: { message: 'hello world' } }),
+          stats$: Observable.of('') } },
+        { provide: MarkdownToHtmlPipe, useValue: { transform: () => null } }
+      ]
     })
       .compileComponents();
   }));

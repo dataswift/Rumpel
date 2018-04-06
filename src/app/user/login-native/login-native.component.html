@@ -6,43 +6,42 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<div class="container-fluid view-body">
-  <div class="row">
-    <div class="responsive header-strip">
-      <div class="logo"></div>
+<rum-info-header>
+  <span class="header-item">What can I do with my HAT?</span>
+  <a mat-button href="#" target="_blank" class="header-item header-link">Learn more</a>
+</rum-info-header>
+
+<div class="native-login-page">
+  <span class="flex-spacer"></span>
+
+  <div class="title-container">
+    <button mat-icon-button class="back-button">
+      <mat-icon (click)="goBack()">arrow_back</mat-icon>
+    </button>
+    <div class="logo-wrapper">
+      <img src="/assets/icons/hat-logo@3x.png" height="75" width="75" />
+    </div>
+    <div class="heading-wrapper">
+      <h2 class="title-hat-name">{{ hatName }}</h2>
+      <h3 class="title-hat-domain">{{ hatDomain }}</h3>
     </div>
   </div>
 
-  <div class="row">
-    <form class="responsive" (submit)="onSubmit(f)" #f="ngForm">
-      <div class="form-group" [class.has-error]="error">
-        <label for="hatPassword">Please enter your HAT password</label>
-        <input type="password" class="form-control input-rum lg" id="hatPassword"
-            (focus)="clearError()"
-            ngModel name="password"
-            placeholder="Password"
-            aria-describedby="hatPassword">
-        <div *ngIf="error" class="error alert alert-danger">
-          {{error}}
-        </div>
-      </div>
-
-      <div class="form-group inline-checkbox">
-        <input type="checkbox" class="checkbox" id="rememberMe"
-               [ngModel]="true" name="rememberMe">
-        <label for="rememberMe" class="text">Remember Me</label>
-      </div>
-
-      <div class="form-group">
-        <button type="submit" class="btn btn-rum md fading">Login</button>
-      </div>
-
-      <div class="form-context">&nbsp;
-        <a [routerLink]="['/user', 'password', 'recover']">Forgot Password?</a>
-      </div>
-    </form>
+  <div class="f-g">
+    <label for="hatPass" hidden></label>
+    <input id="hatPass" type="password" class="hat-pass-input" name="hat-pass-input"
+           placeholder="Enter HAT password" #hatPass
+           (keyup.enter)="login(hatPass)"/>
   </div>
 
-  <div class="version-tag">v{{config.version}}</div>
+  <div>
+    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="rememberMe" color="primary">Remember me</mat-checkbox>
+  </div>
 
+  <span class="custom-flex-spacer"></span>
+
+  <div class="user-actions">
+    <button mat-flat-button role="button" (click)="login(hatPass)">Login</button>
+    <a role="link" [routerLink]="['/user', 'password', 'recover']">Forgotten password</a>
+  </div>
 </div>

@@ -9,6 +9,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PasswordRecoverComponent } from './password-recover.component';
+import { AuthService } from '../../core/services/auth.service';
 
 describe('PasswordRecoverComponent', () => {
   let component: PasswordRecoverComponent;
@@ -16,7 +17,10 @@ describe('PasswordRecoverComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PasswordRecoverComponent ]
+      declarations: [ PasswordRecoverComponent ],
+      providers: [
+        { provide: AuthService, useValue: {} }
+      ]
     })
     .compileComponents();
   }));

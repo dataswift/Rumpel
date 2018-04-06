@@ -7,7 +7,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../user/user.service';
+import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../user/user.interface';
 import { AccountStatus } from '../../user/account-status.interface';
 
@@ -20,11 +20,10 @@ export class AccountStatusTileComponent implements OnInit {
   public username: string;
   public accountStatus: AccountStatus;
 
-  constructor(private userSvc: UserService) { }
+  constructor(private authSvc: AuthService) { }
 
   ngOnInit() {
-    this.userSvc.user$
-      .filter((user: User) => user.authenticated === true)
+    this.authSvc.user$
       .subscribe((user: User) => this.username = user.hatId);
 
     // this.userSvc.getAccountStatus().subscribe((accountStatus: AccountStatus) => this.accountStatus = accountStatus);

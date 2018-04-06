@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FitbitMyDayComponent } from './fitbit-my-day.component';
+import { RemoveCharsPipe } from '../../shared/pipes/removeChars.pipe';
 
 describe('FitbitMyDayComponent', () => {
   let component: FitbitMyDayComponent;
@@ -8,7 +9,7 @@ describe('FitbitMyDayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FitbitMyDayComponent ]
+      declarations: [ FitbitMyDayComponent, RemoveCharsPipe ]
     })
     .compileComponents();
   }));
@@ -16,6 +17,7 @@ describe('FitbitMyDayComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FitbitMyDayComponent);
     component = fixture.componentInstance;
+    component.fitbitData = { steps: 42 };
     fixture.detectChanges();
   });
 

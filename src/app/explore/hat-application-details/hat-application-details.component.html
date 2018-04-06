@@ -11,9 +11,16 @@
       </div>
       <h3 class="app-details-header-title">{{app.application.info.name}}</h3>
       <div class="app-details-header-headline">{{app.application.info.headline}}</div>
-      <a mat-button [class.require-setup]="!app.setup" href="{{app.application.kind.url}}">
-        <mat-icon>{{app.setup ? 'input' : 'add_circle_outline'}}</mat-icon>
-        {{ app.setup ? 'Go to app' : 'Connect app' }}</a>
+      <ng-container *ngIf="!app.setup || app.needsUpdating else appActivityButtons">
+        <a mat-button class="require-setup" href="{{app.application.kind.url}}">
+          <mat-icon>add_circle_outline</mat-icon>Connect app</a>
+      </ng-container>
+
+      <ng-template #appActivityButtons>
+        <a mat-button [class.require-setup]="!app.active" href="{{app.application.kind.url}}">
+          <mat-icon>{{app.active ? 'input' : 'report_problem'}}</mat-icon>
+          {{ app.active ? 'Go to app' : 'Reconnect app' }}</a>
+      </ng-template>
     </mat-card>
   </div>
 
@@ -40,27 +47,9 @@
       </mat-tab>
 
       <mat-tab label="Data Preview">
-        <div class="card-wrapper" *ngFor="let dataSample of app.application.info.dataPreview">
-          <div class="img-wrapper">
-            <img src="{{app.application.info.graphics.logo.normal}}" height="35" width="35" />
-          </div>
-
-          <mat-card>
-            <mat-card-header>
-              <h4 class="card-header-title">{{dataSample.title.text}}</h4>
-              <span class="flex-spacer"></span>
-              <span class="card-header-action">{{dataSample.title.action}}</span>
-            </mat-card-header>
-            <mat-card-content>
-              {{dataSample.content.text}}
-            </mat-card-content>
-            <mat-card-footer>
-              Posted {{dataSample.date.iso | moment: 'DD MMM YYYY h:mma'}}
-            </mat-card-footer>
-
-            <div class="arrow-left"></div>
-          </mat-card>
-        </div>
+        <ng-container *ngFor="let dataSample of app.application.info.dataPreview">
+          <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+        </ng-container>
       </mat-tab>
     </mat-tab-group>
   </div>
