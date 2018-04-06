@@ -40,7 +40,7 @@ export class DexApiService {
     return this.http.get<{ plug: DataPlug; }[]>(url)
       .map(resBody => {
         return resBody
-          .filter(dataplug => 'location,facebook,twitter,fitbit,calendar'.includes(dataplug.plug.name.toLowerCase()))
+          .filter(dataplug => 'location,facebook,twitter,fitbit,calendar,spotify'.includes(dataplug.plug.name.toLowerCase()))
           .map(dataplug => {
             dataplug.plug.active = false;
 

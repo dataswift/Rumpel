@@ -14,6 +14,8 @@ import { DataDebit } from '../shared/interfaces/data-debit.interface';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpBackendClient } from '../core/services/http-backend-client.service';
 
+const OFFER_CACHING_INTERVAL = 5;
+
 @Injectable()
 export class DataOfferService {
   private jwt: JwtHelperService;
@@ -64,7 +66,7 @@ export class DataOfferService {
     if (this.expires.isBefore()) {
       this.http.get<Offer[]>(url)
         .subscribe(resBody => {
-          this.expires = moment().add(60, 'minutes');
+          this.expires = moment().add(OFFER_CACHING_INTERVAL, 'minutes');
           this._offers$.next({ availableOffers: resBody, acceptedOffers: [] });
         });
     }
@@ -100,7 +102,7 @@ export class DataOfferService {
         })
         .subscribe(resBody => {
           const groupedOffers = this.groupOffers(resBody);
-          this.expires = moment().add(60, 'minutes');
+          this.expires = moment().add(OFFER_CACHING_INTERVAL, 'minutes');
           this._offers$.next(groupedOffers);
         });
     }
