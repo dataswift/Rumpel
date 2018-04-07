@@ -71,7 +71,7 @@
     /deep/ {
       .mat-list-item-content {
         color: $app-dark-tone;
-        font-size: 14px;
+        font-size: 16px;
         width: 100%;
       }
 
@@ -82,7 +82,7 @@
 
     .mat-expansion-panel-header-title {
       color: $app-dark-tone;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .mat-list {
@@ -109,13 +109,13 @@
     border: 1px solid #e0e0e0;
     width: 100%;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
     padding: 15px 20px;
     border-radius: 0;
     -webkit-appearance: none;
 
     &::placeholder {
-      font-size: 14px;
+      font-size: 16px;
       letter-spacing: 0.5px;
     }
 
