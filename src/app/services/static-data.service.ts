@@ -8,13 +8,15 @@ import { toPairs } from 'lodash';
 const ENDPOINT_MAP = {
   facebook: 'profile',
   twitter: 'tweets',
-  fitbit: 'profile'
+  fitbit: 'profile',
+  spotify: 'profile'
 };
 
 const ORDER_BY_MAP = {
   facebook: 'dateCreated',
   twitter: 'id',
-  fitbit: 'dateCreated'
+  fitbit: 'dateCreated',
+  spotify: 'dateCreated'
 };
 
 @Injectable()

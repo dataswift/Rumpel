@@ -16,6 +16,10 @@ export class SheFeedService extends BaseDataService<SheFeed> {
     super(hat, authSvc, 'she', 'feed', 'date.unix');
   }
 
+  getNewDataFormat(namespace: string): Observable<SheFeed[]> {
+    return this.hat.getSheRecords(namespace);
+  }
+
   filteredBy$(provider: string): Observable<HatRecord<SheFeed>[]> {
     return this.data$.map((feedItems: HatRecord<SheFeed>[]) => {
       return feedItems.filter((item: HatRecord<SheFeed>) => item.data.source === provider);

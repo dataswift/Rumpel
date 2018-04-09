@@ -11,14 +11,19 @@ import { SheFeed } from '../../dashboard/she-feed.interface';
   styleUrls: ['./data-plug-feed.component.scss']
 })
 export class DataPlugFeedComponent implements OnInit {
-  public feed$: Observable<HatRecord<SheFeed>[]>;
+  public feed$: Observable<SheFeed[]>;
 
   constructor(private route: ActivatedRoute,
               private sheSvc: SheFeedService) { }
 
   ngOnInit() {
     this.feed$ = this.route.parent.params.flatMap(routeParams => {
-      return this.sheSvc.filteredBy$(routeParams['provider'].replace('calendar', 'google') || '');
+      if (routeParams['provider'] === 'spotify') {
+        return this.sheSvc.getNewDataFormat(routeParams['provider']);
+      } else {
+        return this.sheSvc.filteredBy$(routeParams['provider'].replace('calendar', 'google') || '')
+          .map(feedItems => feedItems.map(item => item.data));
+      }
     });
 
     this.sheSvc.getInitData(1000);
