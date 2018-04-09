@@ -49,7 +49,7 @@ export const configuration: AppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubofallthings.com',
+    url: 'https://databuyer.hubat.net',
     pathPrefix: '/api/v2'
   },
   facebook: {

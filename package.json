@@ -9,9 +9,9 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
+    "start": "ng serve --environment=standalone --host=rumpel.hubofallthings.net",
+    "build": "ng lint && ng test --sourcemaps=false --watch=false && ng build --environment=native --target=production",
+    "test": "ng test --sourcemaps=false --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
