@@ -4,7 +4,7 @@ import { DataPlugFeedComponent } from './data-plug-feed.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
-import { SheFeedService } from '../../dashboard/she-feed.service';
+import { SheFeedService } from '../../she/she-feed.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 

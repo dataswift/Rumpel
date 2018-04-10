@@ -1,4 +1,4 @@
-<div class="she-feed">
+<div class="she-feed" #feedContainer>
   <mat-toolbar color="primary" style="display: flex;">
     <h2>My Digital Life</h2>
 
@@ -12,8 +12,11 @@
   </mat-toolbar>
 
   <div class="feed">
-    <ng-container *ngFor="let item of feed$ | async">
-      <rum-she-feed-item [feedItem]="item.data"></rum-she-feed-item>
+    <ng-container *ngFor="let day of feed$ | async">
+      <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
+      <ng-container *ngFor="let feedItem of day.data">
+        <rum-she-feed-item [feedItem]="feedItem"></rum-she-feed-item>
+      </ng-container>
     </ng-container>
   </div>
 </div>
