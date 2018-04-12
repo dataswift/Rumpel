@@ -26,7 +26,7 @@ export class SheFeedComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const today = format(new Date(), 'YYYY-MM-DD');
+    const today = format(new Date(), 'ddd DD MMM YYYY');
 
     this.dateSeparators.changes.subscribe((changes) => {
       const todayElement = changes.find(item => {

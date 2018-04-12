@@ -35,7 +35,7 @@ export class SheFeedService {
 
     this.hat.getSheRecords('', defaultSince, defaultUntil)
       .subscribe((feedItems: SheFeed[]) => {
-        const groupedByDay = groupBy(feedItems, item => <string>format(item.date.unix * 1000, 'YYYY-MM-DD'));
+        const groupedByDay = groupBy(feedItems, item => <string>format(item.date.unix * 1000, 'ddd DD MMM YYYY'));
         const dayGroupedSheFeed = Object.keys(groupedByDay)
           .map((day: string) => {
             return { day: day, data: groupedByDay[day] }
