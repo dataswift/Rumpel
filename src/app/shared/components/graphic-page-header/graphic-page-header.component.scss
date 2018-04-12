@@ -1,0 +1,64 @@
+@import '../../../style/branding';
+
+.graphic-page-header {
+  position: relative;
+  height: 250px;
+  width: 100%;
+  background-size: contain;
+  background-image: url('/assets/images/piggy.jpg');
+  background-repeat: no-repeat;
+  background-color: #2b313d;
+  // background-position: 100% 100%;
+
+  &:before {
+    position: absolute;
+    content: " ";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .2);
+  }
+
+  .mat-toolbar {
+    background-color: transparent;
+    height: 75px;
+    font-size: 16px;
+
+    .page-heading {
+      color: white;
+      text-transform: uppercase;
+      margin: 0 auto;
+      font-size: 1.25em;
+    }
+  }
+
+  .page-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    color: white;
+    height: calc(250px - 75px);
+
+    .flex-spacer {
+      flex-grow: 1;
+    }
+
+    .page-header-icon {
+      height: auto;
+      width: auto;
+      font-size: 30px;
+      padding: 20px;
+      background-color: $app-accent-color;
+      border-radius: 50%;
+    }
+
+    .page-header-text {
+      max-width: 300px;
+      font-size: 14px;
+      line-height: 1.43;
+      text-align: center;
+    }
+  }
+}
