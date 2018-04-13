@@ -96,4 +96,21 @@
 
 .feed {
   padding: 20px 12px;
+
+  .infinite-scroll {
+    content: " ";
+    height: 500px;
+  }
+}
+
+button {
+  background-color: $app-accent-color;
+  display: block;
+  margin: 20px auto;
+  width: 250px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 4px;
+  padding: 5px 0;
+  font-size: 14px;
 }

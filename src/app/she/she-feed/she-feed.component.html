@@ -11,12 +11,14 @@
     </mat-radio-group>
   </mat-toolbar>
 
-  <div class="feed">
-    <ng-container *ngFor="let day of feed$ | async">
+  <div class="feed" *ngIf="feed$ | async as feedData">
+    <ng-container *ngFor="let day of feedData">
       <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
       <ng-container *ngFor="let feedItem of day.data">
         <rum-she-feed-item [feedItem]="feedItem"></rum-she-feed-item>
       </ng-container>
     </ng-container>
+
+    <button mat-flat-button role="button" (click)="loadMoreData()">Show more</button>
   </div>
 </div>

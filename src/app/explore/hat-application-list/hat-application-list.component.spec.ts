@@ -5,6 +5,7 @@ import { CustomAngularMaterialModule } from '../../core/custom-angular-material.
 import { HatApplicationsService } from '../hat-applications.service';
 import { Observable } from 'rxjs/Observable';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '../../shared/shared.module';
 
 describe('HatApplicationListComponent', () => {
   let component: HatApplicationListComponent;
@@ -12,7 +13,7 @@ describe('HatApplicationListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ CustomAngularMaterialModule, RouterTestingModule ],
+      imports: [ SharedModule, CustomAngularMaterialModule, RouterTestingModule ],
       declarations: [ HatApplicationListComponent ],
       providers: [
         { provide: HatApplicationsService, useValue: { getApplicationList: () => Observable.of([]) } }

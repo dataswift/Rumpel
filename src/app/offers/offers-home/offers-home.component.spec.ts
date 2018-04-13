@@ -9,7 +9,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { DialogService } from '../../core/dialog.service';
 import { DataOfferService } from '../data-offer.service';
 import { Observable } from 'rxjs/Observable';
-import { MomentPipe } from '../../shared/pipes/moment.pipe';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { SharedModule } from '../../shared/shared.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('OffersHomeComponent', () => {
   let component: OffersHomeComponent;
@@ -17,12 +19,12 @@ describe('OffersHomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ SharedModule, NoopAnimationsModule, CustomAngularMaterialModule ],
       declarations: [
         OffersHomeComponent,
         OffersComponent,
         OffersAcceptedComponent,
-        OfferAcceptedStatsComponent,
-        MomentPipe
+        OfferAcceptedStatsComponent
       ],
       providers: [
         { provide: APP_CONFIG, useValue: { databuyer: { url: 'test.url' } } },
