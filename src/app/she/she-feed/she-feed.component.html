@@ -2,13 +2,13 @@
   <mat-toolbar color="primary" style="display: flex;">
     <h2>My Digital Life</h2>
 
-    <span class="fill-space"></span>
+    <!--<span class="fill-space"></span>-->
 
-    <mat-radio-group [value]="'all'" (change)="applyFilter($event)">
-      <mat-radio-button value="all" color="accent">All</mat-radio-button>
-      <mat-radio-button value="past" color="accent">Past</mat-radio-button>
-      <mat-radio-button value="future" color="accent">Future</mat-radio-button>
-    </mat-radio-group>
+    <!--<mat-radio-group [value]="'all'" (change)="applyFilter($event)">-->
+      <!--<mat-radio-button value="all" color="accent">All</mat-radio-button>-->
+      <!--<mat-radio-button value="past" color="accent">Past</mat-radio-button>-->
+      <!--<mat-radio-button value="future" color="accent">Future</mat-radio-button>-->
+    <!--</mat-radio-group>-->
   </mat-toolbar>
 
   <div class="feed" *ngIf="feed$ | async as feedData">

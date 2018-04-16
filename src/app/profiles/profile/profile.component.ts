@@ -6,14 +6,15 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ProfilesService } from '../profiles.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
 import { User } from '../../user/user.interface';
 
 import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { DialogService } from '../../core/dialog.service';
 import { FileUploadComponent } from '../../core/file-upload/file-upload.component';
 
@@ -30,6 +31,7 @@ const URL_REGEX = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9
   styleUrls: ['profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild('birdthdayDatepicker') birthdayPicker: MatDatepicker<any>;
   public values: Profile;
   public share: ProfileSharingConfig;
   public profilePhoto: any;
@@ -118,6 +120,10 @@ export class ProfileComponent implements OnInit {
   togglePrivacy([groupName, fieldName]): void {
     // A bit of a hack to force Angular change detection
     setTimeout(() => this.share[groupName][fieldName] = !this.share[groupName][fieldName]);
+  }
+
+  handleInputClick(): void {
+    this.birthdayPicker.open();
   }
 
 }

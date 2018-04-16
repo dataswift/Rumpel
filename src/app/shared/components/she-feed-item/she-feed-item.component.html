@@ -10,9 +10,16 @@
     <span class="card-header-action">{{feedItem.title.action}}</span>
   </mat-card-header>
 
-  <ng-container *ngIf="!feedItem.content.media && !feedItem.location">
+  <ng-container *ngIf="!feedItem.content.media">
     <mat-card-content class="no-image" *ngIf="feedItem.content">
       {{feedItem.content.text}}
+      <ng-container *ngIf="feedItem.location && feedItem.location.address">
+        <br><br>
+        <div>{{feedItem.location.address.name}}</div>
+        <div>{{feedItem.location.address.street}}</div>
+        <div>{{feedItem.location.address.city}}</div>
+        <div>{{feedItem.location.address.country}}</div>
+      </ng-container>
     </mat-card-content>
     <mat-card-footer>
       Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}

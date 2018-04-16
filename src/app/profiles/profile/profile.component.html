@@ -131,7 +131,8 @@
         <mat-form-field style="width: 49%;">
           <input matInput placeholder="Birthday" readonly name="birthday"
                  [matDatepicker]="birdthdayDatepicker"
-                 [(ngModel)]="values.personal.birthDate">
+                 [(ngModel)]="values.personal.birthDate"
+                 (click)="handleInputClick()">
           <mat-datepicker-toggle matSuffix [for]="birdthdayDatepicker"></mat-datepicker-toggle>
           <mat-datepicker #birdthdayDatepicker startView="year" disabled="false"></mat-datepicker>
           <rum-privacy-toggle-helper matSuffix
