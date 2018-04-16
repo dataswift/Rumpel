@@ -1,9 +1,3 @@
-<div class="offer-hero overlay">
-    <h2>Browse offers</h2>
-    <p>We’ve not got any offers available at the moment. See your accepted offers to check their statuses.</p>
-    <a (click)="showInfobox()">Learn more</a>
-</div>
-
 <div class="offers-container">
     <div *ngIf="offers.length == 0" class="no-offers-text">
       <h4 class="no-offers">{{ noOffersMessage }}</h4>

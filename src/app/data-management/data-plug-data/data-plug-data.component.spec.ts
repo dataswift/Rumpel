@@ -6,8 +6,8 @@ import { CustomAngularMaterialModule } from '../../core/custom-angular-material.
 import { DataPlugService } from '../data-plug.service';
 import { Observable } from 'rxjs/Observable';
 import { PageHeaderComponent } from '../../shared/components/page-header/page-header.component';
-import {ActivatedRoute} from '@angular/router';
-import {SheFeedService} from '../../dashboard/she-feed.service';
+import { ActivatedRoute } from '@angular/router';
+import { SheFeedService } from '../../she/she-feed.service';
 
 describe('DataPlugDataComponent', () => {
   let component: DataPlugDataComponent;

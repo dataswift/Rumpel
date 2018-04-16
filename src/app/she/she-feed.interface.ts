@@ -20,9 +20,10 @@ interface SheContent {
 interface SheLocation {
   geo?: { longitude: number; latitude: number; };
   address?: {
-    street: string;
-    city: string;
-    country: string;
+    name?: string;
+    street?: string;
+    city?: string;
+    country?: string;
   };
   tags: string[];
 }

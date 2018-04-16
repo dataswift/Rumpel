@@ -17,7 +17,7 @@ import { DataDebit, DataDebitValues } from '../../shared/interfaces/data-debit.i
 import { FileMetadataReq, FileMetadataRes } from '../../shared/interfaces/file.interface';
 import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../../shared/interfaces/bundle.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
-import { SheFeed } from '../../dashboard/she-feed.interface';
+import { SheFeed } from '../../she/she-feed.interface';
 
 @Injectable()
 export class HatApiService {
@@ -132,10 +132,17 @@ export class HatApiService {
     return this.authHttp.get<HatRecord<any>[]>(path, { params: queryParams });
   }
 
-  getSheRecords(namespace: string, limit: number = 20): Observable<SheFeed[]> {
-    const path = `${this.pathPrefix}/she/feed/${namespace}/feed`;
-    const queryParams = new HttpParams()
-      .set('take', limit.toString());
+  getSheRecords(endpoint?: string, since?: number, until?: number): Observable<SheFeed[]> {
+    const path = `${this.pathPrefix}/she/feed${endpoint ? '/' + endpoint : ''}`;
+    let queryParams = new HttpParams();
+
+    if (since) {
+      queryParams = queryParams.set('since', since.toString());
+    }
+
+    if (until) {
+      queryParams = queryParams.set('until', until.toString());
+    }
 
     return this.authHttp.get<SheFeed[]>(path, { params: queryParams });
   }

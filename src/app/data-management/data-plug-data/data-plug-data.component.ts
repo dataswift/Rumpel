@@ -1,9 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, UrlSegment } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import { DataPlugService } from '../data-plug.service';
-import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 
 @Component({
   selector: 'rum-data-plug-data',

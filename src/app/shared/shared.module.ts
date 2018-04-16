@@ -24,6 +24,8 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
 import { UnbundlePipe } from './pipes/unbundle.pipe';
 import { SheFeedItemComponent } from './components/she-feed-item/she-feed-item.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
+import { DatetimePipe } from './pipes/datetime.pipe';
+import { GraphicPageHeaderComponent } from './components/graphic-page-header/graphic-page-header.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
@@ -36,13 +38,15 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
                   NotableComponent, LocationNotableComponent, PresignImgUrlPipe,
                   PageHeaderComponent,
                   UnbundlePipe,
-                  SheFeedItemComponent ],
+                  SheFeedItemComponent,
+                  DatetimePipe,
+                  GraphicPageHeaderComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
-             TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
+             TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe, DatetimePipe,
              TreeViewComponent,
-             OutsideClickDirective, StickDirective, SpinnerComponent,
+             OutsideClickDirective, StickDirective, SpinnerComponent, GraphicPageHeaderComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
              UnbundlePipe, SheFeedItemComponent ]
 })

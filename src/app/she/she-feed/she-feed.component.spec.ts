@@ -16,7 +16,10 @@ describe('SheFeedComponent', () => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
       declarations: [ SheFeedComponent, SheFeedItemComponent, MarkdownToHtmlPipe, MomentPipe ],
-      providers: [ { provide: SheFeedService, useValue: { getInitData: () => null, data$: Observable.of([]) } } ]
+      providers: [ { provide: SheFeedService, useValue: {
+        getInitData: () => Observable.of([]),
+        getInitFeed: () => Observable.of([])
+      }}]
     })
     .compileComponents();
   }));

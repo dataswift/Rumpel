@@ -12,6 +12,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TileProfileComponent } from './tile-profile.component';
 import { ProfilesService } from '../profiles.service';
 import { Observable } from 'rxjs/Observable';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 
 const PROFILE_MOCK_DATA = {
   dateCreated: 0,
@@ -81,6 +82,7 @@ describe('TileProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ CustomAngularMaterialModule ],
       declarations: [ TileProfileComponent ],
       providers: [
         { provide: ProfilesService, useValue: {

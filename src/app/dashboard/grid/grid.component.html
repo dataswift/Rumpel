@@ -16,10 +16,10 @@
                       [info]="'Your words are your memories! Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists - all in one place, and lets you decide what is private to yourself and what to share!'"></rum-tile-header>
   </rum-tile-notables>
 
-  <rum-account-status-tile class="grid-item" *ngIf="appIsNative">
-    <rum-tile-header [title]="'Account'"
-                      [info]="'This tile lets you know how much storage space you have left on your HAT'"></rum-tile-header>
-  </rum-account-status-tile>
+  <!--<rum-account-status-tile class="grid-item" *ngIf="appIsNative">-->
+    <!--<rum-tile-header [title]="'Account'"-->
+                      <!--[info]="'This tile lets you know how much storage space you have left on your HAT'"></rum-tile-header>-->
+  <!--</rum-account-status-tile>-->
 
   <rum-tile-profile class="grid-item">
     <rum-tile-header [title]="'My personal data'"
@@ -67,10 +67,6 @@
     </div>
   </rum-tile-social>
 
-  <rum-tile-fitbit *ngIf="showFitbitTile" class="grid-item"></rum-tile-fitbit>
-
-  <rum-tile-monzo *ngIf="showMonzoTile" class="grid-item"></rum-tile-monzo>
-
   <rum-tile-weather class="grid-item">
     <rum-tile-header [title]="'Weather'"
                       [info]="'What is the weather like today? Look at the sky or use this widget ;)'"></rum-tile-header>
@@ -81,11 +77,4 @@
     <rum-tile-header [title]="'Data debits'"
                       [info]="'List of data debits created on the HAT.'"></rum-tile-header>
   </rum-tile-data-debit>
-
-  <rum-tile-coming-soon class="grid-item col-xs-12 col-sm-6 col-md-6 col-lg-3 "
-                    [bkgImage]="'assets/images/finance_bg.png'"
-                    [icon]="'bank'" [title]="'Finance'"></rum-tile-coming-soon>
-
-
-
 </div>

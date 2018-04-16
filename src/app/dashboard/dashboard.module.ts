@@ -25,8 +25,6 @@ import { TileDataDebitComponent } from './tile-data-debit/tile-data-debit.compon
 import { WeatherService } from './weather.service';
 import { DataDebitService } from './data-debits.service';
 import { TileComingSoonComponent } from './tile-coming-soon/tile-coming-soon.component';
-import { SheFeedComponent } from './she-feed/she-feed.component';
-import { SheFeedService } from './she-feed.service';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 
 @NgModule({
@@ -46,9 +44,8 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
     TileHeaderComponent,
     TileWeatherComponent,
     TileDataDebitComponent,
-    AccountStatusTileComponent,
-    SheFeedComponent
+    AccountStatusTileComponent
   ],
-  providers: [ WeatherService, DataDebitService, SheFeedService ]
+  providers: [ WeatherService, DataDebitService ]
 })
 export class DashboardModule {}

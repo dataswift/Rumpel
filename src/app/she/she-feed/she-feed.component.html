@@ -1,0 +1,24 @@
+<div class="she-feed" #feedContainer>
+  <mat-toolbar color="primary" style="display: flex;">
+    <h2>My Digital Life</h2>
+
+    <!--<span class="fill-space"></span>-->
+
+    <!--<mat-radio-group [value]="'all'" (change)="applyFilter($event)">-->
+      <!--<mat-radio-button value="all" color="accent">All</mat-radio-button>-->
+      <!--<mat-radio-button value="past" color="accent">Past</mat-radio-button>-->
+      <!--<mat-radio-button value="future" color="accent">Future</mat-radio-button>-->
+    <!--</mat-radio-group>-->
+  </mat-toolbar>
+
+  <div class="feed" *ngIf="feed$ | async as feedData">
+    <ng-container *ngFor="let day of feedData">
+      <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
+      <ng-container *ngFor="let feedItem of day.data">
+        <rum-she-feed-item [feedItem]="feedItem"></rum-she-feed-item>
+      </ng-container>
+    </ng-container>
+
+    <button mat-flat-button role="button" (click)="loadMoreData()">Show more</button>
+  </div>
+</div>

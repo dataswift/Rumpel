@@ -3,6 +3,7 @@ import 'rxjs/add/operator/mergeMap'; // flatMap aliased to mergeMap
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/defaultIfEmpty';
 import 'rxjs/add/operator/timeoutWith';
