@@ -91,7 +91,7 @@ export class DataPlugService {
         this.expires = moment().add(10, 'minutes');
 
         this.plugs.forEach(plug => {
-          if (plug.name === 'Locations') {
+          if (plug.name === 'location') {
             this.locationsSvc.checkTableExists().subscribe(isActive => {
               plug.active = isActive;
               this._dataplugs$.next(this.plugs);
