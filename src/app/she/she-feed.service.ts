@@ -23,7 +23,8 @@ interface DayGroupedSheFeed {
 export class SheFeedService {
   private _feed$: ReplaySubject<DayGroupedSheFeed[]> = <ReplaySubject<DayGroupedSheFeed[]>>new ReplaySubject(1);
   private _subfeed$: ReplaySubject<SheFeed[]> = <ReplaySubject<SheFeed[]>>new ReplaySubject(1);
-  private store: { [endpoint: string]: { since: number, data: { day: string; data: SheFeed[] }[] } } = {};
+  private store: { since: number, data: { day: string; data: SheFeed[] }[] };
+  private subfeedStore: { [endpoint: string]: SheFeed[] } = {}
 
   constructor(private hat: HatApiService,
               private authSvc: AuthService) {
@@ -35,46 +36,43 @@ export class SheFeedService {
     this.hat.getSheRecords('', defaultSince)
       .map(this.groupSheFeedByDay)
       .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => {
-        this.store['main'] = { since: defaultSince, data: feedItems };
-        this._feed$.next(this.store['main'].data);
+        this.store = { since: defaultSince, data: feedItems };
+        this._feed$.next(this.store.data);
       });
 
     return this._feed$.asObservable();
   }
 
   getMoreData(): void {
-    const until = this.store['main'].since;
+    const until = this.store.since - 1;
     const since = Math.round(subDays(until * 1000, 30) / 1000);
 
     this.hat.getSheRecords('', since, until)
       .map(this.groupSheFeedByDay)
       .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => {
-        this.store['main'] = {
+        this.store = {
           since: since,
-          data: this.store['main'].data.concat(feedItems)
+          data: this.store.data.concat(feedItems)
         };
 
-        this._feed$.next(this.store['main'].data);
+        this._feed$.next(this.store.data);
       });
   }
 
-  getInitData(endpoint: string = ''): Observable<SheFeed[]> {
-    // if (!this.store[endpoint] || (!endpoint && !this.store['main'])) {
-    //   const defaultSince = Math.round(subDays(Date.now(), 14) / 1000);
-    //   const defaultUntil = Math.round(addDays(Date.now(), 7) / 1000);
-    //
-    //   this.hat.getSheRecords(endpoint, defaultSince, defaultUntil)
-    //     .subscribe((feedItems: SheFeed[]) => {
-    //       this.store[endpoint || 'main'] = {
-    //         since: defaultSince,
-    //         data: feedItems
-    //       };
-    //
-    //       this._subfeed$.next(this.store[endpoint || 'main'].data)
-    //     });
-    // } else {
-    //   this._subfeed$.next(this.store[endpoint || 'main'].data);
-    // }
+  getFeedBySource(endpoint: string): Observable<SheFeed[]> {
+    if (!this.subfeedStore[endpoint]) {
+      const defaultSince = Math.round(subDays(Date.now(), 60) / 1000);
+      const defaultUntil = Math.round(addDays(Date.now(), 30) / 1000);
+
+      this.hat.getSheRecords(endpoint, defaultSince, defaultUntil)
+        .subscribe((feedItems: SheFeed[]) => {
+          this.subfeedStore[endpoint] = feedItems;
+
+          this._subfeed$.next(this.subfeedStore[endpoint])
+        });
+    } else {
+      this._subfeed$.next(this.subfeedStore[endpoint]);
+    }
 
     return this._subfeed$.asObservable();
   }

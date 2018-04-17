@@ -7,9 +7,9 @@ import { SheFeed } from '../../she/she-feed.interface';
 const PROVIDER_ENDPOINT_MAP = {
   spotify: 'spotify/feed',
   calendar: 'calendar/google/events',
-  facebook: 'facebook/feed',
+  facebook: 'facebook',
   twitter: 'twitter/tweets',
-  fitbit: 'fitbit/activity'
+  fitbit: 'fitbit'
 };
 
 @Component({
@@ -25,7 +25,7 @@ export class DataPlugFeedComponent implements OnInit {
 
   ngOnInit() {
     this.feed$ = this.route.parent.params.flatMap(routeParams => {
-      return this.sheSvc.getInitData(PROVIDER_ENDPOINT_MAP[routeParams['provider']]);
+      return this.sheSvc.getFeedBySource(PROVIDER_ENDPOINT_MAP[routeParams['provider']]);
     });
   }
 

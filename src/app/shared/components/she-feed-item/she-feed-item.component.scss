@@ -69,6 +69,9 @@
         .feed-item-overlay-content {
           background-color: transparent;
           border: none;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          white-space: pre-wrap;
           padding: 0;
           font-family: $font-standard;
           color: whitesmoke;

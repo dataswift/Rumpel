@@ -7,10 +7,10 @@
   <mat-card-header>
     <h4 class="card-header-title">{{feedItem.title.text}}</h4>
     <span class="flex-spacer"></span>
-    <span class="card-header-action">{{feedItem.title.action}}</span>
+    <!--<span class="card-header-action">{{feedItem.title.action}}</span>-->
   </mat-card-header>
 
-  <ng-container *ngIf="!feedItem.content.media">
+  <ng-container *ngIf="feedItem.content && !feedItem.content.media">
     <mat-card-content class="no-image" *ngIf="feedItem.content">
       {{feedItem.content.text}}
       <ng-container *ngIf="feedItem.location && feedItem.location.address">
@@ -26,7 +26,7 @@
     </mat-card-footer>
   </ng-container>
 
-  <ng-container *ngIf="feedItem.content.media && feedItem.content.media.length > 0">
+  <ng-container *ngIf="feedItem.content && feedItem.content.media && feedItem.content.media.length > 0">
     <mat-card-content class="single-image"
                       [ngStyle]="{ 'background-image': 'url(' + feedItem.content.media[0].url + ')' }">
       <div class="feed-item-overlay">

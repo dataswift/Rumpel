@@ -18,7 +18,7 @@ describe('DataPlugFeedComponent', () => {
       declarations: [ DataPlugFeedComponent, MomentPipe, MarkdownToHtmlPipe ],
       providers: [
         { provide: ActivatedRoute, useValue: { parent: { params: Observable.of({ provider: 'test' }) }} },
-        { provide: SheFeedService, useValue: { filteredBy$: () => Observable.of([]), getInitData: () => Observable.of(null) } }
+        { provide: SheFeedService, useValue: { getFeedBySource: () => Observable.of([]) } }
       ]
     })
     .compileComponents();
