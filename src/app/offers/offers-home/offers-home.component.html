@@ -1,16 +1,16 @@
-<div class="offers">
-  <nav class="offers-nav">
-    <a (click)="currentPage = 'available'" [class.current]="currentPage == 'available'">
-      <span class="mobile-count">{{ offers.length }}</span>
-      Available <span class="desktop-count">({{ offers.length }})</span>
-    </a>
-    <div class="separator"></div>
-    <a (click)="currentPage = 'accepted'" [class.current]="currentPage == 'accepted'">
-      <span class="mobile-count">{{ acceptedOffers.length }}</span>
-      Accepted <span class="desktop-count">({{ acceptedOffers.length }})</span>
-    </a>
-  </nav>
+<rum-graphic-page-header title="Browse offers"
+                         headline="We’ve not got any offers available at the moment. See your accepted offers to check their statuses."
+                         matIcon="local_activity">
+</rum-graphic-page-header>
 
-  <rum-offers *ngIf="currentPage == 'available'" [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noOffers"></rum-offers>
-  <rum-offers-accepted *ngIf="currentPage == 'accepted'" [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noAcceptedOffers"></rum-offers-accepted>
+<div class="offers">
+  <mat-tab-group class="app-details-tab-group">
+    <mat-tab label="Available ({{offers.length}})">
+      <rum-offers [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noOffers"></rum-offers>
+    </mat-tab>
+
+    <mat-tab label="Accepted ({{acceptedOffers.length}})">
+      <rum-offers-accepted [offers]="offers" [acceptedOffers]="acceptedOffers" [noOffersMessage]="noAcceptedOffers"></rum-offers-accepted>
+    </mat-tab>
+  </mat-tab-group>
 </div>

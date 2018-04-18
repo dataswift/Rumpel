@@ -52,13 +52,56 @@
     }
 
     .mat-card-content {
-      margin: 0;
-      padding: 20px 15px;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      font-size: 13px;
-      color: $hat-body-text;
-      line-height: 1.54;
+      position: relative;
+
+      .feed-item-overlay {
+        background-color: $image-overlay-color;
+        padding: 20px 15px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .feed-item-overlay-content {
+          background-color: transparent;
+          border: none;
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          white-space: pre-wrap;
+          padding: 0;
+          font-family: $font-standard;
+          color: whitesmoke;
+          font-size: 13px;
+          line-height: 1.54;
+        }
+
+        .feed-item-overlay-footer {
+          color: whitesmoke;
+          font-size: 13px;
+          font-style: italic;
+        }
+      }
+
+      &.no-image {
+        margin: 0;
+        padding: 20px 15px;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        font-size: 13px;
+        color: $hat-body-text;
+        line-height: 1.54;
+      }
+
+      &.single-image {
+        background: center center no-repeat;
+        background-size: cover;
+        padding: 0;
+        min-height: 200px;
+      }
     }
 
     .mat-card-footer {

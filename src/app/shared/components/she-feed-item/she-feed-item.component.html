@@ -7,12 +7,32 @@
   <mat-card-header>
     <h4 class="card-header-title">{{feedItem.title.text}}</h4>
     <span class="flex-spacer"></span>
-    <span class="card-header-action">{{feedItem.title.action}}</span>
+    <!--<span class="card-header-action">{{feedItem.title.action}}</span>-->
   </mat-card-header>
-  <mat-card-content *ngIf="feedItem.content">
-    {{feedItem.content.text}}
-  </mat-card-content>
-  <mat-card-footer>
-    Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}
-  </mat-card-footer>
+
+  <ng-container *ngIf="feedItem.content && !feedItem.content.media">
+    <mat-card-content class="no-image" *ngIf="feedItem.content">
+      {{feedItem.content.text}}
+      <ng-container *ngIf="feedItem.location && feedItem.location.address">
+        <br><br>
+        <div>{{feedItem.location.address.name}}</div>
+        <div>{{feedItem.location.address.street}}</div>
+        <div>{{feedItem.location.address.city}}</div>
+        <div>{{feedItem.location.address.country}}</div>
+      </ng-container>
+    </mat-card-content>
+    <mat-card-footer>
+      Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}
+    </mat-card-footer>
+  </ng-container>
+
+  <ng-container *ngIf="feedItem.content && feedItem.content.media && feedItem.content.media.length > 0">
+    <mat-card-content class="single-image"
+                      [ngStyle]="{ 'background-image': 'url(' + feedItem.content.media[0].url + ')' }">
+      <div class="feed-item-overlay">
+        <pre class="feed-item-overlay-content">{{feedItem.content.text}}</pre>
+        <div class="feed-item-overlay-footer">Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}</div>
+      </div>
+    </mat-card-content>
+  </ng-container>
 </mat-card>

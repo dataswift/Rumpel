@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
 import { HatApplication } from '../hat-application.interface';
 import { Observable } from 'rxjs/Observable';
-import { SheFeed } from '../../dashboard/she-feed.interface';
+import { SheFeed } from '../../she/she-feed.interface';
 
 @Component({
   selector: 'rum-hat-application-details',

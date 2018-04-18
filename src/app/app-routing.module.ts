@@ -25,7 +25,7 @@ import { DataPlugDataComponent } from './data-management/data-plug-data/data-plu
 import { ProfileComponent } from './profiles/profile/profile.component';
 import { OffersHomeComponent } from './offers/offers-home/offers-home.component';
 import { GridComponent } from './dashboard/grid/grid.component';
-import { SheFeedComponent } from './dashboard/she-feed/she-feed.component';
+import { SheFeedComponent } from './she/she-feed/she-feed.component';
 import { NotablesViewComponent } from './notables/notables-view/notables-view.component';
 import { MashupsComponent } from './mashups/mashups/mashups.component';
 import { MyDayComponent } from './mashups/my-day/my-day.component';

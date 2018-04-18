@@ -35,11 +35,11 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.4.4',
-  name: 'Rumpel',
+  version: '3.5.0.3',
+  name: 'RumpelStaging',
   tokenApp: 'rumpel',
   tokenExpiryTime: 3,
-  supportedDomains: ['.hubofallthings.net', '.hat.direct'],
+  supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,
   dex: {
@@ -49,7 +49,7 @@ export const configuration: AppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubofallthings.com',
+    url: 'https://databuyer.hubat.net',
     pathPrefix: '/api/v2'
   },
   facebook: {

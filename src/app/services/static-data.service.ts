@@ -25,7 +25,8 @@ export class StaticDataService {
   private store: { [source: string]: Array<Array<any>> } = {
     facebook: [],
     twitter: [],
-    fitbit: []
+    fitbit: [],
+    spotify: []
   };
 
   constructor(private hat: HatApiService) { }

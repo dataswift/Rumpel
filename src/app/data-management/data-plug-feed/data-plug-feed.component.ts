@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SheFeedService } from '../../dashboard/she-feed.service';
+import { SheFeedService } from '../../she/she-feed.service';
 import { Observable } from 'rxjs/Observable';
-import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import { SheFeed } from '../../dashboard/she-feed.interface';
+import { SheFeed } from '../../she/she-feed.interface';
+
+const PROVIDER_ENDPOINT_MAP = {
+  spotify: 'spotify/feed',
+  calendar: 'calendar/google/events',
+  facebook: 'facebook',
+  twitter: 'twitter/tweets',
+  fitbit: 'fitbit'
+};
 
 @Component({
   selector: 'rum-data-plug-feed',
@@ -18,15 +25,8 @@ export class DataPlugFeedComponent implements OnInit {
 
   ngOnInit() {
     this.feed$ = this.route.parent.params.flatMap(routeParams => {
-      if (routeParams['provider'] === 'spotify') {
-        return this.sheSvc.getNewDataFormat(routeParams['provider']);
-      } else {
-        return this.sheSvc.filteredBy$(routeParams['provider'].replace('calendar', 'google') || '')
-          .map(feedItems => feedItems.map(item => item.data));
-      }
+      return this.sheSvc.getFeedBySource(PROVIDER_ENDPOINT_MAP[routeParams['provider']]);
     });
-
-    this.sheSvc.getInitData(1000);
   }
 
 }
