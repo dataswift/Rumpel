@@ -31,7 +31,11 @@
     <label for="hatPass" hidden></label>
     <input id="hatPass" type="password" class="hat-pass-input" name="hat-pass-input"
            placeholder="Enter HAT password" #hatPass
+           (focus)="hideErrorMessage()"
            (keyup.enter)="login(hatPass)"/>
+    <div *ngIf="passwordError" class="error alert alert-danger">
+      Incorrect password. Please try again.
+    </div>
   </div>
 
   <div>
