@@ -22,6 +22,7 @@ export class LoginNativeComponent implements OnInit {
   public hatName: string;
   public hatDomain: string;
   public rememberMe: boolean;
+  public passwordError = false;
   public error: string;
   private redirectPath: string;
 
@@ -63,6 +64,10 @@ export class LoginNativeComponent implements OnInit {
     this.location.back();
   }
 
+  hideErrorMessage(): void {
+    this.passwordError = false;
+  }
+
   login(hatPass) {
     this.storageSvc.rememberMe = this.rememberMe;
     this.authSvc.login(this.hatName, hatPass.value).subscribe(
@@ -71,7 +76,7 @@ export class LoginNativeComponent implements OnInit {
       },
       err => {
         console.log('Login failed! Reason: ', err);
-        this.error = 'Incorrect password. Please try again.';
+        this.passwordError = true;
       });
   }
 
