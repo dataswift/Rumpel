@@ -16,9 +16,9 @@ import { DataPlugService } from '../../data-management/data-plug.service';
 import { Notable } from '../../shared/interfaces/notable.class';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { DexOfferClaimRes } from '../../shared/interfaces/dex-offer-claim-res.interface';
-import { DataDebit } from '../../shared/interfaces/data-debit.interface';
-import {Observable} from 'rxjs/Observable';
-import {DataPlug} from '../../shared/interfaces/data-plug.interface';
+import { DataDebit } from '../../data-management/data-debit.interface';
+import { Observable } from 'rxjs/Observable';
+import { DataPlug } from '../../shared/interfaces/data-plug.interface';
 
 @Component({
   selector: 'rum-share-belt',

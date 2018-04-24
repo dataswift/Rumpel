@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import { DataDebit, DataDebitValues } from '../../shared/interfaces/data-debit.interface';
+import { DataDebit, DataDebitValues } from '../../data-management/data-debit.interface';
 import { FileMetadataReq, FileMetadataRes } from '../../shared/interfaces/file.interface';
 import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../../shared/interfaces/bundle.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
@@ -21,7 +21,7 @@ import { SheFeed } from '../../she/she-feed.interface';
 
 @Injectable()
 export class HatApiService {
-  private pathPrefix = '/api/v2';
+  private pathPrefix = '/api/v2.6';
   private appNamespace: string;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,

@@ -35,7 +35,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.5.0.3',
+  version: '3.6.0.0',
   name: 'RumpelStaging',
   tokenApp: 'rumpel',
   tokenExpiryTime: 3,
@@ -79,6 +79,9 @@ export const configuration: AppConfig = {
 
       { display: 'Explore', icon: 'touch_app', link: '/explore', dataType: '', disable: '',
         description: 'Explore all the apps available in the HAT ecosystem.' },
+
+      { display: 'Data Debits', icon: 'swap_horiz', link: '/data-debit', dataType: '', disable: '',
+        description: 'See all of the data debits setup on the HAT' },
 
       { display: 'Notables', icon: 'border_color', link: '/notables', dataType: '', disable: '',
       description: `Your words are your memories!

@@ -70,7 +70,7 @@ export class NotablesService extends BaseDataService<Notable> {
         } else {
           return this.hat.getDataDebit(offerClaim.dataDebitId)
             .map((dataDebit: DataDebit) => {
-              offerClaim.confirmed = dataDebit.bundles[0].enabled;
+              offerClaim.confirmed = dataDebit.active;
 
               return offerClaim;
             });
