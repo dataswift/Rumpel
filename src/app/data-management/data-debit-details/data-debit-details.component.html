@@ -1,0 +1,64 @@
+<div class="app-details" *ngIf="dataDebitDetails$ | async as dataDebit">
+  <div class="app-details-header">
+    <mat-toolbar class="app-details-header-toolbar">
+      <span class="flex-spacer"></span>
+      <mat-icon class="app-details-close">more_horiz</mat-icon>
+    </mat-toolbar>
+
+    <mat-card class="app-details-header-card">
+      <div class="app-logo-wrapper">
+        <img [src]="dataDebit.requestClientLogoUrl || '/assets/icons/hat-permissions-generic.svg'" height="100" class="img img-responsive app-logo" />
+      </div>
+      <h3 class="app-details-header-title">{{dataDebit.dataDebitKey}}</h3>
+      <div class="app-details-header-headline">PLACEHOLDER HEADLINE</div>
+      <div class="debit-status-indicator" [class.active]="dataDebit.active">
+        <mat-icon>{{dataDebit.active ? 'fiber_manual_record' : 'radio_button_unchecked'}}</mat-icon>
+        {{ dataDebit.active ? 'Active' : 'In-active' }}
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="app-details-content">
+    <mat-card class="app-details-general">
+      <mat-card-content>
+        <h5 class="app-details-heading">Description</h5>
+        <p class="app-details-description">{{dataDebit.dataDebitKey}}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="app-details-general">
+      <mat-card-content>
+        <h5 class="app-details-heading">Purpose</h5>
+        <div class="app-details-description">
+          {{dataDebit.dataDebitKey}}
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="app-details-general">
+      <mat-card-content>
+        <h5 class="app-details-heading">Requirements</h5>
+        <div class="app-details-description" *ngFor="let endpoint of dataDebit.permissionsLatest.bundle.bundle | unbundle">
+          <h5 class="app-details-heading indented" >{{endpoint.title}}</h5>
+            <ul class="card-list">
+              <li *ngFor="let field of endpoint.fields">{{field}}</li>
+            </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="debit-origin">
+      <div class="card-img-wrapper">
+        <img [src]="dataDebit.requestClientLogoUrl || '/assets/icons/hat-permissions-generic.svg'" class="card-img" height="60" width="60" />
+      </div>
+
+      <mat-card-content>
+        <h5 class="app-details-heading">{{dataDebit.requestClientName || 'Not available'}}</h5>
+        <div class="app-details-description">
+          {{dataDebit.dataDebitKey}}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+

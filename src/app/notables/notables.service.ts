@@ -16,7 +16,8 @@ import { DexApiService } from '../services/dex-api.service';
 import { AuthService } from '../core/services/auth.service';
 
 import { APP_CONFIG, AppConfig } from '../app.config';
-import { Notable, DataDebit } from '../shared/interfaces';
+import { Notable } from '../shared/interfaces';
+import { DataDebit } from '../data-management/data-debit.interface';
 import { NotablesServiceMeta } from '../shared/interfaces/notables-service-meta.interface';
 import { User } from '../user/user.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';

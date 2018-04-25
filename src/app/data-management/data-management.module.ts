@@ -12,6 +12,7 @@ import { DataPlugFeedComponent } from './data-plug-feed/data-plug-feed.component
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { DataPlugStaticComponent } from './data-plug-static/data-plug-static.component';
 import { DataDebitListComponent } from './data-debit-list/data-debit-list.component';
+import { DataDebitDetailsComponent } from './data-debit-details/data-debit-details.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { DataDebitListComponent } from './data-debit-list/data-debit-list.compon
     DataPlugDataComponent,
     DataPlugFeedComponent,
     DataPlugStaticComponent,
-    DataDebitListComponent
+    DataDebitListComponent,
+    DataDebitDetailsComponent
   ],
   providers: [ DataPlugService ],
   exports: [ DataPlugDataComponent ]
