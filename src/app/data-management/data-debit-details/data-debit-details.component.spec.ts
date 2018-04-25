@@ -300,7 +300,13 @@ describe('DataDebitDetailsComponent', () => {
       declarations: [ DataDebitDetailsComponent, UnbundlePipe ],
       providers: [
         { provide: ActivatedRoute, useValue: { params: Observable.of({ id: 'test' }) } },
-        { provide: HatApiService, useValue: { getDataDebit: () => Observable.of(TEST_DATA_DEBIT) } }
+        { provide: HatApiService, useValue: { getDataDebit: (testId: string) => {
+          if (testId === 'test') {
+            return Observable.of(TEST_DATA_DEBIT);
+          } else {
+            return Observable.throw('Given ID does not exist');
+          }
+        } } }
         ]
     })
     .compileComponents();
@@ -312,7 +318,7 @@ describe('DataDebitDetailsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', async() => {
     expect(component).toBeTruthy();
   });
 });

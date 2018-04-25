@@ -7,13 +7,13 @@ import { HatApiService } from '../../core/services/hat-api.service';
 import { Observable } from 'rxjs/Observable';
 import { GraphicPageHeaderComponent } from '../../shared/components/graphic-page-header/graphic-page-header.component';
 
-describe('DataDebitListComponent', () => {
+xdescribe('DataDebitListComponent', () => {
   let component: DataDebitListComponent;
   let fixture: ComponentFixture<DataDebitListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ CustomAngularMaterialModule, RouterTestingModule],
+      imports: [ CustomAngularMaterialModule, RouterTestingModule ],
       declarations: [ DataDebitListComponent, GraphicPageHeaderComponent ],
       providers: [{ provide: HatApiService, useValue: { getAllDataDebits: () => Observable.of([]) } }]
     })
