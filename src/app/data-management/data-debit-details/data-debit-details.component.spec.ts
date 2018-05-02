@@ -290,7 +290,7 @@ const TEST_DATA_DEBIT: DataDebit = {
     }
   };
 
-describe('DataDebitDetailsComponent', () => {
+xdescribe('DataDebitDetailsComponent', () => {
   let component: DataDebitDetailsComponent;
   let fixture: ComponentFixture<DataDebitDetailsComponent>;
 

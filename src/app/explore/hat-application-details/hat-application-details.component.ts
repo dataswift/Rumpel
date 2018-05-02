@@ -20,11 +20,11 @@ export class HatApplicationDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.appDetails$ = this.activatedRoute.params.flatMap(pathParams => {
-      const appName = pathParams['appName'];
+      const appId = pathParams['appId'];
 
       return Observable.forkJoin(
-        this.hatAppSvc.getApplicationDetails(appName),
-        this.hatAppSvc.getApplicationData(appName)
+        this.hatAppSvc.getApplicationDetails(appId),
+        this.hatAppSvc.getApplicationData(appId)
       )
         .map((results: [HatApplication, SheFeed[]]) => {
           if (results[1].length > 0) {

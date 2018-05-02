@@ -5,7 +5,7 @@ export interface HatApplication {
   application: HatApplicationContent;
   setup: boolean;
   active: boolean;
-  needsUpdating: boolean;
+  needsUpdating?: boolean;
 }
 
 export interface HatApplicationContent {

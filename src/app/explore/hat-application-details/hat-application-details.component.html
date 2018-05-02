@@ -34,7 +34,8 @@
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="app-details-general">
+        <mat-card class="app-details-general"
+                  *ngIf="app.application.info.graphics.screenshots && app.application.info.graphics.screenshots.length > 0">
           <mat-card-content>
             <h5 class="app-details-heading">Screenshots</h5>
             <div class="app-details-screenshots">
