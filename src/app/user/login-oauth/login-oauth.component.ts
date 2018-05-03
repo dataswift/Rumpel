@@ -76,10 +76,6 @@ export class LoginOauthComponent implements OnInit {
     window.location.href = this.route.snapshot.queryParams['fallback'];
   }
 
-  toggleCardExpansion(endpoint): void {
-    endpoint.expanded = !endpoint.expanded;
-  }
-
   private legacyLogin(): void {
     this.authSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
       .subscribe((url: string) => window.location.href = url);
