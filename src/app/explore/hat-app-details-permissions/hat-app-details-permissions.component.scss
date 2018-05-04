@@ -1,0 +1,18 @@
+@import '../../style/branding';
+
+.user-actions {
+  background-color: $hat-background-color;
+  width: 100%;
+
+  button {
+    display: block;
+    width: 250px;
+    margin: 20px auto;
+    cursor: pointer;
+    background-color: $app-accent-color;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 5px 0;
+  }
+}

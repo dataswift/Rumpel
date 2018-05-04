@@ -2,7 +2,8 @@
   <div class="app-details-header">
     <mat-toolbar class="app-details-header-toolbar">
       <span class="flex-spacer"></span>
-      <mat-icon class="app-details-close" (click)="closeComponentView()">clear</mat-icon>
+      <mat-icon [matMenuTriggerFor]="moreActionsMenu" class="app-details-close" *ngIf="app.setup">more_horiz</mat-icon>
+      <mat-icon (click)="closeComponentView()" class="app-details-close" *ngIf="!app.setup">clear</mat-icon>
     </mat-toolbar>
 
     <mat-card class="app-details-header-card">
@@ -55,3 +56,10 @@
     </mat-tab-group>
   </div>
 </div>
+
+<mat-menu #moreActionsMenu="matMenu">
+  <a mat-menu-item class="actions-menu-item"
+     [routerLink]="['permissions']">
+    <mat-icon>phonelink_lock</mat-icon>App permissions</a>
+  <button mat-menu-item class="actions-menu-item">Cancel</button>
+</mat-menu>

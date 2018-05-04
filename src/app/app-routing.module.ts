@@ -37,6 +37,7 @@ import { LocationsComponent } from './locations/locations/locations.component';
 import { SocialComponent } from './social/social/social.component';
 import { HatApplicationListComponent } from './explore/hat-application-list/hat-application-list.component';
 import { HatApplicationDetailsComponent } from './explore/hat-application-details/hat-application-details.component';
+import { HatAppDetailsPermissionsComponent } from './explore/hat-app-details-permissions/hat-app-details-permissions.component';
 import { DataDebitListComponent } from './data-management/data-debit-list/data-debit-list.component';
 import { DataDebitDetailsComponent } from './data-management/data-debit-details/data-debit-details.component';
 
@@ -77,7 +78,8 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'explore', component: HatApplicationListComponent },
-          { path: 'explore/:appId', component: HatApplicationDetailsComponent }
+          { path: 'explore/:appId', component: HatApplicationDetailsComponent },
+          { path: 'explore/:appId/permissions', component: HatAppDetailsPermissionsComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
