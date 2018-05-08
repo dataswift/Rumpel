@@ -227,10 +227,19 @@ export class HatApiService {
     return this.authHttp.get<DataDebitValues>(path);
   }
 
-  updateDataDebit(debitId: string, action: string): Observable<DataDebit> {
-    const path = `${this.pathPrefix}/data-debit/${debitId}/${action}`;
+  enableDataDebit(debitId: string): Observable<DataDebit> {
+    const path = `${this.pathPrefix}/data-debit/${debitId}/enable`;
 
     return this.authHttp.get<DataDebit>(path);
+  }
+
+  disableDataDebit(debitId: string, atPeriodEnd: boolean): Observable<any> {
+    const path = `${this.pathPrefix}/data-debit/${debitId}/disable`;
+
+    const queryParams = new HttpParams()
+      .set('atPeriodEnd', atPeriodEnd.toString());
+
+    return this.authHttp.get<any>(path, { params: queryParams });
   }
 
   getFileMetadata(fileId: string): Observable<FileMetadataRes> {

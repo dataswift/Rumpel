@@ -17,10 +17,15 @@ export class DataDebitDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.dataDebitDetails$ = this.activatedRoute.params.flatMap(pathParams => {
-      const dataDebitId = pathParams['id'];
+      const debitId = pathParams['id'];
 
-      return this.hat.getDataDebit(dataDebitId);
+      return this.hat.getDataDebit(debitId);
     });
+  }
+
+  disableDataDebit(id: string): void {
+    this.dataDebitDetails$ = this.hat.disableDataDebit(id, false)
+      .flatMap(_ => this.hat.getDataDebit(id));
   }
 
 }

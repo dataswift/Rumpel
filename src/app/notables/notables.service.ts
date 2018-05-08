@@ -112,7 +112,7 @@ export class NotablesService extends BaseDataService<Notable> {
           return Observable.throw(error);
         }
       })
-      .flatMap((offerClaim: DexOfferClaimRes) => this.hat.updateDataDebit(offerClaim.dataDebitId, 'enable'))
+      .flatMap((offerClaim: DexOfferClaimRes) => this.hat.enableDataDebit(offerClaim.dataDebitId))
   }
 
   coerceType(rawNotable: HatRecord<any>): HatRecord<Notable> {

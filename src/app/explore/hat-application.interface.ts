@@ -6,6 +6,7 @@ export interface HatApplication {
   setup: boolean;
   active: boolean;
   needsUpdating?: boolean;
+  mostRecentData: string;
 }
 
 export interface HatApplicationContent {

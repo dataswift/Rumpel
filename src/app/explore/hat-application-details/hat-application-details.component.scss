@@ -162,6 +162,10 @@
   min-width: 400px;
   text-decoration: none;
 
+  .mat-icon {
+    color: $app-dark-tone;
+  }
+
   &:focus {
     outline: none;
   }

@@ -2,7 +2,7 @@
   <div class="app-details-header">
     <mat-toolbar class="app-details-header-toolbar">
       <span class="flex-spacer"></span>
-      <mat-icon class="app-details-close">more_horiz</mat-icon>
+      <mat-icon [matMenuTriggerFor]="actionsMenu" class="app-details-close">more_horiz</mat-icon>
     </mat-toolbar>
 
     <mat-card class="app-details-header-card">
@@ -68,5 +68,13 @@
 
     <a class="privacy-policy" [href]="dataDebit.permissionsLatest.termsUrl" target="_blank">Privacy policy</a>
   </div>
-</div>
 
+  <mat-menu #actionsMenu="matMenu">
+    <button mat-menu-item class="actions-menu-item"
+            *ngIf="dataDebit.active"
+            (click)="disableDataDebit(dataDebit.dataDebitKey)">
+      <mat-icon>pause_circle_outline</mat-icon>Make debit inactive
+    </button>
+    <button mat-menu-item class="actions-menu-item">Cancel</button>
+  </mat-menu>
+</div>

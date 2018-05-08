@@ -74,7 +74,7 @@ export class DataOfferService {
 
   claim(offerId: string): Observable<DataDebit> {
     return this.claimOfferWithDataBuyer(offerId)
-      .flatMap((claim: Claim) => this.hatSvc.updateDataDebit(claim.dataDebitId, 'enable'))
+      .flatMap((claim: Claim) => this.hatSvc.enableDataDebit(claim.dataDebitId))
       .do(_ => this.fetchUserAwareOfferList(true));
   }
 

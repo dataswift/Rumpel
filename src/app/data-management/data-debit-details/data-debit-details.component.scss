@@ -172,3 +172,24 @@
     color: $app-accent-color;
   }
 }
+
+.actions-menu-item {
+  color: $app-dark-tone;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  font-weight: 500;
+  min-width: 400px;
+
+  .mat-icon {
+    color: $app-dark-tone;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid $app-light-background-color;
+  }
+}
+
