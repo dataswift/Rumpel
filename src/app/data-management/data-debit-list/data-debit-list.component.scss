@@ -34,6 +34,10 @@
       color: $text-dark;
       font-size: 13px;
       line-height: 1.23;
+
+      &:nth-child(3) {
+        font-style: italic;
+      }
     }
   }
 }
@@ -101,6 +105,7 @@
 
   .mat-card-content {
     @include flex-container(column);
+    min-width: 300px;
   }
 
   .app-link-wrapper {
