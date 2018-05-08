@@ -1,0 +1,7 @@
+<ng-container *ngIf="hatApp$ | async as app">
+  <rum-hat-application-permissions [app]="app.application"></rum-hat-application-permissions>
+
+  <div class="user-actions">
+    <button mat-flat-button role="button" (click)="navigateBack()">Okey</button>
+  </div>
+</ng-container>

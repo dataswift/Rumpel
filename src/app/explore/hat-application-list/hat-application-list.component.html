@@ -13,7 +13,7 @@
 
 <div class="app-list">
   <mat-card *ngFor="let app of hatApp$ | async">
-    <a [routerLink]="app.application.info.name.toLowerCase()" class="app-link-wrapper">
+    <a [routerLink]="app.application.id" class="app-link-wrapper">
       <mat-card-content>
         <img [src]="app.application.info.graphics.logo.normal" class="img img-responsive app-logo" height="60" width="60" />
         <div class="app-description">

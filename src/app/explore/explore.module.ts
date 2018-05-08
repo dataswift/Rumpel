@@ -5,6 +5,7 @@ import { HatApplicationsService } from './hat-applications.service';
 import { HatApplicationListComponent } from './hat-application-list/hat-application-list.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { HatApplicationDetailsComponent } from './hat-application-details/hat-application-details.component';
+import { HatAppDetailsPermissionsComponent } from './hat-app-details-permissions/hat-app-details-permissions.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { HatApplicationDetailsComponent } from './hat-application-details/hat-ap
   ],
   declarations: [
     HatApplicationListComponent,
-    HatApplicationDetailsComponent
+    HatApplicationDetailsComponent,
+    HatAppDetailsPermissionsComponent
   ],
   providers: [ HatApplicationsService ],
   exports: [  ]

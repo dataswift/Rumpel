@@ -69,6 +69,11 @@
       font-size: 24px;
       font-weight: bold;
       color: $app-dark-tone;
+      width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
     }
 
     .app-details-header-headline {
@@ -78,46 +83,46 @@
       line-height: 1.38;
     }
 
-    .mat-button {
-      border: 1px solid $app-accent-color;
-      text-decoration: none;
-      margin-bottom: 30px;
-      padding: 5px 20px;
-      border-radius: 4px;
-      text-transform: uppercase;
+    .debit-status-indicator {
+      border: solid 1px $app-dark-tone;
+      padding: 10px 25px;
       font-size: 14px;
-      font-weight: bold;
-      color: white;
+      margin-bottom: 30px;
 
-      &.require-setup {
-        /deep/ .mat-button-wrapper {
-          color: $app-accent-color;
-        }
-      }
-
-      &:not(.require-setup) {
-        background-color: $app-accent-color;
+      &.active {
+        border: solid 1px green;
+        color: green;
       }
 
       .mat-icon {
-        margin-right: 15px;
+        vertical-align: middle;
+        margin-right: 5px;
       }
     }
   }
 }
 
 .app-details-content {
-  padding: 0 12px;
+  padding: 30px 12px;
+
+  .debit-valitity-interval {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 13px;
+    color: $app-dark-tone;
+    margin-bottom: 30px;
+
+    .mat-icon {
+      vertical-align: bottom;
+      margin: 0 10px;
+    }
+  }
 
   .mat-card {
     margin: 15px auto;
     max-width: 500px;
     box-shadow: none;
     border-radius: 4px;
-
-    &.app-details-general {
-      max-width: 900px;
-    }
   }
 
   .app-details-heading {
@@ -125,32 +130,46 @@
     color: $app-dark-tone;
     font-size: 14px;
     margin-bottom: 10px;
+
+    &.indented {
+      text-indent: 15px;
+    }
   }
 
   .app-details-description {
     color: $hat-body-text;
     font-size: 13px;
     line-height: 1.54;
+
+    &-formatted {
+      white-space: pre-wrap;
+      color: $hat-body-text;
+      font-size: 13px;
+      line-height: 1.54;
+    }
   }
 
-  .app-details-screenshots {
-    margin: 30px 0;
-    height: 600px;
-    overflow-x: auto;
+  .debit-origin {
+    display: flex;
+    align-items: center;
 
-    .img-wrapper {
-      display: inline;
-      white-space: nowrap;
-
-      &:not(:first-child):not(:last-child) {
-        margin: 0 10px;
-      }
+    .card-img-wrapper {
+      margin-right: 20px;
 
       img {
-        display: inline;
-        height: 100%;
+        border-radius: 50%;
       }
     }
+  }
+
+  .privacy-policy {
+    display: block;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    color: $app-accent-color;
   }
 }
 
@@ -160,7 +179,6 @@
   letter-spacing: 0.6px;
   font-weight: 500;
   min-width: 400px;
-  text-decoration: none;
 
   .mat-icon {
     color: $app-dark-tone;
@@ -175,40 +193,3 @@
   }
 }
 
-/deep/ .mat-menu-panel {
-  max-width: none;
-}
-
-/deep/ .mat-tab-header {
-  width: intrinsic;
-  margin: 30px auto;
-  border-bottom: none;
-
-  .mat-tab-labels {
-    justify-content: center;
-
-    .mat-tab-label {
-      opacity: .5;
-      padding: 0 4px;
-
-      &:not(.mat-tab-disabled):focus {
-        background-color: transparent;
-      }
-
-      .mat-tab-label-content {
-        text-transform: uppercase;
-        font-size: 12px;
-      }
-    }
-
-    .mat-tab-label-active {
-      opacity: .8;
-
-      .mat-tab-label-content {
-        color: $app-dark-tone;
-        font-weight: bold;
-        font-size: 13px;
-      }
-    }
-  }
-}

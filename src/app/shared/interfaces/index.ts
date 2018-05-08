@@ -11,7 +11,6 @@ export { Event } from './event.interface';
 export { Post } from './post.interface';
 export { Profile } from './profile.interface';
 export { User } from '../../user/user.interface';
-export { DataDebit } from './data-debit.interface';
 export { MusicListen } from './music-listen.interface';
 export { Node } from './node.class';
 export { ExpandedTime } from './expanded-time.class';

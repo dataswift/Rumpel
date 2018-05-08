@@ -16,7 +16,8 @@ import { DexApiService } from '../services/dex-api.service';
 import { AuthService } from '../core/services/auth.service';
 
 import { APP_CONFIG, AppConfig } from '../app.config';
-import { Notable, DataDebit } from '../shared/interfaces';
+import { Notable } from '../shared/interfaces';
+import { DataDebit } from '../data-management/data-debit.interface';
 import { NotablesServiceMeta } from '../shared/interfaces/notables-service-meta.interface';
 import { User } from '../user/user.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
@@ -70,7 +71,7 @@ export class NotablesService extends BaseDataService<Notable> {
         } else {
           return this.hat.getDataDebit(offerClaim.dataDebitId)
             .map((dataDebit: DataDebit) => {
-              offerClaim.confirmed = dataDebit.bundles[0].enabled;
+              offerClaim.confirmed = dataDebit.active;
 
               return offerClaim;
             });
@@ -111,7 +112,7 @@ export class NotablesService extends BaseDataService<Notable> {
           return Observable.throw(error);
         }
       })
-      .flatMap((offerClaim: DexOfferClaimRes) => this.hat.updateDataDebit(offerClaim.dataDebitId, 'enable'))
+      .flatMap((offerClaim: DexOfferClaimRes) => this.hat.enableDataDebit(offerClaim.dataDebitId))
   }
 
   coerceType(rawNotable: HatRecord<any>): HatRecord<Notable> {

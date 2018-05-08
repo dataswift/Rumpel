@@ -10,7 +10,7 @@ import { groupBy } from 'lodash';
 
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { DataDebit } from '../shared/interfaces/data-debit.interface';
+import { DataDebit } from '../data-management/data-debit.interface';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { HttpBackendClient } from '../core/services/http-backend-client.service';
 
@@ -74,7 +74,7 @@ export class DataOfferService {
 
   claim(offerId: string): Observable<DataDebit> {
     return this.claimOfferWithDataBuyer(offerId)
-      .flatMap((claim: Claim) => this.hatSvc.updateDataDebit(claim.dataDebitId, 'enable'))
+      .flatMap((claim: Claim) => this.hatSvc.enableDataDebit(claim.dataDebitId))
       .do(_ => this.fetchUserAwareOfferList(true));
   }
 

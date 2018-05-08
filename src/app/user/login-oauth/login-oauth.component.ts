@@ -31,7 +31,7 @@ export class LoginOauthComponent implements OnInit {
     const redirect = this.route.snapshot.queryParams['redirect'];
 
     if (name && redirect) {
-      this.authSvc.getApplicationDetails(name, redirect)
+      this.authSvc.getApplicationDetails(name.toLowerCase(), redirect)
         .subscribe(
       (hatApp: HatApplication) => {
 
@@ -74,10 +74,6 @@ export class LoginOauthComponent implements OnInit {
 
   declineTerms(): void {
     window.location.href = this.route.snapshot.queryParams['fallback'];
-  }
-
-  toggleCardExpansion(endpoint): void {
-    endpoint.expanded = !endpoint.expanded;
   }
 
   private legacyLogin(): void {

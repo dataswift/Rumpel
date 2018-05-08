@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { Observable } from 'rxjs/Observable';
-import { DataDebit } from '../../shared/interfaces/data-debit.interface';
+import { DataDebit } from '../data-debit.interface';
 
 @Component({
   selector: 'rum-data-debit-list',

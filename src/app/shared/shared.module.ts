@@ -26,6 +26,7 @@ import { SheFeedItemComponent } from './components/she-feed-item/she-feed-item.c
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { DatetimePipe } from './pipes/datetime.pipe';
 import { GraphicPageHeaderComponent } from './components/graphic-page-header/graphic-page-header.component';
+import { HatApplicationPermissionsComponent } from './components/hat-application-permissions/hat-application-permissions.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
@@ -40,7 +41,8 @@ import { GraphicPageHeaderComponent } from './components/graphic-page-header/gra
                   UnbundlePipe,
                   SheFeedItemComponent,
                   DatetimePipe,
-                  GraphicPageHeaderComponent ],
+                  GraphicPageHeaderComponent,
+                  HatApplicationPermissionsComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
@@ -48,6 +50,6 @@ import { GraphicPageHeaderComponent } from './components/graphic-page-header/gra
              TreeViewComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, GraphicPageHeaderComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
-             UnbundlePipe, SheFeedItemComponent ]
+             UnbundlePipe, SheFeedItemComponent, HatApplicationPermissionsComponent ]
 })
 export class SharedModule {}

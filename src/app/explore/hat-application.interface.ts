@@ -5,7 +5,8 @@ export interface HatApplication {
   application: HatApplicationContent;
   setup: boolean;
   active: boolean;
-  needsUpdating: boolean;
+  needsUpdating?: boolean;
+  mostRecentData: string;
 }
 
 export interface HatApplicationContent {
@@ -29,8 +30,10 @@ interface HatApplicationInfo {
   headline: string;
   description: HatApplicationDescription;
   dataPreview: SheFeed[];
+  dataUsePurpose: string;
   graphics: HatApplicationGraphics;
   published: boolean;
+  termsUrl: string;
 }
 
 interface HatApplicationDescription {
@@ -54,15 +57,33 @@ interface HatApplicationGraphicsSize {
 
 interface HatApplicationPermissions {
   rolesGranted: { role: string; detail: string; }[];
-  dataRequired?: { bundle: BundleStructure; };
+  dataRequired?: HatApplicationDataRequired;
+  dataRetrieved?: BundleStructure;
+}
+
+interface HatApplicationDataRequired {
+  bundle: BundleStructure;
+  startDate: string;
+  endDate: string;
+  rolling: boolean;
 }
 
 interface HatApplicationSetup {
+  iosUrl?: string;
+  onboarding: HatApplicationOnboarding[];
   kind: string;
+}
+
+interface HatApplicationOnboarding {
+  title: string;
+  illustration: { normal: string; };
+  description: string;
 }
 
 interface HatApplicationStatus {
   compatibility: string;
+  expectedStatus: number;
   recentDataCheckEndpoint: string;
+  statusUrl: string;
   kind: string;
 }

@@ -2,7 +2,8 @@
   <div class="app-details-header">
     <mat-toolbar class="app-details-header-toolbar">
       <span class="flex-spacer"></span>
-      <mat-icon class="app-details-close" (click)="closeComponentView()">clear</mat-icon>
+      <mat-icon [matMenuTriggerFor]="moreActionsMenu" class="app-details-close" *ngIf="app.setup">more_horiz</mat-icon>
+      <mat-icon (click)="closeComponentView()" class="app-details-close" *ngIf="!app.setup">clear</mat-icon>
     </mat-toolbar>
 
     <mat-card class="app-details-header-card">
@@ -34,7 +35,8 @@
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="app-details-general">
+        <mat-card class="app-details-general"
+                  *ngIf="app.application.info.graphics.screenshots && app.application.info.graphics.screenshots.length > 0">
           <mat-card-content>
             <h5 class="app-details-heading">Screenshots</h5>
             <div class="app-details-screenshots">
@@ -54,3 +56,10 @@
     </mat-tab-group>
   </div>
 </div>
+
+<mat-menu #moreActionsMenu="matMenu">
+  <a mat-menu-item class="actions-menu-item"
+     [routerLink]="['permissions']">
+    <mat-icon>phonelink_lock</mat-icon>App permissions</a>
+  <button mat-menu-item class="actions-menu-item">Cancel</button>
+</mat-menu>
