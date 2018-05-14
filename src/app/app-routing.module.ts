@@ -77,9 +77,9 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
-          { path: 'explore', component: HatApplicationListComponent },
-          { path: 'explore/:appId', component: HatApplicationDetailsComponent },
-          { path: 'explore/:appId/permissions', component: HatAppDetailsPermissionsComponent }
+          { path: 'explore/:appKind', component: HatApplicationListComponent },
+          { path: 'explore/:appKind/:appId', component: HatApplicationDetailsComponent },
+          { path: 'explore/:appKind/:appId/permissions', component: HatAppDetailsPermissionsComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [

@@ -77,7 +77,7 @@ export const configuration: AppConfig = {
       { display: 'Redeem Offers', icon: 'local_offer', link: '/offers', dataType: '', disable: '',
       description: 'Allow access to your data in exchange for cash, services or vouchers.' },
 
-      { display: 'Explore', icon: 'touch_app', link: '/explore', dataType: '', disable: '',
+      { display: 'Explore', icon: 'touch_app', link: '/explore/App', dataType: '', disable: '',
         description: 'Explore all the apps available in the HAT ecosystem.' },
 
       { display: 'Data Debits', icon: 'swap_horiz', link: '/data-debit', dataType: '', disable: '',
@@ -92,7 +92,7 @@ export const configuration: AppConfig = {
       { display: 'My Mashups', icon: 'layers', link: '/mashups/myday', dataType: '', disable: '',
       description: 'See mashups of your data' },
 
-      { display: 'My Data Plugs', icon: 'settings_input_component', link: '/dataplugs', dataType: '', disable: '',
+      { display: 'My Data Plugs', icon: 'settings_input_component', link: '/explore/DataPlug', dataType: '', disable: '',
       description: `Data comes into your HAT via data plugs.
       Click here to see what data plugs are available, and what data plugs are already connected.` }
     ],

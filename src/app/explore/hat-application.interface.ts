@@ -68,7 +68,8 @@ interface HatApplicationDataRequired {
   rolling: boolean;
 }
 
-interface HatApplicationSetup {
+export interface HatApplicationSetup {
+  url?: string;
   iosUrl?: string;
   onboarding: HatApplicationOnboarding[];
   kind: string;

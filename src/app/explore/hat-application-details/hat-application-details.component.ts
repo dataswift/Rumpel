@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
-import { HatApplication } from '../hat-application.interface';
+import { HatApplication, HatApplicationSetup } from '../hat-application.interface';
 import { Observable } from 'rxjs/Observable';
 import { SheFeed } from '../../she/she-feed.interface';
+import { AuthService } from '../../core/services/auth.service';
+import {User} from '../../user/user.interface';
 
 @Component({
   selector: 'rum-hat-application-details',
@@ -15,6 +17,7 @@ export class HatApplicationDetailsComponent implements OnInit {
   public appDetails$: Observable<HatApplication>;
 
   constructor(private activatedRoute: ActivatedRoute,
+              private authSvc: AuthService,
               private location: Location,
               private hatAppSvc: HatApplicationsService) { }
 
@@ -34,6 +37,12 @@ export class HatApplicationDetailsComponent implements OnInit {
           return results[0];
         })
     });
+  }
+
+  generateHatLoginLink(id: string, setup: HatApplicationSetup): Observable<string> {
+    const redirectUrl = setup.url || setup.iosUrl || '';
+
+    return this.authSvc.user$.map((user: User) => `${user.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}`);
   }
 
   closeComponentView(): void {

@@ -9,20 +9,17 @@ export class HatApplicationsService {
 
   constructor(private hatSvc: HatApiService) { }
 
-  getApplicationList(): Observable<HatApplication[]> {
-    return this.hatSvc.getApplicationList()
-      .map((apps: HatApplication[]) => apps.filter(app => app.application.kind.kind === 'App'));
+  getApplicationList(kind: string = null): Observable<HatApplication[]> {
+    if (kind) {
+      return this.hatSvc.getApplicationList()
+        .map((apps: HatApplication[]) => apps.filter((app: HatApplication) => app.application.kind.kind === kind));
+    } else {
+      return this.hatSvc.getApplicationList();
+    }
   }
 
   getApplicationDetails(application: string): Observable<HatApplication> {
-    return this.hatSvc.getApplicationById(application)
-      .flatMap((app: HatApplication) => {
-        if (app.application.kind.kind === 'App') {
-          return Observable.of(app);
-        } else {
-          return Observable.throw('Requested resource is not an app.');
-        }
-      });
+    return this.hatSvc.getApplicationById(application);
   }
 
   getApplicationData(application: string): Observable<SheFeed[]> {
