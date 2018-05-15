@@ -1,33 +1,21 @@
-import { Component, OnInit, Input, Output, Inject, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, Inject, EventEmitter } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../../../app.config';
-import { Subscription } from 'rxjs/Subscription';
-import { DataPlugService } from '../../../data-management/data-plug.service';
 import { Notable } from '../../interfaces/notable.class';
 import { HatRecord } from '../../interfaces/hat-record.interface';
-import { DataPlug } from '../../interfaces/data-plug.interface';
 
 @Component({
   selector: 'rum-notable',
   templateUrl: './notable.component.html',
   styleUrls: ['./notable.component.scss']
 })
-export class NotableComponent implements OnInit, OnDestroy {
+export class NotableComponent implements OnInit {
   @Input() notable: HatRecord<Notable>;
   @Input() modifiable = false;
   @Output() change: EventEmitter<{ action: string; notable: HatRecord<Notable>; }> = new EventEmitter();
 
-  private notablesPlugs: DataPlug[] = [];
-  private sub: Subscription;
-
-  constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private dataPlugSvc: DataPlugService) { }
+  constructor(@Inject(APP_CONFIG) private config: AppConfig) { }
 
   ngOnInit() {
-    this.sub = this.dataPlugSvc.notablesEnabledPlugs$.subscribe(plugs => this.notablesPlugs = plugs);
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 
   edit() {
@@ -45,10 +33,10 @@ export class NotableComponent implements OnInit, OnDestroy {
   getLogo(name: string): string {
     if (name === 'phata' || name === 'hatters') {
       return '/assets/icons/hatters-icon.png';
+    } else if (name === 'facebook' || name === 'twitter') {
+      return `/assets/icons/${name}-icon.png`
     } else {
-      const foundPlug = this.notablesPlugs.find(plug => plug.name.toLowerCase() === name);
-
-      return foundPlug ? foundPlug.illustrationUrl : '/assets/images/help.svg';
+      return '/assets/images/help.svg';
     }
   }
 

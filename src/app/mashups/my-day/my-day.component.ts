@@ -10,9 +10,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SocialService } from '../../social/social.service';
 import { TwitterService } from '../../social/twitter.service';
-import { DataPlugService } from '../../data-management/data-plug.service';
 import { LocationsService } from '../../locations/locations.service';
-import { Post, Tweet, Event } from '../../shared/interfaces/index';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { mergeWith, groupBy } from 'lodash';
@@ -21,8 +19,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { FacebookEventsService } from '../../dimensions/facebook-events.service';
 import { GoogleEventsService } from '../../dimensions/google-events.service';
-import { FitbitActivitySummaryService } from '../../fitbit/services/fitbit-activity-summary.service';
-import { MonzoService } from '../../monzo/monzo.service';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 
@@ -55,21 +51,10 @@ export class MyDayComponent implements OnInit, OnDestroy {
               private socialSvc: SocialService,
               private twitterSvc: TwitterService,
               private notablesSvc: NotablesService,
-              private fitbitSvc: FitbitActivitySummaryService,
-              private monzoSvc: MonzoService,
-              private dataplugsSvc: DataPlugService,
               private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
-    this.dataplugs = this.dataplugsSvc.dataplugs$.subscribe(plugs => {
-      for (let i = 0; i < plugs.length; i++) {
-        if (plugs[i].name === 'location') {
-          this.hasLocationData = true;
-        }
-      }
-    });
-
     this.selectedTime = moment().format('YYYY-MM-DD');
 
     this.dataStreamSub = Observable.merge(

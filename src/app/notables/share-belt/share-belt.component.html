@@ -9,7 +9,7 @@
 <div class="belt">
   <div class="content">
     <p>Post publicly:</p>
-    <ul *ngIf="offerClaimIsConfirmed && !displayMessage">
+    <ul *ngIf="notablesAppEnabled && !displayMessage">
       <li (click)="toggleSharing({ name: 'phata', active: true })" [class.selected]="currentNotable.shared_on.indexOf('phata') > -1">
         <img src="/assets/icons/hatters-icon.png"
              class="img img-responsive share-service"
@@ -30,9 +30,9 @@
     {{displayMessage}}
   </div>
 
-  <div class="message" *ngIf="!offerClaimIsConfirmed && !displayMessage">
-    Notables data offer needs to be claimed in order to share this notable on other services.
-    <span class="claim" (click)="claimNotablesOffer()">Claim it.</span>
+  <div class="message" *ngIf="!notablesAppEnabled && !displayMessage">
+    Notables App needs to be activated in order to share this notable on other services.
+    <a class="claim" [href]="generateHatLoginLink()">Activate now.</a>
   </div>
 
   <div class="error-message" *ngIf="parentError">

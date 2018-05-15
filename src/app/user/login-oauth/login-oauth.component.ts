@@ -31,12 +31,14 @@ export class LoginOauthComponent implements OnInit {
     const redirect = this.route.snapshot.queryParams['redirect'];
 
     if (name && redirect) {
-      this.authSvc.getApplicationDetails(name.toLowerCase(), redirect)
+      const safeName = name.toLowerCase();
+
+      this.authSvc.getApplicationDetails(safeName, redirect)
         .subscribe(
       (hatApp: HatApplication) => {
 
         if (hatApp.active && !hatApp.needsUpdating) {
-          this.buildRedirect(name);
+          this.buildRedirect(safeName);
         } else {
           this.hatApp = hatApp.application;
         }

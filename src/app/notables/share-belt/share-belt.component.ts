@@ -8,15 +8,12 @@
 
 import { Component, OnInit, Input, EventEmitter, Output, Inject } from '@angular/core';
 
-import { NotablesService } from '../notables.service';
 import { DialogService } from '../../core/dialog.service';
 import { DialogBoxComponent } from '../../core/dialog-box/dialog-box.component';
 import { HatApplicationsService } from '../../explore/hat-applications.service';
 
 import { Notable } from '../../shared/interfaces/notable.class';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { DexOfferClaimRes } from '../../shared/interfaces/dex-offer-claim-res.interface';
-import { DataDebit } from '../../data-management/data-debit.interface';
 import { Observable } from 'rxjs/Observable';
 import { HatApplication } from '../../explore/hat-application.interface';
 
@@ -32,11 +29,10 @@ export class ShareBeltComponent implements OnInit {
   @Output() notableUpdated: EventEmitter<Notable> = new EventEmitter<Notable>();
   public dataPlugError: string;
   public displayMessage: string;
-  public offerClaimIsConfirmed: boolean;
+  public notablesAppEnabled: boolean;
   public shareOptions: Observable<HatApplication[]>;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private notablesSvc: NotablesService,
               private dialogSvc: DialogService,
               private hatAppSvc: HatApplicationsService) { }
 
@@ -44,10 +40,8 @@ export class ShareBeltComponent implements OnInit {
     this.dataPlugError = null;
 
     this.shareOptions = this.hatAppSvc.notablesEnabledPlugs$;
-
-    this.notablesSvc.getNotablesOfferClaimStatus().subscribe((offerClaim: DexOfferClaimRes) => {
-      this.offerClaimIsConfirmed = offerClaim.confirmed;
-    });
+    this.hatAppSvc.getApplicationDetails('notables')
+      .subscribe((app: HatApplication) => this.notablesAppEnabled = app.active);
   }
 
   toggleSharing(provider) {
@@ -74,28 +68,9 @@ export class ShareBeltComponent implements OnInit {
     }
   }
 
-  claimNotablesOffer(): void {
-    this.displayMessage = 'Processing... please wait.';
-    this.notablesSvc.setupNotablesService().subscribe({
-      next: (dataDebit: DataDebit) => {
-        this.offerClaimIsConfirmed = true;
-        this.displayMessage = null;
-      },
-      error: error => {
-        this.dialogSvc.createDialog<DialogBoxComponent>(DialogBoxComponent, {
-          title: 'Something went wrong',
-          message: 'There was a problem setting up your notables service. Please report the problem and try again by refreshing this page.',
-          buttons: [{
-            title: 'Report the Problem',
-            link: `http://forum.hatcommunity.org/c/hat-users`
-          }]
-        });
+  generateHatLoginLink(): string {
+    const currentUrl = window.location.href;
 
-        this.displayMessage = null;
-      }});
-  }
-
-  confirmNotablesDataDebit(): void {
-    this.displayMessage = 'Confirming the data debit';
+    return `https://${this.hatDomain}/#/hatlogin?name=notables&redirect=${currentUrl}`;
   }
 }
