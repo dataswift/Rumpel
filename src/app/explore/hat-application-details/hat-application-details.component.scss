@@ -78,8 +78,8 @@
       line-height: 1.38;
     }
 
-    .mat-button {
-      border: 1px solid $app-accent-color;
+    .app-details-status {
+      border: none;
       text-decoration: none;
       margin-bottom: 30px;
       padding: 5px 20px;
@@ -89,19 +89,34 @@
       font-weight: bold;
       color: white;
 
-      &.require-setup {
-        /deep/ .mat-button-wrapper {
-          color: $app-accent-color;
-        }
+      &.running {
+        border: 1px solid $app-accent-color;
+        background-color: transparent;
+        color: $app-accent-color;
       }
-
-      &:not(.require-setup) {
+      &.fetching {
+        color: $app-accent-color;
+      }
+      &.failing {
+        background-color: #E36682;
+      }
+      &.untouched {
         background-color: $app-accent-color;
       }
 
       .mat-icon {
-        margin-right: 15px;
+        margin-right: 5px;
       }
+    }
+
+    .app-details-error {
+      margin-bottom: 20px;
+      width: 80%;
+      color: #E36682;
+      font-size: 13px;
+      line-height: 1.38;
+      letter-spacing: 0.5px;
+      text-align: center;
     }
   }
 }

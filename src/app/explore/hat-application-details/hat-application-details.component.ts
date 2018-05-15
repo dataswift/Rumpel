@@ -15,6 +15,7 @@ import {User} from '../../user/user.interface';
 })
 export class HatApplicationDetailsComponent implements OnInit {
   public appDetails$: Observable<HatApplication>;
+  public appStatus: 'running' | 'fetching' | 'failing' | 'untouched';
 
   constructor(private activatedRoute: ActivatedRoute,
               private authSvc: AuthService,
@@ -29,6 +30,18 @@ export class HatApplicationDetailsComponent implements OnInit {
         this.hatAppSvc.getApplicationDetails(appId),
         this.hatAppSvc.getApplicationData(appId)
       )
+        .do((results: [HatApplication, SheFeed[]]) => {
+          const { setup, active, mostRecentData } = results[0];
+          if (setup && active && mostRecentData) {
+            this.appStatus = 'running';
+          } else if (setup && !active && !mostRecentData) {
+            this.appStatus = 'fetching';
+          } else if (setup && !active && mostRecentData) {
+            this.appStatus = 'failing';
+          } else {
+            this.appStatus = 'untouched';
+          }
+        })
         .map((results: [HatApplication, SheFeed[]]) => {
           if (results[1].length > 0) {
             results[0].application.info.dataPreview = results[1];

@@ -23,13 +23,10 @@
           <div class="app-headline">{{ app.application.info.headline }}</div>
         </div>
         <div class="app-link-action">View app</div>
-        <ng-container *ngIf="!app.setup || app.needsUpdating else appActivityIcons">
-          <mat-icon class="app-status-icon">add_circle_outline</mat-icon>
-        </ng-container>
-
-        <ng-template #appActivityIcons>
-          <mat-icon class="app-status-icon">{{ app.active ? 'check_circle' : 'report_problem' }}</mat-icon>
-        </ng-template>
+        <mat-icon class="app-status-icon"
+                  [class.error]="app.setup && !app.active && app.mostRecentData">
+          {{ statusIcon(app.setup, app.active, app.mostRecentData) }}
+        </mat-icon>
       </mat-card-content>
     </a>
   </mat-card>

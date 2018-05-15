@@ -13,18 +13,18 @@
       <h3 class="app-details-header-title">{{app.application.info.name}}</h3>
       <div class="app-details-header-headline">{{app.application.info.headline}}</div>
 
-      <a mat-button class="require-setup"
-         [href]="generateHatLoginLink(app.application.id, app.application.setup) | async">
-        <ng-container *ngIf="app.setup && app.active && !app.needsUpdating else appSetupVariants">
-          <mat-icon>input</mat-icon>
-          Go to app
-        </ng-container>
+      <a mat-button [ngClass]="['app-details-status', appStatus]"
+         [href]="generateHatLoginLink(app.application.id, app.application.setup) | async"
+         [ngSwitch]="appStatus">
+        <ng-container *ngSwitchCase="'running'"><mat-icon>check_circle</mat-icon>Active</ng-container>
+        <ng-container *ngSwitchCase="'fetching'"><mat-icon>sync</mat-icon>Fetching...</ng-container>
+        <ng-container *ngSwitchCase="'failing'"><mat-icon>sync_problem</mat-icon>Reconnect</ng-container>
+        <ng-container *ngSwitchCase="'untouched'"><mat-icon>add_circle_outline</mat-icon>Connect</ng-container>
       </a>
 
-      <ng-template #appSetupVariants>
-        <mat-icon>{{app.setup ? 'report_problem' : 'add_circle_outline'}}</mat-icon>
-        {{app.setup ? 'Reconnect app' : 'Connect app'}}
-      </ng-template>
+      <div class="app-details-error" *ngIf="appStatus === 'failing'">
+        ERROR: App disconnected. Please click reconnect to re-establish connection.
+      </div>
     </mat-card>
   </div>
 
