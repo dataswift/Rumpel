@@ -16,11 +16,11 @@
              [class.on]="currentNotable.shared_on.indexOf('phata') > -1">
         <span>PHATA</span>
       </li>
-      <li *ngFor="let provider of shareOptions | async" (click)="toggleSharing(provider)" [class.selected]="currentNotable.shared_on.indexOf(provider.name.toLowerCase()) > -1">
-        <img [src]="provider.illustrationUrl"
+      <li *ngFor="let provider of shareOptions | async" (click)="toggleSharing(provider)" [class.selected]="currentNotable.shared_on.indexOf(provider.application.id) > -1">
+        <img [src]="provider.application.info.graphics.logo.normal"
              class="img img-responsive share-service"
-             [class.on]="currentNotable.shared_on.indexOf(provider.name.toLowerCase()) > -1">
-        <span>{{ provider.name }}</span>
+             [class.on]="currentNotable.shared_on.indexOf(provider.application.id) > -1">
+        <span>{{ provider.application.id }}</span>
       </li>
     </ul>
   </div>

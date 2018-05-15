@@ -6,7 +6,7 @@ import { HeaderComponent } from '../header/header.component';
 import { SideMenuComponent } from '../side-menu/side-menu.component';
 import { CustomAngularMaterialModule } from '../custom-angular-material.module';
 import { APP_CONFIG } from '../../app.config';
-import { DataPlugService } from '../../data-management/data-plug.service';
+import { HatApplicationsService } from '../../explore/hat-applications.service';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { Observable } from 'rxjs/Observable';
 import { DialogService } from '../dialog.service';
@@ -24,7 +24,7 @@ describe('PrivateSpaceComponent', () => {
       declarations: [ PrivateSpaceComponent, HeaderComponent, SideMenuComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: { menuItems: { private: [] }}},
-        { provide: DataPlugService, useValue: { inactiveDataplugs$: Observable.of([]) } },
+        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: Observable.of([]) } },
         { provide: DataOfferService, useValue: { offers$: Observable.of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } },
         { provide: DialogService, useValue: {} },
         { provide: AuthService, useValue: { user$: Observable.of({}) } },

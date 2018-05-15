@@ -39,8 +39,9 @@
     padding-right: 30px;
     width: 150px;
 
-    span{
+    span {
       opacity: 0.3;
+      text-transform: capitalize;
     }
 
     &:before{

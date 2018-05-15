@@ -14,7 +14,7 @@
       <div class="app-details-header-headline">{{app.application.info.headline}}</div>
 
       <a mat-button [ngClass]="['app-details-status', appStatus]"
-         [href]="generateHatLoginLink(app.application.id, app.application.setup) | async"
+         [href]="generateHatLoginLink(app.application.id, app.application.setup)"
          [ngSwitch]="appStatus">
         <ng-container *ngSwitchCase="'running'"><mat-icon>check_circle</mat-icon>Active</ng-container>
         <ng-container *ngSwitchCase="'fetching'"><mat-icon>sync</mat-icon>Fetching...</ng-container>

@@ -13,7 +13,7 @@ import { ShareBeltComponent } from './share-belt.component';
 import { APP_CONFIG } from '../../app.config';
 import { NotablesService } from '../notables.service';
 import { DialogService } from '../../core/dialog.service';
-import { DataPlugService } from '../../data-management/data-plug.service';
+import { HatApplicationsService } from '../../explore/hat-applications.service';
 import { Observable } from 'rxjs/Observable';
 
 describe('ShareBeltComponent', () => {
@@ -29,7 +29,7 @@ describe('ShareBeltComponent', () => {
           getNotablesOfferClaimStatus: () => Observable.of({})
         } },
         { provide: DialogService, useValue: {} },
-        { provide: DataPlugService, useValue: {} }
+        { provide: HatApplicationsService, useValue: {} }
       ]
     })
       .compileComponents();

@@ -6,19 +6,19 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {Component, OnInit, Input, EventEmitter, Output, Inject} from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, Inject } from '@angular/core';
 
 import { NotablesService } from '../notables.service';
 import { DialogService } from '../../core/dialog.service';
 import { DialogBoxComponent } from '../../core/dialog-box/dialog-box.component';
-import { DataPlugService } from '../../data-management/data-plug.service';
+import { HatApplicationsService } from '../../explore/hat-applications.service';
 
 import { Notable } from '../../shared/interfaces/notable.class';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { DexOfferClaimRes } from '../../shared/interfaces/dex-offer-claim-res.interface';
 import { DataDebit } from '../../data-management/data-debit.interface';
 import { Observable } from 'rxjs/Observable';
-import { DataPlug } from '../../shared/interfaces/data-plug.interface';
+import { HatApplication } from '../../explore/hat-application.interface';
 
 @Component({
   selector: 'rum-share-belt',
@@ -33,17 +33,17 @@ export class ShareBeltComponent implements OnInit {
   public dataPlugError: string;
   public displayMessage: string;
   public offerClaimIsConfirmed: boolean;
-  public shareOptions: Observable<DataPlug[]>;
+  public shareOptions: Observable<HatApplication[]>;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private notablesSvc: NotablesService,
               private dialogSvc: DialogService,
-              private dataPlugSvc: DataPlugService) { }
+              private hatAppSvc: HatApplicationsService) { }
 
   ngOnInit() {
     this.dataPlugError = null;
 
-    this.shareOptions = this.dataPlugSvc.notablesEnabledPlugs$;
+    this.shareOptions = this.hatAppSvc.notablesEnabledPlugs$;
 
     this.notablesSvc.getNotablesOfferClaimStatus().subscribe((offerClaim: DexOfferClaimRes) => {
       this.offerClaimIsConfirmed = offerClaim.confirmed;
