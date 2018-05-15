@@ -16,6 +16,7 @@
       <a mat-button [ngClass]="['app-details-status', appStatus]"
          [href]="generateHatLoginLink(app.application.id, app.application.setup)"
          [ngSwitch]="appStatus">
+        <ng-container *ngSwitchCase="'goto'"><mat-icon>exit_to_app</mat-icon>Go to app</ng-container>
         <ng-container *ngSwitchCase="'running'"><mat-icon>check_circle</mat-icon>Active</ng-container>
         <ng-container *ngSwitchCase="'fetching'"><mat-icon>sync</mat-icon>Fetching...</ng-container>
         <ng-container *ngSwitchCase="'failing'"><mat-icon>sync_problem</mat-icon>Reconnect</ng-container>
@@ -23,7 +24,7 @@
       </a>
 
       <div class="app-details-error" *ngIf="appStatus === 'failing'">
-        ERROR: App disconnected. Please click reconnect to re-establish connection.
+        App disconnected. Please click reconnect to re-establish connection.
       </div>
     </mat-card>
   </div>
@@ -58,11 +59,14 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-</div>
 
-<mat-menu #moreActionsMenu="matMenu">
-  <a mat-menu-item class="actions-menu-item"
-     [routerLink]="['permissions']">
-    <mat-icon>phonelink_lock</mat-icon>App permissions</a>
-  <button mat-menu-item class="actions-menu-item">Cancel</button>
-</mat-menu>
+  <mat-menu #moreActionsMenu="matMenu">
+    <a mat-menu-item class="actions-menu-item" [routerLink]="['permissions']">
+      <mat-icon>phonelink_lock</mat-icon>App permissions
+    </a>
+    <button mat-menu-item class="actions-menu-item" (click)="disableApp(app.application.id)">
+      <mat-icon>link_off</mat-icon>Disable app
+    </button>
+    <button mat-menu-item class="actions-menu-item">Cancel</button>
+  </mat-menu>
+</div>

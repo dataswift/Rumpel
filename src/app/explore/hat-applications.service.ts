@@ -39,6 +39,10 @@ export class HatApplicationsService {
     return this.hatSvc.getSheRecords(application);
   }
 
+  disable(id: string): Observable<HatApplication> {
+    return this.hatSvc.disableApplication(id);
+  }
+
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     const redirectUrl = setup.url || setup.iosUrl || '';
 

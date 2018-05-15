@@ -100,7 +100,7 @@
       &.failing {
         background-color: #E36682;
       }
-      &.untouched {
+      &.untouched, &.goto {
         background-color: $app-accent-color;
       }
 

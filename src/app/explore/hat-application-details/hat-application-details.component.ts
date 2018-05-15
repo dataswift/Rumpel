@@ -13,7 +13,7 @@ import { SheFeed } from '../../she/she-feed.interface';
 })
 export class HatApplicationDetailsComponent implements OnInit {
   public appDetails$: Observable<HatApplication>;
-  public appStatus: 'running' | 'fetching' | 'failing' | 'untouched';
+  public appStatus: 'goto' | 'running' | 'fetching' | 'failing' | 'untouched';
 
   constructor(private activatedRoute: ActivatedRoute,
               private location: Location,
@@ -27,18 +27,7 @@ export class HatApplicationDetailsComponent implements OnInit {
         this.hatAppSvc.getApplicationDetails(appId),
         this.hatAppSvc.getApplicationData(appId)
       )
-        .do((results: [HatApplication, SheFeed[]]) => {
-          const { setup, active, mostRecentData } = results[0];
-          if (setup && active && mostRecentData) {
-            this.appStatus = 'running';
-          } else if (setup && !active && !mostRecentData) {
-            this.appStatus = 'fetching';
-          } else if (setup && !active && mostRecentData) {
-            this.appStatus = 'failing';
-          } else {
-            this.appStatus = 'untouched';
-          }
-        })
+        .do((results: [HatApplication, SheFeed[]]) => this.setAppStatus(results[0]))
         .map((results: [HatApplication, SheFeed[]]) => {
           if (results[1].length > 0) {
             results[0].application.info.dataPreview = results[1];
@@ -53,8 +42,39 @@ export class HatApplicationDetailsComponent implements OnInit {
     return this.hatAppSvc.generateHatLoginLink(id, setup);
   }
 
+  disableApp(id: string): void {
+    this.appDetails$ = this.hatAppSvc.disable(id).do(this.setAppStatus);
+  }
+
   closeComponentView(): void {
     this.location.back();
+  }
+
+  private setAppStatus(app: HatApplication): void {
+    const { setup, active, needsUpdating, mostRecentData } = app;
+    const kind = app.application.kind.kind;
+
+    if (kind === 'App') {
+      if ((setup && !active) || needsUpdating) {
+        this.appStatus = 'failing';
+      } else if (active) {
+        this.appStatus = 'goto';
+      } else {
+        this.appStatus = 'untouched';
+      }
+    } else if (kind === 'DataPlug') {
+      if ((setup && !active && mostRecentData) || needsUpdating) {
+        this.appStatus = 'failing';
+      } else if (setup && active && mostRecentData) {
+        this.appStatus = 'running';
+      } else if (setup && !active && !mostRecentData) {
+        this.appStatus = 'fetching';
+      } else {
+        this.appStatus = 'untouched';
+      }
+    } else {
+      this.appStatus = 'untouched';
+    }
   }
 
 }

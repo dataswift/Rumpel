@@ -61,24 +61,6 @@ export class NotablesService extends BaseDataService<Notable> {
     return this.notablesServiceMeta.phata;
   }
 
-  getNotablesOfferClaimStatus(): Observable<DexOfferClaimRes> {
-    return this.dex.getOfferClaim(this.config.notables.dexOfferId)
-      .flatMap((offerClaim: DexOfferClaimRes)  => {
-        if (offerClaim.confirmed) {
-          return Observable.of(offerClaim);
-          // If the MaketSquare reports offer as unconfirmed, check its status on the HAT
-          // For the initial 30 mins after offer confirmation MarketSquare can report it as unconfirmed
-        } else {
-          return this.hat.getDataDebit(offerClaim.dataDebitId)
-            .map((dataDebit: DataDebit) => {
-              offerClaim.confirmed = dataDebit.active;
-
-              return offerClaim;
-            });
-        }
-      });
-  }
-
   saveNotable(recordValue: HatRecord<Notable>): Observable<HatRecord<Notable>> {
     const permissionKey = recordValue.data.isShared ? 'allow' : 'restrict';
     let filePermissionUpdate$: Observable<any>;
@@ -101,18 +83,6 @@ export class NotablesService extends BaseDataService<Notable> {
 
   editNotable(notable: HatRecord<Notable>) {
     this._editedNotable$.next(notable);
-  }
-
-  setupNotablesService(): Observable<DataDebit> {
-    return this.dex.claimOffer(this.config.notables.dexOfferId)
-      .catch(error => {
-        if (error.status === 400) {
-          return this.dex.getOfferClaim(this.config.notables.dexOfferId);
-        } else {
-          return Observable.throw(error);
-        }
-      })
-      .flatMap((offerClaim: DexOfferClaimRes) => this.hat.enableDataDebit(offerClaim.dataDebitId))
   }
 
   coerceType(rawNotable: HatRecord<any>): HatRecord<Notable> {
