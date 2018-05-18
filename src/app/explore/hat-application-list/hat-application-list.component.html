@@ -23,9 +23,11 @@
           <div class="app-headline">{{ app.application.info.headline }}</div>
         </div>
         <div class="app-link-action">View app</div>
+
+
         <mat-icon class="app-status-icon"
                   [class.error]="app.setup && !app.active && app.mostRecentData">
-          {{ statusIcon(app.setup, app.active, app.mostRecentData) }}
+          {{ statusIcon(app) }}
         </mat-icon>
       </mat-card-content>
     </a>

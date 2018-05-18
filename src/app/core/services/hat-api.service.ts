@@ -133,7 +133,8 @@ export class HatApiService {
   }
 
   getSheRecords(endpoint?: string, since?: number, until?: number): Observable<SheFeed[]> {
-    const path = `${this.pathPrefix}/she/feed${endpoint ? '/' + endpoint : ''}`;
+    const path = endpoint ? `${this.pathPrefix}/${endpoint}` : `${this.pathPrefix}/she/feed`;
+
     let queryParams = new HttpParams();
 
     if (since) {

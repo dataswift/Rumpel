@@ -4,6 +4,7 @@ import {BundleStructure} from '../shared/interfaces/bundle.interface';
 export interface HatApplication {
   application: HatApplicationContent;
   setup: boolean;
+  enabled: boolean;
   active: boolean;
   needsUpdating?: boolean;
   mostRecentData?: string;
@@ -84,6 +85,7 @@ interface HatApplicationOnboarding {
 interface HatApplicationStatus {
   compatibility: string;
   expectedStatus: number;
+  dataPreviewEndpoint: string;
   recentDataCheckEndpoint: string;
   statusUrl: string;
   kind: string;

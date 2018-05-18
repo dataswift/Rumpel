@@ -46,7 +46,22 @@ export class HatApplicationsService {
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     const redirectUrl = setup.url || setup.iosUrl || '';
 
-    return `${this.hatUrl}/#/hatlogin?name=${id}&redirect${redirectUrl}`;
+    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}`;
+  }
+
+  getAppStatus(app: HatApplication): 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update' {
+    const { setup, enabled, active, needsUpdating, mostRecentData } = app;
+    const kind = app.application.kind.kind;
+
+    if (setup && needsUpdating) {
+      return 'update';
+    } else if (enabled && !active) {
+      return mostRecentData ? 'failing' : 'fetching';
+    } else if (enabled && active) {
+      return kind === 'App' ? 'goto' : 'running';
+    } else {
+      return 'untouched';
+    }
   }
 
   get dataplugs$(): Observable<HatApplication[]> {

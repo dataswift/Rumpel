@@ -33,15 +33,17 @@ export class HatApplicationListComponent implements OnInit {
     });
   }
 
-  statusIcon(setup: boolean, active: boolean, mostRecentData: string): string {
-    if (setup && active && mostRecentData) {
-      return 'check_circle';
-    } else if (setup && !active && !mostRecentData) {
-      return 'sync';
-    } else if (setup && !active && mostRecentData) {
-      return 'sync_problem';
-    } else {
-      return 'add_circle_outline';
+  statusIcon(app: HatApplication): string {
+    switch (this.hatAppSvc.getAppStatus(app)) {
+      case 'running':
+      case 'goto':
+        return 'check_circle';
+      case 'fetching':
+        return 'sync';
+      case 'failing':
+        return 'sync_problem';
+      default:
+        return 'add_circle_outline';
     }
   }
 }
