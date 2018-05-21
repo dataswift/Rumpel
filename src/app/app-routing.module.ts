@@ -20,8 +20,6 @@ import { LoginStandaloneComponent } from './user/login-standalone/login-standalo
 
 // Standalone modules
 
-import { DataPlugsComponent } from './data-management/data-plugs/data-plugs.component';
-import { DataPlugDataComponent } from './data-management/data-plug-data/data-plug-data.component';
 import { ProfileComponent } from './profiles/profile/profile.component';
 import { OffersHomeComponent } from './offers/offers-home/offers-home.component';
 import { GridComponent } from './dashboard/grid/grid.component';
@@ -31,8 +29,6 @@ import { MashupsComponent } from './mashups/mashups/mashups.component';
 import { MyDayComponent } from './mashups/my-day/my-day.component';
 import { PasswordRecoverComponent } from './user/password-recover/password-recover.component';
 import { PasswordChangeComponent } from './user/password-change/password-change.component';
-import { DataPlugFeedComponent } from './data-management/data-plug-feed/data-plug-feed.component';
-import { DataPlugStaticComponent } from './data-management/data-plug-static/data-plug-static.component';
 import { LocationsComponent } from './locations/locations/locations.component';
 import { SocialComponent } from './social/social/social.component';
 import { HatApplicationListComponent } from './explore/hat-application-list/hat-application-list.component';
@@ -86,16 +82,6 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
           { path: 'mashups', component: MashupsComponent,
             children: [
               { path: 'myday', component: MyDayComponent }
-            ]}
-        ]},
-      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
-        children: [
-          { path: 'dataplugs', component: DataPlugsComponent },
-          { path: 'dataplugs/data/location/feed', component: LocationsComponent },
-          { path: 'dataplugs/data/:provider', component: DataPlugDataComponent,
-            children: [
-              { path: 'feed', component: DataPlugFeedComponent },
-              { path: 'static', component: DataPlugStaticComponent }
             ]}
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
