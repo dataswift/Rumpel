@@ -56,9 +56,9 @@ export class HatApplicationsService {
     if (setup && needsUpdating) {
       return 'update';
     } else if (enabled && !active) {
-      return mostRecentData ? 'failing' : 'fetching';
+      return 'failing';
     } else if (enabled && active) {
-      return kind === 'App' ? 'goto' : 'running';
+      return !mostRecentData && kind === 'DataPlug' ? 'fetching' : (kind === 'App' ? 'goto' : 'running');
     } else {
       return 'untouched';
     }

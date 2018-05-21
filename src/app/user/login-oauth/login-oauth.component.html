@@ -6,13 +6,22 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
   -->
 
-<ng-container *ngIf="hatApp else loading">
-  <rum-hat-application-permissions [app]="hatApp"></rum-hat-application-permissions>
+<ng-container *ngIf="hatApp || errorMessage else loading">
+  <ng-container *ngIf="hatApp">
+    <rum-hat-application-permissions [app]="hatApp"></rum-hat-application-permissions>
 
-  <div class="user-actions">
-    <button mat-flat-button role="button" (click)="agreeTerms(hatApp.id)">Agree</button>
-    <button mat-flat-button role="link" (click)="declineTerms()">Cancel</button>
-  </div>
+    <div class="user-actions">
+      <button mat-flat-button role="button" (click)="agreeTerms(hatApp.id)">Agree</button>
+      <button mat-flat-button role="link" (click)="declineTerms()">Cancel</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="errorMessage">
+    <div class="app-error">
+      <h3 class="app-error-header">Ooops... Looks like something went wrong.</h3>
+      <p class="app-error-text">{{errorMessage}}</p>
+    </div>
+  </ng-container>
 
 </ng-container>
 

@@ -19,7 +19,7 @@ import { HatApplication, HatApplicationContent } from '../../explore/hat-applica
 })
 export class LoginOauthComponent implements OnInit {
   public hatDomain: string;
-  public error: string;
+  public errorMessage: string;
   public hatApp: HatApplicationContent;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
@@ -37,20 +37,19 @@ export class LoginOauthComponent implements OnInit {
         .subscribe(
       (hatApp: HatApplication) => {
 
-        if (hatApp.active && !hatApp.needsUpdating) {
+        if (hatApp.enabled && !hatApp.needsUpdating) {
           this.buildRedirect(safeName);
         } else {
           this.hatApp = hatApp.application;
         }
       },
-      error => { // App is not registered, assume legacy for testing
-        // console.warn('Failed to login. Reason: ', error);
-        // this.error = 'ERROR: Failed to obtain HAT authentication. Please try again.';
-        this.legacyLogin();
+      error => {
+          console.warn('Failed to login. Reason: ', error);
+          this.errorMessage = 'ERROR: Failed to obtain permission profile. Is the app registered?';
         }
       );
     } else {
-      // TODO: show error message
+      this.errorMessage = 'ERROR: App details incorrect. Please contact the app developer and let them know.';
     }
   }
 
@@ -61,7 +60,7 @@ export class LoginOauthComponent implements OnInit {
   }
 
   clearError() {
-    this.error = '';
+    this.errorMessage = null;
   }
 
   buildRedirect(appName: string): void {
@@ -76,11 +75,6 @@ export class LoginOauthComponent implements OnInit {
 
   declineTerms(): void {
     window.location.href = this.route.snapshot.queryParams['fallback'];
-  }
-
-  private legacyLogin(): void {
-    this.authSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
-      .subscribe((url: string) => window.location.href = url);
   }
 
 }

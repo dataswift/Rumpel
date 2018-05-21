@@ -81,7 +81,8 @@ export class AuthService {
   getApplicationDetails(name: string, redirect: string): Observable<HatApplication> {
     return this.hatSvc.getApplicationById(name)
       .map((hatApp: HatApplication) => {
-        const redirectUrlIsValid = true; // TODO: check
+        const redirectUrlIsValid = redirect === hatApp.application.setup.url ||
+                                   redirect === hatApp.application.setup.iosUrl; // TODO: add support for Android
 
         if (redirectUrlIsValid) {
           return hatApp;

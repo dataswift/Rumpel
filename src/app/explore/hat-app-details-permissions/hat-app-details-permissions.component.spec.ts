@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
-import {HatApplication} from '../hat-application.interface';
+import { HatApplication } from '../hat-application.interface';
 
 const HAT_APPLICATION_MOCK: HatApplication = {
   'application': {
@@ -254,11 +254,13 @@ const HAT_APPLICATION_MOCK: HatApplication = {
       'compatibility': '1.0.3',
       'statusUrl': 'https://notables.hubofallthings.com/api/bulletin/status',
       'expectedStatus': 200,
+      'dataPreviewEndpoint': 'she/feed/notables',
       'recentDataCheckEndpoint': 'rumpel/notablesv1',
       'kind': 'External'
     }
   },
   'setup': true,
+  'enabled': true,
   'active': false,
   'needsUpdating': true,
   'mostRecentData': '2018-01-31T20:40:21.274Z'

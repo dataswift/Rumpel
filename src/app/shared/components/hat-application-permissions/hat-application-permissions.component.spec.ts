@@ -247,6 +247,7 @@ const APP_DATA_MOCK: HatApplicationContent = {
     'compatibility': '1.0.3',
     'statusUrl': 'https://notables.hubofallthings.com/api/bulletin/status',
     'expectedStatus': 200,
+    'dataPreviewEndpoint': 'she/feed/notables',
     'recentDataCheckEndpoint': 'rumpel/notablesv1',
     'kind': 'External'
   }
