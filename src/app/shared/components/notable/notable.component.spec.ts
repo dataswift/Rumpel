@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotableComponent } from './notable.component';
 import { APP_CONFIG } from '../../../app.config';
-import { DataPlugService } from '../../../data-management/data-plug.service';
 import { MomentPipe } from '../../pipes/moment.pipe';
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 import { MarkdownToHtmlPipe } from '../../pipes/markdown-to-html.pipe';
@@ -46,7 +45,6 @@ describe('NotableComponent', () => {
       declarations: [ NotableComponent, MomentPipe, SafeHtmlPipe, MarkdownToHtmlPipe, RelativeTimePipe, PresignImgUrlPipe ],
       providers: [
         { provide: APP_CONFIG, useValue: { notables: { iconMap: {} } } },
-        { provide: DataPlugService, useValue: { notablesEnabledPlugs$: Observable.of([]) } },
         { provide: HatApiService, useValue: {} }
       ]
     })
