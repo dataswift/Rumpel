@@ -44,8 +44,9 @@ export class LoginOauthComponent implements OnInit {
         }
       },
       error => {
-          console.warn('Failed to login. Reason: ', error);
-          this.errorMessage = 'ERROR: Failed to obtain permission profile. Is the app registered?';
+          // console.warn('Failed to login. Reason: ', error);
+          // this.errorMessage = 'ERROR: Failed to obtain permission profile. Is the app registered?';
+          this.legacyLogin();
         }
       );
     } else {
@@ -75,6 +76,11 @@ export class LoginOauthComponent implements OnInit {
 
   declineTerms(): void {
     window.location.href = this.route.snapshot.queryParams['fallback'];
+  }
+
+  private legacyLogin(): void {
+    this.authSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
+      .subscribe((url: string) => window.location.href = url);
   }
 
 }

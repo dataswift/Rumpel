@@ -35,7 +35,7 @@
         <mat-card class="app-details-general">
           <mat-card-content>
             <h5 class="app-details-heading">Description</h5>
-            <p class="app-details-description">{{app.application.info.description.text}}</p>
+            <div class="app-details-description" [innerHTML]="app.application.info.description.text | markdownToHtml"></div>
           </mat-card-content>
         </mat-card>
 
