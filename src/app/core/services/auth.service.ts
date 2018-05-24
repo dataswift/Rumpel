@@ -145,7 +145,7 @@ export class AuthService {
 
     const scopeIsValid = decodedToken['application'] === this.config.tokenApp || decodedToken['accessScope'] === 'owner';
     const tokenDomain = decodedToken['iss'].slice(decodedToken['iss'].indexOf('.'));
-    const domainIsValid = this.config.supportedDomains.includes(tokenDomain) || /^[\w.]+:9000$/.test(tokenDomain);
+    const domainIsValid = this.config.supportedDomains.indexOf(tokenDomain) > -1 || /^[\w.]+:9000$/.test(tokenDomain);
     const notExpired = isFuture(expiryDate) && isFuture(addDays(issuedDate, this.config.tokenExpiryTime));
 
     return scopeIsValid && domainIsValid && notExpired;
