@@ -35,7 +35,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.6.0.0',
+  version: '3.6.0.2',
   name: 'RumpelStaging',
   tokenApp: 'rumpel',
   tokenExpiryTime: 3,
