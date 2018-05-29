@@ -36,6 +36,7 @@ export class HatApplicationListComponent implements OnInit {
   statusIcon(app: HatApplication): string {
     switch (this.hatAppSvc.getAppStatus(app)) {
       case 'running':
+        return 'check_circle';
       case 'goto':
         return 'check_circle';
       case 'fetching':

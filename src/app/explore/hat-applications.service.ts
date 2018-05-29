@@ -32,7 +32,8 @@ export class HatApplicationsService {
   }
 
   getApplicationDetails(application: string): Observable<HatApplication> {
-    return this.hatSvc.getApplicationById(application);
+    return this.hatSvc.getApplicationList()
+      .map((apps: HatApplication[]) => apps.filter(app => app.application.id === application)[0]);
   }
 
   getApplicationData(application: string): Observable<SheFeed[]> {

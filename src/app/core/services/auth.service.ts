@@ -102,7 +102,6 @@ export class AuthService {
     return this.hatSvc.getApplicationTokenNew(name);
   }
 
-
   recoverPassword(email: string): Observable<any> {
     return this.hatSvc.recoverPassword({ email: email });
   }
