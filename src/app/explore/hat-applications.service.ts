@@ -69,10 +69,6 @@ export class HatApplicationsService {
     return this._dataplugs$.asObservable();
   }
 
-  get inactiveDataplugs$(): Observable<HatApplication[]> {
-    return this.dataplugs$.map((plugs: HatApplication[]) => plugs.filter(plug => !plug.setup));
-  }
-
   get notablesEnabledPlugs$(): Observable<HatApplication[]> {
     return this.dataplugs$
       .map((dps: HatApplication[]) => {

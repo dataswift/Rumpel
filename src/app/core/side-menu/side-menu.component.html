@@ -26,32 +26,6 @@
       </div>
     </li>
   </ul>
-
-  <h6 class="data-plugs-title">Add data plugs</h6>
-  <ul class="center plug-menu">
-    <li *ngFor="let item of dataplugList | async; let i = index" class="data-plugs-list">
-      <div class="wrapper">
-        <a (click)="openPlugPopup(item); close.emit('Close menu');" class="sidebar-pop">
-          <div class="icon icon-grey"><img [src]="'assets/icons/grey-' + item.application.id + '-plug.svg'" /></div>
-          <div class="icon icon-color"><img [src]="'assets/icons/' + item.application.id + '-plug.svg'" /></div>
-          {{item.application.info.name}}
-          <mat-icon class="plus-icon">control_point</mat-icon>
-        </a>
-      </div>
-    </li>
-  </ul>
-
-  <ul class="center" >
-    <li class="data-plugs-more">
-      <div class="wrapper">
-        <a [routerLink]="['/explore', 'DataPlug']">
-          <mat-icon class="icon">more_horiz</mat-icon>
-          <em>More</em>
-        </a>
-      </div>
-    </li>
-  </ul>
-
 </div>
 
 <div class="poweredBy">

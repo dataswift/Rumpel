@@ -9,7 +9,6 @@
 import { Component, OnInit, Inject, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { HatApplicationsService } from '../../explore/hat-applications.service';
-import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { APP_CONFIG, AppConfig } from '../../app.config';
@@ -24,7 +23,6 @@ import { HatApplication } from '../../explore/hat-application.interface';
 export class SideMenuComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<string>();
 
-  public dataplugList: Observable<HatApplication[]>;
   public availableOffersCount = 0;
   private offersSub: Subscription;
   private windowRef: any;
@@ -37,8 +35,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
               private dataOfferSvc: DataOfferService) {}
 
   ngOnInit() {
-    this.dataplugList = this.hatAppSvc.inactiveDataplugs$;
-
     this.offersSub = this.dataOfferSvc.offers$
       .subscribe((offers: OffersStorage) => this.availableOffersCount = offers.availableOffers.length);
 
