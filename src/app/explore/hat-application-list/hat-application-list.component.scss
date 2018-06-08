@@ -96,12 +96,12 @@
   .mat-card {
     margin: 20px 15px;
     padding: 20px 15px;
-    max-width: 250px;
-    flex: 1 1;
+    flex-basis: 0 250px;
   }
 
   .mat-card-content {
     @include flex-container(column);
+    min-width: 250px;
   }
 
   .app-link-wrapper {

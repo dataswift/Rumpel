@@ -9,10 +9,12 @@ import { groupBy } from 'lodash';
 })
 export class HatApplicationPermissionsComponent implements OnInit {
   @Input() app: HatApplicationContent;
+  public readablePermissions: { title: string; text: string; }[];
 
   constructor() { }
 
   ngOnInit() {
+    this.readablePermissions = this.processPermissionRoles(this.app.permissions.rolesGranted);
   }
 
   toggleCardExpansion(endpoint): void {
@@ -20,7 +22,7 @@ export class HatApplicationPermissionsComponent implements OnInit {
   }
 
   processPermissionRoles(roles: Array<{ role: string; detail?: string; }>): Array<{ title: string, text: string; }> {
-    const readablePermissions = [];
+    let readablePermissions = [];
     const { general, read, write, manage } = groupBy(roles, (role: { role: string; detail?: string; }) => {
       if (role.role.indexOf('namespace') > -1) {
         return role.role.replace('namespace', '');
@@ -30,37 +32,54 @@ export class HatApplicationPermissionsComponent implements OnInit {
     });
 
     if (read) {
-      readablePermissions.push({
-        title: 'Read access',
-        text: `The app needs to be able to READ data in ${read.map(r => r.detail).join(', ')} namespace${read.length > 1 ? 's' : ''}.`
-      });
+      readablePermissions = readablePermissions.concat(read.map(role => {
+        return {
+          title: 'Read access',
+          text: `The app needs to be able to read data in ${role.detail} namespace.`
+        }
+      }));
     }
 
     if (write) {
-      readablePermissions.push({
-        title: 'Write access',
-        text: `The app needs to be able to WRITE data in ${write.map(r => r.detail).join(', ')} namespace${write.length > 1 ? 's' : ''}.`
-      });
+      readablePermissions = readablePermissions.concat(write.map(role => {
+        return {
+          title: 'Write access',
+          text: `The app needs to be able to write data in ${role.detail} namespace.`
+        }
+      }));
     }
 
     if (manage) {
-      readablePermissions.push({
-        title: 'Manage other applications',
-        text: `The app needs to be able to manage ${manage.map(r => r.detail).join(', ')} app${manage.length > 1 ? 's' : ''}.`
-      });
+      readablePermissions = readablePermissions.concat(manage.map(role => {
+        return {
+          title: 'Manage other applications',
+          text: `The app needs to be able to manage ${role.detail} app.`
+        }
+      }));
     }
 
     return readablePermissions.concat(general.map(role => {
-      if (role.role === 'applicationlist') {
-        return {
-          title: 'List application',
-          text: 'The app needs to be able to list other available applications.'
-        }
-      } else if (role.role === 'datadebit') {
-        return {
-          title: 'Create data debit',
-          text: `Create data debit ${role.detail}. More details below.`
-        }
+      switch (role.role) {
+        case 'applicationlist':
+          return {
+            title: 'List application',
+            text: 'The app needs to be able to list other available applications.'
+          };
+        case 'datadebit':
+          return {
+            title: 'Create data debit',
+            text: `Create data debit ${role.detail}. More details below.`
+          };
+        case 'owner':
+          return {
+            title: 'Owner access',
+            text: 'Warning! The app will have FULL ACCESS to your HAT.'
+          };
+        default:
+          return {
+            title: 'Unknown permission',
+            text: 'Unidentified permission request. Please let us know about this issue.'
+          };
       }
     }));
   }

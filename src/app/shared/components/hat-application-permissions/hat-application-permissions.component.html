@@ -12,14 +12,14 @@
 
   <section class="permissions-section">
     <h4 class="section-header">{{app.info.name}} will be able to:</h4>
-    <mat-card *ngFor="let readableRoles of processPermissionRoles(app.permissions.rolesGranted)">
+    <mat-card *ngFor="let permission of readablePermissions">
       <div class="card-img-wrapper">
         <img src="/assets/icons/hat-permissions-generic.svg" class="card-img" />
       </div>
 
       <mat-card-content>
-        <h5 class="card-heading">{{readableRoles.title}}</h5>
-        <p class="card-text">{{readableRoles.text}}</p>
+        <h5 class="card-heading">{{permission.title}}</h5>
+        <p class="card-text">{{permission.text}}</p>
       </mat-card-content>
     </mat-card>
   </section>
