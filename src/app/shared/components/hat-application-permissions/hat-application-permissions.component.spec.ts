@@ -103,6 +103,17 @@ const APP_DATA_MOCK: HatApplicationContent = {
       {
         'role': 'datadebit',
         'detail': 'app-notables'
+      },
+      {
+        'role': 'applicationlist'
+      },
+      {
+        'role': 'applicationmanage',
+        'detail': 'facebook'
+      },
+      {
+        'role': 'applicationmanage',
+        'detail': 'twitter'
       }
     ],
     'dataRetrieved': {

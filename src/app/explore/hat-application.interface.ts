@@ -57,7 +57,7 @@ interface HatApplicationGraphicsSize {
 }
 
 interface HatApplicationPermissions {
-  rolesGranted: { role: string; detail: string; }[];
+  rolesGranted: { role: string; detail?: string; }[];
   dataRequired?: HatApplicationDataRequired;
   dataRetrieved?: BundleStructure;
 }

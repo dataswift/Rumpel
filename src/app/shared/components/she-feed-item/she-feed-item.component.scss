@@ -67,13 +67,9 @@
         justify-content: space-between;
 
         .feed-item-overlay-content {
-          background-color: transparent;
-          border: none;
           overflow-wrap: break-word;
           word-wrap: break-word;
           white-space: pre-wrap;
-          padding: 0;
-          font-family: $font-standard;
           color: whitesmoke;
           font-size: 13px;
           line-height: 1.54;
@@ -87,13 +83,17 @@
       }
 
       &.no-image {
-        margin: 0;
-        padding: 20px 15px;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
+        margin: 20px 15px;
+        padding: 0;
         font-size: 13px;
         color: $hat-body-text;
         line-height: 1.54;
+
+        .feed-item-content {
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          white-space: pre-wrap;
+        }
       }
 
       &.single-image {
