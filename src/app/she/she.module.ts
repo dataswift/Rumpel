@@ -12,10 +12,11 @@ import { SharedModule } from '../shared/shared.module';
 import { SheFeedService } from './she-feed.service';
 import { SheFeedComponent } from './she-feed/she-feed.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
+import { SheFeedRollupComponent } from './she-feed-rollup/she-feed-rollup.component';
 
 @NgModule({
   imports: [ SharedModule, CustomAngularMaterialModule ],
-  declarations: [ SheFeedComponent ],
+  declarations: [ SheFeedComponent, SheFeedRollupComponent ],
   providers: [ SheFeedService ],
   exports: [  ]
 })

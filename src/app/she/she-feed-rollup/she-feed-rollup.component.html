@@ -1,0 +1,12 @@
+<div *ngFor="let rolledUpItem of rolledUpFeed" style="text-align: center;">
+  <ng-container *ngIf="rolledUpItem.rollup.length < minItemsForRollup || rolledUpItem.expanded === true; else condensedRollup">
+    <rum-she-feed-item [feedItem]="feedItem" *ngFor="let feedItem of rolledUpItem.rollup">></rum-she-feed-item>
+  </ng-container>
+
+  <ng-template #condensedRollup>
+    <rum-she-feed-item [feedItem]="rolledUpItem.rollup[0]"></rum-she-feed-item>
+    <button class="feed-item-rollup-control" (click)="rolledUpItem.expanded = !rolledUpItem.expanded">
+      See {{rolledUpItem.rollup.length - 1}} more items
+    </button>
+  </ng-template>
+</div>
