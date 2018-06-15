@@ -13,7 +13,7 @@ import { SideMenuComponent } from './side-menu.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CustomAngularMaterialModule } from '../custom-angular-material.module';
 import { APP_CONFIG } from '../../app.config';
-import { DataPlugService } from '../../data-management/data-plug.service';
+import { HatApplicationsService } from '../../explore/hat-applications.service';
 import { Observable } from 'rxjs/Observable';
 import { DataOfferService } from '../../offers/data-offer.service';
 
@@ -27,7 +27,7 @@ describe('SideMenuComponent', () => {
       declarations: [ SideMenuComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: { menuItems: { private: [] }}},
-        { provide: DataPlugService, useValue: { inactiveDataplugs$: Observable.of([]) } },
+        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: Observable.of([]) } },
         { provide: DataOfferService, useValue: { offers$: Observable.of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } }
       ]
     })

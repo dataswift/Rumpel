@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataDebitService } from '../data-debits.service';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../user/user.interface';
-import { DataDebit } from '../../shared/interfaces/data-debit.interface';
+import { DataDebit } from '../../data-management/data-debit.interface';
 
 @Component({
   selector: 'rum-tile-data-debit',

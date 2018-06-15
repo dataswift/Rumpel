@@ -81,7 +81,10 @@ export class AuthService {
   getApplicationDetails(name: string, redirect: string): Observable<HatApplication> {
     return this.hatSvc.getApplicationById(name)
       .map((hatApp: HatApplication) => {
-        const redirectUrlIsValid = true; // TODO: check
+        // const redirectUrlIsValid = redirect === hatApp.application.setup.url ||
+        //                            redirect === hatApp.application.setup.iosUrl; // TODO: add support for Android
+
+        const redirectUrlIsValid = true;
 
         if (redirectUrlIsValid) {
           return hatApp;
@@ -98,7 +101,6 @@ export class AuthService {
   appLogin(name: string): Observable<string> {
     return this.hatSvc.getApplicationTokenNew(name);
   }
-
 
   recoverPassword(email: string): Observable<any> {
     return this.hatSvc.recoverPassword({ email: email });
@@ -141,7 +143,8 @@ export class AuthService {
     const issuedDate = parse(decodedToken['iat'] * 1000);
 
     const scopeIsValid = decodedToken['application'] === this.config.tokenApp || decodedToken['accessScope'] === 'owner';
-    const domainIsValid = this.config.supportedDomains.includes(decodedToken['iss'].slice(decodedToken['iss'].indexOf('.')));
+    const tokenDomain = decodedToken['iss'].slice(decodedToken['iss'].indexOf('.'));
+    const domainIsValid = this.config.supportedDomains.indexOf(tokenDomain) > -1 || /^[\w.]+:9000$/.test(tokenDomain);
     const notExpired = isFuture(expiryDate) && isFuture(addDays(issuedDate, this.config.tokenExpiryTime));
 
     return scopeIsValid && domainIsValid && notExpired;

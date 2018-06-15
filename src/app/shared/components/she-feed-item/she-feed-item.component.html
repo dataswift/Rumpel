@@ -11,8 +11,8 @@
   </mat-card-header>
 
   <ng-container *ngIf="feedItem.content && !feedItem.content.media">
-    <mat-card-content class="no-image" *ngIf="feedItem.content">
-      {{feedItem.content.text}}
+    <mat-card-content class="no-image">
+      <div class="feed-item-content" *ngIf="feedItem.content.text">{{feedItem.content.text.trim()}}</div>
       <ng-container *ngIf="feedItem.location && feedItem.location.address">
         <br><br>
         <div>{{feedItem.location.address.name}}</div>
@@ -30,7 +30,7 @@
     <mat-card-content class="single-image"
                       [ngStyle]="{ 'background-image': 'url(' + feedItem.content.media[0].url + ')' }">
       <div class="feed-item-overlay">
-        <pre class="feed-item-overlay-content">{{feedItem.content.text}}</pre>
+        <div class="feed-item-overlay-content">{{feedItem.content.text}}</div>
         <div class="feed-item-overlay-footer">Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}</div>
       </div>
     </mat-card-content>

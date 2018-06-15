@@ -13,6 +13,7 @@
 .app-list {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
 
   .mat-card {
     box-shadow: none;
@@ -45,10 +46,18 @@
 
 @media screen and (max-width: 900px) {
   .mat-card {
-    margin: 20px 15px;
+    margin: 10px 15px;
     padding: 20px 15px;
     flex-basis: 100%;
     justify-content: center;
+
+    &:first-child {
+      margin-top: 20px;
+    }
+
+    &:last-child {
+      margin-bottom: 20px;
+    }
   }
 
   .mat-card-content {
@@ -87,12 +96,12 @@
   .mat-card {
     margin: 20px 15px;
     padding: 20px 15px;
-    max-width: 250px;
-    flex: 1 1;
+    flex-basis: 0 250px;
   }
 
   .mat-card-content {
     @include flex-container(column);
+    min-width: 250px;
   }
 
   .app-link-wrapper {

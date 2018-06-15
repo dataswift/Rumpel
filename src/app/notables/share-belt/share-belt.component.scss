@@ -39,8 +39,9 @@
     padding-right: 30px;
     width: 150px;
 
-    span{
+    span {
       opacity: 0.3;
+      text-transform: capitalize;
     }
 
     &:before{
@@ -73,6 +74,7 @@
       margin-right: 2px;
       position: relative;
       top: -1px;
+      border-radius: 50%;
 
       &.on {
         opacity: 1.0;

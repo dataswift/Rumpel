@@ -11,10 +11,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShareBeltComponent } from './share-belt.component';
 import { APP_CONFIG } from '../../app.config';
-import { NotablesService } from '../notables.service';
 import { DialogService } from '../../core/dialog.service';
-import { DataPlugService } from '../../data-management/data-plug.service';
+import { HatApplicationsService } from '../../explore/hat-applications.service';
 import { Observable } from 'rxjs/Observable';
+import { Notable } from '../../shared/interfaces/notable.class';
 
 describe('ShareBeltComponent', () => {
   let component: ShareBeltComponent;
@@ -25,11 +25,8 @@ describe('ShareBeltComponent', () => {
       declarations: [ ShareBeltComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
-        { provide: NotablesService, useValue: {
-          getNotablesOfferClaimStatus: () => Observable.of({})
-        } },
         { provide: DialogService, useValue: {} },
-        { provide: DataPlugService, useValue: {} }
+        { provide: HatApplicationsService, useValue: { getApplicationDetails: () => Observable.of({ active: true }) } }
       ]
     })
       .compileComponents();
@@ -38,6 +35,7 @@ describe('ShareBeltComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ShareBeltComponent);
     component = fixture.componentInstance;
+    component.currentNotable = new Notable();
     fixture.detectChanges();
   });
 

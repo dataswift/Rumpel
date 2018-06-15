@@ -6,14 +6,16 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
   -->
 
-<rum-graphic-page-header title="HAT Applications"
-                         headline="HAT apps are integrated with your HAT data to give you great services."
-                         matIcon="touch_app">
-</rum-graphic-page-header>
+<ng-container *ngIf="headerProps$ | async as props">
+  <rum-graphic-page-header title="HAT {{props.title}}s"
+                           headline="{{props.headline}}"
+                           matIcon="{{props.icon}}">
+  </rum-graphic-page-header>
+</ng-container>
 
 <div class="app-list">
   <mat-card *ngFor="let app of hatApp$ | async">
-    <a [routerLink]="app.application.info.name.toLowerCase()" class="app-link-wrapper">
+    <a [routerLink]="app.application.id" class="app-link-wrapper">
       <mat-card-content>
         <img [src]="app.application.info.graphics.logo.normal" class="img img-responsive app-logo" height="60" width="60" />
         <div class="app-description">
@@ -21,13 +23,12 @@
           <div class="app-headline">{{ app.application.info.headline }}</div>
         </div>
         <div class="app-link-action">View app</div>
-        <ng-container *ngIf="!app.setup || app.needsUpdating else appActivityIcons">
-          <mat-icon class="app-status-icon">add_circle_outline</mat-icon>
-        </ng-container>
 
-        <ng-template #appActivityIcons>
-          <mat-icon class="app-status-icon">{{ app.active ? 'check_circle' : 'report_problem' }}</mat-icon>
-        </ng-template>
+
+        <mat-icon class="app-status-icon"
+                  [class.error]="app.setup && !app.active && app.mostRecentData">
+          {{ statusIcon(app) }}
+        </mat-icon>
       </mat-card-content>
     </a>
   </mat-card>

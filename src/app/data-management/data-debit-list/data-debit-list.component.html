@@ -1,3 +1,27 @@
-<mat-card *ngFor="let debit of dataDebits$ | async">
-  {{ debit | json }}
-</mat-card>
+<rum-graphic-page-header title="Data debits"
+                         headline="See all data debits you have enabled so far in your HAT"
+                         matIcon="swap_horiz">
+</rum-graphic-page-header>
+
+<div class="app-list">
+  <mat-card *ngFor="let debit of dataDebits$ | async">
+    <a [routerLink]="['/data-debit', debit.dataDebitKey]" class="app-link-wrapper">
+      <mat-card-content>
+        <img [src]="debit.requestClientLogoUrl || '/assets/icons/hat-permissions-generic.svg'" class="img img-responsive app-logo" height="60" width="60" />
+        <div class="app-description">
+          <h3 class="app-name">{{ debit.dataDebitKey }}</h3>
+          <div class="app-headline">by {{ debit.requestClientName }}</div>
+          <div class="app-headline">{{ debit.active ? 'active' : 'expired ' + (debit.end | datetime:'DD-MM-YYYY hh:mm aa') }}</div>
+        </div>
+        <div class="app-link-action">View app</div>
+        <!--<ng-container *ngIf="!app.setup || app.needsUpdating else appActivityIcons">-->
+          <!--<mat-icon class="app-status-icon">add_circle_outline</mat-icon>-->
+        <!--</ng-container>-->
+
+        <!--<ng-template #appActivityIcons>-->
+          <!--<mat-icon class="app-status-icon">{{ app.active ? 'check_circle' : 'report_problem' }}</mat-icon>-->
+        <!--</ng-template>-->
+      </mat-card-content>
+    </a>
+  </mat-card>
+</div>

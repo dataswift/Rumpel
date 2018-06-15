@@ -93,109 +93,6 @@
 
 /////////////
 
-.content-wrapper {
-  @include flex-container(column);
-  overflow: scroll;
-  margin-bottom: 125px;
-}
-
-.title-section {
-  text-align: center;
-  max-width: 500px;
-  margin-bottom: 20px;
-
-  .app-logo-wrapper {
-    display: inline-block;
-    background-color: white;
-    padding: 6px;
-    border-radius: 50%;
-    margin: auto;
-    margin-top: 50px;
-
-    .app-logo {
-      border-radius: 50%;
-    }
-  }
-
-  .title-section-heading {
-    color: $app-dark-tone;
-    font-size: 24px;
-    font-weight: bold;
-  }
-
-  .title-section-text {
-    color: $hat-body-text;
-    font-size: 13px;
-    line-height: 1.38;
-    width: 80%;
-    margin: auto;
-  }
-}
-
-.permissions-section {
-  padding: 10px 10px;
-  width: 100%;
-  max-width: 500px;
-
-  .section-header {
-    color: $text-dark;
-    font-size: 13px;
-    text-transform: uppercase;
-  }
-
-  .mat-card {
-    margin: 10px 0;
-    box-shadow: none;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-
-    .card-img-wrapper {
-      margin-right: 20px;
-    }
-
-    .card-heading {
-      color: $app-dark-tone;
-      font-weight: bold;
-      font-size: 14px;
-      letter-spacing: 0.5px;
-      text-transform: capitalize;
-    }
-
-    .card-subheading {
-      font-weight: bold;
-      margin-top: 0;
-    }
-
-    .card-text {
-      letter-spacing: normal;
-      color: $hat-body-text;
-      font-size: 13px;
-      height: 36px;
-      overflow: hidden;
-
-      &-expanded {
-        height: auto;
-      }
-    }
-
-    .card-list {
-      margin-bottom: 0;
-      padding-left: 16px;
-    }
-
-    .card-expansion-toggle {
-      position: absolute;
-      bottom: 8px;
-      right: 16px;
-      color: $app-accent-color;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: bold;
-    }
-  }
-}
-
 .user-actions {
   position: fixed;
   bottom: 0;
@@ -222,5 +119,27 @@
     background-color: transparent;
     letter-spacing: 0.7px;
     color: $text-dark;
+  }
+}
+
+.app-error {
+  border: solid 2px #E36682;
+  color: #E36682;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 500px;
+
+  &-header {
+    font-size: 22px;
+    margin-top: 0;
+  }
+
+  &-text {
+    font-size: 14px;
+  }
+
+  @media (max-width: 500px) {
+    margin: 30px 20px;
   }
 }

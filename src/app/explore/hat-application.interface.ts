@@ -4,8 +4,10 @@ import {BundleStructure} from '../shared/interfaces/bundle.interface';
 export interface HatApplication {
   application: HatApplicationContent;
   setup: boolean;
+  enabled: boolean;
   active: boolean;
-  needsUpdating: boolean;
+  needsUpdating?: boolean;
+  mostRecentData?: string;
 }
 
 export interface HatApplicationContent {
@@ -29,8 +31,10 @@ interface HatApplicationInfo {
   headline: string;
   description: HatApplicationDescription;
   dataPreview: SheFeed[];
+  dataUsePurpose: string;
   graphics: HatApplicationGraphics;
   published: boolean;
+  termsUrl: string;
 }
 
 interface HatApplicationDescription {
@@ -53,16 +57,36 @@ interface HatApplicationGraphicsSize {
 }
 
 interface HatApplicationPermissions {
-  rolesGranted: { role: string; detail: string; }[];
-  dataRequired?: { bundle: BundleStructure; };
+  rolesGranted: { role: string; detail?: string; }[];
+  dataRequired?: HatApplicationDataRequired;
+  dataRetrieved?: BundleStructure;
 }
 
-interface HatApplicationSetup {
+interface HatApplicationDataRequired {
+  bundle: BundleStructure;
+  startDate: string;
+  endDate: string;
+  rolling: boolean;
+}
+
+export interface HatApplicationSetup {
+  url?: string;
+  iosUrl?: string;
+  onboarding: HatApplicationOnboarding[];
   kind: string;
+}
+
+interface HatApplicationOnboarding {
+  title: string;
+  illustration: { normal: string; };
+  description: string;
 }
 
 interface HatApplicationStatus {
   compatibility: string;
+  expectedStatus: number;
+  dataPreviewEndpoint: string;
   recentDataCheckEndpoint: string;
+  statusUrl: string;
   kind: string;
 }

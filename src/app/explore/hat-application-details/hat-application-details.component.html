@@ -2,7 +2,8 @@
   <div class="app-details-header">
     <mat-toolbar class="app-details-header-toolbar">
       <span class="flex-spacer"></span>
-      <mat-icon class="app-details-close" (click)="closeComponentView()">clear</mat-icon>
+      <mat-icon [matMenuTriggerFor]="moreActionsMenu" class="app-details-close" *ngIf="app.setup">more_horiz</mat-icon>
+      <mat-icon (click)="closeComponentView()" class="app-details-close" *ngIf="!app.setup">clear</mat-icon>
     </mat-toolbar>
 
     <mat-card class="app-details-header-card">
@@ -11,16 +12,20 @@
       </div>
       <h3 class="app-details-header-title">{{app.application.info.name}}</h3>
       <div class="app-details-header-headline">{{app.application.info.headline}}</div>
-      <ng-container *ngIf="!app.setup || app.needsUpdating else appActivityButtons">
-        <a mat-button class="require-setup" href="{{app.application.kind.url}}">
-          <mat-icon>add_circle_outline</mat-icon>Connect app</a>
-      </ng-container>
 
-      <ng-template #appActivityButtons>
-        <a mat-button [class.require-setup]="!app.active" href="{{app.application.kind.url}}">
-          <mat-icon>{{app.active ? 'input' : 'report_problem'}}</mat-icon>
-          {{ app.active ? 'Go to app' : 'Reconnect app' }}</a>
-      </ng-template>
+      <a mat-button [ngClass]="['app-details-status', appStatus]"
+         [href]="generateHatLoginLink(app.application.id, app.application.setup)"
+         [ngSwitch]="appStatus">
+        <ng-container *ngSwitchCase="'goto'"><mat-icon>exit_to_app</mat-icon>Go to app</ng-container>
+        <ng-container *ngSwitchCase="'running'"><mat-icon>check_circle</mat-icon>Active</ng-container>
+        <ng-container *ngSwitchCase="'fetching'"><mat-icon>sync</mat-icon>Fetching...</ng-container>
+        <ng-container *ngSwitchCase="'failing'"><mat-icon>sync_problem</mat-icon>Reconnect</ng-container>
+        <ng-container *ngSwitchCase="'untouched'"><mat-icon>add_circle_outline</mat-icon>Connect</ng-container>
+      </a>
+
+      <div class="app-details-error" *ngIf="appStatus === 'failing'">
+        App disconnected. Please click reconnect to re-establish connection.
+      </div>
     </mat-card>
   </div>
 
@@ -30,11 +35,12 @@
         <mat-card class="app-details-general">
           <mat-card-content>
             <h5 class="app-details-heading">Description</h5>
-            <p class="app-details-description">{{app.application.info.description.text}}</p>
+            <div class="app-details-description" [innerHTML]="app.application.info.description.text | markdownToHtml"></div>
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="app-details-general">
+        <mat-card class="app-details-general"
+                  *ngIf="app.application.info.graphics.screenshots && app.application.info.graphics.screenshots.length > 0">
           <mat-card-content>
             <h5 class="app-details-heading">Screenshots</h5>
             <div class="app-details-screenshots">
@@ -53,4 +59,14 @@
       </mat-tab>
     </mat-tab-group>
   </div>
+
+  <mat-menu #moreActionsMenu="matMenu">
+    <a mat-menu-item class="actions-menu-item" [routerLink]="['permissions']">
+      <mat-icon>phonelink_lock</mat-icon>App permissions
+    </a>
+    <button mat-menu-item class="actions-menu-item" (click)="disableApp(app.application.id)">
+      <mat-icon>link_off</mat-icon>Disable app
+    </button>
+    <button mat-menu-item class="actions-menu-item">Cancel</button>
+  </mat-menu>
 </div>

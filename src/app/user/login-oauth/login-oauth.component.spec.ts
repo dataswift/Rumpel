@@ -14,6 +14,8 @@ import { APP_CONFIG } from '../../app.config';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
+// tslint:disable-next-line:max-line-length
+import { HatApplicationPermissionsComponent } from '../../shared/components/hat-application-permissions/hat-application-permissions.component';
 
 describe('LoginOauthComponent', () => {
   let component: LoginOauthComponent;
@@ -22,7 +24,7 @@ describe('LoginOauthComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
-      declarations: [ LoginOauthComponent, UnbundlePipe ],
+      declarations: [ LoginOauthComponent, HatApplicationPermissionsComponent, UnbundlePipe ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },

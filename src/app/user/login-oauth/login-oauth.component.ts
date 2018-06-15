@@ -19,7 +19,7 @@ import { HatApplication, HatApplicationContent } from '../../explore/hat-applica
 })
 export class LoginOauthComponent implements OnInit {
   public hatDomain: string;
-  public error: string;
+  public errorMessage: string;
   public hatApp: HatApplicationContent;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
@@ -31,24 +31,26 @@ export class LoginOauthComponent implements OnInit {
     const redirect = this.route.snapshot.queryParams['redirect'];
 
     if (name && redirect) {
-      this.authSvc.getApplicationDetails(name, redirect)
+      const safeName = name.toLowerCase();
+
+      this.authSvc.getApplicationDetails(safeName, redirect)
         .subscribe(
       (hatApp: HatApplication) => {
 
-        if (hatApp.active && !hatApp.needsUpdating) {
-          this.buildRedirect(name);
+        if (hatApp.enabled && !hatApp.needsUpdating) {
+          this.buildRedirect(safeName);
         } else {
           this.hatApp = hatApp.application;
         }
       },
-      error => { // App is not registered, assume legacy for testing
-        // console.warn('Failed to login. Reason: ', error);
-        // this.error = 'ERROR: Failed to obtain HAT authentication. Please try again.';
-        this.legacyLogin();
+      error => {
+          // console.warn('Failed to login. Reason: ', error);
+          // this.errorMessage = 'ERROR: Failed to obtain permission profile. Is the app registered?';
+          this.legacyLogin();
         }
       );
     } else {
-      // TODO: show error message
+      this.errorMessage = 'ERROR: App details incorrect. Please contact the app developer and let them know.';
     }
   }
 
@@ -59,7 +61,7 @@ export class LoginOauthComponent implements OnInit {
   }
 
   clearError() {
-    this.error = '';
+    this.errorMessage = null;
   }
 
   buildRedirect(appName: string): void {
@@ -74,10 +76,6 @@ export class LoginOauthComponent implements OnInit {
 
   declineTerms(): void {
     window.location.href = this.route.snapshot.queryParams['fallback'];
-  }
-
-  toggleCardExpansion(endpoint): void {
-    endpoint.expanded = !endpoint.expanded;
   }
 
   private legacyLogin(): void {

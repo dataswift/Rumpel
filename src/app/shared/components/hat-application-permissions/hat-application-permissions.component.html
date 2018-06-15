@@ -1,0 +1,48 @@
+<div class="content-wrapper">
+  <section class="title-section">
+    <div class="app-logo-wrapper">
+      <img src="{{app.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" />
+    </div>
+
+    <h3 class="title-section-heading">{{app.info.name}}</h3>
+
+    <p class="title-section-text">{{app.info.name}} needs access to some of your HAT data, and will have the
+      ability to take actions in your HAT. By agreeing, you confirm that you're okay with this.</p>
+  </section>
+
+  <section class="permissions-section">
+    <h4 class="section-header">{{app.info.name}} will be able to:</h4>
+    <mat-card *ngFor="let permission of readablePermissions">
+      <div class="card-img-wrapper">
+        <img src="/assets/icons/hat-permissions-generic.svg" class="card-img" />
+      </div>
+
+      <mat-card-content>
+        <h5 class="card-heading">{{permission.title}}</h5>
+        <p class="card-text">{{permission.text}}</p>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <section class="permissions-section" *ngIf="app.permissions.dataRequired && app.permissions.dataRequired.bundle">
+    <h4 class="section-header">{{app.info.name}} will have access to:</h4>
+    <mat-card *ngFor="let endpoint of app.permissions.dataRequired.bundle.bundle | unbundle">
+      <div class="card-img-wrapper" [class.card-img-wrapper-expanded]="endpoint.expanded">
+        <img src="/assets/icons/hat-permissions-generic.svg" class="card-img" />
+      </div>
+
+      <mat-card-content>
+        <h5 class="card-heading">{{endpoint.title}}</h5>
+        <div class="card-text" [class.card-text-expanded]="endpoint.expanded">
+          <h6 class="card-subheading">Fields required</h6>
+          <ul class="card-list">
+            <li *ngFor="let field of endpoint.fields">{{field}}</li>
+          </ul>
+        </div>
+        <div *ngIf="endpoint.fields.length > 1" (click)="toggleCardExpansion(endpoint)" class="card-expansion-toggle">
+          {{endpoint.expanded ? 'Less' : 'More'}}
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</div>

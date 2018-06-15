@@ -77,40 +77,6 @@ ul.center {
     &:hover {
       background-color: $app-hover-grey;
     }
-
-    &.data-plugs-list {
-      a {
-        text-transform: capitalize;
-        cursor: pointer;
-
-        .plus-icon {
-          color: #ddd;
-          float: right;
-        }
-
-        .icon-grey {
-          display: inline-block;
-        }
-
-        .icon-color {
-          display: none;
-        }
-
-        &:hover {
-          .plus-icon {
-            color: $app-dark-grey;
-          }
-
-          .icon-grey {
-            display: none;
-          }
-
-          .icon-color {
-            display: inline-block;
-          }
-        }
-      }
-    }
   }
 
   .disable {
@@ -125,12 +91,6 @@ ul.center {
     .text {
       margin-top: 2em;
     }
-  }
-}
-
-.data-plugs-more {
-  em {
-    color: #bbb;
   }
 }
 
