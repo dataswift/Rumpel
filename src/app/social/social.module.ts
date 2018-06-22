@@ -10,7 +10,6 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { SocialComponent } from './social/social.component';
 import { TileSocialComponent } from './tile-social/tile-social.component';
 import { FbPostComponent } from './fb-post/fb-post.component';
 import { LocationFbPostComponent } from './location-fb-post/location-fb-post.component';
@@ -23,7 +22,7 @@ import { MediaService } from './media.service';
 
 @NgModule({
     imports: [ SharedModule ],
-    declarations: [ SocialComponent, TileSocialComponent, FbPostComponent,
+    declarations: [ TileSocialComponent, FbPostComponent,
                     LocationFbPostComponent, TweetComponent, LocationTweetComponent ],
     providers: [ SocialService, TwitterService, MediaService ],
     exports: [ TileSocialComponent, FbPostComponent, LocationFbPostComponent, TweetComponent, LocationTweetComponent ]

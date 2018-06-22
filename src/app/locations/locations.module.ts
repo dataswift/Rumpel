@@ -10,7 +10,6 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { LocationsComponent } from './locations/locations.component';
 import { MapComponent } from './map/map.component';
 import { TileMapComponent } from './tile-map/tile-map.component';
 
@@ -20,7 +19,7 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
 
 @NgModule({
     imports: [ SharedModule, FormsModule, CustomAngularMaterialModule ],
-    declarations: [ LocationsComponent, MapComponent, TileMapComponent ],
+    declarations: [ MapComponent, TileMapComponent ],
     providers: [ LocationsService ],
     exports: [ TileMapComponent, MapComponent ]
 })

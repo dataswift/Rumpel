@@ -18,44 +18,8 @@
   //}
 }
 
-.filter-header {
-  font-family: $font-standard;
-  font-size: 2em;
-  margin-top: 2em;
-  display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-  margin-top: 100px;
-
-
-  .filters{
-
-  }
-
-  .filter {
-    font-size: 16px;
-    padding: 14px 0px 14px 14px;
-    margin-left: 4px;
-    cursor: pointer;
-    display: inline-block;
-
-
-    i{
-      vertical-align: middle;
-      margin-right: 5px;
-      font-size: 18px;
-    }
-
-    span {
-      margin-top: 0.1em;
-      margin-right: 0.5em;
-    }
-
-    &.on {
-      color: $app-mid-tone;
-    }
-  }
+.notables-editor-wrapper {
+  margin: 50px auto;
 }
 
 li.removed-item {

@@ -18,7 +18,6 @@ import { DimensionsModule } from '../dimensions/dimensions.module';
 import { NotablesModule } from '../notables/notables.module';
 
 import { MyDayComponent } from './my-day/my-day.component';
-import { MashupsComponent } from './mashups/mashups.component';
 import { ActivityListComponent } from './activity-list/activity-list.component';
 import { ActivityCardComponent } from './activity-card/activity-card.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
@@ -38,7 +37,6 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
   declarations: [
     MyDayComponent,
     ActivityListComponent,
-    MashupsComponent,
     ActivityCardComponent
   ]
 })

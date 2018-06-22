@@ -90,13 +90,9 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
 
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 180 + 'px');
-    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 259 + 'px');
+    this.updateMapSize(100, 200);
 
-    window.addEventListener('resize', () => {
-      this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 180 + 'px');
-      this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - 259 + 'px');
-    });
+    window.addEventListener('resize', () => this.updateMapSize(100, 200));
 
     this.loadMoreData();
   }
@@ -181,5 +177,10 @@ export class MyDayComponent implements OnInit, OnDestroy {
     if (Array.isArray(objValue)) {
       return objValue.concat(srcValue);
     }
+  }
+
+  private updateMapSize(sizeOffset: number, sidebarSizeOffset: number): void {
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - sizeOffset + 'px');
+    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - sidebarSizeOffset + 'px');
   }
 }

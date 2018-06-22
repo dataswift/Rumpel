@@ -100,7 +100,7 @@ describe('ProfileComponent', () => {
         HttpBackendClient,
         { provide: HatApiService, useValue: {} },
         { provide: AuthService, useValue: {
-          user$: Observable.of({ hatId: 'test', domain: '.hat.org' })
+          user$: Observable.of({ hatId: 'test', domain: '.hat.org', fullDomain: 'test.hat.org' })
         } },
         { provide: DialogService, useValue: {} },
         { provide: ProfilesService, useValue: {

@@ -25,12 +25,9 @@ import { OffersHomeComponent } from './offers/offers-home/offers-home.component'
 import { GridComponent } from './dashboard/grid/grid.component';
 import { SheFeedComponent } from './she/she-feed/she-feed.component';
 import { NotablesViewComponent } from './notables/notables-view/notables-view.component';
-import { MashupsComponent } from './mashups/mashups/mashups.component';
 import { MyDayComponent } from './mashups/my-day/my-day.component';
 import { PasswordRecoverComponent } from './user/password-recover/password-recover.component';
 import { PasswordChangeComponent } from './user/password-change/password-change.component';
-import { LocationsComponent } from './locations/locations/locations.component';
-import { SocialComponent } from './social/social/social.component';
 import { HatApplicationListComponent } from './explore/hat-application-list/hat-application-list.component';
 import { HatApplicationDetailsComponent } from './explore/hat-application-details/hat-application-details.component';
 import { HatAppDetailsPermissionsComponent } from './explore/hat-app-details-permissions/hat-app-details-permissions.component';
@@ -60,14 +57,6 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
-          { path: 'locations', component: LocationsComponent }
-        ]},
-      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
-        children: [
-          { path: 'social', component: SocialComponent }
-        ]},
-      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
-        children: [
           { path: 'data-debit', component: DataDebitListComponent },
           { path: 'data-debit/:id', component: DataDebitDetailsComponent }
         ]},
@@ -79,10 +68,7 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
-          { path: 'mashups', component: MashupsComponent,
-            children: [
-              { path: 'myday', component: MyDayComponent }
-            ]}
+          { path: 'mashups', component: MyDayComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
