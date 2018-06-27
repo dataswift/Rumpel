@@ -71,9 +71,6 @@ export const configuration: AppConfig = {
       { display: 'Map', icon: 'layers', link: '/mashups', dataType: '', disable: '',
         description: 'See your feed correlated with the places you\'ve been too.' },
 
-      { display: 'Dashboard', icon: 'dashboard', link: '/dashboard', dataType: '', disable: '',
-        description: 'The dashboard is where you have an overview of Rumpel.' },
-
       { display: 'My Public Profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
         description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
 

@@ -22,7 +22,6 @@ import { LoginStandaloneComponent } from './user/login-standalone/login-standalo
 
 import { ProfileComponent } from './profiles/profile/profile.component';
 import { OffersHomeComponent } from './offers/offers-home/offers-home.component';
-import { GridComponent } from './dashboard/grid/grid.component';
 import { SheFeedComponent } from './she/she-feed/she-feed.component';
 import { NotablesViewComponent } from './notables/notables-view/notables-view.component';
 import { MyDayComponent } from './mashups/my-day/my-day.component';
@@ -44,7 +43,6 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
       { path: 'user/login/start', component: LoginStandaloneComponent },
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
-          { path: 'dashboard', component: GridComponent },
           { path: 'feed', component: SheFeedComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
