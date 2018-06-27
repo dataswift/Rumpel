@@ -12,7 +12,14 @@
 </rum-info-header>
 
 <div class="native-login-page">
-  <span class="flex-spacer"></span>
+  <span class="small-flex-spacer"></span>
+
+  <div [style.visibility]="hatNameError ? 'visible' : 'hidden'" class="rum-error-message">
+    <mat-icon class="rum-error-message-icon">warning</mat-icon>
+    Sorry that HAT name doesn't exist
+  </div>
+
+  <span class="small-flex-spacer"></span>
 
   <div class="title-container">
     <div class="logo-wrapper">
@@ -27,7 +34,9 @@
   <div class="f-g">
     <label for="hatName" hidden></label>
     <input id="hatName" type="text" class="hat-pass-input" name="hat-pass-input"
+           [class.rum-field-has-error]="hatNameError"
            placeholder="Enter HAT name" [(ngModel)]="hatName"
+           (focus)="hideErrorMessage()"
            (keyup.enter)="redirectToLogin()"/>
   </div>
 
@@ -58,7 +67,7 @@
     <p class="login-info">After pressing 'next' you will be re-directed to your HAT to enter your password</p>
   </div>
 
-  <span class="custom-flex-spacer"></span>
+  <span class="large-flex-spacer"></span>
 
   <div class="user-actions">
     <button mat-flat-button role="link" (click)="redirectToLogin()" [disabled]="hatName.length < 4 && selectedDomain">Next</button>

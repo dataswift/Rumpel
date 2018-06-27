@@ -14,6 +14,11 @@ import { PasswordChangeFailureResInterface } from '../password-change-failure-re
 
 declare const zxcvbn: any;
 const MIN_PASSWORD_STRENGTH = 3; // Integer from 0-4, see https://github.com/dropbox/zxcvbn for more info
+const ERROR_MESSAGES = {
+  authenticationError: 'ERROR: Current password incorrect',
+  passwordStrengthError: 'ERROR: Password is too weak. Please make it harder to guess.',
+  passwordMatchError: 'Provided passwords do not match'
+};
 
 @Component({
   selector: 'rum-password-change',
@@ -25,15 +30,13 @@ export class PasswordChangeComponent implements OnInit {
   public colorMapping = ['red', 'red', 'orange', 'green', 'green'];
   public evaluationMapping = ['Too guessable', 'Weak', 'So-so', 'Strong', 'Very Strong'];
   public resetToken: string;
-  public unauthorizedError: boolean;
-  public matchError: boolean;
-  public strengthError: string;
   public successMessage: string;
   public passwordStrength: any;
   public loadingText: string;
   public hatName: string;
   public hatDomain: string;
   public passwordChanged = false;
+  public errorType: string;
 
   constructor(private route: ActivatedRoute,
               private authSvc: AuthService) { }
@@ -49,10 +52,12 @@ export class PasswordChangeComponent implements OnInit {
     this.hatDomain = host.substring(host.indexOf('.'));
   }
 
+  errorText(): string {
+    return ERROR_MESSAGES[this.errorType] || '';
+  }
+
   clearErrors() {
-    this.unauthorizedError = false;
-    this.matchError = false;
-    this.strengthError = null;
+    this.errorType = '';
     this.successMessage = null;
     this.passwordStrength = null;
   }
@@ -66,7 +71,7 @@ export class PasswordChangeComponent implements OnInit {
       const passwordStrength = zxcvbn(newPass);
 
       if (passwordStrength.score < MIN_PASSWORD_STRENGTH) {
-        this.strengthError = 'ERROR: Password is too weak. Please make it harder to guess.';
+        this.errorType = 'passwordStrengthError';
 
         return;
       }
@@ -77,7 +82,7 @@ export class PasswordChangeComponent implements OnInit {
         this.changePassword(this.currentPass.nativeElement.value, newPass);
       }
     } else {
-      this.matchError = true;
+      this.errorType = 'passwordMatchError';
     }
   }
 
@@ -93,14 +98,7 @@ export class PasswordChangeComponent implements OnInit {
         },
         (error: HttpErrorResponse) => {
           this.loadingText = null;
-
-          if (error.status === 403) {
-            this.unauthorizedError = true;
-          } else {
-            const serverErrorMsg: PasswordChangeFailureResInterface = error.error;
-            this.strengthError = `ERROR: ${serverErrorMsg.message['obj.newPassword'][0].msg[0]}.<br>
-            ${serverErrorMsg.message['obj.newPassword'][0].args.join('<br>')}`;
-          }
+          this.errorType = error.status === 403 ? 'authenticationError' : 'passwordStrengthError';
         }
       );
   }
@@ -116,13 +114,7 @@ export class PasswordChangeComponent implements OnInit {
         },
         (error: HttpErrorResponse) => {
           this.loadingText = null;
-          if (error.status === 403) {
-            this.unauthorizedError = true;
-          } else {
-            const serverErrorMsg: PasswordChangeFailureResInterface = error.error;
-            this.strengthError = `ERROR: ${serverErrorMsg.message['obj.newPassword'][0].msg[0]}.<br>
-            ${serverErrorMsg.message['obj.newPassword'][0].args.join('<br>')}`;
-          }
+          this.errorType = error.status === 403 ? 'authenticationError' : 'passwordStrengthError';
         }
       );
   }

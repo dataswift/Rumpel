@@ -8,6 +8,8 @@ import { BrowserStorageService } from '../../services/browser-storage.service';
 import { ActivatedRoute } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { InfoHeaderComponent } from '../info-header/info-header.component';
+import { AuthService } from '../../core/services/auth.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('LoginStandaloneComponent', () => {
   let component: LoginStandaloneComponent;
@@ -20,6 +22,7 @@ describe('LoginStandaloneComponent', () => {
       providers: [
         { provide: APP_CONFIG, useValue: { supportedDomains: ['.hat.org'] } },
         { provide: BrowserStorageService, useValue: { getItem: () => null } },
+        { provide: AuthService, useValue: { domainRegistered: () => Observable.of(true) } },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } }
       ]
     })

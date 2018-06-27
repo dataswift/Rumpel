@@ -11,6 +11,7 @@ import { HatApplication } from '../../explore/hat-application.interface';
 import * as parse from 'date-fns/parse';
 import * as isFuture from 'date-fns/is_future';
 import * as addDays from 'date-fns/add_days';
+import {HttpResponse} from '@angular/common/http';
 
 declare const httpProtocol: string;
 
@@ -116,6 +117,12 @@ export class AuthService {
 
   setupApplication(name: string): Observable<HatApplication> {
     return this.hatSvc.setupApplication(name);
+  }
+
+  domainRegistered(domain: string): Observable<boolean> {
+    return this.hatSvc.getPublicKey(domain)
+      .map((res: HttpResponse<any>) => res.status === 200)
+      .catch(error => Observable.of(false));
   }
 
   private generateUserInfo(decodedToken: string | null): User {

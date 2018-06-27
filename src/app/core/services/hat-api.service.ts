@@ -289,6 +289,12 @@ export class HatApiService {
       .map((res: HttpResponse<any>) => res.status);
   }
 
+  getPublicKey(domain: string): Observable<any> {
+    const path = `https://${domain}/publickey`;
+
+    return this.http.get(path, { observe: 'response' });
+  }
+
   private uploadFileMetadata(metadata: FileMetadataReq): Observable<FileMetadataRes> {
     const path = `${this.pathPrefix}/files/upload`;
 
