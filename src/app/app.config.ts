@@ -35,8 +35,8 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.6.0.3',
-  name: 'RumpelStaging',
+  version: '3.6.0.4',
+  name: 'Rumpel',
   tokenApp: 'rumpel',
   tokenExpiryTime: 3,
   supportedDomains: ['.hubofallthings.net', '.hat.direct'],
