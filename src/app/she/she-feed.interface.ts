@@ -1,3 +1,16 @@
+export interface DayGroupedSheFeed {
+  day: string;
+  data: SheFeed[];
+}
+
+export interface SheMapItem {
+  source: string;
+  timestamp: number;
+  latitude: number;
+  longitude: number;
+  content?: { title: string; body: string; };
+}
+
 export interface SheFeed {
   source: string;
   date: { iso: string; unix: number };

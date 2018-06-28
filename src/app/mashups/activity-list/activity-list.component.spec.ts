@@ -23,6 +23,7 @@ import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { RelativeTimePipe } from '../../shared/pipes/relative-time.pipe';
 import { RemoveCharsPipe } from '../../shared/pipes/removeChars.pipe';
+import { SheFeedItemComponent } from '../../shared/components/she-feed-item/she-feed-item.component';
 
 describe('ActivityListComponent', () => {
   let component: ActivityListComponent;
@@ -44,7 +45,8 @@ describe('ActivityListComponent', () => {
         SafeHtmlPipe,
         MarkdownToHtmlPipe,
         RelativeTimePipe,
-        RemoveCharsPipe
+        RemoveCharsPipe,
+        SheFeedItemComponent
       ]
     })
       .compileComponents();

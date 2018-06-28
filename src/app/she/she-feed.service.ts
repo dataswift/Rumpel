@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
 
-import { SheFeed } from './she-feed.interface';
+import { DayGroupedSheFeed, SheFeed } from './she-feed.interface';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 
@@ -14,17 +14,14 @@ import * as endOfDay from 'date-fns/end_of_day';
 import * as format from 'date-fns/format';
 import { groupBy } from 'lodash';
 
-interface DayGroupedSheFeed {
-  day: string;
-  data: SheFeed[];
-}
+
 
 @Injectable()
 export class SheFeedService {
   private _feed$: ReplaySubject<DayGroupedSheFeed[]> = <ReplaySubject<DayGroupedSheFeed[]>>new ReplaySubject(1);
   private _subfeed$: ReplaySubject<SheFeed[]> = <ReplaySubject<SheFeed[]>>new ReplaySubject(1);
   private store: { since: number, data: { day: string; data: SheFeed[] }[] };
-  private subfeedStore: { [endpoint: string]: SheFeed[] } = {}
+  private subfeedStore: { [endpoint: string]: SheFeed[] } = {};
 
   constructor(private hat: HatApiService,
               private authSvc: AuthService) {

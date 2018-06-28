@@ -13,6 +13,7 @@ import { LocationIos } from '../../shared/interfaces/location.interface';
 import * as leaflet from 'leaflet';
 import 'leaflet.markercluster';
 import { Moment } from 'moment';
+import { SheMapItem } from '../../she/she-feed.interface';
 
 @Component({
   selector: 'rum-map',
@@ -20,7 +21,7 @@ import { Moment } from 'moment';
   styleUrls: ['map.component.scss']
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input() dataPoints: HatRecord<LocationIos>[];
+  @Input() dataPoints: SheMapItem[];
   @Input() mapHeight: string;
   @Input() mapWidth: string;
   @Input() selectedTime: Moment;
@@ -78,7 +79,7 @@ export class MapComponent implements OnInit, OnChanges {
     }
   }
 
-  updateMap(locations: HatRecord<LocationIos>[]) {
+  updateMap(locations: SheMapItem[]) {
     if (this.map) {
       this.drawMarkers(locations);
       if (locations && locations.length > 0) {
@@ -103,19 +104,27 @@ export class MapComponent implements OnInit, OnChanges {
     this.bbox.maxLng = Math.max(this.bbox.maxLng, lng);
   }
 
-  drawMarkers(locations: HatRecord<LocationIos>[]) {
+  drawMarkers(locations: SheMapItem[]) {
     this.map.removeLayer(this.markers);
     this.markers = leaflet.markerClusterGroup();
     this.resetBoundingBox();
     // const pointlist = [];
     for (const loc of locations || []) {
-      this.adjustBoundingBox(loc.data.latitude, loc.data.longitude);
-      const pos = new leaflet.LatLng(loc.data.latitude, loc.data.longitude);
+      this.adjustBoundingBox(loc.latitude, loc.longitude);
+      const pos = new leaflet.LatLng(loc.latitude, loc.longitude);
       const marker = leaflet.marker(pos);
       // marker.timestamp = loc.data.dateCreated;
 
-      const date = moment(Number(loc.data.dateCreated));
-      marker.bindPopup('<b style="text-align: center">' + date.format('DD MMM YYYY h:mm a') + '</b>').openPopup();
+      const date = moment(Number(loc.timestamp * 1000));
+
+      if (loc.content) {
+        marker.bindPopup(`
+          <h3>${loc.content.title}</h3>
+          <div>${loc.content.body}</div>
+          <div>Posted on ${date.format('YYYY-MM-DD hh:mma')}</div>`).openPopup();
+      } else {
+        marker.bindPopup(`<p>Source: ${loc.source}<br/>Recorded at ${date.format('YYYY-MM-DD hh:mma')}</p>`).openPopup();
+      }
 
       /*
       marker.on('click', (e: any) => {

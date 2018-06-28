@@ -14,10 +14,10 @@
         <span>Loading more data...</span>
       </div>
 
-      <div class="timeline-view">
+      <div class="timeline-view" *ngIf="feed$ | async as feedData">
 
         <rum-map class="map"
-                  [dataPoints]="locations[selectedTime]"
+                  [dataPoints]="locations$ | async"
                   [mapHeight]="safeSize"
                   [selectedTime]="selectedTime"
                   (timeSelected)="selectTime($event)"
@@ -25,7 +25,7 @@
 
         <rum-activity-list class="activitylist"
                            [componentHeight]="safeSizeSidebar"
-                           [cards]="cardList"
+                           [cards]="feedData"
                            [selectedDate]="selectedTime"
                            (timeSelected)="selectTime($event)"
                            (notifyDatesInRange)="getDatesInRange($event)"></rum-activity-list>

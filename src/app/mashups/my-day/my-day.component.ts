@@ -8,19 +8,15 @@
 
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { SocialService } from '../../social/social.service';
-import { TwitterService } from '../../social/twitter.service';
 import { LocationsService } from '../../locations/locations.service';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { mergeWith, groupBy } from 'lodash';
-import { NotablesService } from '../../notables/notables.service';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { FacebookEventsService } from '../../dimensions/facebook-events.service';
-import { GoogleEventsService } from '../../dimensions/google-events.service';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
+import { SheFeedService } from '../../she/she-feed.service';
+import { DayGroupedSheFeed, SheMapItem } from '../../she/she-feed.interface';
 
 @Component({
   selector: 'rum-my-day',
@@ -33,7 +29,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
   private locationSub: Subscription;
   private dataStreamSub: Subscription;
-  public locations: HatRecord<LocationIos>[] = [];
+  public locations: SheMapItem[] = [];
   public cardList: { [date: string]: HatRecord<any>[]; };
 
   public safeSize;
@@ -45,54 +41,26 @@ export class MyDayComponent implements OnInit, OnDestroy {
   public hasLocationData = false;
   public dataplugs: Subscription;
 
-  constructor(private locationsSvc: LocationsService,
-              private facebookEventsSvc: FacebookEventsService,
-              private googleEventsSvc: GoogleEventsService,
-              private socialSvc: SocialService,
-              private twitterSvc: TwitterService,
-              private notablesSvc: NotablesService,
+  public feed$: Observable<DayGroupedSheFeed[]>;
+  public locations$: Observable<SheMapItem[]>;
+
+  constructor(private sheSvc: SheFeedService,
+              private locationsSvc: LocationsService,
               private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
+    this.feed$ = this.sheSvc.getInitFeed();
+
+    const sheLocations$ = this.getSheLocationStream();
+    const iosLocations$ = this.getDeviceLocationStream();
+
+    this.locations$ = Observable.combineLatest(sheLocations$, iosLocations$).map(results => results[0].concat(results[1]));
+
     this.selectedTime = moment().format('YYYY-MM-DD');
 
-    this.dataStreamSub = Observable.merge(
-      this.facebookEventsSvc.data$,
-      this.googleEventsSvc.data$,
-      this.socialSvc.data$,
-      this.twitterSvc.data$,
-      this.notablesSvc.data$
-    )
-    .subscribe((dataEntities: HatRecord<any>[]) => {
-      const groupedRecords = this.groupByDate(dataEntities);
-
-      this.cardList = mergeWith(this.cardList, groupedRecords, this.cardMergeCustomiser);
-    });
-
-    this.locationSub = this.locationsSvc.data$.subscribe((locations: HatRecord<LocationIos>[]) => {
-      const groupedLocations = this.groupByDate(locations);
-      const squashedAndGroupedLocations = {};
-
-      for (const key in groupedLocations) {
-        if (groupedLocations.hasOwnProperty(key)) {
-          squashedAndGroupedLocations[key] = [{
-            endpoint: groupedLocations[key][0].endpoint,
-            recordId: null,
-            data: groupedLocations[key].length
-          }];
-        }
-      }
-
-      this.cardList = mergeWith(this.cardList, squashedAndGroupedLocations, this.cardMergeCustomiser);
-      this.locations = mergeWith(this.locations, groupedLocations, this.cardMergeCustomiser);
-    });
-
-    this.locationsSvc.loading$.subscribe(isLoading => this.loading = isLoading);
-
-    this.updateMapSize(100, 200);
-
-    window.addEventListener('resize', () => this.updateMapSize(100, 200));
+    this.updateMapSize(100, 160);
+    window.addEventListener('resize', () => this.updateMapSize(100, 160));
 
     this.loadMoreData();
   }
@@ -121,40 +89,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
     }
   }
 
-  groupByDate(dataEntities: HatRecord<any>[]): { [date: string]: HatRecord<any>[] } {
-    let extractDateString: (entity: HatRecord<any>) => string;
-    const endpoint = dataEntities.length > 0 ? dataEntities[0].endpoint : '';
-
-    switch (endpoint) {
-      case 'google/events':
-        extractDateString = entity => entity.data.start.format('YYYY-MM-DD');
-        break;
-      case 'facebook/events':
-        extractDateString = entity => entity.data.start.format('YYYY-MM-DD');
-        break;
-      case 'rumpel/notablesv1':
-        extractDateString = entity => entity.data.created_time.format('YYYY-MM-DD');
-        break;
-      case 'facebook/feed':
-        extractDateString = entity => entity.data.createdTime.format('YYYY-MM-DD');
-        break;
-      case 'twitter/tweets':
-        extractDateString = entity => entity.data.createdTime.format('YYYY-MM-DD');
-        break;
-      case 'rumpel/locations/ios':
-        extractDateString = entity => moment.unix(entity.data.dateCreated).format('YYYY-MM-DD');
-        break;
-      default:
-        extractDateString = entity => moment().format('YYYY-MM-DD');
-        break;
-    }
-
-    return groupBy(dataEntities, extractDateString);
-  }
-
   ngOnDestroy(): void {
-    this.locationSub.unsubscribe();
-    this.dataStreamSub.unsubscribe();
   }
 
   selectTime(event) {
@@ -166,17 +101,40 @@ export class MyDayComponent implements OnInit, OnDestroy {
   }
 
   loadMoreData() {
-    this.socialSvc.getMoreData(100);
     this.locationsSvc.getMoreData(1000, 10000);
-    this.facebookEventsSvc.getMoreData(100);
-    this.googleEventsSvc.getMoreData(100);
-    this.notablesSvc.getMoreData(100);
   }
 
-  private cardMergeCustomiser(objValue, srcValue): Array<any> {
-    if (Array.isArray(objValue)) {
-      return objValue.concat(srcValue);
-    }
+  private getSheLocationStream(): Observable<SheMapItem[]> {
+    return this.feed$
+      .map((days: DayGroupedSheFeed[]) => days.reduce((acc, day) => {
+        return acc.concat(day.data
+          .filter(feedItem => feedItem.location && feedItem.location.geo)
+          .map(feedItem => {
+            return {
+              source: feedItem.source,
+              timestamp: feedItem.date.unix,
+              latitude: feedItem.location.geo.latitude,
+              longitude: feedItem.location.geo.longitude,
+              content: {
+                title: feedItem.title.text || '',
+                body: feedItem.content.text || ''
+              }
+            };
+          }));
+      }, []));
+  }
+
+  private getDeviceLocationStream(): Observable<SheMapItem[]> {
+    return this.locationsSvc.data$.map((locations: HatRecord<LocationIos>[]) => {
+      return locations.map(location => {
+        return {
+          source: 'ios',
+          timestamp: location.data.dateCreated,
+          latitude: location.data.latitude,
+          longitude: location.data.longitude
+        };
+      });
+    });
   }
 
   private updateMapSize(sizeOffset: number, sidebarSizeOffset: number): void {

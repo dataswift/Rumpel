@@ -6,10 +6,11 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { DayGroupedSheFeed } from '../../she/she-feed.interface';
 
 @Component({
   selector: 'rum-activity-list',
@@ -17,9 +18,8 @@ import { HatRecord } from '../../shared/interfaces/hat-record.interface';
   styleUrls: ['activity-list.component.scss']
 })
 export class ActivityListComponent implements OnInit, OnChanges {
-
   @Input() componentHeight: string;
-  @Input() cards: { [day: string]: HatRecord<any>[]; } = {};
+  @Input() cards: DayGroupedSheFeed[] = [];
   @Input() selectedDate: string;
 
   @Output() timeSelected = new EventEmitter<string>();
@@ -118,7 +118,7 @@ export class ActivityListComponent implements OnInit, OnChanges {
 
 
   scrollToItem(index: number) {
-    this.timeSelected.emit(this.cardList[index].day);
+    // this.timeSelected.emit(this.cardList[index].day);
 
     if (index === 0) {
       this.activityListEl.nativeElement.scrollTop = 0;

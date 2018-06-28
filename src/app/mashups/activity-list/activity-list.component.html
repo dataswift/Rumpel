@@ -6,20 +6,12 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<div class="datePicker">
-  <h4 class="currentMonth" [innerHTML]="currentMonth"></h4>
-<!--  <ng2-datepicker [options]="options" [(ngModel)]="date" (ngModelChange)="changeDate($event)" ></ng2-datepicker> -->
-</div>
-
 <div class="activitylist-container" [style.height]="componentHeight" #activityList>
-
-  <h6 class="todayHeader">Today</h6>
-  <div class="date" *ngFor="let day of cardList; let i = index;">
-    <rum-activity-card [dayList]="day.dayList"
-                        [date]="day.day"
-                        [index]="i"
-                        [isSelected]="day.day === selectedDate"
-                        (selection)="scrollToItem($event)"></rum-activity-card>
+  <div *ngFor="let day of cards">
+    <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
+    <ng-container *ngFor="let card of day.data">
+      <rum-she-feed-item [feedItem]="card"></rum-she-feed-item>
+    </ng-container>
   </div>
 </div>
 

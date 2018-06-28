@@ -11,6 +11,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MapComponent } from './map.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
 
 describe('MapComponent', () => {
   let component: MapComponent;
@@ -19,7 +20,7 @@ describe('MapComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
-      declarations: [ MapComponent ]
+      declarations: [ MapComponent, MomentPipe ]
     })
       .compileComponents();
   }));
