@@ -34,6 +34,7 @@ interface HatApplicationInfo {
   dataUsePurpose: string;
   graphics: HatApplicationGraphics;
   published: boolean;
+  rating: { score: string; };
   termsUrl: string;
 }
 

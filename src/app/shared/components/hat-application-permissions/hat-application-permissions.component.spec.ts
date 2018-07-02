@@ -23,6 +23,9 @@ const APP_DATA_MOCK: HatApplicationContent = {
       'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>`
     },
     'termsUrl': 'https://hatdex.org/website-terms-service',
+    'rating': {
+      'score': 'A'
+    },
     'dataUsePurpose': 'Purpose of data use...',
     'dataPreview': [
       {
