@@ -69,3 +69,34 @@
     font-family: $font-standard;
   }
 }
+
+/deep/ .rum-map-popup .leaflet-popup-content-wrapper {
+  border-radius: 4px;
+
+  .leaflet-popup-content {
+    margin: 0;
+
+    .rum-map-popup-header {
+      font-size: 14px;
+      color: $app-dark-tone;
+      margin: 0;
+      padding: 10px 15px;
+      border-bottom: 1px solid #EEEEEE;
+    }
+
+    .rum-map-popup-content {
+      margin: 20px 15px;
+      padding: 0;
+      font-size: 13px;
+      color: $hat-body-text;
+      line-height: 1.54;
+    }
+
+    .rum-map-popup-footer {
+      margin: 10px 15px;
+      font-size: 13px;
+      color: $hat-body-text;
+      font-style: italic;
+    }
+  }
+}

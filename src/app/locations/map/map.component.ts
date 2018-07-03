@@ -8,8 +8,6 @@
 
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import * as moment from 'moment';
-import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import { LocationIos } from '../../shared/interfaces/location.interface';
 import * as leaflet from 'leaflet';
 import 'leaflet.markercluster';
 import { Moment } from 'moment';
@@ -37,6 +35,13 @@ export class MapComponent implements OnInit, OnChanges {
     minLat: 180,
     maxLat: -180
   };
+  private facebookPin: leaflet.Icon;
+  private twitterPin: leaflet.Icon;
+  private fitbitPin: leaflet.Icon;
+  private googlePin: leaflet.Icon;
+  private spotifyPin: leaflet.Icon;
+  private notablesv1Pin: leaflet.Icon;
+  private iosPin: leaflet.Icon;
 
   constructor() {
   }
@@ -57,6 +62,22 @@ export class MapComponent implements OnInit, OnChanges {
 
     const map = this.map;
     this.map.once('focus', () => map.scrollWheelZoom.enable());
+
+    const SourceIcon = leaflet.Icon.extend({
+      options: {
+        iconSize: [27, 38],
+        iconAnchor: [10, 38],
+        popupAnchor: [4, -40]
+      }
+    });
+
+    this.facebookPin = new SourceIcon({ iconUrl: '/assets/images/pins/facebook.png' });
+    this.twitterPin = new SourceIcon({ iconUrl: '/assets/images/pins/twitter.png' });
+    this.fitbitPin = new SourceIcon({ iconUrl: '/assets/images/pins/fitbit.png' });
+    this.googlePin = new SourceIcon({ iconUrl: '/assets/images/pins/google-calendar.png' });
+    this.spotifyPin = new SourceIcon({ iconUrl: '/assets/images/pins/spotify.png' });
+    this.notablesv1Pin = new SourceIcon({ iconUrl: '/assets/images/pins/notables.png' });
+    this.iosPin = new SourceIcon({ iconUrl: '/assets/images/pins/locations.png' });
 
     // WHY
     setTimeout(() => {
@@ -112,19 +133,29 @@ export class MapComponent implements OnInit, OnChanges {
     for (const loc of locations || []) {
       this.adjustBoundingBox(loc.latitude, loc.longitude);
       const pos = new leaflet.LatLng(loc.latitude, loc.longitude);
-      const marker = leaflet.marker(pos);
+      const marker = leaflet.marker(pos, { icon: this[loc.source + 'Pin'] });
       // marker.timestamp = loc.data.dateCreated;
 
       const date = moment(Number(loc.timestamp * 1000));
 
+      let popupContent: string;
+
       if (loc.content) {
-        marker.bindPopup(`
-          <h3>${loc.content.title}</h3>
-          <div>${loc.content.body}</div>
-          <div>Posted on ${date.format('YYYY-MM-DD hh:mma')}</div>`).openPopup();
+        popupContent = `
+          <h4 class="rum-map-popup-header">${loc.content.title}</h4>
+          <div class="rum-map-popup-content">${loc.content.body}</div>
+          <div class="rum-map-popup-footer">Posted on ${date.format('YYYY-MM-DD hh:mma')}</div>`;
       } else {
-        marker.bindPopup(`<p>Source: ${loc.source}<br/>Recorded at ${date.format('YYYY-MM-DD hh:mma')}</p>`).openPopup();
+        popupContent = `
+          <h4 class="rum-map-popup-header">From your ${loc.source} device</h4>
+          <div class="rum-map-popup-content">
+            Latitude: ${Math.round(loc.latitude * 1000) / 1000}<br/>
+            Longitude: ${Math.round(loc.longitude * 1000) / 1000}
+          </div>
+          <div class="rum-map-popup-footer">Recorded at ${date.format('hh:mma, YYYY-MM-DD')}</div>`;
       }
+
+      marker.bindPopup(popupContent, { 'className': 'rum-map-popup' }).openPopup();
 
       /*
       marker.on('click', (e: any) => {
