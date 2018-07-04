@@ -6,17 +6,17 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocationsService } from '../../locations/locations.service';
 import * as moment from 'moment';
 import { Moment } from 'moment';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 import { SheFeedService } from '../../she/she-feed.service';
 import { DayGroupedSheFeed, SheMapItem } from '../../she/she-feed.interface';
+import { Filter } from '../../shared/interfaces/bundle.interface';
 
 @Component({
   selector: 'rum-my-day',
@@ -25,21 +25,15 @@ import { DayGroupedSheFeed, SheMapItem } from '../../she/she-feed.interface';
 })
 
 export class MyDayComponent implements OnInit, OnDestroy {
-  @Input() selectedTime: string;
-
-  private locationSub: Subscription;
-  private dataStreamSub: Subscription;
   public locations: SheMapItem[] = [];
-  public cardList: { [date: string]: HatRecord<any>[]; };
 
   public safeSize;
   public safeSizeSidebar;
   public loading = false;
   public locationDataDownloaded = [];
   public datesInRange = [];
-  public moment: Moment = moment();
-  public hasLocationData = false;
-  public dataplugs: Subscription;
+
+  public selectedTime: Moment;
 
   public feed$: Observable<DayGroupedSheFeed[]>;
   public locations$: Observable<SheMapItem[]>;
@@ -57,10 +51,10 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.locations$ = Observable.combineLatest(sheLocations$, iosLocations$).map(results => results[0].concat(results[1]));
 
-    this.selectedTime = moment().format('YYYY-MM-DD');
+    this.selectedTime = moment();
 
-    this.updateMapSize(100, 160);
-    window.addEventListener('resize', () => this.updateMapSize(100, 160));
+    this.updateMapSize(175, 160);
+    window.addEventListener('resize', () => this.updateMapSize(175, 160));
 
     this.loadMoreData();
   }
@@ -76,24 +70,33 @@ export class MyDayComponent implements OnInit, OnDestroy {
         }
       }
     }
-
-    this.loadLocationData(newMonths);
-  }
-
-  loadLocationData(newMonths) {
-    for (let k = 0; k < newMonths.length; k++) {
-      this.locationDataDownloaded.push(newMonths[k]);
-      const startTime = moment(newMonths[k], 'MM YYYY').startOf('month').format('X');
-      const endTime = moment(newMonths[k], 'MM YYYY').endOf('month').format('X');
-      // this.locationsSvc.getTimeIntervalData(startTime, endTime);
-    }
   }
 
   ngOnDestroy(): void {
   }
 
+  applyTimeFilter(changeEvent): void {
+    const from = changeEvent.value.startOf('day').unix();
+    const to = changeEvent.value.endOf('day').unix();
+
+    const locationsFilter: Filter[] = [{
+      field: 'dateCreated',
+      transformation: {
+        transformation: 'identity'
+      },
+      operator: {
+        operator: 'between',
+        lower: from,
+        upper: to
+      }
+    }];
+
+    this.locationsSvc.getTimeIntervalData(locationsFilter);
+    this.sheSvc.getTimeBoundData(from, to);
+  }
+
   selectTime(event) {
-    this.selectedTime = event;
+    this.selectedTime = moment.unix(event);
   }
 
   onViewReset() {
@@ -101,7 +104,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
   }
 
   loadMoreData() {
-    this.locationsSvc.getMoreData(1000, 10000);
+    this.locationsSvc.getMoreData(1000, 5000);
   }
 
   private getSheLocationStream(): Observable<SheMapItem[]> {

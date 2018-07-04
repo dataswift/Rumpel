@@ -68,7 +68,7 @@ export const configuration: AppConfig = {
       { display: 'My Digital Life', icon: 'line_weight', link: '/feed', dataType: '', disable: '',
         description: 'My Digital Life' },
 
-      { display: 'Map', icon: 'layers', link: '/mashups', dataType: '', disable: '',
+      { display: 'Map', icon: 'map', link: '/mashups', dataType: '', disable: '',
         description: 'See your feed correlated with the places you\'ve been too.' },
 
       { display: 'My Public Profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',

@@ -7,11 +7,11 @@
   -->
 
 <div class="activitylist-container" [style.height]="componentHeight" #activityList>
-  <div *ngFor="let day of cards">
+  <div class="day-wrapper-{{day.day.split(' ').join('').toLowerCase()}}" *ngFor="let day of cards">
     <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
-    <ng-container *ngFor="let card of day.data">
+    <div *ngFor="let card of day.data" (click)="selectLocation(card)">
       <rum-she-feed-item [feedItem]="card"></rum-she-feed-item>
-    </ng-container>
+    </div>
   </div>
 </div>
 

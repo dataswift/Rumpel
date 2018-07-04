@@ -9,19 +9,27 @@
 <div class="row">
   <div class="col-md-12 mixpad">
     <div class="view-body">
-      <div class="loading-overlay" *ngIf="loading && hasLocationData">
-        <rum-spinner [isRunning]="true"></rum-spinner>
-        <span>Loading more data...</span>
-      </div>
-
       <div class="timeline-view" *ngIf="feed$ | async as feedData">
+        <div class="map-wrapper">
+          <div class="locationDate">
+            <div class="location-icon"><img src="assets/icons/grey-location-plug.svg"></div>
+            <h4 class="location-title">My locations</h4>
 
-        <rum-map class="map"
-                  [dataPoints]="locations$ | async"
-                  [mapHeight]="safeSize"
-                  [selectedTime]="selectedTime"
-                  (timeSelected)="selectTime($event)"
-                  [locationDate]="selectedTime"></rum-map>
+            <span class="flex-spacer"></span>
+
+            <input matInput placeholder="Select Date" readonly name="selectedTime" class="map-date-input"
+                   [matDatepicker]="timeFilterDatepicker"
+                   [value]="selectedTime"
+                   (dateChange)="applyTimeFilter($event)">
+            <mat-datepicker-toggle matSuffix [for]="timeFilterDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #timeFilterDatepicker disabled="false"></mat-datepicker>
+          </div>
+
+          <rum-map class="map"
+                   [dataPoints]="locations$ | async"
+                   [mapHeight]="safeSize"
+                   (timeSelected)="selectTime($event)"></rum-map>
+        </div>
 
         <rum-activity-list class="activitylist"
                            [componentHeight]="safeSizeSidebar"

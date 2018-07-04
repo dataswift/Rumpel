@@ -76,7 +76,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatDividerModule
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
 })
 export class CustomAngularMaterialModule {}

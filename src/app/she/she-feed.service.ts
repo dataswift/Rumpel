@@ -56,6 +56,12 @@ export class SheFeedService {
       });
   }
 
+  getTimeBoundData(from: number, to: number): void {
+    this.hat.getSheRecords('', from, to)
+      .map(this.groupSheFeedByDay)
+      .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => this._feed$.next(feedItems));
+  }
+
   getFeedBySource(endpoint: string): Observable<SheFeed[]> {
     if (!this.subfeedStore[endpoint]) {
       const defaultSince = Math.round(subDays(Date.now(), 60) / 1000);

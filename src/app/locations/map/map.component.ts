@@ -10,7 +10,6 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChange
 import * as moment from 'moment';
 import * as leaflet from 'leaflet';
 import 'leaflet.markercluster';
-import { Moment } from 'moment';
 import { SheMapItem } from '../../she/she-feed.interface';
 
 @Component({
@@ -22,10 +21,8 @@ export class MapComponent implements OnInit, OnChanges {
   @Input() dataPoints: SheMapItem[];
   @Input() mapHeight: string;
   @Input() mapWidth: string;
-  @Input() selectedTime: Moment;
-  @Input() enableMapControls: boolean;
-  @Input() locationDate: any;
-  @Output() timeSelected = new EventEmitter<any>();
+  @Input() enableMapControls = true;
+  @Output() timeSelected = new EventEmitter<number>();
 
   private map: any;
   private markers = leaflet.markerClusterGroup();
@@ -125,7 +122,7 @@ export class MapComponent implements OnInit, OnChanges {
     this.bbox.maxLng = Math.max(this.bbox.maxLng, lng);
   }
 
-  drawMarkers(locations: SheMapItem[]) {
+  drawMarkers(locations: SheMapItem[]): void {
     this.map.removeLayer(this.markers);
     this.markers = leaflet.markerClusterGroup();
     this.resetBoundingBox();
@@ -156,6 +153,9 @@ export class MapComponent implements OnInit, OnChanges {
       }
 
       marker.bindPopup(popupContent, { 'className': 'rum-map-popup' }).openPopup();
+      marker.on('click', (_) => {
+        this.timeSelected.emit(loc.timestamp);
+      });
 
       /*
       marker.on('click', (e: any) => {
@@ -170,13 +170,5 @@ export class MapComponent implements OnInit, OnChanges {
     // routePolyline.addTo(this.map);
 
     this.map.addLayer(this.markers);
-    }
-
-  onMarkerSelected(e: any) {
-    this.timeSelected.emit(e.target.timestamp);
-  }
-
-  dateChanged(mapEvent: any) {
-    this.timeSelected.emit(mapEvent.value.format('YYYY-MM-DD'));
   }
 }
