@@ -11,7 +11,8 @@ import { CanActivate, Router, NavigationExtras, ActivatedRouteSnapshot, RouterSt
 import { AuthService } from './core/services/auth.service';
 import { APP_CONFIG, AppConfig } from './app.config';
 import { GlobalMessagingService } from './services/global-messaging.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { tap, timeoutWith } from 'rxjs/operators';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -32,9 +33,9 @@ export class AuthGuard implements CanActivate {
       tokenLogin = true;
     }
 
-    return this.authSvc.auth$
-      .timeoutWith(50, Observable.of(false))
-      .do((authenticated: boolean) => {
+    return this.authSvc.auth$.pipe(
+      timeoutWith(50, of(false)),
+      tap((authenticated: boolean) => {
         if (!authenticated && tokenLogin) {
           this.messagingSvc.sendMessage(
             `Authentication with HAT failed. Either your session has expired or this app is incompatible with your HAT.`
@@ -47,6 +48,7 @@ export class AuthGuard implements CanActivate {
 
           this.router.navigate(this.redirectPath, navExtras);
         }
-      });
+      })
+    );
   }
 }

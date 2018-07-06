@@ -13,7 +13,7 @@ import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../shared/interfaces/index';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { AccountStatus } from '../../user/account-status.interface';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';

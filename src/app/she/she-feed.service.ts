@@ -4,8 +4,8 @@ import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
 
 import { DayGroupedSheFeed, SheFeed } from './she-feed.interface';
-import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Observable, ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import * as subDays from 'date-fns/sub_days';
 import * as addDays from 'date-fns/add_days';
@@ -13,8 +13,6 @@ import * as startOfDay from 'date-fns/start_of_day';
 import * as endOfDay from 'date-fns/end_of_day';
 import * as format from 'date-fns/format';
 import { groupBy } from 'lodash';
-
-
 
 @Injectable()
 export class SheFeedService {
@@ -28,44 +26,47 @@ export class SheFeedService {
   }
 
   getInitFeed(): Observable<DayGroupedSheFeed[]> {
-    const defaultSince = Math.round(startOfDay(subDays(Date.now(), 14)) / 1000);
+    const defaultSince = Math.round(startOfDay(subDays(Date.now(), 14)).getTime() / 1000);
 
-    this.hat.getSheRecords('', defaultSince)
-      .map(this.groupSheFeedByDay)
-      .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => {
-        this.store = { since: defaultSince, data: feedItems };
-        this._feed$.next(this.store.data);
-      });
+    this.hat.getSheRecords('', defaultSince).pipe(
+      map(this.groupSheFeedByDay)
+    )
+    .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => {
+      this.store = { since: defaultSince, data: feedItems };
+      this._feed$.next(this.store.data);
+    });
 
     return this._feed$.asObservable();
   }
 
   getMoreData(): void {
     const until = this.store.since - 1;
-    const since = Math.round(subDays(until * 1000, 30) / 1000);
+    const since = Math.round(subDays(until * 1000, 30).getTime() / 1000);
 
-    this.hat.getSheRecords('', since, until)
-      .map(this.groupSheFeedByDay)
-      .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => {
-        this.store = {
-          since: since,
-          data: this.store.data.concat(feedItems)
-        };
+    this.hat.getSheRecords('', since, until).pipe(
+      map(this.groupSheFeedByDay)
+    )
+    .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => {
+      this.store = {
+        since: since,
+        data: this.store.data.concat(feedItems)
+      };
 
-        this._feed$.next(this.store.data);
-      });
+      this._feed$.next(this.store.data);
+    });
   }
 
   getTimeBoundData(from: number, to: number): void {
-    this.hat.getSheRecords('', from, to)
-      .map(this.groupSheFeedByDay)
-      .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => this._feed$.next(feedItems));
+    this.hat.getSheRecords('', from, to).pipe(
+      map(this.groupSheFeedByDay)
+    )
+    .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => this._feed$.next(feedItems));
   }
 
   getFeedBySource(endpoint: string): Observable<SheFeed[]> {
     if (!this.subfeedStore[endpoint]) {
-      const defaultSince = Math.round(subDays(Date.now(), 60) / 1000);
-      const defaultUntil = Math.round(addDays(Date.now(), 30) / 1000);
+      const defaultSince = Math.round(subDays(Date.now(), 60).getTime() / 1000);
+      const defaultUntil = Math.round(addDays(Date.now(), 30).getTime() / 1000);
 
       this.hat.getSheRecords(endpoint, defaultSince, defaultUntil)
         .subscribe((feedItems: SheFeed[]) => {

@@ -1,16 +1,15 @@
-import {Inject, Injectable} from '@angular/core';
-import {APP_CONFIG, AppConfig} from '../app.config';
-import {HatApiService} from '../core/services/hat-api.service';
-import {FileMetadataReq, FileMetadataRes} from '../shared/interfaces/file.interface';
-import {Observable} from 'rxjs/Observable';
-import {ReplaySubject} from 'rxjs/ReplaySubject';
-import {Subscription} from 'rxjs/Subscription';
+import { Inject, Injectable } from '@angular/core';
+import { APP_CONFIG, AppConfig } from '../app.config';
+import { HatApiService } from '../core/services/hat-api.service';
+import { FileMetadataReq, FileMetadataRes } from '../shared/interfaces/file.interface';
+import { Observable, ReplaySubject, Subscription, fromEvent } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 @Injectable()
 export class FileService {
   private _file$: ReplaySubject<FileMetadataRes> = <ReplaySubject<FileMetadataRes>>new ReplaySubject(1);
   private fileReader: FileReader;
-  private boo: Subscription;
+  private fileLoadSub: Subscription;
 
   constructor(@Inject(APP_CONFIG) private _config: AppConfig,
               private hat: HatApiService) { }
@@ -26,8 +25,8 @@ export class FileService {
       source: 'rumpel'
     };
 
-    this.boo = Observable.fromEvent(this.fileReader, 'load')
-      .flatMap((ev: Event) => this.hat.uploadFile(this.fileReader.result, fileMetadata, file.type))
+    this.fileLoadSub = fromEvent(this.fileReader, 'load')
+      .pipe(flatMap((ev: Event) => this.hat.uploadFile(this.fileReader.result, fileMetadata, file.type)))
       .subscribe((result: FileMetadataRes) => {
         this._file$.next(result);
       });

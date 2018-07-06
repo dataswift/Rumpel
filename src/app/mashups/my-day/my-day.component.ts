@@ -11,7 +11,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { LocationsService } from '../../locations/locations.service';
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import { Observable } from 'rxjs/Observable';
+import { Observable, combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 import { LocationIos } from '../../shared/interfaces/location.interface';
 import { SheFeedService } from '../../she/she-feed.service';
@@ -49,7 +50,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
     const sheLocations$ = this.getSheLocationStream();
     const iosLocations$ = this.getDeviceLocationStream();
 
-    this.locations$ = Observable.combineLatest(sheLocations$, iosLocations$).map(results => results[0].concat(results[1]));
+    this.locations$ = combineLatest(sheLocations$, iosLocations$).pipe(map(results => results[0].concat(results[1])));
 
     this.selectedTime = moment();
 
@@ -108,8 +109,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
   }
 
   private getSheLocationStream(): Observable<SheMapItem[]> {
-    return this.feed$
-      .map((days: DayGroupedSheFeed[]) => days.reduce((acc, day) => {
+    return this.feed$.pipe(
+      map((days: DayGroupedSheFeed[]) => days.reduce((acc, day) => {
         return acc.concat(day.data
           .filter(feedItem => feedItem.location && feedItem.location.geo)
           .map(feedItem => {
@@ -124,11 +125,12 @@ export class MyDayComponent implements OnInit, OnDestroy {
               }
             };
           }));
-      }, []));
+      }, []))
+    );
   }
 
   private getDeviceLocationStream(): Observable<SheMapItem[]> {
-    return this.locationsSvc.data$.map((locations: HatRecord<LocationIos>[]) => {
+    return this.locationsSvc.data$.pipe(map((locations: HatRecord<LocationIos>[]) => {
       return locations.map(location => {
         return {
           source: 'ios',
@@ -137,7 +139,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
           longitude: location.data.longitude
         };
       });
-    });
+    }));
   }
 
   private updateMapSize(sizeOffset: number, sidebarSizeOffset: number): void {

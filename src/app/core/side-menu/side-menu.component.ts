@@ -9,7 +9,7 @@
 import { Component, OnInit, Inject, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { DataOfferService } from '../../offers/data-offer.service';
 import { HatApplicationsService } from '../../explore/hat-applications.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { OffersStorage } from '../../offers/offer.interface';

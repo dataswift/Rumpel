@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { DataOfferService } from '../data-offer.service';
 import { DialogService } from '../../core/dialog.service';
 import { AuthService } from '../../core/services/auth.service';
-import { User } from '../../user/user.interface';
 import { InfoBoxComponent } from '../../core/info-box/info-box.component';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
-import {Offer, OffersStorage} from '../offer.interface';
+import { Offer, OffersStorage } from '../offer.interface';
 
 @Component({
   selector: 'rum-offers-home',
@@ -53,7 +53,7 @@ export class OffersHomeComponent implements OnInit {
     },
     error => { console.log(error); });
 
-    this.authSvc.auth$.filter((authenticated: boolean) => authenticated)
+    this.authSvc.auth$.pipe(filter((authenticated: boolean) => authenticated))
       .subscribe(() =>  this.dataOfferSvc.fetchUserAwareOfferList());
   }
 

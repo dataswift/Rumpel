@@ -2,7 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { HttpBackendClient } from '../core/services/http-backend-client.service';
 import { APP_CONFIG, AppConfig } from '../app.config';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HatApiService } from '../core/services/hat-api.service';
 import { DexOfferClaimRes } from '../shared/interfaces/dex-offer-claim-res.interface';
@@ -23,22 +24,22 @@ export class DexApiService {
   claimOffer(offerId: string): Observable<DexOfferClaimRes> {
     const url = `${this.baseUrl}/offer/${offerId}/claim`;
 
-    return this.getApplicationToken()
-      .flatMap((headers: HttpHeaders) => this.http.get<DexOfferClaimRes>(url, { headers: headers }));
+    return this.getApplicationToken().pipe(
+      mergeMap((headers: HttpHeaders) => this.http.get<DexOfferClaimRes>(url, { headers: headers })));
   }
 
   getOfferClaim(offerId: string): Observable<DexOfferClaimRes> {
     const url = `${this.baseUrl}/offer/${offerId}/userClaim`;
 
-    return this.getApplicationToken()
-      .flatMap((headers: HttpHeaders) => this.http.get<DexOfferClaimRes>(url, { headers: headers }));
+    return this.getApplicationToken().pipe(
+      mergeMap((headers: HttpHeaders) => this.http.get<DexOfferClaimRes>(url, { headers: headers })));
   }
 
   getAvailablePlugList(): Observable<DataPlug[]> {
     const url = `${this.config.dex.url}/api/dataplugs`;
 
     return this.http.get<{ plug: DataPlug; }[]>(url)
-      .map(resBody => {
+      .pipe(map(resBody => {
         return resBody
           .filter(dataplug => 'location,facebook,twitter,fitbit,calendar,spotify'.includes(dataplug.plug.name.toLowerCase()))
           .map(dataplug => {
@@ -46,7 +47,7 @@ export class DexApiService {
 
             return dataplug.plug;
           });
-      });
+      }));
   }
 
   private getApplicationToken(): Observable<HttpHeaders> {
@@ -55,11 +56,12 @@ export class DexApiService {
         .set('X-Auth-Token', this.cachedAppToken)
         .set('Content-Type', 'application/json');
 
-      return Observable.of(headers);
+      return of(headers);
     } else {
-      return this.hat.getApplicationToken(this.config.dex.name, this.config.dex.url)
-        .do(token => this.cachedAppToken = token)
-        .map(token => new HttpHeaders({ 'X-Auth-Token': token }));
+      return this.hat.getApplicationToken(this.config.dex.name, this.config.dex.url).pipe(
+        tap(token => this.cachedAppToken = token),
+        map(token => new HttpHeaders({ 'X-Auth-Token': token }))
+      );
     }
   }
 

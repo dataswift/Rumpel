@@ -8,7 +8,8 @@
 
 import { Injectable } from '@angular/core';
 import { HttpBackendClient } from '../core/services/http-backend-client.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class WeatherService {
@@ -24,6 +25,6 @@ export class WeatherService {
     const url = `${this.baseUrl}/${this.token}/conditions/q/autoip.json`;
 
     return this.http.get<any>(url)
-      .map(wunder => wunder.current_observation);
+      .pipe(map(wunder => wunder.current_observation));
   }
 }

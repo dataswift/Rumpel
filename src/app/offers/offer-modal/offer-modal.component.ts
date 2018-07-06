@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { DataOfferService } from '../data-offer.service';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { OffersStorage } from '../offer.interface';
 
 const BTN_TEXT = {

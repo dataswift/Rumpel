@@ -7,9 +7,8 @@
  */
 
 import { Injectable, Inject } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject} from 'rxjs/BehaviorSubject';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Observable, BehaviorSubject, ReplaySubject, forkJoin, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { BaseDataService } from '../services/base-data.service';
 import { HatApiService } from '../core/services/hat-api.service';
 import { DexApiService } from '../services/dex-api.service';
@@ -17,11 +16,9 @@ import { AuthService } from '../core/services/auth.service';
 
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { Notable } from '../shared/interfaces';
-import { DataDebit } from '../data-management/data-debit.interface';
 import { NotablesServiceMeta } from '../shared/interfaces/notables-service-meta.interface';
 import { User } from '../user/user.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
-import { DexOfferClaimRes } from '../shared/interfaces/dex-offer-claim-res.interface';
 
 @Injectable()
 export class NotablesService extends BaseDataService<Notable> {
@@ -69,16 +66,17 @@ export class NotablesService extends BaseDataService<Notable> {
     if (recordValue.data.photov1) {
       filePermissionUpdate$ = this.hat.updateFilePermissions(recordValue.data.photov1.link.split('/').pop(), permissionKey);
     } else {
-      filePermissionUpdate$ = Observable.of(null); // Dummy observable to make subsequent forkJoin succeed
+      filePermissionUpdate$ = of(null); // Dummy observable to make subsequent forkJoin succeed
     }
 
-    return Observable.forkJoin(notablePost$, filePermissionUpdate$)
-      .do(() => {
+    return forkJoin(notablePost$, filePermissionUpdate$).pipe(
+      tap(() => {
         if (recordValue.data.currently_shared === true) {
           this.dex.tickleNotables(this.hatDomain);
         }
-      })
-      .map(([savedNotable, permissionUpdateResult]) => this.coerceType(savedNotable));
+      }),
+      map(([savedNotable, permissionUpdateResult]) => this.coerceType(savedNotable))
+    );
   }
 
   editNotable(notable: HatRecord<Notable>) {
