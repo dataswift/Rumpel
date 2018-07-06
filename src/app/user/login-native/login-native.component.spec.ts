@@ -17,7 +17,7 @@ import { APP_CONFIG } from '../../app.config';
 import { ActivatedRoute } from '@angular/router';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { AuthService } from '../../core/services/auth.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { InfoHeaderComponent } from '../info-header/info-header.component';
 
 describe('LoginNativeComponent', () => {
@@ -32,7 +32,7 @@ describe('LoginNativeComponent', () => {
         { provide: APP_CONFIG, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },
         { provide: BrowserStorageService, useValue: {} },
-        { provide: AuthService, useValue: { auth$: Observable.of(false) } }
+        { provide: AuthService, useValue: { auth$: of(false) } }
       ]
     })
       .compileComponents();

@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HatApplicationsService } from './hat-applications.service';
 import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('HatApplicationsService', () => {
   beforeEach(() => {
@@ -11,11 +11,11 @@ describe('HatApplicationsService', () => {
       providers: [
         HatApplicationsService,
         { provide: HatApiService, useValue: {
-          getApplicationList: () => Observable.of([]),
-          getApplicationById: (app: string) => Observable.of({}),
-          getSheRecords: (app: string) => Observable.of([])
+          getApplicationList: () => of([]),
+          getApplicationById: (app: string) => of({}),
+          getSheRecords: (app: string) => of([])
         } },
-        { provide: AuthService, useValue: { user$: Observable.of({ fullDomain: 'test.hat.net' }) } }
+        { provide: AuthService, useValue: { user$: of({ fullDomain: 'test.hat.net' }) } }
       ]
     });
   });

@@ -22,7 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { HttpBackendClient } from '../../core/services/http-backend-client.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const PROFILE_MOCK_DATA = {
@@ -100,12 +100,12 @@ describe('ProfileComponent', () => {
         HttpBackendClient,
         { provide: HatApiService, useValue: {} },
         { provide: AuthService, useValue: {
-          user$: Observable.of({ hatId: 'test', domain: '.hat.org', fullDomain: 'test.hat.org' })
+          user$: of({ hatId: 'test', domain: '.hat.org', fullDomain: 'test.hat.org' })
         } },
         { provide: DialogService, useValue: {} },
         { provide: ProfilesService, useValue: {
           getProfileData: () => null,
-          profileData$: Observable.of({ values: PROFILE_MOCK_DATA, share: PROFILE_SHARE_MOCK })
+          profileData$: of({ values: PROFILE_MOCK_DATA, share: PROFILE_SHARE_MOCK })
         } },
         { provide: FileService, useValue: {} }
       ]

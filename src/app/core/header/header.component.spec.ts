@@ -16,7 +16,7 @@ import { APP_CONFIG } from '../../app.config';
 import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -29,8 +29,8 @@ describe('HeaderComponent', () => {
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: DialogService, useValue: {} },
-        { provide: AuthService, useValue: { user$: Observable.of({}) } },
-        { provide: ProfilesService, useValue: { profileData$: Observable.of({}) } }
+        { provide: AuthService, useValue: { user$: of({}) } },
+        { provide: ProfilesService, useValue: { profileData$: of({}) } }
       ]
     })
       .compileComponents();

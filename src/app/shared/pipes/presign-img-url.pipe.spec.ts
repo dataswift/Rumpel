@@ -1,5 +1,5 @@
 import { PresignImgUrlPipe } from './presign-img-url.pipe';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { inject, TestBed } from '@angular/core/testing';
 import { HatApiService } from '../../core/services/hat-api.service';
 
@@ -7,7 +7,7 @@ describe('PresignImgUrlPipe', () => {
   let pipe;
 
   const hatApiServiceStub = {
-    getFileMetadata: (path: string) => Observable.of({})
+    getFileMetadata: (path: string) => of({})
   };
 
   beforeEach(() => {

@@ -13,7 +13,7 @@ import { TileMapComponent } from './tile-map.component';
 import { TimeFilterTwoPipe } from '../../shared/pipes/time-filter-two.pipe';
 import { MapComponent } from '../map/map.component';
 import { LocationsService } from '../locations.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 
 describe('TileMapComponent', () => {
@@ -26,8 +26,8 @@ describe('TileMapComponent', () => {
       declarations: [ TileMapComponent, TimeFilterTwoPipe, MapComponent ],
       providers: [
         { provide: LocationsService, useValue: {
-          loading$: Observable.of(false),
-          data$: Observable.of([]),
+          loading$: of(false),
+          data$: of([]),
           getInitData: () => null
         }}
       ]

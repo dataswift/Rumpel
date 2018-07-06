@@ -262,7 +262,7 @@ export class HatApiService {
         return this.http.put(uploadedMetadata.contentUrl, file, { headers: headers })
           .pipe(map(_ => uploadedMetadata));
       }),
-      mergeMap(uploadedMetadata => this.markFileAsComplete(uploadedMetadata.fileId)),);
+      mergeMap(uploadedMetadata => this.markFileAsComplete(uploadedMetadata.fileId)));
   }
 
   deleteFile(fileId: string): Observable<number> {

@@ -12,7 +12,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { MediaService } from './media.service';
 import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('MediaService', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('MediaService', () => {
       providers: [
         MediaService,
         { provide: HatApiService, useValue: {} },
-        { provide: AuthService, useValue: { auth$: Observable.of(false)} }
+        { provide: AuthService, useValue: { auth$: of(false)} }
       ]
     });
   });

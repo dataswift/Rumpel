@@ -11,7 +11,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { ActivityListComponent } from './activity-list.component';
-import { ActivityCardComponent } from '../activity-card/activity-card.component';
 import { LocationNotableComponent } from '../../shared/components/location-notable/location-notable.component';
 import { LocationFbPostComponent } from '../../social/location-fb-post/location-fb-post.component';
 import { FitbitMyDayComponent } from '../../fitbit/fitbit-my-day/fitbit-my-day.component';
@@ -34,7 +33,6 @@ describe('ActivityListComponent', () => {
       imports: [ CustomAngularMaterialModule ],
       declarations: [
         ActivityListComponent,
-        ActivityCardComponent,
         LocationNotableComponent,
         LocationFbPostComponent,
         FitbitMyDayComponent,

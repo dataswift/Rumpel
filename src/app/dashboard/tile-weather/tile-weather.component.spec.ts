@@ -13,11 +13,11 @@ import { DebugElement } from '@angular/core';
 
 import { TileWeatherComponent } from './tile-weather.component';
 import { WeatherService } from '../weather.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 class MockWeatherService {
   getCurrentWeather() {
-    return Observable.of({
+    return of({
       weather: 'haze',
       display_location: { full: 'London, UK' },
       temp_c: '32 C',

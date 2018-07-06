@@ -12,7 +12,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { TwitterService } from './twitter.service';
 import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('TwitterService', () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('TwitterService', () => {
       providers: [
         TwitterService,
         { provide: HatApiService, useValue: {} },
-        { provide: AuthService, useValue: { auth$: Observable.of(false)} }
+        { provide: AuthService, useValue: { auth$: of(false)} }
       ]
     });
   });

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OfferAcceptedStatsComponent } from './offer-accepted-stats.component';
 import { DialogService } from '../../core/dialog.service';
 import { DataOfferService } from '../data-offer.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('OfferAcceptedStatsComponent', () => {
   let component: OfferAcceptedStatsComponent;
@@ -14,7 +14,7 @@ describe('OfferAcceptedStatsComponent', () => {
       declarations: [ OfferAcceptedStatsComponent ],
       providers: [
         { provide: DialogService, useValue: { } },
-        { provide: DataOfferService, useValue: { offersSummary$: Observable.of({}), fetchUserAwareOfferList: () => null } }
+        { provide: DataOfferService, useValue: { offersSummary$: of({}), fetchUserAwareOfferList: () => null } }
       ]
     })
     .compileComponents();

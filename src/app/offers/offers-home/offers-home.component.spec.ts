@@ -8,7 +8,7 @@ import { APP_CONFIG } from '../../app.config';
 import { AuthService } from '../../core/services/auth.service';
 import { DialogService } from '../../core/dialog.service';
 import { DataOfferService } from '../data-offer.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -30,9 +30,9 @@ describe('OffersHomeComponent', () => {
         { provide: APP_CONFIG, useValue: { databuyer: { url: 'test.url' } } },
         { provide: DialogService, useValue: { createDialog: () => null } },
         { provide: DataOfferService, useValue: {
-          offers$: Observable.of({ availableOffers: [], acceptedOffers: [] }),
+          offers$: of({ availableOffers: [], acceptedOffers: [] }),
           fetchUserAwareOfferList: () => null } },
-        { provide: AuthService, useValue: { auth$: Observable.of(false) } }
+        { provide: AuthService, useValue: { auth$: of(false) } }
       ]
     })
     .compileComponents();

@@ -19,7 +19,7 @@ import { NotablesService } from '../notables.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { AuthService } from '../../core/services/auth.service';
 import { LocationsService } from '../../locations/locations.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('TileNotablesComponent', () => {
   let component: TileNotablesComponent;
@@ -30,9 +30,9 @@ describe('TileNotablesComponent', () => {
       imports: [ RouterTestingModule, FormsModule ],
       declarations: [ TileNotablesComponent, InputBoxComponent, MomentPipe, MarkdownToHtmlPipe ],
       providers: [
-        { provide: NotablesService, useValue: { getInitData: () => null, data$: Observable.of([]) } },
-        { provide: ProfilesService, useValue: { profileData$: Observable.of([])} },
-        { provide: AuthService, useValue: { user$: Observable.of({ fullDomain: 'testing.hat.org' })} },
+        { provide: NotablesService, useValue: { getInitData: () => null, data$: of([]) } },
+        { provide: ProfilesService, useValue: { profileData$: of([])} },
+        { provide: AuthService, useValue: { user$: of({ fullDomain: 'testing.hat.org' })} },
         { provide: LocationsService, useValue: {} }
       ]
     })
