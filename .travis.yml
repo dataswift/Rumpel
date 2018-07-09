@@ -126,10 +126,9 @@ jobs:
         - ng test --watch=false
         - ng build --configuration=native
       after_success:
-        - mv ./dist/inline.*.bundle.js ./dist/inline.bundle.js
+        - mv ./dist/runtime.*.bundle.js ./dist/runtime.bundle.js
         - mv ./dist/polyfills.*.bundle.js ./dist/polyfills.bundle.js
         - mv ./dist/main.*.bundle.js ./dist/main.bundle.js
-        - mv ./dist/vendor.*.bundle.js ./dist/vendor.bundle.js
         - mv ./dist/styles.*.bundle.css ./dist/styles.bundle.css
       deploy:
         - provider: s3
