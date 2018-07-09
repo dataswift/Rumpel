@@ -38,7 +38,7 @@ export class MapComponent implements OnInit, OnChanges {
   private googlePin: leaflet.Icon;
   private spotifyPin: leaflet.Icon;
   private notablesv1Pin: leaflet.Icon;
-  private iosPin: leaflet.Icon;
+  private iOSPin: leaflet.Icon;
 
   constructor() {
   }
@@ -74,7 +74,7 @@ export class MapComponent implements OnInit, OnChanges {
     this.googlePin = new SourceIcon({ iconUrl: '/assets/images/pins/google-calendar.png' });
     this.spotifyPin = new SourceIcon({ iconUrl: '/assets/images/pins/spotify.png' });
     this.notablesv1Pin = new SourceIcon({ iconUrl: '/assets/images/pins/notables.png' });
-    this.iosPin = new SourceIcon({ iconUrl: '/assets/images/pins/locations.png' });
+    this.iOSPin = new SourceIcon({ iconUrl: '/assets/images/pins/locations.png' });
 
     // WHY
     setTimeout(() => {
@@ -146,8 +146,10 @@ export class MapComponent implements OnInit, OnChanges {
         popupContent = `
           <h4 class="rum-map-popup-header">From your ${loc.source} device</h4>
           <div class="rum-map-popup-content">
-            Latitude: ${Math.round(loc.latitude * 1000) / 1000}<br/>
-            Longitude: ${Math.round(loc.longitude * 1000) / 1000}
+            Latitude: ${loc.latitude}<br/>
+            Longitude: ${loc.longitude}
+            ${loc.altitude ? '</br>Altitude: ' + Math.round(loc.altitude * 10) / 10 + ' m' : ''}
+            ${loc.speed ? '</br>Speed: ' + Math.round(loc.speed * 36) / 10  + ' km/h' : ''}
           </div>
           <div class="rum-map-popup-footer">Recorded at ${date.format('hh:mma, YYYY-MM-DD')}</div>`;
       }

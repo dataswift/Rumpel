@@ -133,10 +133,12 @@ export class MyDayComponent implements OnInit, OnDestroy {
     return this.locationsSvc.data$.pipe(map((locations: HatRecord<LocationIos>[]) => {
       return locations.map(location => {
         return {
-          source: 'ios',
+          source: 'iOS',
           timestamp: location.data.dateCreated,
           latitude: location.data.latitude,
-          longitude: location.data.longitude
+          longitude: location.data.longitude,
+          altitude: location.data.altitude,
+          speed: location.data.speed
         };
       });
     }));

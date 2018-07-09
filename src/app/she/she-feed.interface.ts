@@ -8,6 +8,8 @@ export interface SheMapItem {
   timestamp: number;
   latitude: number;
   longitude: number;
+  altitude?: number;
+  speed?: number;
   content?: { title: string; body: string; };
 }
 
