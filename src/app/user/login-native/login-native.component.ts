@@ -23,7 +23,6 @@ export class LoginNativeComponent implements OnInit {
   public hatDomain: string;
   public rememberMe: boolean;
   public passwordError = false;
-  public error: string;
   private redirectPath: string;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
@@ -50,10 +49,6 @@ export class LoginNativeComponent implements OnInit {
 
     this.hatName = host.substring(0, host.indexOf('.'));
     this.hatDomain = host.substring(host.indexOf('.'));
-  }
-
-  clearError() {
-    this.error = '';
   }
 
   get protocol(): string {

@@ -14,7 +14,7 @@ import { CustomAngularMaterialModule } from '../../core/custom-angular-material.
 import { ProfilesService } from '../../profiles/profiles.service';
 import { DialogService } from '../../core/dialog.service';
 import { AuthService } from '../../core/services/auth.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('TileHeroComponent', () => {
   let component: TileHeroComponent;
@@ -25,9 +25,9 @@ describe('TileHeroComponent', () => {
       imports: [ CustomAngularMaterialModule ],
       declarations: [ TileHeroComponent ],
       providers: [
-        { provide: ProfilesService, useValue: { profileData$: Observable.of({ share: { photo: { avatar: '' } } }) } },
+        { provide: ProfilesService, useValue: { profileData$: of({ share: { photo: { avatar: '' } } }) } },
         { provide: DialogService, useValue: { createDialog: () => null } },
-        { provide: AuthService, useValue: { user$: Observable.of({ fullDomain: '' }) } }
+        { provide: AuthService, useValue: { user$: of({ fullDomain: '' }) } }
       ]
     })
       .compileComponents();

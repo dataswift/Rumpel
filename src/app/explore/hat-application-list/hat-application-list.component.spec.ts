@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HatApplicationListComponent } from './hat-application-list.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { HatApplicationsService } from '../hat-applications.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -16,7 +16,7 @@ describe('HatApplicationListComponent', () => {
       imports: [ SharedModule, CustomAngularMaterialModule, RouterTestingModule ],
       declarations: [ HatApplicationListComponent ],
       providers: [
-        { provide: HatApplicationsService, useValue: { getApplicationList: () => Observable.of([]) } }
+        { provide: HatApplicationsService, useValue: { getApplicationList: () => of([]) } }
       ]
     })
     .compileComponents();

@@ -21,51 +21,33 @@
   display: inline;
 }
 
-.locationDate {
-  background-color: #d2dce1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 500;
-  width: 100%;
-  padding: 10px 22px;
-  max-height: 54px;
-  display: flex;
-  align-items: center;
+/deep/ .rum-map-popup .leaflet-popup-content-wrapper {
+  border-radius: 4px;
 
-  .map-date-input {
-    border: none;
-    background-color: transparent;
-    color: $app-mid-tone;
-    text-align: right;
-    font-size: 14px;
-  }
+  .leaflet-popup-content {
+    margin: 0;
 
-  /deep/ .mat-datepicker-toggle .mat-button-wrapper {
-    color: $app-mid-tone;
-  }
-
-  .location-icon {
-    width: 24px;
-    height: 24px;
-    background-color: rgba(74, 85, 107, 0.1);
-    padding: 6px;
-    border-radius: 50%;
-    position: relative;
-    margin: 0 7px;
-
-    img {
-      height: 12px;
-      position: relative;
-      left: 2px;
-      top: -4px;
+    .rum-map-popup-header {
+      font-size: 14px;
+      color: $app-dark-tone;
+      margin: 0;
+      padding: 10px 15px;
+      border-bottom: 1px solid #EEEEEE;
     }
-  }
 
-  h4 {
-    color: $app-mid-tone;
-    font-size: 14px;
-    text-transform: uppercase;
-    font-family: $font-standard;
+    .rum-map-popup-content {
+      margin: 20px 15px;
+      padding: 0;
+      font-size: 13px;
+      color: $hat-body-text;
+      line-height: 1.54;
+    }
+
+    .rum-map-popup-footer {
+      margin: 10px 15px;
+      font-size: 13px;
+      color: $hat-body-text;
+      font-style: italic;
+    }
   }
 }

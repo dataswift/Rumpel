@@ -7,7 +7,7 @@
  */
 
 import { Injectable, EventEmitter } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { ExternalNotification } from '../shared/interfaces/index';
 
 @Injectable()

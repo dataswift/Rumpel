@@ -4,7 +4,7 @@ import { OffersAcceptedComponent } from './offers-accepted.component';
 import { OfferAcceptedStatsComponent } from '../offer-accepted-stats/offer-accepted-stats.component';
 import { DialogService } from '../../core/dialog.service';
 import { DataOfferService } from '../data-offer.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import {MomentPipe} from '../../shared/pipes/moment.pipe';
 
 describe('OffersAcceptedComponent', () => {
@@ -16,7 +16,7 @@ describe('OffersAcceptedComponent', () => {
       declarations: [ OffersAcceptedComponent, OfferAcceptedStatsComponent, MomentPipe ],
       providers: [
         { provide: DialogService, useValue: { } },
-        { provide: DataOfferService, useValue: { offersSummary$: Observable.of({}), fetchUserAwareOfferList: () => null } }
+        { provide: DataOfferService, useValue: { offersSummary$: of({}), fetchUserAwareOfferList: () => null } }
       ]
     })
     .compileComponents();

@@ -9,7 +9,7 @@
 @import "../../style/branding";
 
 
-.row{
+.row {
   background-color: white;
   margin-left: 0px;
   margin-right: 0px;
@@ -18,16 +18,64 @@
 .view-body {
   position: relative;
 
-  .timeline-view{
+  .timeline-view {
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
 
-    .map{
+    .map-wrapper {
       width: 100%;
     }
-    .activityList{
+
+    .activityList {
       width: 100%;
     }
+  }
+}
+
+.locationDate {
+  background-color: #d2dce1;
+  z-index: 500;
+  width: 100%;
+  padding: 10px 22px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+
+  .map-date-input {
+    border: none;
+    background-color: transparent;
+    color: $app-mid-tone;
+    text-align: right;
+    font-size: 14px;
+  }
+
+  /deep/ .mat-datepicker-toggle .mat-button-wrapper {
+    color: $app-mid-tone;
+  }
+
+  .location-icon {
+    width: 24px;
+    height: 24px;
+    background-color: rgba(74, 85, 107, 0.1);
+    padding: 6px;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 7px;
+
+    img {
+      height: 12px;
+      position: relative;
+      left: 2px;
+      top: -4px;
+    }
+  }
+
+  h4 {
+    color: $app-mid-tone;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: $font-standard;
   }
 }
 

@@ -35,7 +35,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.6.0.3',
+  version: '3.6.1.0',
   name: 'RumpelStaging',
   tokenApp: 'rumpel',
   tokenExpiryTime: 3,
@@ -66,16 +66,16 @@ export const configuration: AppConfig = {
   menuItems: {
     'private': [
       { display: 'My Digital Life', icon: 'line_weight', link: '/feed', dataType: '', disable: '',
-      description: 'My Digital Life' },
+        description: 'My Digital Life' },
 
-      { display: 'Dashboard', icon: 'dashboard', link: '/dashboard', dataType: '', disable: '',
-      description: 'The dashboard is where you have an overview of Rumpel.' },
+      { display: 'Map', icon: 'map', link: '/mashups', dataType: '', disable: '',
+        description: 'See your feed correlated with the places you\'ve been too.' },
 
       { display: 'My Public Profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
-      description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
+        description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
 
       { display: 'Redeem Offers', icon: 'local_offer', link: '/offers', dataType: '', disable: '',
-      description: 'Allow access to your data in exchange for cash, services or vouchers.' },
+        description: 'Allow access to your data in exchange for cash, services or vouchers.' },
 
       { display: 'Explore', icon: 'touch_app', link: '/explore/App', dataType: '', disable: '',
         description: 'Explore all the apps available in the HAT ecosystem.' },
@@ -88,9 +88,6 @@ export const configuration: AppConfig = {
       Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists -
       all in one place, and lets you decide what is private to yourself and what to share!
       Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.` },
-
-      { display: 'My Mashups', icon: 'layers', link: '/mashups/myday', dataType: '', disable: '',
-      description: 'See mashups of your data' },
 
       { display: 'My Data Plugs', icon: 'settings_input_component', link: '/explore/DataPlug', dataType: '', disable: '',
       description: `Data comes into your HAT via data plugs.

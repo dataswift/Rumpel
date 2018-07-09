@@ -15,6 +15,7 @@ import * as moment from 'moment';
 import { GlobalMessagingService } from './services/global-messaging.service';
 import { InfoBoxComponent } from './core/info-box/info-box.component';
 import { DialogService } from './core/dialog.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'rum-app',
@@ -37,12 +38,12 @@ export class AppRootComponent implements OnInit {
             private authSvc: AuthService,
             private router: Router) {
 
-        router.events
-            .filter(event => event instanceof NavigationEnd)
-            .subscribe((event: NavigationEnd) => {
-              window.scroll(0, 0);
-              this.isPublicPage = router.isActive('public', false);
-            });
+        router.events.pipe(
+            filter(event => event instanceof NavigationEnd)
+        ).subscribe(_ => {
+          window.scroll(0, 0);
+          this.isPublicPage = router.isActive('public', false);
+        });
   }
 
   ngOnInit() {

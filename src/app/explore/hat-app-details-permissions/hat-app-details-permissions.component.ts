@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HatApplication } from '../hat-application.interface';
 import { Location } from '@angular/common';
 

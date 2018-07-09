@@ -3,6 +3,7 @@ import { APP_CONFIG, AppConfig } from '../../app.config';
 import { ActivatedRoute } from '@angular/router';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { MatExpansionPanel } from '@angular/material/expansion';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'rum-login-standalone',
@@ -15,9 +16,11 @@ export class LoginStandaloneComponent implements OnInit {
   private redirectPath: string;
   public hatName: string;
   public selectedDomain: string;
+  public hatNameError = false;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private route: ActivatedRoute,
+              private authSvc: AuthService,
               private storageSvc: BrowserStorageService) { }
 
   ngOnInit() {
@@ -36,8 +39,18 @@ export class LoginStandaloneComponent implements OnInit {
   redirectToLogin(): void {
     // Add port 4200 for local redirects
     const hatAddress = this.hatName + this.selectedDomain;
-    window.location.href = `//${hatAddress}/hatlogin?name=${this.config.name}&`
-      + `redirect=${window.location.protocol}//${window.location.hostname}/${this.redirectPath}`;
+    this.authSvc.domainRegistered(hatAddress).subscribe((registered: boolean) => {
+      if (registered) {
+        window.location.href = `//${hatAddress}/hatlogin?name=${this.config.name}&`
+          + `redirect=${window.location.protocol}//${window.location.hostname}/${this.redirectPath}`;
+      } else {
+        this.hatNameError = true;
+      }
+    });
+  }
+
+  hideErrorMessage(): void {
+    this.hatNameError = false;
   }
 
 }

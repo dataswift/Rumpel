@@ -17,7 +17,7 @@ import { LimitContentPipe } from '../../shared/pipes/limit-content.pipe';
 import { SocialService } from '../social.service';
 import { TwitterService } from '../twitter.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('TileSocialComponent', () => {
   let component: TileSocialComponent;
@@ -28,8 +28,8 @@ describe('TileSocialComponent', () => {
       imports: [ RouterTestingModule ],
       declarations: [ TileSocialComponent, MomentPipe, ReplaceCharsPipe, LimitContentPipe ],
       providers: [
-        { provide: SocialService, useValue: { getInitData: () => null, data$: Observable.of([]) } },
-        { provide: TwitterService, useValue: { getInitData: () => null, data$: Observable.of([]) } },
+        { provide: SocialService, useValue: { getInitData: () => null, data$: of([]) } },
+        { provide: TwitterService, useValue: { getInitData: () => null, data$: of([]) } },
         { provide: ActivatedRoute, useValue: { snapshot: { fragment: '1' } } }
       ]
     })

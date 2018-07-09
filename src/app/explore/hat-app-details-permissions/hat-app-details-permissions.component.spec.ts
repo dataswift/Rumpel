@@ -8,7 +8,7 @@ import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
 import { Location } from '@angular/common';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { HatApplication } from '../hat-application.interface';
 
 const HAT_APPLICATION_MOCK: HatApplication = {
@@ -30,6 +30,9 @@ const HAT_APPLICATION_MOCK: HatApplication = {
         'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>\n\n`
       },
       'termsUrl': 'https://hatdex.org/website-terms-service',
+      'rating': {
+        'score': 'A'
+      },
       'dataUsePurpose': 'Purpose of data use...',
       'dataPreview': [
         {
@@ -276,7 +279,7 @@ describe('HatAppDetailsPermissionsComponent', () => {
       declarations: [ HatAppDetailsPermissionsComponent, HatApplicationPermissionsComponent, UnbundlePipe ],
       providers: [
         { provide: ActivatedRoute, useValue: { snapshot: { params: { appId: 'notables' } } } },
-        { provide: HatApplicationsService, useValue: { getApplicationDetails: () => Observable.of(HAT_APPLICATION_MOCK) } },
+        { provide: HatApplicationsService, useValue: { getApplicationDetails: () => of(HAT_APPLICATION_MOCK) } },
         { provide: Location, useValue: { back: () => {} } }
       ]
     })

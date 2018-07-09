@@ -8,7 +8,7 @@ import { CustomAngularMaterialModule } from '../custom-angular-material.module';
 import { APP_CONFIG } from '../../app.config';
 import { HatApplicationsService } from '../../explore/hat-applications.service';
 import { DataOfferService } from '../../offers/data-offer.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { AuthService } from '../services/auth.service';
@@ -24,11 +24,11 @@ describe('PrivateSpaceComponent', () => {
       declarations: [ PrivateSpaceComponent, HeaderComponent, SideMenuComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: { menuItems: { private: [] }}},
-        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: Observable.of([]) } },
-        { provide: DataOfferService, useValue: { offers$: Observable.of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } },
+        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]) } },
+        { provide: DataOfferService, useValue: { offers$: of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } },
         { provide: DialogService, useValue: {} },
-        { provide: AuthService, useValue: { user$: Observable.of({}) } },
-        { provide: ProfilesService, useValue: { profileData$: Observable.of({}) } }
+        { provide: AuthService, useValue: { user$: of({}) } },
+        { provide: ProfilesService, useValue: { profileData$: of({}) } }
       ]
     })
     .compileComponents();

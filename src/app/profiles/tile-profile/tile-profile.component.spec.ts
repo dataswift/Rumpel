@@ -11,7 +11,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TileProfileComponent } from './tile-profile.component';
 import { ProfilesService } from '../profiles.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 
 const PROFILE_MOCK_DATA = {
@@ -87,7 +87,7 @@ describe('TileProfileComponent', () => {
       providers: [
         { provide: ProfilesService, useValue: {
           getProfileData: () => null,
-          profileData$: Observable.of({ values: PROFILE_MOCK_DATA, share: PROFILE_SHARE_MOCK })
+          profileData$: of({ values: PROFILE_MOCK_DATA, share: PROFILE_SHARE_MOCK })
         } }
       ]
     })

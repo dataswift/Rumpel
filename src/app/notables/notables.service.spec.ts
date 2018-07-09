@@ -14,7 +14,7 @@ import { HatApiService } from '../core/services/hat-api.service';
 import { DexApiService } from '../services/dex-api.service';
 import { AuthService } from '../core/services/auth.service';
 import { APP_CONFIG } from '../app.config';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('NotablesService', () => {
   beforeEach(() => {
@@ -25,8 +25,8 @@ describe('NotablesService', () => {
         { provide: HatApiService, useValue: {} },
         { provide: DexApiService, useValue: {} },
         { provide: AuthService, useValue: {
-          user$: Observable.of({ fullDomain: 'testing.hat.org' }),
-          auth$: Observable.of(false)
+          user$: of({ fullDomain: 'testing.hat.org' }),
+          auth$: of(false)
         } }
       ]
     });

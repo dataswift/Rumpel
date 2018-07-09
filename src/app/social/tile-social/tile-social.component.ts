@@ -12,7 +12,8 @@ import { SocialService } from '../social.service';
 import { TwitterService } from '../twitter.service';
 import { Post, Tweet } from '../../shared/interfaces';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
-import { Observable } from 'rxjs/Observable';
+import { merge, Observable } from 'rxjs';
+import { scan } from 'rxjs/operators';
 
 @Component({
   selector: 'rum-tile-social',
@@ -27,13 +28,13 @@ export class TileSocialComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit(): void {
-    this.feed$ = Observable.merge(
+    this.feed$ = merge(
       this.socialSvc.data$,
       this.twitterSvc.data$
-    )
-      .scan((acc: HatRecord<Post|Tweet>[], postsToAdd: HatRecord<Post|Tweet>[]) => {
+    ).pipe(
+      scan((acc: HatRecord<Post|Tweet>[], postsToAdd: HatRecord<Post|Tweet>[]) => {
         return acc.concat(postsToAdd).sort((a, b) => a.data.createdTime.isAfter(b.data.createdTime) ? -1 : 1).slice(0, 30);
-      }, []);
+      }, []));
 
     this.socialSvc.getInitData();
     this.twitterSvc.getInitData();

@@ -12,7 +12,8 @@ import { PasswordChangeComponent } from './password-change.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 
 describe('PasswordChangeComponent', () => {
   let component: PasswordChangeComponent;
@@ -20,11 +21,11 @@ describe('PasswordChangeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule ],
+      imports: [ RouterTestingModule, CustomAngularMaterialModule ],
       declarations: [ PasswordChangeComponent ],
       providers: [
         { provide: AuthService, useValue: {} },
-        { provide: ActivatedRoute, useValue: { params: Observable.of({}) } }
+        { provide: ActivatedRoute, useValue: { params: of({}) } }
       ]
     })
     .compileComponents();

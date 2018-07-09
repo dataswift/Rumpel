@@ -8,8 +8,9 @@
 
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { throwError as observableThrowError, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { HttpBackendClient } from './http-backend-client.service';
-import { Observable } from 'rxjs/Observable';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
@@ -38,7 +39,7 @@ export class HatApiService {
     });
 
     return this.http.get<{ accessToken: string; }>(path, { headers: headers })
-      .map(resBody => resBody.accessToken);
+      .pipe(map(resBody => resBody.accessToken));
   }
 
   legacyHatLogin(name: string, redirect: string): Observable<string> {
@@ -47,7 +48,8 @@ export class HatApiService {
       .set('name', name)
       .set('redirect', redirect);
 
-    return this.authHttp.get<{ message: string }>(path, { params: queryParams }).map(resBody => resBody.message);
+    return this.authHttp.get<{ message: string }>(path, { params: queryParams })
+      .pipe(map(resBody => resBody.message));
   }
 
   recoverPassword(body: { email: string; }): Observable<any> {
@@ -78,7 +80,7 @@ export class HatApiService {
       .set('resource', resource);
 
     return this.authHttp.get<{ accessToken: string; }>(path, { params: queryParams })
-      .map(resBody => resBody.accessToken);
+      .pipe(map(resBody => resBody.accessToken));
   }
 
   getApplicationList(): Observable<HatApplication[]> {
@@ -97,7 +99,7 @@ export class HatApiService {
     const path = `${this.pathPrefix}/applications/${applicationId}/access-token`;
 
     return this.authHttp.get<{ accessToken: string; }>(path)
-      .map(resBody => resBody.accessToken);
+      .pipe(map(resBody => resBody.accessToken));
   }
 
   setupApplication(applicationId: string): Observable<HatApplication> {
@@ -168,9 +170,9 @@ export class HatApiService {
       recordIds.forEach(recordId => queryParams = queryParams.set('records', recordId));
 
       return this.authHttp.delete(path, { params: queryParams, observe: 'response' })
-        .map((res: HttpResponse<any>) => res.status);
+        .pipe(map((res: HttpResponse<any>) => res.status));
     } else {
-      return Observable.throw(new Error('Cannot delete. Record ID(s) missing.'));
+      return observableThrowError(new Error('Cannot delete. Record ID(s) missing.'));
     }
   }
 
@@ -189,7 +191,7 @@ export class HatApiService {
     const path = `${this.pathPrefix}/combinator/${name}`;
 
     return this.authHttp.post(path, proposedCombinator, { observe: 'response' })
-      .map((res: HttpResponse<any>) => res.status);
+      .pipe(map((res: HttpResponse<any>) => res.status));
   }
 
   getDataBundle(bundleId: string): Observable<any> {
@@ -255,19 +257,19 @@ export class HatApiService {
       'Content-Type': contentType || 'image/png'
     });
 
-    return this.uploadFileMetadata(metadata)
-      .flatMap(uploadedMetadata => {
+    return this.uploadFileMetadata(metadata).pipe(
+      mergeMap(uploadedMetadata => {
         return this.http.put(uploadedMetadata.contentUrl, file, { headers: headers })
-          .map(_ => uploadedMetadata)
-      })
-      .flatMap(uploadedMetadata => this.markFileAsComplete(uploadedMetadata.fileId));
+          .pipe(map(_ => uploadedMetadata));
+      }),
+      mergeMap(uploadedMetadata => this.markFileAsComplete(uploadedMetadata.fileId)));
   }
 
   deleteFile(fileId: string): Observable<number> {
     const path = `${this.pathPrefix}/files/file/${fileId}`;
 
     return this.authHttp.delete(path, { observe: 'response' })
-      .map((res: HttpResponse<any>) => res.status);
+      .pipe(map((res: HttpResponse<any>) => res.status));
   }
 
   updateFilePermissions(fileId: string, permission: string, userId?: string): Observable<number> {
@@ -280,13 +282,19 @@ export class HatApiService {
         actionIdentifier = 'restrictAccessPublic';
         break;
       default:
-        return Observable.throw(new Error('Requested permission cannot be matched to available options.'))
+        return observableThrowError(new Error('Requested permission cannot be matched to available options.'))
     }
 
     const path = `${this.pathPrefix}/files/${actionIdentifier}/${fileId}`;
 
     return this.authHttp.get(path, { observe: 'response' })
-      .map((res: HttpResponse<any>) => res.status);
+      .pipe(map((res: HttpResponse<any>) => res.status));
+  }
+
+  getPublicKey(domain: string): Observable<any> {
+    const path = `https://${domain}/publickey`;
+
+    return this.http.get(path, { observe: 'response' });
   }
 
   private uploadFileMetadata(metadata: FileMetadataReq): Observable<FileMetadataRes> {

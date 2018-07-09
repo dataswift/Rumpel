@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Observable } from 'rxjs/Observable';
+import { ReplaySubject ,  Observable } from 'rxjs';
+import { defaultIfEmpty, filter, flatMap, map, tap } from 'rxjs/operators';
 import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
 import { HatApplication, HatApplicationSetup } from './hat-application.interface';
@@ -15,17 +15,18 @@ export class HatApplicationsService {
   constructor(private authSvc: AuthService,
               private hatSvc: HatApiService) {
 
-    this.authSvc.user$
-      .filter((user: User) => Boolean(user.fullDomain))
-      .do((user: User) => this.hatUrl = user.fullDomain)
-      .flatMap(_ => this.getApplicationList('DataPlug'))
-      .subscribe((apps: HatApplication[]) => this._dataplugs$.next(apps));
+    this.authSvc.user$.pipe(
+      filter((user: User) => Boolean(user.fullDomain)),
+      tap((user: User) => this.hatUrl = user.fullDomain),
+      flatMap(_ => this.getApplicationList('DataPlug'))
+    )
+    .subscribe((apps: HatApplication[]) => this._dataplugs$.next(apps));
   }
 
   getApplicationList(kind: string = null): Observable<HatApplication[]> {
     if (kind) {
-      return this.hatSvc.getApplicationList()
-        .map((apps: HatApplication[]) => apps.filter((app: HatApplication) => app.application.kind.kind === kind));
+      return this.hatSvc.getApplicationList().pipe(
+        map((apps: HatApplication[]) => apps.filter((app: HatApplication) => app.application.kind.kind === kind)));
     } else {
       return this.hatSvc.getApplicationList();
     }
@@ -33,7 +34,7 @@ export class HatApplicationsService {
 
   getApplicationDetails(application: string): Observable<HatApplication> {
     return this.hatSvc.getApplicationList()
-      .map((apps: HatApplication[]) => apps.filter(app => app.application.id === application)[0]);
+      .pipe(map((apps: HatApplication[]) => apps.filter(app => app.application.id === application)[0]));
   }
 
   getApplicationData(application: string): Observable<SheFeed[]> {
@@ -70,10 +71,11 @@ export class HatApplicationsService {
   }
 
   get notablesEnabledPlugs$(): Observable<HatApplication[]> {
-    return this.dataplugs$
-      .map((dps: HatApplication[]) => {
+    return this.dataplugs$.pipe(
+      map((dps: HatApplication[]) => {
         return dps.filter((plug: HatApplication) => plug.application.id === 'facebook' || plug.application.id === 'twitter');
-      })
-      .defaultIfEmpty([]);
+      }),
+      defaultIfEmpty([])
+    );
   }
 }

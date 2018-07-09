@@ -53,6 +53,7 @@
 
     .mat-card-content {
       position: relative;
+      text-align: left;
 
       .feed-item-overlay {
         background-color: $image-overlay-color;
@@ -93,6 +94,14 @@
           overflow-wrap: break-word;
           word-wrap: break-word;
           white-space: pre-wrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          max-height: 40px;
+          transition: max-height 1s ease-out;
+
+          &.expanded {
+            max-height: 1000px;
+          }
         }
       }
 
@@ -105,11 +114,19 @@
     }
 
     .mat-card-footer {
+      display: flex;
       margin: 0;
-      padding: 0 0 10px 15px;
+      padding: 0 15px 10px 15px;
       font-size: 13px;
       color: $hat-body-text;
       font-style: italic;
+
+      .card-expand-tag {
+        font-weight: bold;
+        font-style: normal;
+        cursor: pointer;
+        color: $app-accent-color;
+      }
     }
 
     .mat-card-header {

@@ -21,7 +21,6 @@ import { FitbitModule } from './fitbit/fitbit.module';
 import { MonzoModule } from './monzo/monzo.module';
 import { PublicPagesModule } from './public-pages/public-pages.module';
 import { OffersModule } from './offers/offers.module';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
 
@@ -76,7 +75,7 @@ export function cookieServiceFactory() {
     DataManagementModule,
     PublicPagesModule,
     OffersModule,
-    DashboardModule,
+    // DashboardModule,
     NotablesModule,
     MashupsModule,
     ExploreModule,

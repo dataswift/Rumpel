@@ -14,7 +14,7 @@ import { HatApplicationsService } from '../../explore/hat-applications.service';
 
 import { Notable } from '../../shared/interfaces/notable.class';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HatApplication } from '../../explore/hat-application.interface';
 
 @Component({

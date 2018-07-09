@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DataDebitDetailsComponent } from './data-debit-details.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { of, throwError } from 'rxjs';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
 import { DataDebit } from '../data-debit.interface';
@@ -299,12 +299,12 @@ xdescribe('DataDebitDetailsComponent', () => {
       imports: [ CustomAngularMaterialModule ],
       declarations: [ DataDebitDetailsComponent, UnbundlePipe ],
       providers: [
-        { provide: ActivatedRoute, useValue: { params: Observable.of({ id: 'test' }) } },
+        { provide: ActivatedRoute, useValue: { params: of({ id: 'test' }) } },
         { provide: HatApiService, useValue: { getDataDebit: (testId: string) => {
           if (testId === 'test') {
-            return Observable.of(TEST_DATA_DEBIT);
+            return of(TEST_DATA_DEBIT);
           } else {
-            return Observable.throw('Given ID does not exist');
+            return throwError('Given ID does not exist');
           }
         } } }
         ]

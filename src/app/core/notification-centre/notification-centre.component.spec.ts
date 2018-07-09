@@ -13,7 +13,7 @@ import { NotificationCentreComponent } from './notification-centre.component';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
 import { NotificationsService } from '../notifications.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('NotificationCentreComponent', () => {
   let component: NotificationCentreComponent;
@@ -24,8 +24,8 @@ describe('NotificationCentreComponent', () => {
       declarations: [ NotificationCentreComponent, MarkdownToHtmlPipe, MomentPipe ],
       providers: [
         { provide: NotificationsService, useValue: {
-          notification$: Observable.of({ notice: { message: 'hello world' } }),
-          stats$: Observable.of('') } },
+          notification$: of({ notice: { message: 'hello world' } }),
+          stats$: of('') } },
         { provide: MarkdownToHtmlPipe, useValue: { transform: () => null } }
       ]
     })

@@ -12,7 +12,8 @@
 
   <ng-container *ngIf="feedItem.content && !feedItem.content.media">
     <mat-card-content class="no-image">
-      <div class="feed-item-content" *ngIf="feedItem.content.text">{{feedItem.content.text.trim()}}</div>
+      <div class="feed-item-content" [class.expanded]="expanded" #cardContent
+           *ngIf="feedItem.content.text">{{feedItem.content.text.trim()}}</div>
       <ng-container *ngIf="feedItem.location && feedItem.location.address">
         <br><br>
         <div>{{feedItem.location.address.name}}</div>
@@ -22,7 +23,9 @@
       </ng-container>
     </mat-card-content>
     <mat-card-footer>
-      Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}
+      <span>Posted {{feedItem.date.iso | moment: 'DD MMM YYYY h:mma'}}</span>
+      <span class="flex-spacer"></span>
+      <span class="card-expand-tag" *ngIf="!expanded && overflowing" (click)="expandCard()">Show More</span>
     </mat-card-footer>
   </ng-container>
 

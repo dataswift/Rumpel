@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TileFitbitComponent } from './tile-fitbit.component';
 import { RemoveCharsPipe } from '../../shared/pipes/removeChars.pipe';
 import { FitbitActivitySummaryService } from '../services/fitbit-activity-summary.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('TileFitbitComponent', () => {
   let component: TileFitbitComponent;
@@ -13,7 +13,7 @@ describe('TileFitbitComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TileFitbitComponent, RemoveCharsPipe ],
       providers: [
-        { provide: FitbitActivitySummaryService, useValue: { data$: Observable.of([]) } }
+        { provide: FitbitActivitySummaryService, useValue: { data$: of([]) } }
       ]
     })
     .compileComponents();

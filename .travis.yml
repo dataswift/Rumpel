@@ -20,7 +20,7 @@ cache:
 before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
-  - npm install -g @angular/cli@1.7.0
+  - npm install -g @angular/cli@6.0.8
   - sh -e /etc/init.d/xvfb start
 
 install:
@@ -35,8 +35,8 @@ jobs:
       script:
         - ng --version
         - ng lint
-        - ng test --sourcemaps=false --watch=false
-        - ng build --target=production --environment=standalone
+        - ng test --watch=false
+        - ng build --configuration=standalone
       deploy:
         - provider: s3
           access_key_id: AKIAJLFHYRO2WNJ52L5A
@@ -123,13 +123,12 @@ jobs:
       script:
         - ng --version
         - ng lint
-        - ng test --sourcemaps=false --watch=false
-        - ng build --target=production --environment=native
+        - ng test --watch=false
+        - ng build --configuration=native
       after_success:
-        - mv ./dist/inline.*.bundle.js ./dist/inline.bundle.js
+        - mv ./dist/runtime.*.bundle.js ./dist/runtime.bundle.js
         - mv ./dist/polyfills.*.bundle.js ./dist/polyfills.bundle.js
         - mv ./dist/main.*.bundle.js ./dist/main.bundle.js
-        - mv ./dist/vendor.*.bundle.js ./dist/vendor.bundle.js
         - mv ./dist/styles.*.bundle.css ./dist/styles.bundle.css
       deploy:
         - provider: s3
