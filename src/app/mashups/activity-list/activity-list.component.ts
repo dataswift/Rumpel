@@ -7,7 +7,7 @@
  */
 
 import {
-  Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef
+  Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit
 } from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
@@ -19,7 +19,7 @@ import { DayGroupedSheFeed, SheFeed } from '../../she/she-feed.interface';
   templateUrl: 'activity-list.component.html',
   styleUrls: ['activity-list.component.scss']
 })
-export class ActivityListComponent implements OnInit, OnChanges {
+export class ActivityListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() componentHeight: string;
   @Input() cards: DayGroupedSheFeed[] = [];
   @Input() selectedDate: Moment;
@@ -43,13 +43,12 @@ export class ActivityListComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.selectedDate && changes.selectedDate.currentValue) {
-      const selectedDay = <HTMLElement>document.querySelector('.day-wrapper-' +
-        changes.selectedDate.currentValue.format('dddDDMMMYYYY').toLowerCase());
-
-      if (selectedDay) {
-        document.querySelector('.activitylist-container').scrollTop = selectedDay.offsetTop;
-      }
+      this.scrollToDate(changes.selectedDate.currentValue);
     }
+  }
+
+  ngAfterViewInit(): void {
+    this.scrollToDate(moment());
   }
 
   selectLocation(sheItem: SheFeed): void {
@@ -102,6 +101,15 @@ export class ActivityListComponent implements OnInit, OnChanges {
     } else {
       const targetPosition = this.activityListEl.nativeElement.children[index + 1].offsetTop;
       this.activityListEl.nativeElement.scrollTop = targetPosition;
+    }
+  }
+
+  private scrollToDate(dateTime: Moment): void {
+    const selectedDay = <HTMLElement>document.querySelector('.day-wrapper-' +
+      dateTime.format('dddDDMMMYYYY').toLowerCase());
+
+    if (selectedDay) {
+      document.querySelector('.activitylist-container').scrollTop = selectedDay.offsetTop;
     }
   }
 

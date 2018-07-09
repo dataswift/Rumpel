@@ -34,7 +34,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
   public locationDataDownloaded = [];
   public datesInRange = [];
 
-  public selectedTime: Moment;
+  public selectedTime: Moment = null;
 
   public feed$: Observable<DayGroupedSheFeed[]>;
   public locations$: Observable<SheMapItem[]>;
@@ -52,10 +52,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
 
     this.locations$ = combineLatest(sheLocations$, iosLocations$).pipe(map(results => results[0].concat(results[1])));
 
-    this.selectedTime = moment();
-
-    this.updateMapSize(175, 160);
-    window.addEventListener('resize', () => this.updateMapSize(175, 160));
+    this.updateMapSize(115, 110);
+    window.addEventListener('resize', () => this.updateMapSize(115, 110));
 
     this.loadMoreData();
   }
@@ -145,7 +143,7 @@ export class MyDayComponent implements OnInit, OnDestroy {
   }
 
   private updateMapSize(sizeOffset: number, sidebarSizeOffset: number): void {
-    this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - sizeOffset + 'px');
-    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle(window.outerHeight - sidebarSizeOffset + 'px');
+    this.safeSize = this.sanitizer.bypassSecurityTrustStyle(window.innerHeight - sizeOffset + 'px');
+    this.safeSizeSidebar = this.sanitizer.bypassSecurityTrustStyle(window.innerHeight - sidebarSizeOffset + 'px');
   }
 }

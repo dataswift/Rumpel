@@ -6,6 +6,11 @@ import { HatApplication } from '../hat-application.interface';
 import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
+const TITLE_MAP = {
+  'App': 'applications',
+  'DataPlug': 'data plugs'
+};
+
 const HEADLINE_MAP = {
   'App': 'HAT apps are integrated with your HAT data to give you great services.',
   'DataPlug': 'Add new data plugs to your account, or view data from existing plugs.'
@@ -27,7 +32,7 @@ export class HatApplicationListComponent implements OnInit {
     this.hatApp$ = this.activateRoute.params.pipe(mergeMap(params => this.hatAppSvc.getApplicationList(params['appKind'])));
     this.headerProps$ = this.activateRoute.params.pipe(map(params => {
       return {
-        title: params['appKind'],
+        title: TITLE_MAP[params['appKind']],
         headline: HEADLINE_MAP[params['appKind']],
         icon: params['appKind'] === 'DataPlug' ? 'settings_input_component' : 'touch_app'
       };

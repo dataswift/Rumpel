@@ -45,8 +45,12 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     this.offersSub.unsubscribe();
   }
 
-  get menuItems(): Array<any> {
-    return this.config.menuItems.private;
+  get mainMenu(): Array<any> {
+    return this.config.mainMenu;
+  }
+
+  get appsMenu(): Array<any> {
+    return this.config.appsMenu;
   }
 
   openPlugPopup(plug: HatApplication) {
