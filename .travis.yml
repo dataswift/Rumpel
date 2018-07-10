@@ -126,10 +126,10 @@ jobs:
         - ng test --watch=false
         - ng build --configuration=native
       after_success:
-        - mv ./dist/runtime.*.bundle.js ./dist/runtime.bundle.js
-        - mv ./dist/polyfills.*.bundle.js ./dist/polyfills.bundle.js
-        - mv ./dist/main.*.bundle.js ./dist/main.bundle.js
-        - mv ./dist/styles.*.bundle.css ./dist/styles.bundle.css
+        - mv ./dist/runtime.*.js ./dist/runtime.bundle.js
+        - mv ./dist/polyfills.*.js ./dist/polyfills.bundle.js
+        - mv ./dist/main.*.js ./dist/main.bundle.js
+        - mv ./dist/styles.*.css ./dist/styles.bundle.css
       deploy:
         - provider: s3
           access_key_id: AKIAJ4VKFGF4ZU23H4QA
