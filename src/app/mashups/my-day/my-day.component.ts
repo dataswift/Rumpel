@@ -118,8 +118,8 @@ export class MyDayComponent implements OnInit, OnDestroy {
               latitude: feedItem.location.geo.latitude,
               longitude: feedItem.location.geo.longitude,
               content: {
-                title: feedItem.title.text || '',
-                body: feedItem.content.text || ''
+                title: feedItem.title ? feedItem.title.text || '' : '',
+                body: feedItem.content ? feedItem.content.text || '' : ''
               }
             };
           }));

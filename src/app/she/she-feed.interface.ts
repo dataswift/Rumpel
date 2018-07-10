@@ -18,7 +18,7 @@ export interface SheFeed {
   date: { iso: string; unix: number };
   types: string[];
   title?: SheTitle;
-  content: SheContent;
+  content?: SheContent;
   location?: SheLocation;
 }
 
