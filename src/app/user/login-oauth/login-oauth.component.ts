@@ -10,7 +10,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { HatApplication, HatApplicationContent } from '../../explore/hat-application.interface';
+import { HatApplication } from '../../explore/hat-application.interface';
 
 @Component({
   selector: 'rum-login-oauth',
@@ -20,7 +20,7 @@ import { HatApplication, HatApplicationContent } from '../../explore/hat-applica
 export class LoginOauthComponent implements OnInit {
   public hatDomain: string;
   public errorMessage: string;
-  public hatApp: HatApplicationContent;
+  public hatApp: HatApplication;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
@@ -36,11 +36,10 @@ export class LoginOauthComponent implements OnInit {
       this.authSvc.getApplicationDetails(safeName, redirect)
         .subscribe(
       (hatApp: HatApplication) => {
-
         if (hatApp.enabled && !hatApp.needsUpdating) {
           this.buildRedirect(safeName);
         } else {
-          this.hatApp = hatApp.application;
+          this.hatApp = hatApp;
         }
       },
       error => {

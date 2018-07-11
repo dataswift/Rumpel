@@ -16,6 +16,8 @@ import { AuthService } from '../../core/services/auth.service';
 import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
 // tslint:disable-next-line:max-line-length
 import { HatApplicationPermissionsComponent } from '../../shared/components/hat-application-permissions/hat-application-permissions.component';
+import { HatAppUpdateNotesComponent } from '../../shared/components/hat-app-update-notes/hat-app-update-notes.component';
+import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 
 describe('LoginOauthComponent', () => {
   let component: LoginOauthComponent;
@@ -24,7 +26,9 @@ describe('LoginOauthComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
-      declarations: [ LoginOauthComponent, HatApplicationPermissionsComponent, UnbundlePipe ],
+      declarations: [
+        LoginOauthComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent, UnbundlePipe,
+        MarkdownToHtmlPipe ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },

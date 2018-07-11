@@ -36,6 +36,12 @@ interface HatApplicationInfo {
   published: boolean;
   rating: { score: string; };
   termsUrl: string;
+  updateNotes?: HatApplicationUpdateNotes;
+}
+
+interface HatApplicationUpdateNotes {
+  header: string;
+  notes?: Array<string>;
 }
 
 interface HatApplicationDescription {

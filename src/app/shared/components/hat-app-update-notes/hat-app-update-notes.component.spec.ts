@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HatApplicationPermissionsComponent } from './hat-application-permissions.component';
-import { CustomAngularMaterialModule } from '../../../core/custom-angular-material.module';
-import { UnbundlePipe } from '../../pipes/unbundle.pipe';
+import { HatAppUpdateNotesComponent } from './hat-app-update-notes.component';
 import { HatApplicationContent } from '../../../explore/hat-application.interface';
+import { CustomAngularMaterialModule } from '../../../core/custom-angular-material.module';
+import { MarkdownToHtmlPipe } from '../../pipes/markdown-to-html.pipe';
 
 const APP_DATA_MOCK: HatApplicationContent = {
   'id': 'notables',
@@ -275,20 +275,20 @@ const APP_DATA_MOCK: HatApplicationContent = {
   }
 };
 
-describe('HatApplicationPermissionsComponent', () => {
-  let component: HatApplicationPermissionsComponent;
-  let fixture: ComponentFixture<HatApplicationPermissionsComponent>;
+describe('HatAppUpdateNotesComponent', () => {
+  let component: HatAppUpdateNotesComponent;
+  let fixture: ComponentFixture<HatAppUpdateNotesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
-      declarations: [ HatApplicationPermissionsComponent, UnbundlePipe ]
+      declarations: [ HatAppUpdateNotesComponent, MarkdownToHtmlPipe ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HatApplicationPermissionsComponent);
+    fixture = TestBed.createComponent(HatAppUpdateNotesComponent);
     component = fixture.componentInstance;
     component.app = APP_DATA_MOCK;
     fixture.detectChanges();
