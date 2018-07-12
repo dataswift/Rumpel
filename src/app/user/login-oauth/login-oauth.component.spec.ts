@@ -11,7 +11,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginOauthComponent } from './login-oauth.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { APP_CONFIG } from '../../app.config';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
 // tslint:disable-next-line:max-line-length
@@ -32,7 +32,8 @@ describe('LoginOauthComponent', () => {
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },
-        { provide: AuthService, useValue: {} }
+        { provide: AuthService, useValue: {} },
+        { provide: Router, useValue: { navigate: () => {} } }
       ]
     })
     .compileComponents();

@@ -13,7 +13,7 @@
       <div class="app-rating-wrapper" *ngIf="app.application.kind.kind === 'App'">
         <div class="app-rating">
           <span class="app-rating-highlighted">{{app.application.info.rating.score}}</span>
-          <span class="app-rating-italicized">rated</span>
+          <!--<span class="app-rating-italicized">rated</span>-->
         </div>
       </div>
       <h3 class="app-details-header-title">{{app.application.info.name}}</h3>
@@ -46,7 +46,7 @@
         <mat-card class="app-details-general">
           <mat-card-content>
             <h5 class="app-details-heading">Description</h5>
-            <div class="app-details-description" [innerHTML]="app.application.info.description.text | markdownToHtml"></div>
+            <div class="app-details-description">{{ app.application.info.description.text }}</div>
           </mat-card-content>
         </mat-card>
 

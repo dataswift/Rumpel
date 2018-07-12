@@ -7,7 +7,7 @@
  */
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
@@ -24,6 +24,7 @@ export class LoginOauthComponent implements OnInit {
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
+              private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -64,9 +65,16 @@ export class LoginOauthComponent implements OnInit {
   }
 
   buildRedirect(appName: string): void {
-    this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
-      window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
-    });
+    // Use internal login option when forcing HAT-native version through terms approval process
+    const internal = this.route.snapshot.queryParams['internal'] === 'true';
+
+    if (internal) {
+      this.router.navigate([this.route.snapshot.queryParams['redirect']]);
+    } else {
+      this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
+        window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
+      });
+    }
   }
 
   agreeTerms(appId: string): void {

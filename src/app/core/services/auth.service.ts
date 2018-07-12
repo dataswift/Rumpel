@@ -80,7 +80,7 @@ export class AuthService {
     this._token$.next({ token: null, user: this.generateUserInfo(null) });
   }
 
-  getApplicationDetails(name: string, redirect: string): Observable<HatApplication> {
+  getApplicationDetails(name: string, redirect: string = '/'): Observable<HatApplication> {
     return this.hatSvc.getApplicationById(name)
       .pipe(map((hatApp: HatApplication) => {
         // const redirectUrlIsValid = redirect === hatApp.application.setup.url ||
