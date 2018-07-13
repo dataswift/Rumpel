@@ -4,7 +4,7 @@ import { DataDebitListComponent } from './data-debit-list.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HatApiService } from '../../core/services/hat-api.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { GraphicPageHeaderComponent } from '../../shared/components/graphic-page-header/graphic-page-header.component';
 
 xdescribe('DataDebitListComponent', () => {
@@ -15,7 +15,7 @@ xdescribe('DataDebitListComponent', () => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule, RouterTestingModule ],
       declarations: [ DataDebitListComponent, GraphicPageHeaderComponent ],
-      providers: [{ provide: HatApiService, useValue: { getAllDataDebits: () => Observable.of([]) } }]
+      providers: [{ provide: HatApiService, useValue: { getAllDataDebits: () => of([]) } }]
     })
     .compileComponents();
   }));

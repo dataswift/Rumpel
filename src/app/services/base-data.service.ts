@@ -6,15 +6,13 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Observable, Subject, ReplaySubject, Subscription } from 'rxjs';
+import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
 
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { EndpointQuery, Filter } from '../shared/interfaces/bundle.interface';
-import { Subscription } from 'rxjs/Subscription';
 
 export abstract class BaseDataService<T> {
   private _data$: ReplaySubject<HatRecord<T>[]> = <ReplaySubject<HatRecord<T>[]>>new ReplaySubject(1);
@@ -35,7 +33,7 @@ export abstract class BaseDataService<T> {
     this.clearLocalStore();
 
     this.userSub = authSvc.auth$
-      .filter(isAuthenticated => isAuthenticated === false)
+      .pipe(filter(isAuthenticated => isAuthenticated === false))
       .subscribe(_ => this.clearLocalStore());
   }
 
@@ -53,7 +51,7 @@ export abstract class BaseDataService<T> {
 
   checkTableExists(): Observable<boolean> {
     return this.hat.getDataRecords(this.namespace, this.endpoint, 1)
-      .map(data => data.length > 0)
+      .pipe(map(data => data.length > 0));
   }
 
   getInitData(take: number = this.RECORDS_PER_REQUEST): void {
@@ -61,7 +59,7 @@ export abstract class BaseDataService<T> {
       this.pushToStream();
     } else {
       this.hat.getDataRecords(this.namespace, this.endpoint, take, this.orderBy)
-        .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
+        .pipe(map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType)))
         .subscribe((data: HatRecord<T>[]) => {
           this.store.data = this.store.data.concat(data);
           this.drop = this.drop + data.length;
@@ -72,7 +70,7 @@ export abstract class BaseDataService<T> {
 
   getMoreData(take: number = this.RECORDS_PER_REQUEST, repeatUntilMinRecordNumber?: number): void {
     this.hat.getDataRecords(this.namespace, this.endpoint, take, this.orderBy, this.drop)
-      .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
+      .pipe(map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType)))
       .subscribe((data: HatRecord<T>[]) => {
         this.store.data = this.store.data.concat(data);
         this.drop = this.drop + data.length;
@@ -85,19 +83,20 @@ export abstract class BaseDataService<T> {
   }
 
   save(recordValue: T): Observable<HatRecord<T>> {
-    return this.hat.createRecord(this.namespace, this.endpoint, recordValue)
-      .map(this.coerceType)
-      .do((record: HatRecord<T>) => {
+    return this.hat.createRecord(this.namespace, this.endpoint, recordValue).pipe(
+      map(this.coerceType),
+      tap((record: HatRecord<T>) => {
         this.store.data.unshift(record);
         this.drop += 1;
         this.pushToStream();
-      });
+      })
+    );
   }
 
   update(recordValue: HatRecord<T>): Observable<HatRecord<T>> {
-    return this.hat.updateRecord(recordValue)
-      .map(this.coerceType)
-      .do((updatedRecord: HatRecord<T>) => {
+    return this.hat.updateRecord(recordValue).pipe(
+      map(this.coerceType),
+      tap((updatedRecord: HatRecord<T>) => {
         const updatedRecordIndex = this.store.data
           .findIndex((dataPoint) => dataPoint.recordId === updatedRecord.recordId);
 
@@ -105,7 +104,8 @@ export abstract class BaseDataService<T> {
           this.store.data[updatedRecordIndex] = updatedRecord;
           this.pushToStream();
         }
-      });
+      })
+    );
   }
 
   delete(recordValue: HatRecord<T>): void {
@@ -128,9 +128,9 @@ export abstract class BaseDataService<T> {
       filters: filters
     };
 
-    this.hat.proposeNewDataEndpoint(combinatorName, [endpointQuery])
-      .flatMap((resCode: number) => this.hat.getCombinatorRecords(combinatorName, this.orderBy, 2 * this.RECORDS_PER_REQUEST))
-      .map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType))
+    this.hat.proposeNewDataEndpoint(combinatorName, [endpointQuery]).pipe(
+      mergeMap((resCode: number) => this.hat.getCombinatorRecords(combinatorName, this.orderBy, 2 * this.RECORDS_PER_REQUEST)))
+      .pipe(map((rawData: HatRecord<any>[]) => rawData.map(this.coerceType)))
       .subscribe((data: HatRecord<T>[]) => {
         this.store.data = data;
         this.drop = data.length;

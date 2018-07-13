@@ -13,7 +13,7 @@ import { ShareBeltComponent } from './share-belt.component';
 import { APP_CONFIG } from '../../app.config';
 import { DialogService } from '../../core/dialog.service';
 import { HatApplicationsService } from '../../explore/hat-applications.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { Notable } from '../../shared/interfaces/notable.class';
 
 describe('ShareBeltComponent', () => {
@@ -26,7 +26,7 @@ describe('ShareBeltComponent', () => {
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: DialogService, useValue: {} },
-        { provide: HatApplicationsService, useValue: { getApplicationDetails: () => Observable.of({ active: true }) } }
+        { provide: HatApplicationsService, useValue: { getApplicationDetails: () => of({ active: true }) } }
       ]
     })
       .compileComponents();

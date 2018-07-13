@@ -7,10 +7,10 @@
  */
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { HatApplication, HatApplicationContent } from '../../explore/hat-application.interface';
+import { HatApplication } from '../../explore/hat-application.interface';
 
 @Component({
   selector: 'rum-login-oauth',
@@ -20,10 +20,11 @@ import { HatApplication, HatApplicationContent } from '../../explore/hat-applica
 export class LoginOauthComponent implements OnInit {
   public hatDomain: string;
   public errorMessage: string;
-  public hatApp: HatApplicationContent;
+  public hatApp: HatApplication;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
+              private router: Router,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -36,11 +37,10 @@ export class LoginOauthComponent implements OnInit {
       this.authSvc.getApplicationDetails(safeName, redirect)
         .subscribe(
       (hatApp: HatApplication) => {
-
         if (hatApp.enabled && !hatApp.needsUpdating) {
           this.buildRedirect(safeName);
         } else {
-          this.hatApp = hatApp.application;
+          this.hatApp = hatApp;
         }
       },
       error => {
@@ -65,9 +65,16 @@ export class LoginOauthComponent implements OnInit {
   }
 
   buildRedirect(appName: string): void {
-    this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
-      window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
-    });
+    // Use internal login option when forcing HAT-native version through terms approval process
+    const internal = this.route.snapshot.queryParams['internal'] === 'true';
+
+    if (internal) {
+      this.router.navigate([this.route.snapshot.queryParams['redirect']]);
+    } else {
+      this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
+        window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
+      });
+    }
   }
 
   agreeTerms(appId: string): void {

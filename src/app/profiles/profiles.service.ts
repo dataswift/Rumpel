@@ -6,9 +6,9 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
+import { throwError as observableThrowError, ReplaySubject, Observable, forkJoin, of, zip } from 'rxjs';
+import { catchError, filter, map, startWith } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Observable } from 'rxjs/Observable';
 import { HatApiService } from '../core/services/hat-api.service';
 import { BaseDataService } from '../services/base-data.service';
 import { AuthService } from '../core/services/auth.service';
@@ -97,16 +97,17 @@ export class ProfilesService extends BaseDataService<Profile> {
       online: { website: false, blog: false, facebook: false, twitter: false, linkedin: false, google: false, youtube: false }
     };
 
-    const filteredData$ = this.data$.filter(profile => profile.length > 0);
+    const filteredData$ = this.data$.pipe(filter(profile => profile.length > 0));
 
-    return Observable.zip(filteredData$, this._bundle$.asObservable())
-      .map(([profiles, profileBundle]) => {
+    return zip(filteredData$, this._bundle$.asObservable()).pipe(
+      map(([profiles, profileBundle]) => {
         return {
           values: this.validateProfileNewOrDefault(profiles[0].data),
           share: this.generateProfileShare(this.validateProfileNewOrDefault(profiles[0].data), profileBundle)
         };
-      })
-      .startWith({ values: defaultProfile, share: defaultProfileShareConfig });
+      }),
+      startWith({ values: defaultProfile, share: defaultProfileShareConfig })
+    );
   }
 
   coerceType(rawProfile: HatRecord<any>): HatRecord<Profile> {
@@ -129,13 +130,14 @@ export class ProfilesService extends BaseDataService<Profile> {
     if (values.photo.avatar) {
       filePermissionUpdate$ = this.hat.updateFilePermissions(values.photo.avatar.split('/').pop(), permissionKey);
     } else {
-      filePermissionUpdate$ = Observable.of(null);
+      filePermissionUpdate$ = of(null);
     }
 
     const phataBundleUpdate$ = this.hat.proposeNewDataBundle('phata', this.generatePhataBundle(shares));
 
-    return Observable.forkJoin(this.save(values), filePermissionUpdate$, phataBundleUpdate$)
-      .map(([savedProfile, permissionUpdateResult, bundleUpdateResult]) => this.coerceType(savedProfile));
+    return forkJoin(this.save(values), filePermissionUpdate$, phataBundleUpdate$).pipe(
+      map(([savedProfile, permissionUpdateResult, bundleUpdateResult]) => this.coerceType(savedProfile))
+    );
   }
 
   private generateProfileShare(profile: Profile, phataBundle: BundleStructure): ProfileSharingConfig {
@@ -193,14 +195,14 @@ export class ProfilesService extends BaseDataService<Profile> {
   }
 
   private getPhataBundle(): void {
-    this.hat.getDataBundeStructure('phata')
-      .catch(error => {
+    this.hat.getDataBundeStructure('phata').pipe(
+      catchError(error => {
         if (error.status === 404) {
-          return Observable.of(DEFAULT_PHATA_BUNDLE);
+          return of(DEFAULT_PHATA_BUNDLE);
         } else {
-          return Observable.throw(error);
+          return observableThrowError(error);
         }
-      })
+      }))
       .subscribe((bundle: BundleStructure) => {
         this.previousBundle = bundle;
         this._bundle$.next(bundle);

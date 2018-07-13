@@ -1,0 +1,11 @@
+@import '../../style/branding';
+
+.feed-item-rollup-control {
+  border: none;
+  background: transparent;
+  color: $app-accent-color;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  padding-bottom: 8px;
+}

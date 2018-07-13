@@ -14,6 +14,14 @@ const APP_DATA_MOCK: HatApplicationContent = {
   },
   'info': {
     'version': '1.0.3',
+    'updateNotes': {
+      'header': 'We’ve made some improvements to the user experience.',
+      'notes': [
+        'Note 1',
+        'Note 2',
+        'Note 3'
+      ]
+    },
     'published': true,
     'name': 'Notables',
     'headline': 'All your words',
@@ -23,6 +31,9 @@ const APP_DATA_MOCK: HatApplicationContent = {
       'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>`
     },
     'termsUrl': 'https://hatdex.org/website-terms-service',
+    'rating': {
+      'score': 'A'
+    },
     'dataUsePurpose': 'Purpose of data use...',
     'dataPreview': [
       {

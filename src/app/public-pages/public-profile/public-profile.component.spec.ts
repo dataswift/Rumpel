@@ -18,8 +18,7 @@ import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
 import { RelativeTimePipe } from '../../shared/pipes/relative-time.pipe';
-import {Observable} from 'rxjs/Observable';
-
+import { of } from 'rxjs';
 
 describe('PublicProfileComponent', () => {
   let component: PublicProfileComponent;
@@ -32,10 +31,10 @@ describe('PublicProfileComponent', () => {
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: AuthService, useValue: {
-          auth$: Observable.of(false)
+          auth$: of(false)
         } },
         { provide: HatApiService, useValue: {
-          getPhataPage: () => Observable.of({})
+          getPhataPage: () => of({})
         } }
       ]
     })

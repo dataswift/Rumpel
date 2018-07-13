@@ -6,28 +6,22 @@
   ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
   -->
 
-<div class="row content-bg content-header">
-  <div class="col-md-12">
-    <rum-page-header title="Notables" tooltipContent="Your words are your memories! Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists - all in one place, and lets you decide what is private to yourself and what to share!"></rum-page-header>
-  </div>
-</div>
+<rum-graphic-page-header title="Notables"
+                         headline="Your words are your memories!"
+                         matIcon="create">
+</rum-graphic-page-header>
 
 <div class="row notables-view content-bg">
   <div class="col-md-10 col-md-offset-1">
-    <rum-notables-md-editor [profile]="profile"></rum-notables-md-editor>
-
-    <div class="filter-header">
-      <div class="filter icon-text-valign" [class.on]="filter === ''" (click)="filterBy('')"><i class="material-icons">folder</i>All</div>
-      <div class="filter icon-text-valign" [class.on]="filter === 'blog'" (click)="filterBy('blog')"><i class="material-icons">library_books</i>Blogs</div>
-      <div class="filter icon-text-valign" [class.on]="filter === 'note'" (click)="filterBy('note')"><i class="material-icons">border_color</i>Notes</div>
-      <div class="filter icon-text-valign" [class.on]="filter === 'list'" (click)="filterBy('list')"><i class="material-icons">list</i>Lists</div>
+    <div class="notables-editor-wrapper">
+      <rum-notables-md-editor [profile]="profile"></rum-notables-md-editor>
     </div>
 
     <ul class="bulletless-list">
-      <li *ngFor="let notable of notables | filterBy:'kind':filter" class="notable-item placeholder">
+      <li *ngFor="let notable of notables" class="notable-item placeholder">
         <rum-notable [notable]="notable"
-                      [modifiable]="true"
-                      (change)="changeNotable($event)"></rum-notable>
+                     [modifiable]="true"
+                     (change)="changeNotable($event)"></rum-notable>
       </li>
     </ul>
   </div>

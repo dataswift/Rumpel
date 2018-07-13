@@ -12,7 +12,14 @@
 </rum-info-header>
 
 <div class="native-login-page">
-  <span class="flex-spacer"></span>
+  <span class="small-flex-spacer"></span>
+
+  <div [style.visibility]="passwordError ? 'visible' : 'hidden'" class="rum-error-message">
+    <mat-icon class="rum-error-message-icon">warning</mat-icon>
+    Sorry that password is incorrect
+  </div>
+
+  <span class="small-flex-spacer"></span>
 
   <div class="title-container">
     <button mat-icon-button class="back-button">
@@ -30,19 +37,17 @@
   <div class="f-g">
     <label for="hatPass" hidden></label>
     <input id="hatPass" type="password" class="hat-pass-input" name="hat-pass-input"
+           [class.rum-error-field]="passwordError"
            placeholder="Enter HAT password" #hatPass
            (focus)="hideErrorMessage()"
            (keyup.enter)="login(hatPass)"/>
-    <div *ngIf="passwordError" class="error alert alert-danger">
-      Incorrect password. Please try again.
-    </div>
   </div>
 
   <div>
     <mat-checkbox class="remember-me-checkbox" [(ngModel)]="rememberMe" color="primary">Remember me</mat-checkbox>
   </div>
 
-  <span class="custom-flex-spacer"></span>
+  <span class="large-flex-spacer"></span>
 
   <div class="user-actions">
     <button mat-flat-button role="button" (click)="login(hatPass)">Login</button>

@@ -11,7 +11,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { ActivityListComponent } from './activity-list.component';
-import { ActivityCardComponent } from '../activity-card/activity-card.component';
 import { LocationNotableComponent } from '../../shared/components/location-notable/location-notable.component';
 import { LocationFbPostComponent } from '../../social/location-fb-post/location-fb-post.component';
 import { FitbitMyDayComponent } from '../../fitbit/fitbit-my-day/fitbit-my-day.component';
@@ -23,6 +22,7 @@ import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { RelativeTimePipe } from '../../shared/pipes/relative-time.pipe';
 import { RemoveCharsPipe } from '../../shared/pipes/removeChars.pipe';
+import { SheFeedItemComponent } from '../../shared/components/she-feed-item/she-feed-item.component';
 
 describe('ActivityListComponent', () => {
   let component: ActivityListComponent;
@@ -33,7 +33,6 @@ describe('ActivityListComponent', () => {
       imports: [ CustomAngularMaterialModule ],
       declarations: [
         ActivityListComponent,
-        ActivityCardComponent,
         LocationNotableComponent,
         LocationFbPostComponent,
         FitbitMyDayComponent,
@@ -44,7 +43,8 @@ describe('ActivityListComponent', () => {
         SafeHtmlPipe,
         MarkdownToHtmlPipe,
         RelativeTimePipe,
-        RemoveCharsPipe
+        RemoveCharsPipe,
+        SheFeedItemComponent
       ]
     })
       .compileComponents();

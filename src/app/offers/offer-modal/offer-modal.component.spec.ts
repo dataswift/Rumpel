@@ -3,10 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { OfferModalComponent } from './offer-modal.component';
 import { OfferRequirementsComponent } from '../offer-requirements/offer-requirements.component';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
-import { ClipboardModule } from 'ngx-clipboard/dist';
+import { ClipboardModule } from 'ngx-clipboard';
 import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
 import { DataOfferService } from '../data-offer.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 
 xdescribe('OfferModalComponent', () => {
@@ -18,7 +18,7 @@ xdescribe('OfferModalComponent', () => {
       imports: [ ClipboardModule ],
       declarations: [ OfferModalComponent, OfferRequirementsComponent, MomentPipe, SafeHtmlPipe ],
       providers: [
-        { provide: DataOfferService, useValue: { offers$: Observable.of({ availableOffers: [], acceptedOffers: [] }) } }
+        { provide: DataOfferService, useValue: { offers$: of({ availableOffers: [], acceptedOffers: [] }) } }
       ]
     })
     .compileComponents();

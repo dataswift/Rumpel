@@ -28,16 +28,14 @@ export class AppConfig {
     dexOfferId: string;
     url: string;
   };
-  menuItems: {
-    private: Array<any>;
-    dataPlugs: Array<any>;
-  };
+  mainMenu: Array<any>;
+  appsMenu: Array<any>;
 }
 
 export const configuration: AppConfig = {
-  version: '3.6.0.4',
+  version: '3.6.2.0',
   name: 'Rumpel',
-  tokenApp: 'rumpel',
+  tokenApp: 'hatapp',
   tokenExpiryTime: 3,
   supportedDomains: ['.hubofallthings.net', '.hat.direct'],
   native: environment.native,
@@ -63,47 +61,35 @@ export const configuration: AppConfig = {
     dexOfferId: '92e4a135-cd81-4c5e-bbf8-57bea3b7d9e0',
     url: 'https://notables.hubofallthings.com/api/bulletin/tickle'
   },
-  menuItems: {
-    'private': [
-      { display: 'My Digital Life', icon: 'line_weight', link: '/feed', dataType: '', disable: '',
+  mainMenu: [
+    { display: 'My digital life', icon: 'line_weight', link: '/feed', dataType: '', disable: '',
       description: 'My Digital Life' },
 
-      { display: 'Dashboard', icon: 'dashboard', link: '/dashboard', dataType: '', disable: '',
-      description: 'The dashboard is where you have an overview of Rumpel.' },
+    { display: 'Map', icon: 'map', link: '/mashups', dataType: '', disable: '',
+      description: 'See your feed correlated with the places you\'ve been too.' },
 
-      { display: 'My Public Profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
+    { display: 'My public profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
       description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
 
-      { display: 'Redeem Offers', icon: 'local_offer', link: '/offers', dataType: '', disable: '',
-      description: 'Allow access to your data in exchange for cash, services or vouchers.' },
+    { display: 'Explore HAT apps', icon: 'touch_app', link: '/explore/App', dataType: '', disable: '',
+      description: 'Explore all the apps available in the HAT ecosystem.' },
 
-      { display: 'Explore', icon: 'touch_app', link: '/explore/App', dataType: '', disable: '',
-        description: 'Explore all the apps available in the HAT ecosystem.' },
+    { display: 'Data plugs', icon: 'settings_input_component', link: '/explore/DataPlug', dataType: '', disable: '',
+    description: `Data comes into your HAT via data plugs.
+    Click here to see what data plugs are available, and what data plugs are already connected.` },
 
-      { display: 'Data Debits', icon: 'swap_horiz', link: '/data-debit', dataType: '', disable: '',
-        description: 'See all of the data debits setup on the HAT' },
+    { display: 'Data debits', icon: 'swap_horiz', link: '/data-debit', dataType: '', disable: '',
+      description: 'See all of the data debits setup on the HAT' },
+  ],
 
-      { display: 'Notables', icon: 'border_color', link: '/notables', dataType: '', disable: '',
+  appsMenu: [
+    { display: 'Notables', icon: '/assets/icons/she-notables.png', link: '/notables', dataType: '', disable: '',
       description: `Your words are your memories!
-      Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists -
-      all in one place, and lets you decide what is private to yourself and what to share!
-      Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.` },
+    Notables allow you to create and keep your social media interactions, thoughts, blogs, shopping lists -
+    all in one place, and lets you decide what is private to yourself and what to share!
+    Enabling the calendar icon when the notable is shared will create a 7 day expiry of the note visibility in the sharing space.` },
 
-      { display: 'My Mashups', icon: 'layers', link: '/mashups/myday', dataType: '', disable: '',
-      description: 'See mashups of your data' },
-
-      { display: 'My Data Plugs', icon: 'settings_input_component', link: '/explore/DataPlug', dataType: '', disable: '',
-      description: `Data comes into your HAT via data plugs.
-      Click here to see what data plugs are available, and what data plugs are already connected.` }
-    ],
-    'dataPlugs': [
-      { display: 'Facebook', activatedSearchName: 'posts', activatedSearchSource: 'facebook', page: 'social' },
-      { display: 'Twitter', activatedSearchName: 'tweets', activatedSearchSource: 'twitter', page: 'social' },
-      { display: 'Location', activatedSearchName: 'location', activatedSearchSource: 'rumpel', page: 'locations' },
-      { display: 'Google calendar', activatedSearchName: 'events', activatedSearchSource: 'google', page: 'calendar' },
-      { display: 'Calendar', activatedSearchName: 'events', activatedSearchSource: 'ical', page: 'calendar' },
-      { display: 'Dropbox photos', activatedSearchName: 'photos', activatedSearchSource: 'dropbox', page: 'photos' },
-      { display: 'Rumpel', activatedSearchName: 'profile', activatedSearchSource: 'rumpel', page: 'dashboard' }
-    ]
-  }
+    { display: 'DataBuyer', icon: '/assets/icons/she-databuyer.png', link: '/offers', dataType: '', disable: '',
+      description: 'Allow access to your data in exchange for cash, services or vouchers.' }
+  ]
 };

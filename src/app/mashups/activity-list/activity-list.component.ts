@@ -6,24 +6,26 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef} from '@angular/core';
+import {
+  Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, ViewChild, ElementRef, AfterViewInit
+} from '@angular/core';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { HatRecord } from '../../shared/interfaces/hat-record.interface';
+import { DayGroupedSheFeed, SheFeed } from '../../she/she-feed.interface';
 
 @Component({
   selector: 'rum-activity-list',
   templateUrl: 'activity-list.component.html',
   styleUrls: ['activity-list.component.scss']
 })
-export class ActivityListComponent implements OnInit, OnChanges {
-
+export class ActivityListComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() componentHeight: string;
-  @Input() cards: { [day: string]: HatRecord<any>[]; } = {};
-  @Input() selectedDate: string;
+  @Input() cards: DayGroupedSheFeed[] = [];
+  @Input() selectedDate: Moment;
 
   @Output() timeSelected = new EventEmitter<string>();
-  @Output() notifyDatesInRange: EventEmitter<any> = new EventEmitter();
+  @Output() locationSelected: EventEmitter<{ lat: number; long: number; }> = new EventEmitter<{ lat: number; long: number; }>();
 
   @ViewChild('activityList') activityListEl: ElementRef;
 
@@ -32,55 +34,29 @@ export class ActivityListComponent implements OnInit, OnChanges {
   public cardList: Array<{ day: string; dayList: HatRecord<any>[]; }> = [];
   public datesInRange = [];
   public currentMonth = '';
-  // public date: DateModel;
-  // public options: DatePickerOptions;
 
-  constructor() {
-    // this.options = new DatePickerOptions();
-  }
+  constructor() {}
 
   ngOnInit() {
     this.getMonthsInRange();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.cards && changes.cards.currentValue) {
-       this.cardList = Object.keys(changes.cards.currentValue).sort().reverse().reduce((acc, key) => {
-        if (changes.cards.currentValue.hasOwnProperty(key)) {
-          acc.push({ day: key, dayList: changes.cards.currentValue[key] });
-        }
-
-        return acc;
-      }, []);
-    }
-
-    if (changes.selectedDate.previousValue !== changes.selectedDate.currentValue) {
-      const dayIndex = this.cardList.findIndex(item => item.day === changes.selectedDate.currentValue);
-      this.scrollToItem(dayIndex);
+    if (changes.selectedDate && changes.selectedDate.currentValue) {
+      this.scrollToDate(changes.selectedDate.currentValue);
     }
   }
 
-  // changeDate(e) {
-  //   const targetDate = e.target.value;
-  //   // const targetDate = this.date.momentObj;
-  //   let closestDate = moment();
-  //   let closestDateDistance = Math.abs( closestDate.diff(targetDate, 'days') );
-  //   let targetIndex = 0;
-  //
-  //   if (targetDate.isValid() && targetDate.isSameOrBefore(this.moment) ) {
-  //
-  //     for (let i = 0; i < this.cardList.length; i++) {
-  //       const newClosestDateDistance = Math.abs(this.cardList[i].timestamp.diff( targetDate, 'days' ));
-  //
-  //       if ( newClosestDateDistance < closestDateDistance ) {
-  //         closestDateDistance = Math.abs( this.cardList[i].timestamp.diff(targetDate, 'days') );
-  //         closestDate = this.cardList[i].timestamp;
-  //         targetIndex = i;
-  //       }
-  //     }
-  //     this.scrollToItem(targetIndex);
-  //   }
-  // }
+  ngAfterViewInit(): void {
+    this.scrollToDate(moment());
+  }
+
+  selectLocation(sheItem: SheFeed): void {
+    if (sheItem.location && sheItem.location.geo) {
+      const { latitude, longitude } = sheItem.location.geo;
+      this.locationSelected.emit({ lat: latitude, long: longitude });
+    }
+  }
 
   getMonthsInRange() {
     setInterval( () => {
@@ -112,19 +88,28 @@ export class ActivityListComponent implements OnInit, OnChanges {
 
       this.currentMonth = tempMonths.join(' / ');
 
-      this.notifyDatesInRange.emit(this.datesInRange);
+      // this.notifyDatesInRange.emit(this.datesInRange);
     }, 1000);
   }
 
 
   scrollToItem(index: number) {
-    this.timeSelected.emit(this.cardList[index].day);
+    // this.timeSelected.emit(this.cardList[index].day);
 
     if (index === 0) {
       this.activityListEl.nativeElement.scrollTop = 0;
     } else {
       const targetPosition = this.activityListEl.nativeElement.children[index + 1].offsetTop;
       this.activityListEl.nativeElement.scrollTop = targetPosition;
+    }
+  }
+
+  private scrollToDate(dateTime: Moment): void {
+    const selectedDay = <HTMLElement>document.querySelector('.day-wrapper-' +
+      dateTime.format('dddDDMMMYYYY').toLowerCase());
+
+    if (selectedDay) {
+      document.querySelector('.activitylist-container').scrollTop = selectedDay.offsetTop;
     }
   }
 

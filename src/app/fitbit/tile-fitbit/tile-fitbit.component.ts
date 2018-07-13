@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 import { FitbitActivitySummaryService } from '../services/fitbit-activity-summary.service';
 
 import { FitbitActivitySummary } from '../interfaces/fitbit-activity-summary.interface';

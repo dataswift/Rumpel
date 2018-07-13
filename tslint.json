@@ -2,9 +2,6 @@
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
-  "extends": [
-    "rxjs-tslint-rules"
-  ],
   "rules": {
     "callable-types": true,
     "class-name": true,
@@ -15,7 +12,7 @@
     "curly": true,
     "eofline": true,
     "forin": true,
-    "import-blacklist": [true, "rxjs"],
+    "import-blacklist": [true],
     "import-spacing": true,
     "indent": [
       true,
@@ -73,15 +70,6 @@
       "single"
     ],
     "radix": true,
-    "rxjs-add": {
-      "options": [{
-        "allowElsewhere": false,
-        "allowUnused": true,
-        "file": "./src/rxjs.imports.ts"
-      }],
-      "severity": "error"
-    },
-    "rxjs-no-wholesale": { "severity": "error" },
     "semicolon": [
       "always"
     ],

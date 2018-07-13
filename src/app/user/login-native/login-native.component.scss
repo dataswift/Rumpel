@@ -65,7 +65,11 @@
     max-width: 500px;
   }
 
-  .custom-flex-spacer {
+  .small-flex-spacer {
+    flex-grow: 1;
+  }
+
+  .large-flex-spacer {
     flex-grow: 2;
   }
 
@@ -81,6 +85,11 @@
     margin-bottom: 25px;
     border-radius: 0;
     -webkit-appearance: none;
+
+    &.rum-error-field {
+      border: solid 1px #e36682;
+      color: #e36682;
+    }
 
     @media (min-width: 501px) {
       font-size: 20px;
@@ -163,5 +172,20 @@
     .user-actions {
       flex-grow: 3;
     }
+  }
+}
+
+.rum-error-message {
+  padding: 15px 30px;
+  background-color: rgba(227, 102, 130, 0.2);
+  border-radius: 2px;
+  border: solid 1px #e36682;
+  color: #e36682;
+  font-size: 13px;
+  font-weight: bold;
+
+  &-icon {
+    margin-right: 5px;
+    vertical-align: middle;
   }
 }

@@ -4,6 +4,13 @@
       <img src="{{app.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" />
     </div>
 
+    <div class="app-rating-wrapper" *ngIf="app.kind.kind === 'App'">
+      <div class="app-rating">
+        <span class="app-rating-highlighted">{{app.info.rating.score}}</span>
+        <!--<span class="app-rating-italicized">rated</span>-->
+      </div>
+    </div>
+
     <h3 class="title-section-heading">{{app.info.name}}</h3>
 
     <p class="title-section-text">{{app.info.name}} needs access to some of your HAT data, and will have the

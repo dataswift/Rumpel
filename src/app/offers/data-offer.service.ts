@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Observable, ReplaySubject, forkJoin, of } from 'rxjs';
+import { flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { Claim, Offer, OffersStorage } from './offer.interface';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, AppConfig } from '../app.config';
@@ -35,7 +35,7 @@ export class DataOfferService {
   }
 
   get offersSummary$(): Observable<any> {
-    return this.offers$.map((offers: OffersStorage) => {
+    return this.offers$.pipe(map((offers: OffersStorage) => {
       const groupedOffers = groupBy(offers.acceptedOffers, offer => {
         return `${offer.reward.rewardType}-${offer.claim && offer.claim.status}`;
       });
@@ -57,7 +57,7 @@ export class DataOfferService {
         servicesClaimed: groupedOffers['service-completed'] && groupedOffers['service-completed'].length || 0,
         servicesPending: groupedOffers['service-claimed'] && groupedOffers['service-claimed'].length || 0,
       }
-    });
+    }));
   }
 
   fetchOfferList(): void {
@@ -73,16 +73,17 @@ export class DataOfferService {
   }
 
   claim(offerId: string): Observable<DataDebit> {
-    return this.claimOfferWithDataBuyer(offerId)
-      .flatMap((claim: Claim) => this.hatSvc.enableDataDebit(claim.dataDebitId))
-      .do(_ => this.fetchUserAwareOfferList(true));
+    return this.claimOfferWithDataBuyer(offerId).pipe(
+      mergeMap((claim: Claim) => this.hatSvc.enableDataDebit(claim.dataDebitId)),
+      tap(_ => this.fetchUserAwareOfferList(true))
+    );
   }
 
   redeemCash(): void {
     const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/user/redeem/cash`;
 
-    this.getDataBuyerToken()
-      .flatMap((headers: HttpHeaders) => this.http.get(url, { headers: headers }))
+    this.getDataBuyerToken().pipe(
+      mergeMap((headers: HttpHeaders) => this.http.get(url, { headers: headers })))
       .subscribe(_ => console.log('Requested cash redemption.'));
   }
 
@@ -90,8 +91,8 @@ export class DataOfferService {
     const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/offersWithClaims`;
 
     if (forceReload || this.expires.isBefore()) {
-      Observable.forkJoin(this.getDataBuyerToken(), this.fetchMerchantFilter())
-        .flatMap(([headers, merchants]) => {
+      forkJoin(this.getDataBuyerToken(), this.fetchMerchantFilter())
+        .pipe(flatMap(([headers, merchants]) => {
           let queryParams = new HttpParams();
 
           for (const merchant of merchants) {
@@ -99,7 +100,7 @@ export class DataOfferService {
           }
 
           return this.http.get<Offer[]>(url, { headers: headers, params: queryParams });
-        })
+        }))
         .subscribe(resBody => {
           const groupedOffers = this.groupOffers(resBody);
           this.expires = moment().add(OFFER_CACHING_INTERVAL, 'minutes');
@@ -110,31 +111,31 @@ export class DataOfferService {
 
   private fetchMerchantFilter(): Observable<string[]> {
     return this.hatSvc.getDataRecords('dex', 'databuyer', 1)
-      .map((records: HatRecord<any>[]) => {
+      .pipe(map((records: HatRecord<any>[]) => {
         if (records.length > 0 && records[0].data && records[0].data.merchants) {
           return records[0].data.merchants;
         } else {
           // HAT is not configured for merchant filtering
           return [];
         }
-      });
+      }));
   }
 
   private claimOfferWithDataBuyer(offerId: string): Observable<Claim> {
     const url = `${this.config.databuyer.url + this.config.databuyer.pathPrefix}/offer/${offerId}/claim`;
 
-    return this.getDataBuyerToken()
-      .flatMap((headers: HttpHeaders) => this.http.get<Claim>(url, { headers: headers }));
+    return this.getDataBuyerToken().pipe(
+      mergeMap((headers: HttpHeaders) => this.http.get<Claim>(url, { headers: headers })));
   }
 
   private getDataBuyerToken(): Observable<HttpHeaders | null> {
     if (this.cachedToken && this.jwt.decodeToken(this.cachedToken)['exp'] > moment().unix()) {
       const headers = new HttpHeaders({ 'X-Auth-Token': this.cachedToken });
 
-      return Observable.of(headers);
+      return of(headers);
     } else {
       return this.hatSvc.getApplicationToken(this.config.databuyer.name, this.config.databuyer.url)
-        .map((accessToken: string) => {
+        .pipe(map((accessToken: string) => {
           const payload = this.jwt.decodeToken(accessToken);
 
           if (payload && payload['exp'] > moment().unix()) {
@@ -146,7 +147,7 @@ export class DataOfferService {
 
             return null;
           }
-        });
+        }));
     }
   }
 

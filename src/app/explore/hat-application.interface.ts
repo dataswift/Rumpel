@@ -34,7 +34,14 @@ interface HatApplicationInfo {
   dataUsePurpose: string;
   graphics: HatApplicationGraphics;
   published: boolean;
+  rating: { score: string; };
   termsUrl: string;
+  updateNotes?: HatApplicationUpdateNotes;
+}
+
+interface HatApplicationUpdateNotes {
+  header: string;
+  notes?: Array<string>;
 }
 
 interface HatApplicationDescription {

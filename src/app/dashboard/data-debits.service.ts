@@ -8,7 +8,7 @@
 
 import { Injectable } from '@angular/core';
 import { HatApiService } from '../core/services/hat-api.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DataDebit } from '../data-management/data-debit.interface';
 
 @Injectable()

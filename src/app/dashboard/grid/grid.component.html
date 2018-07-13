@@ -43,7 +43,7 @@
 
   <rum-tile-map class="grid-item grid-item-2 locations">
     <rum-tile-header [title]="'Recent locations'"
-                      [pageLink]="'/locations'"
+                      [pageLink]="'/mashups'"
                       [info]="'Pull in your location data and Investigate your recent movements on the RUMPEL interactive map (as long as locations plug is running).'"></rum-tile-header>
     <div class="inactive" *ngIf="!showLocationsTile">
       <div class="filter">
@@ -56,7 +56,7 @@
 
   <rum-tile-social class="grid-item">
     <rum-tile-header [title]="'Social feed'"
-                      [pageLink]="'/social'"
+                      [pageLink]="'/feed'"
                       [info]="'What happened on social media recently? See all your recent activity in one convenient place.'"></rum-tile-header>
     <div class="inactive" *ngIf="!showPostsTile">
       <div class="filter">
@@ -75,6 +75,7 @@
 
   <rum-tile-data-debit class="grid-item">
     <rum-tile-header [title]="'Data debits'"
-                      [info]="'List of data debits created on the HAT.'"></rum-tile-header>
+                     [pageLink]="'/data-debit'"
+                     [info]="'List of data debits created on the HAT.'"></rum-tile-header>
   </rum-tile-data-debit>
 </div>

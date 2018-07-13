@@ -1,11 +1,12 @@
 import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import { SheFeedService } from '../she-feed.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { SheFeed } from '../she-feed.interface';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { Filter } from '../../shared/interfaces/bundle.interface';
 import { MatRadioChange } from '@angular/material/radio';
+import { take } from 'rxjs/operators';
 
 import * as format from 'date-fns/format';
 
@@ -41,7 +42,7 @@ export class SheFeedComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const today = format(new Date(), 'ddd DD MMM YYYY');
 
-    this.dateSeparators.changes.take(1).subscribe((changes) => {
+    this.dateSeparators.changes.pipe(take(1)).subscribe((changes) => {
       const todayElement = changes.find(item => {
         return item.nativeElement.textContent === today;
       });

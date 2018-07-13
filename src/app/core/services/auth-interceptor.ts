@@ -1,8 +1,9 @@
+import { throwError as observableThrowError, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
-import { Observable } from 'rxjs/Observable';
 import { User } from '../../user/user.interface';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 
@@ -31,13 +32,13 @@ export class AuthInterceptor implements HttpInterceptor {
         headers: req.headers.set('X-Auth-Token', this.token)
       });
 
-      return next.handle(modReq).do((event: HttpEvent<any>) => {
+      return next.handle(modReq).pipe(tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
           this.processResponse(event);
         }
-      });
+      }));
     } else {
-      return Observable.throw('Unauthenticated!');
+      return observableThrowError('Unauthenticated!');
     }
   }
 

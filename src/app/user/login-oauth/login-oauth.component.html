@@ -8,10 +8,17 @@
 
 <ng-container *ngIf="hatApp || errorMessage else loading">
   <ng-container *ngIf="hatApp">
-    <rum-hat-application-permissions [app]="hatApp"></rum-hat-application-permissions>
+    <ng-container *ngIf="hatApp.needsUpdating">
+      <rum-hat-app-update-notes [app]="hatApp.application"></rum-hat-app-update-notes>
+    </ng-container>
+
+    <ng-container *ngIf="!hatApp.needsUpdating">
+      <rum-hat-application-permissions [app]="hatApp.application"></rum-hat-application-permissions>
+    </ng-container>
+
 
     <div class="user-actions">
-      <button mat-flat-button role="button" (click)="agreeTerms(hatApp.id)">Agree</button>
+      <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)">Agree</button>
       <button mat-flat-button role="link" (click)="declineTerms()">Cancel</button>
     </div>
   </ng-container>

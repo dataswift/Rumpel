@@ -13,7 +13,7 @@ import { ProfilesService } from './profiles.service';
 import { AuthService } from '../core/services/auth.service';
 import { HatApiService } from '../core/services/hat-api.service';
 import { APP_CONFIG } from '../app.config';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('ProfilesService', () => {
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('ProfilesService', () => {
         ProfilesService,
         { provide: HatApiService, useValue: {} },
         { provide: AuthService, useValue: {
-          auth$: Observable.of(false)
+          auth$: of(false)
         } },
         { provide: APP_CONFIG, useValue: {} }
       ]

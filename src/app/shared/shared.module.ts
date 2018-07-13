@@ -27,6 +27,7 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
 import { DatetimePipe } from './pipes/datetime.pipe';
 import { GraphicPageHeaderComponent } from './components/graphic-page-header/graphic-page-header.component';
 import { HatApplicationPermissionsComponent } from './components/hat-application-permissions/hat-application-permissions.component';
+import { HatAppUpdateNotesComponent } from './components/hat-app-update-notes/hat-app-update-notes.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
@@ -42,7 +43,8 @@ import { HatApplicationPermissionsComponent } from './components/hat-application
                   SheFeedItemComponent,
                   DatetimePipe,
                   GraphicPageHeaderComponent,
-                  HatApplicationPermissionsComponent ],
+                  HatApplicationPermissionsComponent,
+                  HatAppUpdateNotesComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
@@ -50,6 +52,6 @@ import { HatApplicationPermissionsComponent } from './components/hat-application
              TreeViewComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, GraphicPageHeaderComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
-             UnbundlePipe, SheFeedItemComponent, HatApplicationPermissionsComponent ]
+             UnbundlePipe, SheFeedItemComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent ]
 })
 export class SharedModule {}

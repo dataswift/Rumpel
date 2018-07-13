@@ -8,44 +8,6 @@
 
 @import "../../style/branding";
 
-.view-header {
-  h4, h6 {
-    display: inline-block;
-    text-transform: uppercase;
-  }
-
-  .view-mode-toggle {
-    float: right;
-    margin-right: 0.2em;
-    margin-top: 1em;
-
-    .previewPHATA{
-      cursor: pointer;
-      color: white;
-      text-decoration: none;
-      padding: 10px;
-      background-color: $app-mid-tone;
-      border-radius: 4px;
-
-      &:hover{
-        text-decoration: none;
-        filter: brightness(110%);
-      }
-    }
-
-    .switch-main {
-      display: inline-block;
-      vertical-align: middle;
-      font-size: 0.75em;
-      margin: 0.5em;
-    }
-
-    .switch-label {
-      font-size: 1.25em;
-    }
-  }
-}
-
 .row {
   color: $text-dark;
 }
@@ -76,75 +38,10 @@ section {
   font-size: 1.4em;
 }
 
-.section-body {
-  background-color: white;
-  text-align: left;
-  margin: 0;
-  height: 100%;
-  padding: 6em 2em 4em 2em;
-}
-
-.picture {
-  height: 20em;
-  padding-top: 20px;
-  text-align: center;
-
-  .switch{
-    margin-right: 30px;
-  }
-}
-
-.settings {
-  .profile-privacy-switch{
-    margin: auto;
-    width: 250px;
-
-    * {
-      float: left;
-    }
-
-    span {
-      font-size: 1.5em;
-      margin-top: 7px;
-      color: $app-mid-tone;
-    }
-
-    .main-switch {
-      font-size: 14px;
-      margin-left: 1em;
-      margin-right: 1em;
-    }
-  }
-
-  .info {
-    padding-top: 1em;
-    padding-left: 0.75em;
-    padding-right: 0.75em;
-    clear: both;
-
-    p {
-      font-size: 1.2em;
-      padding: 10px;
-    }
-  }
-}
-
-.intro {
-  .section-body {
-    div {
-      margin-right: 0.75em;
-      margin-left: 0.75em;
-    }
-  }
-
-  p {
-    font-size: 1.2em;
-    padding: 10px;
-  }
-}
-
 form {
+  margin: 0 15px;
   text-align: center;
+  padding-top: 2em;
 }
 
 .switch {
@@ -160,28 +57,6 @@ form {
   &.group-switch {
     font-size: 14px;
     margin-right: 1em;
-  }
-}
-
-.btn-toggle-sec {
-  font-size: 2.5em;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  padding-top: 0.25em;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  border: none;
-  border-left: 2px solid #c7c7c7;
-  border-top: 2px solid #c7c7c7;
-}
-
-.btn-addon {
-  height: 3.75em;
-
-  span {
-    margin-right: 0.75em;
-    margin-left: 0.75em;
   }
 }
 
@@ -241,18 +116,6 @@ form {
   }
 }
 
-.img-profile {
-  margin-top: 1em;
-  height: 15em;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-}
-
-.img-circle {
-  border-radius: 50%;
-}
-
-
-
 .ui-message {
   padding: 0.75em;
   margin-top: 70px;
@@ -270,35 +133,26 @@ form {
   box-shadow:         0 0 5px black;
 }
 
-
-.buttons{
-  margin-top: 60px;
-  margin-bottom: 60px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  .btn{
-    margin: 10px;
-    width: 200px;
-    padding: 10px;
-    text-align: center;
-  }
-}
-
 .demo-basic {
   padding: 0;
-  border-radius: 8px;
+  border-radius: 4px;
+  max-width: 900px;
+
+  .card-toolbar-header {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+  }
 }
 .demo-basic .mat-card-content {
   padding: 2em;
 }
+
 .demo-full-width {
   width: 100%;
 }
 
 .demo-card {
-  margin: 4em 2em;
+  margin: 4em auto;
 }
 
 .demo-text-align-end {
@@ -322,20 +176,6 @@ form {
   background-repeat: no-repeat;
   background-size: cover;
   background-image: url('/assets/images/hero-fade.jpg');
-}
-
-.social-links {
-  a {
-    margin: 0 7px;
-
-    img {
-      top: 0;
-      border: none;
-      width: 4em;
-      height: 4em;
-      background: $hat-background-color;
-    }
-  }
 }
 
 .phata-box {
@@ -380,30 +220,123 @@ form {
 
 }
 
-.dashboard-hero {
-  background-color: $app-mid-tone;
-  background-image: url('/assets/images/hero.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 8px;
-  padding: 0;
-  margin: 4em 2em;
-}
-
-.overlay {
+.app-details-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 125px;
   position: relative;
+  height: 234px;
+  width: 100%;
+  background-size: contain;
+  background-image: url('/assets/images/piggy.jpg');
+  background-repeat: no-repeat;
+  background-color: #2b313d;
+  // background-position: 100% 100%;
 
   &:before {
     position: absolute;
-    content:" ";
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background-color: $image-overlay-color;
-    z-index:0;
-    border-radius: 8px;
+    content: " ";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .2);
+  }
 
+  .app-details-header-toolbar {
+    background-color: transparent;
+    display: flex;
+    align-self: flex-start;
+    z-index: 1;
+
+    .flex-spacer {
+      flex-grow: 1;
+    }
+
+    .app-details-header-toolbar-button {
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .app-details-header-card {
+    margin-bottom: -125px;
+    padding: 0 2em;
+    border-radius: 4px;
+    width: 95%;
+    max-width: 500px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .app-logo-wrapper {
+      margin-top: -60px;
+      background-color: white;
+      padding: 6px;
+      border-radius: 50%;
+      cursor: pointer;
+
+      .app-logo {
+        height: 120px;
+        width: 120px;
+        border-radius: 50%;
+      }
+    }
+
+    .social-links {
+      margin: 25px 0;
+
+      a {
+        margin: 0 7px;
+
+        img {
+          top: 0;
+          border: none;
+          border-radius: 50%;
+          height: 50px;
+          width: 50px;
+          background: $hat-background-color;
+        }
+      }
+    }
+
+    .app-details-header-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: $app-dark-tone;
+      margin-bottom: 0;
+    }
+
+    .app-details-header-headline {
+      margin: 0 30px;
+      font-size: 14px;
+      color: $hat-body-text;
+      line-height: 1.38;
+    }
+
+    .app-details-status {
+      border: none;
+      text-decoration: none;
+      margin-bottom: 30px;
+      padding: 5px 20px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .app-details-error {
+      margin-bottom: 20px;
+      width: 80%;
+      color: #E36682;
+      font-size: 13px;
+      line-height: 1.38;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
   }
 }

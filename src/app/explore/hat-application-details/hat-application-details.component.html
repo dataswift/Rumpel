@@ -10,8 +10,13 @@
       <div class="app-logo-wrapper">
         <img [src]="app.application.info.graphics.logo.normal" height="100" class="img img-responsive app-logo" />
       </div>
+      <div class="app-rating-wrapper" *ngIf="app.application.kind.kind === 'App'">
+        <div class="app-rating">
+          <span class="app-rating-highlighted">{{app.application.info.rating.score}}</span>
+          <!--<span class="app-rating-italicized">rated</span>-->
+        </div>
+      </div>
       <h3 class="app-details-header-title">{{app.application.info.name}}</h3>
-      <div class="app-details-header-headline">{{app.application.info.headline}}</div>
 
       <a mat-button [ngClass]="['app-details-status', appStatus]"
          [href]="generateHatLoginLink(app.application.id, app.application.setup)"
@@ -22,6 +27,12 @@
         <ng-container *ngSwitchCase="'failing'"><mat-icon>sync_problem</mat-icon>Reconnect</ng-container>
         <ng-container *ngSwitchCase="'untouched'"><mat-icon>add_circle_outline</mat-icon>Connect</ng-container>
       </a>
+
+      <div class="app-details-header-headline" *ngIf="app.application.kind.kind === 'App'">
+        This app scores {{app.application.info.rating.score}} rating for data exchange
+      </div>
+      <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="app-link"
+         *ngIf="app.application.kind.kind === 'App'">Learn more</a>
 
       <div class="app-details-error" *ngIf="appStatus === 'failing'">
         App disconnected. Please click reconnect to re-establish connection.
@@ -35,7 +46,7 @@
         <mat-card class="app-details-general">
           <mat-card-content>
             <h5 class="app-details-heading">Description</h5>
-            <div class="app-details-description" [innerHTML]="app.application.info.description.text | markdownToHtml"></div>
+            <div class="app-details-description">{{ app.application.info.description.text }}</div>
           </mat-card-content>
         </mat-card>
 

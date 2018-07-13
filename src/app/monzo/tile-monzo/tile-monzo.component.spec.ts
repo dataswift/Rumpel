@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TileMonzoComponent } from './tile-monzo.component';
-import {MonzoService} from '../monzo.service';
-import {Observable} from 'rxjs/Observable';
+import { MonzoService } from '../monzo.service';
+import { of } from 'rxjs';
 
 xdescribe('TileMonzoComponent', () => {
   let component: TileMonzoComponent;
@@ -12,7 +12,7 @@ xdescribe('TileMonzoComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TileMonzoComponent ],
       providers: [
-        { provide: MonzoService, useValue: { data$: Observable.of([]) } }
+        { provide: MonzoService, useValue: { data$: of([]) } }
       ]
     })
     .compileComponents();

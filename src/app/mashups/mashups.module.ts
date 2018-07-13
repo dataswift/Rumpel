@@ -11,16 +11,9 @@ import { FormsModule } from '@angular/forms';
 
 import { LocationsModule } from '../locations/locations.module';
 import { SharedModule } from '../shared/shared.module';
-import { SocialModule } from '../social/social.module';
-import { FitbitModule } from '../fitbit/fitbit.module';
-import { MonzoModule } from '../monzo/monzo.module';
-import { DimensionsModule } from '../dimensions/dimensions.module';
-import { NotablesModule } from '../notables/notables.module';
 
 import { MyDayComponent } from './my-day/my-day.component';
-import { MashupsComponent } from './mashups/mashups.component';
 import { ActivityListComponent } from './activity-list/activity-list.component';
-import { ActivityCardComponent } from './activity-card/activity-card.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 
 @NgModule({
@@ -28,18 +21,11 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
     SharedModule,
     LocationsModule,
     FormsModule,
-    SocialModule,
-    FitbitModule,
-    MonzoModule,
-    DimensionsModule,
-    NotablesModule,
     CustomAngularMaterialModule
   ],
   declarations: [
     MyDayComponent,
-    ActivityListComponent,
-    MashupsComponent,
-    ActivityCardComponent
+    ActivityListComponent
   ]
 })
 export class MashupsModule {}

@@ -9,7 +9,7 @@ import { MarkdownToHtmlPipe } from '../../pipes/markdown-to-html.pipe';
 import { RelativeTimePipe } from '../../pipes/relative-time.pipe';
 import { PresignImgUrlPipe } from '../../pipes/presign-img-url.pipe';
 import { HatApiService } from '../../../core/services/hat-api.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 import { Notable } from '../../interfaces/notable.class';
 
 const NOTABLE_MOCK_DATA = {

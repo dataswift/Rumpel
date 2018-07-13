@@ -3,14 +3,15 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApiService } from './hat-api.service';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { Observable } from 'rxjs/Observable'
+import { ReplaySubject, Observable, of } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../../user/user.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
 
 import * as parse from 'date-fns/parse';
 import * as isFuture from 'date-fns/is_future';
 import * as addDays from 'date-fns/add_days';
+import {HttpResponse} from '@angular/common/http';
 
 declare const httpProtocol: string;
 
@@ -36,8 +37,8 @@ export class AuthService {
   }
 
   get token$(): Observable<string> {
-    return this._token$.asObservable()
-      .do(({ token, user }) => {
+    return this._token$.asObservable().pipe(
+      tap(({ token, user }) => {
         if (token) {
           this.storageSvc.setAuthToken(token);
           this.storageSvc.setItem('lastLoginId', user.hatId);
@@ -45,23 +46,24 @@ export class AuthService {
         } else {
           this.storageSvc.removeAuthToken();
         }
-      })
-      .map(({ token, user }) => token);
+      }),
+      map(({ token, user }) => token)
+    );
   }
 
   get user$(): Observable<User> {
     return this._token$.asObservable()
-      .map(({ token, user }) => user);
+      .pipe(map(({ token, user }) => user));
   }
 
   get auth$(): Observable<boolean> {
     return this._token$.asObservable()
-      .map((tokenUser: TokenUser) => Boolean(tokenUser.token));
+      .pipe(map((tokenUser: TokenUser) => Boolean(tokenUser.token)));
   }
 
   login(username: string, password: string): Observable<string> {
     return this.hatSvc.login(username, password)
-      .do(token => this.loginWithToken(token));
+      .pipe(tap(token => this.loginWithToken(token)));
   }
 
   loginWithToken(token: string): void {
@@ -78,9 +80,9 @@ export class AuthService {
     this._token$.next({ token: null, user: this.generateUserInfo(null) });
   }
 
-  getApplicationDetails(name: string, redirect: string): Observable<HatApplication> {
+  getApplicationDetails(name: string, redirect: string = '/'): Observable<HatApplication> {
     return this.hatSvc.getApplicationById(name)
-      .map((hatApp: HatApplication) => {
+      .pipe(map((hatApp: HatApplication) => {
         // const redirectUrlIsValid = redirect === hatApp.application.setup.url ||
         //                            redirect === hatApp.application.setup.iosUrl; // TODO: add support for Android
 
@@ -91,7 +93,7 @@ export class AuthService {
         } else {
           throw new Error('Redirect URL does not match registered value');
         }
-      });
+      }));
   }
 
   hatLogin(name: string, redirect: string): Observable<string> {
@@ -116,6 +118,13 @@ export class AuthService {
 
   setupApplication(name: string): Observable<HatApplication> {
     return this.hatSvc.setupApplication(name);
+  }
+
+  domainRegistered(domain: string): Observable<boolean> {
+    return this.hatSvc.getPublicKey(domain).pipe(
+      map((res: HttpResponse<any>) => res.status === 200),
+      catchError(error => of(false))
+    );
   }
 
   private generateUserInfo(decodedToken: string | null): User {

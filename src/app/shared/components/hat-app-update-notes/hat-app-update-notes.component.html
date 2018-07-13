@@ -1,0 +1,28 @@
+<div class="content-wrapper">
+  <section class="title-section">
+    <div class="app-logo-wrapper">
+      <img src="{{app.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" />
+    </div>
+
+    <div class="app-rating-wrapper" *ngIf="app.kind.kind === 'App'">
+      <div class="app-rating">
+        <span class="app-rating-highlighted">{{app.info.rating.score}}&nbsp;</span>
+        <!--<span class="app-rating-italicized">rated</span>-->
+      </div>
+    </div>
+
+    <h3 class="title-section-heading">{{app.info.name}}</h3>
+
+    <div class="title-section-text" [innerHTML]="app.info.updateNotes.header | markdownToHtml"></div>
+  </section>
+
+  <section class="update-notes-section">
+    <h4 class="section-header">Summary of updates</h4>
+    <ul class="app-update-notes">
+      <li *ngFor="let note of app.info.updateNotes.notes" class="app-update-notes-item">
+        <mat-icon class="app-update-notes-item-icon">check_circle</mat-icon>
+        <span class="app-update-notes-item-content">{{note | markdownToHtml}}</span>
+      </li>
+    </ul>
+  </section>
+</div>

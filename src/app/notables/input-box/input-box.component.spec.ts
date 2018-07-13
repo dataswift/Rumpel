@@ -14,7 +14,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { NotablesService } from '../notables.service';
 import { LocationsService } from '../../locations/locations.service';
-import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 describe('InputBoxComponent', () => {
   let component: InputBoxComponent;
@@ -25,8 +25,8 @@ describe('InputBoxComponent', () => {
       imports: [ RouterTestingModule, FormsModule ],
       declarations: [ InputBoxComponent ],
       providers: [
-        { provide: NotablesService, useValue: { data$: Observable.of([]) } },
-        { provide: LocationsService, userValue: { data$: Observable.of([]) } }
+        { provide: NotablesService, useValue: { data$: of([]) } },
+        { provide: LocationsService, userValue: { data$: of([]) } }
       ]
     })
       .compileComponents();

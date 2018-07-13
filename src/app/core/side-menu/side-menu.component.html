@@ -10,8 +10,8 @@
 
 <div class="menu-scroll">
   <h6 class="data-plugs-title">Menu</h6>
-  <ul class="center" id="intro-step1">
-    <li *ngFor="let item of menuItems; let i = index">
+  <ul class="center">
+    <li *ngFor="let item of mainMenu; let i = index">
       <div class="wrapper">
         <a [routerLink]="[item.link]" (click)="close.emit('Close menu')"
            routerLinkActive="rum-sidenav-item-selected"
@@ -20,6 +20,23 @@
            [matTooltipShowDelay]="500"
            [matTooltipPosition]="'right'">
           <mat-icon class="icon">{{item.icon}}</mat-icon>
+          {{item.display}}
+        </a>
+      </div>
+    </li>
+  </ul>
+
+  <h6 class="data-plugs-title">Apps</h6>
+  <ul class="center">
+    <li *ngFor="let item of appsMenu; let i = index">
+      <div class="wrapper">
+        <a [routerLink]="[item.link]" (click)="close.emit('Close menu')"
+           routerLinkActive="rum-sidenav-item-selected"
+           [matTooltip]="item.description"
+           [matTooltipClass]="'rum-tooltip-content'"
+           [matTooltipShowDelay]="500"
+           [matTooltipPosition]="'right'">
+          <img [src]="item.icon" width="24" height="24" style="margin-right: 20px;" />
           {{item.display}}
           <span class="badge" *ngIf="item.link === '/offers' && availableOffersCount > 0">{{ availableOffersCount }}</span>
         </a>
@@ -30,5 +47,5 @@
 
 <div class="poweredBy">
   <img src="assets/icons/hat-logo@2x.png" class="img img-responsive">
-  <p>HAT Dashboard</p>
+  <p>HAT Web app</p>
 </div>
