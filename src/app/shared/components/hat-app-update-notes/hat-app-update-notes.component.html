@@ -21,7 +21,7 @@
     <ul class="app-update-notes">
       <li *ngFor="let note of app.info.updateNotes.notes" class="app-update-notes-item">
         <mat-icon class="app-update-notes-item-icon">check_circle</mat-icon>
-        <span class="app-update-notes-item-content">{{note}}</span>
+        <span class="app-update-notes-item-content">{{note | markdownToHtml}}</span>
       </li>
     </ul>
   </section>
