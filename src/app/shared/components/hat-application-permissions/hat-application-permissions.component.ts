@@ -51,7 +51,8 @@ export class HatApplicationPermissionsComponent implements OnInit {
         case 'owner':
           return {
             title: 'Owner access',
-            text: 'Warning! The app will have FULL ACCESS to your HAT.'
+            text: 'This is a special Z class app that enables the HAT owner to view, search, browse and organise their' +
+            ' HAT data as well as manage permissions on their HAT microserver'
           };
         default:
           return {

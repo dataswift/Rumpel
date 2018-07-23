@@ -8,13 +8,13 @@
 
 <ng-container *ngIf="hatApp || errorMessage else loading">
   <ng-container *ngIf="hatApp">
-    <ng-container *ngIf="hatApp.needsUpdating">
+    <ng-container *ngIf="(hatApp.needsUpdating && hatApp.application.info.updateNotes) else appPermissions">
       <rum-hat-app-update-notes [app]="hatApp.application"></rum-hat-app-update-notes>
     </ng-container>
 
-    <ng-container *ngIf="!hatApp.needsUpdating">
+    <ng-template #appPermissions>
       <rum-hat-application-permissions [app]="hatApp.application"></rum-hat-application-permissions>
-    </ng-container>
+    </ng-template>
 
 
     <div class="user-actions">
