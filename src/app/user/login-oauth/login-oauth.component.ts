@@ -82,7 +82,13 @@ export class LoginOauthComponent implements OnInit {
   }
 
   declineTerms(): void {
-    window.location.href = this.route.snapshot.queryParams['fallback'];
+    const internal = this.route.snapshot.queryParams['internal'] === 'true';
+
+    if (internal) {
+      this.router.navigate([this.route.snapshot.queryParams['fallback']]);
+    } else {
+      window.location.href = this.route.snapshot.queryParams['fallback'];
+    }
   }
 
   private legacyLogin(): void {

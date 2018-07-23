@@ -32,6 +32,7 @@ export class PrivateSpaceComponent implements OnInit {
             const queryParams: Params = {
               name: this.config.tokenApp,
               redirect: '/feed',
+              fallback: '/public/profile',
               internal: 'true'
             };
 
