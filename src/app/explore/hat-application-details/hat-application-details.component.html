@@ -10,7 +10,7 @@
       <div class="app-logo-wrapper">
         <img [src]="app.application.info.graphics.logo.normal" height="100" class="img img-responsive app-logo" />
       </div>
-      <div class="app-rating-wrapper" *ngIf="app.application.kind.kind === 'App'">
+      <div class="app-rating-wrapper">
         <div class="app-rating">
           <span class="app-rating-highlighted">{{app.application.info.rating.score}}</span>
           <!--<span class="app-rating-italicized">rated</span>-->
@@ -29,10 +29,9 @@
       </a>
 
       <div class="app-details-header-headline">
-        This app scores {{app.application.info.rating.score}} rating for data exchange
+        This app is rated {{app.application.info.rating.score}}
       </div>
-      <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="app-link"
-         *ngIf="app.application.kind.kind === 'App'">Learn more</a>
+      <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="app-link">Learn more</a>
 
       <div class="app-details-error" *ngIf="appStatus === 'failing'">
         App disconnected. Please click reconnect to re-establish connection.
