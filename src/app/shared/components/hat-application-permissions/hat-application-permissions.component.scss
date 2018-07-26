@@ -88,6 +88,20 @@
     width: 80%;
     margin: auto;
   }
+
+  .title-section-text-rating {
+    margin-top: 10px;
+    color: $hat-body-text;
+    font-size: 13px;
+    line-height: 1.38;
+    font-style: italic;
+  }
+
+  .title-section-text-link {
+    font-weight: bold;
+    font-style: normal;
+    color: $app-accent-color;
+  }
 }
 
 .permissions-section {
