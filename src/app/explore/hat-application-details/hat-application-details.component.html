@@ -63,9 +63,26 @@
       </mat-tab>
 
       <mat-tab label="Data Preview">
-        <ng-container *ngFor="let dataSample of app.application.info.dataPreview">
-          <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+        <mat-card *ngIf="staticData">
+          <h5 class="app-details-heading">Static data</h5>
+          <mat-list class="app-static-data-list">
+            <mat-list-item *ngFor="let prop of staticData" class="app-static-data-list-item">
+              <span class="app-static-data-list-key">{{ sanitizeText(prop[0]) }}</span>
+              <span class="flex-spacer"></span>
+              <span class="app-static-data-list-value">{{ prop[1] }}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card>
+
+        <ng-container *ngIf="dataPreview">
+          <ng-container *ngFor="let dataSample of dataPreview">
+            <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+          </ng-container>
         </ng-container>
+
+        <div *ngIf="!dataPreview && !staticData" class="no-data-message">
+          No previews found. Please connect to see your preview.
+        </div>
       </mat-tab>
     </mat-tab-group>
   </div>
