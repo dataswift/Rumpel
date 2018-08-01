@@ -225,32 +225,6 @@
   }
 }
 
-.app-static-data-list {
-  .app-static-data-list-item {
-    height: auto;
-    padding: 13px 0;
-
-    &:not(:last-child) {
-      border-bottom: solid 1px $hat-background-color;
-    }
-  }
-
-  .app-static-data-list-key {
-    margin-right: 40px;
-    font-size: 13px;
-    color: $hat-body-text;
-    text-transform: capitalize;
-  }
-
-  .app-static-data-list-value {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 14px;
-    color: $app-dark-tone;
-    text-align: right;
-  }
-}
-
 .no-data-message {
   text-align: center;
   font-size: 15px;

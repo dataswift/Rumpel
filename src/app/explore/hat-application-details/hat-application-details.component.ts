@@ -8,6 +8,8 @@ import { forkJoin, of, Observable } from 'rxjs';
 import { catchError, flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { SheFeed } from '../../she/she-feed.interface';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'rum-hat-application-details',
   templateUrl: './hat-application-details.component.html',
@@ -18,6 +20,7 @@ export class HatApplicationDetailsComponent implements OnInit {
   public appStatus: 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update';
   public dataPreview: SheFeed[];
   public staticData: any;
+  public appInformation: string[][];
 
   constructor(private activatedRoute: ActivatedRoute,
               private location: Location,
@@ -29,7 +32,21 @@ export class HatApplicationDetailsComponent implements OnInit {
       const appId = pathParams['appId'];
 
       return this.hatAppSvc.getApplicationDetails(appId).pipe(
-        tap((app: HatApplication) => this.appStatus = this.hatAppSvc.getAppStatus(app)),
+        tap((app: HatApplication) => {
+          this.appStatus = this.hatAppSvc.getAppStatus(app);
+          const { name, url, country } = app.application.developer;
+          const { version, termsUrl, supportContact } = app.application.info;
+
+          this.appInformation = [
+            ['provider', name],
+            ['website', url],
+            ['country', country],
+            ['version', version],
+            ['last updated', moment(app.application.status.versionReleaseDate).format('DD/MM/YYYY')],
+            ['terms and conditions', termsUrl],
+            ['support email', supportContact]
+          ];
+        }),
         flatMap((app: HatApplication) => {
           return forkJoin(
             this.hatAppSvc.getApplicationData(app.application.status.dataPreviewEndpoint),
@@ -64,9 +81,5 @@ export class HatApplicationDetailsComponent implements OnInit {
 
   closeComponentView(): void {
     this.location.back();
-  }
-
-  sanitizeText(text: string): string {
-    return text.replace(/_/g, ' ');
   }
 }

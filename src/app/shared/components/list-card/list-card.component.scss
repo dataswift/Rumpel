@@ -1,0 +1,53 @@
+@import '../../../style/branding';
+
+.app-details-heading {
+  font-weight: bold;
+  color: $app-dark-tone;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.app-static-data-list {
+  .app-static-data-list-item {
+    height: auto;
+    padding: 13px 0;
+
+    &:not(:last-child) {
+      border-bottom: solid 1px $hat-background-color;
+    }
+  }
+
+  .app-static-data-list-key {
+    margin-right: 20px;
+    font-size: 13px;
+    color: $hat-body-text;
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  .app-static-data-list-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    color: $app-dark-tone;
+    text-align: right;
+
+    /deep/ a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+.mat-card {
+  margin: 15px auto;
+  max-width: 500px;
+  box-shadow: none;
+  border-radius: 4px;
+
+  &.expandable {
+    max-width: 900px;
+  }
+}

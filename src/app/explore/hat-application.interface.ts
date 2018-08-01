@@ -14,6 +14,7 @@ export interface HatApplicationContent {
   id: string;
   kind: HatApplicationKind;
   info: HatApplicationInfo;
+  developer: HatApplicationDeveloper;
   permissions: HatApplicationPermissions;
   setup: HatApplicationSetup;
   status: HatApplicationStatus;
@@ -35,8 +36,16 @@ interface HatApplicationInfo {
   graphics: HatApplicationGraphics;
   published: boolean;
   rating: { score: string; };
+  supportContact: string;
   termsUrl: string;
   updateNotes?: HatApplicationUpdateNotes;
+}
+
+interface HatApplicationDeveloper {
+  id: string;
+  name: string;
+  url: string;
+  country: string;
 }
 
 interface HatApplicationUpdateNotes {
@@ -94,6 +103,7 @@ interface HatApplicationStatus {
   expectedStatus: number;
   dataPreviewEndpoint: string;
   recentDataCheckEndpoint: string;
+  versionReleaseDate: string;
   statusUrl: string;
   kind: string;
 }
