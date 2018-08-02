@@ -14,7 +14,7 @@ describe('DataOfferService', () => {
         DataOfferService,
         HttpBackendClient,
         { provide: APP_CONFIG, useValue: { } },
-        { provide: HatApiService, useValue: {} },
+        { provide: HatApiService, useValue: { proxiedRequest: (app: string) => null } },
       ]
     });
   });

@@ -23,11 +23,11 @@ describe('PrivateSpaceComponent', () => {
       imports: [ RouterTestingModule, CustomAngularMaterialModule, NoopAnimationsModule ],
       declarations: [ PrivateSpaceComponent, HeaderComponent, SideMenuComponent ],
       providers: [
-        { provide: APP_CONFIG, useValue: { menuItems: { private: [] }}},
-        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]) } },
+        { provide: APP_CONFIG, useValue: { mainMenu: [], appsMenu: [] }},
+        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]), enable: () => of({}) } },
         { provide: DataOfferService, useValue: { offers$: of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } },
         { provide: DialogService, useValue: {} },
-        { provide: AuthService, useValue: { user$: of({}) } },
+        { provide: AuthService, useValue: { user$: of({}), getApplicationDetails: () => of({}) } },
         { provide: ProfilesService, useValue: { profileData$: of({}) } }
       ]
     })

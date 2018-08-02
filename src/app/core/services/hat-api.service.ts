@@ -320,4 +320,15 @@ export class HatApiService {
     return this.authHttp.put<FileMetadataRes>(path, {});
   }
 
+  proxiedRequest(appId: string): (a: string, b: string, c: any) => Observable<any> {
+    const hatPath = `${this.pathPrefix}/applications/${appId}/proxy`;
+    // Options object should have the same structure as the Angular HttpClient options object
+
+    return (method: string, proxyPath: string, options: any) => {
+      const completePath = hatPath + proxyPath;
+
+      return this.authHttp.request(method, completePath, options);
+    }
+  }
+
 }

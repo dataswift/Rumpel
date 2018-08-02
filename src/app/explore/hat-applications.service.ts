@@ -41,6 +41,10 @@ export class HatApplicationsService {
     return this.hatSvc.getSheRecords(application);
   }
 
+  enable(id: string): Observable<HatApplication> {
+    return this.hatSvc.setupApplication(id);
+  }
+
   disable(id: string): Observable<HatApplication> {
     return this.hatSvc.disableApplication(id);
   }
