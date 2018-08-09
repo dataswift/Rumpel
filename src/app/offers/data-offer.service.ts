@@ -73,7 +73,7 @@ export class DataOfferService {
   claim(offerId: string): Observable<DataDebit> {
     const url = `${this.config.databuyer.pathPrefix}/offer/${offerId}/claim`;
 
-    return this.proxiedRequest('GET', url, null).pipe(
+    return this.proxiedRequest('GET', url, undefined).pipe(
       mergeMap((claim: Claim) => this.hatSvc.enableDataDebit(claim.dataDebitId)),
       tap(_ => this.fetchUserAwareOfferList(true))
     );
