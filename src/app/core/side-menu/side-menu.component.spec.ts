@@ -26,7 +26,7 @@ describe('SideMenuComponent', () => {
       imports: [ RouterTestingModule, CustomAngularMaterialModule ],
       declarations: [ SideMenuComponent ],
       providers: [
-        { provide: APP_CONFIG, useValue: { menuItems: { private: [] }}},
+        { provide: APP_CONFIG, useValue: { mainMenu: [], appsMenu: [] } },
         { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]) } },
         { provide: DataOfferService, useValue: { offers$: of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } }
       ]

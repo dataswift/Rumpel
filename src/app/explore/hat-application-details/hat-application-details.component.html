@@ -60,12 +60,27 @@
             </div>
           </mat-card-content>
         </mat-card>
+
+        <rum-list-card *ngIf="appInformation"
+                       [title]="'Information'"
+                       [listData]="appInformation"
+                       [expandable]="true"></rum-list-card>
       </mat-tab>
 
       <mat-tab label="Data Preview">
-        <ng-container *ngFor="let dataSample of app.application.info.dataPreview">
-          <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+        <div *ngIf="staticData" style="margin-bottom: 60px;">
+          <rum-list-card [title]="'Profile information'" [listData]="staticData"></rum-list-card>
+        </div>
+
+        <ng-container *ngIf="dataPreview">
+          <ng-container *ngFor="let dataSample of dataPreview">
+            <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+          </ng-container>
         </ng-container>
+
+        <div *ngIf="!dataPreview && !staticData" class="no-data-message">
+          No previews found. Please connect to see your preview.
+        </div>
       </mat-tab>
     </mat-tab-group>
   </div>

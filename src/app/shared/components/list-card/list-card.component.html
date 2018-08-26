@@ -1,0 +1,10 @@
+<mat-card [class.expandable]="expandable">
+  <h5 class="app-details-heading">Profile information</h5>
+  <mat-list class="app-static-data-list">
+    <mat-list-item *ngFor="let prop of listData" class="app-static-data-list-item">
+      <span class="app-static-data-list-key">{{ prop[0] | replaceChars }}</span>
+      <span class="flex-spacer"></span>
+      <div class="app-static-data-list-value" [innerHTML]="prop[1] | safeHtml:true"></div>
+    </mat-list-item>
+  </mat-list>
+</mat-card>

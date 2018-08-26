@@ -11,7 +11,7 @@
     "ng": "ng",
     "start": "ng serve --configuration=standalone --host=rumpel.hubofallthings.net",
     "build": "ng lint && ng test --watch=false && ng build --configuration=native",
-    "test": "ng test --watch=false",
+    "test": "ng test --sourceMap=false --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

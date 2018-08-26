@@ -35,25 +35,15 @@ export class StaticDataService {
     return this._data$.asObservable();
   }
 
-  fetchData(source: string): void {
-    if (this.store[source].length > 0) {
-      this.pushToStream(source);
-    } else {
-      this.hat.getDataRecords(source, ENDPOINT_MAP[source], 1, ORDER_BY_MAP[source])
-        .pipe(map((rawData: HatRecord<any>[]) => rawData.map(record => {
-          if (source === 'twitter') {
-            return toPairs(record.data.user);
-          } else {
-            return toPairs(record.data);
-          }
-        })))
-        .subscribe(data => {
-          if (data.length > 0) {
-            this.store[source] = data[0];
-            this.pushToStream(source);
-          }
-        });
-    }
+  fetchData(source: string): Observable<Array<Array<any>>> {
+    return this.hat.getDataRecords(source, ENDPOINT_MAP[source], 1, ORDER_BY_MAP[source])
+      .pipe(map((rawData: HatRecord<any>[]) => rawData.map(record => {
+        if (source === 'twitter') {
+          return toPairs(record.data.user);
+        } else {
+          return toPairs(record.data);
+        }
+      })));
   }
 
   private pushToStream(source: string): void {

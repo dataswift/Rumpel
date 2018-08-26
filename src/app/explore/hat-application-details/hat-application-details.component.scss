@@ -225,6 +225,12 @@
   }
 }
 
+.no-data-message {
+  text-align: center;
+  font-size: 15px;
+  color: $hat-body-text;
+}
+
 .actions-menu-item {
   color: $app-dark-tone;
   font-size: 14px;

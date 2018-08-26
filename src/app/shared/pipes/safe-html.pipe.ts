@@ -23,9 +23,13 @@ export class SafeHtmlPipe implements PipeTransform {
   constructor(private sanitizer: Sanitizer) {}
 
   transform(message: string, replaceUrls: boolean = false): SafeHtml {
-    const html = replaceUrls ? SafeHtmlPipe.replaceUrlsWithHtmlLinks(message) : message;
+    if (typeof message === 'string') {
+      const html = replaceUrls ? SafeHtmlPipe.replaceUrlsWithHtmlLinks(message) : message;
 
-    return this.sanitizer.sanitize(SecurityContext.HTML, html);
+      return this.sanitizer.sanitize(SecurityContext.HTML, html);
+    } else {
+      return message;
+    }
   }
 
 }

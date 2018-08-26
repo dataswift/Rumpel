@@ -30,46 +30,12 @@ const HAT_APPLICATION_MOCK: HatApplication = {
         'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>\n\n`
       },
       'termsUrl': 'https://hatdex.org/website-terms-service',
+      'supportContact': 'contact@hatdex.org',
       'rating': {
         'score': 'A'
       },
       'dataUsePurpose': 'Purpose of data use...',
-      'dataPreview': [
-        {
-          'source': 'notables',
-          'date': {
-            'iso': '2018-05-03T09:33:38.184Z',
-            'unix': 1525340018
-          },
-          'types': [
-            'note'
-          ],
-          'title': {
-            'text': 'leila.hubat.net',
-            'action': 'private'
-          },
-          'content': {
-            'text': 'Notes are live!'
-          }
-        },
-        {
-          'source': 'notables',
-          'date': {
-            'iso': '2018-05-03T09:33:38.322Z',
-            'unix': 1525340018
-          },
-          'types': [
-            'note'
-          ],
-          'title': {
-            'text': 'leila.hubat.net',
-            'action': 'private'
-          },
-          'content': {
-            'text': `And I love 'em!'`
-          }
-        }
-      ],
+      'dataPreview': [],
       'graphics': {
         'banner': {
           'normal': ''
@@ -239,6 +205,12 @@ const HAT_APPLICATION_MOCK: HatApplication = {
         'rolling': true
       }
     },
+    'developer': {
+      'id': 'hatdex',
+      'name': 'HAT Data Exchange Ltd',
+      'url': 'https://hatdex.org',
+      'country': 'United Kingdom'
+    },
     'setup': {
       'iosUrl': 'notables://notablesapphost',
       'onboarding': [
@@ -259,6 +231,7 @@ const HAT_APPLICATION_MOCK: HatApplication = {
       'expectedStatus': 200,
       'dataPreviewEndpoint': 'she/feed/notables',
       'recentDataCheckEndpoint': 'rumpel/notablesv1',
+      'versionReleaseDate': '2018-07-23T12:00:00.000Z',
       'kind': 'External'
     }
   },

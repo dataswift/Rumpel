@@ -14,89 +14,47 @@ const APP_DATA_MOCK: HatApplicationContent = {
   },
   'info': {
     'version': '1.0.3',
-    'updateNotes': {
-      'header': 'We’ve made some improvements to the user experience.',
-      'notes': [
-        'Note 1',
-        'Note 2',
-        'Note 3'
-      ]
-    },
     'published': true,
     'name': 'Notables',
     'headline': 'All your words',
     'description': {
-      'text': '\n Anything you write online is your data – searches, social media posts, comments and notes.',
-      'markdown': '\n Anything you write online is your data – searches, social media posts, comments and notes.',
-      'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>`
+      'text': '\n Anything you write online is your data – searches, social media posts, comments and notes.\n\n',
+      'markdown': '\n Anything you write online is your data – searches, social media posts, comments and notes.\n\n',
+      'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>\n\n`
     },
     'termsUrl': 'https://hatdex.org/website-terms-service',
+    'supportContact': 'contact@hatdex.org',
     'rating': {
       'score': 'A'
     },
     'dataUsePurpose': 'Purpose of data use...',
-    'dataPreview': [
-      {
-        'source': 'notables',
-        'date': {
-          'iso': '2018-05-03T09:33:38.184Z',
-          'unix': 1525340018
-        },
-        'types': [
-          'note'
-        ],
-        'title': {
-          'text': 'leila.hubat.net',
-          'action': 'private'
-        },
-        'content': {
-          'text': 'Notes are live!'
-        }
-      },
-      {
-        'source': 'notables',
-        'date': {
-          'iso': '2018-05-03T09:33:38.322Z',
-          'unix': 1525340018
-        },
-        'types': [
-          'note'
-        ],
-        'title': {
-          'text': 'leila.hubat.net',
-          'action': 'private'
-        },
-        'content': {
-          'text': `And I love 'em!'`
-        }
-      }
-    ],
+    'dataPreview': [],
     'graphics': {
       'banner': {
         'normal': ''
       },
       'logo': {
-        'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-' +
-        'kex8hb7fsdge/notablesapp/0x0ss.png'
+        'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/' +
+        'notablesapp/0x0ss.png'
       },
       'screenshots': [
         {
-          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-' +
-          'kex8hb7fsdge/notablesapp/0x0ss.jpg',
-          'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-' +
-          'kex8hb7fsdge/notablesapp/0x0ss-5.jpg'
+          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/' +
+          'notablesapp/0x0ss.jpg',
+          'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/' +
+          'notablesapp/0x0ss-5.jpg'
         },
         {
-          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-' +
-          'kex8hb7fsdge/notablesapp/0x0ss-2.jpg',
-          'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-' +
-          'kex8hb7fsdge/notablesapp/0x0ss-6.jpg'
+          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/' +
+          'notablesapp/0x0ss-2.jpg',
+          'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/' +
+          'notablesapp/0x0ss-6.jpg'
         },
         {
-          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-' +
-          'kex8hb7fsdge/notablesapp/0x0ss-3.jpg',
-          'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-' +
-          'kex8hb7fsdge/notablesapp/0x0ss-7.jpg'
+          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/' +
+          'notablesapp/0x0ss-3.jpg',
+          'large': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/' +
+          'notablesapp/0x0ss-7.jpg'
         }
       ]
     }
@@ -114,17 +72,6 @@ const APP_DATA_MOCK: HatApplicationContent = {
       {
         'role': 'datadebit',
         'detail': 'app-notables'
-      },
-      {
-        'role': 'applicationlist'
-      },
-      {
-        'role': 'applicationmanage',
-        'detail': 'facebook'
-      },
-      {
-        'role': 'applicationmanage',
-        'detail': 'twitter'
       }
     ],
     'dataRetrieved': {
@@ -251,14 +198,20 @@ const APP_DATA_MOCK: HatApplicationContent = {
       'rolling': true
     }
   },
+  'developer': {
+    'id': 'hatdex',
+    'name': 'HAT Data Exchange Ltd',
+    'url': 'https://hatdex.org',
+    'country': 'United Kingdom'
+  },
   'setup': {
     'iosUrl': 'notables://notablesapphost',
     'onboarding': [
       {
         'title': 'All your words in one place',
         'illustration': {
-          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-' +
-          'kex8hb7fsdge/notablesapp/0x0ss.jpg'
+          'normal': 'https://s3-eu-west-1.amazonaws.com/hubofallthings-com-dexservi-dexpublicassetsbucket-kex8hb7fsdge/' +
+          'notablesapp/0x0ss.jpg'
         },
         'description': 'Save them for yourself or share them on social media - you are in control'
       }
@@ -271,6 +224,7 @@ const APP_DATA_MOCK: HatApplicationContent = {
     'expectedStatus': 200,
     'dataPreviewEndpoint': 'she/feed/notables',
     'recentDataCheckEndpoint': 'rumpel/notablesv1',
+    'versionReleaseDate': '2018-07-23T12:00:00.000Z',
     'kind': 'External'
   }
 };
