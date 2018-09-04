@@ -18,6 +18,7 @@ export interface DataDebit {
   requestClientLogoUrl: string;
   requestApplicationId?: string;
   requestDescription?: string;
+  accepted: boolean;
   active: boolean;
   start: string | null;
   end: string | null;

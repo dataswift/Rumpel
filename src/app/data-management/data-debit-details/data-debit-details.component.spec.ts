@@ -145,6 +145,7 @@ const TEST_DATA_DEBIT: DataDebit = {
     'requestClientName': '',
     'requestClientUrl': '',
     'requestClientLogoUrl': '',
+    'accepted': true,
     'active': true,
     'start': '2018-03-23T09:23:33.787Z',
     'end': null,
