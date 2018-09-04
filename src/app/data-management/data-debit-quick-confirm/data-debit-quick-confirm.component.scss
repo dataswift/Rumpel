@@ -1,0 +1,221 @@
+@import "../../style/branding";
+@import "../../style/rumpel-mixins";
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 200px;
+  width: 200px;
+  margin: -100px 0 0 -100px;
+}
+
+.loading-spinner,
+.loading-spinner::before,
+.loading-spinner::after {
+  border: 2px solid rgba(74, 85, 107, 0.6);
+  -webkit-border-radius: 999px;
+  -moz-border-radius: 999px;
+  border-radius: 999px;
+}
+
+.loading-spinner {
+  margin: 20px auto;
+  height: 75px;
+  width: 75px;
+  mask-border: linear-gradient(rgba(74, 85, 107, 1), rgba(74, 85, 107, 0.1) 50%);
+  -webkit-animation: animation-rotate 1250ms linear infinite;
+  -moz-animation: animation-rotate 1250ms linear infinite;
+  -o-animation: animation-rotate 1250ms linear infinite;
+  animation: animation-rotate 1250ms linear infinite;
+}
+
+.loading-text {
+  color: rgba(74, 85, 107, 0.6);
+  font-size: 14px;
+  font-variant: small-caps;
+  text-align: center;
+}
+
+@-webkit-keyframes animation-rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@-moz-keyframes animation-rotate {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes animation-rotate {
+  100% {
+    -o-transform: rotate(360deg);
+  }
+}
+
+@keyframes animation-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.content-wrapper {
+  @include flex-container(column);
+  overflow: scroll;
+  margin-bottom: 125px;
+}
+
+.title-section {
+  text-align: center;
+  max-width: 500px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .app-logo-wrapper {
+    display: inline-block;
+    background-color: white;
+    padding: 6px;
+    border-radius: 50%;
+    margin: auto;
+    margin-top: 50px;
+
+    .app-logo {
+      border-radius: 50%;
+    }
+  }
+
+  .title-section-heading {
+    color: $app-dark-tone;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .title-section-text {
+    color: $hat-body-text;
+    font-size: 13px;
+    line-height: 1.38;
+    width: 80%;
+    margin: auto;
+  }
+
+  .title-section-text-link {
+    font-weight: bold;
+    font-style: normal;
+    color: $app-accent-color;
+    margin: 10px 0;
+  }
+}
+
+.agreement-section {
+  padding: 10px 10px;
+  width: 100%;
+  max-width: 500px;
+
+  .debit-valitity-interval {
+    display: flex;
+    font-size: 13px;
+    color: $hat-body-text;
+    margin-bottom: 10px;
+
+    .mat-card {
+      margin: 0;
+
+      .mat-card-content {
+        color: $hat-body-text;
+        text-transform: uppercase;
+        font-size: 13px;
+        line-height: 1.54;
+      }
+
+      &:first-child {
+        margin-right: 5px;
+      }
+
+      &:last-child {
+        margin-left: 5px;
+      }
+    }
+
+    .mat-card {
+      flex-grow: 1;
+    }
+  }
+
+  .mat-card {
+    margin: 15px auto;
+    max-width: 500px;
+    box-shadow: none;
+    border-radius: 4px;
+  }
+
+  .app-details-heading {
+    font-weight: bold;
+    color: $app-dark-tone;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-transform: none;
+
+    &.indented {
+      text-indent: 15px;
+    }
+  }
+
+  .app-details-description {
+    color: $hat-body-text;
+    font-size: 13px;
+    line-height: 1.54;
+
+    &-formatted {
+      white-space: pre-wrap;
+      color: $hat-body-text;
+      font-size: 13px;
+      line-height: 1.54;
+    }
+  }
+
+  .debit-origin {
+    display: flex;
+    align-items: center;
+
+    .card-img-wrapper {
+      margin-right: 20px;
+
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+.user-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: $hat-background-color;
+
+  button {
+    display: block;
+    width: 250px;
+    margin: 20px auto;
+    cursor: pointer;
+  }
+
+  button:first-child {
+    background-color: $app-accent-color;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 5px 0;
+  }
+
+  button:last-child {
+    background-color: transparent;
+    letter-spacing: 0.7px;
+    color: $text-dark;
+  }
+}
