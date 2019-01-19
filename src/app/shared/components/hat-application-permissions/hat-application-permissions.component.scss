@@ -3,8 +3,8 @@
 
 .content-wrapper {
   @include flex-container(column);
-  overflow: scroll;
-  margin-bottom: 125px;
+  //overflow: scroll;
+  margin-bottom: 242px;
 }
 
 .title-section {
