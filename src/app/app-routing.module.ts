@@ -32,6 +32,7 @@ import { HatApplicationDetailsComponent } from './explore/hat-application-detail
 import { HatAppDetailsPermissionsComponent } from './explore/hat-app-details-permissions/hat-app-details-permissions.component';
 import { DataDebitListComponent } from './data-management/data-debit-list/data-debit-list.component';
 import { DataDebitDetailsComponent } from './data-management/data-debit-details/data-debit-details.component';
+import { HatSetupLoginComponent } from './user/hat-setup-login/hat-setup-login.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
       { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
       { path: 'public/profile', component: PublicProfileComponent, canActivate: [NativeGuard] },
       { path: 'hatlogin', component: LoginOauthComponent, canActivate: [NativeGuard, AuthGuard] },
+      { path: 'hat-setup-login', component: HatSetupLoginComponent, canActivate: [NativeGuard, AuthGuard] },
       { path: 'user/login', component: LoginNativeComponent, canActivate: [NativeGuard] },
       { path: 'user/login/start', component: LoginStandaloneComponent },
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
