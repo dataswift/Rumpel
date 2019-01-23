@@ -6,6 +6,7 @@ import { LocationsModule } from '../locations/locations.module';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { DataDebitListComponent } from './data-debit-list/data-debit-list.component';
 import { DataDebitDetailsComponent } from './data-debit-details/data-debit-details.component';
+import { DataDebitQuickConfirmComponent } from './data-debit-quick-confirm/data-debit-quick-confirm.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { DataDebitDetailsComponent } from './data-debit-details/data-debit-detai
   ],
   declarations: [
     DataDebitListComponent,
-    DataDebitDetailsComponent
+    DataDebitDetailsComponent,
+    DataDebitQuickConfirmComponent
   ]
 })
 export class DataManagementModule { }
