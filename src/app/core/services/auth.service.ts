@@ -11,7 +11,7 @@ import { HatApplication } from '../../explore/hat-application.interface';
 import * as parse from 'date-fns/parse';
 import * as isFuture from 'date-fns/is_future';
 import * as addDays from 'date-fns/add_days';
-import {HttpResponse} from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 
 declare const httpProtocol: string;
 
@@ -93,6 +93,16 @@ export class AuthService {
         } else {
           throw new Error('Redirect URL does not match registered value');
         }
+      }));
+  }
+
+  getApplicationsByIds(parentAppId: string, redirect: string, dependencyAppIds?: string[]):
+    Observable<(HatApplication | HatApplication[])[]> {
+    return this.hatSvc.getApplicationList()
+      .pipe(map((apps: HatApplication[]) => {
+        const parentApp = apps.find(app => app.application.id === parentAppId);
+
+        return [ parentApp, apps.filter(app => dependencyAppIds.indexOf(app.application.id) > -1) ];
       }));
   }
 
