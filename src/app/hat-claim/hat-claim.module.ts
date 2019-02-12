@@ -17,6 +17,8 @@ import { HatClaimNewPasswordComponent } from "./hat-claim-new-password/hat-claim
 import { HatClaimSubscriptionsComponent } from "./hat-claim-subscriptions/hat-claim-subscriptions.component";
 import { HatClaimUrlComponent } from "./hat-claim-url/hat-claim-url.component";
 import { HatClaimSuccessComponent } from "./hat-claim-success/hat-claim-success.component";
+import { HatClaimComponent } from './hat-claim/hat-claim.component';
+import { HatClaimService } from "./hat-claim.service";
 
 @NgModule({
   imports: [
@@ -30,16 +32,12 @@ import { HatClaimSuccessComponent } from "./hat-claim-success/hat-claim-success.
     HatClaimNewPasswordComponent,
     HatClaimSubscriptionsComponent,
     HatClaimUrlComponent,
-    HatClaimSuccessComponent
-  ],
-  providers: [  ],
-  exports: [
-    HatClaimConfirmationComponent,
-    HatClaimDetailsComponent,
-    HatClaimNewPasswordComponent,
-    HatClaimSubscriptionsComponent,
-    HatClaimUrlComponent,
     HatClaimSuccessComponent,
+    HatClaimComponent
+  ],
+  providers: [ HatClaimService ],
+  exports: [
+    HatClaimComponent
   ]
 })
 export class HatClaimModule {}

@@ -40,6 +40,7 @@ import {HatClaimNewPasswordComponent} from "./hat-claim/hat-claim-new-password/h
 import {HatClaimSubscriptionsComponent} from "./hat-claim/hat-claim-subscriptions/hat-claim-subscriptions.component";
 import {HatClaimConfirmationComponent} from "./hat-claim/hat-claim-confirmation/hat-claim-confirmation.component";
 import {HatClaimSuccessComponent} from "./hat-claim/hat-claim-success/hat-claim-success.component";
+import { HatClaimComponent } from "./hat-claim/hat-claim/hat-claim.component";
 
 @NgModule({
   imports: [
@@ -90,12 +91,7 @@ import {HatClaimSuccessComponent} from "./hat-claim/hat-claim-success/hat-claim-
         ]},
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'about', component: AboutComponent },
-      { path: 'hat/claim/:claimToken', component: HatClaimDetailsComponent },
-      { path: 'hat/claim/steps/url/:claimToken', component: HatClaimUrlComponent },
-      { path: 'hat/claim/steps/password/:claimToken', component: HatClaimNewPasswordComponent },
-      { path: 'hat/claim/steps/subscriptions/:claimToken', component: HatClaimSubscriptionsComponent },
-      { path: 'hat/claim/steps/confirm', component: HatClaimConfirmationComponent },
-      { path: 'hat/claim/steps/success', component: HatClaimSuccessComponent }
+      { path: 'hat/claim/:claimToken', component: HatClaimComponent }
     ])
   ],
   exports: [

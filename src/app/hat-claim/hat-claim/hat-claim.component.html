@@ -1,0 +1,43 @@
+<ng-container *ngIf="!loading else loadingScreen">
+  <ng-container [ngSwitch]="step">
+    <ng-container *ngSwitchCase="1">
+      <rum-hat-claim-details></rum-hat-claim-details>
+    </ng-container>
+    <ng-container *ngSwitchCase="2">
+      <rum-hat-claim-url></rum-hat-claim-url>
+    </ng-container>
+    <ng-container *ngSwitchCase="3">
+      <rum-hat-claim-new-password></rum-hat-claim-new-password>
+    </ng-container>
+    <ng-container *ngSwitchCase="4">
+      <rum-hat-claim-subscriptions></rum-hat-claim-subscriptions>
+    </ng-container>
+    <ng-container *ngSwitchCase="5">
+      <rum-password-change></rum-password-change>
+    </ng-container>
+    <ng-container *ngSwitchCase="6">
+      <rum-hat-claim-success></rum-hat-claim-success>
+    </ng-container>
+  </ng-container>
+
+
+  <div *ngIf="step !== 6" class="user-actions">
+    <img src="/assets/images/HATDataRights_200.png"/>
+    <button mat-flat-button role="button" (click)="nextStep()">{{ step === 5 ? "Confirm" : "Next" }}</button>
+    <button mat-flat-button role="button" (click)="previousStep()">Previous</button>
+
+    <div *ngIf="step === 5" class="f-g">
+      <div class="password-guidance-box">
+        By selecting 'Confirm', I agree to the HATDex <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+      </div>
+    </div>
+  </div>
+
+</ng-container>
+
+<ng-template #loadingScreen>
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading permissions</div>
+  </div>
+</ng-template>
