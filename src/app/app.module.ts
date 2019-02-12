@@ -52,6 +52,7 @@ import { StaticDataService } from './services/static-data.service';
 import { ExploreModule } from './explore/explore.module';
 import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
+import {HatClaimModule} from "./hat-claim/hat-claim.module";
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -81,7 +82,8 @@ export function cookieServiceFactory() {
     ExploreModule,
     SheModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HatClaimModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent ],

@@ -34,6 +34,12 @@ import { DataDebitListComponent } from './data-management/data-debit-list/data-d
 import { DataDebitDetailsComponent } from './data-management/data-debit-details/data-debit-details.component';
 import { HatSetupLoginComponent } from './user/hat-setup-login/hat-setup-login.component';
 import { DataDebitQuickConfirmComponent } from './data-management/data-debit-quick-confirm/data-debit-quick-confirm.component';
+import {HatClaimDetailsComponent} from "./hat-claim/hat-claim-details/hat-claim-details.component";
+import {HatClaimUrlComponent} from "./hat-claim/hat-claim-url/hat-claim-url.component";
+import {HatClaimNewPasswordComponent} from "./hat-claim/hat-claim-new-password/hat-claim-new-password.component";
+import {HatClaimSubscriptionsComponent} from "./hat-claim/hat-claim-subscriptions/hat-claim-subscriptions.component";
+import {HatClaimConfirmationComponent} from "./hat-claim/hat-claim-confirmation/hat-claim-confirmation.component";
+import {HatClaimSuccessComponent} from "./hat-claim/hat-claim-success/hat-claim-success.component";
 
 @NgModule({
   imports: [
@@ -83,7 +89,13 @@ import { DataDebitQuickConfirmComponent } from './data-management/data-debit-qui
           { path: 'change', component: PasswordChangeComponent, canActivate: [AuthGuard] }
         ]},
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'about', component: AboutComponent }
+      { path: 'about', component: AboutComponent },
+      { path: 'hat/claim/:claimToken', component: HatClaimDetailsComponent },
+      { path: 'hat/claim/steps/url/:claimToken', component: HatClaimUrlComponent },
+      { path: 'hat/claim/steps/password/:claimToken', component: HatClaimNewPasswordComponent },
+      { path: 'hat/claim/steps/subscriptions/:claimToken', component: HatClaimSubscriptionsComponent },
+      { path: 'hat/claim/steps/confirm', component: HatClaimConfirmationComponent },
+      { path: 'hat/claim/steps/success', component: HatClaimSuccessComponent }
     ])
   ],
   exports: [

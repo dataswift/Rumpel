@@ -1,0 +1,210 @@
+/*!
+ * Copyright (C) 2019 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
+ */
+
+@import "../../style/branding";
+@import "../../style/rumpel-mixins";
+
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .title-container {
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 525px) {
+  .password-guidance-box, .password-strength-description {
+    text-align: justify;
+    margin: auto;
+    width: 80%;
+  }
+}
+
+.hat-claim-subscriptions-page {
+  @include flex-container(column);
+  height: calc(100vh - 60px);
+  overflow: scroll;
+
+  .title-container {
+    display: flex;
+    margin-bottom: 50px;
+
+    .logo-wrapper {
+      margin-right: 15px;
+    }
+
+    .heading-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      color: $app-dark-tone;
+      letter-spacing: 1px;
+
+      .title {
+        font-size: 24px;
+        font-weight: 500;
+        margin-top: 0;
+        margin-bottom: 5px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+        font-weight: 300;
+        margin: 0;
+      }
+    }
+  }
+
+  .f-g {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .small-flex-spacer {
+    flex-grow: 1;
+  }
+
+  .large-flex-spacer {
+    flex-grow: 2;
+  }
+
+  .hat-pass-input {
+    color: $app-dark-tone;
+    height: 50px;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 2px;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 0;
+    -webkit-appearance: none;
+
+    @media (min-width: 501px) {
+      font-size: 20px;
+
+      &::placeholder {
+        padding-top: 4px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      border-left: none;
+      border-right: none;
+    }
+
+    &::placeholder {
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.user-actions {
+  background-color: $hat-background-color;
+
+  * {
+    display: block;
+    margin: 20px auto;
+    width: 250px;
+    text-align: center;
+  }
+
+  button {
+    background-color: $app-accent-color;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 5px 0;
+    font-size: 14px;
+  }
+
+  .login-link {
+    background-color: transparent;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 5px 0;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid $app-accent-color;
+    color: $app-accent-color;
+    text-decoration: none;
+  }
+}
+
+.highlight {
+  font-weight: 600;
+}
+
+.password-guidance-box {
+  color: $hat-body-text;
+  font-size: 14px;
+  line-height: 1.57;
+  padding-top: 25px;
+  padding-bottom: 25px;
+
+  a {
+    color: $app-accent-color;
+  }
+
+  .password-highlight {
+    font-weight: bold;
+    color: green;
+  }
+}
+
+.error {
+  font-size: 1em;
+  font-weight: 700;
+  border-radius: 0;
+  margin-top: 0.25em;
+}
+
+.password-strength-indicator {
+  width: 100%;
+  margin-top: 0.5em;
+
+  .indicator-bar {
+    display: inline-block;
+    border-radius: 4px;
+    height: 0.75em;
+    width: 19.4%;
+    margin-left: 0.5%;
+  }
+}
+
+.password-strength-description {
+  font-size: 14px;
+  color: $hat-body-text;
+  line-height: 1.57;
+  margin-bottom: 20px;
+}
+
+@media(min-width: 720px) {
+  .user-actions {
+    flex-grow: 3;
+  }
+}
+
+.rum-error-message {
+  padding: 15px 30px;
+  background-color: rgba(227, 102, 130, 0.2);
+  border-radius: 2px;
+  border: solid 1px #e36682;
+  color: #e36682;
+  font-size: 13px;
+  font-weight: bold;
+
+  &-icon {
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+}
