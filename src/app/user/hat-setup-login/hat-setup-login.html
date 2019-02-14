@@ -8,19 +8,95 @@
 
 <ng-container *ngIf="hatApp || errorMessage else loading">
   <ng-container *ngIf="hatApp">
-    <ng-container *ngIf="(hatApp.needsUpdating && hatApp.application.info.updateNotes) else appPermissions">
-      <rum-hat-app-update-notes [app]="hatApp.application"></rum-hat-app-update-notes>
-    </ng-container>
+    <div class="content-wrapper">
+      <section class="drp-explainer">
+        <div class="drp-logo-wrapper">
+          <img src="/assets/images/HATDataRights_200.png" class="drp-logo" height="100" width="100" />
+        </div>
 
-    <ng-template #appPermissions>
-      <rum-hat-application-permissions [app]="hatApp.application"></rum-hat-application-permissions>
-    </ng-template>
+        <h3 class="section-heading" style="margin: 32px auto;">{{hatAddress}}</h3>
 
+        <p class="section-text">Your HAT with the above URL is ready for you. An email will be sent to guide you
+          on finishing the set up of your HAT Microserver and to create a password.</p>
+      </section>
 
-    <div class="user-actions">
-      <img src="/assets/images/HATDataRights_200.png"/>
-      <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)">Agree</button>
-      <button mat-flat-button role="link" (click)="declineTerms()">Cancel</button>
+      <!--<div class="section-divider"></div>-->
+
+      <!--<section>-->
+
+      <!--</section>-->
+
+      <div class="section-divider"></div>
+
+      <section class="app-information">
+        <div class="app-logo-wrapper">
+          <img src="{{hatApp.application.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" />
+        </div>
+
+        <div class="app-rating-wrapper">
+          <div class="app-rating">
+            <span class="app-rating-highlighted">{{hatApp.application.info.rating.score}}</span>
+          </div>
+        </div>
+
+        <h3 class="section-heading">{{hatApp.application.info.name}} by {{hatApp.application.developer.name}}</h3>
+
+        <p class="section-text">This app is rated <span style="letter-spacing: 2px;">{{hatApp.application.info.rating.score}}</span></p>
+
+        <p class="section-text">
+          <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="title-section-text-link">Learn more</a>
+        </p>
+
+        <p class="section-text" style="margin-top: 22px;">The following permissions are requested by <br>{{hatApp.application.info.name}}:</p>
+      </section>
+
+      <section class="permissions-section">
+        <mat-card>
+          <mat-card-content>
+            <h5 class="card-heading">Data debit access</h5>
+            <p class="card-text">The datadebit [{{dataDebitRole()}}] will be created to download your data.</p>
+
+            <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.1); margin: auto; margin-bottom: 30px; width: 100%;"></div>
+
+            <h5 class="card-heading">Purpose of data usage</h5>
+            <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
+          </mat-card-content>
+        </mat-card>
+        <!--<h4 class="section-header">{{hatApp.application.info.name}} will be able to:</h4>-->
+        <!--<mat-card *ngFor="let permission of readablePermissions">-->
+          <!--<mat-card-content>-->
+            <!--<h5 class="card-heading">{{permission.title}}</h5>-->
+            <!--<p class="card-text">{{permission.text}}</p>-->
+          <!--</mat-card-content>-->
+        <!--</mat-card>-->
+      </section>
+
+      <section class="permissions-section" *ngIf="hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle">
+        <mat-card *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
+          <mat-card-content>
+            <h5 class="card-heading">{{endpoint.title}}</h5>
+            <div class="card-text" [class.card-text-expanded]="endpoint.expanded">
+              <h6 class="card-subheading">Fields required</h6>
+              <ul class="card-list">
+                <li *ngFor="let field of endpoint.fields">{{field}}</li>
+              </ul>
+            </div>
+            <div *ngIf="endpoint.fields.length > 1" (click)="toggleCardExpansion(endpoint)" class="card-expansion-toggle">
+              {{endpoint.expanded ? 'Less' : 'More'}}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </section>
+    </div>
+
+    <div class="sticky-action-panel">
+      <div class="sticky-action-panel-content">
+        <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)">Confirm</button>
+        <p class="hmi-id-text">HMI ID: {{hatApp.application.id}}-v{{hatApp.application.info.version}}</p>
+        <p class="tos-text">By pressing ‘Confirm’ I agree to HAT Data Exchange Ltd
+          <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c540dc4e4966bf470e0d5fd/1549012420957/hat+owner+terms+of+service+-+10_1_19+-+v2.3+%281%29.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>
+          and the permissions laid out above.</p>
+      </div>
     </div>
   </ng-container>
 
