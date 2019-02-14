@@ -20,8 +20,7 @@ export class HatClaimSuccessComponent implements OnInit {
   public hatName: string;
   public hatDomain: string;
 
-  constructor(private route: ActivatedRoute,
-              private authSvc: AuthService) { }
+  constructor() { }
 
   ngOnInit() {
     const host = window.location.hostname;

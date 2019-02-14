@@ -37,7 +37,8 @@ import { HatClaimService } from "./hat-claim.service";
   ],
   providers: [ HatClaimService ],
   exports: [
-    HatClaimComponent
+    HatClaimComponent,
+    HatClaimDetailsComponent
   ]
 })
 export class HatClaimModule {}

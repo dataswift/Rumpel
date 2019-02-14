@@ -91,7 +91,8 @@ import { HatClaimComponent } from "./hat-claim/hat-claim/hat-claim.component";
         ]},
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'about', component: AboutComponent },
-      { path: 'hat/claim/:claimToken', component: HatClaimComponent }
+      { path: 'hat/claim/:claimToken', component: HatClaimComponent },
+      { path: 'hat/claim/success', component: HatClaimSuccessComponent }
     ])
   ],
   exports: [

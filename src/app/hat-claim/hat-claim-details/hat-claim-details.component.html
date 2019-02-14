@@ -9,13 +9,6 @@
 <div class="hat-claim-details-page">
   <span class="small-flex-spacer"></span>
 
-  <div [style.visibility]="errorType ? 'visible' : 'hidden'" class="rum-error-message">
-    <mat-icon class="rum-error-message-icon">warning</mat-icon>
-    {{errorText()}}
-  </div>
-
-  <span class="small-flex-spacer"></span>
-
   <div class="title-container">
     <div class="heading-wrapper">
       <h2 class="title">Claim your HAT</h2>
@@ -28,17 +21,11 @@
     </div>
   </div>
 
-  <div class="f-g" *ngIf="claimToken">
+  <div class="f-g">
     <label for="email" hidden>Your email address</label>
     <input id="email" class="hat-pass-input" name="hat-pass-input"
-           [class.rum-field-has-error]="errorType === 'authenticationError'"
-           [contentEditable]="false" [value]="email"
-           (focus)="clearErrors()" />
+           [contentEditable]="false" [value]="email" />
   </div>
 
   <span class="large-flex-spacer"></span>
 </div>
-
-<ng-template #loginLink>
-  <a mat-flat-button class="login-link" [routerLink]="['/user', 'login']">Log me in</a>
-</ng-template>

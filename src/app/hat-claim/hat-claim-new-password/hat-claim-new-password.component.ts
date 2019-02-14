@@ -26,27 +26,23 @@ const ERROR_MESSAGES = {
   styleUrls: ['./hat-claim-new-password.component.scss']
 })
 export class HatClaimNewPasswordComponent implements OnInit {
-  @ViewChild('currentPass') currentPass: ElementRef;
   public colorMapping = ['red', 'red', 'orange', 'green', 'green'];
   public evaluationMapping = ['Too guessable', 'Weak', 'So-so', 'Strong', 'Very Strong'];
-  public claimToken: string;
   public successMessage: string;
   public passwordStrength: any;
-  public loadingText: string;
   public hatName: string;
   public hatDomain: string;
-  public passwordChanged = false;
   public errorType: string;
+  public newPassword: string;
+
+  @ViewChild('newPass') newPass: ElementRef;
+  @ViewChild('newPassConfirm') newPassConfirm: ElementRef;
 
   constructor(private route: ActivatedRoute,
               private authSvc: AuthService,
               private router: Router) { }
 
   ngOnInit() {
-    this.route.params.subscribe((routeParams) => {
-      this.claimToken = routeParams['claimToken'] || null;
-    });
-
     const host = window.location.hostname;
 
     this.hatName = host.substring(0, host.indexOf('.'));
@@ -67,43 +63,25 @@ export class HatClaimNewPasswordComponent implements OnInit {
     this.passwordStrength = zxcvbn(password);
   }
 
-  doCancel() {
-
+  getPassword(): string {
+    return this.newPassword;
   }
 
-  changePass(newPass: string, confirmPass: string) {
-    if (newPass === confirmPass) {
+  checkPassword(): boolean {
+    let newPass: string = this.newPass.nativeElement.value;
+    let newPassConfirm: string = this.newPassConfirm.nativeElement.value;
+    if (newPass === newPassConfirm) {
       const passwordStrength = zxcvbn(newPass);
 
       if (passwordStrength.score < MIN_PASSWORD_STRENGTH) {
         this.errorType = 'passwordStrengthError';
 
-        return;
-      }
-
-      if (this.claimToken) {
-        this.setPassword(this.claimToken, newPass);
+        return false;
       }
     } else {
       this.errorType = 'passwordMatchError';
+      return false;
     }
-  }
-
-  private setPassword(claimToken: string, newPassword: string) {
-    this.loadingText = 'Saving new password';
-    this.authSvc.resetPassword(claimToken, newPassword)
-      .subscribe(
-        _ => {
-          this.loadingText = null;
-          this.successMessage = 'Password reset. You can now log into your HAT with your new password.';
-          this.passwordChanged = true;
-
-          this.router.navigate(['hat', 'claim', 'steps', 'subscriptions', this.claimToken])
-        },
-        (error: HttpErrorResponse) => {
-          this.loadingText = null;
-          this.errorType = error.status === 403 ? 'authenticationError' : 'passwordStrengthError';
-        }
-      );
+    return true;
   }
 }

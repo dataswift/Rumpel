@@ -9,11 +9,6 @@
 <div class="hat-claim-subscriptions-page">
   <span class="small-flex-spacer"></span>
 
-  <div [style.visibility]="errorType ? 'visible' : 'hidden'" class="rum-error-message">
-    <mat-icon class="rum-error-message-icon">warning</mat-icon>
-    {{errorText()}}
-  </div>
-
   <span class="small-flex-spacer"></span>
 
   <div class="title-container">
@@ -47,7 +42,3 @@
 
   <span class="large-flex-spacer"></span>
 </div>
-
-<ng-template #loginLink>
-  <a mat-flat-button class="login-link" [routerLink]="['/user', 'login']">Log me in</a>
-</ng-template>

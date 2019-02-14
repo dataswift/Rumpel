@@ -1,7 +1,7 @@
 <ng-container *ngIf="!loading else loadingScreen">
   <ng-container [ngSwitch]="step">
     <ng-container *ngSwitchCase="1">
-      <rum-hat-claim-details></rum-hat-claim-details>
+      <rum-hat-claim-details [email]="email"></rum-hat-claim-details>
     </ng-container>
     <ng-container *ngSwitchCase="2">
       <rum-hat-claim-url></rum-hat-claim-url>
@@ -24,7 +24,7 @@
   <div *ngIf="step !== 6" class="user-actions">
     <img src="/assets/images/HATDataRights_200.png"/>
     <button mat-flat-button role="button" (click)="nextStep()">{{ step === 5 ? "Confirm" : "Next" }}</button>
-    <button mat-flat-button role="button" (click)="previousStep()">Previous</button>
+    <button *ngIf="step !== 1" mat-flat-button role="button" (click)="previousStep()">Previous</button>
 
     <div *ngIf="step === 5" class="f-g">
       <div class="password-guidance-box">
