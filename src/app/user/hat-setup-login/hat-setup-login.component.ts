@@ -19,7 +19,7 @@ import { flatMap } from 'rxjs/operators';
   styleUrls: ['./hat-setup-login.scss']
 })
 export class HatSetupLoginComponent implements OnInit {
-  public hatDomain: string;
+  public hatAddress: string;
   public errorMessage: string;
   public hatApp: HatApplication;
   private dependencyApps: HatApplication[];
@@ -31,6 +31,7 @@ export class HatSetupLoginComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.hatAddress = window.location.hostname;
     const { name, redirect } = this.route.snapshot.queryParams;
 
     if (name && redirect) {
@@ -103,6 +104,14 @@ export class HatSetupLoginComponent implements OnInit {
     } else {
       window.location.href = this.route.snapshot.queryParams['fallback'];
     }
+  }
+
+  dataDebitRole(): string {
+    return this.hatApp.application.permissions.rolesGranted.filter(role => role.role === 'datadebit')[0].detail;
+  }
+
+  toggleCardExpansion(endpoint): void {
+    endpoint.expanded = !endpoint.expanded;
   }
 
   private setupAppDependencies(parentApp: HatApplication, dependencies: HatApplication[], appRedirect: string): void {
