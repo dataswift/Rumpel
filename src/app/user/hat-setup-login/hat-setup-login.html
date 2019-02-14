@@ -16,8 +16,8 @@
 
         <h3 class="section-heading" style="margin: 32px auto;">{{hatAddress}}</h3>
 
-        <p class="section-text">Your HAT with the above URL is ready for you. An email will be sent to guide you
-          on finishing the set up of your HAT Microserver and to create a password.</p>
+        <p class="section-text">Our friends at {{hatApp.application.developer.name}} have requested for a Personal Data Account
+          to be created with the above URL. Check your email for more details.</p>
       </section>
 
       <!--<div class="section-divider"></div>-->
@@ -47,17 +47,13 @@
           <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="title-section-text-link">Learn more</a>
         </p>
 
-        <p class="section-text" style="margin-top: 22px;">The following permissions are requested by <br>{{hatApp.application.info.name}}:</p>
+        <p class="section-text" style="margin-top: 22px;">{{hatApp.application.info.name}} is requesting the following
+          permissions. You need to confirm it so that this is all legal.</p>
       </section>
 
       <section class="permissions-section">
         <mat-card>
           <mat-card-content>
-            <h5 class="card-heading">Data debit access</h5>
-            <p class="card-text">The datadebit [{{dataDebitRole()}}] will be created to download your data.</p>
-
-            <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.1); margin: auto; margin-bottom: 30px; width: 100%;"></div>
-
             <h5 class="card-heading">Purpose of data usage</h5>
             <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
           </mat-card-content>
@@ -74,7 +70,7 @@
       <section class="permissions-section" *ngIf="hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle">
         <mat-card *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
           <mat-card-content>
-            <h5 class="card-heading">{{endpoint.title}}</h5>
+            <h5 class="card-heading">Data from {{endpoint.title}}</h5>
             <div class="card-text" [class.card-text-expanded]="endpoint.expanded">
               <h6 class="card-subheading">Fields required</h6>
               <ul class="card-list">

@@ -60,13 +60,9 @@
 
   &-content {
     margin: auto;
-    padding: 10px 0 7px 0;
+    padding: 10px;
     max-width: 500px;
     text-align: center;
-
-    @media (max-width: 520px) {
-      padding: 10px 20px 7px 20px;
-    }
   }
 
   img {
@@ -148,9 +144,13 @@
 }
 
 .section-divider {
-  width: 50%;
+  width: 420px;
   margin: 40px auto;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 500px) {
+    width: 80%;
+  }
 }
 
 .app-information {
@@ -199,6 +199,7 @@
       text-align: center;
       width: 70px;
       padding: 2px 0;
+      letter-spacing: 2px;
 
       &:before {
         content: " ";
@@ -257,7 +258,7 @@
       font-weight: bold;
       font-size: 14px;
       letter-spacing: 0.5px;
-      text-transform: capitalize;
+      //text-transform: capitalize;
     }
 
     .card-subheading {
