@@ -19,16 +19,11 @@
   </div>
 
   <div class="f-g">
-    <input id="madhatters" type="checkbox" name="madhatters"  />
-    <label for="madhatters">MadHATTERs (Tech news with an attitude)</label>
-
+    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="subscribeMadhatters" color="primary">MadHATTERs (Tech news with an attitude)</mat-checkbox>
     <br />
-    <input id="monthly_updates" type="checkbox" name="monthly_updates"  />
-    <label for="monthly_updates">Monthly Updates</label>
-
+    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="subscribeHatMonthly" color="primary">Monthly Updates</mat-checkbox>
     <br />
-    <input id="monthly_updates" type="checkbox" name="monthly_updates"  />
-    <label for="monthly_updates">Monthly Updates</label>
+    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="subscribeHCF" color="primary">HAT Ecosystem updates from the Foundation</mat-checkbox>
   </div>
 
   <div class="f-g">

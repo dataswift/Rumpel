@@ -3,6 +3,10 @@ import { HatClaimService } from "../hat-claim.service";
 import {HatClaimDetailsComponent} from "../hat-claim-details/hat-claim-details.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HatClaimNewPasswordComponent} from "../hat-claim-new-password/hat-claim-new-password.component";
+import {Event} from "../../shared/interfaces";
+import * as moment from "../../dimensions/facebook-events.service";
+import {HatClaimSubscriptionsComponent} from "../hat-claim-subscriptions/hat-claim-subscriptions.component";
+import {ClaimMembership, HatClaimRequest} from "../../shared/interfaces/hat-claim.interface";
 
 @Component({
   selector: 'rum-hat-claim',
@@ -18,9 +22,17 @@ export class HatClaimComponent implements OnInit {
 
   public email: string;
   public claimToken: string;
+  public hatName: string;
+  public hatDomain: string;
+
+  public password: string;
+  public optins: string[];
 
   @ViewChild(HatClaimNewPasswordComponent)
   private hatClaimNewPasswordComponent: HatClaimNewPasswordComponent;
+
+  @ViewChild(HatClaimSubscriptionsComponent)
+  private hatClaimSubscriptionsComponent: HatClaimSubscriptionsComponent;
 
   constructor(private route: ActivatedRoute, private hatClaimSvc: HatClaimService, private router: Router) { }
 
@@ -29,17 +41,29 @@ export class HatClaimComponent implements OnInit {
       this.claimToken = routeParams['claimToken'] || null;
     });
     this.email = this.route.snapshot.queryParams['email'];
+
+    const host = window.location.hostname;
+
+    this.hatName = host.substring(0, host.indexOf('.'));
+    this.hatDomain = host.substring(host.indexOf('.'));
   }
 
   nextStep(): void {
-    //console.log(this.hatClaimDetailsComponent.email);
     if (this.step === 3) {
-      if (this.hatClaimNewPasswordComponent.checkPassword()) this.step++;
+      if (this.hatClaimNewPasswordComponent.checkPassword()) {
+        this.password = this.hatClaimNewPasswordComponent.getPassword();
+        this.step++;
+      } else {
+        this.password = this.hatClaimNewPasswordComponent.getPassword();
+        this.step++;
+      }
+    } else if (this.step === 4) {
+      this.optins = this.hatClaimSubscriptionsComponent.buildOptins();
+      this.step++;
     } else if (this.step === 5) {
-      var password: string = this.hatClaimNewPasswordComponent.getPassword();
       // Display loading page?
-      var hatClaimRequest: HatClaimRequest = null; // TODO
-      this.hatClaimSvc.submitHatClaim(this.claimForm, this.claimToken, password, hatClaimRequest).subscribe(() => {
+      let hatClaimRequest: HatClaimRequest = this.buildClaimRequest(this.email, this.optins, this.hatName, this.hatDomain);
+      this.hatClaimSvc.submitHatClaim(this.claimForm, this.claimToken, this.password, hatClaimRequest).subscribe(() => {
         this.step++;
         this.router.navigate(['hat', 'claim', 'success']);
       });
@@ -59,15 +83,27 @@ export class HatClaimComponent implements OnInit {
     }
   }
 
-}
+  private buildClaimRequest(_email: string, _optins: string[], _hatName: string, _hatDomain: string): HatClaimRequest {
+    const claimMembership: ClaimMembership = {
+      plan: 'partner',
+      membershipType: 'claimed'
+    };
 
-interface HatClaimRequest {
-  email: string;
-  termsAgreed: boolean;
-  optins?: string[];
-  hatName: string;
-  hatCluster: string;
-  hatCountry?: string;
-  password?: string;
-  membership: any;
+    const claimRequest: HatClaimRequest = {
+      firstName: '',
+      lastName: '',
+      email: _email,
+      termsAgreed: true,
+      optins: _optins,
+      hatName: _hatName,
+      hatCluster: _hatDomain,
+      hatCountry: 'not used',
+      password: 'not used',
+      membership: claimMembership,
+      applicationId: 'not used'
+    };
+
+    return claimRequest;
+  }
+
 }

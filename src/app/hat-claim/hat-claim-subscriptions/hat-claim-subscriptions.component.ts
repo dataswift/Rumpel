@@ -17,6 +17,10 @@ export class HatClaimSubscriptionsComponent implements OnInit {
   public hatName: string;
   public hatDomain: string;
 
+  public subscribeMadhatters: boolean;
+  public subscribeHatMonthly: boolean;
+  public subscribeHCF: boolean;
+
   constructor() { }
 
   ngOnInit() {
@@ -24,5 +28,19 @@ export class HatClaimSubscriptionsComponent implements OnInit {
 
     this.hatName = host.substring(0, host.indexOf('.'));
     this.hatDomain = host.substring(host.indexOf('.'));
+
+    this.subscribeMadhatters = false;
+    this.subscribeHatMonthly = false;
+    this.subscribeHCF = false;
+  }
+
+  buildOptins(): string[] {
+    let optins: string[] = [];
+
+    if (this.subscribeMadhatters) optins.push("MadHATTERS");
+    if (this.subscribeHatMonthly) optins.push("HAT Monthly");
+    if (this.subscribeHCF) optins.push("HCF");
+
+    return optins;
   }
 }
