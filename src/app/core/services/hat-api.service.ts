@@ -73,6 +73,16 @@ export class HatApiService {
     return this.http.post(path, body, { headers: headers });
   }
 
+  /*
+    Call Hatters API call through HAT
+   */
+  informHattersOfHatClaim(claimToken: string, body: HatClaimRequest): Observable<any> {
+    const path = `/api/v2.6 /applications/hatters/proxy/api/products/hat/claim`;  // TODO: Gus does this work?
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(path, body, { headers: headers });
+  }
+
   getApplicationToken(name: string, resource: string): Observable<string> {
     const path = `/users/application_token`;
     const queryParams = new HttpParams()

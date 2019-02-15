@@ -38,7 +38,8 @@ export class HatClaimComponent implements OnInit {
     } else if (this.step === 5) {
       var password: string = this.hatClaimNewPasswordComponent.getPassword();
       // Display loading page?
-      this.hatClaimSvc.submitHatClaim(this.claimForm, this.claimToken, password).subscribe(() => {
+      var hatClaimRequest: HatClaimRequest = null; // TODO
+      this.hatClaimSvc.submitHatClaim(this.claimForm, this.claimToken, password, hatClaimRequest).subscribe(() => {
         this.step++;
         this.router.navigate(['hat', 'claim', 'success']);
       });

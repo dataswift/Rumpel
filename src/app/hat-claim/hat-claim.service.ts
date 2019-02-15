@@ -8,10 +8,10 @@ export class HatClaimService {
 
   constructor(private hat: HatApiService) { }
 
-  submitHatClaim(claimForm, claimToken, password): Observable<any> {
+  submitHatClaim(claimForm, claimToken, password, hatClaimRequest): Observable<any> {
     return forkJoin(
       this.hat.resetPassword(claimToken, { newPassword: password }),
-      this.hat.resetPassword("abc", { newPassword: "abc" }) // TODO: replace with Hatters API call through HAT
+      this.hat.informHattersOfHatClaim(claimToken, hatClaimRequest)
     ).pipe(
       map(([resetPasswordResponse, hattersResponse]) => null) // TODO: add data mapping
     );
