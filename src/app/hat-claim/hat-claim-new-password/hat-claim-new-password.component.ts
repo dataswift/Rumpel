@@ -8,9 +8,7 @@
 
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../core/services/auth.service';
-import { PasswordChangeFailureResInterface } from '../../user/password-change-failure-res.interface';
 
 declare const zxcvbn: any;
 const MIN_PASSWORD_STRENGTH = 3; // Integer from 0-4, see https://github.com/dropbox/zxcvbn for more info

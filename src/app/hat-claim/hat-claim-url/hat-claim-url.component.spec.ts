@@ -23,10 +23,7 @@ describe('HatClaimUrlComponent', () => {
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule, CustomAngularMaterialModule ],
       declarations: [ HatClaimUrlComponent ],
-      providers: [
-        { provide: AuthService, useValue: {} },
-        { provide: ActivatedRoute, useValue: { params: of({}) } }
-      ]
+      providers: []
     })
     .compileComponents();
   }));

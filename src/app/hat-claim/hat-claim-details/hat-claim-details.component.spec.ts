@@ -8,10 +8,6 @@
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '../../core/services/auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import {HatClaimDetailsComponent} from "./hat-claim-details.component";
 
@@ -21,12 +17,9 @@ describe('HatClaimDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, CustomAngularMaterialModule ],
+      imports: [ CustomAngularMaterialModule ],
       declarations: [ HatClaimDetailsComponent ],
-      providers: [
-        { provide: AuthService, useValue: {} },
-        { provide: ActivatedRoute, useValue: { params: of({}) } }
-      ]
+      providers: []
     })
     .compileComponents();
   }));

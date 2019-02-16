@@ -9,10 +9,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../../core/services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { HatClaimSubscriptionsComponent } from "./hat-claim-subscriptions.component";
+import {FormsModule} from "@angular/forms";
 
 describe('HatClaimSubscriptionsComponent', () => {
   let component: HatClaimSubscriptionsComponent;
@@ -20,12 +21,9 @@ describe('HatClaimSubscriptionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, CustomAngularMaterialModule ],
+      imports: [ FormsModule, RouterTestingModule, CustomAngularMaterialModule ],
       declarations: [ HatClaimSubscriptionsComponent ],
-      providers: [
-        { provide: AuthService, useValue: {} },
-        { provide: ActivatedRoute, useValue: { params: of({}) } }
-      ]
+      providers: []
     })
     .compileComponents();
   }));

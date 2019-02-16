@@ -18,7 +18,7 @@ const ERROR_MESSAGES = {
 };
 
 @Component({
-  selector: 'rum-password-change',
+  selector: 'rum-hat-claim-confirmation',
   templateUrl: './hat-claim-confirmation.component.html',
   styleUrls: ['./hat-claim-confirmation.component.scss']
 })
