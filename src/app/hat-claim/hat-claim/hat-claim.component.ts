@@ -104,7 +104,7 @@ export class HatClaimComponent implements OnInit {
 
   handleSubmission(): void {
     const hatClaimRequest: HatClaimRequest = this.buildClaimRequest();
-    this.hatClaimSvc.submitHatClaim(this.claimForm, this.claimToken, this.password, hatClaimRequest).subscribe(_ => {
+    this.hatClaimSvc.submitHatClaim(this.claimForm, this.claimToken, hatClaimRequest).subscribe(_ => {
       this.step++;
     });
   }

@@ -8,7 +8,7 @@ export class HatClaimService {
 
   constructor(private hat: HatApiService) { }
 
-  submitHatClaim(claimForm, claimToken, password, hatClaimRequest): Observable<any> {
+  submitHatClaim(claimForm, claimToken, hatClaimRequest): Observable<any> {
     return this.hat.claimHat(claimToken, hatClaimRequest).pipe(
       tap(response => console.log('HAT response: ', response)),
       map((response) => null) // TODO: add data mapping
