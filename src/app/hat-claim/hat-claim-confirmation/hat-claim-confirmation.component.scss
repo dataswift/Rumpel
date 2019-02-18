@@ -29,8 +29,8 @@
   overflow: scroll;
 
   .title-container {
-    display: flex;
-    margin-bottom: 50px;
+    margin-bottom: 25px;
+    text-align: center;
 
     .logo-wrapper {
       margin-right: 15px;
@@ -45,7 +45,7 @@
       letter-spacing: 1px;
 
       .title-hat-name {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 500;
         margin-top: 0;
         margin-bottom: 5px;
@@ -62,6 +62,7 @@
   .f-g {
     width: 100%;
     max-width: 500px;
+    text-align: center;
   }
 
   .small-flex-spacer {
@@ -148,8 +149,9 @@
   color: $hat-body-text;
   font-size: 14px;
   line-height: 1.57;
-  padding-top: 25px;
+  padding-top: 15px;
   padding-bottom: 25px;
+  text-align: center;
 
   a {
     color: $app-accent-color;

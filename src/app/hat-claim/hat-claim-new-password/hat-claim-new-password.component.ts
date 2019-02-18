@@ -6,11 +6,10 @@
  * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
  */
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 declare const zxcvbn: any;
+
 const MIN_PASSWORD_STRENGTH = 3; // Integer from 0-4, see https://github.com/dropbox/zxcvbn for more info
 const ERROR_MESSAGES = {
   authenticationError: 'ERROR: Current password incorrect',
@@ -28,24 +27,15 @@ export class HatClaimNewPasswordComponent implements OnInit {
   public evaluationMapping = ['Too guessable', 'Weak', 'So-so', 'Strong', 'Very Strong'];
   public successMessage: string;
   public passwordStrength: any;
-  public hatName: string;
-  public hatDomain: string;
   public errorType: string;
-  public newPassword: string;
 
-  @ViewChild('newPass') newPass: ElementRef;
-  @ViewChild('newPassConfirm') newPassConfirm: ElementRef;
+  @Input() hatName: string;
+  @Input() hatDomain: string;
+  @Output() password = new EventEmitter<string>();
 
-  constructor(private route: ActivatedRoute,
-              private authSvc: AuthService,
-              private router: Router) { }
+  constructor() { }
 
-  ngOnInit() {
-    const host = window.location.hostname;
-
-    this.hatName = host.substring(0, host.indexOf('.'));
-    this.hatDomain = host.substring(host.indexOf('.'));
-  }
+  ngOnInit() {}
 
   errorText(): string {
     return ERROR_MESSAGES[this.errorType] || '';
@@ -61,25 +51,28 @@ export class HatClaimNewPasswordComponent implements OnInit {
     this.passwordStrength = zxcvbn(password);
   }
 
-  getPassword(): string {
-    return this.newPassword;
+  updatePassword(password: string, newPassword: string): void {
+    if (this.passwordIsValid(password, newPassword)) {
+      this.password.emit(password);
+    }
   }
 
-  checkPassword(): boolean {
-    let newPass: string = this.newPass.nativeElement.value;
-    let newPassConfirm: string = this.newPassConfirm.nativeElement.value;
-    if (newPass === newPassConfirm) {
-      const passwordStrength = zxcvbn(newPass);
+  passwordIsValid(password: string, newPassword: string): boolean {
+    if (password === newPassword) {
+      // const passwordStrength = zxcvbn(newPass);
+      //
+      // if (passwordStrength.score < MIN_PASSWORD_STRENGTH) {
+      //   this.errorType = 'passwordStrengthError';
+      //
+      //   return false;
+      // }
+      this.errorType = '';
 
-      if (passwordStrength.score < MIN_PASSWORD_STRENGTH) {
-        this.errorType = 'passwordStrengthError';
-
-        return false;
-      }
+      return true;
     } else {
       this.errorType = 'passwordMatchError';
+
       return false;
     }
-    return true;
   }
 }

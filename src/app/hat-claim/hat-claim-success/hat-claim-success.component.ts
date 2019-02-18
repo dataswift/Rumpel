@@ -6,10 +6,7 @@
  * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
  */
 
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../core/services/auth.service';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'rum-hat-claim-success',
@@ -17,25 +14,10 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./hat-claim-success.component.scss']
 })
 export class HatClaimSuccessComponent implements OnInit {
-  public hatName: string;
-  public hatDomain: string;
+  @Input() hatName: string;
+  @Input() hatDomain: string;
 
   constructor() { }
 
-  ngOnInit() {
-    const host = window.location.hostname;
-
-    this.hatName = host.substring(0, host.indexOf('.'));
-    this.hatDomain = host.substring(host.indexOf('.'));
-  }
-
-  goToLogin(avenue: string) {
-    if (avenue==='ios') {
-      // TODO
-    } else if (avenue==='android') {
-      // TODO
-    } else if (avenue==='web') {
-      // TODO
-    }
-  }
+  ngOnInit() {}
 }

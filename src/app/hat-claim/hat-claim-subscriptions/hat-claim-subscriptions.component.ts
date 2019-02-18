@@ -35,11 +35,17 @@ export class HatClaimSubscriptionsComponent implements OnInit {
   }
 
   buildOptins(): string[] {
-    let optins: string[] = [];
+    const optins: string[] = [];
 
-    if (this.subscribeMadhatters) optins.push("MadHATTERS");
-    if (this.subscribeHatMonthly) optins.push("HAT Monthly");
-    if (this.subscribeHCF) optins.push("HCF");
+    if (this.subscribeMadhatters) {
+      optins.push('MadHATTERS');
+    }
+    if (this.subscribeHatMonthly) {
+      optins.push('HAT Monthly');
+    }
+    if (this.subscribeHCF) {
+      optins.push('HCF');
+    }
 
     return optins;
   }

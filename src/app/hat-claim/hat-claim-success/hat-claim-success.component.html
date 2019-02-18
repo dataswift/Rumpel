@@ -12,41 +12,33 @@
 
   <div class="title-container">
     <div class="heading-wrapper">
-      <h2 class="title-hat-name">Success!</h2>
+      <h2 class="title">Success!</h2>
+
+      <div class="password-guidance-box">
+        Your HAT Microserver with the following URL has been claimed.
+      </div>
+
+      <h3 class="title-hat-domain">{{ hatName }}.{{ hatDomain }}</h3>
     </div>
+  </div>
+
+  <div class="password-guidance-box" style="padding-bottom: 10px;">
+    Your HAT issuer is
+  </div>
+
+  <div class="issuer-logo">
+    <img src="/assets/images/hatdex-logo.png" />
+  </div>
+
+  <div class="drp-image">
+    <img src="/assets/images/HATDataRights_200.png" />
   </div>
 
   <div class="f-g">
     <div class="password-guidance-box">
-      Your HAT Microserver with the following URL has been claimed.
-    </div>
-  </div>
-
-  <div class="f-g">
-    <div class="heading-wrapper">
-      <h2 class="title">{{ hatName }}.{{ hatDomain }}</h2>
-    </div>
-  </div>
-
-  <div class="f-g">
-    <div class="password-guidance-box">
-      Your HAT Issuer is "TODO ICON"
-    </div>
-  </div>
-
-  <div class="f-g">
-    <div class="password-guidance-box">
-      "DATA RIGHTS ICON"
-      <br />
       This icon appears every time you access your HAT Microserver and whenever you issue instructions to your HAT Microserver. Data rights protection ensures your HAT Microserver is always secure and that the rights to your data are preserved.
     </div>
   </div>
 
   <span class="large-flex-spacer"></span>
-
-  <div class="user-actions">
-    <button mat-flat-button role="button" (click)="goToLogin('ios')">LOG IN WITH HAT IOS APP</button>
-    <button mat-flat-button role="button" (click)="goToLogin('android')">LOG IN WITH HAT ANDROID APP</button>
-    <button mat-flat-button role="button" (click)="goToLogin('web')">LOG IN WITH HAT WEB APP</button>
-  </div>
 </div>

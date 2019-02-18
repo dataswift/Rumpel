@@ -13,7 +13,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
-import { HatClaimNewPasswordComponent } from "./hat-claim-new-password.component";
+import { HatClaimNewPasswordComponent } from './hat-claim-new-password.component';
 
 describe('HatClaimNewPasswordComponent', () => {
   let component: HatClaimNewPasswordComponent;

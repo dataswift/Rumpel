@@ -23,14 +23,30 @@
   }
 }
 
+/deep/ .mat-checkbox.remember-me-checkbox {
+  .mat-checkbox-layout {
+    margin-bottom: 20px;
+  }
+
+  .mat-checkbox-label {
+    font-size: 18px;
+    color: $app-dark-tone;
+    margin-left: 15px;
+  }
+
+  .mat-checkbox-frame, .mat-checkbox-background {
+    border-radius: 50%;
+  }
+}
+
 .hat-claim-subscriptions-page {
   @include flex-container(column);
   height: calc(100vh - 60px);
   overflow: scroll;
 
   .title-container {
-    display: flex;
     margin-bottom: 50px;
+    text-align: center;
 
     .logo-wrapper {
       margin-right: 15px;
@@ -45,16 +61,10 @@
       letter-spacing: 1px;
 
       .title {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 500;
         margin-top: 0;
         margin-bottom: 5px;
-      }
-
-      .subtitle {
-        font-size: 18px;
-        font-weight: 300;
-        margin: 0;
       }
     }
   }
@@ -62,6 +72,7 @@
   .f-g {
     width: 100%;
     max-width: 500px;
+    text-align: center;
   }
 
   .small-flex-spacer {

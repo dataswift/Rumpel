@@ -29,7 +29,7 @@
   overflow: scroll;
 
   .title-container {
-    display: flex;
+    text-align: center;
     margin-bottom: 50px;
 
     .logo-wrapper {
@@ -44,16 +44,16 @@
       color: $app-dark-tone;
       letter-spacing: 1px;
 
-      .title-hat-name {
-        font-size: 24px;
+      .title {
+        font-size: 26px;
         font-weight: 500;
         margin-top: 0;
         margin-bottom: 5px;
       }
 
       .title-hat-domain {
-        font-size: 18px;
-        font-weight: 300;
+        font-size: 26px;
+        font-weight: bold;
         margin: 0;
       }
     }
@@ -166,6 +166,8 @@
   line-height: 1.57;
   padding-top: 25px;
   padding-bottom: 25px;
+  letter-spacing: initial;
+  text-align: center;
 
   a {
     color: $app-accent-color;
@@ -222,5 +224,27 @@
   &-icon {
     margin-right: 5px;
     vertical-align: middle;
+  }
+}
+
+.issuer-logo {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 60px;
+
+  img {
+    max-width: 186px;
+    width: 35%;
+  }
+}
+
+.drp-image {
+  width: 100%;
+  text-align: center;
+
+  img {
+    max-width: 100px;
+    max-height: 100px;
+    width: 25%;
   }
 }

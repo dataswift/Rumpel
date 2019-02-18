@@ -13,7 +13,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
-import { HatClaimSuccessComponent } from "./hat-claim-success.component";
+import { HatClaimSuccessComponent } from './hat-claim-success.component';
 
 describe('HatClaimSuccessComponent', () => {
   let component: HatClaimSuccessComponent;

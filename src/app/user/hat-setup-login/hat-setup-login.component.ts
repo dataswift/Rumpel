@@ -118,11 +118,11 @@ export class HatSetupLoginComponent implements OnInit {
 
     console.log('Redirect value: ', callback);
 
-    console.log("STATS: hmi_data_plug_setup:" + app.application.id);
+    console.log('STATS: hmi_data_plug_setup:' + app.application.id);
     this.authSvc.setupApplication(app.application.id)
       .pipe(flatMap(_ => this.authSvc.appLogin(app.application.id)))
       .subscribe(appAccessToken => {
-        console.log("STATS: hmi_data_plug_enabled:" + app.application.id);
+        console.log('STATS: hmi_data_plug_enabled:' + app.application.id);
         window.location.href = `${app.application.setup.url}?token=${appAccessToken}&redirect=${callback}`;
       });
   }

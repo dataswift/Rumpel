@@ -4,32 +4,34 @@
       <rum-hat-claim-details [email]="email"></rum-hat-claim-details>
     </ng-container>
     <ng-container *ngSwitchCase="2">
-      <rum-hat-claim-url></rum-hat-claim-url>
+      <rum-hat-claim-url [hatName]="hatName" [hatDomain]="hatDomain"></rum-hat-claim-url>
     </ng-container>
     <ng-container *ngSwitchCase="3">
-      <rum-hat-claim-new-password></rum-hat-claim-new-password>
+      <rum-hat-claim-subscriptions></rum-hat-claim-subscriptions>
     </ng-container>
     <ng-container *ngSwitchCase="4">
-      <rum-hat-claim-subscriptions></rum-hat-claim-subscriptions>
+      <rum-hat-claim-new-password
+        [hatName]="hatName"
+        [hatDomain]="hatDomain"
+        (password)="handlePasswordUpdate($event)"></rum-hat-claim-new-password>
     </ng-container>
     <ng-container *ngSwitchCase="5">
       <rum-hat-claim-confirmation></rum-hat-claim-confirmation>
     </ng-container>
     <ng-container *ngSwitchCase="6">
-      <rum-hat-claim-success></rum-hat-claim-success>
+      <rum-hat-claim-success [hatName]="hatName" [hatDomain]="hatDomain"></rum-hat-claim-success>
     </ng-container>
   </ng-container>
 
 
-  <div *ngIf="step !== 6" class="user-actions">
-    <img src="/assets/images/HATDataRights_200.png"/>
-    <button mat-flat-button role="button" (click)="nextStep()">{{ step === 5 ? "Confirm" : "Next" }}</button>
-    <button *ngIf="step !== 1" mat-flat-button role="button" (click)="previousStep()">Previous</button>
+  <div class="user-actions">
+    <button mat-flat-button role="button" (click)="nextStep()">{{ step === 5 ? "Confirm" : step === 6 ? "Log in" : "Next" }}</button>
+    <button *ngIf="step !== 1 && step !== 5 && step !== 6" mat-flat-button role="button" (click)="previousStep()">Previous</button>
 
-    <div *ngIf="step === 5" class="f-g">
-      <div class="password-guidance-box">
-        By selecting 'Confirm', I agree to the HATDex <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
-      </div>
+    <div *ngIf="step === 5" class="password-guidance-box">
+      By selecting ‘Confirm’, I agree to the HATDeX
+      <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c540dc4e4966bf470e0d5fd/1549012420957/hat+owner+terms+of+service+-+10_1_19+-+v2.3+%281%29.pdf">Terms of Service</a>
+      and <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c26550670a6ad08a55214ba/1546016006812/HATDeX+privacy+policy+2.1.pdf">Privacy Policy</a>.
     </div>
   </div>
 

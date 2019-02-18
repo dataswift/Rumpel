@@ -29,15 +29,12 @@
   overflow: scroll;
 
   .title-container {
-    display: flex;
     margin-bottom: 50px;
-
-    .logo-wrapper {
-      margin-right: 15px;
-    }
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
 
     .heading-wrapper {
-      display: flex;
       flex-direction: column;
       justify-content: center;
 
@@ -45,15 +42,15 @@
       letter-spacing: 1px;
 
       .title {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 500;
         margin-top: 0;
         margin-bottom: 5px;
       }
 
       .title-hat-domain {
-        font-size: 18px;
-        font-weight: 300;
+        font-size: 26px;
+        font-weight: bold;
         margin: 0;
       }
     }
@@ -78,8 +75,7 @@
     border: 1px solid #e0e0e0;
     width: 100%;
     font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 2px;
+    font-size: 14px;
     padding: 15px 20px;
     margin-bottom: 10px;
     border-radius: 0;

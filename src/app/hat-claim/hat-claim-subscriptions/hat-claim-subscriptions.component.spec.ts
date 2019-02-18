@@ -8,12 +8,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '../../core/services/auth.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
-import { HatClaimSubscriptionsComponent } from "./hat-claim-subscriptions.component";
-import {FormsModule} from "@angular/forms";
+import { HatClaimSubscriptionsComponent } from './hat-claim-subscriptions.component';
+import { FormsModule } from '@angular/forms';
 
 describe('HatClaimSubscriptionsComponent', () => {
   let component: HatClaimSubscriptionsComponent;

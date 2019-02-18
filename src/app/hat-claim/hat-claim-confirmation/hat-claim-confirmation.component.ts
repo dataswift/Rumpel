@@ -6,10 +6,7 @@
  * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
  */
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../core/services/auth.service';
+import { Component, OnInit } from '@angular/core';
 
 const ERROR_MESSAGES = {
   authenticationError: 'ERROR: Current password incorrect',
@@ -23,33 +20,14 @@ const ERROR_MESSAGES = {
   styleUrls: ['./hat-claim-confirmation.component.scss']
 })
 export class HatClaimConfirmationComponent implements OnInit {
-  public hatName: string;
-  public hatDomain: string;
   public errorType: string;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) { }
+  constructor() { }
 
-  ngOnInit() {
-    const host = window.location.hostname;
-
-    this.hatName = host.substring(0, host.indexOf('.'));
-    this.hatDomain = host.substring(host.indexOf('.'));
-  }
+  ngOnInit() { }
 
   errorText(): string {
     return ERROR_MESSAGES[this.errorType] || '';
-  }
-
-  clearErrors() {
-    this.errorType = '';
-  }
-
-  doConfirm() {
-    // TODO - call HATTERS /claim endpoint
-    // TODO - HOW to get subscription data from previous screen
-
-    this.router.navigate(['hat', 'claim', 'steps', 'success'])
   }
 
 }

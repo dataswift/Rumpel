@@ -11,20 +11,19 @@
 
   <div class="title-container">
     <div class="heading-wrapper">
-      <h2 class="title">Claim your HAT</h2>
+      <h2 class="title">Enter your email</h2>
     </div>
-  </div>
 
-  <div class="f-g">
     <div class="password-guidance-box">
-      This information is purely used to claim your HAT. Your personal information will never be shared with anyone unless you authorise it.
+      This information is only used to create your HAT Microserver. Your personal information will never be
+      shared with anyone unless you authorise it.
     </div>
   </div>
 
   <div class="f-g">
-    <label for="email" hidden>Your email address</label>
+    <label for="email" hidden>Email address</label>
     <input id="email" class="hat-pass-input" name="hat-pass-input"
-           [contentEditable]="false" [value]="email" />
+           [value]="email" readonly />
   </div>
 
   <span class="large-flex-spacer"></span>

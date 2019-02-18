@@ -30,7 +30,8 @@
 
   .title-container {
     display: flex;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
+    text-align: center;
 
     .logo-wrapper {
       margin-right: 15px;
@@ -45,15 +46,15 @@
       letter-spacing: 1px;
 
       .title {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 500;
         margin-top: 0;
-        margin-bottom: 5px;
+        margin-bottom: 50px;
       }
 
       .title-hat-domain {
-        font-size: 18px;
-        font-weight: 300;
+        font-size: 26px;
+        font-weight: bold;
         margin: 0;
       }
     }

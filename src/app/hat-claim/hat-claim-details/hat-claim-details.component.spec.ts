@@ -9,7 +9,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
-import {HatClaimDetailsComponent} from "./hat-claim-details.component";
+import { HatClaimDetailsComponent } from './hat-claim-details.component';
 
 describe('HatClaimDetailsComponent', () => {
   let component: HatClaimDetailsComponent;

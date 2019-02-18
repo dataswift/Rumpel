@@ -49,10 +49,9 @@
   }
 }
 
-@media (max-width: 525px) {
-  .password-guidance-box, .password-strength-description {
-    text-align: justify;
-    margin: auto;
-    width: 80%;
-  }
+.password-guidance-box {
+  max-width: 250px;
+  text-align: center;
+  color: $hat-body-text;
+  margin: 10px auto;
 }

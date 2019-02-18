@@ -52,7 +52,7 @@ import { StaticDataService } from './services/static-data.service';
 import { ExploreModule } from './explore/explore.module';
 import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
-import {HatClaimModule} from "./hat-claim/hat-claim.module";
+import {HatClaimModule} from './hat-claim/hat-claim.module';
 
 export function cookieServiceFactory() {
   return new CookieService();

@@ -6,7 +6,7 @@
  * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'rum-hat-claim-url',
@@ -14,15 +14,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hat-claim-url.component.scss']
 })
 export class HatClaimUrlComponent implements OnInit {
-  public hatName: string;
-  public hatDomain: string;
+  @Input() hatName: string;
+  @Input() hatDomain: string;
 
   constructor() { }
 
   ngOnInit() {
-    const host = window.location.hostname;
-
-    this.hatName = host.substring(0, host.indexOf('.'));
-    this.hatDomain = host.substring(host.indexOf('.'));
   }
 }

@@ -19,7 +19,7 @@ import { FileMetadataReq, FileMetadataRes } from '../../shared/interfaces/file.i
 import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../../shared/interfaces/bundle.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { SheFeed } from '../../she/she-feed.interface';
-import {HatClaimRequest} from "../../shared/interfaces/hat-claim.interface";
+import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 
 @Injectable()
 export class HatApiService {
@@ -77,8 +77,8 @@ export class HatApiService {
   /*
     Call Hatters API call through HAT
    */
-  informHattersOfHatClaim(claimToken: string, body: HatClaimRequest): Observable<any> {
-    const path = `/api/v2.6/hatters/proxy/api/products/hat/claim`;
+  claimHat(claimToken: string, body: HatClaimRequest): Observable<any> {
+    const path = `/control/v2/auth/claim/confirm/${claimToken}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.post(path, body, { headers: headers });
