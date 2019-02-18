@@ -34,6 +34,8 @@ import { DataDebitListComponent } from './data-management/data-debit-list/data-d
 import { DataDebitDetailsComponent } from './data-management/data-debit-details/data-debit-details.component';
 import { HatSetupLoginComponent } from './user/hat-setup-login/hat-setup-login.component';
 import { DataDebitQuickConfirmComponent } from './data-management/data-debit-quick-confirm/data-debit-quick-confirm.component';
+import { HatClaimSuccessComponent } from './hat-claim/hat-claim-success/hat-claim-success.component';
+import { HatClaimComponent } from './hat-claim/hat-claim/hat-claim.component';
 
 @NgModule({
   imports: [
@@ -83,7 +85,9 @@ import { DataDebitQuickConfirmComponent } from './data-management/data-debit-qui
           { path: 'change', component: PasswordChangeComponent, canActivate: [AuthGuard] }
         ]},
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'about', component: AboutComponent }
+      { path: 'about', component: AboutComponent },
+      { path: 'hat/claim/:claimToken', component: HatClaimComponent, canActivate: [NativeGuard] },
+      { path: 'hat/claim/success', component: HatClaimSuccessComponent }
     ])
   ],
   exports: [

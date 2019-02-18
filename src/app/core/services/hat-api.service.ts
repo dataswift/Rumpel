@@ -19,6 +19,7 @@ import { FileMetadataReq, FileMetadataRes } from '../../shared/interfaces/file.i
 import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../../shared/interfaces/bundle.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { SheFeed } from '../../she/she-feed.interface';
+import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 
 @Injectable()
 export class HatApiService {
@@ -68,6 +69,16 @@ export class HatApiService {
 
   resetPassword(resetToken: string, body: { newPassword: string; }): Observable<any> {
     const path = `/control/v2/auth/passwordreset/confirm/${resetToken}`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(path, body, { headers: headers });
+  }
+
+  /*
+    Call Hatters API call through HAT
+   */
+  claimHat(claimToken: string, body: HatClaimRequest): Observable<any> {
+    const path = `/control/v2/auth/claim/confirm/${claimToken}`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     return this.http.post(path, body, { headers: headers });
