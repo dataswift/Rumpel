@@ -1,0 +1,30 @@
+<!--
+  ~ Copyright (C) 2019 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
+  -->
+
+<div class="hat-claim-details-page">
+  <span class="small-flex-spacer"></span>
+
+  <div class="title-container">
+    <div class="heading-wrapper">
+      <h2 class="title">Enter your email</h2>
+    </div>
+
+    <div class="password-guidance-box">
+      This information is only used to create your HAT Microserver. Your personal information will never be
+      shared with anyone unless you authorise it.
+    </div>
+  </div>
+
+  <div class="f-g">
+    <label for="email" hidden>Email address</label>
+    <input id="email" class="hat-pass-input" name="hat-pass-input"
+           [value]="email" readonly />
+  </div>
+
+  <span class="large-flex-spacer"></span>
+</div>
