@@ -6,7 +6,7 @@
  * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
  */
 
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 declare const zxcvbn: any;
 

@@ -8,20 +8,10 @@
 
 
 export interface HatClaimRequest {
-  firstName?: string;
-  lastName?: string;
   email: string;
   termsAgreed: boolean;
-  optins?: string[];
+  optins: Array<string>;
   hatName: string;
   hatCluster: string;
-  hatCountry?: string;
-  password?: string;
-  membership: any;
-  applicationId: string;
-}
-
-export interface ClaimMembership {
-  plan: string,
-  membershipType: string
+  password: string;
 }

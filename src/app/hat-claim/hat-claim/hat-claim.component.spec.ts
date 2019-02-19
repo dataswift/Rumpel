@@ -31,7 +31,7 @@ describe('HatClaimComponent', () => {
         HatClaimSuccessComponent
       ],
       providers: [
-        { provide: ActivatedRoute, useValue: { params: of({}), snapshot: { queryParams: {} } } },
+        { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {}, params: {} } } },
         { provide: Router, useValue: {} },
         { provide: HatClaimService, useValue: {} }
       ]

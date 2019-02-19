@@ -3,7 +3,7 @@ import { HatClaimService } from '../hat-claim.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HatClaimNewPasswordComponent } from '../hat-claim-new-password/hat-claim-new-password.component';
 import { HatClaimSubscriptionsComponent } from '../hat-claim-subscriptions/hat-claim-subscriptions.component';
-import { ClaimMembership, HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
+import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 
 @Component({
   selector: 'rum-hat-claim',
@@ -36,10 +36,8 @@ export class HatClaimComponent implements OnInit {
               private hatClaimSvc: HatClaimService) { }
 
   ngOnInit() {
-    this.route.params.subscribe((routeParams) => {
-      this.claimToken = routeParams['claimToken'] || null;
-    });
     this.email = this.route.snapshot.queryParams['email'];
+    this.claimToken = this.route.snapshot.params['claimToken'];
 
     const host = window.location.hostname;
 
@@ -75,42 +73,32 @@ export class HatClaimComponent implements OnInit {
     }
   }
 
-  private buildClaimRequest(): HatClaimRequest {
-    const claimMembership: ClaimMembership = {
-      plan: 'partner',
-      membershipType: 'claimed'
-    };
-
-    const claimRequest: HatClaimRequest = {
-      firstName: '',
-      lastName: '',
-      email: this.email,
-      termsAgreed: true,
-      optins: this.optins,
-      hatName: this.hatName,
-      hatCluster: this.hatDomain,
-      hatCountry: 'not used',
-      password: this.password,
-      membership: claimMembership,
-      applicationId: 'not used'
-    };
-
-    return claimRequest;
-  }
-
   handlePasswordUpdate(password: any): void {
     this.password = password;
   }
 
   handleSubmission(): void {
     const hatClaimRequest: HatClaimRequest = this.buildClaimRequest();
-    this.hatClaimSvc.submitHatClaim(this.claimForm, this.claimToken, this.password, hatClaimRequest).subscribe(_ => {
+    this.hatClaimSvc.submitHatClaim(this.claimToken, hatClaimRequest).subscribe(_ => {
       this.step++;
     });
   }
 
   goToLogin(): void {
     this.router.navigate(['/user', 'login']);
+  }
+
+  private buildClaimRequest(): HatClaimRequest {
+    const claimRequest: HatClaimRequest = {
+      email: this.email,
+      termsAgreed: true,
+      optins: this.optins,
+      hatName: this.hatName,
+      hatCluster: this.hatDomain,
+      password: this.password
+    };
+
+    return claimRequest;
   }
 
 }
