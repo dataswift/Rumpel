@@ -1,6 +1,6 @@
 {
   "name": "Rumpel",
-  "version": "3.6.2",
+  "version": "3.7.0",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "angular-cli": {},
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --configuration=standalone --host=rumpel.hubofallthings.net",
+    "start": "ng serve --configuration=development --host=rumpel.hubofallthings.net",
     "build": "ng lint && ng test --watch=false && ng build --configuration=native",
     "test": "ng test --sourceMap=false --watch=false",
     "lint": "ng lint",
