@@ -32,6 +32,10 @@ import { HatApplicationDetailsComponent } from './explore/hat-application-detail
 import { HatAppDetailsPermissionsComponent } from './explore/hat-app-details-permissions/hat-app-details-permissions.component';
 import { DataDebitListComponent } from './data-management/data-debit-list/data-debit-list.component';
 import { DataDebitDetailsComponent } from './data-management/data-debit-details/data-debit-details.component';
+import { HatSetupLoginComponent } from './user/hat-setup-login/hat-setup-login.component';
+import { DataDebitQuickConfirmComponent } from './data-management/data-debit-quick-confirm/data-debit-quick-confirm.component';
+import { HatClaimSuccessComponent } from './hat-claim/hat-claim-success/hat-claim-success.component';
+import { HatClaimComponent } from './hat-claim/hat-claim/hat-claim.component';
 
 @NgModule({
   imports: [
@@ -39,6 +43,8 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
       { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
       { path: 'public/profile', component: PublicProfileComponent, canActivate: [NativeGuard] },
       { path: 'hatlogin', component: LoginOauthComponent, canActivate: [NativeGuard, AuthGuard] },
+      { path: 'hat-setup-login', component: HatSetupLoginComponent, canActivate: [NativeGuard, AuthGuard] },
+      { path: 'data-debit/:id/quick-confirm', component: DataDebitQuickConfirmComponent, canActivate: [NativeGuard, AuthGuard] },
       { path: 'user/login', component: LoginNativeComponent, canActivate: [NativeGuard] },
       { path: 'user/login/start', component: LoginStandaloneComponent },
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
@@ -79,7 +85,9 @@ import { DataDebitDetailsComponent } from './data-management/data-debit-details/
           { path: 'change', component: PasswordChangeComponent, canActivate: [AuthGuard] }
         ]},
       { path: 'users/authenticate', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'about', component: AboutComponent }
+      { path: 'about', component: AboutComponent },
+      { path: 'hat/claim/:claimToken', component: HatClaimComponent, canActivate: [NativeGuard] },
+      { path: 'hat/claim/success', component: HatClaimSuccessComponent }
     ])
   ],
   exports: [

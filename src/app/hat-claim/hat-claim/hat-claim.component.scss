@@ -1,0 +1,57 @@
+@import "../../style/branding";
+@import "../../style/rumpel-mixins";
+
+.user-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: $hat-background-color;
+
+  img {
+    display: block;
+    width: 60px;
+    margin: 20px auto 0;
+  }
+
+  button {
+    display: block;
+    width: 250px;
+    margin: 20px auto;
+    cursor: pointer;
+    background-color: $app-accent-color;
+    color: white;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 5px 0;
+  }
+}
+
+.app-error {
+  border: solid 2px #E36682;
+  color: #E36682;
+  border-radius: 4px;
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 500px;
+
+  &-header {
+    font-size: 22px;
+    margin-top: 0;
+  }
+
+  &-text {
+    font-size: 14px;
+  }
+
+  @media (max-width: 500px) {
+    margin: 30px 20px;
+  }
+}
+
+.password-guidance-box {
+  max-width: 250px;
+  text-align: center;
+  color: $hat-body-text;
+  margin: 10px auto;
+}

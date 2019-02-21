@@ -1,0 +1,86 @@
+<ng-container *ngIf="dataDebitDetails$ | async as debit else loading">
+  <div class="content-wrapper">
+    <section class="title-section">
+      <div class="app-logo-wrapper">
+        <img [src]="debit.requestClientLogoUrl || '/assets/icons/hat-permissions-generic.svg'"
+             class="app-logo" height="100" width="100" />
+      </div>
+
+      <h3 class="title-section-heading">{{debit.dataDebitKey}}</h3>
+
+      <p class="title-section-text">Details of your data debit agreement with the provider</p>
+
+      <a [href]="debit.permissionsLatest.termsUrl" target="_blank" class="title-section-text-link">Privacy Policy</a>
+    </section>
+
+    <section class="agreement-section">
+      <div class="debit-valitity-interval">
+        <mat-card>
+          <mat-card-content>
+            <h5 class="app-details-heading">Starts</h5>
+            {{debit.start | datetime:'DD MMM YYYY'}}
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>
+            <h5 class="app-details-heading">Ends</h5>
+            {{ debit.end ? (debit.end | datetime:'DD MMM YYYY') : 'until cancelled' }}
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <mat-card class="app-details-general" *ngIf="debit.requestDescription">
+        <mat-card-content>
+          <h5 class="app-details-heading">Description</h5>
+          <div class="app-details-description-formatted">{{debit.requestDescription}}</div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="app-details-general">
+        <mat-card-content>
+          <h5 class="app-details-heading">Purpose</h5>
+          <div class="app-details-description">
+            {{debit.permissionsLatest.purpose}}
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="app-details-general">
+        <mat-card-content>
+          <h5 class="app-details-heading">Requirements</h5>
+          <div class="app-details-description" *ngFor="let endpoint of debit.permissionsLatest.bundle.bundle | unbundle">
+            <h5 class="app-details-heading indented" >{{endpoint.title}}</h5>
+            <ul class="card-list">
+              <li *ngFor="let field of endpoint.fields">{{field}}</li>
+            </ul>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="debit-origin">
+        <div class="card-img-wrapper">
+          <img [src]="debit.requestClientLogoUrl || '/assets/icons/hat-permissions-generic.svg'" class="card-img" height="60" width="60" />
+        </div>
+
+        <mat-card-content>
+          <h5 class="app-details-heading">{{debit.requestClientName || 'Not available'}}</h5>
+          <div class="app-details-description">
+            Created the data debit
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </section>
+  </div>
+
+  <div class="user-actions">
+    <button mat-flat-button role="button" (click)="enable(debit.dataDebitKey)">Enable</button>
+    <button mat-flat-button role="link" (click)="cancel()">Cancel</button>
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading data debit</div>
+  </div>
+</ng-template>

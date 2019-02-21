@@ -1,0 +1,113 @@
+<!--
+  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+  -->
+
+<ng-container *ngIf="hatApp || errorMessage else loading">
+  <ng-container *ngIf="hatApp">
+    <div class="content-wrapper">
+      <section class="drp-explainer">
+        <div class="drp-logo-wrapper">
+          <img src="/assets/images/HATDataRights_200.png" class="drp-logo" height="100" width="100" />
+        </div>
+
+        <h3 class="section-heading" style="margin: 32px auto;">{{hatAddress}}</h3>
+
+        <p class="section-text">Our friends at {{hatApp.application.developer.name}} have requested for a Personal Data Account
+          to be created with the above URL. Check your email for more details.</p>
+      </section>
+
+      <!--<div class="section-divider"></div>-->
+
+      <!--<section>-->
+
+      <!--</section>-->
+
+      <div class="section-divider"></div>
+
+      <section class="app-information">
+        <div class="app-logo-wrapper">
+          <img src="{{hatApp.application.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" />
+        </div>
+
+        <div class="app-rating-wrapper">
+          <div class="app-rating">
+            <span class="app-rating-highlighted">{{hatApp.application.info.rating.score}}</span>
+          </div>
+        </div>
+
+        <h3 class="section-heading">{{hatApp.application.info.name}} by {{hatApp.application.developer.name}}</h3>
+
+        <p class="section-text">This app is rated <span style="letter-spacing: 2px;">{{hatApp.application.info.rating.score}}</span></p>
+
+        <p class="section-text">
+          <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="title-section-text-link">Learn more</a>
+        </p>
+
+        <p class="section-text" style="margin-top: 22px;">{{hatApp.application.info.name}} is requesting the following
+          permissions. You need to confirm it so that this is all legal.</p>
+      </section>
+
+      <section class="permissions-section">
+        <mat-card>
+          <mat-card-content>
+            <h5 class="card-heading">Purpose of data usage</h5>
+            <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
+          </mat-card-content>
+        </mat-card>
+        <!--<h4 class="section-header">{{hatApp.application.info.name}} will be able to:</h4>-->
+        <!--<mat-card *ngFor="let permission of readablePermissions">-->
+          <!--<mat-card-content>-->
+            <!--<h5 class="card-heading">{{permission.title}}</h5>-->
+            <!--<p class="card-text">{{permission.text}}</p>-->
+          <!--</mat-card-content>-->
+        <!--</mat-card>-->
+      </section>
+
+      <section class="permissions-section" *ngIf="hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle">
+        <mat-card *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
+          <mat-card-content>
+            <h5 class="card-heading">Data from {{endpoint.title}}</h5>
+            <div class="card-text" [class.card-text-expanded]="endpoint.expanded">
+              <h6 class="card-subheading">Fields required</h6>
+              <ul class="card-list">
+                <li *ngFor="let field of endpoint.fields">{{field}}</li>
+              </ul>
+            </div>
+            <div *ngIf="endpoint.fields.length > 1" (click)="toggleCardExpansion(endpoint)" class="card-expansion-toggle">
+              {{endpoint.expanded ? 'Less' : 'More'}}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </section>
+    </div>
+
+    <div class="sticky-action-panel">
+      <div class="sticky-action-panel-content">
+        <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)">Confirm</button>
+        <p class="hmi-id-text">HMI ID: {{hatApp.application.id}}-v{{hatApp.application.info.version}}</p>
+        <p class="tos-text">By pressing ‘Confirm’ I agree to HAT Data Exchange Ltd
+          <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c540dc4e4966bf470e0d5fd/1549012420957/hat+owner+terms+of+service+-+10_1_19+-+v2.3+%281%29.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>
+          and the permissions laid out above.</p>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="errorMessage">
+    <div class="app-error">
+      <h3 class="app-error-header">Ooops... Looks like something went wrong.</h3>
+      <p class="app-error-text">{{errorMessage}}</p>
+    </div>
+  </ng-container>
+
+</ng-container>
+
+<ng-template #loading>
+  <div class="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Loading permissions</div>
+  </div>
+</ng-template>

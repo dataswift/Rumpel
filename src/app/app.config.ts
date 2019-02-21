@@ -33,7 +33,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.6.2.0',
+  version: '3.7.0.0',
   name: 'Rumpel',
   tokenApp: 'hatapp',
   tokenExpiryTime: 3,
