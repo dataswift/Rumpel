@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject ,  Observable } from 'rxjs';
+import { ReplaySubject ,  Observable , of } from 'rxjs';
 import { defaultIfEmpty, filter, flatMap, map, tap } from 'rxjs/operators';
 import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
@@ -37,8 +37,12 @@ export class HatApplicationsService {
       .pipe(map((apps: HatApplication[]) => apps.filter(app => app.application.id === application)[0]));
   }
 
-  getApplicationData(application: string): Observable<SheFeed[]> {
-    return this.hatSvc.getSheRecords(application);
+  getApplicationData(application?: string): Observable<SheFeed[]> {
+    if (application == null) {
+      return of([]);
+    } else {
+      return this.hatSvc.getSheRecords(application);
+    }
   }
 
   enable(id: string): Observable<HatApplication> {
