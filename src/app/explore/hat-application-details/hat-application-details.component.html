@@ -68,19 +68,25 @@
       </mat-tab>
 
       <mat-tab label="Data Preview">
-        <div *ngIf="staticData" style="margin-bottom: 60px;">
-          <rum-list-card [title]="'Profile information'" [listData]="staticData"></rum-list-card>
-        </div>
+        <ng-container *ngIf="staticData$ | async as staticData">
+          <div  *ngIf="staticData[0]" style="margin-bottom: 60px;">
+            <rum-list-card [title]="'Profile information'" [listData]="staticData[0]"></rum-list-card>
+          </div>
+        </ng-container>
 
-        <ng-container *ngIf="dataPreview">
-          <ng-container *ngFor="let dataSample of dataPreview">
-            <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+        <ng-container *ngIf="dataPreview$ | async as dataPreview">
+          <ng-container *ngIf="dataPreview.length > 0; else nopreview">
+            <ng-container *ngFor="let dataSample of dataPreview">
+              <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+            </ng-container>
           </ng-container>
         </ng-container>
 
-        <div *ngIf="!dataPreview && !staticData" class="no-data-message">
-          No previews found. Please connect to see your preview.
-        </div>
+        <ng-template #nopreview>
+            <div class="no-data-message">
+              No previews found. Please connect to see your preview.
+            </div>
+        </ng-template>
       </mat-tab>
     </mat-tab-group>
   </div>

@@ -7,6 +7,9 @@ import { HatApplication, HatApplicationSetup } from '../hat-application.interfac
 import { forkJoin, of, Observable } from 'rxjs';
 import { catchError, flatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { SheFeed } from '../../she/she-feed.interface';
+import * as startOfDay from 'date-fns/start_of_day';
+import * as subMonths from 'date-fns/sub_months';
+
 
 import * as moment from 'moment';
 
@@ -17,10 +20,11 @@ import * as moment from 'moment';
 })
 export class HatApplicationDetailsComponent implements OnInit {
   public appDetails$: Observable<HatApplication>;
+  public staticData$: Observable<any>;
+  public dataPreview$: Observable<SheFeed[]>;
   public appStatus: 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update';
-  public dataPreview: SheFeed[];
-  public staticData: any;
   public appInformation: string[][];
+  public staticData2: any;
 
   constructor(private activatedRoute: ActivatedRoute,
               private location: Location,
@@ -28,6 +32,7 @@ export class HatApplicationDetailsComponent implements OnInit {
               private staticDataSvc: StaticDataService) { }
 
   ngOnInit() {
+
     this.appDetails$ = this.activatedRoute.params.pipe(mergeMap(pathParams => {
       const appId = pathParams['appId'];
 
@@ -46,26 +51,19 @@ export class HatApplicationDetailsComponent implements OnInit {
             ['terms and conditions', termsUrl],
             ['support email', supportContact]
           ];
-        }),
-        flatMap((app: HatApplication) => {
-          return forkJoin(
-            this.hatAppSvc.getApplicationData(app.application.status.dataPreviewEndpoint),
-            this.staticDataSvc.fetchData(app.application.id).pipe(catchError(err => of([])))
-            )
-            .pipe(map(result => {
-              return { app, sheFeed: result[0], staticData: result[1] };
-            }));
-        }),
-        map((results) => {
-          if (results.sheFeed.length > 0) {
-            this.dataPreview = results.sheFeed;
-          }
+          this.staticData$ = this.staticDataSvc.fetchData(app.application.id).pipe(
+            tap((staticData) => {
+             if (app.application.status && app.application.status.dataPreviewEndpoint && app.mostRecentData) {
+               const recentDate = Date.parse(app.mostRecentData);
+               const defaultSince = Math.round(startOfDay(subMonths(recentDate, 1)).getTime() / 1000);
+               const untilDate = Math.round(recentDate / 1000);
 
-          if (results.staticData.length > 0) {
-            this.staticData = results.staticData[0];
-          }
-
-          return results.app;
+               this.dataPreview$ = this.hatAppSvc.getApplicationData(app.application.status.dataPreviewEndpoint, defaultSince, untilDate);
+             } else {
+               this.dataPreview$ = of([]);
+             }
+            }),
+              catchError(err => of([])));
         }));
     }));
   }

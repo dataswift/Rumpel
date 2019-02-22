@@ -37,12 +37,8 @@ export class HatApplicationsService {
       .pipe(map((apps: HatApplication[]) => apps.filter(app => app.application.id === application)[0]));
   }
 
-  getApplicationData(application?: string): Observable<SheFeed[]> {
-    if (application == null) {
-      return of([]);
-    } else {
-      return this.hatSvc.getSheRecords(application);
-    }
+  getApplicationData(endpoint: string, since: number, until: number): Observable<SheFeed[]> {
+      return this.hatSvc.getSheRecords(endpoint, since, until);
   }
 
   enable(id: string): Observable<HatApplication> {
