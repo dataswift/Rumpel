@@ -12,7 +12,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { flatMap } from 'rxjs/operators';
-import {HatApiService} from "../../core/services/hat-api.service";
+import {HatApiService} from '../../core/services/hat-api.service';
 
 @Component({
   selector: 'rum-hat-setup-login',
