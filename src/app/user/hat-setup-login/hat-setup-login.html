@@ -23,18 +23,7 @@
       <div class="section-divider"></div>
 
       <section class="permissions-section">
-        <mat-card>
-          <mat-card-content>
-            <h5 class="card-heading">You agree that {{hatApp.application.info.name}} by {{hatApp.application.developer.name}} will be able to:</h5>
-          </mat-card-content>
-        </mat-card>
-
-        <mat-card>
-          <mat-card-content>
-            <h5 class="card-heading">Why it needs the data?</h5>
-            <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
-          </mat-card-content>
-        </mat-card>
+        <h4 class="section-heading">You agree that {{hatApp.application.info.name}} by {{hatApp.application.developer.name}} will be able to:</h4>
 
         <div class="data-access-summary" *ngIf="hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle">
           <mat-expansion-panel *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
@@ -49,17 +38,21 @@
             </mat-panel-description>
           </mat-expansion-panel>
         </div>
+
+        <mat-card>
+          <mat-card-content>
+            <h5 class="card-heading">Why it needs the data?</h5>
+            <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
+          </mat-card-content>
+        </mat-card>
       </section>
 
       <section class="permissions-section" *ngIf="dependencyApps && dependencyApps.length > 0">
-        <mat-card>
-          <mat-card-content>
-            <h5 class="card-heading">Additional data plugs have to be setup for this app:</h5>
-          </mat-card-content>
-        </mat-card>
+        <h5 class="section-heading">Additional data plugs have to be setup for this app:</h5>
+
         <mat-card *ngFor="let depApp of dependencyApps">
           <div class="card-img-wrapper">
-            <img [src]="depApp.application.info.graphics.logo.normal" class="card-img" />
+            <img [src]="depApp.application.info.graphics.logo.normal" class="card-img" [alt]="depApp.application.info.name" />
           </div>
           <mat-card-content>
             <h5 class="card-heading">{{depApp.application.info.name}}</h5>
@@ -72,7 +65,7 @@
     <div class="sticky-action-panel">
       <div class="sticky-action-panel-content">
         <div class="action-buttons">
-          <button mat-flat-button role="button" (click)="declineTerms(hatApp.application.id)" class="secondary-action">Cancel</button>
+          <button mat-flat-button role="button" (click)="declineTerms()" class="secondary-action">Cancel</button>
           <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)" class="primary-action">Confirm</button>
         </div>
         <p class="hmi-id-text">HMI ID: {{hatApp.application.id}}-v{{hatApp.application.info.version}}</p>

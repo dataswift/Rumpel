@@ -314,8 +314,8 @@ export class HatApiService {
     return this.http.get(path, { observe: 'response', responseType: 'text' });
   }
 
-  log(actionCode: string): Observable<any> {
-    const path = `https://${this.pathPrefix}/log`;
+  sendReport(actionCode: string): Observable<any> {
+    const path = `${this.pathPrefix}/report-frontend-action`;
 
     return this.http.post(path, { actionCode: actionCode });
   }

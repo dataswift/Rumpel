@@ -99,22 +99,18 @@ export class HatSetupLoginComponent implements OnInit {
   }
 
   declineTerms(): void {
-    this.hatApiSvc.log('hmi_declined');
-
-    const internal = this.route.snapshot.queryParams['internal'] === 'true';
-    if (internal) {
-      this.router.navigate([this.route.snapshot.queryParams['fallback']]);
-    } else {
-      window.location.href = this.route.snapshot.queryParams['fallback'];
-    }
+    this.hatApiSvc.sendReport('hmi_declined').subscribe(() => {
+      const internal = this.route.snapshot.queryParams['internal'] === 'true';
+      if (internal) {
+        this.router.navigate([this.route.snapshot.queryParams['fallback']]);
+      } else {
+        window.location.href = this.route.snapshot.queryParams['fallback'];
+      }
+    });
   }
 
   dataDebitRole(): string {
     return this.hatApp.application.permissions.rolesGranted.filter(role => role.role === 'datadebit')[0].detail;
-  }
-
-  toggleCardExpansion(endpoint): void {
-    endpoint.expanded = !endpoint.expanded;
   }
 
   private setupAppDependencies(parentApp: HatApplication, dependencies: HatApplication[], appRedirect: string): void {
