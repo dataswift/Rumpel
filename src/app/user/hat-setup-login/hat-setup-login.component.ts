@@ -23,7 +23,7 @@ export class HatSetupLoginComponent implements OnInit {
   public hatAddress: string;
   public errorMessage: string;
   public hatApp: HatApplication;
-  private dependencyApps: HatApplication[];
+  public dependencyApps: HatApplication[];
   private redirect: string;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,

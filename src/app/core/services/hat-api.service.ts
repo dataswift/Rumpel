@@ -100,7 +100,7 @@ export class HatApiService {
     return this.authHttp.get<HatApplication[]>(path);
   }
 
-  getApplicationsHmi(): Observable<HatApplication[]> {
+  getApplicationHmi(): Observable<HatApplication[]> {
     const path = `${this.pathPrefix}/applications/hmi`;
 
     return this.authHttp.get<HatApplication[]>(path);
