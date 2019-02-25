@@ -18,6 +18,7 @@ import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
 import { HatApplicationPermissionsComponent } from '../../shared/components/hat-application-permissions/hat-application-permissions.component';
 import { HatAppUpdateNotesComponent } from '../../shared/components/hat-app-update-notes/hat-app-update-notes.component';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
+import { HatApiService } from '../../core/services/hat-api.service';
 
 describe('LoginOauthComponent', () => {
   let component: HatSetupLoginComponent;
@@ -33,6 +34,7 @@ describe('LoginOauthComponent', () => {
         { provide: APP_CONFIG, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },
         { provide: AuthService, useValue: {} },
+        { provide: HatApiService, useValue: {} },
         { provide: Router, useValue: { navigate: () => {} } }
       ]
     })

@@ -12,6 +12,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { flatMap } from 'rxjs/operators';
+import {HatApiService} from '../../core/services/hat-api.service';
 
 @Component({
   selector: 'rum-hat-setup-login',
@@ -27,6 +28,7 @@ export class HatSetupLoginComponent implements OnInit {
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
+              private hatApiSvc: HatApiService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -51,8 +53,6 @@ export class HatSetupLoginComponent implements OnInit {
             this.hatApp = parentApp;
             this.dependencyApps = dependencyApps;
             this.redirect = redirect;
-
-            console.log('STATS: hmi_loaded')
           }
         },
           error => {
@@ -90,7 +90,6 @@ export class HatSetupLoginComponent implements OnInit {
   agreeTerms(appId: string): void {
     this.authSvc.setupApplication(appId)
       .subscribe((hatApp: HatApplication) => {
-        console.log('STATS: hmi_accepted');
         if (this.dependencyApps.every(app => app.enabled === true)) {
           this.buildRedirect(appId);
         } else {
@@ -100,9 +99,9 @@ export class HatSetupLoginComponent implements OnInit {
   }
 
   declineTerms(): void {
-    const internal = this.route.snapshot.queryParams['internal'] === 'true';
+    this.hatApiSvc.log('hmi_declined');
 
-    console.log('STATS: hmi_declined');
+    const internal = this.route.snapshot.queryParams['internal'] === 'true';
     if (internal) {
       this.router.navigate([this.route.snapshot.queryParams['fallback']]);
     } else {
@@ -127,11 +126,9 @@ export class HatSetupLoginComponent implements OnInit {
 
     console.log('Redirect value: ', callback);
 
-    console.log('STATS: hmi_data_plug_setup:' + app.application.id);
     this.authSvc.setupApplication(app.application.id)
       .pipe(flatMap(_ => this.authSvc.appLogin(app.application.id)))
       .subscribe(appAccessToken => {
-        console.log('STATS: hmi_data_plug_enabled:' + app.application.id);
         window.location.href = `${app.application.setup.url}?token=${appAccessToken}&redirect=${callback}`;
       });
   }
