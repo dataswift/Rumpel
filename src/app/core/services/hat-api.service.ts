@@ -134,7 +134,7 @@ export class HatApiService {
     return this.authHttp.get<HatRecord<any>[]>(path, { params: queryParams });
   }
 
-  getSheRecords(endpoint?: string, since?: number, until?: number): Observable<SheFeed[]> {
+  getSheRecords(endpoint?: string, since?: number | string, until?: number | string): Observable<SheFeed[]> {
     const path = endpoint ? `${this.pathPrefix}/${endpoint}` : `${this.pathPrefix}/she/feed`;
 
     let queryParams = new HttpParams();

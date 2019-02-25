@@ -4,14 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
 import { StaticDataService } from '../../services/static-data.service';
 import { HatApplication, HatApplicationSetup } from '../hat-application.interface';
-import { forkJoin, of, Observable } from 'rxjs';
-import { catchError, flatMap, map, mergeMap, tap } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { SheFeed } from '../../she/she-feed.interface';
 import * as startOfDay from 'date-fns/start_of_day';
 import * as subMonths from 'date-fns/sub_months';
-
-
-import * as moment from 'moment';
+import * as parse from 'date-fns/parse';
+import * as format from 'date-fns/format';
 
 @Component({
   selector: 'rum-hat-application-details',
@@ -24,7 +23,6 @@ export class HatApplicationDetailsComponent implements OnInit {
   public dataPreview$: Observable<SheFeed[]>;
   public appStatus: 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update';
   public appInformation: string[][];
-  public staticData2: any;
 
   constructor(private activatedRoute: ActivatedRoute,
               private location: Location,
@@ -47,18 +45,21 @@ export class HatApplicationDetailsComponent implements OnInit {
             ['website', url],
             ['country', country],
             ['version', version],
-            ['last updated', moment(app.application.status.versionReleaseDate).format('DD/MM/YYYY')],
+            ['last updated', format(app.application.status.versionReleaseDate, 'DD/MM/YYYY')],
             ['terms and conditions', termsUrl],
             ['support email', supportContact]
           ];
           this.staticData$ = this.staticDataSvc.fetchData(app.application.id).pipe(
-            tap((staticData) => {
+            tap(() => {
              if (app.application.status && app.application.status.dataPreviewEndpoint && app.mostRecentData) {
-               const recentDate = Date.parse(app.mostRecentData);
-               const defaultSince = Math.round(startOfDay(subMonths(recentDate, 1)).getTime() / 1000);
-               const untilDate = Math.round(recentDate / 1000);
+               const defaultUntil = parse(app.mostRecentData);
+               const defaultSince = subMonths(startOfDay(defaultUntil), 1);
 
-               this.dataPreview$ = this.hatAppSvc.getApplicationData(app.application.status.dataPreviewEndpoint, defaultSince, untilDate);
+               this.dataPreview$ = this.hatAppSvc.getApplicationData(
+                 app.application.status.dataPreviewEndpoint,
+                 format(defaultSince, 'X'),
+                 format(defaultUntil, 'X')
+               );
              } else {
                this.dataPreview$ = of([]);
              }
