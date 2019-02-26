@@ -58,31 +58,6 @@ export class NotablesService extends BaseDataService<Notable> {
     return this.notablesServiceMeta.phata;
   }
 
-  saveNotable(recordValue: HatRecord<Notable>): Observable<HatRecord<Notable>> {
-    const permissionKey = recordValue.data.isShared ? 'allow' : 'restrict';
-    let filePermissionUpdate$: Observable<any>;
-    const notablePost$ = recordValue.recordId ? this.update(recordValue) : this.save(recordValue.data);
-
-    if (recordValue.data.photov1) {
-      filePermissionUpdate$ = this.hat.updateFilePermissions(recordValue.data.photov1.link.split('/').pop(), permissionKey);
-    } else {
-      filePermissionUpdate$ = of(null); // Dummy observable to make subsequent forkJoin succeed
-    }
-
-    return forkJoin(notablePost$, filePermissionUpdate$).pipe(
-      tap(() => {
-        if (recordValue.data.currently_shared === true) {
-          this.dex.tickleNotables(this.hatDomain);
-        }
-      }),
-      map(([savedNotable, permissionUpdateResult]) => this.coerceType(savedNotable))
-    );
-  }
-
-  editNotable(notable: HatRecord<Notable>) {
-    this._editedNotable$.next(notable);
-  }
-
   coerceType(rawNotable: HatRecord<any>): HatRecord<Notable> {
     return {
       endpoint: rawNotable.endpoint,
