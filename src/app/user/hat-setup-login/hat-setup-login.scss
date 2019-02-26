@@ -12,7 +12,9 @@
 .content-wrapper {
   @include flex-container(column);
   //overflow: scroll;
-  margin-bottom: 120px;
+  margin-bottom: 150px;
+  padding: 0 10px;
+  background-color: #f6f6f6;
 }
 
 .loading {
@@ -74,6 +76,7 @@
   .action-buttons {
     button {
       width: 48%;
+      max-width: 180px;
       margin: 0 1%;
       font-size: 14px;
       cursor: pointer;
@@ -101,10 +104,12 @@
     font-size: 11px;
     color: #a5a5a5;
     letter-spacing: 0.4px;
-    margin: 8px 1%;
+    margin: 0 1%;
   }
 
   .hmi-id-text {
+    margin-top: 24px;
+    margin-bottom: 16px;
     font-weight: bold;
   }
 }
@@ -153,13 +158,14 @@
   color: $hat-body-text;
   font-size: 14px;
   line-height: 1.38;
-  margin: 0 20px;
   letter-spacing: 0.3px;
 }
 
 .section-divider {
-  width: 175px;
+  width: 100%;
+  max-width: 500px;
   margin: 40px auto;
+  padding: 0 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -168,6 +174,7 @@
   font-weight: bold;
   font-size: 16px;
   letter-spacing: 0.5px;
+  padding: 0 24px;
 }
 
 .app-information {
@@ -245,7 +252,7 @@
 }
 
 .permissions-section {
-  padding: 10px 10px;
+  padding: 10px 0;
   width: 100%;
   max-width: 500px;
 
@@ -261,12 +268,13 @@
     border-radius: 4px;
     display: flex;
     align-items: center;
+    padding: 18px 24px;
 
     .card-img-wrapper {
       margin-right: 20px;
 
       .card-img {
-        max-width: 50px;
+        max-width: 40px;
         border-radius: 50%;
       }
 
@@ -292,7 +300,7 @@
       letter-spacing: normal;
       color: $hat-body-text;
       font-size: 13px;
-      height: 36px;
+      height: auto;
       overflow: hidden;
 
       &-expanded {
@@ -342,4 +350,13 @@
     font-size: 14px;
     letter-spacing: 0.5px;
   }
+}
+
+.link-button {
+  border: none;
+  background: transparent;
+  color: $app-accent-color;
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
