@@ -1,0 +1,49 @@
+@import "../../../style/branding";
+
+/deep/ {
+  .mat-dialog-container {
+    border-radius: 4px;
+  }
+
+  .mat-dialog-title, .app-section-title {
+    color: $app-dark-tone;
+    font-weight: bold;
+  }
+
+  .mat-dialog-title {
+    font-size: 18px;
+    letter-spacing: 0.4px;
+  }
+
+  .mat-dialog-content {
+    padding-top: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .mat-button {
+    color: $app-accent-color;
+    margin: auto;
+    letter-spacing: 1px;
+  }
+
+  .mat-button-focus-overlay {
+    background-color: transparent;
+  }
+
+  .app-section-title, .list-item {
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+  }
+
+  .list-item {
+    color: $hat-body-text;
+  }
+
+  .instruction-list {
+    margin-top: 5px;
+    margin-bottom: 24px;
+  }
+}

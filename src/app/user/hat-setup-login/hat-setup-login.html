@@ -56,9 +56,15 @@
           </div>
           <mat-card-content>
             <h5 class="card-heading">{{depApp.application.info.name}}</h5>
-            <p class="card-text">This app enables you to claim your data from Facebook into your HAT.</p>
+            <p class="card-text">This data plug enables you to claim your data from Facebook into your HAT.</p>
           </mat-card-content>
         </mat-card>
+      </section>
+
+      <section class="permissions-section" style="text-align: center;">
+        <p class="section-text">The apps above will have permission to take actions in your HAT.</p>
+        <button role="button" class="link-button" (click)="handleShowPermissions()">Show permissions</button>
+
       </section>
     </div>
 

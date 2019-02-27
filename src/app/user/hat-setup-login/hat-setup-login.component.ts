@@ -12,7 +12,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { flatMap } from 'rxjs/operators';
-import {HatApiService} from '../../core/services/hat-api.service';
+import { HatApiService } from '../../core/services/hat-api.service';
+import { MatDialog } from '@angular/material';
+import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
 
 @Component({
   selector: 'rum-hat-setup-login',
@@ -29,6 +31,7 @@ export class HatSetupLoginComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
               private hatApiSvc: HatApiService,
+              public dialog: MatDialog,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -133,6 +136,12 @@ export class HatSetupLoginComponent implements OnInit {
   private legacyLogin(): void {
     this.authSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
       .subscribe((url: string) => window.location.href = url);
+  }
+
+  handleShowPermissions(): void {
+    const dialogRef = this.dialog.open(HatAppHmiComponent, {
+      data: { title: 'HAT Microserver Instructions', apps: [this.hatApp, ...this.dependencyApps] }
+    });
   }
 
 }
