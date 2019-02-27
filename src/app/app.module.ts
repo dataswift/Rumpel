@@ -52,6 +52,8 @@ import { StaticDataService } from './services/static-data.service';
 import { ExploreModule } from './explore/explore.module';
 import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
+import { HatClaimModule } from './hat-claim/hat-claim.module';
+import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.component';
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -81,10 +83,13 @@ export function cookieServiceFactory() {
     ExploreModule,
     SheModule,
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HatClaimModule
   ],
   bootstrap: [ AppRootComponent ],
-  entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent ],
+  entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent,
+    HatAppHmiComponent
+  ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: configuration },

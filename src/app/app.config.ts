@@ -33,7 +33,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.6.2.0',
+  version: '3.7.0.1',
   name: 'RumpelStaging',
   tokenApp: 'hatappstaging',
   tokenExpiryTime: 3,
@@ -47,7 +47,7 @@ export const configuration: AppConfig = {
   },
   databuyer: {
     name: 'DataBuyer',
-    url: 'https://databuyer.hubat.net',
+    url: 'https://databuyer.hubofallthings.com',
     pathPrefix: '/api/v2'
   },
   facebook: {

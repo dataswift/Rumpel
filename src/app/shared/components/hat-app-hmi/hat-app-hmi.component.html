@@ -1,0 +1,16 @@
+<h3 mat-dialog-title>{{data.title}}</h3>
+
+<div mat-dialog-content>
+  <div *ngFor="let app of data.apps">
+    <h4 class="app-section-title">{{app.application.info.name}} {{mapApplicationKind(app.application.kind.kind)}} will be able to:</h4>
+    <ul class="instruction-list">
+      <li *ngFor="let text of processPermissionRoles(app.application.permissions.rolesGranted)"
+          [innerHtml]="text | safeHtml" class="list-item">
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>OK</button>
+</div>

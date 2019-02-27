@@ -12,6 +12,9 @@ import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { flatMap } from 'rxjs/operators';
+import { HatApiService } from '../../core/services/hat-api.service';
+import { MatDialog } from '@angular/material';
+import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
 
 @Component({
   selector: 'rum-hat-setup-login',
@@ -22,11 +25,13 @@ export class HatSetupLoginComponent implements OnInit {
   public hatAddress: string;
   public errorMessage: string;
   public hatApp: HatApplication;
-  private dependencyApps: HatApplication[];
+  public dependencyApps: HatApplication[];
   private redirect: string;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
+              private hatApiSvc: HatApiService,
+              public dialog: MatDialog,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -97,21 +102,18 @@ export class HatSetupLoginComponent implements OnInit {
   }
 
   declineTerms(): void {
-    const internal = this.route.snapshot.queryParams['internal'] === 'true';
-
-    if (internal) {
-      this.router.navigate([this.route.snapshot.queryParams['fallback']]);
-    } else {
-      window.location.href = this.route.snapshot.queryParams['fallback'];
-    }
+    this.hatApiSvc.sendReport('hmi_declined').subscribe(() => {
+      const internal = this.route.snapshot.queryParams['internal'] === 'true';
+      if (internal) {
+        this.router.navigate([this.route.snapshot.queryParams['fallback']]);
+      } else {
+        window.location.href = this.route.snapshot.queryParams['fallback'];
+      }
+    });
   }
 
   dataDebitRole(): string {
     return this.hatApp.application.permissions.rolesGranted.filter(role => role.role === 'datadebit')[0].detail;
-  }
-
-  toggleCardExpansion(endpoint): void {
-    endpoint.expanded = !endpoint.expanded;
   }
 
   private setupAppDependencies(parentApp: HatApplication, dependencies: HatApplication[], appRedirect: string): void {
@@ -134,6 +136,12 @@ export class HatSetupLoginComponent implements OnInit {
   private legacyLogin(): void {
     this.authSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
       .subscribe((url: string) => window.location.href = url);
+  }
+
+  handleShowPermissions(): void {
+    const dialogRef = this.dialog.open(HatAppHmiComponent, {
+      data: { title: 'HAT Microserver Instructions', apps: [this.hatApp, ...this.dependencyApps] }
+    });
   }
 
 }

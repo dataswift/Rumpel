@@ -20,74 +20,60 @@
           to be created with the above URL. Check your email for more details.</p>
       </section>
 
-      <!--<div class="section-divider"></div>-->
-
-      <!--<section>-->
-
-      <!--</section>-->
-
       <div class="section-divider"></div>
 
-      <section class="app-information">
-        <div class="app-logo-wrapper">
-          <img src="{{hatApp.application.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" />
-        </div>
-
-        <div class="app-rating-wrapper">
-          <div class="app-rating">
-            <span class="app-rating-highlighted">{{hatApp.application.info.rating.score}}</span>
-          </div>
-        </div>
-
-        <h3 class="section-heading">{{hatApp.application.info.name}} by {{hatApp.application.developer.name}}</h3>
-
-        <p class="section-text">This app is rated <span style="letter-spacing: 2px;">{{hatApp.application.info.rating.score}}</span></p>
-
-        <p class="section-text">
-          <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="title-section-text-link">Learn more</a>
-        </p>
-
-        <p class="section-text" style="margin-top: 22px;">{{hatApp.application.info.name}} is requesting the following
-          permissions. You need to confirm it so that this is all legal.</p>
-      </section>
-
       <section class="permissions-section">
-        <mat-card>
-          <mat-card-content>
-            <h5 class="card-heading">Purpose of data usage</h5>
-            <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
-          </mat-card-content>
-        </mat-card>
-        <!--<h4 class="section-header">{{hatApp.application.info.name}} will be able to:</h4>-->
-        <!--<mat-card *ngFor="let permission of readablePermissions">-->
-          <!--<mat-card-content>-->
-            <!--<h5 class="card-heading">{{permission.title}}</h5>-->
-            <!--<p class="card-text">{{permission.text}}</p>-->
-          <!--</mat-card-content>-->
-        <!--</mat-card>-->
-      </section>
+        <h4 class="section-heading">You agree that {{hatApp.application.info.name}} by {{hatApp.application.developer.name}} will be able to:</h4>
 
-      <section class="permissions-section" *ngIf="hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle">
-        <mat-card *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
-          <mat-card-content>
-            <h5 class="card-heading">Data from {{endpoint.title}}</h5>
-            <div class="card-text" [class.card-text-expanded]="endpoint.expanded">
-              <h6 class="card-subheading">Fields required</h6>
+        <div class="data-access-summary" *ngIf="hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle">
+          <mat-expansion-panel *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
+            <mat-expansion-panel-header>
+              <mat-panel-title class="expandable-card-title">Use {{endpoint.title}} data</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <mat-panel-description>
               <ul class="card-list">
                 <li *ngFor="let field of endpoint.fields">{{field}}</li>
               </ul>
-            </div>
-            <div *ngIf="endpoint.fields.length > 1" (click)="toggleCardExpansion(endpoint)" class="card-expansion-toggle">
-              {{endpoint.expanded ? 'Less' : 'More'}}
-            </div>
+            </mat-panel-description>
+          </mat-expansion-panel>
+        </div>
+
+        <mat-card>
+          <mat-card-content>
+            <h5 class="card-heading">Why it needs the data?</h5>
+            <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
           </mat-card-content>
         </mat-card>
+      </section>
+
+      <section class="permissions-section" *ngIf="dependencyApps && dependencyApps.length > 0">
+        <h5 class="section-heading">Additional data plugs have to be setup for this app:</h5>
+
+        <mat-card *ngFor="let depApp of dependencyApps">
+          <div class="card-img-wrapper">
+            <img [src]="depApp.application.info.graphics.logo.normal" class="card-img" [alt]="depApp.application.info.name" />
+          </div>
+          <mat-card-content>
+            <h5 class="card-heading">{{depApp.application.info.name}}</h5>
+            <p class="card-text">This data plug enables you to claim your data from Facebook into your HAT.</p>
+          </mat-card-content>
+        </mat-card>
+      </section>
+
+      <section class="permissions-section" style="text-align: center;">
+        <p class="section-text">The apps above will have permission to take actions in your HAT.</p>
+        <button role="button" class="link-button" (click)="handleShowPermissions()">Show permissions</button>
+
       </section>
     </div>
 
     <div class="sticky-action-panel">
       <div class="sticky-action-panel-content">
-        <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)">Confirm</button>
+        <div class="action-buttons">
+          <button mat-flat-button role="button" (click)="declineTerms()" class="secondary-action">Cancel</button>
+          <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)" class="primary-action">Confirm</button>
+        </div>
         <p class="hmi-id-text">HMI ID: {{hatApp.application.id}}-v{{hatApp.application.info.version}}</p>
         <p class="tos-text">By pressing ‘Confirm’ I agree to HAT Data Exchange Ltd
           <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c540dc4e4966bf470e0d5fd/1549012420957/hat+owner+terms+of+service+-+10_1_19+-+v2.3+%281%29.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>

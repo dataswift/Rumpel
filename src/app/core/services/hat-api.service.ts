@@ -19,6 +19,7 @@ import { FileMetadataReq, FileMetadataRes } from '../../shared/interfaces/file.i
 import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../../shared/interfaces/bundle.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { SheFeed } from '../../she/she-feed.interface';
+import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 
 @Injectable()
 export class HatApiService {
@@ -73,6 +74,16 @@ export class HatApiService {
     return this.http.post(path, body, { headers: headers });
   }
 
+  /*
+    Call Hatters API call through HAT
+   */
+  claimHat(claimToken: string, body: HatClaimRequest): Observable<any> {
+    const path = `/control/v2/auth/claim/complete/${claimToken}`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    return this.http.post(path, body, { headers: headers });
+  }
+
   getApplicationToken(name: string, resource: string): Observable<string> {
     const path = `/users/application_token`;
     const queryParams = new HttpParams()
@@ -85,6 +96,12 @@ export class HatApiService {
 
   getApplicationList(): Observable<HatApplication[]> {
     const path = `${this.pathPrefix}/applications`;
+
+    return this.authHttp.get<HatApplication[]>(path);
+  }
+
+  getApplicationHmi(): Observable<HatApplication[]> {
+    const path = `${this.pathPrefix}/applications/hmi`;
 
     return this.authHttp.get<HatApplication[]>(path);
   }
@@ -295,6 +312,12 @@ export class HatApiService {
     const path = `https://${domain}/publickey`;
 
     return this.http.get(path, { observe: 'response', responseType: 'text' });
+  }
+
+  sendReport(actionCode: string): Observable<any> {
+    const path = `${this.pathPrefix}/report-frontend-action`;
+
+    return this.http.post(path, { actionCode: actionCode });
   }
 
   private uploadFileMetadata(metadata: FileMetadataReq): Observable<FileMetadataRes> {
