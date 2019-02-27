@@ -344,6 +344,12 @@
     border-bottom: 1px solid #eeeeee;
   }
 
+  &-header {
+    &:hover {
+      background-color: white !important;
+    }
+  }
+
   .expandable-card-title {
     color: $app-dark-tone;
     font-weight: bold;

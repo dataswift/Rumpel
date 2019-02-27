@@ -29,6 +29,7 @@ import { GraphicPageHeaderComponent } from './components/graphic-page-header/gra
 import { HatApplicationPermissionsComponent } from './components/hat-application-permissions/hat-application-permissions.component';
 import { HatAppUpdateNotesComponent } from './components/hat-app-update-notes/hat-app-update-notes.component';
 import { ListCardComponent } from './components/list-card/list-card.component';
+import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
@@ -46,7 +47,8 @@ import { ListCardComponent } from './components/list-card/list-card.component';
                   GraphicPageHeaderComponent,
                   HatApplicationPermissionsComponent,
                   HatAppUpdateNotesComponent,
-                  ListCardComponent ],
+                  ListCardComponent,
+                  HatAppHmiComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,

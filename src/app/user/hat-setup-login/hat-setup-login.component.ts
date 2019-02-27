@@ -13,8 +13,8 @@ import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { flatMap } from 'rxjs/operators';
 import { HatApiService } from '../../core/services/hat-api.service';
-import { DialogService } from "../../core/dialog.service";
-import { InfoBoxComponent } from "../../core/info-box/info-box.component";
+import { MatDialog } from '@angular/material';
+import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
 
 @Component({
   selector: 'rum-hat-setup-login',
@@ -31,7 +31,7 @@ export class HatSetupLoginComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
               private hatApiSvc: HatApiService,
-              private dialogSvc: DialogService,
+              public dialog: MatDialog,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -139,38 +139,8 @@ export class HatSetupLoginComponent implements OnInit {
   }
 
   handleShowPermissions(): void {
-    const apps = [this.hatApp, ...this.dependencyApps];
-    const message = apps.reduce((message: string, app: HatApplication) => {
-      return message + `
-        <h4>${app.application.info.name}</h4>
-        <ul>
-          ${this.processPermissionRoles(app.application.permissions.rolesGranted).join("")}
-        </ul>
-      `;
-    }, "");
-
-    this.dialogSvc.createDialog<InfoBoxComponent>(InfoBoxComponent, { title: 'HAT Microserver Instructions', message });
-
-  }
-
-  private processPermissionRoles(roles: Array<{ role: string; detail?: string; }>): Array<string> {
-    return roles.map(role => {
-      switch (role.role) {
-        case 'namespaceread':
-          return `<li><b>Read</b> data from the ${role.detail} namespace.</li>`;
-        case 'namespacewrite':
-          return `<li><b>Write</b> data into the ${role.detail} namespace.</li>`;
-        case 'applicationmanage':
-          return `<li>The app needs to be able to manage ${role.detail} app.</li>`;
-        case 'applicationlist':
-          return '<li>The app needs to be able to list other available applications.</li>';
-        case 'datadebit':
-          return `<li>Create data debit ${role.detail}.</li>`;
-        case 'owner':
-          return '<li>This is a Z class app that enables the HAT owner to view, search, browse and organise their HAT data.</li>';
-        default:
-          return '<li>Unidentified permission request. Please let us know about this issue.</li>';
-      }
+    const dialogRef = this.dialog.open(HatAppHmiComponent, {
+      data: { title: 'HAT Microserver Instructions', apps: [this.hatApp, ...this.dependencyApps] }
     });
   }
 
