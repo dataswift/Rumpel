@@ -26,7 +26,7 @@ export class FileService {
     };
 
     this.fileLoadSub = fromEvent(this.fileReader, 'load')
-      .pipe(flatMap((ev: Event) => this.hat.uploadFile(this.fileReader.result, fileMetadata, file.type)))
+      .pipe(flatMap((ev: Event) => this.hat.uploadFile(this.fileReader.result as ArrayBuffer, fileMetadata, file.type)))
       .subscribe((result: FileMetadataRes) => {
         this._file$.next(result);
       });
