@@ -15,10 +15,18 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class HatClaimDetailsComponent implements OnInit {
   @Input('email') public email: string;
+  public errorInputMsg = 'Unspecified email address';
 
   constructor() { }
 
   ngOnInit() {
+  }
+  public getEmailValueOrError(): string {
+    if (this.email) {
+      return this.email;
+    } else {
+      return this.errorInputMsg;
+    }
   }
 
 }

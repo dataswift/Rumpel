@@ -46,7 +46,11 @@ export class HatClaimComponent implements OnInit {
   }
 
   nextStep(): void {
-    if (this.step === 3) {
+    if (this.step === 1) {
+      if (this.email) {
+        this.step++
+      }
+    } else if (this.step === 3) {
       this.optins = this.hatClaimSubscriptionsComponent.buildOptins();
       this.step++;
     } else if (this.step === 4) {
