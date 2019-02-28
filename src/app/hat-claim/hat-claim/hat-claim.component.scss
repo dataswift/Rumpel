@@ -17,13 +17,22 @@
   button {
     display: block;
     width: 250px;
-    margin: 20px auto;
     cursor: pointer;
-    background-color: $app-accent-color;
-    color: white;
     text-transform: uppercase;
     border-radius: 4px;
     padding: 5px 0;
+  }
+
+  .next-button {
+    margin: 20px auto;
+    background-color: $app-accent-color;
+    color: white;
+  }
+
+  .previous-button {
+    margin: 6px auto 25px;
+    background-color: transparent;
+    color: $app-accent-color;
   }
 }
 

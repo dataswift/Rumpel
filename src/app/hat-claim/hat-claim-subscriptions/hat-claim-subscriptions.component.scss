@@ -17,21 +17,26 @@
 
 @media (max-width: 525px) {
   .password-guidance-box, .password-strength-description {
-    text-align: justify;
+    text-align: center;
     margin: auto;
     width: 80%;
+  }
+  .password-large-content-box {
+    margin-bottom: 70px;
   }
 }
 
 /deep/ .mat-checkbox.remember-me-checkbox {
   .mat-checkbox-layout {
     margin-bottom: 20px;
+    margin-left: 20px;
   }
 
   .mat-checkbox-label {
-    font-size: 18px;
+    font-size: 14px;
     color: $app-dark-tone;
-    margin-left: 15px;
+    margin-left: 10px;
+    white-space: normal !important;
   }
 
   .mat-checkbox-frame, .mat-checkbox-background {
@@ -56,14 +61,13 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-
       color: $app-dark-tone;
       letter-spacing: 1px;
 
       .title {
         font-size: 26px;
         font-weight: 500;
-        margin-top: 0;
+        margin-top: 70px;
         margin-bottom: 5px;
       }
     }
