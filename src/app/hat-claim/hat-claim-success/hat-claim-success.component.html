@@ -7,7 +7,6 @@
   -->
 
 <div class="native-login-page">
-
   <span class="small-flex-spacer"></span>
 
   <div class="title-container">
@@ -18,7 +17,14 @@
         Your HAT Microserver with the following URL has been claimed.
       </div>
 
-      <h3 class="title-hat-domain">{{ hatName }}.{{ hatDomain }}</h3>
+      <div class="title-hat-domain-wrapper">
+        <div class="hat-name">
+          <h3 class="title-hat-domain">{{ hatName }}</h3>
+        </div>
+        <div class="hat-domain">
+          <h3 class="title-hat-domain">.{{ hatDomain }}</h3>
+        </div>
+      </div>
     </div>
   </div>
 

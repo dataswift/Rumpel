@@ -17,7 +17,7 @@
 
 @media (max-width: 525px) {
   .password-guidance-box, .password-strength-description {
-    text-align: justify;
+    text-align: center;
     margin: auto;
     width: 80%;
   }
@@ -46,14 +46,14 @@
       letter-spacing: 1px;
 
       .title {
-        font-size: 26px;
+        font-size: 22px;
         font-weight: 500;
         margin-top: 0;
         margin-bottom: 50px;
       }
 
       .title-hat-domain {
-        font-size: 26px;
+        font-size: 20px;
         font-weight: bold;
         margin: 0;
       }
@@ -71,6 +71,19 @@
 
   .large-flex-spacer {
     flex-grow: 2;
+  }
+
+  .title-hat-domain-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hat-name {
+    display: inline-block;
+  }
+
+  .hat-domain {
+    display: inline-block;
   }
 
   .hat-pass-input {
@@ -151,6 +164,8 @@
   line-height: 1.57;
   padding-top: 25px;
   padding-bottom: 25px;
+  text-align: center;
+
 
   a {
     color: $app-accent-color;

@@ -17,7 +17,7 @@
 
 @media (max-width: 525px) {
   .password-guidance-box, .password-strength-description {
-    text-align: justify;
+    text-align: center;
     margin: auto;
     width: 80%;
   }
@@ -42,7 +42,7 @@
       letter-spacing: 1px;
 
       .title {
-        font-size: 26px;
+        font-size: 22px;
         font-weight: 500;
         margin-top: 0;
         margin-bottom: 5px;
@@ -146,6 +146,7 @@
   line-height: 1.57;
   padding-top: 25px;
   padding-bottom: 25px;
+  text-align: center;
 
   a {
     color: $app-accent-color;
