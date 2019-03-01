@@ -100,6 +100,12 @@ export class HatApiService {
     return this.authHttp.get<HatApplication[]>(path);
   }
 
+  getApplicationHmi(): Observable<HatApplication[]> {
+    const path = `${this.pathPrefix}/applications/hmi`;
+
+    return this.authHttp.get<HatApplication[]>(path);
+  }
+
   getApplicationById(applicationId: string): Observable<HatApplication> {
     const path = `${this.pathPrefix}/applications/${applicationId}`;
 
@@ -306,6 +312,12 @@ export class HatApiService {
     const path = `https://${domain}/publickey`;
 
     return this.http.get(path, { observe: 'response', responseType: 'text' });
+  }
+
+  sendReport(actionCode: string): Observable<any> {
+    const path = `${this.pathPrefix}/report-frontend-action`;
+
+    return this.http.post(path, { actionCode: actionCode });
   }
 
   private uploadFileMetadata(metadata: FileMetadataReq): Observable<FileMetadataRes> {

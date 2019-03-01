@@ -13,7 +13,8 @@
       <rum-hat-claim-new-password
         [hatName]="hatName"
         [hatDomain]="hatDomain"
-        (password)="handlePasswordUpdate($event)"></rum-hat-claim-new-password>
+        (password)="handlePasswordUpdate($event)">
+      </rum-hat-claim-new-password>
     </ng-container>
     <ng-container *ngSwitchCase="5">
       <rum-hat-claim-confirmation></rum-hat-claim-confirmation>
@@ -25,8 +26,8 @@
 
 
   <div class="user-actions">
-    <button mat-flat-button role="button" (click)="nextStep()">{{ step === 5 ? "Confirm" : step === 6 ? "Log in" : "Next" }}</button>
-    <button *ngIf="step !== 1 && step !== 5 && step !== 6" mat-flat-button role="button" (click)="previousStep()">Previous</button>
+    <button mat-flat-button role="button" class="next-button" (click)="nextStep()">{{ step === 5 ? "Confirm" : step === 6 ? "Log in" : "Next" }}</button>
+    <button *ngIf="step !== 1 && step !== 5 && step !== 6" mat-flat-button role="button" class="previous-button" (click)="previousStep()">Previous</button>
 
     <div *ngIf="step === 5" class="password-guidance-box">
       By selecting ‘Confirm’, I agree to the HATDeX

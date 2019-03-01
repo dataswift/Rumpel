@@ -11,7 +11,7 @@
 
   <div class="title-container">
     <div class="heading-wrapper">
-      <h2 class="title">Enter your email</h2>
+      <h2 class="title">Claim your HAT</h2>
     </div>
 
     <div class="password-guidance-box">
@@ -23,7 +23,7 @@
   <div class="f-g">
     <label for="email" hidden>Email address</label>
     <input id="email" class="hat-pass-input" name="hat-pass-input"
-           [value]="email" readonly />
+           [value]="getEmailValueOrError()" readonly />
   </div>
 
   <span class="large-flex-spacer"></span>

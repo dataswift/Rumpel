@@ -15,7 +15,9 @@ export class UnbundlePipe implements PipeTransform {
     return flatten(arr).map((endpointQuery: EndpointQuery) => {
       return {
         title: endpointQuery.endpoint.replace('/', ' '),
-        fields: endpointQuery.mapping ? uniqBy(Object.keys(endpointQuery.mapping), path => path.split('.')[0]) : ['NONE']
+        fields: endpointQuery.mapping ?
+          uniqBy(Object.keys(endpointQuery.mapping), path => path.split('.')[0]).map(name => name.replace(/_/g, ' '))
+          : ['NONE']
       };
     });
   }
