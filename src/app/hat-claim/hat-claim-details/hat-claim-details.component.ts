@@ -6,27 +6,25 @@
  * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
  */
 
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'rum-hat-claim-details',
   templateUrl: './hat-claim-details.component.html',
   styleUrls: ['./hat-claim-details.component.scss']
 })
-export class HatClaimDetailsComponent implements OnInit {
-  @Input('email') public email: string;
-  public errorInputMsg = 'Unspecified email address';
+export class HatClaimDetailsComponent implements OnInit, OnChanges {
+  @Input('email')
+  public email: string;
 
   constructor() { }
 
-  ngOnInit() {
-  }
-  public getEmailValueOrError(): string {
-    if (this.email) {
-      return this.email;
-    } else {
-      return this.errorInputMsg;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.email.currentValue) {
+      this.email = 'Unspecified email address';
     }
   }
 
+  ngOnInit() {
+  }
 }
