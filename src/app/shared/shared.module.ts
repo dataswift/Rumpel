@@ -30,6 +30,7 @@ import { HatApplicationPermissionsComponent } from './components/hat-application
 import { HatAppUpdateNotesComponent } from './components/hat-app-update-notes/hat-app-update-notes.component';
 import { ListCardComponent } from './components/list-card/list-card.component';
 import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.component';
+import { PasswordStrengthIndicatorComponent } from './components/password-strength-indicator/password-strength-indicator.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
@@ -48,7 +49,8 @@ import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.compone
                   HatApplicationPermissionsComponent,
                   HatAppUpdateNotesComponent,
                   ListCardComponent,
-                  HatAppHmiComponent ],
+                  HatAppHmiComponent,
+                  PasswordStrengthIndicatorComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
@@ -57,6 +59,6 @@ import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.compone
              OutsideClickDirective, StickDirective, SpinnerComponent, GraphicPageHeaderComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
              UnbundlePipe, SheFeedItemComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent,
-             ListCardComponent ]
+             ListCardComponent, PasswordStrengthIndicatorComponent ]
 })
 export class SharedModule {}
