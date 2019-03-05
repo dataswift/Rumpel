@@ -11,8 +11,10 @@ export class PasswordStrengthIndicatorComponent implements OnInit, OnChanges {
   public colorMapping = ['red', 'red', 'orange', 'green', 'green'];
   public evaluationMapping = ['Too guessable', 'Weak', 'So-so', 'Strong', 'Very Strong'];
 
-  @Output() public passwordStrength = new EventEmitter<any>();
-  @Input() password: string;
+  @Output()
+  public passwordStrength = new EventEmitter<any>();
+  @Input()
+  public password: string;
 
   constructor() { }
 
