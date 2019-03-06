@@ -14,6 +14,8 @@ import { AuthService } from '../../core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { PasswordStrengthIndicatorComponent
+} from '../../shared/components/password-strength-indicator/password-strength-indicator.component';
 
 describe('PasswordChangeComponent', () => {
   let component: PasswordChangeComponent;
@@ -22,7 +24,7 @@ describe('PasswordChangeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule, CustomAngularMaterialModule ],
-      declarations: [ PasswordChangeComponent ],
+      declarations: [ PasswordChangeComponent, PasswordStrengthIndicatorComponent ],
       providers: [
         { provide: AuthService, useValue: {} },
         { provide: ActivatedRoute, useValue: { params: of({}) } }
