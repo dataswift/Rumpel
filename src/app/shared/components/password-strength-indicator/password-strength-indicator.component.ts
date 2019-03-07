@@ -10,6 +10,7 @@ declare const zxcvbn: any;
 export class PasswordStrengthIndicatorComponent implements OnInit, OnChanges {
   public colorMapping = ['red', 'red', 'orange', 'green', 'green'];
   public evaluationMapping = ['Too guessable', 'Weak', 'So-so', 'Strong', 'Very Strong'];
+  public passwordStrengthResult: any;
 
   @Output()
   public passwordStrength = new EventEmitter<any>();
@@ -28,6 +29,7 @@ export class PasswordStrengthIndicatorComponent implements OnInit, OnChanges {
   }
 
   analysePassword(password: string): void {
-    this.passwordStrength.emit(zxcvbn(password));
+    this.passwordStrengthResult = zxcvbn(password);
+    this.passwordStrength.emit(this.passwordStrengthResult);
   }
 }
