@@ -13,8 +13,8 @@ import { FormsModule } from '@angular/forms';
 
 import { TreeViewComponent } from './components';
 import { OutsideClickDirective, StickDirective } from './directives';
-import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, RemoveCharsPipe, RelativeTimePipe,
-         MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
+import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, ReplaceCamelCasePipe,
+  RemoveCharsPipe, RelativeTimePipe, MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
 import { TimeFilterTwoPipe } from './pipes/time-filter-two.pipe';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NotableComponent } from './components/notable/notable.component';
@@ -36,7 +36,7 @@ import { PasswordStrengthIndicatorComponent } from './components/password-streng
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
-                  ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
+                  ReplaceCharsPipe, ReplaceCamelCasePipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClickDirective, StickDirective,
                   TreeViewComponent, SpinnerComponent,
@@ -53,7 +53,7 @@ import { PasswordStrengthIndicatorComponent } from './components/password-streng
                   PasswordStrengthIndicatorComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
-             ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
+             ReplaceCharsPipe, ReplaceCamelCasePipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe, DatetimePipe,
              TreeViewComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, GraphicPageHeaderComponent,

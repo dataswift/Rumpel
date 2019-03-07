@@ -75,14 +75,14 @@
         </ng-container>
 
         <ng-container *ngIf="dataPreview$ | async as dataPreview">
-          <ng-container *ngIf="dataPreview.length > 0; else nopreview">
+          <ng-container *ngIf="dataPreview.length > 0; else noPreview">
             <ng-container *ngFor="let dataSample of dataPreview">
               <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
             </ng-container>
           </ng-container>
         </ng-container>
 
-        <ng-template #nopreview>
+        <ng-template #noPreview>
             <div class="no-data-message">
               No previews found. Please connect to see your preview.
             </div>

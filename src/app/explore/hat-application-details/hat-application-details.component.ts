@@ -49,7 +49,7 @@ export class HatApplicationDetailsComponent implements OnInit {
             ['terms and conditions', termsUrl],
             ['support email', supportContact]
           ];
-          this.staticData$ = this.staticDataSvc.fetchData(app.application.id).pipe(
+          this.staticData$ = this.staticDataSvc.fetchSheStaticInfo(app.application.id).pipe(
             tap(() => {
              if (app.application.status && app.application.status.dataPreviewEndpoint && app.mostRecentData) {
                const defaultUntil = parse(app.mostRecentData);

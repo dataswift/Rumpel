@@ -20,6 +20,7 @@ import { BundleStructure, BundleValues, EndpointQuery, PropertyQuery } from '../
 import { HatApplication } from '../../explore/hat-application.interface';
 import { SheFeed } from '../../she/she-feed.interface';
 import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
+import { SheStaticProfile } from '../../shared/interfaces/she-static-profile.interface';
 
 @Injectable()
 export class HatApiService {
@@ -149,6 +150,12 @@ export class HatApiService {
     }
 
     return this.authHttp.get<HatRecord<any>[]>(path, { params: queryParams });
+  }
+
+  getSheStaticProfileRecords(applicationId: string): Observable<SheStaticProfile<any>[]> {
+    const path = `${this.pathPrefix}/she/static/${applicationId}/profile`;
+
+    return this.authHttp.get<SheStaticProfile<any>[]>(path);
   }
 
   getSheRecords(endpoint?: string, since?: number | string, until?: number | string): Observable<SheFeed[]> {
