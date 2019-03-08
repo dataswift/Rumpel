@@ -23,7 +23,6 @@ import { LoginStandaloneComponent } from './user/login-standalone/login-standalo
 import { ProfileComponent } from './profiles/profile/profile.component';
 import { OffersHomeComponent } from './offers/offers-home/offers-home.component';
 import { SheFeedComponent } from './she/she-feed/she-feed.component';
-import { NotablesViewComponent } from './notables/notables-view/notables-view.component';
 import { MyDayComponent } from './mashups/my-day/my-day.component';
 import { PasswordRecoverComponent } from './user/password-recover/password-recover.component';
 import { PasswordChangeComponent } from './user/password-change/password-change.component';
@@ -54,10 +53,6 @@ import { HatClaimComponent } from './hat-claim/hat-claim/hat-claim.component';
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'offers', component: OffersHomeComponent }
-        ]},
-      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
-        children: [
-          { path: 'notables', component: NotablesViewComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [

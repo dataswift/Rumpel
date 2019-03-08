@@ -23,7 +23,7 @@ export class PrivateSpaceComponent implements OnInit {
               private hatAppSvc: HatApplicationsService,
               private router: Router,
               zone: NgZone) {
-    this.mediaMatcher.addListener(mql => zone.run(() => this.mediaMatcher = mql));
+    this.mediaMatcher.addListener(mql => zone.run(() => this.mediaMatcher = matchMedia(`(max-width: ${SMALL_SCREEN_BREAKPOINT}px)`)));
   }
 
   ngOnInit() {

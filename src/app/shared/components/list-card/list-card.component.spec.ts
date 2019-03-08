@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListCardComponent } from './list-card.component';
 import { ReplaceCharsPipe } from '../../pipes/replace-chars.pipe';
+import { ReplaceCamelCasePipe } from '../../pipes/replace-camel-case.pipe';
+
 import { SafeHtmlPipe } from '../../pipes/safe-html.pipe';
 import { CustomAngularMaterialModule } from '../../../core/custom-angular-material.module';
 
@@ -12,7 +14,7 @@ describe('ListCardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
-      declarations: [ ListCardComponent, ReplaceCharsPipe, SafeHtmlPipe ]
+      declarations: [ ListCardComponent, ReplaceCharsPipe, SafeHtmlPipe, ReplaceCamelCasePipe ]
     })
     .compileComponents();
   }));

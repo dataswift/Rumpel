@@ -14,6 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { HatClaimNewPasswordComponent } from './hat-claim-new-password.component';
+import { PasswordStrengthIndicatorComponent
+} from '../../shared/components/password-strength-indicator/password-strength-indicator.component';
 
 describe('HatClaimNewPasswordComponent', () => {
   let component: HatClaimNewPasswordComponent;
@@ -22,7 +24,7 @@ describe('HatClaimNewPasswordComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule, CustomAngularMaterialModule ],
-      declarations: [ HatClaimNewPasswordComponent ],
+      declarations: [ HatClaimNewPasswordComponent, PasswordStrengthIndicatorComponent ],
       providers: [
         { provide: AuthService, useValue: {} },
         { provide: ActivatedRoute, useValue: { params: of({}) } }

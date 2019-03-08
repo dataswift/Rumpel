@@ -1,8 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY, of } from 'rxjs';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { FileMetadataRes } from '../interfaces/file.interface';
-import { EMPTY, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Pipe({
