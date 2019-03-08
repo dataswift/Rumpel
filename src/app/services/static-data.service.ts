@@ -4,7 +4,7 @@ import { ReplaySubject ,  Observable } from 'rxjs';
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { toPairs } from 'lodash';
 import { map } from 'rxjs/operators';
-import {SheStaticProfile} from '../shared/interfaces/she-static-profile.interface';
+import { SheStaticProfile } from '../shared/interfaces/she-static-profile.interface';
 
 const ENDPOINT_MAP = {
   facebook: 'profile',
@@ -49,7 +49,7 @@ export class StaticDataService {
 
   fetchSheStaticInfo(source: string): Observable<Array<Array<any>>> {
     return this.hat.getSheStaticProfileRecords(source)
-      .pipe(map((rawData: SheStaticProfile<any>[]) => rawData.map(record => {
+      .pipe(map((rawData: SheStaticProfile<string[][]>[]) => rawData.map(record => {
         return toPairs(record.values);
       })));
   }

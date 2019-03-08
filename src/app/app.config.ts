@@ -28,8 +28,8 @@ export class AppConfig {
     dexOfferId: string;
     url: string;
   };
-  mainMenu: Array<any>;
-  appsMenu: Array<any>;
+  mainMenu: Array<{ [key: string]: string; }>;
+  appsMenu: Array<{ [key: string]: string; }>;
 }
 
 export const configuration: AppConfig = {

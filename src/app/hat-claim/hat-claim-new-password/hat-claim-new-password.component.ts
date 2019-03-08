@@ -41,7 +41,6 @@ export class HatClaimNewPasswordComponent implements OnInit {
   clearErrors() {
     this.errorType = '';
     this.successMessage = null;
-    this.passwordStrength = null;
   }
 
   handlePasswordStrengthUpdate(passwordStrength: number): void {
@@ -60,8 +59,7 @@ export class HatClaimNewPasswordComponent implements OnInit {
 
   passwordIsValid(password: string, newPassword: string): boolean {
     if (password === newPassword) {
-
-      if (this.passwordStrength && this.passwordStrength.score < MIN_PASSWORD_STRENGTH) {
+      if (this.passwordStrength.score < MIN_PASSWORD_STRENGTH) {
         this.errorType = 'passwordStrengthError';
 
         return false;

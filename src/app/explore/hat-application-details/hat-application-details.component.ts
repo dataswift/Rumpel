@@ -19,7 +19,7 @@ import * as format from 'date-fns/format';
 })
 export class HatApplicationDetailsComponent implements OnInit {
   public appDetails$: Observable<HatApplication>;
-  public staticData$: Observable<any>;
+  public staticData$: Observable<Array<string[][]>>;
   public dataPreview$: Observable<SheFeed[]>;
   public appStatus: 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update';
   public appInformation: string[][];

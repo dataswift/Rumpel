@@ -152,10 +152,10 @@ export class HatApiService {
     return this.authHttp.get<HatRecord<any>[]>(path, { params: queryParams });
   }
 
-  getSheStaticProfileRecords(applicationId: string): Observable<SheStaticProfile<any>[]> {
+  getSheStaticProfileRecords(applicationId: string): Observable<SheStaticProfile<string[][]>[]> {
     const path = `${this.pathPrefix}/she/static/${applicationId}/profile`;
 
-    return this.authHttp.get<SheStaticProfile<any>[]>(path);
+    return this.authHttp.get<SheStaticProfile<string[][]>[]>(path);
   }
 
   getSheRecords(endpoint?: string, since?: number | string, until?: number | string): Observable<SheFeed[]> {

@@ -22,18 +22,26 @@
   <span class="small-flex-spacer"></span>
 
   <div class="title-container">
-    <div class="logo-wrapper">
-      <img src="/assets/icons/hat-logo@3x.png" height="75" width="75" />
-    </div>
     <div class="heading-wrapper">
-      <h2 class="title-hat-name">{{ hatName || 'yourhatname' }}</h2>
-      <h3 class="title-hat-domain">{{ selectedDomain || '.yourhatdomain' }}</h3>
+      <div class="title-hat-domain-wrapper">
+        <div class="hat-name">
+          <h3 class="title-hat-domain">{{ hatName || 'yourhatname' }}</h3>
+        </div>
+
+        <div class="hat-domain">
+          <h3 class="title-hat-domain">{{ selectedDomain || '.yourhatdomain' }}</h3>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="f-g">
+    <p class="login-description">Please enter your HAT name and select your domain to confirm access to your HAT Microserver.</p>
+  </div>
+
+  <div class="f-g">
     <label for="hatName" hidden></label>
-    <input id="hatName" type="text" class="hat-pass-input" name="hat-pass-input"
+    <input id="hatName" type="text" class="hat-pass-input" name="hat-pass-input" maxlength="22"
            [class.rum-field-has-error]="hatNameError"
            placeholder="Enter HAT name" [(ngModel)]="hatName"
            (focus)="hideErrorMessage()"
@@ -63,13 +71,14 @@
     </mat-expansion-panel>
   </div>
 
-  <div class="f-g">
-    <p class="login-info">After pressing 'next' you will be re-directed to your HAT to enter your password</p>
-  </div>
-
   <span class="large-flex-spacer"></span>
 
   <div class="user-actions">
     <button mat-flat-button role="link" (click)="redirectToLogin()" [disabled]="hatName.length < 4 && selectedDomain">Next</button>
+
+    <div class="f-g">
+      <p class="login-info">After pressing 'next' you will be re-directed to your HAT to enter your password</p>
+    </div>
   </div>
+
 </div>
