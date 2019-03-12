@@ -94,8 +94,12 @@
               </div>
 
               <ng-container *ngIf="app.application.kind.kind === 'DataPlug'">
-                <div class="no-data-press-connect">
+                <div *ngIf="appStatus === 'untouched'" class="no-data-press-connect">
                   Press the ‘Connect’ button to get started!
+                </div>
+
+                <div *ngIf="appStatus !== 'untouched'" class="no-data-press-connect">
+                  Data Preview not available yet. Stay tuned.
                 </div>
               </ng-container>
             </ng-container>
