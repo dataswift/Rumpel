@@ -35,6 +35,7 @@ import { HatSetupLoginComponent } from './user/hat-setup-login/hat-setup-login.c
 import { DataDebitQuickConfirmComponent } from './data-management/data-debit-quick-confirm/data-debit-quick-confirm.component';
 import { HatClaimSuccessComponent } from './hat-claim/hat-claim-success/hat-claim-success.component';
 import { HatClaimComponent } from './hat-claim/hat-claim/hat-claim.component';
+import {SettingsComponent} from './settings/settings.component';
 
 @NgModule({
   imports: [
@@ -72,6 +73,10 @@ import { HatClaimComponent } from './hat-claim/hat-claim/hat-claim.component';
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'datastore', component: ProfileComponent }
+        ]},
+      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
+        children: [
+          { path: 'settings', component: SettingsComponent }
         ]},
       { path: 'user/password/recover', component: PasswordRecoverComponent, canActivate: [NativeGuard] },
       { path: 'user/password/change/:resetToken', component: PasswordChangeComponent, canActivate: [NativeGuard] },

@@ -80,6 +80,9 @@ export const configuration: AppConfig = {
 
     { display: 'Data debits', icon: 'swap_horiz', link: '/data-debit', dataType: '', disable: '',
       description: 'See all of the data debits setup on the HAT' },
+
+    { display: 'Settings', icon: 'settings', link: '/settings', dataType: '', disable: '',
+      description: 'Settings on the HAT' },
   ],
 
   appsMenu: [

@@ -23,6 +23,7 @@ import { PublicPagesModule } from './public-pages/public-pages.module';
 import { OffersModule } from './offers/offers.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
+import { SettingsModule } from './settings/settings.module';
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -54,6 +55,7 @@ import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
 import { HatClaimModule } from './hat-claim/hat-claim.module';
 import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.component';
+import { SettingsComponent } from './settings/settings.component';
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -62,7 +64,8 @@ export function cookieServiceFactory() {
 @NgModule({
   declarations: [
     AppRootComponent,
-    DataTypeFilterPipe
+    DataTypeFilterPipe,
+    SettingsComponent
   ],
   imports: [
     NoopAnimationsModule, // Using NoopAnimationModule instead of BrowserModule to prevent double-import error
@@ -84,7 +87,8 @@ export function cookieServiceFactory() {
     SheModule,
     CoreModule,
     AppRoutingModule,
-    HatClaimModule
+    HatClaimModule,
+    SettingsModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent,
