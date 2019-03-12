@@ -74,7 +74,8 @@
       text-align: center;
       color: $app-dark-tone;
       margin: 16px auto 0;
-      width: 80%;
+      max-width: 500px;
+      width: 90%;
     }
   }
 
@@ -82,14 +83,18 @@
     padding-left: 20px;
     padding-right: 20px;
     text-align: center;
+    vertical-align: middle;
   }
 
   .hat-name {
     display: inline-block;
+
+    @media (max-width: 719px) {
+      margin-bottom: 10px;
+    }
   }
 
   .hat-domain {
-    margin-top: 10px;
     display: inline-block;
   }
 
@@ -168,7 +173,6 @@
 
     img {
       max-width: 186px;
-      width: 35%;
       margin-top:10px;
       margin-bottom: 39px;
     }
