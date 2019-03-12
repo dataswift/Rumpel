@@ -83,9 +83,27 @@
         </ng-container>
 
         <ng-template #noPreview>
-            <div class="no-data-message">
-              No previews found. Please connect to see your preview.
-            </div>
+          <ng-container *ngIf="staticData$ | async as staticData">
+            <ng-container *ngIf="staticData.length === 0">
+              <div class="no-data-icon">
+                <mat-icon>cloud_queue</mat-icon>
+              </div>
+
+              <div class="no-data-message">
+                No data available
+              </div>
+
+              <ng-container *ngIf="app.application.kind.kind === 'DataPlug'">
+                <div *ngIf="appStatus === 'untouched'" class="no-data-press-connect">
+                  Press the ‘Connect’ button to get started!
+                </div>
+
+                <div *ngIf="appStatus !== 'untouched'" class="no-data-press-connect">
+                  Data Preview not available yet. Stay tuned.
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
         </ng-template>
       </mat-tab>
     </mat-tab-group>
