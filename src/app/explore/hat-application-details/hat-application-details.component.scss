@@ -137,7 +137,7 @@
       border: none;
       text-decoration: none;
       margin-top: 5px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       padding: 5px 20px;
       border-radius: 4px;
       text-transform: uppercase;
@@ -227,9 +227,22 @@
   }
 }
 
+.no-data-icon {
+  margin: 25px;
+  text-align: center;
+}
+
 .no-data-message {
   text-align: center;
-  font-size: 15px;
+  font-size: 16px;
+  color: $app-dark-tone;
+  margin-bottom: 15px;
+}
+
+.no-data-press-connect{
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 14px;
   color: $hat-body-text;
 }
 
