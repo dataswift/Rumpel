@@ -1,0 +1,37 @@
+/*
+ * Copyright (C) 2019 HAT Data Exchange Ltd - All Rights Reserved
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ * Written by Eleftherios Myteletsis <eleftherios.myteletsis@gmail.com> 3, 2019
+ */
+
+@import "../../style/branding";
+
+.user-actions {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  margin: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  background-color: $hat-background-color;
+
+
+  button {
+    display: block;
+    width: 150px;
+    cursor: pointer;
+    margin: auto;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 5px 0;
+  }
+
+  .next-button {
+    margin: 10px auto;
+    background-color: $app-accent-color;
+    color: white;
+  }
+}

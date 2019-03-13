@@ -12,6 +12,7 @@ import { SettingsPageComponent } from './settings-page/settings-page.component';
 import {SettingsListComponent} from './settings-list/settings-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
+import { SettingsFooterComponent } from './settings-footer/settings-footer.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
   declarations: [
     SettingsHeaderComponent,
     SettingsPageComponent,
-    SettingsListComponent
+    SettingsListComponent,
+    SettingsFooterComponent
   ],
   providers: [],
   exports: [

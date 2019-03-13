@@ -1,3 +1,11 @@
+<!--
+  ~ Copyright (C) 2019 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Eleftherios Myteletsis <eleftherios.myteletsis@gmail.com> 3, 2019
+  -->
+
 <div class="app-details-header">
   <span class="flex-spacer"></span>
   <mat-card class="app-details-header-card">
@@ -16,10 +24,12 @@
     <h3 class="app-details-header-title">{{hatDomain.split('.')[0]}}</h3>
     <div class="app-details-header-headline">{{hatDomain.slice(hatDomain.indexOf('.'))}}</div>
 
-    <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
+    <ng-container *ngIf="systemStatus$ | async as systemStatus">
+      <ng-container *ngIf="dataBaseUsedPercent">
+      <mat-progress-bar mode="determinate" value="{{ dataBaseUsedPercent.kind.metric }}"></mat-progress-bar>
 
-    <ng-container *ngIf="dataBaseUsedPercent">
-      <div class="app-details-header-headline">storage used</div>
+      <div class="app-details-header-headline">{{ dataBaseUsedPercent.kind.metric }}% of {{ dataBaseStorage.kind.metric }}{{ dataBaseStorage.kind.units }} storage used</div>
+      </ng-container>
     </ng-container>
 
   </mat-card>
