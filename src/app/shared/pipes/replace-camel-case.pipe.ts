@@ -14,12 +14,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ReplaceCamelCasePipe implements PipeTransform {
 
   transform(str: string, args?: any): string {
-    const rgx =  new RegExp('(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])|(?=[A-Z][a-z])|(?<=\\d)(?=\\D)|(?=\\d)(?<=\\D)', 'g');
-    if (str) {
-      return str.replace(rgx, ' ');
-    } else {
-      return str;
-    }
+
+    return str.replace
+    ( /(^[a-z]+)|[0-9]+|[A-Z][a-z]+|[A-Z]+(?=[A-Z][a-z]|[0-9])/g
+      , function(match, first) {
+        if (first) {
+          match = match[0].toUpperCase() + match.substr(1);
+        }
+
+        return match + ' ';
+      }
+    )
   }
 
 }
