@@ -1,0 +1,38 @@
+<mat-list>
+  <ng-container >
+    <h3 mat-line class="settings-title"> My account settings</h3>
+    <mat-divider></mat-divider>
+    <mat-list-item *ngFor="let item of settingsMenu; let i = index"  [routerLink]="[item.link]" (click)="close.emit('Close menu')">
+      <h3 mat-line> {{ item.display }} </h3>
+      <mat-icon class="icon">{{item.icon}}</mat-icon>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </ng-container>
+
+  <ng-container >
+    <h3 mat-line class="settings-title">Version</h3>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <h3 mat-line>3.7.1</h3>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </ng-container>
+
+  <ng-container >
+    <h3 mat-line class="settings-title">Vendor (where you got your HAT)</h3>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <h3 mat-line>HAT App</h3>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </ng-container>
+
+  <ng-container >
+    <h3 mat-line class="settings-title">HAT issuer</h3>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <h3 mat-line>HAT Data Exchange Ltd.</h3>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </ng-container>
+</mat-list>

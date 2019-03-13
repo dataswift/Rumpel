@@ -31,6 +31,7 @@ import { ProfilesModule } from '../profiles/profiles.module';
 import { CustomAngularMaterialModule } from './custom-angular-material.module';
 import { HttpBackendClient } from './services/http-backend-client.service';
 import {AuthService} from './services/auth.service';
+import {SystemStatusService} from '../services/system-status.service';
 
 @NgModule({
   imports: [ SharedModule, LocationsModule, ProfilesModule, CustomAngularMaterialModule ],
@@ -49,6 +50,6 @@ import {AuthService} from './services/auth.service';
   exports: [ HeaderComponent,
             SideMenuComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService, HttpBackendClient, AuthService ]
+  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService, HttpBackendClient, AuthService, SystemStatusService ]
 })
 export class CoreModule {}

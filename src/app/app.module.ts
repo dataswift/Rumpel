@@ -55,7 +55,7 @@ import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
 import { HatClaimModule } from './hat-claim/hat-claim.module';
 import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.component';
-import { SettingsComponent } from './settings/settings.component';
+import {SystemStatusService} from './services/system-status.service';
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -64,8 +64,7 @@ export function cookieServiceFactory() {
 @NgModule({
   declarations: [
     AppRootComponent,
-    DataTypeFilterPipe,
-    SettingsComponent
+    DataTypeFilterPipe
   ],
   imports: [
     NoopAnimationsModule, // Using NoopAnimationModule instead of BrowserModule to prevent double-import error
@@ -103,6 +102,7 @@ export function cookieServiceFactory() {
     NativeGuard,
     HatApiService, // Supersedes original HAT API service
     StaticDataService,
+    SystemStatusService,
     GlobalMessagingService,
     DexApiService,
     FileService,

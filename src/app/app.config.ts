@@ -30,6 +30,7 @@ export class AppConfig {
   };
   mainMenu: Array<{ [key: string]: string; }>;
   appsMenu: Array<{ [key: string]: string; }>;
+  settingsMenu: Array<{ [key: string]: string; }>;
 }
 
 export const configuration: AppConfig = {
@@ -88,5 +89,19 @@ export const configuration: AppConfig = {
   appsMenu: [
     { display: 'DataBuyer', icon: '/assets/icons/she-databuyer.png', link: '/offers', dataType: '', disable: '',
       description: 'Allow access to your data in exchange for cash, services or vouchers.' }
+  ],
+  settingsMenu: [
+    { display: 'Reset password', icon: 'keyboard_arrow_right', link: '/data-debit', dataType: '', disable: '',
+      description: 'Profile description' },
+    { display: 'Tech support', icon: 'exit_to_app', link: '/profile', dataType: '', disable: '',
+      description: 'Profile description' },
+    { display: 'Terms of Service', icon: 'keyboard_arrow_right', link: '/profile', dataType: '', disable: '',
+      description: 'Profile description' },
+    { display: 'Privacy policy', icon: 'keyboard_arrow_right', link: '/profile', dataType: '', disable: '',
+      description: 'Profile description' },
+    { display: 'Join the HAT Community', icon: 'exit_to_app', link: '/profile', dataType: '', disable: '',
+      description: 'Profile description' },
+    { display: 'Your HAT functionality level is 4 (learn more)', icon: 'keyboard_arrow_right', link: '/profile', dataType: '', disable: '',
+      description: 'Profile description' }
   ]
 };

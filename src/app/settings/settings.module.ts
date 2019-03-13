@@ -7,14 +7,27 @@
  */
 
 import { NgModule } from '@angular/core';
-import { MatCardModule, MatProgressBar } from '@angular/material';
-import { SettingsComponent } from './settings.component';
-
+import { SettingsHeaderComponent } from './settings-header/settings-header.component';
+import { SettingsPageComponent } from './settings-page/settings-page.component';
+import {SettingsListComponent} from './settings-list/settings-list.component';
+import { SharedModule } from '../shared/shared.module';
+import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 
 @NgModule({
-  imports: [ ],
-  declarations: [  ],
-  providers: [  ],
-  exports: [ ]
+  imports: [
+    SharedModule,
+    CustomAngularMaterialModule
+  ],
+  declarations: [
+    SettingsHeaderComponent,
+    SettingsPageComponent,
+    SettingsListComponent
+  ],
+  providers: [],
+  exports: [
+    SettingsPageComponent,
+    SettingsHeaderComponent,
+    SettingsListComponent
+  ]
 })
 export class SettingsModule {}
