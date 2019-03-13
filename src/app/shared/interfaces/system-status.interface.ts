@@ -8,10 +8,7 @@
 
 export interface SystemStatusInterface {
   title: string;
-  kind: { metric: string;
-    kind: string;
-    units?: string;
-  };
+  kind: SystemStatusKindInterface;
 }
 
 interface SystemStatusKindInterface {

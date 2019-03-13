@@ -31,10 +31,11 @@ export class AppConfig {
   mainMenu: Array<{ [key: string]: string; }>;
   appsMenu: Array<{ [key: string]: string; }>;
   settingsMenu: Array<{ [key: string]: string; }>;
+  settingsPrivateDataMenu: Array<{ [key: string]: string; }>;
 }
 
 export const configuration: AppConfig = {
-  version: '3.7.1',
+  version: '3.7.2.0',
   name: 'RumpelStaging',
   tokenApp: 'hatappstaging',
   tokenExpiryTime: 3,
@@ -79,9 +80,6 @@ export const configuration: AppConfig = {
     description: `Data comes into your HAT via data plugs.
     Click here to see what data plugs are available, and what data plugs are already connected.` },
 
-    { display: 'Data debits', icon: 'swap_horiz', link: '/data-debit', dataType: '', disable: '',
-      description: 'See all of the data debits setup on the HAT' },
-
     { display: 'Settings', icon: 'settings', link: '/settings', dataType: '', disable: '',
       description: 'Settings on the HAT' },
   ],
@@ -91,17 +89,32 @@ export const configuration: AppConfig = {
       description: 'Allow access to your data in exchange for cash, services or vouchers.' }
   ],
   settingsMenu: [
-    { display: 'Reset password', icon: 'keyboard_arrow_right', link: '/data-debit', dataType: '', disable: '',
+    { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change',
       description: 'Profile description' },
-    { display: 'Tech support', icon: 'exit_to_app', link: '/profile', dataType: '', disable: '',
+
+    { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@HATDeX.org',
       description: 'Profile description' },
-    { display: 'Terms of Service', icon: 'keyboard_arrow_right', link: '/profile', dataType: '', disable: '',
+
+    { display: 'Terms of Service', icon: 'keyboard_arrow_right',
+      link: 'https://raw.githubusercontent.com/Hub-of-all-Things/exchange-assets/master/legal/hat-terms-of-service.md',
       description: 'Profile description' },
-    { display: 'Privacy policy', icon: 'keyboard_arrow_right', link: '/profile', dataType: '', disable: '',
+
+    { display: 'Privacy policy', icon: 'keyboard_arrow_right',
+      link: 'https://raw.githubusercontent.com/Hub-of-all-Things/exchange-assets/master/legal/hat-privacy-policy.md',
       description: 'Profile description' },
-    { display: 'Join the HAT Community', icon: 'exit_to_app', link: '/profile', dataType: '', disable: '',
+
+    { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org',
       description: 'Profile description' },
-    { display: 'Your HAT functionality level is 4 (learn more)', icon: 'keyboard_arrow_right', link: '/profile', dataType: '', disable: '',
+
+    { display: 'Your HAT functionality level is 4 (learn more)', icon: 'keyboard_arrow_right',
+      link: 'https://raw.githubusercontent.com/Hub-of-all-Things/exchange-assets/master/legal/hat-privacy-policy.md',
       description: 'Profile description' }
+  ],
+  settingsPrivateDataMenu: [
+    { display: 'Profile', icon: 'keyboard_arrow_right', link: '/datastore',
+      description: 'Profile description' },
+
+    { display: 'Data Debits', icon: 'keyboard_arrow_right', link: '/data-debit',
+      description: 'Profile description' },
   ]
 };
