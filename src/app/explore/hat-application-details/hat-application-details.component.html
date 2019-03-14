@@ -63,14 +63,14 @@
 
         <rum-list-card *ngIf="appInformation"
                        [title]="'Information'"
-                       [listData]="appInformation"
+                       [listData]="[appInformation]"
                        [expandable]="true"></rum-list-card>
       </mat-tab>
 
       <mat-tab label="Data Preview">
         <ng-container *ngIf="staticData$ | async as staticData">
           <div  *ngIf="staticData[0]" style="margin-bottom: 60px;">
-            <rum-list-card [title]="'Profile information'" [listData]="staticData[0]"></rum-list-card>
+            <rum-list-card [title]="'Profile information'" [listData]="staticData"></rum-list-card>
           </div>
         </ng-container>
 
