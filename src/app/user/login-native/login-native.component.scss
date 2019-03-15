@@ -54,10 +54,48 @@
 
       .title-hat-domain {
         font-size: 18px;
-        font-weight: 300;
+        font-weight: bold;
+        text-align: center;
         margin: 0;
+        color: $app-dark-tone
       }
     }
+  }
+
+  .data-rights-description {
+    p {
+      opacity: 0.87;
+      font-size: 12px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: 1.5;
+      letter-spacing: 0.2px;
+      text-align: center;
+      color: $app-dark-tone;
+      margin: 16px auto 0;
+      max-width: 500px;
+      width: 90%;
+    }
+  }
+
+  .title-hat-domain-wrapper {
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .hat-name {
+    display: inline-block;
+
+    @media (max-width: 719px) {
+      margin-bottom: 10px;
+    }
+  }
+
+  .hat-domain {
+    display: inline-block;
   }
 
   .f-g {
@@ -129,6 +167,27 @@
       border-radius: 50%;
     }
   }
+  .issuer-logo {
+    width: 100%;
+    text-align: center;
+
+    img {
+      max-width: 186px;
+      margin-top:10px;
+      margin-bottom: 39px;
+    }
+  }
+
+  .drp-image {
+    width: 100%;
+    text-align: center;
+
+    img {
+      max-width: 100px;
+      max-height: 100px;
+      width: 25%;
+    }
+  }
 }
 
 .user-actions {
@@ -145,6 +204,7 @@
      background-color: $app-accent-color;
      text-transform: uppercase;
      border-radius: 4px;
+     color: white;
      padding: 5px 0;
      font-size: 14px;
    }

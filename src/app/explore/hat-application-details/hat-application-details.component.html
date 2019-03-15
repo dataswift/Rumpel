@@ -63,24 +63,48 @@
 
         <rum-list-card *ngIf="appInformation"
                        [title]="'Information'"
-                       [listData]="appInformation"
+                       [listData]="[appInformation]"
                        [expandable]="true"></rum-list-card>
       </mat-tab>
 
       <mat-tab label="Data Preview">
-        <div *ngIf="staticData" style="margin-bottom: 60px;">
-          <rum-list-card [title]="'Profile information'" [listData]="staticData"></rum-list-card>
-        </div>
+        <ng-container *ngIf="staticData$ | async as staticData">
+          <div  *ngIf="staticData[0]" style="margin-bottom: 60px;">
+            <rum-list-card [title]="'Profile information'" [listData]="staticData"></rum-list-card>
+          </div>
+        </ng-container>
 
-        <ng-container *ngIf="dataPreview">
-          <ng-container *ngFor="let dataSample of dataPreview">
-            <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+        <ng-container *ngIf="dataPreview$ | async as dataPreview">
+          <ng-container *ngIf="dataPreview.length > 0; else noPreview">
+            <ng-container *ngFor="let dataSample of dataPreview">
+              <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+            </ng-container>
           </ng-container>
         </ng-container>
 
-        <div *ngIf="!dataPreview && !staticData" class="no-data-message">
-          No previews found. Please connect to see your preview.
-        </div>
+        <ng-template #noPreview>
+          <ng-container *ngIf="staticData$ | async as staticData">
+            <ng-container *ngIf="staticData.length === 0">
+              <div class="no-data-icon">
+                <mat-icon>cloud_queue</mat-icon>
+              </div>
+
+              <div class="no-data-message">
+                No data available
+              </div>
+
+              <ng-container *ngIf="app.application.kind.kind === 'DataPlug'">
+                <div *ngIf="appStatus === 'untouched'" class="no-data-press-connect">
+                  Press the ‘Connect’ button to get started!
+                </div>
+
+                <div *ngIf="appStatus !== 'untouched'" class="no-data-press-connect">
+                  Data Preview not available yet. Stay tuned.
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-template>
       </mat-tab>
     </mat-tab-group>
   </div>

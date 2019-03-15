@@ -101,7 +101,7 @@
 
   .mat-card-content {
     @include flex-container(column);
-    min-width: 250px;
+    width: 250px;
   }
 
   .app-link-wrapper {
@@ -113,7 +113,8 @@
     }
 
     .app-description {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
+      height: 50px;
       text-align: center;
     }
 

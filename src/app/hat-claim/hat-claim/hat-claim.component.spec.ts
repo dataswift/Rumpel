@@ -12,7 +12,8 @@ import { HatClaimUrlComponent } from '../hat-claim-url/hat-claim-url.component';
 import { HatClaimConfirmationComponent } from '../hat-claim-confirmation/hat-claim-confirmation.component';
 import { HatClaimSuccessComponent } from '../hat-claim-success/hat-claim-success.component';
 import { HatClaimService } from '../hat-claim.service';
-import { of } from 'rxjs';
+import { PasswordStrengthIndicatorComponent
+} from '../../shared/components/password-strength-indicator/password-strength-indicator.component';
 
 describe('HatClaimComponent', () => {
   let component: HatClaimComponent;
@@ -28,7 +29,8 @@ describe('HatClaimComponent', () => {
         HatClaimSubscriptionsComponent,
         HatClaimUrlComponent,
         HatClaimConfirmationComponent,
-        HatClaimSuccessComponent
+        HatClaimSuccessComponent,
+        PasswordStrengthIndicatorComponent
       ],
       providers: [
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {}, params: {} } } },

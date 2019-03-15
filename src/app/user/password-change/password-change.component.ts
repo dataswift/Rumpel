@@ -10,9 +10,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../core/services/auth.service';
-import { PasswordChangeFailureResInterface } from '../password-change-failure-res.interface';
 
-declare const zxcvbn: any;
 const MIN_PASSWORD_STRENGTH = 3; // Integer from 0-4, see https://github.com/dropbox/zxcvbn for more info
 const ERROR_MESSAGES = {
   authenticationError: 'ERROR: Current password incorrect',
@@ -27,11 +25,10 @@ const ERROR_MESSAGES = {
 })
 export class PasswordChangeComponent implements OnInit {
   @ViewChild('currentPass') currentPass: ElementRef;
-  public colorMapping = ['red', 'red', 'orange', 'green', 'green'];
-  public evaluationMapping = ['Too guessable', 'Weak', 'So-so', 'Strong', 'Very Strong'];
   public resetToken: string;
   public successMessage: string;
   public passwordStrength: any;
+  public passwordToAnalyse: string;
   public loadingText: string;
   public hatName: string;
   public hatDomain: string;
@@ -62,15 +59,17 @@ export class PasswordChangeComponent implements OnInit {
     this.passwordStrength = null;
   }
 
+  handlePasswordStrengthUpdate(passwordStrength: number): void {
+    this.passwordStrength = passwordStrength;
+  }
+
   analysePassword(password: string): void {
-    this.passwordStrength = zxcvbn(password);
+    this.passwordToAnalyse = password;
   }
 
   changePass(newPass: string, confirmPass: string) {
     if (newPass === confirmPass) {
-      const passwordStrength = zxcvbn(newPass);
-
-      if (passwordStrength.score < MIN_PASSWORD_STRENGTH) {
+      if (this.passwordStrength && (this.passwordStrength.score < MIN_PASSWORD_STRENGTH)) {
         this.errorType = 'passwordStrengthError';
 
         return;

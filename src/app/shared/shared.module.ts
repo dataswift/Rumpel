@@ -13,8 +13,8 @@ import { FormsModule } from '@angular/forms';
 
 import { TreeViewComponent } from './components';
 import { OutsideClickDirective, StickDirective } from './directives';
-import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, RemoveCharsPipe, RelativeTimePipe,
-         MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
+import { MomentPipe, FilterByPipe, WithObjectPipe, TimeFilterPipe, LimitContentPipe, ReplaceCharsPipe, ReplaceCamelCasePipe,
+  RemoveCharsPipe, RelativeTimePipe, MarkdownToHtmlPipe, LimitMembersPipe, RelativeTimesFilterPipe, SafeHtmlPipe } from './pipes';
 import { TimeFilterTwoPipe } from './pipes/time-filter-two.pipe';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { NotableComponent } from './components/notable/notable.component';
@@ -30,12 +30,13 @@ import { HatApplicationPermissionsComponent } from './components/hat-application
 import { HatAppUpdateNotesComponent } from './components/hat-app-update-notes/hat-app-update-notes.component';
 import { ListCardComponent } from './components/list-card/list-card.component';
 import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.component';
+import { PasswordStrengthIndicatorComponent } from './components/password-strength-indicator/password-strength-indicator.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
-                  ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
+                  ReplaceCharsPipe, ReplaceCamelCasePipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
                   TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe,
                   OutsideClickDirective, StickDirective,
                   TreeViewComponent, SpinnerComponent,
@@ -48,15 +49,16 @@ import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.compone
                   HatApplicationPermissionsComponent,
                   HatAppUpdateNotesComponent,
                   ListCardComponent,
-                  HatAppHmiComponent ],
+                  HatAppHmiComponent,
+                  PasswordStrengthIndicatorComponent ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
-             ReplaceCharsPipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
+             ReplaceCharsPipe, ReplaceCamelCasePipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
              TimeFilterPipe, TimeFilterTwoPipe, SafeHtmlPipe, DatetimePipe,
              TreeViewComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, GraphicPageHeaderComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
              UnbundlePipe, SheFeedItemComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent,
-             ListCardComponent ]
+             ListCardComponent, PasswordStrengthIndicatorComponent ]
 })
 export class SharedModule {}
