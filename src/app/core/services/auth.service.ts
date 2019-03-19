@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApiService } from './hat-api.service';
-import { ReplaySubject, Observable, of } from 'rxjs';
+import {ReplaySubject, Observable, of, throwError} from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../../user/user.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
@@ -101,10 +101,21 @@ export class AuthService {
     return this.hatSvc.getApplicationHmi()
       .pipe(map((apps: HatApplication[]) => {
         const parentApp = apps.find(app => app.application.id === parentAppId);
+        const parentDependencies = parentApp.application.setup.dependencies;
 
-        return [ parentApp, apps.filter(app => dependencyAppIds.indexOf(app.application.id) > -1) ];
+        const validDependencies = dependencyAppIds.every((value) => {
+          return (parentDependencies.indexOf(value) >= 0);
+        });
+
+        if (validDependencies) {
+          return [ parentApp, apps.filter(app => dependencyAppIds.indexOf(app.application.id) > -1) ];
+        } else {
+          throw new Error('ERROR: Cannot find one or more application dependencies registered on the parents application');
+        }
+
       }));
   }
+
 
   hatLogin(name: string, redirect: string): Observable<string> {
     return this.hatSvc.legacyHatLogin(name, redirect);
