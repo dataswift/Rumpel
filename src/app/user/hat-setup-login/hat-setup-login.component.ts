@@ -112,7 +112,7 @@ export class HatSetupLoginComponent implements OnInit {
       if (internal) {
         this.router.navigate([this.route.snapshot.queryParams['fallback']]);
       } else {
-        this.windowRef.location.href = this.route.snapshot.queryParams['fallback'];
+        this.windowRef.location.href = this.cancelledCallBackUrl();
       }
     });
   }
@@ -133,14 +133,25 @@ export class HatSetupLoginComponent implements OnInit {
         this.windowRef.location.href = `${app.application.setup.url}?token=${appAccessToken}&redirect=${callback}`;
       });
   }
+
+  private cancelledCallBackUrl(): string {
+    const { redirect } = this.route.snapshot.queryParams;
+    const url = `${redirect}?error=access_denied%26error_reason=user_cancelled`;
+
+    return url.replace('#', '%23');
+  }
+
   private intermediateCallBackUrl(): string {
     let url = this.windowRef.location.href.split('?')[0];
-    const { name, redirect, dependencies } = this.route.snapshot.queryParams;
+    const { name, redirect, dependencies, fallback } = this.route.snapshot.queryParams;
 
     url += `?name=${name}%26redirect=${redirect}`;
 
     if (dependencies) {
       url += `%26dependencies=${dependencies}`;
+    }
+    if (fallback) {
+      url += `%26fallback=${fallback}`;
     }
 
     return url.replace('#', '%23');
