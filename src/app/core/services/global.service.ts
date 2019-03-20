@@ -20,23 +20,7 @@ export abstract class GlobalRef {
 }
 
 /* Define class that implements the abstract class and returns the native window object. */
-export class BrowserWindowRef extends GlobalRef {
-
-  constructor() {
-    super();
-  }
-
-  get nativeWindow(): Window | Object {
-    return window;
-  }
-
-  get nativeDocument(): Document | Object {
-    return document;
-  }
-
-}
-
-export class BrowserDocumentRef extends GlobalRef {
+export class BrowserGlobalRef extends GlobalRef {
 
   constructor() {
     super();
@@ -58,7 +42,7 @@ export function windowFactory(windowRef: GlobalRef, platformId: Object): Window 
     return windowRef.nativeWindow;
   }
 
-  return new Object();
+  return {};
 }
 
 export function documentFactory(documentRef: GlobalRef, platformId: Object): Window | Object {
@@ -66,17 +50,12 @@ export function documentFactory(documentRef: GlobalRef, platformId: Object): Win
     return documentRef.nativeDocument;
   }
 
-  return new Object();
+  return {};
 }
 /* Create a injectable provider for the WindowRef token that uses the BrowserWindowRef class. */
-const browserWindowProvider: ClassProvider = {
+const browserGlobalProvider: ClassProvider = {
   provide: GlobalRef,
-  useClass: BrowserWindowRef
-};
-
-const browserDocumentProvider: ClassProvider = {
-  provide: GlobalRef,
-  useClass: BrowserDocumentRef
+  useClass: BrowserGlobalRef
 };
 
 /* Create an injectable provider that uses the windowFactory function for returning the native window object. */
@@ -94,8 +73,7 @@ const documentProvider: FactoryProvider = {
 
 /* Create an array of providers. */
 export const WINDOW_PROVIDERS = [
-  browserWindowProvider,
-  browserDocumentProvider,
+  browserGlobalProvider,
   windowProvider,
   documentProvider
 ];

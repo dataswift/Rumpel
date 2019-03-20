@@ -55,7 +55,8 @@ import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
 import { HatClaimModule } from './hat-claim/hat-claim.module';
 import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.component';
-import {SystemStatusService} from './services/system-status.service';
+import { SystemStatusService } from './services/system-status.service';
+import { WINDOW_PROVIDERS } from './core/services/global.service';
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -106,7 +107,8 @@ export function cookieServiceFactory() {
     GlobalMessagingService,
     DexApiService,
     FileService,
-    BrowserStorageService
+    BrowserStorageService,
+    WINDOW_PROVIDERS
   ]
 })
 export class AppRootModule {}
