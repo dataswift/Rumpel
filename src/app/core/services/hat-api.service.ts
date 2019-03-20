@@ -21,6 +21,7 @@ import { HatApplication } from '../../explore/hat-application.interface';
 import { SheFeed } from '../../she/she-feed.interface';
 import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 import { SheStaticProfile } from '../../shared/interfaces/she-static-profile.interface';
+import {SystemStatusInterface} from '../../shared/interfaces/system-status.interface';
 
 @Injectable()
 export class HatApiService {
@@ -156,6 +157,12 @@ export class HatApiService {
     const path = `${this.pathPrefix}/she/static/${applicationId}/profile`;
 
     return this.authHttp.get<SheStaticProfile<string[][]>[]>(path);
+  }
+
+  getSystemStatusRecords(): Observable<SystemStatusInterface[]> {
+    const path = `${this.pathPrefix}/system/status`;
+
+    return this.authHttp.get<SystemStatusInterface[]>(path);
   }
 
   getSheRecords(endpoint?: string, since?: number | string, until?: number | string): Observable<SheFeed[]> {

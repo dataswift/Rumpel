@@ -1,0 +1,73 @@
+<!--
+  ~ Copyright (C) 2019 HAT Data Exchange Ltd - All Rights Reserved
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+  ~ Written by Eleftherios Myteletsis <eleftherios.myteletsis@gmail.com> 3, 2019
+  -->
+
+<mat-list>
+  <div>
+    <h3 mat-line class="settings-title">Private data account</h3>
+    <mat-list>
+      <ng-container *ngFor="let item of settingsPrivateDataMenu; last as last" >
+          <mat-list-item style="cursor: pointer" [routerLink]="[item.link]" (click)="close.emit('Close menu')">
+            <h3 class="settings-list-row-text" mat-line> {{ item.display }} </h3>
+            <mat-icon class="icon">{{item.icon}}</mat-icon>
+            <mat-divider *ngIf="!last"></mat-divider>
+          </mat-list-item>
+      </ng-container>
+    </mat-list>
+  </div>
+
+  <ng-container >
+    <h3 mat-line class="settings-title">My account settings</h3>
+    <mat-list>
+      <ng-container *ngFor="let item of settingsMenu; last as last" >
+        <ng-container *ngIf="item.link.includes('http') || item.link.includes('mailto'); else linkIncludesInternal">
+            <a mat-list-item href="{{item.link}}" target="_blank" style="cursor: pointer" (click)="close.emit('Close menu')">
+              <h3 class="settings-list-row-text" mat-line> {{ item.display }} </h3>
+              <mat-icon class="icon">{{item.icon}}</mat-icon>
+            </a>
+        </ng-container>
+
+        <ng-template #linkIncludesInternal>
+            <mat-list-item style="cursor: pointer" [routerLink]="[item.link]" (click)="close.emit('Close menu')">
+              <h3 class="settings-list-row-text" mat-line> {{ item.display }} </h3>
+              <mat-icon class="icon">{{item.icon}}</mat-icon>
+
+            </mat-list-item>
+        </ng-template>
+        <mat-divider *ngIf="!last"></mat-divider>
+
+      </ng-container>
+    </mat-list>
+  </ng-container>
+
+  <ng-container >
+    <h3 mat-line class="settings-title">Version</h3>
+    <mat-list>
+      <mat-list-item>
+        <h3 mat-line>{{ version }}</h3>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <ng-container >
+    <h3 mat-line class="settings-title">Vendor (where you got your HAT)</h3>
+    <mat-list>
+      <mat-list-item>
+        <h3 mat-line>HAT App</h3>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+
+  <ng-container >
+    <h3 mat-line class="settings-title">HAT issuer</h3>
+    <mat-list>
+      <mat-list-item>
+        <h3 mat-line>HAT Data Exchange Ltd.</h3>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+</mat-list>

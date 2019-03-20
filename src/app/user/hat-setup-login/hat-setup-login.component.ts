@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2019 HAT Data Exchange Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -15,6 +15,8 @@ import { flatMap } from 'rxjs/operators';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { MatDialog } from '@angular/material';
 import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
+import { uniq } from 'lodash';
+import { WINDOW } from '../../core/services/global.service';
 
 @Component({
   selector: 'rum-hat-setup-login',
@@ -29,6 +31,7 @@ export class HatSetupLoginComponent implements OnInit {
   private redirect: string;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
+              @Inject(WINDOW) private windowRef: Window,
               private authSvc: AuthService,
               private hatApiSvc: HatApiService,
               public dialog: MatDialog,
@@ -36,21 +39,23 @@ export class HatSetupLoginComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.hatAddress = window.location.hostname;
-    const { name, redirect } = this.route.snapshot.queryParams;
+    this.hatAddress = this.windowRef.location.hostname;
+    const { name, redirect, dependencies } = this.route.snapshot.queryParams;
 
     if (name && redirect) {
       const safeName = name.toLowerCase();
 
-      this.authSvc.getApplicationsByIds(safeName, redirect, ['facebook'])
+      this.authSvc.getApplicationsByIds(safeName, redirect, dependencies )
         .subscribe(([parentApp, dependencyApps]: [HatApplication, HatApplication[]]) => {
-          console.log('Fetched applications: ', parentApp, dependencyApps);
           const dependenciesAreSetup = dependencyApps.every(app => app.enabled); // [].every(x => x = n) ==> true
           const parentAppIsReady = parentApp.enabled && !parentApp.needsUpdating;
 
           if (parentAppIsReady && dependenciesAreSetup) {
             this.buildRedirect(safeName);
           } else if (parentAppIsReady) {
+            console.log('parent app: ' + parentApp);
+            console.log('dependency apps: ' + dependencyApps);
+
             this.setupAppDependencies(parentApp, dependencyApps, redirect);
           } else {
             this.hatApp = parentApp;
@@ -68,7 +73,7 @@ export class HatSetupLoginComponent implements OnInit {
   }
 
   get username(): string {
-    const host = window.location.hostname;
+    const host = this.windowRef.location.hostname;
 
     return host.substring(0, host.indexOf('.'));
   }
@@ -85,7 +90,7 @@ export class HatSetupLoginComponent implements OnInit {
       this.router.navigate([this.route.snapshot.queryParams['redirect']]);
     } else {
       this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
-        window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
+        this.windowRef.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
       });
     }
   }
@@ -107,7 +112,7 @@ export class HatSetupLoginComponent implements OnInit {
       if (internal) {
         this.router.navigate([this.route.snapshot.queryParams['fallback']]);
       } else {
-        window.location.href = this.route.snapshot.queryParams['fallback'];
+        this.windowRef.location.href = this.route.snapshot.queryParams['fallback'];
       }
     });
   }
@@ -117,25 +122,33 @@ export class HatSetupLoginComponent implements OnInit {
   }
 
   private setupAppDependencies(parentApp: HatApplication, dependencies: HatApplication[], appRedirect: string): void {
-    const app = dependencies.filter(d => d.enabled !== true)[0];
-    let url = window.location.href.split('?')[0];
-    const { name, redirect } = this.route.snapshot.queryParams;
-    url += `?name=${name}%26redirect=${redirect}`;
-    const callback = url.replace('#', '%23');
+    const app = dependencies.filter(d => d.enabled === false)[0];
+    const callback = this.intermediateCallBackUrl();
 
     console.log('Redirect value: ', callback);
 
     this.authSvc.setupApplication(app.application.id)
       .pipe(flatMap(_ => this.authSvc.appLogin(app.application.id)))
       .subscribe(appAccessToken => {
-        window.location.href = `${app.application.setup.url}?token=${appAccessToken}&redirect=${callback}`;
+        this.windowRef.location.href = `${app.application.setup.url}?token=${appAccessToken}&redirect=${callback}`;
       });
   }
+  private intermediateCallBackUrl(): string {
+    let url = this.windowRef.location.href.split('?')[0];
+    const { name, redirect, dependencies } = this.route.snapshot.queryParams;
 
+    url += `?name=${name}%26redirect=${redirect}`;
+
+    if (dependencies) {
+      url += `%26dependencies=${dependencies}`;
+    }
+
+    return url.replace('#', '%23');
+  }
 
   private legacyLogin(): void {
     this.authSvc.hatLogin(this.route.snapshot.queryParams['name'], this.route.snapshot.queryParams['redirect'])
-      .subscribe((url: string) => window.location.href = url);
+      .subscribe((url: string) => this.windowRef.location.href = url);
   }
 
   handleShowPermissions(): void {

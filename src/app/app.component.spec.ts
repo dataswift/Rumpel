@@ -15,6 +15,7 @@ import { GlobalMessagingService } from './services/global-messaging.service';
 import { DialogService } from './core/dialog.service';
 import { AuthService } from './core/services/auth.service';
 import { APP_CONFIG } from './app.config';
+import { WINDOW } from './core/services/global.service';
 
 describe('AppRootComponent', () => {
   let fixture: ComponentFixture<AppRootComponent>;
@@ -25,6 +26,7 @@ describe('AppRootComponent', () => {
       declarations: [ AppRootComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
+        { provide: WINDOW, useValue: {} },
         { provide: GlobalMessagingService, useValue: {} },
         { provide: DialogService, useValue: {} },
         { provide: AuthService, useValue: {} }

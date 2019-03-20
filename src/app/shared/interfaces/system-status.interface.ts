@@ -6,7 +6,13 @@
  * Written by Eleftherios Myteletsis <eleftherios.myteletsis@gmail.com> 3, 2019
  */
 
-export interface SheStaticProfile<T> {
-  name: string;
-  values: T;
+export interface SystemStatusInterface {
+  title: string;
+  kind: SystemStatusKindInterface;
+}
+
+interface SystemStatusKindInterface {
+  metric: string;
+  kind: string;
+  units?: string;
 }
