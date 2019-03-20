@@ -42,11 +42,10 @@ export class HatSetupLoginComponent implements OnInit {
     this.hatAddress = this.windowRef.location.hostname;
     const { name, redirect, dependencies } = this.route.snapshot.queryParams;
 
-    if (name && redirect && dependencies) {
+    if (name && redirect) {
       const safeName = name.toLowerCase();
-      const dependencyAppsArray = dependencies.split(',');
 
-      this.authSvc.getApplicationsByIds(safeName, redirect, uniq(dependencyAppsArray))
+      this.authSvc.getApplicationsByIds(safeName, redirect, dependencies )
         .subscribe(([parentApp, dependencyApps]: [HatApplication, HatApplication[]]) => {
           const dependenciesAreSetup = dependencyApps.every(app => app.enabled); // [].every(x => x = n) ==> true
           const parentAppIsReady = parentApp.enabled && !parentApp.needsUpdating;
@@ -137,7 +136,12 @@ export class HatSetupLoginComponent implements OnInit {
   private intermediateCallBackUrl(): string {
     let url = this.windowRef.location.href.split('?')[0];
     const { name, redirect, dependencies } = this.route.snapshot.queryParams;
-    url += `?name=${name}%26redirect=${redirect}%26dependencies=${dependencies}`;
+
+    url += `?name=${name}%26redirect=${redirect}`;
+
+    if (dependencies) {
+      url += `%26dependencies=${dependencies}`;
+    }
 
     return url.replace('#', '%23');
   }
