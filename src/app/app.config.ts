@@ -39,7 +39,7 @@ export const configuration: AppConfig = {
   name: 'RumpelStaging',
   tokenApp: 'hatappstaging',
   tokenExpiryTime: 3,
-  supportedDomains: ['.hubat.net', '.hat.direct'],
+  supportedDomains: ['.hubofallthings.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,
   dex: {
