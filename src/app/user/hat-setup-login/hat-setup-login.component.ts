@@ -6,17 +6,16 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2019
  */
 
-import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../core/services/auth.service';
-import { APP_CONFIG, AppConfig } from '../../app.config';
-import { HatApplication } from '../../explore/hat-application.interface';
-import { flatMap } from 'rxjs/operators';
-import { HatApiService } from '../../core/services/hat-api.service';
-import { MatDialog } from '@angular/material';
-import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
-import { uniq } from 'lodash';
-import { WINDOW } from '../../core/services/global.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../core/services/auth.service';
+import {APP_CONFIG, AppConfig} from '../../app.config';
+import {HatApplication} from '../../explore/hat-application.interface';
+import {flatMap} from 'rxjs/operators';
+import {HatApiService} from '../../core/services/hat-api.service';
+import {MatDialog} from '@angular/material';
+import {HatAppHmiComponent} from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
+import {WINDOW} from '../../core/services/global.service';
 
 @Component({
   selector: 'rum-hat-setup-login',
@@ -64,11 +63,18 @@ export class HatSetupLoginComponent implements OnInit {
           }
         },
           error => {
-            console.warn('Failed to login. Reason: ', error);
-            this.errorMessage = 'ERROR: Cannot find such application. Is the app registered correctly?';
-          });
+            this.windowRef.location.href = this.callBackUrlWithError('access_denied', error.message);
+         });
     } else {
-      this.errorMessage = 'ERROR: App details incorrect. Please contact the app developer and let them know.';
+      if (!name) {
+        this.windowRef.location.href = this.callBackUrlWithError('access_denied', 'application_id_undefined');
+      }
+
+      if (!redirect) {
+        console.warn('Redirect callback url is not defined.');
+        this.errorMessage = 'ERROR: App details incorrect. Please contact the app developer and let them know.';
+      }
+
     }
   }
 
@@ -112,7 +118,7 @@ export class HatSetupLoginComponent implements OnInit {
       if (internal) {
         this.router.navigate([this.route.snapshot.queryParams['fallback']]);
       } else {
-        this.windowRef.location.href = this.cancelledCallBackUrl();
+        this.windowRef.location.href = this.callBackUrlWithError('access_denied', 'user_cancelled');
       }
     });
   }
@@ -125,8 +131,6 @@ export class HatSetupLoginComponent implements OnInit {
     const app = dependencies.filter(d => d.enabled === false)[0];
     const callback = this.intermediateCallBackUrl();
 
-    console.log('Redirect value: ', callback);
-
     this.authSvc.setupApplication(app.application.id)
       .pipe(flatMap(_ => this.authSvc.appLogin(app.application.id)))
       .subscribe(appAccessToken => {
@@ -134,24 +138,21 @@ export class HatSetupLoginComponent implements OnInit {
       });
   }
 
-  private cancelledCallBackUrl(): string {
+  private callBackUrlWithError(error: string, errorReason: string): string {
     const { redirect } = this.route.snapshot.queryParams;
-    const url = `${redirect}?error=access_denied%26error_reason=user_cancelled`;
+    const url = `${redirect}?error=${error}%26error_reason=${errorReason}`;
 
     return url.replace('#', '%23');
   }
 
   private intermediateCallBackUrl(): string {
     let url = this.windowRef.location.href.split('?')[0];
-    const { name, redirect, dependencies, fallback } = this.route.snapshot.queryParams;
+    const { name, dependencies, redirect } = this.route.snapshot.queryParams;
 
     url += `?name=${name}%26redirect=${redirect}`;
 
     if (dependencies) {
       url += `%26dependencies=${dependencies}`;
-    }
-    if (fallback) {
-      url += `%26fallback=${fallback}`;
     }
 
     return url.replace('#', '%23');
