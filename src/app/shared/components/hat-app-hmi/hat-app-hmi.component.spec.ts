@@ -4,6 +4,7 @@ import { HatAppHmiComponent } from './hat-app-hmi.component';
 import { CustomAngularMaterialModule } from '../../../core/custom-angular-material.module';
 import { SafeHtmlPipe } from '../../pipes';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { HatAppHmiContentComponent } from '../hat-app-hmi-content/hat-app-hmi-content.component';
 
 describe('HatAppHmiComponent', () => {
   let component: HatAppHmiComponent;
@@ -12,7 +13,7 @@ describe('HatAppHmiComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
-      declarations: [ HatAppHmiComponent, SafeHtmlPipe ],
+      declarations: [ HatAppHmiComponent, SafeHtmlPipe, HatAppHmiContentComponent ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }

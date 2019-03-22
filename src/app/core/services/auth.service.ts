@@ -102,6 +102,11 @@ export class AuthService {
     return this.hatSvc.getApplicationHmi()
       .pipe(map((apps: HatApplication[]) => {
         const parentApp = apps.find(app => app.application.id === parentAppId);
+
+        if (!parentApp || parentApp.application.kind.kind !== 'App') {
+          throw new Error('application_id_not_found ');
+        }
+
         const parentDependencies = parentApp.application.setup.dependencies || [];
 
         let validDependencies = false;
@@ -121,12 +126,16 @@ export class AuthService {
           return [ parentApp, apps.filter(app => dependencyAppsArray.indexOf(app.application.id) > -1) ];
         } else {
           return [ parentApp, apps.filter(app => parentDependencies.indexOf(app.application.id) > -1) ];
-          // throw new Error('ERROR: Cannot find one or more application dependencies registered on the parents application');
         }
 
       }));
   }
 
+  isRedirectUrlValid(redirect: string, app: HatApplication): boolean {
+    const setup = app.application.setup;
+
+    return [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(decodeURI(redirect));
+  }
 
   hatLogin(name: string, redirect: string): Observable<string> {
     return this.hatSvc.legacyHatLogin(name, redirect);

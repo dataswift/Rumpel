@@ -15,7 +15,6 @@ import { flatMap } from 'rxjs/operators';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { MatDialog } from '@angular/material';
 import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
-import { uniq } from 'lodash';
 import { WINDOW } from '../../core/services/global.service';
 
 @Component({
@@ -51,7 +50,7 @@ export class HatSetupLoginComponent implements OnInit {
           const parentAppIsReady = parentApp.enabled && !parentApp.needsUpdating;
 
           if (parentAppIsReady && dependenciesAreSetup) {
-            this.buildRedirect(safeName);
+            this.buildRedirect(parentApp);
           } else if (parentAppIsReady) {
             console.log('parent app: ' + parentApp);
             console.log('dependency apps: ' + dependencyApps);
@@ -64,11 +63,18 @@ export class HatSetupLoginComponent implements OnInit {
           }
         },
           error => {
-            console.warn('Failed to login. Reason: ', error);
-            this.errorMessage = 'ERROR: Cannot find such application. Is the app registered correctly?';
-          });
+            this.windowRef.location.href = this.callBackUrlWithError('access_denied', error.message);
+         });
     } else {
-      this.errorMessage = 'ERROR: App details incorrect. Please contact the app developer and let them know.';
+      if (!name) {
+        this.windowRef.location.href = this.callBackUrlWithError('access_denied', 'application_id_undefined');
+      }
+
+      if (!redirect) {
+        console.warn('Redirect callback url is not defined.');
+        this.errorMessage = 'ERROR: App details incorrect. Please contact the app developer and let them know.';
+      }
+
     }
   }
 
@@ -82,15 +88,25 @@ export class HatSetupLoginComponent implements OnInit {
     this.errorMessage = null;
   }
 
-  buildRedirect(appName: string): void {
+  buildRedirect(app: HatApplication): void {
     // Use internal login option when forcing HAT-native version through terms approval process
     const internal = this.route.snapshot.queryParams['internal'] === 'true';
+    const redirect = this.route.snapshot.queryParams['redirect'];
+
 
     if (internal) {
-      this.router.navigate([this.route.snapshot.queryParams['redirect']]);
+      this.router.navigate([redirect]);
     } else {
-      this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
-        this.windowRef.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
+      this.authSvc.appLogin(app.application.id).subscribe((accessToken: string) => {
+
+        if (!this.authSvc.isRedirectUrlValid(redirect, app)) {
+          console.warn('Provided URL is not registered');
+          this.hatApiSvc.sendReport('hmi_invalid_redirect_url', `${app.application.id}: ${redirect}`).subscribe(() => {
+            this.windowRef.location.href = `${redirect}?token=${accessToken}`;
+          });
+        } else {
+          this.windowRef.location.href = `${redirect}?token=${accessToken}`;
+        }
       });
     }
   }
@@ -99,7 +115,7 @@ export class HatSetupLoginComponent implements OnInit {
     this.authSvc.setupApplication(appId)
       .subscribe((hatApp: HatApplication) => {
         if (this.dependencyApps.every(app => app.enabled === true)) {
-          this.buildRedirect(appId);
+          this.buildRedirect(hatApp);
         } else {
           this.setupAppDependencies(hatApp, this.dependencyApps, this.redirect);
         }
@@ -112,7 +128,7 @@ export class HatSetupLoginComponent implements OnInit {
       if (internal) {
         this.router.navigate([this.route.snapshot.queryParams['fallback']]);
       } else {
-        this.windowRef.location.href = this.route.snapshot.queryParams['fallback'];
+        this.windowRef.location.href = this.callBackUrlWithError('access_denied', 'user_cancelled');
       }
     });
   }
@@ -125,17 +141,23 @@ export class HatSetupLoginComponent implements OnInit {
     const app = dependencies.filter(d => d.enabled === false)[0];
     const callback = this.intermediateCallBackUrl();
 
-    console.log('Redirect value: ', callback);
-
     this.authSvc.setupApplication(app.application.id)
       .pipe(flatMap(_ => this.authSvc.appLogin(app.application.id)))
       .subscribe(appAccessToken => {
         this.windowRef.location.href = `${app.application.setup.url}?token=${appAccessToken}&redirect=${callback}`;
       });
   }
+
+  private callBackUrlWithError(error: string, errorReason: string): string {
+    const { redirect } = this.route.snapshot.queryParams;
+    const url = `${redirect}?error=${error}%26error_reason=${errorReason}`;
+
+    return url.replace('#', '%23');
+  }
+
   private intermediateCallBackUrl(): string {
     let url = this.windowRef.location.href.split('?')[0];
-    const { name, redirect, dependencies } = this.route.snapshot.queryParams;
+    const { name, dependencies, redirect } = this.route.snapshot.queryParams;
 
     url += `?name=${name}%26redirect=${redirect}`;
 
