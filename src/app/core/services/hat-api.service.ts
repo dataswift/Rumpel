@@ -328,10 +328,10 @@ export class HatApiService {
     return this.http.get(path, { observe: 'response', responseType: 'text' });
   }
 
-  sendReport(actionCode: string): Observable<any> {
+  sendReport(actionCode: string, message?: string): Observable<any> {
     const path = `${this.pathPrefix}/report-frontend-action`;
 
-    return this.authHttp.post(path, { actionCode: actionCode });
+    return this.authHttp.post(path, { actionCode: actionCode, message: message });
   }
 
   private uploadFileMetadata(metadata: FileMetadataReq): Observable<FileMetadataRes> {

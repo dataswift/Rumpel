@@ -6,16 +6,16 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2019
  */
 
-import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthService} from '../../core/services/auth.service';
-import {APP_CONFIG, AppConfig} from '../../app.config';
-import {HatApplication} from '../../explore/hat-application.interface';
-import {flatMap} from 'rxjs/operators';
-import {HatApiService} from '../../core/services/hat-api.service';
-import {MatDialog} from '@angular/material';
-import {HatAppHmiComponent} from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
-import {WINDOW} from '../../core/services/global.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth.service';
+import { APP_CONFIG, AppConfig } from '../../app.config';
+import { HatApplication } from '../../explore/hat-application.interface';
+import { flatMap } from 'rxjs/operators';
+import { HatApiService } from '../../core/services/hat-api.service';
+import { MatDialog } from '@angular/material';
+import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
+import { WINDOW } from '../../core/services/global.service';
 
 @Component({
   selector: 'rum-hat-setup-login',
@@ -50,7 +50,7 @@ export class HatSetupLoginComponent implements OnInit {
           const parentAppIsReady = parentApp.enabled && !parentApp.needsUpdating;
 
           if (parentAppIsReady && dependenciesAreSetup) {
-            this.buildRedirect(safeName);
+            this.buildRedirect(parentApp);
           } else if (parentAppIsReady) {
             console.log('parent app: ' + parentApp);
             console.log('dependency apps: ' + dependencyApps);
@@ -88,15 +88,25 @@ export class HatSetupLoginComponent implements OnInit {
     this.errorMessage = null;
   }
 
-  buildRedirect(appName: string): void {
+  buildRedirect(app: HatApplication): void {
     // Use internal login option when forcing HAT-native version through terms approval process
     const internal = this.route.snapshot.queryParams['internal'] === 'true';
+    const redirect = this.route.snapshot.queryParams['redirect'];
+
 
     if (internal) {
-      this.router.navigate([this.route.snapshot.queryParams['redirect']]);
+      this.router.navigate([redirect]);
     } else {
-      this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
-        this.windowRef.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
+      this.authSvc.appLogin(app.application.id).subscribe((accessToken: string) => {
+
+        if (!this.authSvc.isRedirectUrlValid(redirect, app)) {
+          console.warn('Provided URL is not registered');
+          this.hatApiSvc.sendReport('hmi_invalid_redirect_url', `${app.application.id}: ${redirect}`).subscribe(() => {
+            this.windowRef.location.href = `${redirect}?token=${accessToken}`;
+          });
+        } else {
+          this.windowRef.location.href = `${redirect}?token=${accessToken}`;
+        }
       });
     }
   }
@@ -105,7 +115,7 @@ export class HatSetupLoginComponent implements OnInit {
     this.authSvc.setupApplication(appId)
       .subscribe((hatApp: HatApplication) => {
         if (this.dependencyApps.every(app => app.enabled === true)) {
-          this.buildRedirect(appId);
+          this.buildRedirect(hatApp);
         } else {
           this.setupAppDependencies(hatApp, this.dependencyApps, this.redirect);
         }

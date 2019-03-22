@@ -111,10 +111,6 @@ export class AuthService {
           throw new Error('application_id_not_found ');
         }
 
-        if (!this.isRedirectUrlValid(redirect, parentApp)) {
-          throw new Error('invalid_redirect_url');
-        }
-
         const parentDependencies = parentApp.application.setup.dependencies || [];
 
         let validDependencies = false;

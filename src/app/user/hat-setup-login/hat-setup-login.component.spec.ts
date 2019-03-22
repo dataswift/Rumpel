@@ -21,10 +21,11 @@ import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApplication } from '../../explore/hat-application.interface';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {of} from 'rxjs';
-import {WINDOW} from '../../core/services/global.service';
-import {By} from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+import { WINDOW } from '../../core/services/global.service';
+import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
+import { SafeHtmlPipe } from '../../shared/pipes';
 
 const PARENT_APPLICATION_MOCK: HatApplication = {
   'application': {
@@ -565,7 +566,7 @@ describe('HatSetupLoginComponent', () => {
       imports: [ CustomAngularMaterialModule, BrowserAnimationsModule ],
       declarations: [
         HatSetupLoginComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent, UnbundlePipe,
-        MarkdownToHtmlPipe ],
+        MarkdownToHtmlPipe, HatAppHmiContentComponent, SafeHtmlPipe ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: WINDOW, useValue: { location: { href: 'http://test.com' }} },
