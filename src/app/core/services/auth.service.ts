@@ -103,11 +103,7 @@ export class AuthService {
       .pipe(map((apps: HatApplication[]) => {
         const parentApp = apps.find(app => app.application.id === parentAppId);
 
-        if (!parentApp) {
-          throw new Error('application_id_not_found ');
-        }
-
-        if (parentApp.application.kind.kind !== 'App') {
+        if (!parentApp || parentApp.application.kind.kind !== 'App') {
           throw new Error('application_id_not_found ');
         }
 
@@ -137,10 +133,8 @@ export class AuthService {
 
   isRedirectUrlValid(redirect: string, app: HatApplication): boolean {
     const setup = app.application.setup;
-    redirect.replace('%23', '#');
-    redirect.replace('%2F', '/');
 
-    return [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(redirect);
+    return [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(decodeURI(redirect));
   }
 
   hatLogin(name: string, redirect: string): Observable<string> {
