@@ -22,6 +22,7 @@ import { SheFeed } from '../../she/she-feed.interface';
 import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 import { SheStaticProfile } from '../../shared/interfaces/she-static-profile.interface';
 import {SystemStatusInterface} from '../../shared/interfaces/system-status.interface';
+import {HatTool} from '../../tools/hat-tools.interface';
 
 @Injectable()
 export class HatApiService {
@@ -366,6 +367,16 @@ export class HatApiService {
 
       return this.authHttp.request(method, completePath, options);
     }
+  }
+
+  getToolList(toolName?: string): Observable<HatTool[]> {
+    let path = `${this.pathPrefix}/she/function`;
+
+    if (toolName) {
+      path += `/${toolName}`
+    }
+
+    return this.authHttp.get<HatTool[]>(path);
   }
 
   getMarkDownContent(path: string): Observable<any> {

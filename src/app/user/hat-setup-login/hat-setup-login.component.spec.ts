@@ -573,7 +573,8 @@ describe('HatSetupLoginComponent', () => {
           queryParams: {'name': 'parent-app', 'redirect': 'redirectUrl', 'dependencies': 'facebook,twitter'} } } },
         { provide: AuthService, useValue: {
             getApplicationsByIds: () => (of([PARENT_APPLICATION_MOCK, DEPENDENCY_APPLICATIONS_MOCK])),
-            appLogin: (applicationId) => of('token')
+            appLogin: (applicationId) => of('token'),
+            isRedirectUrlValid: () => true
         }
         },
         { provide: HatApiService, useValue: {} },

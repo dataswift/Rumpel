@@ -36,7 +36,9 @@ import { DataDebitQuickConfirmComponent } from './data-management/data-debit-qui
 import { HatClaimSuccessComponent } from './hat-claim/hat-claim-success/hat-claim-success.component';
 import { HatClaimComponent } from './hat-claim/hat-claim/hat-claim.component';
 import { SettingsPageComponent } from './settings/settings-page/settings-page.component';
-import {MarkdownViewComponent} from './shared/components/markdown-view/markdown-view.component';
+import { MarkdownViewComponent } from './shared/components/markdown-view/markdown-view.component';
+import { ToolsListComponent } from './tools/tools-list/tools-list.component';
+import {ToolsDetailsComponent} from './tools/tools-details/tools-details.component';
 
 @NgModule({
   imports: [
@@ -66,6 +68,11 @@ import {MarkdownViewComponent} from './shared/components/markdown-view/markdown-
           { path: 'explore/:appKind', component: HatApplicationListComponent },
           { path: 'explore/:appKind/:appId', component: HatApplicationDetailsComponent },
           { path: 'explore/:appKind/:appId/permissions', component: HatAppDetailsPermissionsComponent }
+        ]},
+      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
+        children: [
+          { path: 'tools', component: ToolsListComponent },
+          { path: 'tools/:toolId', component: ToolsDetailsComponent },
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [

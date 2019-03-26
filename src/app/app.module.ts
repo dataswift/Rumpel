@@ -57,6 +57,7 @@ import { HatClaimModule } from './hat-claim/hat-claim.module';
 import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.component';
 import { SystemStatusService } from './services/system-status.service';
 import { WINDOW_PROVIDERS } from './core/services/global.service';
+import { ToolsModule } from './tools/tools.module';
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -88,7 +89,8 @@ export function cookieServiceFactory() {
     CoreModule,
     AppRoutingModule,
     HatClaimModule,
-    SettingsModule
+    SettingsModule,
+    ToolsModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent,

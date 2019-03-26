@@ -41,7 +41,7 @@ interface HatApplicationInfo {
   updateNotes?: HatApplicationUpdateNotes;
 }
 
-interface HatApplicationDeveloper {
+export interface HatApplicationDeveloper {
   id: string;
   name: string;
   url: string;
@@ -53,13 +53,13 @@ interface HatApplicationUpdateNotes {
   notes?: Array<string>;
 }
 
-interface HatApplicationDescription {
+export interface HatApplicationDescription {
   text: string;
   markdown: string;
   html: string;
 }
 
-interface HatApplicationGraphics {
+export interface HatApplicationGraphics {
   banner: HatApplicationGraphicsSize;
   logo: HatApplicationGraphicsSize;
   screenshots: HatApplicationGraphicsSize[];

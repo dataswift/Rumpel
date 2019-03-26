@@ -35,7 +35,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.7.2.2',
+  version: '3.8.0.0',
   name: 'RumpelStaging',
   tokenApp: 'hatappstaging',
   tokenExpiryTime: 3,
@@ -72,6 +72,9 @@ export const configuration: AppConfig = {
 
     { display: 'My public profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
       description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
+
+    { display: 'Tools & insights', icon: 'build', link: '/tools', dataType: '', disable: '',
+      description: 'Tools tools tools!' },
 
     { display: 'Explore HAT apps', icon: 'touch_app', link: '/explore/App', dataType: '', disable: '',
       description: 'Explore all the apps available in the HAT ecosystem.' },

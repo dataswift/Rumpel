@@ -1,0 +1,100 @@
+<div class="app-details" *ngIf="toolDetails$ | async as tool">
+  <div class="app-details-header">
+    <mat-toolbar class="app-details-header-toolbar">
+      <span class="flex-spacer"></span>
+      <mat-icon [matMenuTriggerFor]="moreActionsMenu" class="app-details-close" *ngIf="tool.status.enabled">more_horiz</mat-icon>
+      <mat-icon (click)="closeComponentView()" class="app-details-close" *ngIf="!tool.status.enabled">clear</mat-icon>
+    </mat-toolbar>
+
+    <mat-card class="app-details-header-card">
+      <div class="app-logo-wrapper">
+        <img [src]="tool.info.graphics.logo.normal" height="100" class="img img-responsive app-logo" />
+      </div>
+      <h3 class="app-details-header-title">{{tool.info.name}}</h3>
+
+      <a mat-button [ngClass]="['app-details-status', appStatus]"
+         [href]=""
+         [ngSwitch]="appStatus">
+        <ng-container *ngSwitchCase="'running'"><mat-icon>check_circle</mat-icon>Active</ng-container>
+        <ng-container *ngSwitchCase="'untouched'"><mat-icon>add_circle_outline</mat-icon>Connect</ng-container>
+      </a>
+
+    </mat-card>
+  </div>
+
+  <div class="app-details-content">
+    <mat-tab-group class="app-details-tab-group">
+      <mat-tab label="App Info">
+        <mat-card class="app-details-general">
+          <mat-card-content>
+            <h5 class="app-details-heading">Description</h5>
+            <div class="app-details-description">{{ tool.info.description.text }}</div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="app-details-general"
+                  *ngIf="tool.info.graphics.screenshots && tool.info.graphics.screenshots.length > 0">
+          <mat-card-content>
+            <h5 class="app-details-heading">Screenshots</h5>
+            <div class="app-details-screenshots">
+              <div class="img-wrapper" *ngFor="let screenshot of tool.info.graphics.screenshots">
+                <img src="{{screenshot.normal}}" class="img img-responsive" />
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <rum-list-card *ngIf="appInformation"
+                       [title]="'Information'"
+                       [listData]="[appInformation]"
+                       [expandable]="true"></rum-list-card>
+      </mat-tab>
+
+      <mat-tab label="Data Preview">
+
+        <ng-container *ngIf="dataPreview$ | async as dataPreview">
+          <ng-container *ngIf="dataPreview.length > 0; else noPreview">
+            <ng-container *ngFor="let dataSample of dataPreview">
+              <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+
+        <ng-template #noPreview>
+          <ng-container *ngIf="true">
+            <ng-container *ngIf="true">
+              <div class="no-data-icon">
+                <mat-icon>cloud_queue</mat-icon>
+              </div>
+
+              <div class="no-data-message">
+                No data available
+              </div>
+
+              <ng-container>
+                <div *ngIf="appStatus === 'untouched'" class="no-data-press-connect">
+                  Press the ‘Connect’ button to get started!
+                </div>
+
+                <div *ngIf="appStatus !== 'untouched'" class="no-data-press-connect">
+                  Data Preview not available yet. Stay tuned.
+                </div>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <mat-menu #moreActionsMenu="matMenu">
+    <!--<a mat-menu-item class="actions-menu-item" [routerLink]="['permissions']">-->
+      <!--<mat-icon>phonelink_lock</mat-icon>App permissions-->
+    <!--</a>-->
+    <button mat-menu-item class="actions-menu-item" (click)="disableApp(tool.id)">
+      <mat-icon>link_off</mat-icon>Disable tool
+    </button>
+    <button mat-menu-item class="actions-menu-item">Cancel</button>
+  </mat-menu>
+</div>

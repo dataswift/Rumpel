@@ -1,0 +1,132 @@
+@import '../../style/branding';
+@import "../../style/rumpel-mixins";
+
+.app-link-wrapper {
+  text-decoration: none;
+  color: $text-dark;
+
+  &:hover {
+    color: $text-dark;
+  }
+}
+
+.app-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .mat-card {
+    box-shadow: none;
+    border-radius: 4px;
+
+    .app-logo {
+      border-radius: 50%;
+    }
+
+    .app-name {
+      margin-top: 0;
+      color: $app-dark-tone;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .app-headline {
+      color: $text-dark;
+      font-size: 13px;
+      line-height: 1.23;
+    }
+  }
+}
+
+.app-status-icon {
+  width: 24px;
+  height: 24px;
+  color: $app-accent-color;
+}
+
+@media screen and (max-width: 900px) {
+  .mat-card {
+    margin: 10px 15px;
+    padding: 20px 15px;
+    flex-basis: 100%;
+    justify-content: center;
+
+    &:first-child {
+      margin-top: 20px;
+    }
+
+    &:last-child {
+      margin-bottom: 20px;
+    }
+  }
+
+  .mat-card-content {
+    display: flex;
+    margin-bottom: 0;
+    align-items: center;
+  }
+
+  .app-link-wrapper {
+    .app-logo {
+      margin-right: 15px;
+    }
+
+    .app-description {
+      flex: 1 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .app-name {
+        margin-bottom: 5px;
+      }
+    }
+
+    .app-link-action {
+      display: none;
+    }
+
+    .app-status-icon {
+      margin-left: 15px;
+    }
+  }
+}
+
+@media screen and (min-width: 901px) {
+  .mat-card {
+    margin: 20px 15px;
+    padding: 20px 15px;
+    flex-basis: 0 250px;
+  }
+
+  .mat-card-content {
+    @include flex-container(column);
+    width: 250px;
+  }
+
+  .app-link-wrapper {
+    .app-logo {
+      height: 80px;
+      width: 80px;
+      margin: 20px;
+      margin-top: 30px;
+    }
+
+    .app-description {
+      margin-bottom: 20px;
+      height: 50px;
+      text-align: center;
+    }
+
+    .app-link-action {
+      color: $app-accent-color;
+      text-decoration: underline;
+    }
+
+    .app-status-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+  }
+}
