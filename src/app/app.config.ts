@@ -107,7 +107,7 @@ export const configuration: AppConfig = {
       description: 'Profile description' },
 
     { display: 'Your HAT functionality level is 4 (learn more)', icon: 'keyboard_arrow_right',
-      link: 'terms-of-service',
+      link: 'privacy-policy',
       description: 'Profile description' }
   ],
   settingsPrivateDataMenu: [
