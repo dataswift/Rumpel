@@ -87,26 +87,22 @@
 
 
         <ng-template #noPreview>
-          <ng-container *ngIf="true">
-            <ng-container *ngIf="true">
-              <div class="no-data-icon">
-                <mat-icon>cloud_queue</mat-icon>
-              </div>
+          <div class="no-data-icon">
+            <mat-icon>cloud_queue</mat-icon>
+          </div>
 
-              <div class="no-data-message">
-                No data available
-              </div>
+          <div class="no-data-message">
+            No data available
+          </div>
 
-              <ng-container *ngIf="app.application.kind.kind === 'DataPlug'">
-                <div *ngIf="appStatus === 'untouched'" class="no-data-press-connect">
-                  Press the ‘Connect’ button to get started!
-                </div>
+          <ng-container *ngIf="app.application.kind.kind === 'DataPlug'">
+            <div *ngIf="appStatus === 'untouched'" class="no-data-press-connect">
+              Press the ‘Connect’ button to get started!
+            </div>
 
-                <div *ngIf="appStatus !== 'untouched'" class="no-data-press-connect">
-                  Data Preview not available yet. Stay tuned.
-                </div>
-              </ng-container>
-            </ng-container>
+            <div *ngIf="appStatus !== 'untouched'" class="no-data-press-connect">
+              Data Preview not available yet. Stay tuned.
+            </div>
           </ng-container>
         </ng-template>
       </mat-tab>
