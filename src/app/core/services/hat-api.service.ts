@@ -368,4 +368,9 @@ export class HatApiService {
     }
   }
 
+  getMarkDownContent(path: string): Observable<any> {
+
+    return this.http.get(path, { observe: 'response', responseType: 'text' });
+  }
+
 }

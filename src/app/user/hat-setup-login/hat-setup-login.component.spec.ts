@@ -556,7 +556,6 @@ const DEPENDENCY_APPLICATIONS_MOCK: HatApplication[] = [{'application': {
     'needsUpdating': false
 }];
 
-
 describe('HatSetupLoginComponent', () => {
   let component: HatSetupLoginComponent;
   let fixture: ComponentFixture<HatSetupLoginComponent>;
@@ -610,12 +609,11 @@ beforeEach(() => {
   });
 
 
-  it('should show error', () => {
+  it('should create without dependencies', () => {
     component.hatApp = PARENT_APPLICATION_MOCK;
     component.dependencyApps = null;
 
     fixture.detectChanges();
-
-    expect(component.errorMessage).toEqual(undefined);
+    expect(component).toBeTruthy();
   });
 });

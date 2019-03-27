@@ -35,7 +35,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.7.2.1',
+  version: '3.7.2.2',
   name: 'RumpelStaging',
   tokenApp: 'hatappstaging',
   tokenExpiryTime: 3,
@@ -96,18 +96,18 @@ export const configuration: AppConfig = {
       description: 'Profile description' },
 
     { display: 'Terms of Service', icon: 'keyboard_arrow_right',
-      link: 'https://raw.githubusercontent.com/Hub-of-all-Things/exchange-assets/master/legal/hat-terms-of-service.md',
+      link: 'terms-of-service',
       description: 'Profile description' },
 
     { display: 'Privacy policy', icon: 'keyboard_arrow_right',
-      link: 'https://raw.githubusercontent.com/Hub-of-all-Things/exchange-assets/master/legal/hat-privacy-policy.md',
+      link: 'privacy-policy',
       description: 'Profile description' },
 
     { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org',
       description: 'Profile description' },
 
     { display: 'Your HAT functionality level is 4 (learn more)', icon: 'keyboard_arrow_right',
-      link: 'https://raw.githubusercontent.com/Hub-of-all-Things/exchange-assets/master/legal/hat-privacy-policy.md',
+      link: 'privacy-policy',
       description: 'Profile description' }
   ],
   settingsPrivateDataMenu: [

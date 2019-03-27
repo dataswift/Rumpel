@@ -32,6 +32,7 @@ import { ListCardComponent } from './components/list-card/list-card.component';
 import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.component';
 import { PasswordStrengthIndicatorComponent } from './components/password-strength-indicator/password-strength-indicator.component';
 import { HatAppHmiContentComponent } from './components/hat-app-hmi-content/hat-app-hmi-content.component';
+import { MarkdownViewComponent } from './components/markdown-view/markdown-view.component';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
@@ -52,7 +53,9 @@ import { HatAppHmiContentComponent } from './components/hat-app-hmi-content/hat-
                   ListCardComponent,
                   HatAppHmiComponent,
                   PasswordStrengthIndicatorComponent,
-                  HatAppHmiContentComponent ],
+                  HatAppHmiContentComponent,
+                  MarkdownViewComponent
+  ],
 
   exports: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
              ReplaceCharsPipe, ReplaceCamelCasePipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,

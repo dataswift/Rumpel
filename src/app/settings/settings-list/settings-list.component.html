@@ -24,7 +24,7 @@
     <h3 mat-line class="settings-title">My account settings</h3>
     <mat-list>
       <ng-container *ngFor="let item of settingsMenu; last as last" >
-        <ng-container *ngIf="item.link.includes('http') || item.link.includes('mailto'); else linkIncludesInternal">
+        <ng-container *ngIf="!item.link.includes('.md') && (item.link.includes('http') || item.link.includes('mailto')); else linkIncludesInternal">
             <a mat-list-item href="{{item.link}}" target="_blank" style="cursor: pointer" (click)="close.emit('Close menu')">
               <h3 class="settings-list-row-text" mat-line> {{ item.display }} </h3>
               <mat-icon class="icon">{{item.icon}}</mat-icon>

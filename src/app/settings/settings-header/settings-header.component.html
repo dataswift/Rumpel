@@ -28,7 +28,7 @@
       <ng-container *ngIf="dataBaseUsedPercent">
       <mat-progress-bar mode="determinate" value="{{ dataBaseUsedPercent.kind.metric }}"></mat-progress-bar>
 
-      <div class="app-details-header-headline">{{ dataBaseUsedPercent.kind.metric }}% of {{ dataBaseStorage.kind.metric }}{{ dataBaseStorage.kind.units }} storage used</div>
+      <div class="app-details-header-headline">{{ dataBaseUsedPercent.kind.metric >= 100 ? 100 : dataBaseUsedPercent.kind.metric }}% of {{ dataBaseStorage.kind.metric }}{{ dataBaseStorage.kind.units }} storage used</div>
       </ng-container>
     </ng-container>
 
