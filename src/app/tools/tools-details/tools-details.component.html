@@ -12,12 +12,13 @@
       </div>
       <h3 class="app-details-header-title">{{tool.info.name}}</h3>
 
-      <a mat-button [ngClass]="['app-details-status', appStatus]"
-         [href]=""
+      <button mat-button [ngClass]="['app-details-status', appStatus]"
+              (click)="enableTool(tool.id)"
+              role="button"
          [ngSwitch]="appStatus">
         <ng-container *ngSwitchCase="'running'"><mat-icon>check_circle</mat-icon>Active</ng-container>
         <ng-container *ngSwitchCase="'untouched'"><mat-icon>add_circle_outline</mat-icon>Connect</ng-container>
-      </a>
+      </button>
 
     </mat-card>
   </div>
@@ -89,10 +90,7 @@
   </div>
 
   <mat-menu #moreActionsMenu="matMenu">
-    <!--<a mat-menu-item class="actions-menu-item" [routerLink]="['permissions']">-->
-      <!--<mat-icon>phonelink_lock</mat-icon>App permissions-->
-    <!--</a>-->
-    <button mat-menu-item class="actions-menu-item" (click)="disableApp(tool.id)">
+    <button mat-menu-item class="actions-menu-item" (click)="disableTool(tool.id)">
       <mat-icon>link_off</mat-icon>Disable tool
     </button>
     <button mat-menu-item class="actions-menu-item">Cancel</button>

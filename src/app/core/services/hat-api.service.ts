@@ -369,14 +369,34 @@ export class HatApiService {
     }
   }
 
-  getToolList(toolName?: string): Observable<HatTool[]> {
+  getToolList(toolId?: string): Observable<HatTool[]> {
     let path = `${this.pathPrefix}/she/function`;
 
-    if (toolName) {
-      path += `/${toolName}`
+    if (toolId) {
+      path += `/${toolId}`
     }
 
     return this.authHttp.get<HatTool[]>(path);
+  }
+
+
+  enableTool(toolId: string): Observable<HatTool> {
+    const path = `${this.pathPrefix}/she/function/${toolId}/enable`;
+
+    return this.authHttp.get<HatTool>(path);
+  }
+
+  disableTool(toolId: string): Observable<HatTool> {
+    const path = `${this.pathPrefix}/she/function/${toolId}/disable`;
+
+    return this.authHttp.get<HatTool>(path);
+  }
+
+  triggerToolUpdate(toolId: string): Observable<number> {
+    const path = `${this.pathPrefix}/she/function/${toolId}/trigger`;
+
+    return this.authHttp.get(path, { observe: 'response' })
+      .pipe(map((res: HttpResponse<any>) => res.status));
   }
 
   getMarkDownContent(path: string): Observable<any> {

@@ -57,9 +57,18 @@ export class ToolsDetailsComponent implements OnInit {
     }));
   }
 
-  disableApp(id: string): void {
-    // this.appDetails$ = this.hatToolSvc.disable(id)
-    //   .pipe(tap((app: HatTool) => this.appStatus = this.hatToolSvc.getAppStatus(tool)));
+  disableTool(toolId: string): void {
+    this.toolDetails$ = this.hatToolSvc.disable(toolId)
+      .pipe(tap((tool: HatTool) => this.appStatus = this.hatToolSvc.getToolStatus(tool)));
+  }
+
+  enableTool(toolId: string): void {
+    this.toolDetails$ = this.hatToolSvc.enable(toolId)
+      .pipe(tap((tool: HatTool) => {
+        this.appStatus = this.hatToolSvc.getToolStatus(tool);
+        this.hatToolSvc.triggerUpdate(tool.id).subscribe(status => console.log(status))
+        }
+      ));
   }
 
   closeComponentView(): void {

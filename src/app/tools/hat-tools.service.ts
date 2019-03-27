@@ -41,12 +41,16 @@ export class HatToolsService {
     return this.hatSvc.getSheRecords(endpoint, since, until);
   }
 
-  enable(id: string): Observable<HatApplication> {
-    return this.hatSvc.setupApplication(id);
+  enable(id: string): Observable<HatTool> {
+    return this.hatSvc.enableTool(id);
   }
 
-  disable(id: string): Observable<HatApplication> {
-    return this.hatSvc.disableApplication(id);
+  disable(id: string): Observable<HatTool> {
+    return this.hatSvc.disableTool(id);
+  }
+
+  triggerUpdate(id: string): Observable<number> {
+    return this.hatSvc.triggerToolUpdate(id);
   }
 
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
