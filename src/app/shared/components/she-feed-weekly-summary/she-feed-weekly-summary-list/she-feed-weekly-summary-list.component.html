@@ -1,0 +1,17 @@
+<mat-list>
+  <ng-container *ngIf="nestedStructure">
+    <ng-container *ngFor="let row of nestedStructure; last as last">
+      <mat-list-item>
+        <div mat-line>
+          <div class="source-content">
+            <img src="/assets/icons/she-{{imageAsset(row.source)}}.{{row.source === 'notables'? 'png' : 'svg'}}" height="25" width="25" class="source-icon"/>
+            <h5 class="settings-list-row-content"> {{ row.content }} </h5>
+          </div>
+        </div>
+        <h5 class="settings-list-row-badge"> {{ row.badge }} </h5>
+        <mat-divider *ngIf="!last"></mat-divider>
+      </mat-list-item>
+
+    </ng-container>
+  </ng-container>
+</mat-list>

@@ -30,6 +30,13 @@ interface SheTitle {
 interface SheContent {
   text: string;
   media?: Array<{ url: string; }>;
+  nestedStructure?: { [key: string]: SheNestedStructure[]; };
+}
+
+export interface SheNestedStructure {
+  content: string;
+  badge?: string;
+  type?: string[];
 }
 
 interface SheLocation {

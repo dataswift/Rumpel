@@ -4,6 +4,7 @@ import { SheFeedRollupComponent } from './she-feed-rollup.component';
 import { SheFeedItemComponent } from '../../shared/components/she-feed-item/she-feed-item.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
+import {SheFeedWeeklySummaryModule} from '../../shared/components/she-feed-weekly-summary/she-feed-weekly-summary.module';
 
 describe('SheFeedRollupComponent', () => {
   let component: SheFeedRollupComponent;
@@ -11,7 +12,7 @@ describe('SheFeedRollupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ CustomAngularMaterialModule ],
+      imports: [ CustomAngularMaterialModule, SheFeedWeeklySummaryModule ],
       declarations: [ SheFeedRollupComponent, SheFeedItemComponent, MomentPipe ]
     })
     .compileComponents();
