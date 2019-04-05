@@ -21,7 +21,7 @@ mat-list {
   margin-left: 20px;
   color: $app-dark-tone;
   line-height: 1.5;
-  text-align: start;
+  text-align: left;
 }
 
 .settings-list-row-badge {
@@ -47,13 +47,14 @@ mat-list {
   word-wrap: break-word !important;
   white-space: pre-wrap !important;
 
-  &:first-child {
-    //border-top-left-radius: 4px;
-    //border-top-right-radius: 4px;
-  }
-
   &:last-child {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
+  }
+
+  .weekly-summary-mat-list-divider {
+    left: 60px !important;
+    right: 16px !important;
+    width: calc(100% - 76px) !important;
   }
 }
