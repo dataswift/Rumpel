@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HatTool } from '../hat-tools.interface';
-import {HatToolsService} from '../hat-tools.service';
+import { HatToolsService } from '../hat-tools.service';
 
 @Component({
   selector: 'rum-tools-list',
@@ -13,21 +13,20 @@ export class ToolsListComponent implements OnInit {
   public tool$: Observable<HatTool[]>;
   public headerProps$: Observable<{ title: string; headline: string; icon: string; }>;
 
-  constructor(private hatToolService: HatToolsService) { }
+  constructor(private hatToolSvc: HatToolsService) { }
 
   ngOnInit() {
-    this.tool$ = this.hatToolService.getToolList();
+    this.tool$ = this.hatToolSvc.getToolList();
     this.headerProps$ = of({ title: 'Tools',
     headline: 'Tools and Insights are powered by the Smart HAT Engine (SHE)',
-    icon: 'build', })
+    icon: 'assessment', })
   }
 
   statusIcon(tool: HatTool): string {
-    switch (this.hatToolService.getToolStatus(tool)) {
-      case 'running':
-        return 'check_circle';
-      default:
-        return 'add_circle_outline';
+    if (this.hatToolSvc.getToolStatus(tool) === 'running') {
+      return 'check_circle';
+    } else {
+      return 'add_circle_outline';
     }
   }
 

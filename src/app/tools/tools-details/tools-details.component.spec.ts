@@ -8,6 +8,7 @@ import {Location} from '@angular/common';
 import {HatToolsService} from '../hat-tools.service';
 import {of} from 'rxjs';
 import {HatTool} from '../hat-tools.interface';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 const TOOL_MOCK: HatTool = {
   'id': 'data-feed-counter',
@@ -205,13 +206,18 @@ describe('ToolsDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ CustomAngularMaterialModule, SharedModule ],
+      imports: [ CustomAngularMaterialModule, SharedModule, NoopAnimationsModule ],
       declarations: [ ToolsDetailsComponent ],
       providers: [
         { provide: ActivatedRoute, useValue: { 'params': of([{ 'toolId': 'tools' }]) } },
 
         { provide: Location, useValue: { } },
-        { provide: HatToolsService, useValue: { getToolList: () => of(TOOL_MOCK_ARRAY) } }
+        { provide: HatToolsService, useValue: {
+          getToolList: () => of(TOOL_MOCK_ARRAY),
+            getToolDetails: () => of(TOOL_MOCK),
+            getToolStatus: () => 'untouched',
+            getToolData: () => of([])
+        } }
       ]
     })
     .compileComponents();

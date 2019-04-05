@@ -399,7 +399,7 @@ export class HatApiService {
       .pipe(map((res: HttpResponse<any>) => res.status));
   }
 
-  getMarkDownContent(path: string): Observable<any> {
+  getMarkDownContent(path: string): Observable<HttpResponse<string>> {
 
     return this.http.get(path, { observe: 'response', responseType: 'text' });
   }

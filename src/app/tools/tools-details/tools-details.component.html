@@ -56,7 +56,12 @@
         <ng-container *ngIf="dataPreview$ | async as dataPreview">
           <ng-container *ngIf="dataPreview.length > 0; else noPreview">
             <ng-container *ngFor="let dataSample of dataPreview">
-              <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-item>
+              <ng-container *ngIf="dataSample.types.includes('insight') && dataSample.types.includes('activity')">
+                <rum-she-feed-weekly-summary class="card-wrapper" [feedItem]="dataSample"></rum-she-feed-weekly-summary>
+              </ng-container>
+              <ng-container *ngIf="!(dataSample.types.includes('insight') && dataSample.types.includes('activity'))">
+                <rum-she-feed-item class="card-wrapper" [feedItem]="dataSample" >></rum-she-feed-item>
+              </ng-container>
             </ng-container>
           </ng-container>
         </ng-container>

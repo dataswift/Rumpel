@@ -4,9 +4,12 @@ import {SheFeed} from '../../she/she-feed.interface';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {mergeMap, tap} from 'rxjs/operators';
-import * as format from 'date-fns/format';
 import {HatToolsService} from '../hat-tools.service';
 import {HatTool} from '../hat-tools.interface';
+import * as startOfDay from 'date-fns/start_of_day';
+import * as subMonths from 'date-fns/sub_months';
+import * as parse from 'date-fns/parse';
+import * as format from 'date-fns/format';
 
 @Component({
   selector: 'rum-tools-details',
@@ -45,10 +48,15 @@ export class ToolsDetailsComponent implements OnInit {
             ['support email', supportContact]
           ];
 
-          if (tool.status.enabled && tool.info.dataPreviewEndpoint) {
-            this.dataPreview$ = this.hatToolSvc.getApplicationData(
-              // remove the first slash from the endpoint
-              tool.info.dataPreviewEndpoint.substr(1, tool.info.dataPreviewEndpoint.length)
+          if (tool.status.enabled && tool.info.dataPreviewEndpoint && tool.status.lastExecution) {
+            const defaultUntil = parse(tool.status.lastExecution);
+            const defaultSince = subMonths(startOfDay(defaultUntil), 1);
+
+            this.dataPreview$ = this.hatToolSvc.getToolData(
+              // removes the first slash from the endpoint
+              tool.info.dataPreviewEndpoint.substr(1, tool.info.dataPreviewEndpoint.length),
+              format(defaultSince, 'X'),
+              format(defaultUntil, 'X')
             );
           } else {
             this.dataPreview$ = of([]);

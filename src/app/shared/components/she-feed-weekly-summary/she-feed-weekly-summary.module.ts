@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {CustomAngularMaterialModule} from '../../../core/custom-angular-material.module';
 import {SheFeedWeeklySummaryComponent} from './she-feed-weekly-summary/she-feed-weekly-summary.component';
 import {SheFeedWeeklySummaryListComponent} from './she-feed-weekly-summary-list/she-feed-weekly-summary-list.component';
-import {SheFeedWeeklySummaryRowComponent} from './she-feed-weekly-summary-row/she-feed-weekly-summary-row.component';
 import {InsightWeeklySummaryPipe} from '../../pipes';
 
 @NgModule({
@@ -14,7 +13,6 @@ import {InsightWeeklySummaryPipe} from '../../pipes';
   declarations: [
     SheFeedWeeklySummaryComponent,
     SheFeedWeeklySummaryListComponent,
-    SheFeedWeeklySummaryRowComponent,
     InsightWeeklySummaryPipe
   ],
   exports: [ SheFeedWeeklySummaryComponent ]

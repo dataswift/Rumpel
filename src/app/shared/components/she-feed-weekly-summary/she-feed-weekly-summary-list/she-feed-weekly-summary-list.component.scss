@@ -3,6 +3,11 @@
 mat-list {
   max-width: 500px;
   margin: auto;
+  padding-top: 0 !important;
+}
+.mat-line {
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
 }
 
 .source-icon {
@@ -15,27 +20,36 @@ mat-list {
   float:left;
   margin-left: 20px;
   color: $app-dark-tone;
+  line-height: 1.5;
+  text-align: start;
 }
 
 .settings-list-row-badge {
   font-size: 14px;
   font-weight: bold;
   color: $app-dark-tone;
+  line-height: 1.5;
+  text-align: right;
 }
 
 .source-content {
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-/deep/ mat-list-item {
+/deep/ .weekly-summary-mat-list-item {
   background: white;
   letter-spacing: 0.5px;
+  height:initial !important;
+  word-wrap: break-word !important;
+  white-space: pre-wrap !important;
 
   &:first-child {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    //border-top-left-radius: 4px;
+    //border-top-right-radius: 4px;
   }
 
   &:last-child {

@@ -1,5 +1,18 @@
 <ng-container *ngIf="feedItem">
-  <rum-she-feed-weekly-summary-list [nestedStructure]="feedItem.content.nestedStructure | InsightWeeklySummary">
-  </rum-she-feed-weekly-summary-list>
+  <div class="weekly-summary-row">
+    <div class="weekly-summary-header-container">
+      <div class="title-container">
+        <div class="weekly-summary-title">{{feedItem.title.text}}</div>
+        <div class="weekly-summary-subtitle">{{feedItem.title.subtitle}}</div>
+      </div>
+
+      <div class="weekly-summary-icon-container">
+        <img src="/assets/icons/tools_icon.png" alt="" width="30" height="30">
+      </div>
+
+    </div>
+    <rum-she-feed-weekly-summary-list [nestedStructure]="feedItem.content.nestedStructure | InsightWeeklySummary">
+    </rum-she-feed-weekly-summary-list>
+  </div>
 </ng-container>
 

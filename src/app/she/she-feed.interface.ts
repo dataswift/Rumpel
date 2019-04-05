@@ -24,6 +24,7 @@ export interface SheFeed {
 
 interface SheTitle {
   text: string;
+  subtitle?: string;
   action: string;
 }
 
