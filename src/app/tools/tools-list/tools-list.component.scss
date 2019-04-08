@@ -41,7 +41,22 @@
 .app-status-icon {
   width: 24px;
   height: 24px;
-  color: $app-accent-color;
+
+  &.running, &.goto {
+    color: $app-active-color;
+  }
+
+  &.fetching, &.untouched {
+    color: $app-accent-color;
+  }
+
+  &.failing {
+    color: $app-failing-color;
+  }
+
+  &.update {
+    color: $app-update-color;
+  }
 }
 
 @media screen and (max-width: 900px) {

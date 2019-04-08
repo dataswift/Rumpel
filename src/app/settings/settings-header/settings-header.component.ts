@@ -48,7 +48,7 @@ export class SettingsHeaderComponent implements OnInit {
       this.values = profile.values;
     });
 
-    this.profilesSvc.getProfileData();
+    // this.profilesSvc.getProfileData();
 
     this.systemStatus$ = this.systemStatusSvc.fetchSystemStatus().pipe(
       tap((records: SystemStatusInterface[]) => {

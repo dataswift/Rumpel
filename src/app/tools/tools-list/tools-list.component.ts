@@ -22,6 +22,11 @@ export class ToolsListComponent implements OnInit {
     icon: 'assessment', })
   }
 
+  toolStatus(tool: HatTool): string {
+
+    return this.hatToolSvc.getToolStatus(tool)
+  }
+
   statusIcon(tool: HatTool): string {
     if (this.hatToolSvc.getToolStatus(tool) === 'running') {
       return 'check_circle';

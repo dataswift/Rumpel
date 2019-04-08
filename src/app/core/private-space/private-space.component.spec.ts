@@ -13,6 +13,7 @@ import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { AuthService } from '../services/auth.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {SystemStatusService} from '../../services/system-status.service';
 
 describe('PrivateSpaceComponent', () => {
   let component: PrivateSpaceComponent;
@@ -26,9 +27,12 @@ describe('PrivateSpaceComponent', () => {
         { provide: APP_CONFIG, useValue: { mainMenu: [], appsMenu: [] }},
         { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]), enable: () => of({}) } },
         { provide: DataOfferService, useValue: { offers$: of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } },
+        { provide: SystemStatusService, useValue: { fetchSystemStatus: () => of([])} },
         { provide: DialogService, useValue: {} },
         { provide: AuthService, useValue: { user$: of({}), getApplicationDetails: () => of({}) } },
-        { provide: ProfilesService, useValue: { profileData$: of({}) } }
+        { provide: ProfilesService, useValue: {
+            getProfileData: () => null,
+            profileData$: of({}) } }
       ]
     })
     .compileComponents();

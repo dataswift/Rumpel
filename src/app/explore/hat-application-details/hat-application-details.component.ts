@@ -73,6 +73,14 @@ export class HatApplicationDetailsComponent implements OnInit {
     return this.hatAppSvc.generateHatLoginLink(id, setup);
   }
 
+  getTabName(kind: string): string {
+    if (kind === 'App') {
+      return 'App Info';
+    } else {
+      return 'Plug Info';
+    }
+  }
+
   disableApp(id: string): void {
     this.appDetails$ = this.hatAppSvc.disable(id)
       .pipe(tap((app: HatApplication) => this.appStatus = this.hatAppSvc.getAppStatus(app)));

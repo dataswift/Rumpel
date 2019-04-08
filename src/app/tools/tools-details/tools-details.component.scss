@@ -146,15 +146,15 @@
       color: white;
 
       &.running {
-        border: 1px solid $app-accent-color;
+        border: 1px solid $app-active-color;
         background-color: transparent;
-        color: $app-accent-color;
+        color: $app-active-color;
       }
       &.fetching {
         color: $app-accent-color;
       }
       &.failing {
-        background-color: #E36682;
+        background-color: $app-failing-color;
       }
       &.untouched, &.goto {
         background-color: $app-accent-color;
@@ -169,7 +169,7 @@
       padding-bottom: 20px;
       margin-top: -10px;
       width: 80%;
-      color: #E36682;
+      color: $app-failing-color;
       font-size: 13px;
       line-height: 1.38;
       letter-spacing: 0.5px;

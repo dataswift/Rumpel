@@ -17,6 +17,8 @@ import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { AuthService } from '../services/auth.service';
 import { of } from 'rxjs';
+import {CustomAngularMaterialModule} from '../custom-angular-material.module';
+import {SystemStatusService} from '../../services/system-status.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -24,13 +26,16 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, MatMenuModule, MatIconModule ],
+      imports: [ RouterTestingModule, MatMenuModule, MatIconModule, CustomAngularMaterialModule ],
       declarations: [ HeaderComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: DialogService, useValue: {} },
+        { provide: SystemStatusService, useValue: { fetchSystemStatus: () => of([])} },
         { provide: AuthService, useValue: { user$: of({}) } },
-        { provide: ProfilesService, useValue: { profileData$: of({}) } }
+        { provide: ProfilesService, useValue: {
+            getProfileData: () => null,
+            profileData$: of({}) } }
       ]
     })
       .compileComponents();

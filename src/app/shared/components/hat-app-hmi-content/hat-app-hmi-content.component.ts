@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {HatApplication} from '../../../explore/hat-application.interface';
+import {HatApplication, HatApplicationContent} from '../../../explore/hat-application.interface';
 
 @Component({
   selector: 'rum-hat-app-hmi-content',
@@ -7,7 +7,7 @@ import {HatApplication} from '../../../explore/hat-application.interface';
   styleUrls: ['./hat-app-hmi-content.component.scss']
 })
 export class HatAppHmiContentComponent implements OnInit {
-  @Input() app: HatApplication;
+  @Input() appContent: HatApplicationContent;
 
   constructor() { }
 
@@ -21,6 +21,8 @@ export class HatAppHmiContentComponent implements OnInit {
           return `<b>Read</b> data from the ${role.detail} namespace.`;
         case 'namespacewrite':
           return `<b>Write</b> data into the ${role.detail} namespace.`;
+        case 'managefiles':
+          return `Manage files on ${role.detail} namespace.`;
         case 'applicationmanage':
           return `The app needs to be able to manage ${role.detail} app.`;
         case 'applicationlist':

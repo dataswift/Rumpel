@@ -25,7 +25,7 @@
         <div class="app-link-action">View app</div>
 
 
-        <mat-icon class="app-status-icon"
+        <mat-icon [ngClass]="['app-status-icon', applicationStatus(app)]"
                   [class.error]="app.setup && !app.active && app.mostRecentData">
           {{ statusIcon(app) }}
         </mat-icon>

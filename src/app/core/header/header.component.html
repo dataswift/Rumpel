@@ -27,7 +27,7 @@
       </span>
 
       <span class="welcome">Welcome {{profile.hatId}}<br>
-        <span *ngIf="config.native">Last login: {{accountStatus?.previousLogin}}</span>
+        <span *ngIf="previousLogin">Last login: {{previousLogin.kind.metric}}</span>
       </span>
 
       <mat-icon>{{accountMenuBtn.menuOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
@@ -41,14 +41,17 @@
         <img [src]="profile.photo.url ? profile.photo.url : '/assets/icons/user-account-icon-blue.svg'">
         <h6 class="welcome">{{profile?.hatId}}<br><span>&#46;{{profile?.domain}}</span></h6>
       </div>
-
-      <div class="accountUsage" *ngIf="config.native">
-        <div class="bar-container"><div class="bar" [style.width]="[accountStatus?.databaseStorageUsedShare.metric + accountStatus?.databaseStorageUsedShare.units]"></div></div>
-        <h6>{{accountStatus?.databaseStorageUsedShare.metric}}{{accountStatus?.databaseStorageUsedShare.units}} of {{round(accountStatus?.databaseStorage.metric, 2)}} {{accountStatus?.databaseStorage.units}} storage used</h6>
-      </div>
+      <ng-container *ngIf="systemStatus$ | async as systemStatus">
+        <ng-container *ngIf="dataBaseUsedPercent">
+          <div class="accountUsage">
+            <mat-progress-bar mode="determinate" value="{{ dataBaseUsedPercent.kind.metric }}"></mat-progress-bar>
+            <div class="app-details-header-headline">{{ dataBaseUsedPercent.kind.metric >= 100 ? 100 : dataBaseUsedPercent.kind.metric }}% of {{ dataBaseStorage.kind.metric }}{{ dataBaseStorage.kind.units }} storage used</div>
+          </div>
+        </ng-container>
+      </ng-container>
     </div>
 
-    <ng-container *ngIf="config.native">
+    <ng-container >
       <div mat-menu-item class="dropdown-divider"></div>
 
       <a mat-menu-item class="dropdown-item"
@@ -61,7 +64,7 @@
          [routerLink]="['/user', 'password', 'change']">Change password</a>
     </ng-container>
 
-    <div mat-menu-item class="dropdown-divider" *ngIf="config.native"></div>
+    <div mat-menu-item class="dropdown-divider" ></div>
 
     <a mat-menu-item class="dropdown-item" (click)="signOut()" style="display: flex; align-items: center;">
       Logout <mat-icon style="color: rgba(135, 135, 135, 0.3);">exit_to_app</mat-icon>

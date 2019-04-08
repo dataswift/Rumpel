@@ -12,6 +12,8 @@ export class SystemStatusService {
   fetchSystemStatus(): Observable<SystemStatusInterface[]> {
     return this.hat.getSystemStatusRecords()
       .pipe(map((status: SystemStatusInterface[]) =>
-        status.filter(record => record.title === 'Database Storage' || record.title === 'Database Storage Used Share')));
+        status.filter(record => record.title === 'Database Storage' ||
+          record.title === 'Database Storage Used Share' ||
+          record.title === 'Previous Login')));
   }
 }
