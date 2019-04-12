@@ -35,10 +35,11 @@ interface HatApplicationInfo {
   dataUsePurpose: string;
   graphics: HatApplicationGraphics;
   published: boolean;
-  rating: { score: string; };
+  rating: { score: string; points: number; };
   supportContact: string;
   termsUrl: string;
   updateNotes?: HatApplicationUpdateNotes;
+  primaryColor?: string;
 }
 
 export interface HatApplicationDeveloper {
@@ -106,6 +107,7 @@ interface HatApplicationStatus {
   expectedStatus: number;
   dataPreviewEndpoint: string;
   recentDataCheckEndpoint: string;
+  staticDataPreviewEndpoint?: string;
   versionReleaseDate: string;
   statusUrl: string;
   kind: string;

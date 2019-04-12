@@ -11,7 +11,7 @@
   height: 234px;
   width: 100%;
   background-size: contain;
-  background-image: url('/assets/images/piggy.jpg');
+  //background-image: url('/assets/images/piggy.jpg');
   background-repeat: no-repeat;
   background-color: #2b313d;
   // background-position: 100% 100%;
@@ -20,7 +20,7 @@
     color: #6297b1;
     font-size: 13px;
     font-weight: bold;
-    padding-bottom: 20px;
+    padding-bottom: 16px;
     text-decoration: none;
   }
 
@@ -55,7 +55,7 @@
     padding: 0 2em;
     padding-bottom: 20px;
     border-radius: 4px;
-    width: 95%;
+    width: 90%;
     max-width: 500px;
     display: flex;
     flex-direction: column;
@@ -110,6 +110,30 @@
           border-bottom-color: #dfc586;
         }
 
+        &.red {
+          background-color: #d36969;
+
+          &:before {
+            border-bottom-color: #d36969;
+          }
+        }
+
+        &.green {
+          background-color: #7db774;
+
+          &:before {
+            border-bottom-color: #7db774;
+          }
+        }
+
+        &.gold {
+          background-color: #dfc586;
+
+          &:before {
+            border-bottom-color: #dfc586;
+          }
+        }
+
         &-highlighted {
           font-weight: bold;
         }
@@ -121,8 +145,10 @@
     }
 
     .app-details-header-title {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 10px;
       color: $app-dark-tone;
     }
 
@@ -194,7 +220,9 @@
 }
 
 .app-details-content {
-  padding: 0 12px;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 90%;
 
   .mat-card {
     margin: 15px auto;
