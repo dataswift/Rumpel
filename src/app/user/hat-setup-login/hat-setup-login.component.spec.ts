@@ -49,7 +49,8 @@ const PARENT_APPLICATION_MOCK: HatApplication = {
       'dataUsePurpose': '',
       'supportContact': '',
       'rating': {
-        'score': 'AA*A'
+        'score': 'AA*A',
+        'points': 15
       },
       'dataPreview': [],
       'graphics': {
@@ -225,7 +226,8 @@ const DEPENDENCY_APPLICATIONS_MOCK: HatApplication[] = [{'application': {
       'dataUsePurpose': '',
       'supportContact': '',
       'rating': {
-      'score': 'AA*A'
+        'score': 'AA*A',
+        'points': 0
     },
     'dataPreview': [],
       'graphics': {
@@ -400,7 +402,8 @@ const DEPENDENCY_APPLICATIONS_MOCK: HatApplication[] = [{'application': {
       'dataUsePurpose': '',
       'supportContact': '',
       'rating': {
-      'score': 'AA*A'
+        'score': 'AA*A',
+        'points': 12
     },
     'dataPreview': [],
       'graphics': {

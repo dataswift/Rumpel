@@ -52,7 +52,7 @@ export class HatApplicationsService {
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     const redirectUrl = setup.url || setup.iosUrl || '';
 
-    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}`;
+    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}?redirect=www.google.com`;
   }
 
   getAppStatus(app: HatApplication): 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update' {

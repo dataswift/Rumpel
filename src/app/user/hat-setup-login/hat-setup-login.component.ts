@@ -16,6 +16,7 @@ import { HatApiService } from '../../core/services/hat-api.service';
 import { MatDialog } from '@angular/material';
 import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
 import { WINDOW } from '../../core/services/global.service';
+import {HatSetupCacheService} from './hat-setup-cache.service';
 
 @Component({
   selector: 'rum-hat-setup-login',
@@ -33,6 +34,7 @@ export class HatSetupLoginComponent implements OnInit {
               @Inject(WINDOW) private windowRef: Window,
               private authSvc: AuthService,
               private hatApiSvc: HatApiService,
+              private hatCacheSvc: HatSetupCacheService,
               public dialog: MatDialog,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -55,7 +57,7 @@ export class HatSetupLoginComponent implements OnInit {
             console.log('parent app: ' + parentApp);
             console.log('dependency apps: ' + dependencyApps);
 
-            this.setupAppDependencies(parentApp, dependencyApps, redirect);
+            this.setupAppDependencies(parentApp, dependencyApps, redirect); // TODO remove comment
           } else {
             this.hatApp = parentApp;
             this.dependencyApps = dependencyApps;
@@ -114,10 +116,11 @@ export class HatSetupLoginComponent implements OnInit {
   agreeTerms(appId: string): void {
     this.authSvc.setupApplication(appId)
       .subscribe((hatApp: HatApplication) => {
+        this.hatCacheSvc.setParentApp(hatApp);
         if (this.dependencyApps.every(app => app.enabled === true)) {
           this.buildRedirect(hatApp);
         } else {
-          this.setupAppDependencies(hatApp, this.dependencyApps, this.redirect);
+          // this.setupAppDependencies(hatApp, this.dependencyApps, this.redirect); // TODO remove comments
         }
       });
   }

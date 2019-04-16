@@ -5,30 +5,67 @@ import {shareReplay} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class HatSetupService {
-  private cache$: Observable<HatApplication[]>;
+export class HatSetupCacheService {
 
   constructor(private hatSvc: HatApiService) {
   }
 
   getApplicationHmi(): Observable<HatApplication[]> {
-    const parentApp = window.localStorage.getItem('apps-parent');
-    const dependencies = window.localStorage.getItem('apps-dependencies') || [];
-
+    const parentApp: HatApplication[] = this.getParentApp();
+    const dependencies: HatApplication[] = this.getDependencyApps() || [];
+    let cachedApps: HatApplication[] = [];
     if (parentApp) {
-      this.cache$ = of(JSON.parse(storage));
+      cachedApps = cachedApps.concat(parentApp);
+    }
+    if (dependencies) {
+      cachedApps = cachedApps.concat(dependencies);
+    }
+    console.log('cachedApps', cachedApps);
+
+    if (cachedApps.length > 0) {
+      return of(cachedApps);
     }
 
-    console.log('cache', this.cache$);
-    if (!this.cache$) {
-      console.log(this.cache$);
+    return this.hatSvc.getApplicationHmi();
+  }
 
-      this.cache$ = this.hatSvc.getApplicationHmi().pipe(
-        shareReplay(1)
-      );
+  setParentApp(value: HatApplication) {
+    if (value) {
+      this.storeApp('apps-parent', [value]);
     }
+  }
+  setDependencyApps(value: HatApplication[]) {
+    if (value) {
+      this.storeApp('apps-dependencies', value);
+    }
+  }
+  getParentApp(): HatApplication[] {
+    return this.getCachedApp('apps-parent');
+  }
+  getDependencyApps(): HatApplication[] {
+    return this.getCachedApp('apps-dependencies');
+  }
 
-    return this.cache$;
+  refreshDependencyApp(newApp: HatApplication) {
+    if (newApp) {
+      const cachedDependencyApps = this.getDependencyApps();
+      const newApps = cachedDependencyApps.map( app => {
+        return app.application.id === newApp.application.id ? newApp : app;
+      });
+      this.setDependencyApps(newApps);
+    }
+  }
+
+  storeApp(key: string, value: HatApplication[]) {
+    if (key && value) {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    }
+  }
+
+  getCachedApp(key: string): HatApplication[] {
+    if (key) {
+      return JSON.parse(window.localStorage.getItem(key));
+    }
   }
 
 }

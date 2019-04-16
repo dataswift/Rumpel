@@ -42,6 +42,8 @@ export class LoginOauthComponent implements OnInit {
         } else {
           this.hatApp = hatApp;
         }
+
+        console.log('redirect', this.route.snapshot.queryParams['redirect']);
       },
       error => {
           // console.warn('Failed to login. Reason: ', error);
@@ -67,12 +69,14 @@ export class LoginOauthComponent implements OnInit {
   buildRedirect(appName: string): void {
     // Use internal login option when forcing HAT-native version through terms approval process
     const internal = this.route.snapshot.queryParams['internal'] === 'true';
+    const redirect = this.route.snapshot.queryParams['redirect'];
 
     if (internal) {
-      this.router.navigate([this.route.snapshot.queryParams['redirect']]);
+      this.router.navigate([redirect]);
     } else {
       this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
-        window.location.href = `${this.route.snapshot.queryParams['redirect']}?token=${accessToken}`;
+
+        window.location.href = `${redirect}${redirect.includes('?') ? '&' : '?'}token=${accessToken}`;
       });
     }
   }

@@ -13,6 +13,7 @@ import * as isFuture from 'date-fns/is_future';
 import * as addDays from 'date-fns/add_days';
 import { HttpResponse } from '@angular/common/http';
 import { uniq } from 'lodash';
+import {HatSetupCacheService} from '../../user/hat-setup-login/hat-setup-cache.service';
 
 declare const httpProtocol: string;
 
@@ -28,7 +29,8 @@ export class AuthService {
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private storageSvc: BrowserStorageService,
-              private hatSvc: HatApiService) {
+              private hatSvc: HatApiService,
+              private hatCacheSvc: HatSetupCacheService) {
 
     const previouslySavedToken = this.storageSvc.getAuthToken();
 
@@ -99,7 +101,7 @@ export class AuthService {
 
   getApplicationsByIds(parentAppId: string, redirect: string, dependencyAppIds?: string):
     Observable<(HatApplication | HatApplication[])[]> {
-    return this.hatSvc.getApplicationHmi()
+    return this.hatCacheSvc.getApplicationHmi()
       .pipe(map((apps: HatApplication[]) => {
         const parentApp = apps.find(app => app.application.id === parentAppId);
 
@@ -107,7 +109,11 @@ export class AuthService {
           throw new Error('application_id_not_found ');
         }
 
-        const parentDependencies = parentApp.application.setup.dependencies || [];
+        // const parentDependencies = parentApp.application.setup.dependencies || [];
+        const parentDependencies = ['facebook', 'twitter', 'instagram'];
+
+        this.hatCacheSvc.setParentApp(parentApp);
+        this.hatCacheSvc.setDependencyApps(apps.filter(app => parentDependencies.indexOf(app.application.id) > -1));
 
         let validDependencies = false;
         let dependencyAppsArray: string[];
