@@ -7,14 +7,14 @@
       <rum-hat-claim-url [hatName]="hatName" [hatDomain]="hatDomain"></rum-hat-claim-url>
     </ng-container>
     <ng-container *ngSwitchCase="3">
-      <rum-hat-claim-subscriptions></rum-hat-claim-subscriptions>
-    </ng-container>
-    <ng-container *ngSwitchCase="4">
       <rum-hat-claim-new-password
         [hatName]="hatName"
         [hatDomain]="hatDomain"
         (password)="handlePasswordUpdate($event)">
       </rum-hat-claim-new-password>
+    </ng-container>
+    <ng-container *ngSwitchCase="4">
+      <rum-hat-claim-subscriptions></rum-hat-claim-subscriptions>
     </ng-container>
     <ng-container *ngSwitchCase="5">
       <rum-hat-claim-confirmation></rum-hat-claim-confirmation>

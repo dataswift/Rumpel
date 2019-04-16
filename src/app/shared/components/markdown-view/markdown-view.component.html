@@ -1,0 +1,8 @@
+<div class="markDownScreen">
+  <ng-container *ngIf="markdownProps$ | async as props">
+    <ng-container *ngIf="markdownContent$ | async as content">
+      <div [innerHTML]="content | markdownToHtml | safeHtml"></div>
+    </ng-container>
+  </ng-container>
+</div>
+

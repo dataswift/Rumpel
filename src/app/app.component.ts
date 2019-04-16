@@ -16,6 +16,7 @@ import { GlobalMessagingService } from './services/global-messaging.service';
 import { InfoBoxComponent } from './core/info-box/info-box.component';
 import { DialogService } from './core/dialog.service';
 import { filter } from 'rxjs/operators';
+import { WINDOW } from './core/services/global.service';
 
 @Component({
   selector: 'rum-app',
@@ -33,17 +34,18 @@ export class AppRootComponent implements OnInit {
   private appExpireTime: moment.Moment;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
-            private messagingSvc: GlobalMessagingService,
-            private dialogSvc: DialogService,
-            private authSvc: AuthService,
-            private router: Router) {
+              @Inject(WINDOW) private windowRef: Window,
+              private messagingSvc: GlobalMessagingService,
+              private dialogSvc: DialogService,
+              private authSvc: AuthService,
+              private router: Router) {
 
-        router.events.pipe(
-            filter(event => event instanceof NavigationEnd)
-        ).subscribe(_ => {
-          window.scroll(0, 0);
-          this.isPublicPage = router.isActive('public', false);
-        });
+    router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(_ => {
+      this.windowRef.scroll(0, 0);
+      this.isPublicPage = router.isActive('public', false);
+    });
   }
 
   ngOnInit() {
@@ -66,9 +68,9 @@ export class AppRootComponent implements OnInit {
     });
 
 
-    window.onfocus = () => {
+    this.windowRef.onfocus = () => {
       if (moment().isAfter(this.appExpireTime)) {
-        window.location.reload(true);
+        this.windowRef.location.reload(true);
       }
     };
 

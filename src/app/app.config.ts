@@ -30,14 +30,16 @@ export class AppConfig {
   };
   mainMenu: Array<{ [key: string]: string; }>;
   appsMenu: Array<{ [key: string]: string; }>;
+  settingsMenu: Array<{ [key: string]: string; }>;
+  settingsPrivateDataMenu: Array<{ [key: string]: string; }>;
 }
 
 export const configuration: AppConfig = {
-  version: '3.7.1.2',
-  name: 'Rumpel',
-  tokenApp: 'hatapp',
+  version: '3.7.2.2',
+  name: 'RumpelStaging',
+  tokenApp: 'hatappstaging',
   tokenExpiryTime: 3,
-  supportedDomains: ['.hubofallthings.net', '.hat.direct'],
+  supportedDomains: ['.hubat.net', '.hat.direct'],
   native: environment.native,
   protocol: environment.protocol,
   dex: {
@@ -78,12 +80,41 @@ export const configuration: AppConfig = {
     description: `Data comes into your HAT via data plugs.
     Click here to see what data plugs are available, and what data plugs are already connected.` },
 
-    { display: 'Data debits', icon: 'swap_horiz', link: '/data-debit', dataType: '', disable: '',
-      description: 'See all of the data debits setup on the HAT' },
+    { display: 'Settings', icon: 'settings', link: '/settings', dataType: '', disable: '',
+      description: 'Settings on the HAT' },
   ],
 
   appsMenu: [
     { display: 'DataBuyer', icon: '/assets/icons/she-databuyer.png', link: '/offers', dataType: '', disable: '',
       description: 'Allow access to your data in exchange for cash, services or vouchers.' }
+  ],
+  settingsMenu: [
+    { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change',
+      description: 'Profile description' },
+
+    { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@HATDeX.org',
+      description: 'Profile description' },
+
+    { display: 'Terms of Service', icon: 'keyboard_arrow_right',
+      link: 'terms-of-service',
+      description: 'Profile description' },
+
+    { display: 'Privacy policy', icon: 'keyboard_arrow_right',
+      link: 'privacy-policy',
+      description: 'Profile description' },
+
+    { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org',
+      description: 'Profile description' },
+
+    { display: 'Your HAT functionality level is 4 (learn more)', icon: 'keyboard_arrow_right',
+      link: 'privacy-policy',
+      description: 'Profile description' }
+  ],
+  settingsPrivateDataMenu: [
+    { display: 'Profile', icon: 'keyboard_arrow_right', link: '/datastore',
+      description: 'Profile description' },
+
+    { display: 'Data Debits', icon: 'keyboard_arrow_right', link: '/data-debit',
+      description: 'Profile description' },
   ]
 };

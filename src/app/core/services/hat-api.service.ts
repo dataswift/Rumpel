@@ -21,6 +21,7 @@ import { HatApplication } from '../../explore/hat-application.interface';
 import { SheFeed } from '../../she/she-feed.interface';
 import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 import { SheStaticProfile } from '../../shared/interfaces/she-static-profile.interface';
+import {SystemStatusInterface} from '../../shared/interfaces/system-status.interface';
 
 @Injectable()
 export class HatApiService {
@@ -156,6 +157,12 @@ export class HatApiService {
     const path = `${this.pathPrefix}/she/static/${applicationId}/profile`;
 
     return this.authHttp.get<SheStaticProfile<string[][]>[]>(path);
+  }
+
+  getSystemStatusRecords(): Observable<SystemStatusInterface[]> {
+    const path = `${this.pathPrefix}/system/status`;
+
+    return this.authHttp.get<SystemStatusInterface[]>(path);
   }
 
   getSheRecords(endpoint?: string, since?: number | string, until?: number | string): Observable<SheFeed[]> {
@@ -321,10 +328,10 @@ export class HatApiService {
     return this.http.get(path, { observe: 'response', responseType: 'text' });
   }
 
-  sendReport(actionCode: string): Observable<any> {
+  sendReport(actionCode: string, message?: string): Observable<any> {
     const path = `${this.pathPrefix}/report-frontend-action`;
 
-    return this.http.post(path, { actionCode: actionCode });
+    return this.authHttp.post(path, { actionCode: actionCode, message: message });
   }
 
   private uploadFileMetadata(metadata: FileMetadataReq): Observable<FileMetadataRes> {
@@ -359,6 +366,11 @@ export class HatApiService {
 
       return this.authHttp.request(method, completePath, options);
     }
+  }
+
+  getMarkDownContent(path: string): Observable<any> {
+
+    return this.http.get(path, { observe: 'response', responseType: 'text' });
   }
 
 }

@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApiService } from './hat-api.service';
-import { ReplaySubject, Observable, of } from 'rxjs';
+import {ReplaySubject, Observable, of, throwError} from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../../user/user.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
@@ -12,6 +12,7 @@ import * as parse from 'date-fns/parse';
 import * as isFuture from 'date-fns/is_future';
 import * as addDays from 'date-fns/add_days';
 import { HttpResponse } from '@angular/common/http';
+import { uniq } from 'lodash';
 
 declare const httpProtocol: string;
 
@@ -96,14 +97,44 @@ export class AuthService {
       }));
   }
 
-  getApplicationsByIds(parentAppId: string, redirect: string, dependencyAppIds?: string[]):
+  getApplicationsByIds(parentAppId: string, redirect: string, dependencyAppIds?: string):
     Observable<(HatApplication | HatApplication[])[]> {
     return this.hatSvc.getApplicationHmi()
       .pipe(map((apps: HatApplication[]) => {
         const parentApp = apps.find(app => app.application.id === parentAppId);
 
-        return [ parentApp, apps.filter(app => dependencyAppIds.indexOf(app.application.id) > -1) ];
+        if (!parentApp || parentApp.application.kind.kind !== 'App') {
+          throw new Error('application_id_not_found ');
+        }
+
+        const parentDependencies = parentApp.application.setup.dependencies || [];
+
+        let validDependencies = false;
+        let dependencyAppsArray: string[];
+
+        if (dependencyAppIds) {
+          dependencyAppsArray = uniq(dependencyAppIds.split(','));
+
+          validDependencies = dependencyAppsArray.every((value) => {
+            return (parentDependencies.indexOf(value) >= 0);
+          });
+        }
+
+        console.log('validDependencies', validDependencies);
+
+        if (validDependencies) {
+          return [ parentApp, apps.filter(app => dependencyAppsArray.indexOf(app.application.id) > -1) ];
+        } else {
+          return [ parentApp, apps.filter(app => parentDependencies.indexOf(app.application.id) > -1) ];
+        }
+
       }));
+  }
+
+  isRedirectUrlValid(redirect: string, app: HatApplication): boolean {
+    const setup = app.application.setup;
+
+    return [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(decodeURI(redirect));
   }
 
   hatLogin(name: string, redirect: string): Observable<string> {

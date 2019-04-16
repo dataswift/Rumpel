@@ -23,6 +23,7 @@ import { PublicPagesModule } from './public-pages/public-pages.module';
 import { OffersModule } from './offers/offers.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
+import { SettingsModule } from './settings/settings.module';
 
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -54,6 +55,8 @@ import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
 import { HatClaimModule } from './hat-claim/hat-claim.module';
 import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.component';
+import { SystemStatusService } from './services/system-status.service';
+import { WINDOW_PROVIDERS } from './core/services/global.service';
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -84,7 +87,8 @@ export function cookieServiceFactory() {
     SheModule,
     CoreModule,
     AppRoutingModule,
-    HatClaimModule
+    HatClaimModule,
+    SettingsModule
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent,
@@ -99,10 +103,12 @@ export function cookieServiceFactory() {
     NativeGuard,
     HatApiService, // Supersedes original HAT API service
     StaticDataService,
+    SystemStatusService,
     GlobalMessagingService,
     DexApiService,
     FileService,
-    BrowserStorageService
+    BrowserStorageService,
+    WINDOW_PROVIDERS
   ]
 })
 export class AppRootModule {}

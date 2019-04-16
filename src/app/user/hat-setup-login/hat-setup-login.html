@@ -40,10 +40,19 @@
         </div>
 
         <mat-card>
-          <mat-card-content>
-            <h5 class="card-heading">Why it needs the data?</h5>
-            <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
-          </mat-card-content>
+          <ng-container *ngIf="hatApp.application.setup.dependencies || (hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle); else noExtraDataPermissions">
+            <mat-card-content>
+              <h5 class="card-heading">Why it needs the data?</h5>
+              <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
+            </mat-card-content>
+          </ng-container>
+
+          <ng-template #noExtraDataPermissions>
+            <mat-card-content>
+              <h5 class="card-heading">Take actions in your HAT</h5>
+              <rum-hat-app-hmi-content [app]="hatApp"></rum-hat-app-hmi-content>
+            </mat-card-content>
+          </ng-template>
         </mat-card>
       </section>
 
@@ -56,16 +65,18 @@
           </div>
           <mat-card-content>
             <h5 class="card-heading">{{depApp.application.info.name}}</h5>
-            <p class="card-text">This data plug enables you to claim your data from Facebook into your HAT.</p>
+            <p class="card-text">This data plug enables you to claim your data from {{depApp.application.info.name}} into your HAT.</p>
           </mat-card-content>
         </mat-card>
       </section>
 
-      <section class="permissions-section" style="text-align: center;">
-        <p class="section-text">The apps above will have permission to take actions in your HAT.</p>
-        <button role="button" class="link-button" (click)="handleShowPermissions()">Show permissions</button>
+      <ng-container *ngIf="hatApp.application.setup.dependencies || (hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle)">
+        <section class="permissions-section" style="text-align: center;">
+          <p class="section-text">The apps above will have permission to take actions in your HAT.</p>
+          <button role="button" class="link-button" (click)="handleShowPermissions()">Show permissions</button>
 
-      </section>
+        </section>
+      </ng-container>
     </div>
 
     <div class="sticky-action-panel">

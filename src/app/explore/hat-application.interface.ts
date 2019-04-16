@@ -88,8 +88,11 @@ interface HatApplicationDataRequired {
 export interface HatApplicationSetup {
   url?: string;
   iosUrl?: string;
+  androidUrl?: string;
+  testingUrl?: string;
   onboarding: HatApplicationOnboarding[];
   kind: string;
+  dependencies?: string[];
 }
 
 interface HatApplicationOnboarding {
