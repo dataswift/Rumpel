@@ -35,7 +35,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.7.2.2',
+  version: '3.7.3.0',
   name: 'RumpelStaging',
   tokenApp: 'hatappstaging',
   tokenExpiryTime: 3,
