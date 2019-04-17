@@ -75,7 +75,6 @@ export class LoginOauthComponent implements OnInit {
       this.router.navigate([redirect]);
     } else {
       this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
-
         window.location.href = `${redirect}${redirect.includes('?') ? '&' : '?'}token=${accessToken}`;
       });
     }
