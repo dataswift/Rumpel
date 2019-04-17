@@ -99,9 +99,9 @@ export class AuthService {
       }));
   }
 
-  getApplicationsByIds(parentAppId: string, redirect: string, dependencyAppIds?: string):
+  getApplicationsByIds(parentAppId: string):
     Observable<(HatApplication | HatApplication[])[]> {
-    return this.hatCacheSvc.getApplicationHmi()
+    return  this.hatSvc.getApplicationHmi()
       .pipe(map((apps: HatApplication[]) => {
         const parentApp = apps.find(app => app.application.id === parentAppId);
 
@@ -109,31 +109,12 @@ export class AuthService {
           throw new Error('application_id_not_found ');
         }
 
-        // const parentDependencies = parentApp.application.setup.dependencies || [];
-        const parentDependencies = ['facebook', 'twitter', 'instagram'];
+        const parentDependencies = parentApp.application.setup.dependencies || [];
 
-        this.hatCacheSvc.setParentApp(parentApp);
-        this.hatCacheSvc.setDependencyApps(apps.filter(app => parentDependencies.indexOf(app.application.id) > -1));
+        this.hatCacheSvc.storeApplicationData([parentApp]);
+        this.hatCacheSvc.storeApplicationData(apps.filter(app => parentDependencies.indexOf(app.application.id) > -1));
 
-        let validDependencies = false;
-        let dependencyAppsArray: string[];
-
-        if (dependencyAppIds) {
-          dependencyAppsArray = uniq(dependencyAppIds.split(','));
-
-          validDependencies = dependencyAppsArray.every((value) => {
-            return (parentDependencies.indexOf(value) >= 0);
-          });
-        }
-
-        console.log('validDependencies', validDependencies);
-
-        if (validDependencies) {
-          return [ parentApp, apps.filter(app => dependencyAppsArray.indexOf(app.application.id) > -1) ];
-        } else {
-          return [ parentApp, apps.filter(app => parentDependencies.indexOf(app.application.id) > -1) ];
-        }
-
+        return [ parentApp, apps.filter(app => parentDependencies.indexOf(app.application.id) > -1) ];
       }));
   }
 

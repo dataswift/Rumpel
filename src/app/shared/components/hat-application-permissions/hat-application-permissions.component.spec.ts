@@ -28,7 +28,9 @@ const APP_DATA_MOCK: HatApplicationContent = {
     'termsUrl': 'https://hatdex.org/website-terms-service',
     'supportContact': 'contact@hatdex.org',
     'rating': {
-      'score': 'A'
+      'score': 'A',
+      'points': 11
+
     },
     'dataUsePurpose': 'Purpose of data use...',
     'dataPreview': [],

@@ -26,6 +26,7 @@ import { of } from 'rxjs';
 import { WINDOW } from '../../core/services/global.service';
 import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { SafeHtmlPipe } from '../../shared/pipes';
+import {HatSetupCacheService} from './hat-setup-cache.service';
 
 const PARENT_APPLICATION_MOCK: HatApplication = {
   'application': {
@@ -580,7 +581,10 @@ describe('HatSetupLoginComponent', () => {
             isRedirectUrlValid: () => true
         }
         },
-        { provide: HatApiService, useValue: {} },
+        HatSetupCacheService,
+        { provide: HatApiService, useValue: {
+            getApplicationById: () => (of(PARENT_APPLICATION_MOCK))
+          } },
         { provide: BrowserStorageService, useValue: {} },
         { provide: Router, useValue: { navigate: () => {} } }
       ]

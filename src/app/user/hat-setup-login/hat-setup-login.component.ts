@@ -41,32 +41,43 @@ export class HatSetupLoginComponent implements OnInit {
 
   ngOnInit() {
     this.hatAddress = this.windowRef.location.hostname;
-    const { name, redirect, dependencies } = this.route.snapshot.queryParams;
+    const { name, redirect, dependencies, appid } = this.route.snapshot.queryParams;
 
     if (name && redirect) {
       const safeName = name.toLowerCase();
 
-      this.authSvc.getApplicationsByIds(safeName, redirect, dependencies )
-        .subscribe(([parentApp, dependencyApps]: [HatApplication, HatApplication[]]) => {
-          const dependenciesAreSetup = dependencyApps.every(app => app.enabled); // [].every(x => x = n) ==> true
-          const parentAppIsReady = parentApp.enabled && !parentApp.needsUpdating;
+      if (dependencies) {
+        const dependencyAppsArray = dependencies.split(',');
 
-          if (parentAppIsReady && dependenciesAreSetup) {
-            this.buildRedirect(parentApp);
-          } else if (parentAppIsReady) {
-            console.log('parent app: ' + parentApp);
-            console.log('dependency apps: ' + dependencyApps);
+        if (dependencyAppsArray.length > 0) {
+          this.hatCacheSvc.getApplicationById(dependencyAppsArray[0]).subscribe( app =>
+            this.setupAppDependencies([app])
+        );
+        }
+      } else {
+        this.authSvc.getApplicationsByIds(safeName)
+          .subscribe(([parentApp, dependencyApps]: [HatApplication, HatApplication[]]) => {
+              const dependenciesAreSetup = dependencyApps.every(app => app.enabled);
+              const parentAppIsReady = parentApp.enabled && !parentApp.needsUpdating;
 
-            this.setupAppDependencies(parentApp, dependencyApps, redirect); // TODO remove comment
-          } else {
-            this.hatApp = parentApp;
-            this.dependencyApps = dependencyApps;
-            this.redirect = redirect;
-          }
-        },
-          error => {
-            this.windowRef.location.href = this.callBackUrlWithError('access_denied', error.message);
-         });
+              if (parentAppIsReady && dependenciesAreSetup) {
+                this.buildRedirect(parentApp);
+                this.hatCacheSvc.clearCache();
+              } else if (parentAppIsReady) {
+                console.log('parent app: ' + parentApp);
+                console.log('dependency apps: ' + dependencyApps);
+
+                this.setupAppDependencies(dependencyApps);
+              } else {
+                this.hatApp = parentApp;
+                this.dependencyApps = dependencyApps;
+                this.redirect = redirect;
+              }
+            },
+            error => {
+              this.windowRef.location.href = this.callBackUrlWithError('access_denied', error.message);
+            });
+      }
     } else {
       if (!name) {
         this.windowRef.location.href = this.callBackUrlWithError('access_denied', 'application_id_undefined');
@@ -95,7 +106,6 @@ export class HatSetupLoginComponent implements OnInit {
     const internal = this.route.snapshot.queryParams['internal'] === 'true';
     const redirect = this.route.snapshot.queryParams['redirect'];
 
-
     if (internal) {
       this.router.navigate([redirect]);
     } else {
@@ -104,10 +114,10 @@ export class HatSetupLoginComponent implements OnInit {
         if (!this.authSvc.isRedirectUrlValid(redirect, app)) {
           console.warn('Provided URL is not registered');
           this.hatApiSvc.sendReport('hmi_invalid_redirect_url', `${app.application.id}: ${redirect}`).subscribe(() => {
-            this.windowRef.location.href = `${redirect}?token=${accessToken}`;
+            this.windowRef.location.href = `${redirect}${redirect.includes('?') ? '&' : '?'}token=${accessToken}`;
           });
         } else {
-          this.windowRef.location.href = `${redirect}?token=${accessToken}`;
+          this.windowRef.location.href = `${redirect}${redirect.includes('?') ? '&' : '?'}token=${accessToken}`;
         }
       });
     }
@@ -116,11 +126,11 @@ export class HatSetupLoginComponent implements OnInit {
   agreeTerms(appId: string): void {
     this.authSvc.setupApplication(appId)
       .subscribe((hatApp: HatApplication) => {
-        this.hatCacheSvc.setParentApp(hatApp);
+        this.hatCacheSvc.storeApplicationData([hatApp]);
         if (this.dependencyApps.every(app => app.enabled === true)) {
           this.buildRedirect(hatApp);
         } else {
-          // this.setupAppDependencies(hatApp, this.dependencyApps, this.redirect); // TODO remove comments
+          this.setupAppDependencies(this.dependencyApps); // TODO remove comments
         }
       });
   }
@@ -128,6 +138,7 @@ export class HatSetupLoginComponent implements OnInit {
   declineTerms(): void {
     this.hatApiSvc.sendReport('hmi_declined').subscribe(() => {
       const internal = this.route.snapshot.queryParams['internal'] === 'true';
+      this.hatCacheSvc.clearCache();
       if (internal) {
         this.router.navigate([this.route.snapshot.queryParams['fallback']]);
       } else {
@@ -140,9 +151,9 @@ export class HatSetupLoginComponent implements OnInit {
     return this.hatApp.application.permissions.rolesGranted.filter(role => role.role === 'datadebit')[0].detail;
   }
 
-  private setupAppDependencies(parentApp: HatApplication, dependencies: HatApplication[], appRedirect: string): void {
+  private setupAppDependencies(dependencies: HatApplication[]): void {
     const app = dependencies.filter(d => d.enabled === false)[0];
-    const callback = this.intermediateCallBackUrl();
+    const callback = this.intermediateCallBackUrl(app.application.id);
 
     this.authSvc.setupApplication(app.application.id)
       .pipe(flatMap(_ => this.authSvc.appLogin(app.application.id)))
@@ -151,22 +162,33 @@ export class HatSetupLoginComponent implements OnInit {
       });
   }
 
-  private callBackUrlWithError(error: string, errorReason: string): string {
-    const { redirect } = this.route.snapshot.queryParams;
-    const url = `${redirect}?error=${error}%26error_reason=${errorReason}`;
-
-    return url.replace('#', '%23');
-  }
-
-  private intermediateCallBackUrl(): string {
+  private intermediateCallBackUrl(appId?: string): string {
     let url = this.windowRef.location.href.split('?')[0];
     const { name, dependencies, redirect } = this.route.snapshot.queryParams;
 
     url += `?name=${name}%26redirect=${redirect}`;
 
     if (dependencies) {
-      url += `%26dependencies=${dependencies}`;
+      // removes the application id from the dependency parameter
+      const dependencyArray = dependencies.split(',').filter( item => item !== appId);
+      if (dependencyArray && dependencyArray.length > 0) {
+        url += `%26dependencies=${dependencyArray.join()}`;
+      }
+    } else {
+      if (this.dependencyApps) {
+        const dependencyArray = this.dependencyApps.filter( app => app.application.id !== appId).map( app => app.application.id);
+        if (dependencyArray && dependencyArray.length > 0) {
+          url += `%26dependencies=${dependencyArray.join()}`;
+        }
+      }
     }
+
+    return url.replace('#', '%23');
+  }
+
+  private callBackUrlWithError(error: string, errorReason: string): string {
+    const { redirect } = this.route.snapshot.queryParams;
+    const url = `${redirect}?error=${error}%26error_reason=${errorReason}`;
 
     return url.replace('#', '%23');
   }
