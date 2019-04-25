@@ -20,6 +20,15 @@ import { of } from 'rxjs';
 import {CustomAngularMaterialModule} from '../custom-angular-material.module';
 import {SystemStatusService} from '../../services/system-status.service';
 
+const SYSTEM_STATUS_MOCK = {
+  title: 'Previous Login',
+  kind: {
+    kind: 'Text',
+    units: '',
+    metric: '2 hours ago',
+  }
+};
+
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
@@ -32,13 +41,14 @@ describe('HeaderComponent', () => {
         { provide: APP_CONFIG, useValue: {} },
         { provide: DialogService, useValue: {} },
         { provide: SystemStatusService, useValue: {
-          fetchSystemStatus: () => of([]),
-            systemStatus: of([])
+          fetchSystemStatus: () => of([SYSTEM_STATUS_MOCK]),
+            systemStatus$: of([SYSTEM_STATUS_MOCK])
           } },
         { provide: AuthService, useValue: { user$: of({}) } },
         { provide: ProfilesService, useValue: {
             getProfileData: () => null,
-            profileData$: of({}) } }
+            getProfileInitData: () => null,
+            data$: of({}) } }
       ]
     })
       .compileComponents();

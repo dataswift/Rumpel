@@ -12,16 +12,14 @@ import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 import { AuthService } from '../../core/services/auth.service';
-import { User } from '../../shared/interfaces/index';
+import {HatRecord, User} from '../../shared/interfaces/index';
 import {Observable, of, Subscription} from 'rxjs';
-import { AccountStatus } from '../../user/account-status.interface';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
+import { Profile } from '../../shared/interfaces/profile.interface';
 import { MatMenuTrigger } from '@angular/material';
 import {SystemStatusInterface} from '../../shared/interfaces/system-status.interface';
 import {catchError, tap} from 'rxjs/operators';
 import {SystemStatusService} from '../../services/system-status.service';
-import {LocalStorageService} from '../services/local-storage.service';
 
 @Component({
   selector: 'rum-header',
@@ -39,7 +37,7 @@ export class HeaderComponent implements OnInit {
   public systemStatus$: Observable<SystemStatusInterface[]>;
   public dataBaseStorage: SystemStatusInterface;
   public dataBaseUsedPercent: SystemStatusInterface;
-  public previousLogin: SystemStatusInterface;
+  public previousLogin: SystemStatusInterface = {title: '', kind: {metric: '', kind: ''}};
   public showNotifications: boolean;
 
   public unreadNotifications: number;
@@ -64,24 +62,24 @@ export class HeaderComponent implements OnInit {
       this.profile.hatId = user.hatId;
     });
 
-    this.profilesSvc.getProfileData();
+    this.profilesSvc.getProfileInitData();
 
     this.totalNotifications = 0;
 
-    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
-      if (profile.values && profile.values.personal && profile.values.personal.firstName) {
-        this.profile.first_name = profile.values.personal.firstName;
-      }
-      if (profile.values.photo.avatar) {
-        this.profile.photo.url = profile.values.photo.avatar
-      }
-
-      if (profile.share && profile.share.photo && profile.share.photo.avatar) {
-        this.profile.photo.shared = profile.share.photo.avatar;
+    this.profilesSvc.data$.subscribe((profileArray: HatRecord<Profile>[]) => {
+      if (profileArray && profileArray.length > 0) {
+        profileArray.forEach( profile => {
+          if (profile.data && profile.data.personal && profile.data.personal.firstName) {
+            this.profile.first_name = profile.data.personal.firstName;
+          }
+          if (profile.data.photo.avatar) {
+            this.profile.photo.url = profile.data.photo.avatar
+          }
+        })
       }
     });
 
-    this.systemStatus$ = this.systemStatusSvc.systemStatus.pipe(
+    this.systemStatus$ = this.systemStatusSvc.systemStatus$.pipe(
       tap((records: SystemStatusInterface[]) => {
         this.dataBaseStorage = records.find(record => record.title === 'Database Storage');
         this.dataBaseUsedPercent = records.find(record => record.title === 'Database Storage Used Share');

@@ -7,12 +7,10 @@
  */
 
 import { Component, OnInit, Inject, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { DataOfferService } from '../../offers/data-offer.service';
 import { HatApplicationsService } from '../../explore/hat-applications.service';
 import { Subscription } from 'rxjs';
 
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { OffersStorage } from '../../offers/offer.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
 
 @Component({
@@ -20,50 +18,19 @@ import { HatApplication } from '../../explore/hat-application.interface';
   templateUrl: 'side-menu.component.html',
   styleUrls: ['./side-menu.component.scss']
 })
-export class SideMenuComponent implements OnInit, OnDestroy {
+export class SideMenuComponent implements OnInit {
   @Output() close = new EventEmitter<string>();
-
-  public availableOffersCount = 0;
-  private offersSub: Subscription;
   private windowRef: any;
 
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
 
-  constructor(@Inject(APP_CONFIG) private config: AppConfig,
-              private hatAppSvc: HatApplicationsService,
-              private dataOfferSvc: DataOfferService) {}
+  constructor(@Inject(APP_CONFIG) private config: AppConfig) {}
 
   ngOnInit() {
-    this.offersSub = this.dataOfferSvc.offers$
-      .subscribe((offers: OffersStorage) => this.availableOffersCount = offers.availableOffers.length);
-
-    this.dataOfferSvc.fetchUserAwareOfferList();
-  }
-
-  ngOnDestroy(): void {
-    this.offersSub.unsubscribe();
   }
 
   get mainMenu(): Array<any> {
     return this.config.mainMenu;
-  }
-
-  get appsMenu(): Array<any> {
-    return this.config.appsMenu;
-  }
-
-  openPlugPopup(plug: HatApplication) {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-
-    const popupWidth = w * 0.6; const left = w * 0.2;
-    const popupHeight = h * 0.7; const top = h * 0.15;
-
-    this.windowRef = window.open(
-      '', `Setting up ${plug.application.info.name} data plug`,
-      `menubar=no,location=yes,resizable=yes,status=yes,chrome=yes,left=${left},top=${top},width=${popupWidth},height=${popupHeight}`);
-
-    this.windowRef.location = this.hatAppSvc.generateHatLoginLink(plug.application.id, plug.application.setup);
   }
 }

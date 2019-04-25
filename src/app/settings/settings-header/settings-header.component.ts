@@ -8,7 +8,7 @@
 
 
 import { Component, OnInit } from '@angular/core';
-import { Profile, User } from '../../shared/interfaces';
+import {HatRecord, Profile, User} from '../../shared/interfaces';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { AuthService } from '../../core/services/auth.service';
 import { SystemStatusService } from '../../services/system-status.service';
@@ -44,13 +44,16 @@ export class SettingsHeaderComponent implements OnInit {
     });
 
     this.profilePhoto = {};
-    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; }) => {
-      this.values = profile.values;
+
+    this.profilesSvc.data$.subscribe((profileArray: HatRecord<Profile>[]) => {
+      if (profileArray && profileArray.length > 0) {
+        profileArray.forEach(profile => {
+          this.values = profile.data;
+        })
+      }
     });
 
-    // this.profilesSvc.getProfileData();
-
-    this.systemStatus$ = this.systemStatusSvc.systemStatus.pipe(
+    this.systemStatus$ = this.systemStatusSvc.systemStatus$.pipe(
       tap((records: SystemStatusInterface[]) => {
         this.dataBaseStorage = records.find(record => record.title === 'Database Storage');
         this.dataBaseUsedPercent = records.find(record => record.title === 'Database Storage Used Share');

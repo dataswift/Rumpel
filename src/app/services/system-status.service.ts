@@ -14,7 +14,7 @@ export class SystemStatusService {
               private cacheSvc: CacheService) {
   }
 
-  get systemStatus() {
+  get systemStatus$() {
     return this.cacheSvc.get<SystemStatusInterface[]>(this.systemStatusKey, this.fetchSystemStatus(), this.systemStatusMaxAge);
   }
 

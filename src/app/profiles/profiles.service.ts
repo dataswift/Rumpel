@@ -17,6 +17,8 @@ import { Profile, ProfileSharingConfig } from '../shared/interfaces/profile.inte
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { BundleStructure, PropertyQuery } from '../shared/interfaces/bundle.interface';
+import {HatApplication} from '../explore/hat-application.interface';
+import {CacheService} from '../core/services/cache.service';
 
 const DEFAULT_PHATA_BUNDLE: BundleStructure = {
   name: 'phata',
@@ -123,9 +125,14 @@ export class ProfilesService extends BaseDataService<Profile> {
     this.getPhataBundle();
   }
 
+  getProfileInitData(): void {
+    this.getInitData(1);
+  }
+
   saveProfile(values: Profile, shares: ProfileSharingConfig): Observable<HatRecord<Profile>> {
     const permissionKey = shares.photo.avatar ? 'allow' : 'restrict';
     let filePermissionUpdate$: Observable<any>;
+    // this.clearProfileCache();
 
     if (values.photo.avatar) {
       filePermissionUpdate$ = this.hat.updateFilePermissions(values.photo.avatar.split('/').pop(), permissionKey);

@@ -29,7 +29,6 @@ export class AppConfig {
     url: string;
   };
   mainMenu: Array<{ [key: string]: string; }>;
-  appsMenu: Array<{ [key: string]: string; }>;
   settingsMenu: Array<{ [key: string]: string; }>;
   settingsPrivateDataMenu: Array<{ [key: string]: string; }>;
 }
@@ -87,10 +86,6 @@ export const configuration: AppConfig = {
       description: 'Settings on the HAT' },
   ],
 
-  appsMenu: [
-    { display: 'DataBuyer', icon: '/assets/icons/she-databuyer.png', link: '/offers', dataType: '', disable: '',
-      description: 'Allow access to your data in exchange for cash, services or vouchers.' }
-  ],
   settingsMenu: [
     { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change',
       description: 'Profile description' },

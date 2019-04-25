@@ -20,7 +20,6 @@ import { SocialModule } from './social/social.module';
 import { FitbitModule } from './fitbit/fitbit.module';
 import { MonzoModule } from './monzo/monzo.module';
 import { PublicPagesModule } from './public-pages/public-pages.module';
-import { OffersModule } from './offers/offers.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
 import { SettingsModule } from './settings/settings.module';
@@ -61,7 +60,7 @@ import { ToolsModule } from './tools/tools.module';
 import {LocalStorageService} from './core/services/local-storage.service';
 import {ReactiveWebStorageModule} from './core/services/reactive-webstorage.module';
 
-export const storageKeys = ['system-status', 'applications'];
+export const storageKeys = ['system-status', 'applications', 'tools', 'phata-structure'];
 
 export function cookieServiceFactory() {
   return new CookieService();
@@ -84,8 +83,6 @@ export function cookieServiceFactory() {
     MonzoModule,
     DataManagementModule,
     PublicPagesModule,
-    OffersModule,
-    // DashboardModule,
     NotablesModule,
     MashupsModule,
     ExploreModule,

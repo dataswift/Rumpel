@@ -15,7 +15,6 @@ import { CustomAngularMaterialModule } from '../custom-angular-material.module';
 import { APP_CONFIG } from '../../app.config';
 import { HatApplicationsService } from '../../explore/hat-applications.service';
 import { of } from 'rxjs';
-import { DataOfferService } from '../../offers/data-offer.service';
 
 describe('SideMenuComponent', () => {
   let component: SideMenuComponent;
@@ -27,8 +26,7 @@ describe('SideMenuComponent', () => {
       declarations: [ SideMenuComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: { mainMenu: [], appsMenu: [] } },
-        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]) } },
-        { provide: DataOfferService, useValue: { offers$: of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } }
+        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]) } }
       ]
     })
       .compileComponents();

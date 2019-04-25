@@ -17,7 +17,7 @@ export class CacheService {
     }
 
     cache$.subscribe(value => {
-      if (value && value instanceof Array && value.length > 0) {
+      if (value && (value instanceof Array && value.length > 0)) {
         return value;
       } else {
         if (fallback && fallback instanceof Observable) {

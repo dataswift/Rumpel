@@ -21,7 +21,6 @@ import { LoginStandaloneComponent } from './user/login-standalone/login-standalo
 // Standalone modules
 
 import { ProfileComponent } from './profiles/profile/profile.component';
-import { OffersHomeComponent } from './offers/offers-home/offers-home.component';
 import { SheFeedComponent } from './she/she-feed/she-feed.component';
 import { MyDayComponent } from './mashups/my-day/my-day.component';
 import { PasswordRecoverComponent } from './user/password-recover/password-recover.component';
@@ -38,7 +37,7 @@ import { HatClaimComponent } from './hat-claim/hat-claim/hat-claim.component';
 import { SettingsPageComponent } from './settings/settings-page/settings-page.component';
 import { MarkdownViewComponent } from './shared/components/markdown-view/markdown-view.component';
 import { ToolsListComponent } from './tools/tools-list/tools-list.component';
-import {ToolsDetailsComponent} from './tools/tools-details/tools-details.component';
+import { ToolsDetailsComponent } from './tools/tools-details/tools-details.component';
 
 @NgModule({
   imports: [
@@ -53,10 +52,6 @@ import {ToolsDetailsComponent} from './tools/tools-details/tools-details.compone
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'feed', component: SheFeedComponent }
-        ]},
-      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
-        children: [
-          { path: 'offers', component: OffersHomeComponent }
         ]},
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [

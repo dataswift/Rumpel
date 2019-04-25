@@ -27,7 +27,7 @@
       </span>
 
       <span class="welcome">Welcome {{profile.hatId}}<br>
-        <span *ngIf="previousLogin">Last login: {{previousLogin.kind.metric}}</span>
+        <span *ngIf="previousLogin && previousLogin.kind">Last login: {{previousLogin.kind.metric}}</span>
       </span>
 
       <mat-icon>{{accountMenuBtn.menuOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
@@ -42,7 +42,7 @@
         <h6 class="welcome">{{profile?.hatId}}<br><span>&#46;{{profile?.domain}}</span></h6>
       </div>
       <ng-container *ngIf="systemStatus$ | async as systemStatus">
-        <ng-container *ngIf="dataBaseUsedPercent">
+        <ng-container *ngIf="dataBaseUsedPercent && dataBaseUsedPercent.kind">
           <div class="accountUsage">
             <mat-progress-bar mode="determinate" value="{{ dataBaseUsedPercent.kind.metric }}"></mat-progress-bar>
             <div class="app-details-header-headline">{{ dataBaseUsedPercent.kind.metric >= 100 ? 100 : dataBaseUsedPercent.kind.metric }}% of {{ dataBaseStorage.kind.metric }}{{ dataBaseStorage.kind.units }} storage used</div>
