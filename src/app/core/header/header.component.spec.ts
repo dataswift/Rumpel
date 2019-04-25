@@ -31,7 +31,10 @@ describe('HeaderComponent', () => {
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: DialogService, useValue: {} },
-        { provide: SystemStatusService, useValue: { fetchSystemStatus: () => of([])} },
+        { provide: SystemStatusService, useValue: {
+          fetchSystemStatus: () => of([]),
+            systemStatus: of([])
+          } },
         { provide: AuthService, useValue: { user$: of({}) } },
         { provide: ProfilesService, useValue: {
             getProfileData: () => null,

@@ -78,6 +78,11 @@ export class HatApplicationDetailsComponent implements OnInit {
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     return this.hatAppSvc.generateHatLoginLink(id, setup);
   }
+  clearCache(): boolean {
+    this.hatAppSvc.clearApplicationCache();
+
+    return true;
+  }
 
   getAppRating(points: number): 'gold' | 'red' | 'green' {
     if (points < 8) {
@@ -98,6 +103,7 @@ export class HatApplicationDetailsComponent implements OnInit {
   }
 
   disableApp(id: string): void {
+    this.clearCache();
     this.appDetails$ = this.hatAppSvc.disable(id)
       .pipe(tap((app: HatApplication) => this.appStatus = this.hatAppSvc.getAppStatus(app)));
   }

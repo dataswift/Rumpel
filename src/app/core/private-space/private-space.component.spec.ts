@@ -27,7 +27,7 @@ describe('PrivateSpaceComponent', () => {
         { provide: APP_CONFIG, useValue: { mainMenu: [], appsMenu: [] }},
         { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]), enable: () => of({}) } },
         { provide: DataOfferService, useValue: { offers$: of({ availableOffers: [] }), fetchUserAwareOfferList: () => null } },
-        { provide: SystemStatusService, useValue: { fetchSystemStatus: () => of([])} },
+        { provide: SystemStatusService, useValue: { fetchSystemStatus: () => of([]), systemStatus: of([])}},
         { provide: DialogService, useValue: {} },
         { provide: AuthService, useValue: { user$: of({}), getApplicationDetails: () => of({}) } },
         { provide: ProfilesService, useValue: {

@@ -21,6 +21,7 @@ import { MatMenuTrigger } from '@angular/material';
 import {SystemStatusInterface} from '../../shared/interfaces/system-status.interface';
 import {catchError, tap} from 'rxjs/operators';
 import {SystemStatusService} from '../../services/system-status.service';
+import {LocalStorageService} from '../services/local-storage.service';
 
 @Component({
   selector: 'rum-header',
@@ -80,7 +81,7 @@ export class HeaderComponent implements OnInit {
       }
     });
 
-    this.systemStatus$ = this.systemStatusSvc.fetchSystemStatus().pipe(
+    this.systemStatus$ = this.systemStatusSvc.systemStatus.pipe(
       tap((records: SystemStatusInterface[]) => {
         this.dataBaseStorage = records.find(record => record.title === 'Database Storage');
         this.dataBaseUsedPercent = records.find(record => record.title === 'Database Storage Used Share');

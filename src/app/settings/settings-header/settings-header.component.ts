@@ -50,7 +50,7 @@ export class SettingsHeaderComponent implements OnInit {
 
     // this.profilesSvc.getProfileData();
 
-    this.systemStatus$ = this.systemStatusSvc.fetchSystemStatus().pipe(
+    this.systemStatus$ = this.systemStatusSvc.systemStatus.pipe(
       tap((records: SystemStatusInterface[]) => {
         this.dataBaseStorage = records.find(record => record.title === 'Database Storage');
         this.dataBaseUsedPercent = records.find(record => record.title === 'Database Storage Used Share');

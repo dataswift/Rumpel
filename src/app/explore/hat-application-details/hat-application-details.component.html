@@ -29,6 +29,7 @@
 
       <a mat-button [ngClass]="['app-details-status', appStatus]"
          [href]="generateHatLoginLink(app.application.id, app.application.setup)"
+         (click)="clearCache()"
          [ngSwitch]="appStatus">
         <ng-container *ngSwitchCase="'goto'"><mat-icon>exit_to_app</mat-icon>Go to app</ng-container>
         <ng-container *ngSwitchCase="'running'"><mat-icon>check_circle</mat-icon>Active</ng-container>

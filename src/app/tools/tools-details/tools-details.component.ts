@@ -49,14 +49,12 @@ export class ToolsDetailsComponent implements OnInit {
           ];
 
           if (tool.status.enabled && tool.info.dataPreviewEndpoint && tool.status.lastExecution) {
-            const defaultUntil = parse(tool.status.lastExecution);
-            const defaultSince = subMonths(startOfDay(defaultUntil), 1);
+            // const defaultUntil = parse(tool.status.lastExecution);
+            // const defaultSince = subMonths(startOfDay(defaultUntil), 1);
 
             this.dataPreview$ = this.hatToolSvc.getToolData(
               // removes the first slash from the endpoint
-              tool.info.dataPreviewEndpoint.substr(1, tool.info.dataPreviewEndpoint.length),
-              format(defaultSince, 'X'),
-              format(defaultUntil, 'X')
+              tool.info.dataPreviewEndpoint.substr(1, tool.info.dataPreviewEndpoint.length)
             );
           } else {
             this.dataPreview$ = of([]);

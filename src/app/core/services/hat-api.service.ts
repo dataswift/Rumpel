@@ -103,10 +103,13 @@ export class HatApiService {
     return this.authHttp.get<HatApplication[]>(path);
   }
 
-  getApplicationHmi(): Observable<HatApplication[]> {
+  getApplicationHmi(applicationId: string): Observable<HatApplication[]> {
     const path = `${this.pathPrefix}/applications/hmi`;
 
-    return this.authHttp.get<HatApplication[]>(path);
+    const queryParams = new HttpParams()
+      .set('applicationId', applicationId);
+
+    return this.authHttp.get<HatApplication[]>(path, { params: queryParams });
   }
 
   getApplicationById(applicationId: string): Observable<HatApplication> {
@@ -232,7 +235,7 @@ export class HatApiService {
     return this.authHttp.get(path);
   }
 
-  getDataBundeStructure(bundleId: string): Observable<BundleStructure> {
+  getDataBundleStructure(bundleId: string): Observable<BundleStructure> {
     const path = `${this.pathPrefix}/data-bundle/${bundleId}/structure`;
 
     return this.authHttp.get<BundleStructure>(path);

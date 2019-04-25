@@ -27,7 +27,7 @@ export class PrivateSpaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initDatabuyerApp();
+    // this.initDatabuyerApp();
 
     if (this.config.native) {
       this.authSvc.getApplicationDetails(this.config.tokenApp)

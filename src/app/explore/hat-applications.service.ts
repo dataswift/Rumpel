@@ -6,14 +6,18 @@ import { AuthService } from '../core/services/auth.service';
 import { HatApplication, HatApplicationSetup } from './hat-application.interface';
 import { SheFeed } from '../she/she-feed.interface';
 import { User } from '../user/user.interface';
+import { CacheService } from '../core/services/cache.service';
 
 @Injectable()
 export class HatApplicationsService {
   private hatUrl: string;
+  private applicationKey = 'applications';
+  private applicationMaxAge = 20; // in minutes
   private _dataplugs$: ReplaySubject<HatApplication[]> = <ReplaySubject<HatApplication[]>>new ReplaySubject(1);
 
   constructor(private authSvc: AuthService,
-              private hatSvc: HatApiService) {
+              private hatSvc: HatApiService,
+              private cacheSvc: CacheService) {
 
     this.authSvc.user$.pipe(
       filter((user: User) => Boolean(user.fullDomain)),
@@ -25,15 +29,19 @@ export class HatApplicationsService {
 
   getApplicationList(kind: string = null): Observable<HatApplication[]> {
     if (kind) {
-      return this.hatSvc.getApplicationList().pipe(
+      return this.getAppList().pipe(
         map((apps: HatApplication[]) => apps.filter((app: HatApplication) => app.application.kind.kind === kind)));
     } else {
-      return this.hatSvc.getApplicationList();
+      return this.getAppList();
     }
   }
 
+  getAppList(): Observable<HatApplication[]> {
+    return this.cacheSvc.get<HatApplication[]>(this.applicationKey, this.hatSvc.getApplicationList(), this.applicationMaxAge);
+  }
+
   getApplicationDetails(application: string): Observable<HatApplication> {
-    return this.hatSvc.getApplicationList()
+    return this.getAppList()
       .pipe(map((apps: HatApplication[]) => apps.filter(app => app.application.id === application)[0]));
   }
 
@@ -46,13 +54,19 @@ export class HatApplicationsService {
   }
 
   disable(id: string): Observable<HatApplication> {
+    this.clearApplicationCache();
+
     return this.hatSvc.disableApplication(id);
+  }
+
+  clearApplicationCache() {
+    this.cacheSvc.removeFromCache(this.applicationKey);
   }
 
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     const redirectUrl = setup.url || setup.iosUrl || '';
 
-    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}?redirect=www.google.com`;
+    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}%3Fredirect=https://${this.hatUrl}/#/feed`;
   }
 
   getAppStatus(app: HatApplication): 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update' {

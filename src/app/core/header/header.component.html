@@ -55,10 +55,10 @@
       <div mat-menu-item class="dropdown-divider"></div>
 
       <a mat-menu-item class="dropdown-item"
-         [routerLink]="['/datastore']">Public profile</a>
+         [routerLink]="['/public/profile']">Public profile</a>
 
-      <a mat-menu-item class="dropdown-item">
-        Notifications<span class="badge" style="margin-top: 0;" *ngIf="unreadNotifications">{{unreadNotifications}}</span></a>
+<!--      <a mat-menu-item class="dropdown-item">-->
+<!--        Notifications<span class="badge" style="margin-top: 0;" *ngIf="unreadNotifications">{{unreadNotifications}}</span></a>-->
 
       <a mat-menu-item class="dropdown-item"
          [routerLink]="['/user', 'password', 'change']">Change password</a>

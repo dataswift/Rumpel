@@ -7,14 +7,18 @@ import {defaultIfEmpty, filter, flatMap, map, tap} from 'rxjs/operators';
 import {User} from '../user/user.interface';
 import {SheFeed} from '../she/she-feed.interface';
 import {HatTool} from './hat-tools.interface';
+import {CacheService} from '../core/services/cache.service';
 
 @Injectable()
 export class HatToolsService {
   private hatUrl: string;
+  private toolKey = 'tools';
+  private toolMaxAge = 20; // in minutes
   private _tool$: ReplaySubject<HatTool[]> = <ReplaySubject<HatTool[]>>new ReplaySubject(1);
 
   constructor(private authSvc: AuthService,
-              private hatSvc: HatApiService) {
+              private hatSvc: HatApiService,
+              private cacheSvc: CacheService) {
 
     this.authSvc.user$.pipe(
       filter((user: User) => Boolean(user.fullDomain)),
@@ -25,38 +29,32 @@ export class HatToolsService {
   }
 
   getToolList(toolId: string = null): Observable<HatTool[]> {
-      return this.hatSvc.getToolList(toolId)
+    return this.cacheSvc.get<HatTool[]>(this.toolKey, this.hatSvc.getToolList(toolId), this.toolMaxAge);
   }
 
   getToolDetails(toolId: string): Observable<HatTool> {
-    return this.hatSvc.getToolList()
+    return this.getToolList()
       .pipe(map((tools: HatTool[]) => tools.filter(tool => tool.id === toolId)[0]));
   }
 
-  getApplicationData(endpoint: string): Observable<SheFeed[]> {
-    return this.hatSvc.getSheRecords(endpoint);
-  }
-
-  getToolData(endpoint: string, since: number | string, until: number | string): Observable<SheFeed[]> {
+  getToolData(endpoint: string, since?: number | string, until?: number | string): Observable<SheFeed[]> {
     return this.hatSvc.getSheRecords(endpoint, since, until);
   }
 
   enable(id: string): Observable<HatTool> {
+    this.clearToolCache();
+
     return this.hatSvc.enableTool(id);
   }
 
   disable(id: string): Observable<HatTool> {
+    this.clearToolCache();
+
     return this.hatSvc.disableTool(id);
   }
 
   triggerUpdate(id: string): Observable<number> {
     return this.hatSvc.triggerToolUpdate(id);
-  }
-
-  generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
-    const redirectUrl = setup.url || setup.iosUrl || '';
-
-    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}`;
   }
 
   getToolStatus(tool: HatTool): 'running' | 'untouched' {
@@ -65,6 +63,10 @@ export class HatToolsService {
     } else {
       return 'untouched'
     }
+  }
+
+  clearToolCache() {
+    this.cacheSvc.removeFromCache(this.toolKey);
   }
 
   get getTool$(): Observable<HatTool[]> {

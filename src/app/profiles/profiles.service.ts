@@ -6,8 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import { throwError as observableThrowError, ReplaySubject, Observable, forkJoin, of, zip } from 'rxjs';
-import { catchError, filter, map, startWith } from 'rxjs/operators';
+import {throwError as observableThrowError, ReplaySubject, Observable, forkJoin, of, zip, timer} from 'rxjs';
+import {catchError, filter, map, shareReplay, startWith, switchMap} from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
 import { HatApiService } from '../core/services/hat-api.service';
 import { BaseDataService } from '../services/base-data.service';
@@ -195,7 +195,7 @@ export class ProfilesService extends BaseDataService<Profile> {
   }
 
   private getPhataBundle(): void {
-    this.hat.getDataBundeStructure('phata').pipe(
+    this.hat.getDataBundleStructure('phata').pipe(
       catchError(error => {
         if (error.status === 404) {
           return of(DEFAULT_PHATA_BUNDLE);

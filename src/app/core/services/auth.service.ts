@@ -101,7 +101,7 @@ export class AuthService {
 
   getApplicationsByIds(parentAppId: string):
     Observable<(HatApplication | HatApplication[])[]> {
-    return  this.hatSvc.getApplicationHmi()
+    return  this.hatSvc.getApplicationHmi(parentAppId)
       .pipe(map((apps: HatApplication[]) => {
         const parentApp = apps.find(app => app.application.id === parentAppId);
 
