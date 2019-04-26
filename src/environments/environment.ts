@@ -5,6 +5,8 @@
 
 export const environment = {
   production: false,
-  native: false,
-  protocol: 'https:'
+  native: true,
+  protocol: 'https:',
+  appName: 'RumpelStaging',
+  tokenName: 'hatappstaging'
 };

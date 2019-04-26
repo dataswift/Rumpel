@@ -28,7 +28,7 @@ install:
 
 jobs:
   include:
-    - stage: build-standalone
+    - stage: test
       env:
         - CHROME_BIN=chromium-browser
         - DISPLAY=:99.0
@@ -36,95 +36,27 @@ jobs:
         - ng --version
         - ng lint
         - ng test --watch=false
-        - ng build --configuration=standalone
+
+    - stage: build-sandbox
+      if: branch = dev
+      script:
+        - ng build --configuration=sandbox
       deploy:
         - provider: s3
-          access_key_id: AKIAJLFHYRO2WNJ52L5A
+          access_key_id: AKIAJ4VKFGF4ZU23H4QA
           secret_access_key:
-            secure: Q3JeWmaQGkcuY82wm0384h34e0H9+xMh2YA8W7cVNnlEGj2T3W1mLe/p/epCdo7cP/sB71wFJjjWlOjrdF8tq1zwI4U1xH4zXrQHGs9YTx/INF+qWPYfvQFjBXy3rONgGZ11491Ed5UMgCJYiCiO2teTOig0cHryar1YxciyoEsrDjk7cQkh412Ro0ZnwKkQIUtF1+nRJdpNCZMXZV7UbxWFT1eQnN2DG/OmWmj3Y3YJnfNV3ED4xe+A6cLZYCW0c6CR6F5CvSjjVWjKcO7oUtqZAj7PkmMmy9B/lP90DK5JBJozkr51VsfAT3zp4MS458NANF2ZVoyBxV1q9fO/n6gKpWxoMI094JWvPOjqqPCDw6kMbuTsQN0v1ZVvYvnXdUGgscE2IfZsbRZUa4+gjzX2ANGTANwoknemcBdT3e6QDzacaprsGSNGcoCAXryLfuv5f82jv6LXZ66i4qOqxWbBZY0obfI7h/JSfKlZWIlPDL4kVRwuJM5urok89dS0K64nha8P2gtNaW8Z2AyONA9Wu3CizuUktqsHSr67UkW8/NPqr/JCwba1JhDn3UOjccbvXyOhb1meLpvB2ijhLeozqMEOzhql5kc3S/AGvWyMjyMhYgZMuVFTalYySMAXn6OFYTaA+oodZ4NpDzZIK9s1uYAysA0DL2A+YCmWv+o=
-          bucket: surreycode.hubat.net
+            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
+          bucket: rumpel-build-artifacts
           local-dir: dist
-          acl: public_read
+          upload-dir: hubat
+          acl: private
           skip_cleanup: true
           region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: surreycode
 
-        - provider: s3
-          access_key_id: AKIAJ7UTSAOH4FZQNMCA
-          secret_access_key:
-            secure: lYHYrcJlgLAgoKQMwyCVcD8Y3UVhzjwx/3ShHqIv+j1IH2aJEu1nerMrG6g6+seoFDssxArNXsVC7UYyxFYSk7RdKYYQOFvW02gYvo5oXBZB7IgpoaPUQ76PdeJgi+rVKSFIEVIkKxUanzMHDR55nRzYSgDNvbZJoo8TqY8t+rrPrwMvsix8BA2wpAQN9leBhJFF2e4vollc/0UpnvhrOLXIF+3bN1OV8+l+590aoKcVtXKNaUZkJQ9QGz4N9020LC7mIS7Rscp7B9moFqwEAGsFcLxUBFeq2cEXBqoYuf0ngBBIZ+o4uLzrLKzvJ2UUpD8hb7AeUYGUcIeDSR+XP8z4VYSByfuXAWIUoMcSuWLPt0AK6LYdhScnZNSs0ItnvcFtjAq4qLM/sqPR5UFsKC2gutGx514DugLbCs6qki8pEReB7KebB7v7sUjPkKu1swGsI5RZb95j1YCCXRt7chFWB0o6QeII1Rgevy6q2PMJHw+EkiaAwZhgYh7BxcmuKbCmZaJCzS51IuNVoKCRBY9XuqUcPaulb5VTbU4ScqB3UC0SYSO/F10Eox4ZEL/UiF/bYdHPMwJvhXmNJ7kh3sWJSj9mwiR8QklNGa7RmJefr0zUCnCDKEpZ9ZCoBSFtot4X7OE4hUG22nzxR8YHlyuxLZi55yE1t0Wp0d/cA5c=
-          bucket: xtiva-rumpel.hubat.net
-          local-dir: dist
-          acl: public_read
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: xtiva
-
-        - provider: s3
-          access_key_id: AKIAJQYXKMAT6VQBOHGA
-          secret_access_key:
-            secure: dI65RS7ObrRNtI/sAvdJz9mlCsQ+5DuKDz3CMeTuxRNV1+3ipZSkgtXQrXU97v+DbUjlPQeHVAcd9yWakpeuBKge49ZSz2PEz/LJucLgU2x9pAYvixAWpJww2zUkjcb8CNZgdL4ikAlUSNAchku5+ARI4PSeSSzKc1TzKbd1p71EY6oHJy4Lbo+QqzkSRBWBmEcV3H38RsVIxHvPoq2Wx//DWce8e1x9M1sGbDFXQGIdJkKvIq6bbFh0YEAQFogX8rJ+w0KJ13Y2M4hKzbVIZjRjtotI9G9jqVR1sg3P1ffBGIyOZiLq7WyJDyO3dVjSeQ/yk4s2PBJxjsZp0BXMwU+N5o1xg4R5QvF71dh0FDNLo0YL4J1jxUFON4fF3knfiDmO8GUXzjWPG3FUtZpUcMkb/oLt6bDllm6I7vc4Dp34UZvULV93BnodZd6FvKkGSEpvbf/UzJ/l6/2FgB8xjBoDKf/1GiZmu3sJHYMABCQSsenTHhNl+vy63R7Mi4uSIo/LikLKmTik/QPJvYwkri6HAtbnRdWlY9Vekca+lsdid/udu4kADHqcOAGp3Tp5TDD473s1OVYfUaMJHUfFa/cDlxQl9/mtq1CqdtzOm5EwclNj6pzxv2wO/y8gqwaXXAG6sYNI+aZBUOC0r2UTXd1MyUyK0E0rzqul4JeBcdc=
-          bucket: flow-reporter.hubat.net
-          local-dir: dist
-          acl: public_read
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: quensus
-
-        - provider: s3
-          access_key_id: AKIAIC7F56C3VXQISEWA
-          secret_access_key:
-            secure: AZWM4m+jpRCKvbPiNmlDQrYG9B1mpbYb1WZya5GaebfjE4VRo86veRBIpy69knwbbM55qdhJsKSZLy5tTQxlWqAIsZRLR2/ku70TtK6dqL96ZsE7hLLp4qeywgHS1Eshf3Q6do4ozauYuiAWKSvIUqbowEjaWZ20pdI4vdE9BPC/+EkwImpOippAy6+1Lu5egY1gXxsutevVqr5kBvy/hKK5c+dtTtK6KvdqV6peR4iDF+riXxRsdG0nA86EXg1tBbJYrUgCnv4lvtpJhhQknlljZ2lKEJw/yC1dzXZohSGrwBf8eYdO9fOIPZ3PKnpXCQKRTyiBdqLq1ge/eGgf0uc82XjY/OX3F9WCLhraOEZE90zEiQWdfGQ3ONRJoSaJABDseTbzK/m9Jjok9wPC4nk9O9/m33O1Qyy6YuMgJlRyY3wMw8O1TFc7sygs9cSejgDGtmDql+swoLQX48D3sXo7lAsfc7shOPhsI8/Ivt1DaYhIcgTj7wBl9Dhmd/zo48ZaQxcEsW13LVpZyRO7RzVJjHC9qE8vfz+T+k+zFFkUvBDmO/7gg+UVQoNhjcbKPaIODx5KVrYrJTx0j0pWbESrO0OsM0tLoEViSoHZ8cyZj3dtakmdODsviN7PkmbPZTDzj4yBCVFFYeN+zjXwzHW8EuKkFuW3fJs0fYRbTzk=
-          bucket: accept-rumpel.hubat.net
-          local-dir: dist
-          acl: public_read
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: accept
-
-        - provider: s3
-          access_key_id: AKIAIR3HIBCCANU3ZWDQ
-          secret_access_key:
-            secure: NkDynj7y/datNvPNOGkBnThoXlo5sbTKV9afRRCqzA/LcjhbuvcqjQs7p7yL3GOiqNfru8cmtkfyYkaKfZ6lTFZ4+65egb1SL50AAE6UcQFu8DhvfVwe6gHxlMGwUv8Dkg43lSsIFu5PokHa3v4JFAiFemQhW8z8bl/29SWtwQ6ZvSwnjFbTgrTKnNVK/i0LESUxNPkyT5L3UWIeiy7W18jPOfiDP5vw7/3et2++07KlHABbk7QpQJdYmhF+fHDFh8z1FayNG8JXI5pSZBqFEXl6QnIKA5CeBL6aQdkGFpuXj+Bm23i/P0k2uRgdUZZ/UQK2RHd47+NqVKaLgtnJVwTY5wmu6Y3B0lpjckvKdX8u8dbZuCNjp3Xw819LmUGA4qAOmv0pxQWndas4oPnHnPBZNVQiZKatrypBlUztN26Kk5toZSsLrrdPUfj2+XafV7uyyG2xfQnOzy4HkE/fzJCQK6XiM7hIobbRQYsxqp2WszrojydmL0Jnx+x5IBRLPnpy8d/7c9j23O88xbGTtw2YfJPHSoZRrnQC0cO2+gi/vZvHwdz9Ntaxtz6S4z/S36Qd6YzgdLr5LlxYrSr0zoTJ8AopJWCZ2dxpfLev3Uip8MOFVwsTTl41Ym3b62AfM0sSfkZ3ysyY3SwTbCysB3MYGAfBdjPqgcbcIn5r1gM=
-          bucket: tamo-rumpel.hubat.net
-          local-dir: dist
-          acl: public_read
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: tamo
-
-        - provider: s3
-          access_key_id: AKIAISPMI5PZ5RW6NUQQ
-          secret_access_key:
-            secure: nURY+vMAc9+ERrQ1q/5wuO8wHx7CJDJnKgyy0HhvbzaU7S7gd7g+zvz5VGQv1qX3yuDquuh19N4jXdh67sw5qeJ0iqBrZiQUa9Pnr1rUTXthdtxp6/mbwry34JA0RKNAF1JzjDkdVdSxJdJ5r4tunPLIqprmqYSI+Ul5mOxF0iubpSnXN+s1+6dhElTG/Czp6Fi8N0kzSULsv6LefZCZ+viEuBNRAkoALSGU7sa4+OsdN4M0sZN2sEkA1P/khoF5ipBIXz2S/PO6X9jNbRIdmmXtmQisOl0A1KTNR6J0G7ZleMDeDP/uBZkJB1CLuFWELzg6b5tRLMrydbUNS823w+Q4anbR2qd+rxknuEAwuqzqbLC21AGVLhTkapsv8t1IyejvXdTSpm+U60zqJCz4McZfehVDYEAiEYuV4tAGX2VjEAiHe9v4oEG+HbNMX/bZeNQDpUIj4J1g5PfbS0d3EK+40Y0c4cEKJ9Sd3iNqo6bG/LN/cLKDa+aPhU+iJa7bxCdw/0oIex9MDE94S1RHK9hZi1kRmPxyHBoNFWNRLfWBnbgBwgL8j7pnwJjYsrvvbwmJF1gEZgzsXgCV9+SpVl04Y6ooQQgYiAov/CXt7MPd28UXlePHZSdHAAY5rQQirEAME+U5weMx0EQ35daDuL9yBFX3Y6WkFZw7L3k5hxk=
-          bucket: rumpel.hubat.net
-          local-dir: dist
-          acl: public_read
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: dev
-
-    - stage: build-hat
-      env:
-        - CHROME_BIN=chromium-browser
-        - DISPLAY=:99.0
+    - stage: build-production
+      if: branch = master
       script:
-        - ng --version
-        - ng lint
-        - ng test --watch=false
-        - ng build --configuration=native
+        - ng build --configuration=production
       after_success:
         - mv ./dist/runtime.*.js ./dist/runtime.bundle.js
         - mv ./dist/polyfills.*.js ./dist/polyfills.bundle.js
@@ -141,90 +73,3 @@ jobs:
           acl: private
           skip_cleanup: true
           region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: master
-
-        - provider: s3
-          access_key_id: AKIAJ4VKFGF4ZU23H4QA
-          secret_access_key:
-            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
-          bucket: rumpel-build-artifacts
-          local-dir: dist
-          upload-dir: hubat
-          acl: private
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: dev
-
-        - provider: s3
-          access_key_id: AKIAJ4VKFGF4ZU23H4QA
-          secret_access_key:
-            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
-          bucket: rumpel-build-artifacts
-          local-dir: dist
-          upload-dir: xtiva
-          acl: private
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: xtiva
-
-        - provider: s3
-          access_key_id: AKIAJ4VKFGF4ZU23H4QA
-          secret_access_key:
-            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
-          bucket: rumpel-build-artifacts
-          local-dir: dist
-          upload-dir: surreycode
-          acl: private
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: surreycode
-
-        - provider: s3
-          access_key_id: AKIAJ4VKFGF4ZU23H4QA
-          secret_access_key:
-            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
-          bucket: rumpel-build-artifacts
-          local-dir: dist
-          upload-dir: quensus
-          acl: private
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: quensus
-
-        - provider: s3
-          access_key_id: AKIAJ4VKFGF4ZU23H4QA
-          secret_access_key:
-            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
-          bucket: rumpel-build-artifacts
-          local-dir: dist
-          upload-dir: accept
-          acl: private
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: accept
-
-        - provider: s3
-          access_key_id: AKIAJ4VKFGF4ZU23H4QA
-          secret_access_key:
-            secure: aP6ymzAmnVcGL2woZwf1aurp0T8N6ps7JygjeC1N6DGHB8F1Ogxl2Zqi5pTIWcr9z7r2sDJu7WV412OVB4nB9v9BYHxjYq3K6YCV6rvun6Lw6hwt1HhDfw9a0aZEkwvh5SZhszlNi4Of3AGoP1Dvqeb/IdudC6eVF00QcNgY3EmrrRDd14MoPKN2dHuw0HKuQTkLTEFA4UVZB3cyj00KLTTJBaNnttGdlXV1Y7EwkmRDu9+329osKFPGSZneuUO2l134NRFS5g1+cmmPm2r+0ftJ7S2nrF8X2EU3SfBKUOj/rEyWzjiM0HNA3KK1/7H+cCwC8DOcxnDLK4GDeymEx16PO1EnoAIn0bj0ws7ksR+o6jlijZuWLLp6uYdou2+OL7EFv3KWbyIdq5UO1ll7CQ1gzhdudxxIdpjjcnbCknZ/0S4WiOJsTzkqBrILQLcYGcF3gVMAHI9j8WkPJD7Qnz4CO6YgmqwuVyyXEapNMDtIdGA3DkWv51Z+pvkSjQcKTCgMSorZSVESGjLbHYm/c6ojPX4Oe8N+IGAckEIVH/MMGRMN5CCdHHgKiaAG9qJ+R5xPqsL5cWZoGiFRa6npO3PbX89x9MkjvHCuTCtNZ4zfTTMpDGsEnvERVdZPzBKcwWPn3ONIBMGQBHYgbymMwtvc7J3fvaD1G0p7nagnPcs=
-          bucket: rumpel-build-artifacts
-          local-dir: dist
-          upload-dir: tamo
-          acl: private
-          skip_cleanup: true
-          region: eu-west-1
-          on:
-            repo: Hub-of-all-Things/Rumpel
-            branch: tamo
