@@ -17,6 +17,11 @@ cache:
     - node_modules
     - $HOME/.npm
 
+env:
+  global:
+    - CHROME_BIN=chromium-browser
+    - DISPLAY=:99.0
+
 before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
@@ -29,16 +34,12 @@ install:
 jobs:
   include:
     - stage: test
-      env:
-        - CHROME_BIN=chromium-browser
-        - DISPLAY=:99.0
       script:
         - ng --version
         - ng lint
         - ng test --watch=false
 
     - stage: build-sandbox
-      if: branch = dev
       script:
         - ng build --configuration=sandbox
       deploy:
@@ -54,7 +55,6 @@ jobs:
           region: eu-west-1
 
     - stage: build-production
-      if: branch = master
       script:
         - ng build --configuration=production
       after_success:
@@ -73,3 +73,10 @@ jobs:
           acl: private
           skip_cleanup: true
           region: eu-west-1
+
+stages:
+  - test
+  - name: build-sandbox
+    if: branch = test
+  - name: build-production
+    if: branch = master
