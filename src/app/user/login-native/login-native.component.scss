@@ -62,6 +62,13 @@
     }
   }
 
+  @media (max-height: 619px) {
+    .title-container {
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+  }
+
   .data-rights-description {
     p {
       opacity: 0.87;
@@ -178,6 +185,16 @@
     }
   }
 
+  @media (max-height: 619px) {
+    .issuer-logo {
+
+      img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
   .drp-image {
     width: 100%;
     text-align: center;
@@ -218,8 +235,8 @@
 
 @media (min-width: 720px) {
   .native-login-page {
-    height: calc(100vh - 72px);
-    margin-top: 72px;
+    height: calc(100vh - 62px);
+    margin-top: 62px;
 
     .flex-spacer {
       flex-grow: 2;
@@ -232,20 +249,38 @@
     .user-actions {
       flex-grow: 3;
     }
+
+    .rum-hat-already-exists {
+      text-align: center;
+    }
   }
 }
 
 .rum-error-message {
   padding: 15px 30px;
-  background-color: rgba(227, 102, 130, 0.2);
+  background-color: rgba(228, 81, 81, 0.2);
   border-radius: 2px;
-  border: solid 1px #e36682;
-  color: #e36682;
-  font-size: 13px;
-  font-weight: bold;
+  border-bottom: solid 1px #e45151;
+  color: #e45151;
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.4px;
 
   &-icon {
-    margin-right: 5px;
+    margin-right: 17px;
     vertical-align: middle;
   }
+}
+
+.rum-hat-already-exists {
+  padding: 15px 30px;
+  background-color: rgba(74, 85, 107, 0.2);
+  border-radius: 2px;
+  width: 100%;
+  margin-top: 0;
+  text-align: left;
+  border-bottom: solid 1px $app-dark-tone;
+  color: $app-dark-tone;
+  font-size: 14px;
 }

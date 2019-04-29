@@ -12,12 +12,21 @@
 </rum-info-header>
 
 <div class="native-login-page">
-  <span class="small-flex-spacer"></span>
 
-  <div [style.visibility]="passwordError ? 'visible' : 'hidden'" class="rum-error-message">
-    <mat-icon class="rum-error-message-icon">warning</mat-icon>
-    Sorry, that password is incorrect!
-  </div>
+  <ng-container *ngIf="passwordError === true">
+    <div class="rum-error-message">
+      <mat-icon class="rum-error-message-icon">warning</mat-icon>
+      Sorry, that password is incorrect!
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="accountExists === true">
+    <div class="rum-hat-already-exists">
+      Our records show that the email you entered is already used for a HAT with the URL below. Please enter your password to log in.
+    </div>
+  </ng-container>
+
+  <span class="small-flex-spacer"></span>
 
   <span class="small-flex-spacer"></span>
 
