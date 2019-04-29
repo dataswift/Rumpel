@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SheFeed} from '../../../../she/she-feed.interface';
+import { Component, Input, OnInit } from '@angular/core';
+import { SheFeed } from '../../../../she/she-feed.interface';
 
 @Component({
   selector: 'rum-she-feed-weekly-summary',

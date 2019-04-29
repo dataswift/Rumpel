@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PageHeaderComponent } from './page-header.component';
-import {CustomAngularMaterialModule} from '../../../core/custom-angular-material.module';
+import { CustomAngularMaterialModule } from '../../../core/custom-angular-material.module';
 
 describe('PageHeaderComponent', () => {
   let component: PageHeaderComponent;

@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApiService } from './hat-api.service';
-import {ReplaySubject, Observable, of, throwError} from 'rxjs';
+import { ReplaySubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../../user/user.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
@@ -12,9 +12,8 @@ import * as parse from 'date-fns/parse';
 import * as isFuture from 'date-fns/is_future';
 import * as addDays from 'date-fns/add_days';
 import { HttpResponse } from '@angular/common/http';
-import { uniq } from 'lodash';
-import {HatSetupCacheService} from '../../user/hat-setup-login/hat-setup-cache.service';
-import {CacheService} from './cache.service';
+import { HatSetupCacheService } from '../../user/hat-setup-login/hat-setup-cache.service';
+import { CacheService } from './cache.service';
 
 declare const httpProtocol: string;
 

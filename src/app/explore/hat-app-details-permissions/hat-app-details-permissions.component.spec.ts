@@ -10,9 +10,9 @@ import { HatApplicationsService } from '../hat-applications.service';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { HatApplication } from '../hat-application.interface';
-import {HatAppHmiContentComponent} from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
-import {SafeHtmlPipe} from '../../shared/pipes';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
+import { SafeHtmlPipe } from '../../shared/pipes';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const HAT_APPLICATION_MOCK: HatApplication = {
   'application': {

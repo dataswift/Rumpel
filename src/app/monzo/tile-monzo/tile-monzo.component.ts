@@ -4,7 +4,7 @@ import { MonzoService } from '../monzo.service';
 
 import { Monzo } from '../monzo.interface';
 import * as moment from 'moment';
-import {HatRecord} from '../../shared/interfaces/hat-record.interface';
+import { HatRecord } from '../../shared/interfaces/hat-record.interface';
 
 @Component({
   selector: 'rum-tile-monzo',

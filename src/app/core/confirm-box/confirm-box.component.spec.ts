@@ -7,7 +7,7 @@
  */
 
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { ConfirmBoxComponent } from './confirm-box.component';
 import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';

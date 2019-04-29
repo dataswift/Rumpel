@@ -4,9 +4,9 @@ import { HatApplicationPermissionsComponent } from './hat-application-permission
 import { CustomAngularMaterialModule } from '../../../core/custom-angular-material.module';
 import { UnbundlePipe } from '../../pipes/unbundle.pipe';
 import { HatApplicationContent } from '../../../explore/hat-application.interface';
-import {HatAppHmiContentComponent} from '../hat-app-hmi-content/hat-app-hmi-content.component';
-import {SafeHtmlPipe} from '../../pipes';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { HatAppHmiContentComponent } from '../hat-app-hmi-content/hat-app-hmi-content.component';
+import { SafeHtmlPipe } from '../../pipes';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const APP_DATA_MOCK: HatApplicationContent = {
   'id': 'notables',

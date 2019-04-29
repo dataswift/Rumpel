@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {SheNestedStructure} from '../../she/she-feed.interface';
+import { Pipe, PipeTransform } from '@angular/core';
+import { SheNestedStructure } from '../../she/she-feed.interface';
 
 @Pipe({
   name: 'InsightWeeklySummary'

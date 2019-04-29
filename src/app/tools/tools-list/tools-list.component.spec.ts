@@ -6,7 +6,7 @@ import { CustomAngularMaterialModule } from '../../core/custom-angular-material.
 import { RouterTestingModule } from '@angular/router/testing';
 import { HatToolsService } from '../hat-tools.service';
 import { of } from 'rxjs/internal/observable/of';
-import {HatTool} from '../hat-tools.interface';
+import { HatTool } from '../hat-tools.interface';
 
 const TOOL_MOCK: HatTool = {
   'id': 'data-feed-counter',

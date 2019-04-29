@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { SheFeedService } from '../she-feed.service';
 import { Observable } from 'rxjs';
 import { SheFeed } from '../she-feed.interface';

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SheFeedWeeklySummaryListComponent } from './she-feed-weekly-summary-list.component';
-import {CustomAngularMaterialModule} from '../../../../core/custom-angular-material.module';
+import { CustomAngularMaterialModule } from '../../../../core/custom-angular-material.module';
 
 describe('SheFeedWeeklySummaryListComponent', () => {
   let component: SheFeedWeeklySummaryListComponent;

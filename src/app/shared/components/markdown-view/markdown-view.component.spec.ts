@@ -4,7 +4,7 @@ import { MarkdownViewComponent } from './markdown-view.component';
 import { MarkdownToHtmlPipe, SafeHtmlPipe } from '../../pipes';
 import { HatApiService } from '../../../core/services/hat-api.service';
 import { ActivatedRoute } from '@angular/router';
-import {of, throwError} from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 describe('MarkdownViewComponent', () => {
   let component: MarkdownViewComponent;

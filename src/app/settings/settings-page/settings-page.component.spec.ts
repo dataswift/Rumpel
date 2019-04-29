@@ -13,14 +13,14 @@ import { SettingsHeaderComponent } from '../settings-header/settings-header.comp
 import { SettingsListComponent } from '../settings-list/settings-list.component';
 import { PresignImgUrlPipe } from '../../shared/pipes/presign-img-url.pipe';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
-import {Router, RouterModule} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { AuthService } from '../../core/services/auth.service';
 import { of } from 'rxjs';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { APP_CONFIG } from '../../app.config';
-import {SettingsFooterComponent} from '../settings-footer/settings-footer.component';
-import {SystemStatusService} from '../../services/system-status.service';
+import { SettingsFooterComponent } from '../settings-footer/settings-footer.component';
+import { SystemStatusService } from '../../services/system-status.service';
 
 const PROFILE_MOCK_DATA = {
   dateCreated: 0,

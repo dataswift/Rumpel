@@ -1,8 +1,8 @@
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HatApiService } from '../core/services/hat-api.service';
 import { SystemStatusInterface } from '../shared/interfaces/system-status.interface';
-import {CacheService} from '../core/services/cache.service';
+import { CacheService } from '../core/services/cache.service';
 
 
 @Injectable()

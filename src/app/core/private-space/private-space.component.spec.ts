@@ -12,7 +12,7 @@ import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { AuthService } from '../services/auth.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {SystemStatusService} from '../../services/system-status.service';
+import { SystemStatusService } from '../../services/system-status.service';
 
 const SYSTEM_STATUS_MOCK = {
   title: 'Previous Login',

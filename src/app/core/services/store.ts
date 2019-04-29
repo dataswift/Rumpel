@@ -1,11 +1,11 @@
-import {Inject, Injectable, Optional} from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import { Inject, Injectable, Optional } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
-import {isFuture} from 'date-fns';
-import {of} from 'rxjs/internal/observable/of';
+import { isFuture } from 'date-fns';
+import { of } from 'rxjs/internal/observable/of';
 
 @Injectable()
 export class Store extends BehaviorSubject<any> {

@@ -6,8 +6,8 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {throwError as observableThrowError, ReplaySubject, Observable, forkJoin, of, zip, timer} from 'rxjs';
-import {catchError, filter, map, shareReplay, startWith, switchMap} from 'rxjs/operators';
+import { throwError as observableThrowError, ReplaySubject, Observable, forkJoin, of, zip } from 'rxjs';
+import { catchError, filter, map, startWith } from 'rxjs/operators';
 import { Inject, Injectable } from '@angular/core';
 import { HatApiService } from '../core/services/hat-api.service';
 import { BaseDataService } from '../services/base-data.service';
@@ -17,8 +17,6 @@ import { Profile, ProfileSharingConfig } from '../shared/interfaces/profile.inte
 import { HatRecord } from '../shared/interfaces/hat-record.interface';
 import { APP_CONFIG, AppConfig } from '../app.config';
 import { BundleStructure, PropertyQuery } from '../shared/interfaces/bundle.interface';
-import {HatApplication} from '../explore/hat-application.interface';
-import {CacheService} from '../core/services/cache.service';
 
 const DEFAULT_PHATA_BUNDLE: BundleStructure = {
   name: 'phata',

@@ -34,7 +34,6 @@ import { PasswordStrengthIndicatorComponent } from './components/password-streng
 import { HatAppHmiContentComponent } from './components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { MarkdownViewComponent } from './components/markdown-view/markdown-view.component';
 import { SheFeedWeeklySummaryModule } from './components/she-feed-weekly-summary/she-feed-weekly-summary.module';
-import {InsightWeeklySummaryPipe} from './pipes/insight-weekly-summary.pipe';
 
 @NgModule({
   imports: [ CommonModule, FormsModule, CustomAngularMaterialModule, SheFeedWeeklySummaryModule ],

@@ -8,7 +8,7 @@
 
 /* tslint:disable:no-unused-variable */
 
-import {TestBed, async, inject} from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { DomSanitizer } from '@angular/platform-browser';
 
