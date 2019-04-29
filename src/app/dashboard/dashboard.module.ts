@@ -16,7 +16,7 @@ import { MonzoModule } from '../monzo/monzo.module';
 import { NotablesModule } from '../notables/notables.module';
 import { ProfilesModule } from '../profiles/profiles.module';
 
-import { GridComponent} from './grid/grid.component';
+import { GridComponent } from './grid/grid.component';
 import { AccountStatusTileComponent } from './account-status-tile/account-status-tile.component';
 import { TileHeaderComponent } from './tile-header/tile-header.component';
 import { TileWeatherComponent } from './tile-weather/tile-weather.component';

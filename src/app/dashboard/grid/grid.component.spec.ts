@@ -12,8 +12,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { GridComponent } from './grid.component';
-import {TileHeroComponent} from '../tile-hero/tile-hero.component';
-import {CoreModule} from '../../core/core.module';
+import { TileHeroComponent } from '../tile-hero/tile-hero.component';
+import { CoreModule } from '../../core/core.module';
 
 xdescribe('GridComponent', () => {
   let component: GridComponent;

@@ -12,8 +12,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { MyDayComponent } from './my-day.component';
-import {SpinnerComponent} from '../../shared/components/spinner/spinner.component';
-import {MapComponent} from '../../locations/map/map.component';
+import { SpinnerComponent } from '../../shared/components/spinner/spinner.component';
+import { MapComponent } from '../../locations/map/map.component';
 
 xdescribe('MyDayComponent', () => {
   let component: MyDayComponent;

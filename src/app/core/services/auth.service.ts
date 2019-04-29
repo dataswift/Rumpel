@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApiService } from './hat-api.service';
-import {ReplaySubject, Observable, of, throwError} from 'rxjs';
+import { ReplaySubject, Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../../user/user.interface';
 import { HatApplication } from '../../explore/hat-application.interface';

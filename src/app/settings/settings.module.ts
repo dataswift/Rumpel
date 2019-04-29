@@ -9,7 +9,7 @@
 import { NgModule } from '@angular/core';
 import { SettingsHeaderComponent } from './settings-header/settings-header.component';
 import { SettingsPageComponent } from './settings-page/settings-page.component';
-import {SettingsListComponent} from './settings-list/settings-list.component';
+import { SettingsListComponent } from './settings-list/settings-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { SettingsFooterComponent } from './settings-footer/settings-footer.component';

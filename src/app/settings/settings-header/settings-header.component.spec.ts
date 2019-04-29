@@ -15,7 +15,7 @@ import { HatApiService } from '../../core/services/hat-api.service';
 import { AuthService } from '../../core/services/auth.service';
 import { of } from 'rxjs';
 import { ProfilesService } from '../../profiles/profiles.service';
-import {SystemStatusService} from '../../services/system-status.service';
+import { SystemStatusService } from '../../services/system-status.service';
 
 const PROFILE_MOCK_DATA = {
   dateCreated: 0,

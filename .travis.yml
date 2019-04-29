@@ -42,6 +42,11 @@ jobs:
     - stage: build-sandbox
       script:
         - ng build --configuration=sandbox
+      after_success:
+        - mv ./dist/runtime.*.js ./dist/runtime.bundle.js
+        - mv ./dist/polyfills.*.js ./dist/polyfills.bundle.js
+        - mv ./dist/main.*.js ./dist/main.bundle.js
+        - mv ./dist/styles.*.css ./dist/styles.bundle.css
       deploy:
         - provider: s3
           access_key_id: AKIAJ4VKFGF4ZU23H4QA
@@ -53,6 +58,9 @@ jobs:
           acl: private
           skip_cleanup: true
           region: eu-west-1
+          on:
+            repo: Hub-of-all-Things/Rumpel
+            branch: dev
 
     - stage: build-production
       script:
@@ -77,6 +85,6 @@ jobs:
 stages:
   - test
   - name: build-sandbox
-    if: branch = test
+    if: branch = dev
   - name: build-production
     if: branch = master

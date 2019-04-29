@@ -36,7 +36,7 @@ import { DataDebitQuickConfirmComponent } from './data-management/data-debit-qui
 import { HatClaimSuccessComponent } from './hat-claim/hat-claim-success/hat-claim-success.component';
 import { HatClaimComponent } from './hat-claim/hat-claim/hat-claim.component';
 import { SettingsPageComponent } from './settings/settings-page/settings-page.component';
-import {MarkdownViewComponent} from './shared/components/markdown-view/markdown-view.component';
+import { MarkdownViewComponent } from './shared/components/markdown-view/markdown-view.component';
 
 @NgModule({
   imports: [

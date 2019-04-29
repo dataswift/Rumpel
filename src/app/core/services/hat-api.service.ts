@@ -21,7 +21,7 @@ import { HatApplication } from '../../explore/hat-application.interface';
 import { SheFeed } from '../../she/she-feed.interface';
 import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 import { SheStaticProfile } from '../../shared/interfaces/she-static-profile.interface';
-import {SystemStatusInterface} from '../../shared/interfaces/system-status.interface';
+import { SystemStatusInterface } from '../../shared/interfaces/system-status.interface';
 
 @Injectable()
 export class HatApiService {
