@@ -11,7 +11,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SettingsFooterComponent } from './settings-footer.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import {of} from 'rxjs';
+import { of } from 'rxjs';
 
 describe('SettingsFooterComponent', () => {
   let component: SettingsFooterComponent;

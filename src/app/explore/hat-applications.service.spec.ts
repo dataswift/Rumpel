@@ -4,7 +4,7 @@ import { HatApplicationsService } from './hat-applications.service';
 import { HatApiService } from '../core/services/hat-api.service';
 import { AuthService } from '../core/services/auth.service';
 import { of } from 'rxjs';
-import {CacheService} from '../core/services/cache.service';
+import { CacheService } from '../core/services/cache.service';
 
 describe('HatApplicationsService', () => {
   beforeEach(() => {

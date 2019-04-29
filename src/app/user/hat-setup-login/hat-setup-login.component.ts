@@ -16,7 +16,7 @@ import { HatApiService } from '../../core/services/hat-api.service';
 import { MatDialog } from '@angular/material';
 import { HatAppHmiComponent } from '../../shared/components/hat-app-hmi/hat-app-hmi.component';
 import { WINDOW } from '../../core/services/global.service';
-import {HatSetupCacheService} from './hat-setup-cache.service';
+import { HatSetupCacheService } from './hat-setup-cache.service';
 
 @Component({
   selector: 'rum-hat-setup-login',

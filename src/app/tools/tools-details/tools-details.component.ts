@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {SheFeed} from '../../she/she-feed.interface';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {mergeMap, tap} from 'rxjs/operators';
-import {HatToolsService} from '../hat-tools.service';
-import {HatTool} from '../hat-tools.interface';
-import * as startOfDay from 'date-fns/start_of_day';
-import * as subMonths from 'date-fns/sub_months';
-import * as parse from 'date-fns/parse';
+import { Observable, of } from 'rxjs';
+import { SheFeed } from '../../she/she-feed.interface';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { mergeMap, tap } from 'rxjs/operators';
+import { HatToolsService } from '../hat-tools.service';
+import { HatTool } from '../hat-tools.interface';
 import * as format from 'date-fns/format';
 
 @Component({

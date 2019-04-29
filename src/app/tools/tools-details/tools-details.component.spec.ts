@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ToolsDetailsComponent } from './tools-details.component';
-import {CustomAngularMaterialModule} from '../../core/custom-angular-material.module';
-import {SharedModule} from '../../shared/shared.module';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {HatToolsService} from '../hat-tools.service';
-import {of} from 'rxjs';
-import {HatTool} from '../hat-tools.interface';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { SharedModule } from '../../shared/shared.module';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { HatToolsService } from '../hat-tools.service';
+import { of } from 'rxjs';
+import { HatTool } from '../hat-tools.interface';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const TOOL_MOCK: HatTool = {
   'id': 'data-feed-counter',

@@ -9,7 +9,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouterTestingModule } from '@angular/router/testing';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { HatClaimConfirmationComponent } from './hat-claim-confirmation.component';

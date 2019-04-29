@@ -1,13 +1,12 @@
-import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
-import {HatApplication, HatApplicationSetup} from '../explore/hat-application.interface';
-import {AuthService} from '../core/services/auth.service';
-import {HatApiService} from '../core/services/hat-api.service';
-import {defaultIfEmpty, filter, flatMap, map, tap} from 'rxjs/operators';
-import {User} from '../user/user.interface';
-import {SheFeed} from '../she/she-feed.interface';
-import {HatTool} from './hat-tools.interface';
-import {CacheService} from '../core/services/cache.service';
+import { Injectable } from '@angular/core';
+import { Observable, ReplaySubject } from 'rxjs';
+import { AuthService } from '../core/services/auth.service';
+import { HatApiService } from '../core/services/hat-api.service';
+import { filter, flatMap, map, tap } from 'rxjs/operators';
+import { User } from '../user/user.interface';
+import { SheFeed } from '../she/she-feed.interface';
+import { HatTool } from './hat-tools.interface';
+import { CacheService } from '../core/services/cache.service';
 
 @Injectable()
 export class HatToolsService {

@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {HatApplication, HatApplicationContent} from '../../../explore/hat-application.interface';
+import { Component, Input, OnInit } from '@angular/core';
+import { HatApplicationContent } from '../../../explore/hat-application.interface';
 
 @Component({
   selector: 'rum-hat-app-hmi-content',

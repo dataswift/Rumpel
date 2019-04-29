@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
  */
 
-import {Directive, ViewContainerRef, Injector, ComponentFactoryResolver} from '@angular/core';
+import { Directive, ViewContainerRef, Injector, ComponentFactoryResolver } from '@angular/core';
 import { DialogService } from './dialog.service';
 
 @Directive({

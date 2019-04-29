@@ -6,7 +6,7 @@
  * Written by Eleftherios Myteletsis <eleftherios.myteletsis@gmail.com> 2019
  */
 
-import {ReplaceCamelCasePipe} from './replace-camel-case.pipe';
+import { ReplaceCamelCasePipe } from './replace-camel-case.pipe';
 
 describe('ReplaceCamelCasePipe', () => {
   it('create an instance', () => {

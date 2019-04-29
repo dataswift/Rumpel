@@ -57,8 +57,7 @@ import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.
 import { SystemStatusService } from './services/system-status.service';
 import { WINDOW_PROVIDERS } from './core/services/global.service';
 import { ToolsModule } from './tools/tools.module';
-import {LocalStorageService} from './core/services/local-storage.service';
-import {ReactiveWebStorageModule} from './core/services/reactive-webstorage.module';
+import { ReactiveWebStorageModule } from './core/services/reactive-webstorage.module';
 
 export const storageKeys = ['system-status', 'applications', 'tools', 'phata-structure'];
 

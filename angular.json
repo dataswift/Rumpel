@@ -39,11 +39,11 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.production.ts"
                 }
               ]
             },
-            "native": {
+            "sandbox": {
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -56,24 +56,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.native.ts"
-                }
-              ]
-            },
-            "standalone": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.standalone.ts"
+                  "with": "src/environments/environment.sandbox.ts"
                 }
               ]
             },
@@ -90,7 +73,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.standalone.ts"
+                  "with": "src/environments/environment.development.ts"
                 }
               ]
             }
@@ -102,15 +85,6 @@
             "browserTarget": "Rumpel:build"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "Rumpel:build:production"
-            },
-            "native": {
-              "browserTarget": "Rumpel:build:native"
-            },
-            "standalone": {
-              "browserTarget": "Rumpel:build:standalone"
-            },
             "development": {
               "browserTarget": "Rumpel:build:development"
             }

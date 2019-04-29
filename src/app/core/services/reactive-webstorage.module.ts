@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import {Store} from './store';
-import {LocalStorageService} from './local-storage.service';
-import {SessionStorageService} from './session-storage.service';
-import {CacheService} from './cache.service';
+import { Store } from './store';
+import { LocalStorageService } from './local-storage.service';
+import { SessionStorageService } from './session-storage.service';
+import { CacheService } from './cache.service';
 
 @NgModule({
   imports: [],

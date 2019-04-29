@@ -12,14 +12,14 @@ import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 import { AuthService } from '../../core/services/auth.service';
-import {HatRecord, User} from '../../shared/interfaces/index';
-import {Observable, of, Subscription} from 'rxjs';
+import { HatRecord, User } from '../../shared/interfaces/index';
+import { Observable, of, Subscription } from 'rxjs';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { Profile } from '../../shared/interfaces/profile.interface';
 import { MatMenuTrigger } from '@angular/material';
-import {SystemStatusInterface} from '../../shared/interfaces/system-status.interface';
-import {catchError, tap} from 'rxjs/operators';
-import {SystemStatusService} from '../../services/system-status.service';
+import { SystemStatusInterface } from '../../shared/interfaces/system-status.interface';
+import { catchError, tap } from 'rxjs/operators';
+import { SystemStatusService } from '../../services/system-status.service';
 
 @Component({
   selector: 'rum-header',

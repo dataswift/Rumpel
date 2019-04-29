@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
-import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { HatSetupLoginComponent } from './hat-setup-login.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
@@ -26,7 +26,7 @@ import { of } from 'rxjs';
 import { WINDOW } from '../../core/services/global.service';
 import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { SafeHtmlPipe } from '../../shared/pipes';
-import {HatSetupCacheService} from './hat-setup-cache.service';
+import { HatSetupCacheService } from './hat-setup-cache.service';
 
 const PARENT_APPLICATION_MOCK: HatApplication = {
   'application': {

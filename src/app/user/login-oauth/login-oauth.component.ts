@@ -7,7 +7,7 @@
  */
 
 import { Component, Inject, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
