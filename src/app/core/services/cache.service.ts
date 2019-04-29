@@ -40,4 +40,8 @@ export class CacheService {
   removeFromCache(key: string) {
     this.localStorage.removeItem(key);
   }
+
+  removeAll() {
+    this.localStorage.removeAll();
+  }
 }

@@ -4,14 +4,13 @@ import 'rxjs/add/operator/scan';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/startWith';
-import {HatCache} from './local-storage.service';
 import {isFuture} from 'date-fns';
 import {of} from 'rxjs/internal/observable/of';
 
 @Injectable()
 export class Store extends BehaviorSubject<any> {
   private dispatcher = new Subject();
-  constructor( @Inject('localStoragekeys') @Optional() keys: string[]) {
+  constructor( @Inject('localStoragekeys') @Optional() private keys: string[]) {
     super({});
     const initialState: any = keys && keys.length > 0 ? this.getFromLocalStorage(keys) : {};
 
@@ -24,6 +23,17 @@ export class Store extends BehaviorSubject<any> {
 
   public getAll() {
     return this;
+  }
+
+  public clearAll() {
+    if (this.keys) {
+      this.keys.forEach((key) => {
+        try {
+          this.removeItem(key);
+          localStorage.removeItem(key);
+        } catch (error) { }
+      })
+    }
   }
 
   public getItem<T>(key: string): Observable <T | null>  {

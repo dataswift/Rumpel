@@ -92,7 +92,11 @@ import { ToolsDetailsComponent } from './tools/tools-details/tools-details.compo
       { path: 'about', component: AboutComponent },
       { path: 'hat/claim/:claimToken', component: HatClaimComponent, canActivate: [NativeGuard] },
       { path: 'hat/claim/success', component: HatClaimSuccessComponent }
-    ])
+    ],
+      {
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled'
+      })
   ],
   exports: [
     RouterModule

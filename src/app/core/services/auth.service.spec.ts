@@ -8,6 +8,7 @@ import { CookieService } from 'angular2-cookie/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpBackendClient } from './http-backend-client.service';
 import {HatSetupCacheService} from '../../user/hat-setup-login/hat-setup-cache.service';
+import {CacheService} from './cache.service';
 
 describe('AuthService', () => {
   beforeEach(() => {
@@ -20,6 +21,7 @@ describe('AuthService', () => {
         HttpBackendClient,
         CookieService,
         HatSetupCacheService,
+        { provide: CacheService, useValue: { } },
         { provide: APP_CONFIG, useValue: { name: '' } }
       ]
     });

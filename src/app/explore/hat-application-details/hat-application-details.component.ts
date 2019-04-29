@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Location, ViewportScroller} from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
 import { StaticDataService } from '../../services/static-data.service';

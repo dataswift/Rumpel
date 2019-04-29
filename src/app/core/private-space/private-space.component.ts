@@ -27,8 +27,6 @@ export class PrivateSpaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.initDatabuyerApp();
-
     if (this.config.native) {
       this.authSvc.getApplicationDetails(this.config.tokenApp)
         .subscribe((hatApp: HatApplication) => {
@@ -54,10 +52,6 @@ export class PrivateSpaceComponent implements OnInit {
     if (this.isSmallScreen()) {
       this.sideNav.close();
     }
-  }
-
-  private initDatabuyerApp() {
-    this.hatAppSvc.enable('databuyer').subscribe(_ => console.log('Databuyer App enabled.'));
   }
 
 }

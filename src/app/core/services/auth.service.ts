@@ -14,6 +14,7 @@ import * as addDays from 'date-fns/add_days';
 import { HttpResponse } from '@angular/common/http';
 import { uniq } from 'lodash';
 import {HatSetupCacheService} from '../../user/hat-setup-login/hat-setup-cache.service';
+import {CacheService} from './cache.service';
 
 declare const httpProtocol: string;
 
@@ -30,7 +31,8 @@ export class AuthService {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private storageSvc: BrowserStorageService,
               private hatSvc: HatApiService,
-              private hatCacheSvc: HatSetupCacheService) {
+              private hatCacheSvc: HatSetupCacheService,
+              private cacheSvc: CacheService) {
 
     const previouslySavedToken = this.storageSvc.getAuthToken();
 
@@ -81,6 +83,7 @@ export class AuthService {
 
   logout(): void {
     this._token$.next({ token: null, user: this.generateUserInfo(null) });
+    this.cacheSvc.removeAll();
   }
 
   getApplicationDetails(name: string, redirect: string = '/'): Observable<HatApplication> {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from './store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { addMinutes } from 'date-fns';
 
 export interface HatCache<T> {
@@ -25,6 +25,10 @@ export class LocalStorageService {
   public removeItem(key: string) {
     this.syncWithLocalStorage(key, null);
     this.store.removeItem(key);
+  }
+
+  public removeAll() {
+    this.store.clearAll();
   }
 
   private syncWithLocalStorage(key: string, payload: any) {
