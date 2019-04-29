@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 3, 2017
  */
 
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
