@@ -13,9 +13,9 @@ import { ProfilesService } from '../../profiles/profiles.service';
 import { AuthService } from '../../core/services/auth.service';
 import { SystemStatusService } from '../../services/system-status.service';
 import { catchError, tap } from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SystemStatusInterface } from '../../shared/interfaces/system-status.interface';
-import {SheFeed} from '../../she/she-feed.interface';
+import { SheFeed } from '../../she/she-feed.interface';
 
 @Component({
   selector: 'rum-settings-header',

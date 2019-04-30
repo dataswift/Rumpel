@@ -8,6 +8,8 @@
 
 export const environment = {
   production: true,
-  native: false,
-  protocol: 'https:'
+  native: true,
+  protocol: 'https:',
+  appName: 'Rumpel',
+  tokenName: 'hatapp'
 };

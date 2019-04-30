@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {catchError, map} from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
-import {HatApiService} from '../../../core/services/hat-api.service';
-import {HttpResponse} from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { catchError, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { HatApiService } from '../../../core/services/hat-api.service';
+import { HttpResponse } from '@angular/common/http';
 
 const TITLE_MAP = {
   'terms-of-service': 'Terms of Service',

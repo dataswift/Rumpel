@@ -6,7 +6,7 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
  */
 
-import {async, ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
 import { HatSetupLoginComponent } from './hat-setup-login.component';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';

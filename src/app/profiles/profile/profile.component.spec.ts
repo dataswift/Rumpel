@@ -23,7 +23,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HatApiService } from '../../core/services/hat-api.service';
 import { HttpBackendClient } from '../../core/services/http-backend-client.service';
 import { of } from 'rxjs';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const PROFILE_MOCK_DATA = {
   dateCreated: 0,

@@ -7,8 +7,8 @@
  */
 
 
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {APP_CONFIG, AppConfig} from '../../app.config';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 @Component({
   selector: 'rum-settings-list',

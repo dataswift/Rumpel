@@ -1,5 +1,5 @@
 import { SheFeed } from '../she/she-feed.interface';
-import {BundleStructure} from '../shared/interfaces/bundle.interface';
+import { BundleStructure } from '../shared/interfaces/bundle.interface';
 
 export interface HatApplication {
   application: HatApplicationContent;

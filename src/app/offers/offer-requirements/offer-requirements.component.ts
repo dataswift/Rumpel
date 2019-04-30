@@ -1,5 +1,5 @@
-import {Component, Input} from '@angular/core';
-import {OfferRequirement} from '../offer-requirements.interface';
+import { Component, Input } from '@angular/core';
+import { OfferRequirement } from '../offer-requirements.interface';
 
 @Component({
     selector: 'rum-offer-requirements',

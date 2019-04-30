@@ -6,7 +6,7 @@
  * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
  */
 
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'rum-hat-claim-details',

@@ -1,6 +1,6 @@
 {
   "name": "Rumpel",
-  "version": "3.7.1",
+  "version": "3.7.3",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --configuration=development --host=rumpel.hubofallthings.net",
-    "build": "ng lint && ng test --watch=false && ng build --configuration=native",
+    "build": "ng lint && ng test --watch=false && ng build --configuration=sandbox",
     "test": "ng test --sourceMap=false --watch=false",
     "lint": "ng lint",
     "e2e": "ng e2e"

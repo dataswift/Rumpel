@@ -5,7 +5,7 @@ import { OfferAcceptedStatsComponent } from '../offer-accepted-stats/offer-accep
 import { DialogService } from '../../core/dialog.service';
 import { DataOfferService } from '../data-offer.service';
 import { of } from 'rxjs';
-import {MomentPipe} from '../../shared/pipes/moment.pipe';
+import { MomentPipe } from '../../shared/pipes/moment.pipe';
 
 describe('OffersAcceptedComponent', () => {
   let component: OffersAcceptedComponent;
