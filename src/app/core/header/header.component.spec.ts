@@ -41,7 +41,6 @@ describe('HeaderComponent', () => {
         { provide: APP_CONFIG, useValue: {} },
         { provide: DialogService, useValue: {} },
         { provide: SystemStatusService, useValue: {
-          fetchSystemStatus: () => of([SYSTEM_STATUS_MOCK]),
             systemStatus$: of([SYSTEM_STATUS_MOCK])
           } },
         { provide: AuthService, useValue: { user$: of({}) } },

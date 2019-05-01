@@ -40,7 +40,7 @@ export class HatApplicationDetailsComponent implements OnInit {
           this.appStatus = this.hatAppSvc.getAppStatus(app);
 
           if (app.application.info.rating) {
-            this.appRating = this.getAppRating(app.application.info.rating.points);
+            this.appRating = this.getRatingBackgroundColor(app.application.info.rating.points);
           }
 
           const { name, url, country } = app.application.developer;
@@ -84,7 +84,7 @@ export class HatApplicationDetailsComponent implements OnInit {
     return true;
   }
 
-  getAppRating(points: number): 'gold' | 'red' | 'green' {
+  getRatingBackgroundColor(points: number): 'gold' | 'red' | 'green' {
     if (points < 8) {
       return 'red';
     } else if (points <= 11) {

@@ -5,7 +5,7 @@
         <rum-she-feed-weekly-summary [feedItem]="feedItem"></rum-she-feed-weekly-summary>
       </ng-container>
       <ng-container *ngIf="!(feedItem.types.includes('insight') && feedItem.types.includes('activity'))">
-        <rum-she-feed-item [feedItem]="feedItem" >></rum-she-feed-item>
+        <rum-she-feed-item [feedItem]="feedItem">></rum-she-feed-item>
       </ng-container>
     </ng-container>
   </ng-container>

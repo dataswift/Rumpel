@@ -11,8 +11,8 @@ import { CacheService } from '../core/services/cache.service';
 @Injectable()
 export class HatToolsService {
   private hatUrl: string;
-  private toolKey = 'tools';
-  private toolMaxAge = 20; // in minutes
+  readonly toolKey = 'tools';
+  readonly toolMaxAge = 20; // in minutes
   private _tool$: ReplaySubject<HatTool[]> = <ReplaySubject<HatTool[]>>new ReplaySubject(1);
 
   constructor(private authSvc: AuthService,

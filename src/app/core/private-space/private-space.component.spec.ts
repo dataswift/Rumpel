@@ -35,7 +35,6 @@ describe('PrivateSpaceComponent', () => {
         { provide: APP_CONFIG, useValue: { mainMenu: [], appsMenu: [] }},
         { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]), enable: () => of({}) } },
         { provide: SystemStatusService, useValue: {
-          fetchSystemStatus: () => of([SYSTEM_STATUS_MOCK]),
             systemStatus$: of([SYSTEM_STATUS_MOCK])}},
         { provide: DialogService, useValue: {} },
         { provide: AuthService, useValue: { user$: of({}), getApplicationDetails: () => of({}) } },

@@ -7,8 +7,8 @@ import { CacheService } from '../core/services/cache.service';
 
 @Injectable()
 export class SystemStatusService {
-  systemStatusKey = 'system-status';
-  systemStatusMaxAge = 60; // in minutes
+  readonly systemStatusKey = 'system-status';
+  readonly systemStatusMaxAge = 60; // in minutes
 
   constructor(private hatApiSvc: HatApiService,
               private cacheSvc: CacheService) {

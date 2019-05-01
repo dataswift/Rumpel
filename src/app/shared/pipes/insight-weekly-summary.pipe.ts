@@ -7,7 +7,7 @@ import { SheNestedStructure } from '../../she/she-feed.interface';
 export class InsightWeeklySummaryPipe implements PipeTransform {
 
   transform(structure: { [key: string]: SheNestedStructure[] } ): { source: string; content: string; badge: string; }[] {
-    const arr = [];
+    const weeklySummaryArray = [];
     let hasSentiment = false;
     let hasFitbit = false;
     let contentSentiment = '';
@@ -25,20 +25,18 @@ export class InsightWeeklySummaryPipe implements PipeTransform {
         badgeFitbit += structure[key][0].badge + '\n';
         hasFitbit = true;
       } else {
-        arr.push({ source: key, content: structure[key][0].content, badge: structure[key][0].badge });
+        weeklySummaryArray.push({ source: key, content: structure[key][0].content, badge: structure[key][0].badge });
       }
 
     });
 
     if (hasSentiment) {
-      arr.push({ source: 'sentiment', content: contentSentiment.trim(), badge: badgeSentiment });
+      weeklySummaryArray.push({ source: 'sentiment', content: contentSentiment.trim(), badge: badgeSentiment });
     }
     if (hasFitbit) {
-      arr.push({ source: 'fitbit', content: contentFitbit.trim(), badge: badgeFitbit });
+      weeklySummaryArray.push({ source: 'fitbit', content: contentFitbit.trim(), badge: badgeFitbit });
     }
 
-    return arr
-
+    return weeklySummaryArray;
   }
-
 }
