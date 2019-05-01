@@ -11,8 +11,8 @@ import { CacheService } from '../core/services/cache.service';
 @Injectable()
 export class HatApplicationsService {
   private hatUrl: string;
-  private applicationKey = 'applications';
-  private applicationMaxAge = 20; // in minutes
+  readonly applicationKey = 'applications';
+  readonly applicationMaxAge = 20; // in minutes
   private _dataplugs$: ReplaySubject<HatApplication[]> = <ReplaySubject<HatApplication[]>>new ReplaySubject(1);
 
   constructor(private authSvc: AuthService,

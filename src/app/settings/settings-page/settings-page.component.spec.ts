@@ -113,7 +113,7 @@ describe('SettingsPageComponent', () => {
         { provide: AuthService, useValue: {
             user$: of({ hatId: 'test', domain: '.hat.org', fullDomain: 'test.hat.org' })
           } },
-        { provide: SystemStatusService, useValue: { fetchSystemStatus: () => of([]), systemStatus$: of([])}},
+        { provide: SystemStatusService, useValue: { systemStatus$: of([])} },
         { provide: ProfilesService, useValue: {
             getProfileData: () => null,
             data$: of({ values: PROFILE_MOCK_DATA, share: PROFILE_SHARE_MOCK })

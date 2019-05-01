@@ -39,6 +39,7 @@ export class LocalStorageService {
         localStorage.removeItem(key);
       }
     } catch (error) {
+      console.log('local storage error:', error);
     }
   }
 }

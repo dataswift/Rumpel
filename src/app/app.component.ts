@@ -46,7 +46,7 @@ export class AppRootComponent implements OnInit {
       const contentContainer = document.querySelector('.mat-sidenav-content');
 
       if (contentContainer) {
-        document.querySelector('.mat-sidenav-content').scroll({ top: 0, left: 0 });
+        contentContainer.scroll({ top: 0, left: 0 });
       } else {
         this.windowRef.scroll({ top: 0, left: 0 });
       }

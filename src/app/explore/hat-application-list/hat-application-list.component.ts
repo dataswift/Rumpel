@@ -51,8 +51,9 @@ export class HatApplicationListComponent implements OnInit {
         return 'check_circle';
       case 'fetching':
         return 'sync';
-      case 'failing': case 'update':
-        return 'sync_problem';
+      case 'failing':
+        case 'update':
+          return 'sync_problem';
       default:
         return 'add_circle_outline';
     }

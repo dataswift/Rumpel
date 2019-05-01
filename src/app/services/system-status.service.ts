@@ -7,8 +7,8 @@ import { CacheService } from '../core/services/cache.service';
 
 @Injectable()
 export class SystemStatusService {
-  systemStatusKey = 'system-status';
-  systemStatusMaxAge = 60; // in minutes
+  readonly systemStatusKey = 'system-status';
+  readonly systemStatusMaxAge = 60; // in minutes
 
   constructor(private hatApiSvc: HatApiService,
               private cacheSvc: CacheService) {
@@ -18,7 +18,7 @@ export class SystemStatusService {
     return this.cacheSvc.get<SystemStatusInterface[]>(this.systemStatusKey, this.fetchSystemStatus(), this.systemStatusMaxAge);
   }
 
-  fetchSystemStatus(): Observable<SystemStatusInterface[]> {
+  private fetchSystemStatus(): Observable<SystemStatusInterface[]> {
     return this.hatApiSvc.getSystemStatusRecords();
   }
 }

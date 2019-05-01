@@ -10,6 +10,7 @@ export interface HatTool {
   dataBundle: BundleStructure,
   trigger: HatToolTrigger
 }
+
 interface HatToolInfo {
   version: string,
   versionReleaseDate: string,
