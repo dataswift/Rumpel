@@ -19,4 +19,21 @@
 
     <button mat-flat-button role="button" (click)="loadMoreData()">Show more</button>
   </div>
+
+  <div class="user-actions">
+    <div class="user-actions-content">
+      <button mat-flat-button role="button" class="filter-button" (click)="scrollToToday()">
+        <mat-icon>filter_list</mat-icon>
+        Filter
+      </button>
+      <button mat-flat-button role="button" class="today-button" (click)="scrollToToday()">
+        <mat-icon>fullscreen_exit</mat-icon>
+        Today
+      </button>
+      <button mat-flat-button role="button" class="today-button" (click)="scrollToToday()">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+    </div>
+  </div>
 </div>

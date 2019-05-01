@@ -18,7 +18,7 @@ export class SystemStatusService {
     return this.cacheSvc.get<SystemStatusInterface[]>(this.systemStatusKey, this.fetchSystemStatus(), this.systemStatusMaxAge);
   }
 
-  fetchSystemStatus(): Observable<SystemStatusInterface[]> {
+  private fetchSystemStatus(): Observable<SystemStatusInterface[]> {
     return this.hatApiSvc.getSystemStatusRecords();
   }
 }

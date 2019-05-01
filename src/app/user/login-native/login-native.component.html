@@ -53,12 +53,15 @@
   </div>
 
   <div class="f-g">
-    <label for="hatPass" hidden></label>
-    <input id="hatPass" type="password" class="hat-pass-input" name="hat-pass-input"
-           [class.rum-error-field]="passwordError"
-           placeholder="Enter HAT password" #hatPass
-           (focus)="hideErrorMessage()"
-           (keyup.enter)="login(hatPass)"/>
+    <form>
+      <label for="hatPass" hidden></label>
+      <input id="hatPass" type="password" class="hat-pass-input" name="hat-pass-input"
+             [class.rum-error-field]="passwordError"
+             placeholder="Enter HAT password" #hatPass
+             autocomplete="password"
+             (focus)="hideErrorMessage()"
+             (keyup.enter)="login(hatPass)"/>
+    </form>
   </div>
 
   <div>

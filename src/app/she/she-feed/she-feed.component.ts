@@ -20,6 +20,7 @@ export class SheFeedComponent implements OnInit, AfterViewInit {
   @ViewChildren('daySeparator', { read: ElementRef }) dateSeparators: QueryList<ElementRef>;
   public feed$: Observable<{ day: string; data: SheFeed[]; }[] >;
   private observer: IntersectionObserver;
+  private todayElement: any;
 
   constructor(private sheFeedSvc: SheFeedService) { }
 
@@ -43,16 +44,22 @@ export class SheFeedComponent implements OnInit, AfterViewInit {
     const today = format(new Date(), 'ddd DD MMM YYYY');
 
     this.dateSeparators.changes.pipe(take(1)).subscribe((changes) => {
-      const todayElement = changes.find(item => {
+      this.todayElement = changes.find(item => {
         return item.nativeElement.textContent === today;
       });
 
       // TODO: Fix this hack. Material mat-sidenav component does not currently support programmatic scrolling
       // See https://github.com/angular/material2/issues/4280
-      if (todayElement) {
-        document.querySelector('.mat-sidenav-content').scrollTop = todayElement.nativeElement.offsetTop;
+      if (this.todayElement) {
+        document.querySelector('.mat-sidenav-content').scrollTop = this.todayElement.nativeElement.offsetTop;
       }
     });
+  }
+
+  scrollToToday() {
+    if (this.todayElement) {
+      document.querySelector('.mat-sidenav-content').scrollTop = this.todayElement.nativeElement.offsetTop;
+    }
   }
 
   convertUnixTimestampToMoment(timestamp: number): Moment {
