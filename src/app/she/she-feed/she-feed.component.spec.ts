@@ -8,6 +8,7 @@ import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
 import { SheFeedItemComponent } from '../../shared/components/she-feed-item/she-feed-item.component';
 import { SheFeedRollupComponent } from '../she-feed-rollup/she-feed-rollup.component';
+import { SheFeedWeeklySummaryModule } from '../../shared/components/she-feed-weekly-summary/she-feed-weekly-summary.module';
 
 describe('SheFeedComponent', () => {
   let component: SheFeedComponent;
@@ -15,7 +16,7 @@ describe('SheFeedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ CustomAngularMaterialModule ],
+      imports: [ CustomAngularMaterialModule, SheFeedWeeklySummaryModule ],
       declarations: [ SheFeedComponent, SheFeedRollupComponent, SheFeedItemComponent, MarkdownToHtmlPipe, MomentPipe ],
       providers: [ { provide: SheFeedService, useValue: {
         getInitData: () => of([]),

@@ -10,6 +10,9 @@ import { HatApplicationsService } from '../hat-applications.service';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { HatApplication } from '../hat-application.interface';
+import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
+import { SafeHtmlPipe } from '../../shared/pipes';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const HAT_APPLICATION_MOCK: HatApplication = {
   'application': {
@@ -32,7 +35,8 @@ const HAT_APPLICATION_MOCK: HatApplication = {
       'termsUrl': 'https://hatdex.org/website-terms-service',
       'supportContact': 'contact@hatdex.org',
       'rating': {
-        'score': 'A'
+        'score': 'A',
+        'points': 11
       },
       'dataUsePurpose': 'Purpose of data use...',
       'dataPreview': [],
@@ -248,8 +252,13 @@ describe('HatAppDetailsPermissionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ CustomAngularMaterialModule ],
-      declarations: [ HatAppDetailsPermissionsComponent, HatApplicationPermissionsComponent, UnbundlePipe ],
+      imports: [ CustomAngularMaterialModule, NoopAnimationsModule ],
+      declarations: [ HatAppDetailsPermissionsComponent,
+        HatApplicationPermissionsComponent,
+        UnbundlePipe,
+        HatAppHmiContentComponent,
+        SafeHtmlPipe
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: { snapshot: { params: { appId: 'notables' } } } },
         { provide: HatApplicationsService, useValue: { getApplicationDetails: () => of(HAT_APPLICATION_MOCK) } },

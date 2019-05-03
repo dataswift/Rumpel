@@ -22,6 +22,7 @@ export class HatApplicationDetailsComponent implements OnInit {
   public staticData$: Observable<Array<string[][]>>;
   public dataPreview$: Observable<SheFeed[]>;
   public appStatus: 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update';
+  public appRating: 'gold' | 'red' | 'green' = 'red';
   public appInformation: string[][];
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -37,6 +38,11 @@ export class HatApplicationDetailsComponent implements OnInit {
       return this.hatAppSvc.getApplicationDetails(appId).pipe(
         tap((app: HatApplication) => {
           this.appStatus = this.hatAppSvc.getAppStatus(app);
+
+          if (app.application.info.rating) {
+            this.appRating = this.getRatingBackgroundColor(app.application.info.rating.points);
+          }
+
           const { name, url, country } = app.application.developer;
           const { version, termsUrl, supportContact } = app.application.info;
 
@@ -72,8 +78,32 @@ export class HatApplicationDetailsComponent implements OnInit {
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     return this.hatAppSvc.generateHatLoginLink(id, setup);
   }
+  clearCache(): boolean {
+    this.hatAppSvc.clearApplicationCache();
+
+    return true;
+  }
+
+  getRatingBackgroundColor(points: number): 'gold' | 'red' | 'green' {
+    if (points < 8) {
+      return 'red';
+    } else if (points <= 11) {
+      return 'green';
+    } else {
+      return 'gold'
+    }
+  }
+
+  getTabName(kind: string): string {
+    if (kind === 'App') {
+      return 'App Info';
+    } else {
+      return 'Plug Info';
+    }
+  }
 
   disableApp(id: string): void {
+    this.clearCache();
     this.appDetails$ = this.hatAppSvc.disable(id)
       .pipe(tap((app: HatApplication) => this.appStatus = this.hatAppSvc.getAppStatus(app)));
   }

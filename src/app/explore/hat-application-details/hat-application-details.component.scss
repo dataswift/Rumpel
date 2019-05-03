@@ -11,7 +11,7 @@
   height: 234px;
   width: 100%;
   background-size: contain;
-  background-image: url('/assets/images/piggy.jpg');
+  //background-image: url('/assets/images/piggy.jpg');
   background-repeat: no-repeat;
   background-color: #2b313d;
   // background-position: 100% 100%;
@@ -20,7 +20,7 @@
     color: #6297b1;
     font-size: 13px;
     font-weight: bold;
-    padding-bottom: 20px;
+    padding-bottom: 16px;
     text-decoration: none;
   }
 
@@ -55,7 +55,7 @@
     padding: 0 2em;
     padding-bottom: 20px;
     border-radius: 4px;
-    width: 95%;
+    width: 90%;
     max-width: 500px;
     display: flex;
     flex-direction: column;
@@ -110,6 +110,30 @@
           border-bottom-color: #dfc586;
         }
 
+        &.red {
+          background-color: #d36969;
+
+          &:before {
+            border-bottom-color: #d36969;
+          }
+        }
+
+        &.green {
+          background-color: #7db774;
+
+          &:before {
+            border-bottom-color: #7db774;
+          }
+        }
+
+        &.gold {
+          background-color: #dfc586;
+
+          &:before {
+            border-bottom-color: #dfc586;
+          }
+        }
+
         &-highlighted {
           font-weight: bold;
         }
@@ -121,8 +145,10 @@
     }
 
     .app-details-header-title {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: bold;
+      margin-top: 10px;
+      margin-bottom: 10px;
       color: $app-dark-tone;
     }
 
@@ -146,18 +172,22 @@
       color: white;
 
       &.running {
-        border: 1px solid $app-accent-color;
+        border: 1px solid $app-active-color;
         background-color: transparent;
-        color: $app-accent-color;
+        color: $app-active-color;
       }
       &.fetching {
         color: $app-accent-color;
       }
       &.failing {
-        background-color: #E36682;
+        background-color: $app-failing-color;
       }
       &.untouched, &.goto {
         background-color: $app-accent-color;
+      }
+
+      &.update {
+        background-color: $app-update-color;
       }
 
       .mat-icon {
@@ -169,7 +199,18 @@
       padding-bottom: 20px;
       margin-top: -10px;
       width: 80%;
-      color: #E36682;
+      color: $app-failing-color;
+      font-size: 13px;
+      line-height: 1.38;
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+
+    .app-details-update {
+      padding-bottom: 20px;
+      margin-top: -10px;
+      width: 80%;
+      color: $app-update-color;
       font-size: 13px;
       line-height: 1.38;
       letter-spacing: 0.5px;
@@ -179,7 +220,9 @@
 }
 
 .app-details-content {
-  padding: 0 12px;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 90%;
 
   .mat-card {
     margin: 15px auto;

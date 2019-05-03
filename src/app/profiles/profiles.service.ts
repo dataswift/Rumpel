@@ -123,9 +123,14 @@ export class ProfilesService extends BaseDataService<Profile> {
     this.getPhataBundle();
   }
 
+  getProfileInitData(): void {
+    this.getInitData(1);
+  }
+
   saveProfile(values: Profile, shares: ProfileSharingConfig): Observable<HatRecord<Profile>> {
     const permissionKey = shares.photo.avatar ? 'allow' : 'restrict';
     let filePermissionUpdate$: Observable<any>;
+    // this.clearProfileCache();
 
     if (values.photo.avatar) {
       filePermissionUpdate$ = this.hat.updateFilePermissions(values.photo.avatar.split('/').pop(), permissionKey);
@@ -195,7 +200,7 @@ export class ProfilesService extends BaseDataService<Profile> {
   }
 
   private getPhataBundle(): void {
-    this.hat.getDataBundeStructure('phata').pipe(
+    this.hat.getDataBundleStructure('phata').pipe(
       catchError(error => {
         if (error.status === 404) {
           return of(DEFAULT_PHATA_BUNDLE);

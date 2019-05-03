@@ -25,7 +25,6 @@ import { MapBoxComponent } from './map-box/map-box.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MarkdownToHtmlPipe } from '../shared/pipes/markdown-to-html.pipe';
 
-import { DataOfferService } from '../offers/data-offer.service';
 import { PrivateSpaceComponent } from './private-space/private-space.component';
 import { ProfilesModule } from '../profiles/profiles.module';
 import { CustomAngularMaterialModule } from './custom-angular-material.module';
@@ -49,6 +48,6 @@ import { AuthService } from './services/auth.service';
   exports: [ HeaderComponent,
             SideMenuComponent,
             DialogAnchorDirective ],
-  providers: [ DialogService, MarkdownToHtmlPipe, DataOfferService, HttpBackendClient, AuthService ]
+  providers: [ DialogService, MarkdownToHtmlPipe, HttpBackendClient, AuthService ]
 })
 export class CoreModule {}

@@ -33,9 +33,10 @@ import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.compone
 import { PasswordStrengthIndicatorComponent } from './components/password-strength-indicator/password-strength-indicator.component';
 import { HatAppHmiContentComponent } from './components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { MarkdownViewComponent } from './components/markdown-view/markdown-view.component';
+import { SheFeedWeeklySummaryModule } from './components/she-feed-weekly-summary/she-feed-weekly-summary.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, CustomAngularMaterialModule ],
+  imports: [ CommonModule, FormsModule, CustomAngularMaterialModule, SheFeedWeeklySummaryModule ],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
                   ReplaceCharsPipe, ReplaceCamelCasePipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,
@@ -64,6 +65,7 @@ import { MarkdownViewComponent } from './components/markdown-view/markdown-view.
              OutsideClickDirective, StickDirective, SpinnerComponent, GraphicPageHeaderComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
              UnbundlePipe, SheFeedItemComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent,
-             ListCardComponent, PasswordStrengthIndicatorComponent, HatAppHmiContentComponent ]
+             ListCardComponent, PasswordStrengthIndicatorComponent, HatAppHmiContentComponent, SheFeedWeeklySummaryModule,
+  ]
 })
 export class SharedModule {}

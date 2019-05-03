@@ -10,22 +10,38 @@
 
       <p class="title-section-text">Details of your data debit agreement with the provider</p>
 
-      <a [href]="debit.permissionsLatest.termsUrl" target="_blank" class="title-section-text-link">Privacy Policy</a>
+      <a [href]="debit.permissionsLatest.termsUrl" target="_blank" class="title-section-text-link">Learn more</a>
     </section>
 
     <section class="agreement-section">
-      <div class="debit-valitity-interval">
-        <mat-card>
-          <mat-card-content>
-            <h5 class="app-details-heading">Starts</h5>
-            {{debit.start | datetime:'DD MMM YYYY'}}
+
+      <div class="debit-validity-interval">
+        <mat-card class="date-mat-card">
+          <mat-card-content class="date-header-mat-card-content">
+            <h5 class="date-header">START DATE</h5>
           </mat-card-content>
+
+          <mat-card  style="margin-left: 0;">
+            <mat-card-content>
+              <div class="date-description">
+                {{debit.start | datetime:'DD/MM/YYYY'}}
+              </div>
+            </mat-card-content>
+          </mat-card>
         </mat-card>
-        <mat-card>
-          <mat-card-content>
-            <h5 class="app-details-heading">Ends</h5>
-            {{ debit.end ? (debit.end | datetime:'DD MMM YYYY') : 'until cancelled' }}
+
+        <mat-card class="date-mat-card">
+          <mat-card-content class="date-header-mat-card-content">
+            <h5 class="date-header">END DATE</h5>
           </mat-card-content>
+
+          <mat-card>
+            <mat-card-content>
+              <div class="date-description">
+                {{ debit.end ? (debit.end | datetime:'DD/MM/YYYY') : 'until cancelled' }}
+              </div>
+            </mat-card-content>
+          </mat-card>
         </mat-card>
       </div>
 

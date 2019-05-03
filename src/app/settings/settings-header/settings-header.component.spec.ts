@@ -103,13 +103,15 @@ describe('SettingsHeaderComponent', () => {
       ],
       providers: [
         { provide: HatApiService, useValue: {} },
-        { provide: SystemStatusService, useValue: { fetchSystemStatus: () => of([ { SYSTEM_STATUS_MOCK } ])} },
+        { provide: SystemStatusService, useValue: {
+            systemStatus$: of([ { SYSTEM_STATUS_MOCK } ])
+        }},
         { provide: AuthService, useValue: {
             user$: of({ hatId: 'test', domain: '.hat.org', fullDomain: 'test.hat.org' })
           } },
         { provide: ProfilesService, useValue: {
             getProfileData: () => null,
-            profileData$: of({ values: PROFILE_MOCK_DATA, share: PROFILE_SHARE_MOCK })
+            data$: of({ values: PROFILE_MOCK_DATA, share: PROFILE_SHARE_MOCK })
           } }
       ]
     })

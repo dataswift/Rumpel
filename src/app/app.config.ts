@@ -29,13 +29,12 @@ export class AppConfig {
     url: string;
   };
   mainMenu: Array<{ [key: string]: string; }>;
-  appsMenu: Array<{ [key: string]: string; }>;
   settingsMenu: Array<{ [key: string]: string; }>;
   settingsPrivateDataMenu: Array<{ [key: string]: string; }>;
 }
 
 export const configuration: AppConfig = {
-  version: '3.7.3.0',
+  version: '3.8.0.0',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
@@ -64,7 +63,7 @@ export const configuration: AppConfig = {
     url: 'https://notables.hubofallthings.com/api/bulletin/tickle'
   },
   mainMenu: [
-    { display: 'My digital life', icon: 'line_weight', link: '/feed', dataType: '', disable: '',
+    { display: 'My digital life', icon: 'dashboard', link: '/feed', dataType: '', disable: '',
       description: 'My Digital Life' },
 
     { display: 'Map', icon: 'map', link: '/mashups', dataType: '', disable: '',
@@ -72,6 +71,9 @@ export const configuration: AppConfig = {
 
     { display: 'My public profile', icon: 'security', link: '/datastore', dataType: 'profile', disable: '',
       description: 'View and edit the details of your profile and decide what information is private and what is to be shared.' },
+
+    { display: 'Tools & insights', icon: 'assessment', link: '/tools', dataType: '', disable: '',
+      description: 'Tools and Insights are powered by the Smart HAT Engine (SHE)' },
 
     { display: 'Explore HAT apps', icon: 'touch_app', link: '/explore/App', dataType: '', disable: '',
       description: 'Explore all the apps available in the HAT ecosystem.' },
@@ -84,10 +86,6 @@ export const configuration: AppConfig = {
       description: 'Settings on the HAT' },
   ],
 
-  appsMenu: [
-    { display: 'DataBuyer', icon: '/assets/icons/she-databuyer.png', link: '/offers', dataType: '', disable: '',
-      description: 'Allow access to your data in exchange for cash, services or vouchers.' }
-  ],
   settingsMenu: [
     { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change',
       description: 'Profile description' },
