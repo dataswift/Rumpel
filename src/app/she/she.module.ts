@@ -13,9 +13,10 @@ import { SheFeedService } from './she-feed.service';
 import { SheFeedComponent } from './she-feed/she-feed.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { SheFeedRollupComponent } from './she-feed-rollup/she-feed-rollup.component';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 @NgModule({
-  imports: [ SharedModule, CustomAngularMaterialModule ],
+  imports: [SharedModule, CustomAngularMaterialModule, NgxDaterangepickerMd],
   declarations: [ SheFeedComponent, SheFeedRollupComponent ],
   providers: [ SheFeedService ],
   exports: [  ]

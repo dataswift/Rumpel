@@ -60,7 +60,15 @@ export class SheFeedService {
     this.hat.getSheRecords('', from, to).pipe(
       map(this.groupSheFeedByDay)
     )
-    .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => this._feed$.next(feedItems));
+      .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => this._feed$.next(feedItems));
+  }
+
+  getFeedDataByTime(from: number, to: number): Observable<DayGroupedSheFeed[]> {
+    this.hat.getSheRecords('', from, to).pipe(
+      map(this.groupSheFeedByDay)
+    ).subscribe((feedItems: { day: string; data: SheFeed[] }[]) => this._feed$.next(feedItems));
+
+    return this._feed$.asObservable();
   }
 
   getFeedBySource(endpoint: string): Observable<SheFeed[]> {

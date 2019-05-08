@@ -39,6 +39,7 @@
     "marked": "^0.3.12",
     "moment": "^2.24.0",
     "ngx-clipboard": "^11.1.9",
+    "ngx-daterangepicker-material": "^2.1.0",
     "pouchdb-browser": "^6.3.4",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",

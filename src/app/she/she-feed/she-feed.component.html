@@ -1,28 +1,30 @@
-<div class="she-feed" #feedContainer>
+<div class="she-feed" #feedContainer *ngIf="feed$ | async as feedData else loading">
   <mat-toolbar color="primary" style="display: flex;">
     <h2>My Digital Life</h2>
-
-    <!--<span class="fill-space"></span>-->
-
-    <!--<mat-radio-group [value]="'all'" (change)="applyFilter($event)">-->
-      <!--<mat-radio-button value="all" color="accent">All</mat-radio-button>-->
-      <!--<mat-radio-button value="past" color="accent">Past</mat-radio-button>-->
-      <!--<mat-radio-button value="future" color="accent">Future</mat-radio-button>-->
-    <!--</mat-radio-group>-->
   </mat-toolbar>
 
-  <div class="feed" *ngIf="feed$ | async as feedData">
+  <div class="feed">
     <ng-container *ngFor="let day of feedData">
       <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
       <rum-she-feed-rollup [sheFeed]="day.data"></rum-she-feed-rollup>
     </ng-container>
 
-    <button mat-flat-button role="button" (click)="loadMoreData()">Show more</button>
+    <ng-container *ngIf="!filteredData">
+      <button mat-flat-button role="button" (click)="loadMoreData()">Show more</button>
+    </ng-container>
   </div>
 
   <div class="user-actions">
+    <ng-container *ngIf="!hideDatePicker">
+      <ngx-daterangepicker-material (choosedDate)="choosedDate($event)"
+                                    [locale]="{applyLabel: 'Done', firstDay: 1}"
+                                    (change)="change($event)"
+                                    >
+      </ngx-daterangepicker-material>
+      <br>
+    </ng-container>
     <div class="user-actions-content">
-      <button mat-flat-button role="button" class="filter-button" (click)="scrollToToday()">
+      <button mat-flat-button role="button" class="filter-button" (click)="open($event)">
         <mat-icon>filter_list</mat-icon>
         Filter
       </button>
@@ -30,10 +32,13 @@
         <mat-icon>fullscreen_exit</mat-icon>
         Today
       </button>
-      <button mat-flat-button role="button" class="today-button" (click)="scrollToToday()">
+      <button mat-flat-button role="button" class="today-button" (click)="refreshFeedData()">
         <mat-icon>refresh</mat-icon>
         Refresh
       </button>
     </div>
   </div>
 </div>
+<ng-template #loading>
+  Loading...
+</ng-template>

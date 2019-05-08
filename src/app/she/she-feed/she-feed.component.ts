@@ -1,59 +1,84 @@
-import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { SheFeedService } from '../she-feed.service';
 import { Observable } from 'rxjs';
 import { SheFeed } from '../she-feed.interface';
-import { Moment } from 'moment';
 import * as moment from 'moment';
-import { Filter } from '../../shared/interfaces/bundle.interface';
-import { MatRadioChange } from '@angular/material/radio';
 import { take } from 'rxjs/operators';
 
 import * as format from 'date-fns/format';
+import { DaterangepickerDirective } from 'ngx-daterangepicker-material';
 
 @Component({
   selector: 'rum-she-feed',
   templateUrl: './she-feed.component.html',
   styleUrls: ['./she-feed.component.scss']
 })
-export class SheFeedComponent implements OnInit, AfterViewInit {
+export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('feedContainer') feedContainer: ElementRef;
   @ViewChildren('daySeparator', { read: ElementRef }) dateSeparators: QueryList<ElementRef>;
-  public feed$: Observable<{ day: string; data: SheFeed[]; }[] >;
-  private observer: IntersectionObserver;
-  private todayElement: any;
+  @ViewChild(DaterangepickerDirective) pickerDirective: DaterangepickerDirective;
 
-  constructor(private sheFeedSvc: SheFeedService) { }
+  public feed$: Observable<{ day: string; data: SheFeed[]; }[] >;
+  private todayElement: any;
+  private filteredData = false;
+  private scrolled = false;
+
+  private selected: {startDate: moment.Moment, endDate: moment.Moment};
+  private hideDatePicker = true;
+
+  constructor(private sheFeedSvc: SheFeedService) {
+    this.selected = {
+      startDate: moment('2015-11-18T00:00Z'),
+      endDate: moment('2015-11-26T00:00Z')
+    }
+  }
 
   ngOnInit() {
     this.feed$ = this.sheFeedSvc.getInitFeed();
-
-    // const options = {
-    //   root: null,
-    //   rootMargin: '0px',
-    //   threshold: 0.2
-    // };
-
-    // if (this.intersectionObserverSupported()) {
-    //   this.observer = new IntersectionObserver(this.loadMoreData, options);
-    //   const target = document.querySelector('#infiniteScroll');
-    //   this.observer.observe(target);
-    // }
+    this.scrolled = false;
   }
 
-  ngAfterViewInit() {
-    const today = format(new Date(), 'ddd DD MMM YYYY');
+  ngOnDestroy(): void {
+    this.scrolled = false;
+  }
 
-    this.dateSeparators.changes.pipe(take(1)).subscribe((changes) => {
-      this.todayElement = changes.find(item => {
-        return item.nativeElement.textContent === today;
+  ngAfterViewChecked() {
+    this.findTodayElement();
+  }
+
+  findTodayElement() {
+    if (this.dateSeparators && !this.scrolled) {
+      const today = format(new Date(), 'ddd DD MMM YYYY');
+
+      this.dateSeparators.changes.pipe(take(1)).subscribe((changes) => {
+        this.todayElement = changes.find(item => {
+          return item.nativeElement.textContent === today;
+        });
+
+        // TODO: Fix this hack. Material mat-sidenav component does not currently support programmatic scrolling
+        // See https://github.com/angular/material2/issues/4280
+        if (this.todayElement && !this.scrolled) {
+          this.scrolled = true;
+
+          document.querySelector('.mat-sidenav-content').scrollTop = this.todayElement.nativeElement.offsetTop;
+        }
       });
+    }
+  }
 
-      // TODO: Fix this hack. Material mat-sidenav component does not currently support programmatic scrolling
-      // See https://github.com/angular/material2/issues/4280
-      if (this.todayElement) {
-        document.querySelector('.mat-sidenav-content').scrollTop = this.todayElement.nativeElement.offsetTop;
-      }
-    });
+  refreshFeedData() {
+    this.filteredData = false;
+    this.scrolled = false;
+    this.feed$ = this.sheFeedSvc.getInitFeed();
   }
 
   scrollToToday() {
@@ -62,47 +87,26 @@ export class SheFeedComponent implements OnInit, AfterViewInit {
     }
   }
 
-  convertUnixTimestampToMoment(timestamp: number): Moment {
-    return moment.unix(timestamp);
-  }
-
-  applyFilter(change: MatRadioChange) {
-    // if (change.value === 'all') {
-    //   this.sheFeedSvc.clearData();
-    //   this.sheFeedSvc.getInitData(1000);
-    // } else {
-    //   this.sheFeedSvc.getTimeIntervalData(this.generateTimeFilter(change.value));
-    // }
-  }
-
   loadMoreData() {
     this.sheFeedSvc.getMoreData();
   }
 
-  // intersectionObserverSupported(): boolean {
-  //   return 'IntersectionObserver' in window;
-  // }
-
-  private generateTimeFilter(filter: string): Filter[] {
-    let startTime: number;
-    let endTime: number;
-
-    if (filter === 'past') {
-      startTime = 1;
-      endTime = moment().unix();
-    } else {
-      startTime = moment().unix();
-      endTime = moment().add(5, 'years').unix();
-    }
-
-    return [{
-      field: 'date.unix',
-      operator: {
-        operator: 'between',
-        lower: startTime,
-        upper: endTime
-      }
-    }];
+  change(e) {
+    console.log(e)
   }
+  choosedDate(e) {
+    this.hideDatePicker = true;
+    this.filteredData = true;
 
+    const startDay = e.startDate.startOf('day').unix();
+    const endDay = e.endDate.endOf('day').unix();
+
+    this.feed$ = null;
+    this.feed$ = this.sheFeedSvc.getFeedDataByTime(startDay, endDay);
+    this.todayElement = null;
+    document.querySelector('.mat-sidenav-content').scrollTop = 0;
+  }
+  open(e) {
+    this.hideDatePicker = !this.hideDatePicker;
+  }
 }
