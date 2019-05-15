@@ -42,12 +42,7 @@
       flex-direction: column;
       justify-content: center;
 
-      color: $app-dark-tone;
-      letter-spacing: 1px;
-
       .title {
-        font-size: 22px;
-        font-weight: 500;
         margin-top: 0;
         margin-bottom: 50px;
       }
@@ -83,7 +78,7 @@
   }
 
   .hat-domain {
-    margin-top: 10px;
+    //margin-top: 10px;
     display: inline-block;
   }
 

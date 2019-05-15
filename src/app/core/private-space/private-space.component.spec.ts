@@ -33,11 +33,13 @@ describe('PrivateSpaceComponent', () => {
       declarations: [ PrivateSpaceComponent, HeaderComponent, SideMenuComponent ],
       providers: [
         { provide: APP_CONFIG, useValue: { mainMenu: [], appsMenu: [] }},
-        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]), enable: () => of({}) } },
+        { provide: HatApplicationsService, useValue: { inactiveDataplugs$: of([]),
+            enable: () => of({}),
+            getApplicationDetails: () => of({})  } },
         { provide: SystemStatusService, useValue: {
             systemStatus$: of([SYSTEM_STATUS_MOCK])}},
         { provide: DialogService, useValue: {} },
-        { provide: AuthService, useValue: { user$: of({}), getApplicationDetails: () => of({}) } },
+        { provide: AuthService, useValue: { user$: of({}) } },
         { provide: ProfilesService, useValue: {
             getProfileData: () => null,
             getProfileInitData: () => null,

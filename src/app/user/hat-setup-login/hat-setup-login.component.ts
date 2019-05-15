@@ -135,7 +135,7 @@ export class HatSetupLoginComponent implements OnInit {
         if (this.dependencyApps.every(app => app.enabled === true)) {
           this.buildRedirect(hatApp);
         } else {
-          this.setupAppDependencies(this.dependencyApps); // TODO remove comments
+          this.setupAppDependencies(this.dependencyApps);
         }
       });
   }

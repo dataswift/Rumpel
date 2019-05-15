@@ -15,7 +15,7 @@ import * as moment from 'moment';
 import { take } from 'rxjs/operators';
 
 import * as format from 'date-fns/format';
-import { DaterangepickerDirective } from 'ngx-daterangepicker-material';
+import { DaterangepickerComponent, DaterangepickerDirective } from 'ngx-daterangepicker-material';
 
 @Component({
   selector: 'rum-she-feed',
@@ -31,15 +31,9 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   private todayElement: any;
   private filteredData = false;
   private scrolled = false;
-
-  private selected: {startDate: moment.Moment, endDate: moment.Moment};
   private hideDatePicker = true;
 
   constructor(private sheFeedSvc: SheFeedService) {
-    this.selected = {
-      startDate: moment('2015-11-18T00:00Z'),
-      endDate: moment('2015-11-26T00:00Z')
-    }
   }
 
   ngOnInit() {

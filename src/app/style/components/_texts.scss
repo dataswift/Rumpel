@@ -1,0 +1,24 @@
+@import "../branding";
+@import "../rumpel-mixins";
+@import "../mixins/texts";
+
+.title-rumpel {
+  text-align: center;
+  letter-spacing: 1px;
+  @include text-rumpel-variant($app-dark-tone);
+  @include text-rumpel-size(0, 5px, 22px, normal, 500);
+}
+
+.description-rumpel-grey {
+  text-align: center;
+  letter-spacing: 1px;
+  @include text-rumpel-variant($text-dark);
+  @include text-rumpel-size(25px, 0, 14px, 1.57, normal);
+}
+
+.hat-domain-rumpel-bold {
+  text-align: center;
+  letter-spacing: 1px;
+  @include text-rumpel-variant($app-dark-tone);
+  @include text-rumpel-size(0, 0, 20px, 1.57, bold);
+}
