@@ -8,9 +8,13 @@
   font-weight: 500;
   font-size: 14px;
   padding: 15px 20px;
-  margin-bottom: 10px;
   border-radius: 0;
   -webkit-appearance: none;
+
+  &.rum-error-field {
+    border: solid 1px #e45151;
+    color: #e45151;
+  }
 
   @media (min-width: 501px) {
     font-size: 20px;

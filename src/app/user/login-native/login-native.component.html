@@ -42,11 +42,11 @@
     <div class="heading-wrapper">
       <div class="title-hat-domain-wrapper">
         <div class="hat-name">
-          <h3 class="title-hat-domain">{{ hatName }}</h3>
+          <h3 class="hat-domain-rumpel-bold">{{ hatName }}</h3>
         </div>
 
         <div class="hat-domain">
-          <h3 class="title-hat-domain">{{ hatDomain }}</h3>
+          <h3 class="hat-domain-rumpel-bold">{{ hatDomain }}</h3>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
   <div class="f-g">
     <form>
       <label for="hatPass" hidden></label>
-      <input id="hatPass" type="password" class="hat-pass-input" name="hat-pass-input"
+      <input id="hatPass" type="password" class="hat-rumpel-input" name="hat-pass-input"
              [class.rum-error-field]="passwordError"
              placeholder="Enter HAT password" #hatPass
              autocomplete="password"
@@ -64,7 +64,7 @@
     </form>
   </div>
 
-  <div>
+  <div class="remember-me-container">
     <mat-checkbox class="remember-me-checkbox" [(ngModel)]="rememberMe" color="primary">Remember me</mat-checkbox>
   </div>
 
@@ -81,7 +81,7 @@
   </div>
 
   <div class="user-actions">
-    <button mat-flat-button role="button" (click)="login(hatPass)">Log in</button>
+    <button mat-flat-button role="button" class="btn-rumpel btn-rumpel-enabled" (click)="login(hatPass)">Log in</button>
     <a role="link" [routerLink]="['/user', 'password', 'recover']">Forgotten password?</a>
   </div>
 </div>

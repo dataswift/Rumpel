@@ -4,21 +4,39 @@
 
 .title-rumpel {
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 0.17px;
   @include text-rumpel-variant($app-dark-tone);
   @include text-rumpel-size(0, 5px, 22px, normal, 500);
 }
 
 .description-rumpel-grey {
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 0.25px;
   @include text-rumpel-variant($text-dark);
   @include text-rumpel-size(25px, 0, 14px, 1.57, normal);
+
+  @media (max-width: 525px) {
+    margin: 25px auto;
+    width: 80%;
+  }
+}
+
+.description-rumpel-grey-light-small {
+  text-align: center;
+  letter-spacing: 0.4px;
+  @include text-rumpel-variant($text-grey-light);
+  @include text-rumpel-size(25px, 0, 12px, 1.33, normal);
+
+  @media (max-width: 525px) {
+    text-align: justify;
+    margin: 25px auto;
+    width: 80%;
+  }
 }
 
 .hat-domain-rumpel-bold {
   text-align: center;
-  letter-spacing: 1px;
+  letter-spacing: 0.6px;
   @include text-rumpel-variant($app-dark-tone);
-  @include text-rumpel-size(0, 0, 20px, 1.57, bold);
+  @include text-rumpel-size(0, 0, 20px, 1.4, bold);
 }

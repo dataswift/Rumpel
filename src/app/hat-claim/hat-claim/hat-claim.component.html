@@ -26,10 +26,10 @@
 
 
   <div class="user-actions">
-    <button role="button" class="btn-rumpel btn-rumpel-enabled" (click)="nextStep()">{{ step === 5 ? "Confirm" : step === 6 ? "Log in" : "Next" }}</button>
-    <button *ngIf="step !== 1 && step !== 5 && step !== 6" role="button" class="btn-rumpel btn-rumpel-transparent" (click)="previousStep()">Previous</button>
+    <button mat-flat-button role="button" class="btn-rumpel btn-rumpel-enabled next-button" (click)="nextStep()">{{ step === 5 ? "Confirm" : step === 6 ? "Log in" : "Next" }}</button>
+    <button *ngIf="step !== 1 && step !== 5 && step !== 6" mat-flat-button role="button" class="btn-rumpel btn-rumpel-transparent previous-button" (click)="previousStep()">Previous</button>
 
-    <div *ngIf="step === 5" class="password-guidance-box">
+    <div *ngIf="step === 5" class="description-rumpel-grey-light-small" style="text-align: center">
       By selecting ‘Confirm’, I agree to the HATDeX
       <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c540dc4e4966bf470e0d5fd/1549012420957/hat+owner+terms+of+service+-+10_1_19+-+v2.3+%281%29.pdf" target="_blank">Terms of Service</a>
       and <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c26550670a6ad08a55214ba/1546016006812/HATDeX+privacy+policy+2.1.pdf" target="_blank">Privacy Policy</a>.

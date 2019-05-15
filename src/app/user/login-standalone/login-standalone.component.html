@@ -25,18 +25,18 @@
     <div class="heading-wrapper">
       <div class="title-hat-domain-wrapper">
         <div class="hat-name">
-          <h3 class="title-hat-domain">{{ hatName || 'yourhatname' }}</h3>
+          <h3 class="hat-domain-rumpel-bold">{{ hatName || 'yourhatname' }}</h3>
         </div>
 
         <div class="hat-domain">
-          <h3 class="title-hat-domain">{{ selectedDomain || '.yourhatdomain' }}</h3>
+          <h3 class="hat-domain-rumpel-bold">{{ selectedDomain || '.yourhatdomain' }}</h3>
         </div>
       </div>
     </div>
   </div>
 
   <div class="f-g">
-    <p class="login-description">Please enter your HAT name and select your domain to confirm access to your HAT Microserver.</p>
+    <p class="description-rumpel-grey">Please enter your HAT name and select your domain to confirm access to your HAT Microserver.</p>
   </div>
 
   <div class="f-g">
@@ -77,7 +77,7 @@
     <button mat-flat-button role="link" (click)="redirectToLogin()" [disabled]="hatName.length < 4 && selectedDomain">Next</button>
 
     <div class="f-g">
-      <p class="login-info">After pressing 'next' you will be re-directed to your HAT to enter your password</p>
+      <p class="description-rumpel-grey-light-small">After pressing 'next' you will be re-directed to your HAT to enter your password</p>
     </div>
   </div>
 

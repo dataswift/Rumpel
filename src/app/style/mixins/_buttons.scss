@@ -1,12 +1,12 @@
 @mixin button-rumpel-variant($color, $background, $border) {
-  color: $color;
-  background-color: $background;
-  border-color: $border;
+  color: $color !important;
+  background-color: $background !important;
+  border-color: $border !important;
 }
 
 // Button sizes
 @mixin button-rumpel-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
-  padding: $padding-vertical $padding-horizontal;
+  padding: $padding-vertical $padding-horizontal !important;
   font-size: $font-size;
   line-height: $line-height;
   border-radius: $border-radius;
