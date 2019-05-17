@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from './store';
-import { Observable } from 'rxjs/Observable';
 import { addMinutes } from 'date-fns';
 import { HatCache } from './local-storage.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class SessionStorageService {
