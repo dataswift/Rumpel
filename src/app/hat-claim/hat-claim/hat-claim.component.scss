@@ -21,42 +21,9 @@
 
   .next-button {
     margin: 16px auto;
-    background-color: $app-accent-color;
-    color: white;
   }
 
   .previous-button {
     margin: 0 auto 25px;
-    background-color: transparent;
-    color: $app-accent-color;
   }
-}
-
-.app-error {
-  border: solid 2px #E36682;
-  color: #E36682;
-  border-radius: 4px;
-  padding: 20px;
-  margin: 30px auto;
-  max-width: 500px;
-
-  &-header {
-    font-size: 22px;
-    margin-top: 0;
-  }
-
-  &-text {
-    font-size: 14px;
-  }
-
-  @media (max-width: 500px) {
-    margin: 30px 20px;
-  }
-}
-
-.password-guidance-box {
-  max-width: 250px;
-  text-align: center;
-  color: $hat-body-text;
-  margin: 10px auto;
 }

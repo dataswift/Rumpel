@@ -41,24 +41,6 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-
-      color: $app-dark-tone;
-      letter-spacing: 1px;
-
-      .title-hat-name {
-        font-size: 24px;
-        font-weight: 500;
-        margin-top: 0;
-        margin-bottom: 5px;
-      }
-
-      .title-hat-domain {
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        margin: 0;
-        color: $app-dark-tone
-      }
     }
   }
 
@@ -118,47 +100,6 @@
     flex-grow: 2;
   }
 
-  .hat-pass-input {
-    color: $app-dark-tone;
-    height: 50px;
-    border: 1px solid #e0e0e0;
-    width: 100%;
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 2px;
-    padding: 15px 20px;
-    margin-bottom: 25px;
-    border-radius: 0;
-    -webkit-appearance: none;
-
-    &.rum-error-field {
-      border: solid 1px #e36682;
-      color: #e36682;
-    }
-
-    @media (min-width: 501px) {
-      font-size: 20px;
-
-      &::placeholder {
-        padding-top: 4px;
-      }
-    }
-
-    @media (max-width: 500px) {
-      border-left: none;
-      border-right: none;
-    }
-
-    &::placeholder {
-      font-size: 16px;
-      letter-spacing: 0.5px;
-    }
-
-    &:focus {
-      outline: none;
-    }
-  }
-
   /deep/ {
     .mat-checkbox-label {
       color: $app-dark-tone;
@@ -216,15 +157,6 @@
     width: 250px;
     text-align: center;
   }
-
-   //button {
-   //  background-color: $app-accent-color;
-   //  text-transform: uppercase;
-   //  border-radius: 4px;
-   //  color: white;
-   //  padding: 5px 0;
-   //  font-size: 14px;
-   //}
 
   a {
     font-size: 14px;
