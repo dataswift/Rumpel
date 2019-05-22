@@ -9,13 +9,14 @@ import {
   ViewChildren
 } from '@angular/core';
 import { SheFeedService } from '../she-feed.service';
-import { Observable } from 'rxjs';
-import { SheFeed } from '../she-feed.interface';
-import * as moment from 'moment';
-import { take } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { DayGroupedSheFeed, SheFeed } from '../she-feed.interface';
+import { take, tap } from 'rxjs/operators';
+
 
 import * as format from 'date-fns/format';
-import { DaterangepickerComponent, DaterangepickerDirective } from 'ngx-daterangepicker-material';
+import { DaterangepickerDirective } from 'ngx-daterangepicker-material';
+import { SheFeedScrollingService } from './she-feed-scrolling.service';
 
 @Component({
   selector: 'rum-she-feed',
@@ -28,16 +29,33 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild(DaterangepickerDirective) pickerDirective: DaterangepickerDirective;
 
   public feed$: Observable<{ day: string; data: SheFeed[]; }[] >;
+  public feedArray: DayGroupedSheFeed[];
+  public feedSlicedArray: DayGroupedSheFeed[];
+
   private todayElement: any;
   private filteredData = false;
   private scrolled = false;
   private hideDatePicker = true;
 
-  constructor(private sheFeedSvc: SheFeedService) {
+  private dataFetched = false;
+  private feedScrollingInit = false;
+  private previousLength = 0;
+  private monthStep = 1;
+  private currentMonthStep = 0;
+  private readonly today = format(new Date(), 'ddd DD MMM YYYY');
+  todayIndex = 0;
+  startIndex = 0;
+  endIndex = 0;
+
+  sum = 100;
+
+
+  constructor(private sheFeedSvc: SheFeedService,
+              private sheFeedScrollingSvc: SheFeedScrollingService) {
   }
 
   ngOnInit() {
-    this.feed$ = this.sheFeedSvc.getInitFeed();
+    this.feedInit();
     this.scrolled = false;
   }
 
@@ -47,6 +65,66 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   ngAfterViewChecked() {
     this.findTodayElement();
+  }
+
+  feedInit() {
+    this.feed$ = this.sheFeedSvc.getInitFeed().pipe(tap((feed: DayGroupedSheFeed[]) => {
+      this.feedArray = feed;
+      if (!this.feedScrollingInit) {
+        this.feedScrollingInit = true;
+        this.todayIndex = feed.findIndex((value) => value.day === this.today);
+        this.sheFeedScrollingSvc.init(this.todayIndex, feed.length);
+
+        this.startIndex = this.todayIndex > 0 ? this.todayIndex - 1 : 0;
+        this.feedSlicedArray = feed.slice(this.startIndex , this.startIndex + 3);
+      } else {
+        this.sheFeedScrollingSvc.setFeedLength(feed.length);
+        this.pushMoreItems();
+      }
+
+      if ((feed.length < 15) && !this.dataFetched) {
+        this.currentMonthStep += 3;
+        this.monthStep = 3;
+        if (feed.length === 0 && this.currentMonthStep > 11) {
+          this.dataFetched = true;
+
+          return;
+        }
+
+        this.sheFeedSvc.getMoreData(this.monthStep);
+
+      } else {
+        return;
+      }
+      this.previousLength = feed.length;
+    }));
+  }
+
+  onScrollDown() {
+    if (!this.filteredData) {
+      this.pushMoreItems();
+    }
+  }
+
+  onScrollUp() {
+    if (!this.filteredData) {
+      const scrollingUpIndexes = this.sheFeedScrollingSvc.onScrollingUp();
+      if (scrollingUpIndexes.endDate >= 0) {
+        const a = this.feedArray.slice(scrollingUpIndexes.startDate, scrollingUpIndexes.endDate);
+        this.feedSlicedArray.unshift(...a);
+      }
+    }
+  }
+
+  pushMoreItems() {
+    const scrollingDownIndexes = this.sheFeedScrollingSvc.onScrollingDown();
+
+    if (scrollingDownIndexes.startDate >= this.feedArray.length) {
+      this.loadMoreData()
+    } else {
+      const a = this.feedArray.slice(scrollingDownIndexes.startDate , scrollingDownIndexes.endDate);
+      this.feedSlicedArray.push(...a);
+    }
   }
 
   findTodayElement() {
@@ -70,19 +148,30 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   refreshFeedData() {
+    console.log('REFRESH');
+
+    this.feedSlicedArray = [];
+    this.feedArray = [];
+    console.log('feedArray', this.feedArray);
+    console.log('feedArray', this.feedSlicedArray);
+
     this.filteredData = false;
     this.scrolled = false;
-    this.feed$ = this.sheFeedSvc.getInitFeed();
+    this.feedScrollingInit = false;
+    // this.feed$ = this.sheFeedSvc.getInitFeed();
+    this.feedInit();
   }
 
   scrollToToday() {
     if (this.todayElement) {
       document.querySelector('.mat-sidenav-content').scrollTop = this.todayElement.nativeElement.offsetTop;
+    } else {
+      document.querySelector('.mat-sidenav-content').scrollTop = 0;
     }
   }
 
   loadMoreData() {
-    this.sheFeedSvc.getMoreData();
+    this.sheFeedSvc.getMoreData(this.monthStep);
   }
 
   change(e) {
@@ -96,7 +185,10 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     const endDay = e.endDate.endOf('day').unix();
 
     this.feed$ = null;
-    this.feed$ = this.sheFeedSvc.getFeedDataByTime(startDay, endDay);
+    this.feed$ = this.sheFeedSvc.getFeedDataByTime(startDay, endDay).pipe(tap((feed: DayGroupedSheFeed[]) => {
+      this.feedArray = feed;
+      this.feedSlicedArray = feed;
+    }));
     this.todayElement = null;
     document.querySelector('.mat-sidenav-content').scrollTop = 0;
   }

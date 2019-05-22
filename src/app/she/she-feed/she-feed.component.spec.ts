@@ -10,6 +10,8 @@ import { SheFeedItemComponent } from '../../shared/components/she-feed-item/she-
 import { SheFeedRollupComponent } from '../she-feed-rollup/she-feed-rollup.component';
 import { SheFeedWeeklySummaryModule } from '../../shared/components/she-feed-weekly-summary/she-feed-weekly-summary.module';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SheFeedScrollingService } from './she-feed-scrolling.service';
 
 
 describe('SheFeedComponent', () => {
@@ -18,7 +20,7 @@ describe('SheFeedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ CustomAngularMaterialModule, SheFeedWeeklySummaryModule, NgxDaterangepickerMd ],
+      imports: [ CustomAngularMaterialModule, SheFeedWeeklySummaryModule, NgxDaterangepickerMd, InfiniteScrollModule ],
       declarations: [ SheFeedComponent,
         SheFeedRollupComponent,
         SheFeedItemComponent,
@@ -27,7 +29,8 @@ describe('SheFeedComponent', () => {
       providers: [ { provide: SheFeedService, useValue: {
         getInitData: () => of([]),
         getInitFeed: () => of([])
-      }}]
+      }}, { provide: SheFeedScrollingService, useValue: {}
+        }]
     })
     .compileComponents();
   }));

@@ -14,11 +14,14 @@ import { SheFeedComponent } from './she-feed/she-feed.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { SheFeedRollupComponent } from './she-feed-rollup/she-feed-rollup.component';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SheFeedScrollingService } from './she-feed/she-feed-scrolling.service';
+
 
 @NgModule({
-  imports: [SharedModule, CustomAngularMaterialModule, NgxDaterangepickerMd],
+  imports: [SharedModule, CustomAngularMaterialModule, NgxDaterangepickerMd, InfiniteScrollModule],
   declarations: [ SheFeedComponent, SheFeedRollupComponent ],
-  providers: [ SheFeedService ],
+  providers: [ SheFeedService, SheFeedScrollingService ],
   exports: [  ]
 })
 export class SheModule {}
