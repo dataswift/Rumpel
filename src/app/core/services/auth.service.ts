@@ -3,7 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { HatApiService } from './hat-api.service';
-import { ReplaySubject, Observable, of, throwError } from 'rxjs';
+import { ReplaySubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../../user/user.interface';
 import { HatApplication } from '../../explore/hat-application.interface';
@@ -12,7 +12,8 @@ import * as parse from 'date-fns/parse';
 import * as isFuture from 'date-fns/is_future';
 import * as addDays from 'date-fns/add_days';
 import { HttpResponse } from '@angular/common/http';
-import { uniq } from 'lodash';
+import { HatSetupCacheService } from '../../user/hat-setup-login/hat-setup-cache.service';
+import { CacheService } from './cache.service';
 
 declare const httpProtocol: string;
 
@@ -28,7 +29,9 @@ export class AuthService {
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private storageSvc: BrowserStorageService,
-              private hatSvc: HatApiService) {
+              private hatSvc: HatApiService,
+              private hatCacheSvc: HatSetupCacheService,
+              private cacheSvc: CacheService) {
 
     const previouslySavedToken = this.storageSvc.getAuthToken();
 
@@ -79,6 +82,7 @@ export class AuthService {
 
   logout(): void {
     this._token$.next({ token: null, user: this.generateUserInfo(null) });
+    this.cacheSvc.removeAll();
   }
 
   getApplicationDetails(name: string, redirect: string = '/'): Observable<HatApplication> {
@@ -97,9 +101,9 @@ export class AuthService {
       }));
   }
 
-  getApplicationsByIds(parentAppId: string, redirect: string, dependencyAppIds?: string):
+  getApplicationsByIds(parentAppId: string):
     Observable<(HatApplication | HatApplication[])[]> {
-    return this.hatSvc.getApplicationHmi()
+    return  this.hatSvc.getApplicationHmi(parentAppId)
       .pipe(map((apps: HatApplication[]) => {
         const parentApp = apps.find(app => app.application.id === parentAppId);
 
@@ -109,25 +113,10 @@ export class AuthService {
 
         const parentDependencies = parentApp.application.setup.dependencies || [];
 
-        let validDependencies = false;
-        let dependencyAppsArray: string[];
+        this.hatCacheSvc.storeApplicationData([parentApp]);
+        this.hatCacheSvc.storeApplicationData(apps.filter(app => parentDependencies.indexOf(app.application.id) > -1));
 
-        if (dependencyAppIds) {
-          dependencyAppsArray = uniq(dependencyAppIds.split(','));
-
-          validDependencies = dependencyAppsArray.every((value) => {
-            return (parentDependencies.indexOf(value) >= 0);
-          });
-        }
-
-        console.log('validDependencies', validDependencies);
-
-        if (validDependencies) {
-          return [ parentApp, apps.filter(app => dependencyAppsArray.indexOf(app.application.id) > -1) ];
-        } else {
-          return [ parentApp, apps.filter(app => parentDependencies.indexOf(app.application.id) > -1) ];
-        }
-
+        return [ parentApp, apps.filter(app => parentDependencies.indexOf(app.application.id) > -1) ];
       }));
   }
 

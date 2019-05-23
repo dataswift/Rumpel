@@ -43,7 +43,14 @@ export class AppRootComponent implements OnInit {
     router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(_ => {
-      this.windowRef.scroll(0, 0);
+      const contentContainer = document.querySelector('.mat-sidenav-content');
+
+      if (contentContainer) {
+        contentContainer.scroll({ top: 0, left: 0 });
+      } else {
+        this.windowRef.scroll({ top: 0, left: 0 });
+      }
+
       this.isPublicPage = router.isActive('public', false);
     });
   }

@@ -26,6 +26,7 @@ import { of } from 'rxjs';
 import { WINDOW } from '../../core/services/global.service';
 import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { SafeHtmlPipe } from '../../shared/pipes';
+import { HatSetupCacheService } from './hat-setup-cache.service';
 
 const PARENT_APPLICATION_MOCK: HatApplication = {
   'application': {
@@ -49,7 +50,8 @@ const PARENT_APPLICATION_MOCK: HatApplication = {
       'dataUsePurpose': '',
       'supportContact': '',
       'rating': {
-        'score': 'AA*A'
+        'score': 'AA*A',
+        'points': 15
       },
       'dataPreview': [],
       'graphics': {
@@ -225,7 +227,8 @@ const DEPENDENCY_APPLICATIONS_MOCK: HatApplication[] = [{'application': {
       'dataUsePurpose': '',
       'supportContact': '',
       'rating': {
-      'score': 'AA*A'
+        'score': 'AA*A',
+        'points': 0
     },
     'dataPreview': [],
       'graphics': {
@@ -400,7 +403,8 @@ const DEPENDENCY_APPLICATIONS_MOCK: HatApplication[] = [{'application': {
       'dataUsePurpose': '',
       'supportContact': '',
       'rating': {
-      'score': 'AA*A'
+        'score': 'AA*A',
+        'points': 12
     },
     'dataPreview': [],
       'graphics': {
@@ -573,10 +577,14 @@ describe('HatSetupLoginComponent', () => {
           queryParams: {'name': 'parent-app', 'redirect': 'redirectUrl', 'dependencies': 'facebook,twitter'} } } },
         { provide: AuthService, useValue: {
             getApplicationsByIds: () => (of([PARENT_APPLICATION_MOCK, DEPENDENCY_APPLICATIONS_MOCK])),
-            appLogin: (applicationId) => of('token')
+            appLogin: (applicationId) => of('token'),
+            isRedirectUrlValid: () => true
         }
         },
-        { provide: HatApiService, useValue: {} },
+        HatSetupCacheService,
+        { provide: HatApiService, useValue: {
+            getApplicationById: () => (of(PARENT_APPLICATION_MOCK))
+          } },
         { provide: BrowserStorageService, useValue: {} },
         { provide: Router, useValue: { navigate: () => {} } }
       ]

@@ -12,12 +12,14 @@ import { DialogService } from '../dialog.service';
 import { ProfilesService } from '../../profiles/profiles.service';
 import { InfoBoxComponent } from '../info-box/info-box.component';
 import { AuthService } from '../../core/services/auth.service';
-import { User } from '../../shared/interfaces/index';
-import { Subscription } from 'rxjs';
-import { AccountStatus } from '../../user/account-status.interface';
+import { HatRecord, User } from '../../shared/interfaces/index';
+import { Observable, of, Subscription } from 'rxjs';
 import { APP_CONFIG, AppConfig } from '../../app.config';
-import { Profile, ProfileSharingConfig } from '../../shared/interfaces/profile.interface';
+import { Profile } from '../../shared/interfaces/profile.interface';
 import { MatMenuTrigger } from '@angular/material';
+import { SystemStatusInterface } from '../../shared/interfaces/system-status.interface';
+import { catchError, tap } from 'rxjs/operators';
+import { SystemStatusService } from '../../services/system-status.service';
 
 @Component({
   selector: 'rum-header',
@@ -32,7 +34,10 @@ export class HeaderComponent implements OnInit {
   private sub: Subscription;
   public userAuthenticated = false;
   public profile: { photo: { url: string; shared: boolean; }, first_name: string, hatId: string, domain: string };
-  public accountStatus: AccountStatus;
+  public systemStatus$: Observable<SystemStatusInterface[]>;
+  public dataBaseStorage: SystemStatusInterface;
+  public dataBaseUsedPercent: SystemStatusInterface;
+  public previousLogin: SystemStatusInterface = {title: '', kind: {metric: '', kind: ''}};
   public showNotifications: boolean;
 
   public unreadNotifications: number;
@@ -42,7 +47,8 @@ export class HeaderComponent implements OnInit {
               private router: Router,
               private dialogSvc: DialogService,
               private authSvc: AuthService,
-              private profilesSvc: ProfilesService) { }
+              private profilesSvc: ProfilesService,
+              private systemStatusSvc: SystemStatusService) { }
 
   ngOnInit() {
     this.profile = { photo: { url: '', shared: false }, first_name: '', hatId: '', domain: '' };
@@ -56,17 +62,34 @@ export class HeaderComponent implements OnInit {
       this.profile.hatId = user.hatId;
     });
 
+    this.profilesSvc.getProfileInitData();
+
     this.totalNotifications = 0;
 
-    this.profilesSvc.profileData$.subscribe((profile: { values: Profile; share: ProfileSharingConfig; }) => {
-      if (profile.values && profile.values.personal && profile.values.personal.firstName) {
-        this.profile.first_name = profile.values.personal.firstName;
-      }
-
-      if (profile.share && profile.share.photo && profile.share.photo.avatar) {
-        this.profile.photo.shared = profile.share.photo.avatar;
+    this.profilesSvc.data$.subscribe((profileArray: HatRecord<Profile>[]) => {
+      if (profileArray && profileArray.length > 0) {
+        profileArray.forEach( profile => {
+          if (profile.data && profile.data.personal && profile.data.personal.firstName) {
+            this.profile.first_name = profile.data.personal.firstName;
+          }
+          if (profile.data.photo.avatar) {
+            this.profile.photo.url = profile.data.photo.avatar
+          }
+        })
       }
     });
+
+    this.systemStatus$ = this.systemStatusSvc.systemStatus$.pipe(
+      tap((records: SystemStatusInterface[]) => {
+        this.dataBaseStorage = records.find(record => record.title === 'Database Storage');
+        this.dataBaseUsedPercent = records.find(record => record.title === 'Database Storage Used Share');
+        this.previousLogin = records.find(record => record.title === 'Previous Login');
+      }),
+      catchError(err => {
+        console.log(err);
+
+        return of([]);
+      }))
 
   }
 
@@ -102,11 +125,5 @@ export class HeaderComponent implements OnInit {
     if (bool === false) {
       barHeight = 0;
     }
-  }
-
-  round(value: number, decimalPlaces: number): number {
-    const multiplier = Math.pow(10, decimalPlaces);
-
-    return Math.round(value * multiplier) / multiplier;
   }
 }

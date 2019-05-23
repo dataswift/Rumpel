@@ -4,47 +4,50 @@
       <img src="{{app.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" />
     </div>
 
-    <div class="app-rating-wrapper">
-      <div class="app-rating">
-        <span class="app-rating-highlighted">{{app.info.rating.score}}</span>
+    <ng-container *ngIf="app.info.rating && app.info.rating.score">
+      <div class="app-rating-wrapper">
+        <div class="app-rating">
+          <span class="app-rating-highlighted">{{app.info.rating.score}}</span>
+        </div>
       </div>
-    </div>
+    </ng-container>
+
 
     <h3 class="title-section-heading">{{app.info.name}}</h3>
 
     <p class="title-section-text">{{app.info.name}} needs access to some of your HAT data and will have the
       ability to take actions in your HAT. By agreeing, you confirm that you're okay with this.</p>
 
-    <p class="title-section-text-rating">This app is rated {{app.info.rating.score}}<br>
-      <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="title-section-text-link">Learn more</a>
-    </p>
+    <ng-container *ngIf="app.info.rating && app.info.rating.score">
+      <p class="title-section-text-rating">This app is rated {{app.info.rating.score}}<br>
+        <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="title-section-text-link">Learn more</a>
+      </p>
+    </ng-container>
   </section>
 
   <section class="permissions-section">
-    <h4 class="section-header">{{app.info.name}} will be able to:</h4>
-    <mat-card *ngFor="let permission of readablePermissions">
+    <h4 class="section-header">You agree that {{app.info.name}} will be able to:</h4>
+    <mat-card>
       <mat-card-content>
-        <h5 class="card-heading">{{permission.title}}</h5>
-        <p class="card-text">{{permission.text}}</p>
+        <h5 class="card-heading">Take actions in your HAT</h5>
+        <rum-hat-app-hmi-content [appContent]="app"></rum-hat-app-hmi-content>
       </mat-card-content>
     </mat-card>
   </section>
 
   <section class="permissions-section" *ngIf="app.permissions.dataRequired && app.permissions.dataRequired.bundle">
-    <h4 class="section-header">{{app.info.name}} will have access to:</h4>
-    <mat-card *ngFor="let endpoint of app.permissions.dataRequired.bundle.bundle | unbundle">
-      <mat-card-content>
-        <h5 class="card-heading">{{endpoint.title}}</h5>
-        <div class="card-text" [class.card-text-expanded]="endpoint.expanded">
-          <h6 class="card-subheading">Fields required</h6>
-          <ul class="card-list">
-            <li *ngFor="let field of endpoint.fields">{{field}}</li>
-          </ul>
-        </div>
-        <div *ngIf="endpoint.fields.length > 1" (click)="toggleCardExpansion(endpoint)" class="card-expansion-toggle">
-          {{endpoint.expanded ? 'Less' : 'More'}}
-        </div>
-      </mat-card-content>
-    </mat-card>
+    <h4 class="section-header">Data that {{app.info.name}} will have access to:</h4>
+
+    <mat-expansion-panel *ngFor="let endpoint of app.permissions.dataRequired.bundle.bundle | unbundle">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="expandable-card-title">Use {{endpoint.title}} data</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-panel-description>
+        <ul class="card-list">
+          <li *ngFor="let field of endpoint.fields">{{field}}</li>
+        </ul>
+      </mat-panel-description>
+    </mat-expansion-panel>
   </section>
 </div>

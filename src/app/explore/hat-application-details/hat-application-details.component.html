@@ -1,5 +1,5 @@
 <div class="app-details" *ngIf="appDetails$ | async as app">
-  <div class="app-details-header">
+  <div class="app-details-header" [ngStyle]="{'background-color': app.application.info.primaryColor || '#2b313d'}">
     <mat-toolbar class="app-details-header-toolbar">
       <span class="flex-spacer"></span>
       <mat-icon [matMenuTriggerFor]="moreActionsMenu" class="app-details-close" *ngIf="app.setup">more_horiz</mat-icon>
@@ -10,38 +10,49 @@
       <div class="app-logo-wrapper">
         <img [src]="app.application.info.graphics.logo.normal" height="100" class="img img-responsive app-logo" />
       </div>
-      <div class="app-rating-wrapper">
-        <div class="app-rating">
-          <span class="app-rating-highlighted">{{app.application.info.rating.score}}</span>
-          <!--<span class="app-rating-italicized">rated</span>-->
+      <ng-container *ngIf="app.application.info.rating && app.application.info.rating.score">
+        <div class="app-rating-wrapper">
+          <div [ngClass]="['app-rating', appRating]">
+            <span class="app-rating-highlighted">{{app.application.info.rating.score}}</span>
+            <!--<span class="app-rating-italicized">rated</span>-->
+          </div>
         </div>
-      </div>
+      </ng-container>
       <h3 class="app-details-header-title">{{app.application.info.name}}</h3>
+
+      <ng-container *ngIf="app.application.info.rating && app.application.info.rating.score">
+        <div class="app-details-header-headline">
+          This app is rated {{app.application.info.rating.score}}
+        </div>
+        <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="app-link">Learn more</a>
+      </ng-container>
 
       <a mat-button [ngClass]="['app-details-status', appStatus]"
          [href]="generateHatLoginLink(app.application.id, app.application.setup)"
+         (click)="clearCache()"
          [ngSwitch]="appStatus">
         <ng-container *ngSwitchCase="'goto'"><mat-icon>exit_to_app</mat-icon>Go to app</ng-container>
         <ng-container *ngSwitchCase="'running'"><mat-icon>check_circle</mat-icon>Active</ng-container>
         <ng-container *ngSwitchCase="'fetching'"><mat-icon>sync</mat-icon>Fetching...</ng-container>
         <ng-container *ngSwitchCase="'failing'"><mat-icon>sync_problem</mat-icon>Reconnect</ng-container>
         <ng-container *ngSwitchCase="'untouched'"><mat-icon>add_circle_outline</mat-icon>Connect</ng-container>
+        <ng-container *ngSwitchCase="'update'"><mat-icon>refresh</mat-icon>Update</ng-container>
       </a>
 
-      <div class="app-details-header-headline">
-        This app is rated {{app.application.info.rating.score}}
+      <div class="app-details-update" *ngIf="appStatus === 'update'">
+        There is an update available. Please press the button to update.
       </div>
-      <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="app-link">Learn more</a>
 
       <div class="app-details-error" *ngIf="appStatus === 'failing'">
-        App disconnected. Please click reconnect to re-establish connection.
+        Error! {{app.application.kind.kind}} disconnected.
+        Please press the button to reconnect.
       </div>
     </mat-card>
   </div>
 
   <div class="app-details-content">
     <mat-tab-group class="app-details-tab-group">
-      <mat-tab label="App Info">
+      <mat-tab label="{{getTabName(app.application.kind.kind)}}">
         <mat-card class="app-details-general">
           <mat-card-content>
             <h5 class="app-details-heading">Description</h5>
@@ -88,7 +99,7 @@
 
         <ng-template #noPreview>
           <div class="no-data-icon">
-            <mat-icon>cloud_queue</mat-icon>
+            <mat-icon style="opacity: 0.3;">cloud_queue</mat-icon>
           </div>
 
           <div class="no-data-message">
@@ -114,7 +125,7 @@
       <mat-icon>phonelink_lock</mat-icon>App permissions
     </a>
     <button mat-menu-item class="actions-menu-item" (click)="disableApp(app.application.id)">
-      <mat-icon>link_off</mat-icon>Disable app
+      <mat-icon>link_off</mat-icon>Disconnect app
     </button>
     <button mat-menu-item class="actions-menu-item">Cancel</button>
   </mat-menu>

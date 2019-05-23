@@ -18,6 +18,7 @@ import { LoginOauthComponent } from './login-oauth/login-oauth.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { InfoHeaderComponent } from './info-header/info-header.component';
 import { HatSetupLoginComponent } from './hat-setup-login/hat-setup-login.component';
+import { HatSetupCacheService } from './hat-setup-login/hat-setup-cache.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import { HatSetupLoginComponent } from './hat-setup-login/hat-setup-login.compon
     LoginOauthComponent,
     HatSetupLoginComponent,
     InfoHeaderComponent],
-  providers: [  ],
+  providers: [ HatSetupCacheService ],
   exports: [ LoginOauthComponent, LoginNativeComponent, LoginStandaloneComponent, HatSetupLoginComponent ]
 })
 export class UserModule {}

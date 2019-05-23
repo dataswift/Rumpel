@@ -35,13 +35,14 @@ interface HatApplicationInfo {
   dataUsePurpose: string;
   graphics: HatApplicationGraphics;
   published: boolean;
-  rating: { score: string; };
+  rating: { score: string; points: number; };
   supportContact: string;
   termsUrl: string;
   updateNotes?: HatApplicationUpdateNotes;
+  primaryColor?: string;
 }
 
-interface HatApplicationDeveloper {
+export interface HatApplicationDeveloper {
   id: string;
   name: string;
   url: string;
@@ -53,13 +54,13 @@ interface HatApplicationUpdateNotes {
   notes?: Array<string>;
 }
 
-interface HatApplicationDescription {
+export interface HatApplicationDescription {
   text: string;
   markdown: string;
   html: string;
 }
 
-interface HatApplicationGraphics {
+export interface HatApplicationGraphics {
   banner: HatApplicationGraphicsSize;
   logo: HatApplicationGraphicsSize;
   screenshots: HatApplicationGraphicsSize[];
@@ -106,6 +107,7 @@ interface HatApplicationStatus {
   expectedStatus: number;
   dataPreviewEndpoint: string;
   recentDataCheckEndpoint: string;
+  staticDataPreviewEndpoint?: string;
   versionReleaseDate: string;
   statusUrl: string;
   kind: string;

@@ -115,11 +115,22 @@
   width: 100%;
   max-width: 500px;
 
-  .debit-valitity-interval {
+  .debit-validity-interval {
     display: flex;
     font-size: 13px;
     color: $hat-body-text;
     margin-bottom: 10px;
+
+    .date-mat-card {
+      background-color: #f6f6f6 !important;
+      padding: 0 !important;
+      width: 50% !important;
+
+      .date-header-mat-card-content {
+        text-align: center;
+        margin-bottom: 8px;
+      }
+    }
 
     .mat-card {
       margin: 0;
@@ -129,6 +140,29 @@
         text-transform: uppercase;
         font-size: 13px;
         line-height: 1.54;
+      }
+
+      .date-description {
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: #9a9a9a;
+      }
+
+      .date-header {
+        height: 16px;
+        font-size: 12px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.6px;
+        text-align: center;
+        color: $app-dark-tone;
       }
 
       &:first-child {
@@ -158,6 +192,8 @@
     font-size: 14px;
     margin-bottom: 10px;
     text-transform: none;
+    letter-spacing: 0.3px;
+    line-height: 1.43;
 
     &.indented {
       text-indent: 15px;

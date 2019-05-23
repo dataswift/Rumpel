@@ -42,6 +42,8 @@ export class LoginOauthComponent implements OnInit {
         } else {
           this.hatApp = hatApp;
         }
+
+        console.log('redirect', this.route.snapshot.queryParams['redirect']);
       },
       error => {
           // console.warn('Failed to login. Reason: ', error);

@@ -39,6 +39,10 @@ export class HatApplicationListComponent implements OnInit {
     }));
   }
 
+  applicationStatus(app: HatApplication): string {
+    return this.hatAppSvc.getAppStatus(app);
+  }
+
   statusIcon(app: HatApplication): string {
     switch (this.hatAppSvc.getAppStatus(app)) {
       case 'running':
@@ -48,7 +52,8 @@ export class HatApplicationListComponent implements OnInit {
       case 'fetching':
         return 'sync';
       case 'failing':
-        return 'sync_problem';
+        case 'update':
+          return 'sync_problem';
       default:
         return 'add_circle_outline';
     }

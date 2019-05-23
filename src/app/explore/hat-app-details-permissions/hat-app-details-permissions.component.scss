@@ -3,6 +3,11 @@
 .user-actions {
   background-color: $hat-background-color;
   width: 100%;
+  margin-bottom: 0;
+
+  .data-rights-logo-wrapper {
+    text-align: center;
+  }
 
   button {
     display: block;

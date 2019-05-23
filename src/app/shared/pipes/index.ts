@@ -20,3 +20,4 @@ export { LimitMembersPipe } from './limit-members.pipe';
 export { MarkdownToHtmlPipe } from './markdown-to-html.pipe';
 export { RelativeTimesFilterPipe } from './relative-times-filter.pipe';
 export { SafeHtmlPipe } from './safe-html.pipe';
+export { InsightWeeklySummaryPipe } from './insight-weekly-summary.pipe';

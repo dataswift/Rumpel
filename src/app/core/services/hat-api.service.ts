@@ -22,6 +22,7 @@ import { SheFeed } from '../../she/she-feed.interface';
 import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
 import { SheStaticProfile } from '../../shared/interfaces/she-static-profile.interface';
 import { SystemStatusInterface } from '../../shared/interfaces/system-status.interface';
+import { HatTool } from '../../tools/hat-tools.interface';
 
 @Injectable()
 export class HatApiService {
@@ -102,10 +103,13 @@ export class HatApiService {
     return this.authHttp.get<HatApplication[]>(path);
   }
 
-  getApplicationHmi(): Observable<HatApplication[]> {
+  getApplicationHmi(applicationId: string): Observable<HatApplication[]> {
     const path = `${this.pathPrefix}/applications/hmi`;
 
-    return this.authHttp.get<HatApplication[]>(path);
+    const queryParams = new HttpParams()
+      .set('applicationId', applicationId);
+
+    return this.authHttp.get<HatApplication[]>(path, { params: queryParams });
   }
 
   getApplicationById(applicationId: string): Observable<HatApplication> {
@@ -231,7 +235,7 @@ export class HatApiService {
     return this.authHttp.get(path);
   }
 
-  getDataBundeStructure(bundleId: string): Observable<BundleStructure> {
+  getDataBundleStructure(bundleId: string): Observable<BundleStructure> {
     const path = `${this.pathPrefix}/data-bundle/${bundleId}/structure`;
 
     return this.authHttp.get<BundleStructure>(path);
@@ -368,7 +372,37 @@ export class HatApiService {
     }
   }
 
-  getMarkDownContent(path: string): Observable<any> {
+  getToolList(toolId?: string): Observable<HatTool[]> {
+    let path = `${this.pathPrefix}/she/function`;
+
+    if (toolId) {
+      path += `/${toolId}`
+    }
+
+    return this.authHttp.get<HatTool[]>(path);
+  }
+
+
+  enableTool(toolId: string): Observable<HatTool> {
+    const path = `${this.pathPrefix}/she/function/${toolId}/enable`;
+
+    return this.authHttp.get<HatTool>(path);
+  }
+
+  disableTool(toolId: string): Observable<HatTool> {
+    const path = `${this.pathPrefix}/she/function/${toolId}/disable`;
+
+    return this.authHttp.get<HatTool>(path);
+  }
+
+  triggerToolUpdate(toolId: string): Observable<number> {
+    const path = `${this.pathPrefix}/she/function/${toolId}/trigger`;
+
+    return this.authHttp.get(path, { observe: 'response' })
+      .pipe(map((res: HttpResponse<any>) => res.status));
+  }
+
+  getMarkDownContent(path: string): Observable<HttpResponse<string>> {
 
     return this.http.get(path, { observe: 'response', responseType: 'text' });
   }
