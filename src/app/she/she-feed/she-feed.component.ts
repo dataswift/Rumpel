@@ -43,12 +43,8 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   private monthStep = 1;
   private currentMonthStep = 0;
   private readonly today = format(new Date(), 'ddd DD MMM YYYY');
-  todayIndex = 0;
-  startIndex = 0;
-  endIndex = 0;
-
-  sum = 100;
-
+  private todayIndex = 0;
+  private startIndex = 0;
 
   constructor(private sheFeedSvc: SheFeedService,
               private sheFeedScrollingSvc: SheFeedScrollingService) {
@@ -67,6 +63,11 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.findTodayElement();
   }
 
+  /**
+   * Initialise the feed
+   * Checks if there is enough data to show then fetching more
+   * Initialise the scrolling service and slices enough data to display
+   */
   feedInit() {
     this.feed$ = this.sheFeedSvc.getInitFeed().pipe(tap((feed: DayGroupedSheFeed[]) => {
       this.feedArray = feed;
@@ -92,7 +93,6 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
 
         this.sheFeedSvc.getMoreData(this.monthStep);
-
       } else {
         return;
       }
@@ -100,12 +100,20 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     }));
   }
 
+  /**
+   * When the user scrolling down and reach the minimun distance from the bottom
+   * triggers this method to append more data
+   */
   onScrollDown() {
     if (!this.filteredData) {
       this.pushMoreItems();
     }
   }
 
+  /**
+   * When the user scrolling up and reach the minimun distance from the top
+   * triggers this method to append more data
+   */
   onScrollUp() {
     if (!this.filteredData) {
       const scrollingUpIndexes = this.sheFeedScrollingSvc.onScrollingUp();
@@ -116,6 +124,9 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
+  /**
+   * Pushes data from the parent array to the visible array
+   */
   pushMoreItems() {
     const scrollingDownIndexes = this.sheFeedScrollingSvc.onScrollingDown();
 
@@ -127,6 +138,9 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
+  /**
+   * Searches on the Date elements, and finds the current date
+   */
   findTodayElement() {
     if (this.dateSeparators && !this.scrolled) {
       const today = format(new Date(), 'ddd DD MMM YYYY');
@@ -147,21 +161,22 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
+  /**
+   * When the user taps on the refresh button, initialise the feed
+   */
   refreshFeedData() {
-    console.log('REFRESH');
-
     this.feedSlicedArray = [];
     this.feedArray = [];
-    console.log('feedArray', this.feedArray);
-    console.log('feedArray', this.feedSlicedArray);
 
     this.filteredData = false;
     this.scrolled = false;
     this.feedScrollingInit = false;
-    // this.feed$ = this.sheFeedSvc.getInitFeed();
     this.feedInit();
   }
 
+  /**
+   * When the user taps on the today button, scrolls to today
+   */
   scrollToToday() {
     if (this.todayElement) {
       document.querySelector('.mat-sidenav-content').scrollTop = this.todayElement.nativeElement.offsetTop;
@@ -170,6 +185,9 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
   }
 
+  /**
+   * Getting more data from the server
+   */
   loadMoreData() {
     this.sheFeedSvc.getMoreData(this.monthStep);
   }
@@ -177,7 +195,11 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   change(e) {
     console.log(e)
   }
-  choosedDate(e) {
+
+  /**
+   * Getting the dates from the date picker and makes an api call to display the data
+   */
+  selectedDates(e) {
     this.hideDatePicker = true;
     this.filteredData = true;
 
@@ -192,6 +214,10 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.todayElement = null;
     document.querySelector('.mat-sidenav-content').scrollTop = 0;
   }
+
+  /**
+   * Opens the date picker when the user taps on the filter button
+   */
   open(e) {
     this.hideDatePicker = !this.hideDatePicker;
   }

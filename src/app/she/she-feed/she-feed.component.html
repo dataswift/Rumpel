@@ -4,40 +4,26 @@
   </mat-toolbar>
 
   <div class="feed">
-<!--    <cdk-virtual-scroll-viewport itemSize="180">-->
+    <ng-container *ngIf="feedSlicedArray && feedSlicedArray.length > 0">
+      <div infiniteScroll
+           [infiniteScrollDistance]="2"
+           [infiniteScrollUpDistance]="2"
+           infiniteScrollContainer=".sidenav-content" [fromRoot]="true"
+           (scrolled)="onScrollDown()"
+           (scrolledUp)="onScrollUp()"
+      >
 
-<!--      <ng-container *cdkVirtualFor="let day of feedData">-->
-<!--        <h5 class="day-separator" #daySeparator>{{day.day}}</h5>-->
-<!--        <rum-she-feed-rollup [sheFeed]="day.data"></rum-she-feed-rollup>-->
-<!--      </ng-container>-->
-
-<!--      <ng-container *ngIf="!filteredData">-->
-<!--        <button mat-flat-button role="button" (click)="loadMoreData()">Show more</button>-->
-<!--      </ng-container>-->
-<!--    </cdk-virtual-scroll-viewport>-->
-
-
-    <div infiniteScroll
-         [infiniteScrollDistance]="2"
-         [infiniteScrollUpDistance]="2"
-         infiniteScrollContainer=".sidenav-content" [fromRoot]="true"
-         (scrolled)="onScrollDown()"
-         (scrolledUp)="onScrollUp()"
-    >
-
-    <ng-container *ngFor="let day of feedSlicedArray">
-        <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
-        <rum-she-feed-rollup [sheFeed]="day.data"></rum-she-feed-rollup>
-      </ng-container>
-    </div>
-<!--    <ng-container *ngIf="!filteredData">-->
-<!--      <button mat-flat-button role="button" (click)="loadMoreData()">Show more</button>-->
-<!--    </ng-container>-->
+        <ng-container *ngFor="let day of feedSlicedArray">
+          <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
+          <rum-she-feed-rollup [sheFeed]="day.data"></rum-she-feed-rollup>
+        </ng-container>
+      </div>
+    </ng-container>
   </div>
 
   <div class="user-actions">
     <ng-container *ngIf="!hideDatePicker">
-      <ngx-daterangepicker-material (choosedDate)="choosedDate($event)"
+      <ngx-daterangepicker-material (choosedDate)="selectedDates($event)"
                                     [locale]="{applyLabel: 'Done', firstDay: 1}"
                                     (change)="change($event)"
       >
