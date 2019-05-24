@@ -1,0 +1,55 @@
+@import "../branding";
+@import "../rumpel-mixins";
+@import "../mixins/buttons";
+
+$button-enabled-background-color: $app-accent-color;
+$button-enabled-text-color: white;
+
+$button-disabled-background-color: $app-dark-grey;
+$button-disabled-text-color: $app-dark-tone;
+
+$button-default-border-radius: 4px;
+$button-default-font-size: 14px;
+$button-default-padding-vertical: 5px;
+$button-default-padding-horizontal: 0px;
+$button-line-height: normal;
+
+.btn-rumpel {
+  display: block;
+  font-weight: normal;
+  width: 250px;
+  margin: 16px auto;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  border: 1px solid transparent;
+  white-space: nowrap;
+  @include button-rumpel-size($button-default-padding-vertical, $button-default-padding-horizontal, $button-default-font-size, $button-line-height, $button-default-border-radius);
+}
+
+.btn-rumpel-default {
+  @include button-rumpel-variant($button-enabled-text-color, $button-enabled-background-color, $button-enabled-background-color);
+}
+
+.btn-rumpel-enabled {
+  @include button-rumpel-variant($button-enabled-text-color, $button-enabled-background-color, $button-enabled-background-color);
+}
+
+.btn-rumpel-disabled {
+  @include button-rumpel-variant($button-disabled-text-color, $button-disabled-background-color, $button-disabled-background-color);
+}
+
+.btn-rumpel-transparent {
+  @include button-rumpel-variant($button-enabled-background-color, transparent, transparent);
+}
+
+// Button Sizes
+// --------------------------------------------------
+
+.btn-rumpel-default-size {
+  // line-height: ensure even-numbered height of button next to large input
+  @include button-rumpel-size($button-default-padding-vertical, $button-default-padding-horizontal, $button-default-font-size, $button-line-height, $button-default-border-radius);
+}

@@ -574,7 +574,7 @@ describe('HatSetupLoginComponent', () => {
         { provide: APP_CONFIG, useValue: {} },
         { provide: WINDOW, useValue: { location: { href: 'http://test.com' }} },
         { provide: ActivatedRoute, useValue: { snapshot: {
-          queryParams: {'name': 'parent-app', 'redirect': 'redirectUrl', 'dependencies': 'facebook,twitter'} } } },
+          queryParams: {'name': 'parent-app', 'redirect': 'redirectUrl'} } } },
         { provide: AuthService, useValue: {
             getApplicationsByIds: () => (of([PARENT_APPLICATION_MOCK, DEPENDENCY_APPLICATIONS_MOCK])),
             appLogin: (applicationId) => of('token'),

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { SheFeed } from '../../../she/she-feed.interface';
 
 @Component({
@@ -12,7 +12,7 @@ export class SheFeedItemComponent implements OnInit, AfterViewInit {
   public expanded = false;
   public overflowing = false;
 
-  constructor() { }
+  constructor(private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
@@ -21,6 +21,7 @@ export class SheFeedItemComponent implements OnInit, AfterViewInit {
     if (this.content) {
       const nativeEl = this.content.nativeElement;
       this.overflowing = nativeEl.clientHeight < nativeEl.scrollHeight;
+      this.cd.detectChanges();
     }
   }
 

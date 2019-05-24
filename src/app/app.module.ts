@@ -58,6 +58,8 @@ import { SystemStatusService } from './services/system-status.service';
 import { WINDOW_PROVIDERS } from './core/services/global.service';
 import { ToolsModule } from './tools/tools.module';
 import { ReactiveWebStorageModule } from './core/services/reactive-webstorage.module';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+
 
 export const storageKeys = ['system-status', 'applications', 'tools', 'phata-structure'];
 
@@ -91,7 +93,8 @@ export function cookieServiceFactory() {
     HatClaimModule,
     SettingsModule,
     ToolsModule,
-    ReactiveWebStorageModule.setLocalStorageKeys(storageKeys)
+    ReactiveWebStorageModule.setLocalStorageKeys(storageKeys),
+    NgxDaterangepickerMd.forRoot()
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent,

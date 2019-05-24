@@ -29,6 +29,7 @@ export class HatSetupLoginComponent implements OnInit {
   public hatApp: HatApplication;
   public dependencyApps: HatApplication[];
   private redirect: string;
+  private hatExists = false;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               @Inject(WINDOW) private windowRef: Window,
@@ -41,10 +42,14 @@ export class HatSetupLoginComponent implements OnInit {
 
   ngOnInit() {
     this.hatAddress = this.windowRef.location.hostname;
-    const { name, redirect, dependencies, appid } = this.route.snapshot.queryParams;
+    const { name, redirect, dependencies, repeated_signup } = this.route.snapshot.queryParams;
 
     if (name && redirect) {
       const safeName = name.toLowerCase();
+
+      if (repeated_signup && repeated_signup === 'true') {
+        this.hatExists = true;
+      }
 
       if (dependencies) {
         const dependencyAppsArray = dependencies.split(',');
@@ -130,7 +135,7 @@ export class HatSetupLoginComponent implements OnInit {
         if (this.dependencyApps.every(app => app.enabled === true)) {
           this.buildRedirect(hatApp);
         } else {
-          this.setupAppDependencies(this.dependencyApps); // TODO remove comments
+          this.setupAppDependencies(this.dependencyApps);
         }
       });
   }
