@@ -38,6 +38,13 @@ export class SheFeedScrollingService {
    * @returns scrollingUpIndex with startDate and EndDate
    */
   onScrollingUp() {
+    if (this.feedListLength === 0) {
+      this.scrollingUpIndex.startDate = 0;
+      this.scrollingUpIndex.endDate = 0;
+
+      return this.scrollingUpIndex;
+    }
+
     this.scrollingUpIndex.endDate = this.scrollingUpIndex.startDate - 1;
     this.scrollingUpIndex.startDate = this.getMoreFutureData() > 0 ? this.getMoreFutureData() : 0;
 
@@ -49,6 +56,12 @@ export class SheFeedScrollingService {
    * @returns scrollingDownIndex with startDate and EndDate
    */
   onScrollingDown() {
+    if (this.feedListLength === 0) {
+      this.scrollingDownIndex.startDate = 0;
+      this.scrollingDownIndex.endDate = 0;
+
+      return this.scrollingDownIndex;
+    }
     this.scrollingDownIndex.startDate = this.scrollingDownIndex.endDate + 1;
     this.scrollingDownIndex.endDate =
       this.scrollingDownIndex.endDate + 3 < this.feedListLength ? this.scrollingDownIndex.endDate + 3 : this.feedListLength;

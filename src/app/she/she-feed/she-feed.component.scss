@@ -96,10 +96,12 @@
 
 .feed {
   padding: 20px 12px;
+  min-height: 100vh;
 
   .infinite-scroll {
     content: " ";
-    height: 500px;
+    //height: 500px;
+    min-height: 100vh;
   }
 }
 
