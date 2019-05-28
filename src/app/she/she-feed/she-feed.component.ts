@@ -90,9 +90,11 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.dataFetched = true;
 
           return;
+        } else {
+          this.sheFeedSvc.getMoreData(this.monthStep);
+
         }
 
-        this.sheFeedSvc.getMoreData(this.monthStep);
       } else {
         return;
       }
@@ -129,6 +131,10 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
    */
   pushMoreItems() {
     const scrollingDownIndexes = this.sheFeedScrollingSvc.onScrollingDown();
+
+    if (scrollingDownIndexes.startDate === 0) {
+      return;
+    }
 
     if (scrollingDownIndexes.startDate >= this.feedArray.length) {
       this.loadMoreData()
