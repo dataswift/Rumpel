@@ -66,7 +66,7 @@ export class HatApplicationsService {
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     const redirectUrl = setup.url || setup.iosUrl || '';
 
-    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}%3Fredirect=https://${this.hatUrl}/#/feed`;
+    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}%3Fredirect=https://${this.hatUrl}/%23/feed`;
   }
 
   getAppStatus(app: HatApplication): 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update' {
