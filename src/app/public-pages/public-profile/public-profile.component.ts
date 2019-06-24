@@ -25,6 +25,8 @@ export class PublicProfileComponent implements OnInit {
   public userAuthenticated = false;
   public profile: Profile;
   public notables: HatRecord<any>[];
+  public hatName: string;
+  public hatDomain: string;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private hatSvc: HatApiService,
@@ -38,11 +40,12 @@ export class PublicProfileComponent implements OnInit {
       this.notables = data.notables;
     });
 
-    this.authSvc.auth$.subscribe((isAuthenticated: boolean) => this.userAuthenticated = isAuthenticated);
-  }
+    const host = window.location.hostname;
 
-  get hostname(): string {
-    return window.location.hostname;
+    this.hatName = host.substring(0, host.indexOf('.'));
+    this.hatDomain = host.substring(host.indexOf('.') + 1);
+
+    this.authSvc.auth$.subscribe((isAuthenticated: boolean) => this.userAuthenticated = isAuthenticated);
   }
 
   getIconName(kind: string): string {
