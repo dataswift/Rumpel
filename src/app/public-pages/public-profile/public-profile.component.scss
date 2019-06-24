@@ -83,7 +83,6 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url('/assets/images/hero-fade.jpg');
 
     .social-links {
       a {
@@ -92,9 +91,17 @@
         img {
           top: 0;
           border: none;
-          width: 48px;
-          height: 48px;
+          border-radius: 50%;
           background: $hat-background-color;
+
+          @media (max-width: 500px) {
+            width: 25px;
+            height: 25px;
+          }
+          @media (min-width: 501px) {
+            width: 35px;
+            height: 35px;
+          }
         }
       }
     }
@@ -108,10 +115,10 @@
   }
 
   .phata-name {
-    margin-top: 195px;
+    margin-top: 80px;
     text-align: center;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 
     .photo-container {
       background-size: cover;
@@ -120,13 +127,13 @@
     }
 
     .photo-container, svg {
-      width: 160px;
-      height: 160px;
+      width: 100px;
+      height: 100px;
       margin: auto;
       border-radius: 50%;
       border: 6px solid white;
       position: relative;
-      top: -80px;
+      top: -50px;
     }
 
     svg {
@@ -221,6 +228,45 @@
       cursor: pointer;
     }
   }
+}
+
+.title-hat-domain-wrapper {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.hat-name {
+  display: inline-block;
+}
+
+.hat-domain {
+  display: inline-block;
+}
+
+.public-profile-hat-name {
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.56;
+  letter-spacing: 0.4px;
+  text-align: center;
+
+  @media (max-width: 340px) {
+    font-size: 16px;
+  }
+}
+
+.public-profile-profile-of {
+  opacity: 0.6;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.71;
+  letter-spacing: 1.4px;
 }
 
 .view-header {

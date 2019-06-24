@@ -22,6 +22,7 @@
     <div class="row no-margin phathero">
       <div class="col-md-offset-3 col-md-6 ">
         <div class="phata-box phata-name">
+
           <svg *ngIf="!profile?.photo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              width="20px" height="20px" viewBox="2 2 20 20" enable-background="new 2 2 20 20" xml:space="preserve">
             <path fill="#FFFFFF" d="M12,2C6.48,2,2,6.48,2,12c0,5.52,4.48,10,10,10c5.52,0,10-4.48,10-10C22,6.48,17.52,2,12,2z M12,5
@@ -32,7 +33,18 @@
 
           <div *ngIf="profile?.photo && profile.photo.avatar" [ngStyle]="{ 'background-image': 'url(' + profile?.photo.avatar + ')' }" class="photo-container"></div>
 
-          <h1>{{hostname}}</h1>
+          <div class="public-profile-profile-of">PUBLIC PROFILE OF:</div>
+
+          <div class="title-hat-domain-wrapper">
+            <div class="hat-name">
+              <div class="public-profile-hat-name">{{ hatName }}</div>
+            </div>
+
+            <div class="hat-domain">
+              <div class="public-profile-hat-name">.{{ hatDomain }}</div>
+            </div>
+          </div>
+
           <p>
             <span class="social-links" *ngIf="profile?.online">
               <a *ngIf="profile.online.website" [href]="profile.online.website" target="_blank"><img src="assets/icons/website-icon.svg"></a>
