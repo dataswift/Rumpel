@@ -1,5 +1,6 @@
 
 export class SheFeedScrollingService {
+  private scrollingInitIndex = {startDate: 0, endDate: 0};
   private scrollingUpIndex = {startDate: 0, endDate: 0};
   private scrollingDownIndex = {startDate: 0, endDate: 0};
   private readonly moreDataStep = 3;
@@ -19,10 +20,20 @@ export class SheFeedScrollingService {
     this.todayIndex = todayIndex > 0 ? todayIndex : 0;
 
     this.scrollingUpIndex.endDate = todayIndex - 1;
-    this.scrollingUpIndex.startDate = todayIndex - 3 > 0 ? todayIndex - 3 : 0;
+    this.scrollingUpIndex.startDate = todayIndex - 1 > 0 ? todayIndex - 1 : 0;
 
     this.scrollingDownIndex.endDate = todayIndex + 3 < feedListLength ? todayIndex + 3 : feedListLength;
     this.scrollingDownIndex.startDate = todayIndex + 1;
+
+    this.scrollingInitIndex.startDate = this.scrollingUpIndex.startDate;
+    this.scrollingInitIndex.endDate = this.scrollingDownIndex.endDate;
+  }
+
+  /**
+   * Returns the initialize indexes for the feed
+   */
+  getFeedInitIndexes() {
+    return this.scrollingInitIndex
   }
 
   /**
@@ -44,11 +55,12 @@ export class SheFeedScrollingService {
 
       return this.scrollingUpIndex;
     }
+    const tempUpIndex = this.scrollingUpIndex;
 
     this.scrollingUpIndex.endDate = this.scrollingUpIndex.startDate - 1;
     this.scrollingUpIndex.startDate = this.getMoreFutureData() > 0 ? this.getMoreFutureData() : 0;
 
-    return this.scrollingUpIndex;
+    return tempUpIndex;
   }
 
   /**
@@ -62,11 +74,13 @@ export class SheFeedScrollingService {
 
       return this.scrollingDownIndex;
     }
+    const tempDownIndex = this.scrollingDownIndex;
+
     this.scrollingDownIndex.startDate = this.scrollingDownIndex.endDate + 1;
     this.scrollingDownIndex.endDate =
-      this.scrollingDownIndex.endDate + 3 < this.feedListLength ? this.scrollingDownIndex.endDate + 3 : this.feedListLength;
+      this.scrollingDownIndex.startDate + 3 < this.feedListLength ? this.scrollingDownIndex.startDate + 3 : this.feedListLength;
 
-    return this.scrollingDownIndex;
+    return tempDownIndex
   }
 
   /**

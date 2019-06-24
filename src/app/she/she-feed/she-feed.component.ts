@@ -9,10 +9,9 @@ import {
   ViewChildren
 } from '@angular/core';
 import { SheFeedService } from '../she-feed.service';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DayGroupedSheFeed, SheFeed } from '../she-feed.interface';
 import { take, tap } from 'rxjs/operators';
-
 
 import * as format from 'date-fns/format';
 import { DaterangepickerDirective } from 'ngx-daterangepicker-material';
@@ -44,7 +43,7 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   private currentMonthStep = 0;
   private readonly today = format(new Date(), 'ddd DD MMM YYYY');
   private todayIndex = 0;
-  private startIndex = 0;
+  private extraDataAttempts = 0;
 
   constructor(private sheFeedSvc: SheFeedService,
               private sheFeedScrollingSvc: SheFeedScrollingService) {
@@ -71,17 +70,6 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   feedInit() {
     this.feed$ = this.sheFeedSvc.getInitFeed().pipe(tap((feed: DayGroupedSheFeed[]) => {
       this.feedArray = feed;
-      if (!this.feedScrollingInit) {
-        this.feedScrollingInit = true;
-        this.todayIndex = feed.findIndex((value) => value.day === this.today);
-        this.sheFeedScrollingSvc.init(this.todayIndex, feed.length);
-
-        this.startIndex = this.todayIndex > 0 ? this.todayIndex - 1 : 0;
-        this.feedSlicedArray = feed.slice(this.startIndex , this.startIndex + 3);
-      } else {
-        this.sheFeedScrollingSvc.setFeedLength(feed.length);
-        this.pushMoreItems();
-      }
 
       if ((feed.length < 15) && !this.dataFetched) {
         this.currentMonthStep += 3;
@@ -92,10 +80,22 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
           return;
         } else {
           this.sheFeedSvc.getMoreData(this.monthStep);
-
         }
 
       } else {
+        if (!this.feedScrollingInit) {
+          this.feedScrollingInit = true;
+          this.todayIndex = feed.findIndex((value) => value.day === this.today);
+
+          this.sheFeedScrollingSvc.init(this.todayIndex, feed.length);
+          const feedInitIndexes = this.sheFeedScrollingSvc.getFeedInitIndexes();
+
+          this.feedSlicedArray = feed.slice(feedInitIndexes.startDate , feedInitIndexes.endDate + 1);
+        } else {
+          this.sheFeedScrollingSvc.setFeedLength(feed.length);
+          this.pushMoreItems();
+        }
+
         return;
       }
       this.previousLength = feed.length;
@@ -103,7 +103,7 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   /**
-   * When the user scrolling down and reach the minimun distance from the bottom
+   * When the user scrolling down and reach the minimum distance from the bottom
    * triggers this method to append more data
    */
   onScrollDown() {
@@ -113,14 +113,15 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   /**
-   * When the user scrolling up and reach the minimun distance from the top
+   * When the user scrolling up and reach the minimum distance from the top
    * triggers this method to append more data
    */
   onScrollUp() {
     if (!this.filteredData) {
       const scrollingUpIndexes = this.sheFeedScrollingSvc.onScrollingUp();
+
       if (scrollingUpIndexes.endDate >= 0) {
-        const a = this.feedArray.slice(scrollingUpIndexes.startDate, scrollingUpIndexes.endDate);
+        const a = this.feedArray.slice(scrollingUpIndexes.startDate, scrollingUpIndexes.endDate + 1);
         this.feedSlicedArray.unshift(...a);
       }
     }
@@ -137,10 +138,16 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     if (scrollingDownIndexes.startDate >= this.feedArray.length) {
-      this.loadMoreData()
+      if (this.extraDataAttempts < 13) {
+        this.loadMoreData()
+      } else {
+        console.log('no more data')
+      }
+      this.extraDataAttempts += 3;
     } else {
-      const a = this.feedArray.slice(scrollingDownIndexes.startDate , scrollingDownIndexes.endDate);
+      const a = this.feedArray.slice(scrollingDownIndexes.startDate , scrollingDownIndexes.endDate + 1);
       this.feedSlicedArray.push(...a);
+      this.extraDataAttempts = 0;
     }
   }
 
