@@ -27,8 +27,8 @@ export class LocalStorageService {
     this.store.removeItem(key);
   }
 
-  public removeAll() {
-    this.store.clearAll();
+  public removeAll(): Observable<boolean> {
+    return this.store.clearAll();
   }
 
   private syncWithLocalStorage(key: string, payload: any) {

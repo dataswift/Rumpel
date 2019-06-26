@@ -178,12 +178,15 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
    * When the user taps on the refresh button, initialise the feed
    */
   refreshFeedData() {
-    this.feedSlicedArray = [];
-    this.feedArray = [];
+    this.sheFeedSvc.clear();
+    this.feedSlicedArray = null;
+    this.feedArray = null;
+    this.feed$ = null;
 
     this.filteredData = false;
     this.scrolled = false;
     this.feedScrollingInit = false;
+    this.dataFetched = false;
     this.feedInit();
   }
 

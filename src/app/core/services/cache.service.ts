@@ -41,7 +41,7 @@ export class CacheService {
     this.localStorage.removeItem(key);
   }
 
-  removeAll() {
-    this.localStorage.removeAll();
+  removeAll(): Observable<boolean> {
+    return this.localStorage.removeAll();
   }
 }

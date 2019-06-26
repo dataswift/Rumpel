@@ -81,8 +81,12 @@ export class AuthService {
   }
 
   logout(): void {
-    this._token$.next({ token: null, user: this.generateUserInfo(null) });
-    this.cacheSvc.removeAll();
+    this.cacheSvc.removeAll().subscribe( () => {
+      this._token$.next({ token: null, user: this.generateUserInfo(null) });
+      },
+      error => {
+        console.warn('Failed to logout. Reason: ', error);
+      });
   }
 
   getApplicationDetails(name: string, redirect: string = '/'): Observable<HatApplication> {

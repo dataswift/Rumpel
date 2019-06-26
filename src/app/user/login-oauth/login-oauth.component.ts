@@ -11,12 +11,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
+import { pipe } from 'rxjs';
 
 @Component({
   selector: 'rum-login-oauth',
   templateUrl: './login-oauth.component.html',
   styleUrls: ['./login-oauth.component.scss']
 })
+
 export class LoginOauthComponent implements OnInit {
   public hatDomain: string;
   public errorMessage: string;
@@ -89,6 +91,7 @@ export class LoginOauthComponent implements OnInit {
     const internal = this.route.snapshot.queryParams['internal'] === 'true';
 
     if (internal) {
+      this.authSvc.logout();
       this.router.navigate([this.route.snapshot.queryParams['fallback']]);
     } else {
       window.location.href = this.route.snapshot.queryParams['fallback'];

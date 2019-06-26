@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { isFuture } from 'date-fns';
 import { of } from 'rxjs/internal/observable/of';
 import { map, scan, startWith } from 'rxjs/operators';
+import { BoundsLiteral } from 'leaflet';
 
 @Injectable()
 export class Store extends BehaviorSubject<any> {
@@ -15,27 +16,27 @@ export class Store extends BehaviorSubject<any> {
       startWith({}),
       scan((state, payload) => this.reducer(state, payload), initialState)
     ).subscribe((state) => super.next(state));
-
-
-    // this.dispatcher
-    //   .startWith({})
-    //   .scan((state, payload) => this.reducer(state, payload), initialState)
-    //   .subscribe((state) => super.next(state));
-
   }
 
   public getAll() {
     return this;
   }
 
-  public clearAll() {
+  public clearAll(): Observable<boolean> {
     if (this.keys) {
       this.keys.forEach((key) => {
         try {
-          this.removeItem(key);
           localStorage.removeItem(key);
-        } catch (error) { }
-      })
+          this.removeItem(key);
+        } catch (error) {
+          throw new Error(error);
+        }
+      });
+
+      return of(true);
+    } else {
+
+      return of(true);
     }
   }
 
