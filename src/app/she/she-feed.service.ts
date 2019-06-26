@@ -56,6 +56,10 @@ export class SheFeedService {
     });
   }
 
+  clear() {
+    this._feed$ = new ReplaySubject<DayGroupedSheFeed[]>(1)
+  }
+
   getTimeBoundData(from: number, to: number): void {
     this.hat.getSheRecords('', from, to).pipe(
       map(this.groupSheFeedByDay)

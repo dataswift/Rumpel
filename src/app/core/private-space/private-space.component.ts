@@ -38,7 +38,6 @@ export class PrivateSpaceComponent implements OnInit {
               internal: 'true'
             };
 
-            this.authSvc.logout();
             this.router.navigate(['/hatlogin'], { queryParams });
           }
         });
