@@ -44,6 +44,8 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   private readonly today = format(new Date(), 'ddd DD MMM YYYY');
   private todayIndex = 0;
   private extraDataAttempts = 0;
+  private readonly extraDataMonthSteps = 3;
+  private readonly extraDataMonthLimit = 12;
 
   constructor(private sheFeedSvc: SheFeedService,
               private sheFeedScrollingSvc: SheFeedScrollingService) {
@@ -138,12 +140,12 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     if (scrollingDownIndexes.startDate >= this.feedArray.length) {
-      if (this.extraDataAttempts < 13) {
+      if (this.extraDataAttempts <= this.extraDataMonthLimit) {
         this.loadMoreData()
       } else {
         console.log('no more data')
       }
-      this.extraDataAttempts += 3;
+      this.extraDataAttempts += this.extraDataMonthSteps;
     } else {
       const a = this.feedArray.slice(scrollingDownIndexes.startDate , scrollingDownIndexes.endDate + 1);
       this.feedSlicedArray.push(...a);
@@ -178,15 +180,23 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
    * When the user taps on the refresh button, initialise the feed
    */
   refreshFeedData() {
+    // initialize the feed arrays
     this.sheFeedSvc.clear();
     this.feedSlicedArray = null;
     this.feedArray = null;
     this.feed$ = null;
 
+    // initialize the steps
+    this.currentMonthStep = 0;
+    this.monthStep = 0;
+
+    // initialize the flags
     this.filteredData = false;
     this.scrolled = false;
     this.feedScrollingInit = false;
     this.dataFetched = false;
+
+    // re-fetch the feed
     this.feedInit();
   }
 

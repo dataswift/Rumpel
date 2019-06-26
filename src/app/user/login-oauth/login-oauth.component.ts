@@ -12,6 +12,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
 import { pipe } from 'rxjs';
+import { CacheService } from '../../core/services/cache.service';
 
 @Component({
   selector: 'rum-login-oauth',
@@ -27,7 +28,8 @@ export class LoginOauthComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private cacheSvc: CacheService) { }
 
   ngOnInit() {
     const name = this.route.snapshot.queryParams['name'];
@@ -84,7 +86,14 @@ export class LoginOauthComponent implements OnInit {
   }
 
   agreeTerms(appId: string): void {
-    this.authSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => this.buildRedirect(appId));
+    this.authSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => {
+      this.cacheSvc.removeAll().subscribe( () => {
+          this.buildRedirect(appId);
+        },
+        error => {
+          console.warn('Failed to logout. Reason: ', error);
+        });
+    })
   }
 
   declineTerms(): void {
