@@ -2,11 +2,18 @@
   <h5 class="app-details-heading">{{title}}</h5>
   <mat-list class="app-static-data-list">
     <ng-container *ngFor="let rowData of listData">
-      <mat-list-item *ngFor="let prop of rowData" class="app-static-data-list-item">
-        <span class="app-static-data-list-key">{{ prop[0] | replaceCamelCase | replaceChars }}</span>
-        <span class="flex-spacer"></span>
-        <div class="app-static-data-list-value" [innerHTML]="prop[1] | safeHtml:true"></div>
-      </mat-list-item>
+      <ng-container *ngFor="let prop of rowData; index as i" >
+        <ng-container *ngIf="i < (showLess === true ? 5 : rowData.length)">
+          <mat-list-item class="app-static-data-list-item">
+            <span class="app-static-data-list-key">{{ prop[0] | replaceCamelCase | replaceChars }}</span>
+            <span class="flex-spacer"></span>
+            <div class="app-static-data-list-value" [innerHTML]="prop[1] | safeHtml:true"></div>
+          </mat-list-item>
+        </ng-container>
+      </ng-container>
     </ng-container>
+    <div *ngIf="showLess" class="app-show-more-button-container">
+      <button class="app-show-more-button" (click)="showLess = false">Load more</button>
+    </div>
   </mat-list>
 </mat-card>
