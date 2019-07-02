@@ -35,7 +35,7 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
   private filteredData = false;
   private scrolled = false;
   private hideDatePicker = true;
-
+  private disableScrollingHandler = false;
   private dataFetched = false;
   private feedScrollingInit = false;
   private previousLength = 0;
@@ -204,11 +204,15 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
    * When the user taps on the today button, scrolls to today
    */
   scrollToToday() {
+    this.disableScrollingHandler = true;
+
     if (this.todayElement) {
       document.querySelector('.mat-sidenav-content').scrollTop = this.todayElement.nativeElement.offsetTop;
     } else {
       document.querySelector('.mat-sidenav-content').scrollTop = 0;
     }
+
+    this.disableScrollingHandler = false;
   }
 
   /**
