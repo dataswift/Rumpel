@@ -59,9 +59,9 @@
       font-style: normal;
       font-stretch: normal;
       line-height: 1.5;
-      letter-spacing: 0.2px;
+      letter-spacing: normal;
       text-align: center;
-      color: $app-dark-tone;
+      color: $text-dark;
       margin: 16px auto 0;
       max-width: 500px;
       width: 90%;
@@ -77,10 +77,6 @@
 
   .hat-name {
     display: inline-block;
-
-    @media (max-width: 719px) {
-      //margin-bottom: 10px;
-    }
   }
 
   .hat-domain {
@@ -103,16 +99,17 @@
   /deep/ {
     .mat-checkbox-label {
       color: $app-dark-tone;
+      letter-spacing: 0.25px;
       font-size: 14px;
       font-weight: 500;
     }
 
     .mat-checkbox-frame {
-      border-radius: 50%;
+      border-radius: 4px;
     }
 
     .mat-checkbox-background {
-      border-radius: 50%;
+      border-radius: 4px;
     }
   }
   .issuer-logo {
@@ -121,8 +118,7 @@
 
     img {
       max-width: 186px;
-      margin-top:10px;
-      margin-bottom: 39px;
+      margin-top: 10px;
     }
   }
 
@@ -160,8 +156,9 @@
 
   a {
     font-size: 14px;
-    color: $hat-body-text;
+    color: $text-grey-light;
     text-decoration: none;
+    letter-spacing: 0.15px;
   }
 }
 
@@ -219,4 +216,23 @@
   border-bottom: solid 1px $app-dark-tone;
   color: $app-dark-tone;
   font-size: 14px;
+}
+
+.login-vertical-divider {
+  background-color: black;
+  max-width: 320px;
+  width: 80%;
+  height: 1px;
+  opacity: 0.1;
+}
+
+.input-password-container {
+  display: flex;
+  flex-direction: row;
+
+  button {
+    margin-top: 4px;
+    margin-left: -50px;
+    opacity: 0.7;
+  }
 }

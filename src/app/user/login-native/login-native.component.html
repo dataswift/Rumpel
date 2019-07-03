@@ -34,6 +34,8 @@
     <img src="/assets/images/hatdex-logo.png" height="24.5" width="140" />
   </div>
 
+  <hr class="login-vertical-divider"/>
+
   <div class="title-container">
     <button mat-icon-button class="back-button">
       <mat-icon (click)="goBack()">arrow_back</mat-icon>
@@ -54,13 +56,20 @@
 
   <div class="f-g">
     <form>
-      <label for="hatPass" hidden></label>
-      <input id="hatPass" type="password" class="hat-rumpel-input" name="hat-pass-input"
-             [class.rum-error-field]="passwordError"
-             placeholder="Enter HAT password" #hatPass
-             autocomplete="password"
-             (focus)="hideErrorMessage()"
-             (keyup.enter)="login(hatPass)"/>
+      <div class="input-password-container">
+        <label for="hatPass" hidden></label>
+
+        <input matInput id="hatPass" type="password" class="hat-rumpel-input" name="hat-pass-input"
+               [class.rum-error-field]="passwordError"
+               placeholder="Password" #hatPass
+               autocomplete="password"
+               (focus)="hideErrorMessage()"
+               (keyup.enter)="login(hatPass)"
+               [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </div>
     </form>
   </div>
 
@@ -68,10 +77,10 @@
     <mat-checkbox class="remember-me-checkbox" [(ngModel)]="rememberMe" color="primary">Remember me</mat-checkbox>
   </div>
 
-  <span class="large-flex-spacer"></span>
+  <span class="small-flex-spacer"></span>
 
   <div class="logo-wrapper">
-    <img src="/assets/images/HATDataRights_200.png" height="80" width="80" />
+    <img src="/assets/images/HATDataRights_200.png" height="48" width="48" alt="HAT Data rights logo" />
   </div>
 
   <div class="data-rights-description">
@@ -84,4 +93,6 @@
     <button mat-flat-button role="button" class="btn-rumpel btn-rumpel-enabled" (click)="login(hatPass)">Log in</button>
     <a role="link" [routerLink]="['/user', 'password', 'recover']">Forgotten password?</a>
   </div>
+
+  <span class="large-flex-spacer"></span>
 </div>

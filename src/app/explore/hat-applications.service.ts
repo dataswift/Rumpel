@@ -11,8 +11,8 @@ import { CacheService } from '../core/services/cache.service';
 @Injectable()
 export class HatApplicationsService {
   private hatUrl: string;
-  readonly applicationKey = 'applications';
-  readonly applicationMaxAge = 20; // in minutes
+  private readonly applicationKey = 'applications';
+  private applicationMaxAge = 20; // in minutes
   private _dataplugs$: ReplaySubject<HatApplication[]> = <ReplaySubject<HatApplication[]>>new ReplaySubject(1);
 
   constructor(private authSvc: AuthService,
@@ -66,7 +66,8 @@ export class HatApplicationsService {
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     const redirectUrl = setup.url || setup.iosUrl || '';
 
-    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}%3Fredirect=https://${this.hatUrl}/%23/feed`;
+    return `https://${this.hatUrl}/#/hatlogin?name=${id}&fallback=https://${this.hatUrl}/%23/feed
+    &redirect=${redirectUrl}%3Fredirect=https://${this.hatUrl}/%23/feed`;
   }
 
   getAppStatus(app: HatApplication): 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update' {

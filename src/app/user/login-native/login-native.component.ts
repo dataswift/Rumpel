@@ -24,6 +24,7 @@ export class LoginNativeComponent implements OnInit {
   public rememberMe: boolean;
   public passwordError = false;
   public accountExists = false;
+  private hide = true;
 
   private redirectPath: string;
 
