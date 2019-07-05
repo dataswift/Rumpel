@@ -29,7 +29,9 @@ export class Store extends BehaviorSubject<any> {
           localStorage.removeItem(key);
           this.removeItem(key);
         } catch (error) {
-          throw new Error(error);
+          console.log('error while deleting the cache');
+
+          return of(false);
         }
       });
 
