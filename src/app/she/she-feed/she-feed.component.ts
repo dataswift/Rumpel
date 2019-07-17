@@ -181,7 +181,7 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
    */
   refreshFeedData() {
     // initialize the feed arrays
-    this.sheFeedSvc.clear();
+    // this.sheFeedSvc.clear();
     this.feedSlicedArray = null;
     this.feedArray = null;
     this.feed$ = null;
