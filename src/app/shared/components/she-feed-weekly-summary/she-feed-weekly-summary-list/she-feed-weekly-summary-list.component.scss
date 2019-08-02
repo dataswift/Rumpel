@@ -13,7 +13,8 @@ mat-list {
 .source-icon {
   float: left;
   text-align: center;
-  margin-top: 9px;
+  //margin-top: 9px;
+  border-radius: 50%;
 }
 
 .settings-list-row-content {
@@ -25,20 +26,25 @@ mat-list {
   text-align: left;
 }
 
-.settings-list-row-badge {
+.weekly-summary-list-row-content {
   font-size: 14px;
-  font-weight: bold;
+  margin-left: 15px;
   color: $app-dark-tone;
   line-height: 1.5;
-  text-align: right;
+  text-align: left;
+  width: 100%;
 }
 
 .source-content {
   display: flex;
   flex-direction: row;
   //align-items: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.weekly-summary-list-row-badge {
+  text-align: end;
 }
 
 /deep/ .weekly-summary-mat-list-item {

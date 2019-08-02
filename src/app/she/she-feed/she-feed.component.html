@@ -1,14 +1,15 @@
 <div class="she-feed" #feedContainer *ngIf="feed$ | async as feedData">
-  <mat-toolbar color="primary" style="display: flex;">
-    <h2>My Digital Life</h2>
-  </mat-toolbar>
+<!--  <mat-toolbar color="primary" style="display: flex;">-->
+<!--    <h2>My Digital Life</h2>-->
+<!--  </mat-toolbar>-->
 
   <div class="feed">
     <ng-container *ngIf="feedSlicedArray && feedSlicedArray.length > 0 else loading">
         <div infiniteScroll
              [infiniteScrollDistance]="2"
-             [infiniteScrollUpDistance]="2"
-             infiniteScrollContainer=".sidenav-content" [fromRoot]="true"
+             [infiniteScrollUpDistance]="0.4"
+             [infiniteScrollDisabled]="disableScrollingHandler"
+             infiniteScrollContainer=".mat-sidenav-content" [fromRoot]="true"
              (scrolled)="onScrollDown()"
              (scrolledUp)="onScrollUp()"
         >

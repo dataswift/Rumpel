@@ -76,7 +76,12 @@ export class LoginOauthComponent implements OnInit {
     const redirect = this.route.snapshot.queryParams['redirect'];
 
     if (internal) {
-      this.router.navigate([redirect]);
+      this.cacheSvc.removeAll().subscribe( () => {
+          this.router.navigate([redirect]);
+        },
+        error => {
+          console.warn('Failed to remove the cache. Reason: ', error);
+        });
     } else {
       this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
         const finalRedirect = `${redirect}${redirect.includes('?') ? '&' : '?'}token=${accessToken}`;
@@ -87,12 +92,7 @@ export class LoginOauthComponent implements OnInit {
 
   agreeTerms(appId: string): void {
     this.authSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => {
-      this.cacheSvc.removeAll().subscribe( () => {
-          this.buildRedirect(appId);
-        },
-        error => {
-          console.warn('Failed to logout. Reason: ', error);
-        });
+      this.buildRedirect(appId);
     })
   }
 

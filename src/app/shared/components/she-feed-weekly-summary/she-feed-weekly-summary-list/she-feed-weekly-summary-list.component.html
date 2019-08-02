@@ -4,11 +4,11 @@
       <mat-list-item class="weekly-summary-mat-list-item">
         <div mat-line>
           <div class="source-content">
-            <img src="/assets/icons/she-{{imageAsset(row.source)}}.{{row.source === 'notables'? 'png' : 'svg'}}" height="25" width="25" class="source-icon"/>
-            <h5 class="settings-list-row-content">{{ row.content }}</h5>
+            <img src="/assets/icons/she-{{imageAsset(row.source)}}.{{['notables', 'uber'].indexOf(row.source) > -1 ? 'png' : 'svg'}}" height="25" width="25" class="source-icon"/>
+            <div class="weekly-summary-list-row-content">{{ row.content }}</div>
           </div>
         </div>
-        <h5 class="settings-list-row-badge">{{ row.badge }}</h5>
+        <h5 class="weekly-summary-list-row-badge">{{ row.badge }}</h5>
         <mat-divider class="weekly-summary-mat-list-divider" *ngIf="!last"></mat-divider>
       </mat-list-item>
 

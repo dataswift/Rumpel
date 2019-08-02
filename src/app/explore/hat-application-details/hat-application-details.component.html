@@ -81,7 +81,7 @@
       <mat-tab label="Data Preview">
         <ng-container *ngIf="staticData$ | async as staticData">
           <div  *ngIf="staticData[0]" style="margin-bottom: 60px;">
-            <rum-list-card [title]="'Profile information'" [listData]="staticData"></rum-list-card>
+            <rum-list-card [title]="'Profile information'" [listData]="staticData" [showLess]="true"></rum-list-card>
           </div>
 
 
@@ -103,7 +103,7 @@
           </div>
 
           <div class="no-data-message">
-            No data available
+              No data available
           </div>
 
           <ng-container *ngIf="app.application.kind.kind === 'DataPlug'">

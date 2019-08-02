@@ -20,7 +20,7 @@ export class SheFeedScrollingService {
     this.todayIndex = todayIndex > 0 ? todayIndex : 0;
 
     this.scrollingUpIndex.endDate = todayIndex - 1;
-    this.scrollingUpIndex.startDate = todayIndex - 1 > 0 ? todayIndex - 1 : 0;
+    this.scrollingUpIndex.startDate = todayIndex - 3 > 0 ? todayIndex - 3 : 0;
 
     this.scrollingDownIndex.endDate = todayIndex + 3 < feedListLength ? todayIndex + 3 : feedListLength;
     this.scrollingDownIndex.startDate = todayIndex + 1;
