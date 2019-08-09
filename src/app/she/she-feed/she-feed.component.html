@@ -1,22 +1,72 @@
-<div class="she-feed" #feedContainer>
-  <mat-toolbar color="primary" style="display: flex;">
-    <h2>My Digital Life</h2>
+<div class="she-feed" #feedContainer *ngIf="feed$ | async as feedData">
+<!--  <mat-toolbar color="primary" style="display: flex;">-->
+<!--    <h2>My Digital Life</h2>-->
+<!--  </mat-toolbar>-->
 
-    <!--<span class="fill-space"></span>-->
+  <div class="feed">
+    <ng-container *ngIf="feedSlicedArray && feedSlicedArray.length > 0 else loading">
+        <div infiniteScroll
+             [infiniteScrollDistance]="2"
+             [infiniteScrollUpDistance]="0.4"
+             [infiniteScrollDisabled]="disableScrollingHandler"
+             infiniteScrollContainer=".mat-sidenav-content" [fromRoot]="true"
+             (scrolled)="onScrollDown()"
+             (scrolledUp)="onScrollUp()"
+        >
 
-    <!--<mat-radio-group [value]="'all'" (change)="applyFilter($event)">-->
-      <!--<mat-radio-button value="all" color="accent">All</mat-radio-button>-->
-      <!--<mat-radio-button value="past" color="accent">Past</mat-radio-button>-->
-      <!--<mat-radio-button value="future" color="accent">Future</mat-radio-button>-->
-    <!--</mat-radio-group>-->
-  </mat-toolbar>
-
-  <div class="feed" *ngIf="feed$ | async as feedData">
-    <ng-container *ngFor="let day of feedData">
-      <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
-      <rum-she-feed-rollup [sheFeed]="day.data"></rum-she-feed-rollup>
+          <ng-container *ngFor="let day of feedSlicedArray">
+            <h5 class="day-separator" #daySeparator>{{day.day}}</h5>
+            <rum-she-feed-rollup [sheFeed]="day.data"></rum-she-feed-rollup>
+          </ng-container>
+        </div>
     </ng-container>
+  </div>
 
-    <button mat-flat-button role="button" (click)="loadMoreData()">Show more</button>
+  <div class="user-actions">
+    <ng-container *ngIf="!hideDatePicker">
+      <ngx-daterangepicker-material (choosedDate)="selectedDates($event)"
+                                    [locale]="{applyLabel: 'Done', firstDay: 1}"
+                                    (change)="change($event)"
+      >
+      </ngx-daterangepicker-material>
+      <br>
+    </ng-container>
+    <div class="user-actions-content">
+      <button mat-flat-button role="button" class="filter-button" (click)="open($event)">
+        <mat-icon>filter_list</mat-icon>
+        Filter
+      </button>
+      <button mat-flat-button role="button" class="today-button" (click)="scrollToToday()">
+        <mat-icon>fullscreen_exit</mat-icon>
+        Today
+      </button>
+      <button mat-flat-button role="button" class="today-button" (click)="refreshFeedData()">
+        <mat-icon>refresh</mat-icon>
+        Refresh
+      </button>
+    </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="feedLoadingPage">
+    <img class="feedLoadingLogo" src="/assets/images/HATDataRights_200.png" alt="HAT Data rights logo" />
+
+    <ng-container *ngIf="dataFetched">
+      <div class="feedLoadingTitle">No items found</div>
+      <div class="feedLoadingSubtitle">Connect Data Plugs to see your data in the feed</div>
+    </ng-container>
+
+    <ng-container *ngIf="!dataFetched">
+      <ng-container *ngIf="filteredData">
+        <div class="feedLoadingTitle">No results found for the selected dates</div>
+      </ng-container>
+
+      <ng-container *ngIf="!filteredData">
+        <div class="feedLoadingTitle">Loading</div>
+      </ng-container>
+    </ng-container>
+
+
+  </div>
+</ng-template>

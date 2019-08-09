@@ -39,9 +39,9 @@ export class SheFeedService {
     return this._feed$.asObservable();
   }
 
-  getMoreData(): void {
+  getMoreData(step: number = 1): void {
     const until = this.store.since - 1;
-    const since = Math.round(subDays(until * 1000, 30).getTime() / 1000);
+    const since = Math.round(subDays(until * 1000, 30 * step).getTime() / 1000);
 
     this.hat.getSheRecords('', since, until).pipe(
       map(this.groupSheFeedByDay)
@@ -56,11 +56,19 @@ export class SheFeedService {
     });
   }
 
+  clear() {
+    this._feed$ = new ReplaySubject<DayGroupedSheFeed[]>(1)
+  }
+
   getTimeBoundData(from: number, to: number): void {
     this.hat.getSheRecords('', from, to).pipe(
       map(this.groupSheFeedByDay)
     )
-    .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => this._feed$.next(feedItems));
+      .subscribe((feedItems: { day: string; data: SheFeed[] }[]) => this._feed$.next(feedItems));
+  }
+
+  getFeedDataByTime(from: number, to: number): Observable<DayGroupedSheFeed[]> {
+    return this.hat.getSheRecords('', from, to).pipe(map(this.groupSheFeedByDay));
   }
 
   getFeedBySource(endpoint: string): Observable<SheFeed[]> {

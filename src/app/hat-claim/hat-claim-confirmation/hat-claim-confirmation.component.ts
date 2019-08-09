@@ -8,26 +8,15 @@
 
 import { Component, OnInit } from '@angular/core';
 
-const ERROR_MESSAGES = {
-  authenticationError: 'ERROR: Current password incorrect',
-  passwordStrengthError: 'ERROR: Password is too weak. Please make it harder to guess.',
-  passwordMatchError: 'Provided passwords do not match'
-};
-
 @Component({
   selector: 'rum-hat-claim-confirmation',
   templateUrl: './hat-claim-confirmation.component.html',
   styleUrls: ['./hat-claim-confirmation.component.scss']
 })
 export class HatClaimConfirmationComponent implements OnInit {
-  public errorType: string;
 
   constructor() { }
 
   ngOnInit() { }
-
-  errorText(): string {
-    return ERROR_MESSAGES[this.errorType] || '';
-  }
 
 }

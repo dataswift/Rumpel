@@ -23,6 +23,8 @@ export class LoginNativeComponent implements OnInit {
   public hatDomain: string;
   public rememberMe: boolean;
   public passwordError = false;
+  public accountExists = false;
+
   private redirectPath: string;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
@@ -37,6 +39,10 @@ export class LoginNativeComponent implements OnInit {
     this.rememberMe = true;
     const qps = this.route.snapshot.queryParams;
     this.redirectPath = qps['target'] || 'feed';
+
+    if (!!qps['repeated_signup'] && qps['repeated_signup'] === 'true') {
+      this.accountExists = true;
+    }
 
     // Skip login step if the user is already authenticated
     this.authSvc.auth$.subscribe(authenticated => {
@@ -61,6 +67,7 @@ export class LoginNativeComponent implements OnInit {
 
   hideErrorMessage(): void {
     this.passwordError = false;
+    this.accountExists = false;
   }
 
   login(hatPass) {

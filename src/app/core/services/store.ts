@@ -1,11 +1,9 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/startWith';
 import { isFuture } from 'date-fns';
 import { of } from 'rxjs/internal/observable/of';
+import { map, scan, startWith } from 'rxjs/operators';
+import { BoundsLiteral } from 'leaflet';
 
 @Injectable()
 export class Store extends BehaviorSubject<any> {
@@ -14,37 +12,45 @@ export class Store extends BehaviorSubject<any> {
     super({});
     const initialState: any = keys && keys.length > 0 ? this.getFromLocalStorage(keys) : {};
 
-    this.dispatcher
-      .startWith({})
-      .scan((state, payload) => this.reducer(state, payload), initialState)
-      .subscribe((state) => super.next(state));
-
+    this.dispatcher.pipe(
+      startWith({}),
+      scan((state, payload) => this.reducer(state, payload), initialState)
+    ).subscribe((state) => super.next(state));
   }
 
   public getAll() {
     return this;
   }
 
-  public clearAll() {
+  public clearAll(): Observable<boolean> {
     if (this.keys) {
       this.keys.forEach((key) => {
         try {
-          this.removeItem(key);
           localStorage.removeItem(key);
-        } catch (error) { }
-      })
+          this.removeItem(key);
+        } catch (error) {
+          console.log('error while deleting the cache');
+
+          return of(false);
+        }
+      });
+
+      return of(true);
+    } else {
+
+      return of(true);
     }
   }
 
   public getItem<T>(key: string): Observable <T | null>  {
     if (!!key && typeof key === 'string') {
-      return this.map((state) => {
+      return this.pipe(map((state) => {
         if (state[key] && isFuture(state[key].date)) {
           return state[key].value
         } else {
           return of(null);
         }
-      });
+      }));
     }
   }
 

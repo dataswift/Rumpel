@@ -9,6 +9,7 @@ export class ListCardComponent implements OnInit {
   @Input() title: string;
   @Input() listData: string[][];
   @Input() expandable = false;
+  @Input() showLess = false;
 
   constructor() { }
 

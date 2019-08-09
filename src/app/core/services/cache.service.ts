@@ -5,11 +5,11 @@ import { LocalStorageService } from './local-storage.service';
 
 @Injectable()
 export class CacheService {
-  DEFAULT_MAX_AGE = 30; // in minutes
+  private readonly DEFAULT_MAX_AGE = 30; // in minutes
 
   constructor(private localStorage: LocalStorageService) {}
 
-  get<T>(key: string, fallback?: Observable<any>, maxAge?: number): Observable<T> {
+  get<T>(key: string, fallback?: Observable<any>, maxAge?: number, needsValidation: boolean = false): Observable<T> {
     let cache$ = this.localStorage.getItem<T>(key);
 
     if (!maxAge) {
@@ -23,7 +23,9 @@ export class CacheService {
         if (fallback && fallback instanceof Observable) {
           cache$ = fallback.pipe(
             tap((records) => {
-              this.localStorage.setItem(key, records, maxAge);
+              if (!needsValidation) {
+                this.store(key, records, maxAge);
+              }
             }),
             catchError(() => {
               return of([]);
@@ -37,11 +39,15 @@ export class CacheService {
     return cache$;
   }
 
+  store(key: string, payload: any, maxAge: number) {
+    this.localStorage.setItem(key, payload, maxAge);
+  }
+
   removeFromCache(key: string) {
     this.localStorage.removeItem(key);
   }
 
-  removeAll() {
-    this.localStorage.removeAll();
+  removeAll(): Observable<boolean> {
+    return this.localStorage.removeAll();
   }
 }

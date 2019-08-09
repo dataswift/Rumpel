@@ -36,7 +36,7 @@ import { MarkdownViewComponent } from './components/markdown-view/markdown-view.
 import { SheFeedWeeklySummaryModule } from './components/she-feed-weekly-summary/she-feed-weekly-summary.module';
 
 @NgModule({
-  imports: [ CommonModule, FormsModule, CustomAngularMaterialModule, SheFeedWeeklySummaryModule ],
+  imports: [CommonModule, FormsModule, CustomAngularMaterialModule, SheFeedWeeklySummaryModule],
 
   declarations: [ MomentPipe, FilterByPipe, WithObjectPipe, RelativeTimePipe, MarkdownToHtmlPipe,
                   ReplaceCharsPipe, ReplaceCamelCasePipe, RemoveCharsPipe, LimitContentPipe, LimitMembersPipe, RelativeTimesFilterPipe,

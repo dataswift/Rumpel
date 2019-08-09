@@ -96,10 +96,12 @@
 
 .feed {
   padding: 20px 12px;
+  min-height: 100vh;
 
   .infinite-scroll {
     content: " ";
-    height: 500px;
+    //height: 500px;
+    min-height: 100vh;
   }
 }
 
@@ -115,3 +117,81 @@ button {
   padding: 5px 0;
   font-size: 14px;
 }
+.feedLoadingPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .feedLoadingLogo {
+    margin-top: 25px;
+    height: 80px;
+    width: 80px;
+  }
+
+  .feedLoadingTitle {
+    margin-top: 15px;
+    color: $app-dark-tone;
+    font-size: 18px;
+  }
+
+  .feedLoadingSubtitle {
+    margin-top: 15px;
+    font-size: 14px;
+    color: $hat-body-text;
+  }
+}
+
+
+.user-actions {
+  display: flex;
+  flex-direction: column;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  margin: auto;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+
+  ngx-daterangepicker-material {
+    margin: auto;
+  }
+
+  .user-actions-content {
+    margin: 15px auto;
+    background-color: white;
+    width: 75%;
+    max-width: 360px;
+    height: 45px;
+    display: flex;
+    border: 1px solid $app-accent-color;
+    border-radius: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    button {
+      display: block;
+      width: 150px;
+      cursor: pointer;
+      text-transform: uppercase;
+      flex:  1 1 auto;
+      padding: 0;
+      background-color: transparent;
+      color: $app-accent-color;
+
+      &:not(:last-child) {
+        border-right: 1px solid rgba(0, 0, 0, 0.20);
+        border-radius: 0;
+      }
+    }
+
+    .filter-button {
+      margin: 0;
+    }
+    .today-button {
+      margin: 0;
+    }
+  }
+
+}
+

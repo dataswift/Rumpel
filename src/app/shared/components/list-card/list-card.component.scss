@@ -4,8 +4,24 @@
   font-weight: bold;
   color: $app-dark-tone;
   font-size: 14px;
+  margin-left: 16px;
+  margin-top: 16px;
   margin-bottom: 10px;
 }
+
+.app-show-more-button-container {
+  width: 100%;
+  text-align: center;
+
+  .app-show-more-button {
+    background-color: white;
+    color: $app-accent-color;
+    border: none;
+    margin: 15px;
+    font-size: 16px !important;
+  }
+}
+
 
 .app-static-data-list {
   .app-static-data-list-item {

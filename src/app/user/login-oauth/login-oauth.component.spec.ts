@@ -20,6 +20,7 @@ import { HatAppUpdateNotesComponent } from '../../shared/components/hat-app-upda
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { SafeHtmlPipe } from '../../shared/pipes';
+import { CacheService } from '../../core/services/cache.service';
 
 describe('LoginOauthComponent', () => {
   let component: LoginOauthComponent;
@@ -35,6 +36,7 @@ describe('LoginOauthComponent', () => {
         { provide: APP_CONFIG, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },
         { provide: AuthService, useValue: {} },
+        { provide: CacheService, useValue: {} },
         { provide: Router, useValue: { navigate: () => {} } }
       ]
     })

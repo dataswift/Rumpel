@@ -16,8 +16,14 @@
 
         <h3 class="section-heading" style="margin: 32px auto;">{{hatAddress}}</h3>
 
-        <p class="section-text">Our friends at {{hatApp.application.developer.name}} have requested for a Personal Data Account
-          to be created with the above URL. Check your email for more details.</p>
+        <ng-container *ngIf="hatExists; else hatNotExists">
+          <p class="section-text">Our friends at {{hatApp.application.developer.name}} have requested access to your Personal Data Account with the above URL.</p>
+        </ng-container>
+
+        <ng-template #hatNotExists>
+          <p class="section-text">Our friends at {{hatApp.application.developer.name}} have requested for a Personal Data Account
+            to be created with the above URL. Check your email for more details.</p>
+        </ng-template>
       </section>
 
       <div class="section-divider"></div>

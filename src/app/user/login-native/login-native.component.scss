@@ -41,24 +41,13 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+  }
 
-      color: $app-dark-tone;
-      letter-spacing: 1px;
-
-      .title-hat-name {
-        font-size: 24px;
-        font-weight: 500;
-        margin-top: 0;
-        margin-bottom: 5px;
-      }
-
-      .title-hat-domain {
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        margin: 0;
-        color: $app-dark-tone
-      }
+  @media (max-height: 619px) {
+    .title-container {
+      margin-bottom: 10px;
+      margin-top: 10px;
     }
   }
 
@@ -90,7 +79,7 @@
     display: inline-block;
 
     @media (max-width: 719px) {
-      margin-bottom: 10px;
+      //margin-bottom: 10px;
     }
   }
 
@@ -109,47 +98,6 @@
 
   .large-flex-spacer {
     flex-grow: 2;
-  }
-
-  .hat-pass-input {
-    color: $app-dark-tone;
-    height: 50px;
-    border: 1px solid #e0e0e0;
-    width: 100%;
-    font-weight: 500;
-    font-size: 16px;
-    letter-spacing: 2px;
-    padding: 15px 20px;
-    margin-bottom: 25px;
-    border-radius: 0;
-    -webkit-appearance: none;
-
-    &.rum-error-field {
-      border: solid 1px #e36682;
-      color: #e36682;
-    }
-
-    @media (min-width: 501px) {
-      font-size: 20px;
-
-      &::placeholder {
-        padding-top: 4px;
-      }
-    }
-
-    @media (max-width: 500px) {
-      border-left: none;
-      border-right: none;
-    }
-
-    &::placeholder {
-      font-size: 16px;
-      letter-spacing: 0.5px;
-    }
-
-    &:focus {
-      outline: none;
-    }
   }
 
   /deep/ {
@@ -178,6 +126,16 @@
     }
   }
 
+  @media (max-height: 619px) {
+    .issuer-logo {
+
+      img {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
   .drp-image {
     width: 100%;
     text-align: center;
@@ -200,15 +158,6 @@
     text-align: center;
   }
 
-   button {
-     background-color: $app-accent-color;
-     text-transform: uppercase;
-     border-radius: 4px;
-     color: white;
-     padding: 5px 0;
-     font-size: 14px;
-   }
-
   a {
     font-size: 14px;
     color: $hat-body-text;
@@ -218,8 +167,8 @@
 
 @media (min-width: 720px) {
   .native-login-page {
-    height: calc(100vh - 72px);
-    margin-top: 72px;
+    height: calc(100vh - 62px);
+    margin-top: 62px;
 
     .flex-spacer {
       flex-grow: 2;
@@ -232,20 +181,42 @@
     .user-actions {
       flex-grow: 3;
     }
+
+    .rum-hat-already-exists {
+      text-align: center;
+    }
   }
 }
 
 .rum-error-message {
   padding: 15px 30px;
-  background-color: rgba(227, 102, 130, 0.2);
+  background-color: rgba(228, 81, 81, 0.2);
   border-radius: 2px;
-  border: solid 1px #e36682;
-  color: #e36682;
-  font-size: 13px;
-  font-weight: bold;
+  border-bottom: solid 1px #e45151;
+  color: #e45151;
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.4px;
 
   &-icon {
-    margin-right: 5px;
+    margin-right: 17px;
     vertical-align: middle;
   }
+}
+
+.remember-me-container {
+  margin-top: 10px
+}
+
+.rum-hat-already-exists {
+  padding: 15px 30px;
+  background-color: rgba(74, 85, 107, 0.2);
+  border-radius: 2px;
+  width: 100%;
+  margin-top: 0;
+  text-align: left;
+  border-bottom: solid 1px $app-dark-tone;
+  color: $app-dark-tone;
+  font-size: 14px;
 }

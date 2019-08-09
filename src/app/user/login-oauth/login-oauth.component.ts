@@ -11,12 +11,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { HatApplication } from '../../explore/hat-application.interface';
+import { pipe } from 'rxjs';
+import { CacheService } from '../../core/services/cache.service';
 
 @Component({
   selector: 'rum-login-oauth',
   templateUrl: './login-oauth.component.html',
   styleUrls: ['./login-oauth.component.scss']
 })
+
 export class LoginOauthComponent implements OnInit {
   public hatDomain: string;
   public errorMessage: string;
@@ -25,7 +28,8 @@ export class LoginOauthComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) public config: AppConfig,
               private authSvc: AuthService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private cacheSvc: CacheService) { }
 
   ngOnInit() {
     const name = this.route.snapshot.queryParams['name'];
@@ -72,22 +76,31 @@ export class LoginOauthComponent implements OnInit {
     const redirect = this.route.snapshot.queryParams['redirect'];
 
     if (internal) {
-      this.router.navigate([redirect]);
+      this.cacheSvc.removeAll().subscribe( () => {
+          this.router.navigate([redirect]);
+        },
+        error => {
+          console.warn('Failed to remove the cache. Reason: ', error);
+        });
     } else {
       this.authSvc.appLogin(appName).subscribe((accessToken: string) => {
-        window.location.href = `${redirect}${redirect.includes('?') ? '&' : '?'}token=${accessToken}`;
+        const finalRedirect = `${redirect}${redirect.includes('?') ? '&' : '?'}token=${accessToken}`;
+        window.location.href = finalRedirect.replace(/#/gi, '%23');
       });
     }
   }
 
   agreeTerms(appId: string): void {
-    this.authSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => this.buildRedirect(appId));
+    this.authSvc.setupApplication(appId).subscribe((hatApp: HatApplication) => {
+      this.buildRedirect(appId);
+    })
   }
 
   declineTerms(): void {
     const internal = this.route.snapshot.queryParams['internal'] === 'true';
 
     if (internal) {
+      this.authSvc.logout();
       this.router.navigate([this.route.snapshot.queryParams['fallback']]);
     } else {
       window.location.href = this.route.snapshot.queryParams['fallback'];

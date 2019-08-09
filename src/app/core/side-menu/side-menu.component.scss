@@ -64,8 +64,10 @@ ul.center {
       cursor: pointer;
       outline: none;
 
-      &:hover {
-        color: $app-dark-grey;
+      @media (hover: hover) {
+        &:hover {
+          color: $app-dark-grey;
+        }
       }
     }
 
@@ -74,8 +76,10 @@ ul.center {
       color: $app-accent-color;
     }
 
-    &:hover {
-      background-color: $app-hover-grey;
+    @media (hover: hover) {
+      &:hover {
+        background-color: $app-hover-grey;
+      }
     }
   }
 

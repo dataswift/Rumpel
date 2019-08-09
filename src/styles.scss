@@ -19,6 +19,12 @@
 
 @import '~@angular/material/theming';
 
+@import "app/style/components/buttons";
+
+@import "app/style/components/texts";
+
+@import "app/style/components/inputs";
+
 @include mat-core();
 
 $hat-app-primary: mat-palette($hat-blue, 500, 300, 700);

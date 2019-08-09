@@ -28,7 +28,7 @@ export class PrivateSpaceComponent implements OnInit {
 
   ngOnInit() {
     if (this.config.native) {
-      this.authSvc.getApplicationDetails(this.config.tokenApp)
+      this.hatAppSvc.getApplicationDetails(this.config.tokenApp)
         .subscribe((hatApp: HatApplication) => {
           if (hatApp.needsUpdating) {
             const queryParams: Params = {

@@ -13,7 +13,7 @@ export class LocalStorageService {
   constructor(private store: Store) {}
 
   public setItem<T>(key: string, payload: T, maxAge: number) {
-    const value: HatCache<T> = {value: payload, date: addMinutes(new Date(), maxAge) };
+    const value: HatCache<T> = { value: payload, date: addMinutes(new Date(), maxAge) };
     this.syncWithLocalStorage(key, value);
     this.store.setItem(key, value);
   }
@@ -27,8 +27,8 @@ export class LocalStorageService {
     this.store.removeItem(key);
   }
 
-  public removeAll() {
-    this.store.clearAll();
+  public removeAll(): Observable<boolean> {
+    return this.store.clearAll();
   }
 
   private syncWithLocalStorage(key: string, payload: any) {
