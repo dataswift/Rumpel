@@ -32,8 +32,8 @@ const HAT_APPLICATION_MOCK: HatApplication = {
         'markdown': '\n Anything you write online is your data – searches, social media posts, comments and notes.\n\n',
         'html': `\n <p>Anything you write online is your data – searches, social media posts, comments and notes.</p>\n\n`
       },
-      'termsUrl': 'https://hatdex.org/website-terms-service',
-      'supportContact': 'contact@hatdex.org',
+      'termsUrl': 'https://dataswift.io/website-terms-service',
+      'supportContact': 'contact@dataswift.io',
       'rating': {
         'score': 'A',
         'points': 11
@@ -210,9 +210,9 @@ const HAT_APPLICATION_MOCK: HatApplication = {
       }
     },
     'developer': {
-      'id': 'hatdex',
-      'name': 'HAT Data Exchange Ltd',
-      'url': 'https://hatdex.org',
+      'id': 'dataswift',
+      'name': 'DataSwift Ltd',
+      'url': 'https://dataswift.io',
       'country': 'United Kingdom'
     },
     'setup': {

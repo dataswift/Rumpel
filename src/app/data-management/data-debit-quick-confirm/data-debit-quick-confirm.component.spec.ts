@@ -20,7 +20,7 @@ const TEST_DATA_DEBIT: DataDebit = {
       'start': '2018-06-14T09:38:46.604Z',
       'period': 2592000000,
       'cancelAtPeriodEnd': false,
-      'termsUrl': 'https://hatdex.org/website-terms-service',
+      'termsUrl': 'https://dataswift.io/website-terms-service',
       'bundle': {
         'name': 'app-cade-demo-v001',
         'bundle': {
@@ -107,7 +107,7 @@ const TEST_DATA_DEBIT: DataDebit = {
     'start': '2018-06-14T09:38:46.604Z',
     'period': 2592000000,
     'cancelAtPeriodEnd': false,
-    'termsUrl': 'https://hatdex.org/website-terms-service',
+    'termsUrl': 'https://dataswift.io/website-terms-service',
     'bundle': {
       'name': 'app-cade-demo-v001',
       'bundle': {
@@ -184,7 +184,7 @@ const TEST_DATA_DEBIT: DataDebit = {
     'start': '2018-06-14T09:38:46.604Z',
     'period': 2592000000,
     'cancelAtPeriodEnd': false,
-    'termsUrl': 'https://hatdex.org/website-terms-service',
+    'termsUrl': 'https://dataswift.io/website-terms-service',
     'bundle': {
       'name': 'app-cade-demo-v001',
       'bundle': {

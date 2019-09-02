@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2016 - 2019 DataSwift Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+ * Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 2016
  */
 
 import { Injectable, EventEmitter } from '@angular/core';
@@ -12,7 +12,7 @@ import { ExternalNotification } from '../shared/interfaces/index';
 
 @Injectable()
 export class NotificationsService {
-  private hatdexNotifications: Array<ExternalNotification>;
+  private dataswiftNotifications: Array<ExternalNotification>;
   private selectedNotification: number;
   private unreadNotifications: number;
   private totalNotifications: number;
@@ -23,7 +23,7 @@ export class NotificationsService {
   public notificationsShowing = false;
 
   constructor() {
-    this.hatdexNotifications = [];
+    this.dataswiftNotifications = [];
     this.selectedNotification = 0;
     this.totalNotifications = 0;
     this.unreadNotifications = 0;
@@ -48,7 +48,7 @@ export class NotificationsService {
   //
   //
   //       if (Array.isArray(notifications)) {
-  //         this.hatdexNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
+  //         this.dataswiftNotifications = notifications.sort((a, b) => a.received > b.received ? -1 : 1);
   //         this.totalNotifications = notifications.length;
   //       }
   //
@@ -61,7 +61,7 @@ export class NotificationsService {
   // }
 
   nextNotification() {
-    // this.markAsRead(this.hatdexNotifications[this.selectedNotification]);
+    // this.markAsRead(this.dataswiftNotifications[this.selectedNotification]);
     if (this.selectedNotification + 1 === this.totalNotifications) {
       this.selectedNotification = 0;
     } else {
@@ -71,7 +71,7 @@ export class NotificationsService {
   }
 
   previousNotification() {
-    // this.markAsRead(this.hatdexNotifications[this.selectedNotification]);
+    // this.markAsRead(this.dataswiftNotifications[this.selectedNotification]);
     if (this.selectedNotification === 0) {
       this.selectedNotification = this.totalNotifications - 1;
     } else {
@@ -83,8 +83,8 @@ export class NotificationsService {
   // markAsRead(notification: ExternalNotification) {
   //   if (!notification.read) {
   //     this._marketSvc.markAsRead(notification.notice.id).subscribe((readNotification: ExternalNotification) => {
-  //       const foundNotificationIndex = this.hatdexNotifications.findIndex(note => note.notice.id === readNotification.notice.id);
-  //       this.hatdexNotifications[foundNotificationIndex] = readNotification;
+  //       const foundNotificationIndex = this.dataswiftNotifications.findIndex(note => note.notice.id === readNotification.notice.id);
+  //       this.dataswiftNotifications[foundNotificationIndex] = readNotification;
   //
   //       this.unreadNotifications = this.countUnread();
   //
@@ -100,7 +100,7 @@ export class NotificationsService {
 
   private countUnread(): number {
     let unreadCount = 0;
-    for (const notification of this.hatdexNotifications) {
+    for (const notification of this.dataswiftNotifications) {
       if (!notification.read) {
         unreadCount++;
       }
@@ -110,7 +110,7 @@ export class NotificationsService {
   }
 
   private publishNotification() {
-    this._notification$.next(this.hatdexNotifications[this.selectedNotification]);
+    this._notification$.next(this.dataswiftNotifications[this.selectedNotification]);
   }
 
   private publishStats() {
