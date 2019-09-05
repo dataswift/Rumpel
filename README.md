@@ -1,14 +1,14 @@
 # Rumpel
 
-This project was last tested with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.2.
+[![Build Status](https://travis-ci.org/Hub-of-all-Things/Rumpel.svg?branch=master)](https://travis-ci.org/Hub-of-all-Things/Rumpel) | This project was last tested with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.5.
 
 ## Suggested development environment setup
 
-- NPM >=5.0 (required to make use of the **package-lock.json** file)
-- Node >=8.1
-- Angular CLI >=1.5
-- Typescript >=2.4
-- Angular >=5.0
+- NPM >=6.0 (required to make use of the **package-lock.json** file)
+- Node >=10.0
+- Angular CLI >=8.0
+- Typescript >=3.4
+- Angular >=8.0
 
 ## Development server
 
