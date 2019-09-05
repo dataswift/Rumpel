@@ -25,10 +25,11 @@ export class HatClaimComponent implements OnInit {
   public password: string;
   public optins: string[];
 
-  @ViewChild(HatClaimNewPasswordComponent)
-  private hatClaimNewPasswordComponent: HatClaimNewPasswordComponent;
+  @ViewChild(HatClaimNewPasswordComponent, { static: true })
+  private hatClaimNewPasswordComponent!: HatClaimNewPasswordComponent;
 
-  @ViewChild(HatClaimSubscriptionsComponent)
+
+  @ViewChild(HatClaimSubscriptionsComponent, { static: true })
   private hatClaimSubscriptionsComponent: HatClaimSubscriptionsComponent;
 
   constructor(private route: ActivatedRoute,

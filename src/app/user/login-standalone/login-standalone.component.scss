@@ -70,7 +70,7 @@
     width: 100%;
     max-width: 500px;
 
-    /deep/ {
+    ::ng-deep {
       .mat-list-item-content {
         color: $app-dark-tone;
         font-size: 16px;

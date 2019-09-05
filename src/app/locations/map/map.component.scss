@@ -21,7 +21,7 @@
   display: inline;
 }
 
-/deep/ .rum-map-popup .leaflet-popup-content-wrapper {
+::ng-deep .rum-map-popup .leaflet-popup-content-wrapper {
   border-radius: 4px;
 
   .leaflet-popup-content {

@@ -16,7 +16,7 @@
 }
 
 
-/deep/ .mat-checkbox.remember-me-checkbox {
+::ng-deep .mat-checkbox.remember-me-checkbox {
   .mat-checkbox-layout {
     margin-bottom: 20px;
     margin-left: 20px;

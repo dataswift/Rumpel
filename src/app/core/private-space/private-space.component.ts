@@ -14,7 +14,7 @@ const SMALL_SCREEN_BREAKPOINT = 720;
   styleUrls: ['./private-space.component.scss']
 })
 export class PrivateSpaceComponent implements OnInit {
-  @ViewChild('sidenav') sideNav: MatSidenav;
+  @ViewChild('sideNav', { static: true }) sideNav!: MatSidenav;
 
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_SCREEN_BREAKPOINT}px)`);
 
@@ -30,7 +30,7 @@ export class PrivateSpaceComponent implements OnInit {
     if (this.config.native) {
       this.hatAppSvc.getApplicationDetails(this.config.tokenApp)
         .subscribe((hatApp: HatApplication) => {
-          if (hatApp.needsUpdating) {
+          if (hatApp && hatApp.needsUpdating) {
             const queryParams: Params = {
               name: this.config.tokenApp,
               redirect: '/feed',

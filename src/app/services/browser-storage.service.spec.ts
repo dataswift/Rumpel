@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { BrowserStorageService } from './browser-storage.service';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService } from 'ngx-cookie-service';
 
 describe('LocalStorageService', () => {
   beforeEach(() => {

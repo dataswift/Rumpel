@@ -24,7 +24,7 @@ const ERROR_MESSAGES = {
   styleUrls: ['./password-change.component.scss']
 })
 export class PasswordChangeComponent implements OnInit {
-  @ViewChild('currentPass') currentPass: ElementRef;
+  @ViewChild('currentPass', { static: true }) currentPass: ElementRef;
   public resetToken: string;
   public successMessage: string;
   public passwordStrength: any;
