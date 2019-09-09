@@ -31,7 +31,7 @@ export class HatClaimNewPasswordComponent implements OnInit {
   @Input() hatDomain: string;
   @Output() password = new EventEmitter<string>();
 
-  constructor(@Inject(APP_CONFIG) private config: AppConfig) { }
+  constructor(@Inject(APP_CONFIG) public config: AppConfig) { }
 
   ngOnInit() {}
 

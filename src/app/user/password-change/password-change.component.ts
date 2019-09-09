@@ -38,7 +38,7 @@ export class PasswordChangeComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private authSvc: AuthService,
-              @Inject(APP_CONFIG) private config: AppConfig) { }
+              @Inject(APP_CONFIG) public config: AppConfig) { }
 
   ngOnInit() {
     this.route.params.subscribe((routeParams) => {

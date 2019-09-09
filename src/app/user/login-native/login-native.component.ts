@@ -24,8 +24,7 @@ export class LoginNativeComponent implements OnInit {
   public rememberMe: boolean;
   public passwordError = false;
   public accountExists = false;
-  private hide = true;
-
+  public hide = true;
   private redirectPath: string;
 
   constructor(@Inject(APP_CONFIG) public config: AppConfig,

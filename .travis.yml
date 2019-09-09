@@ -25,7 +25,7 @@ env:
 before_install:
   - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
-  - npm install -g @angular/cli@6.0.8
+  - npm install -g @angular/cli@8.2.5
   - sh -e /etc/init.d/xvfb start
 
 install:
