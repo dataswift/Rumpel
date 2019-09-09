@@ -16,6 +16,7 @@ import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { PasswordStrengthIndicatorComponent
 } from '../../shared/components/password-strength-indicator/password-strength-indicator.component';
+import { APP_CONFIG } from '../../app.config';
 
 describe('PasswordChangeComponent', () => {
   let component: PasswordChangeComponent;
@@ -27,6 +28,7 @@ describe('PasswordChangeComponent', () => {
       declarations: [ PasswordChangeComponent, PasswordStrengthIndicatorComponent ],
       providers: [
         { provide: AuthService, useValue: {} },
+        { provide: APP_CONFIG, useValue: { links: {} }},
         { provide: ActivatedRoute, useValue: { params: of({}) } }
       ]
     })

@@ -6,7 +6,8 @@
  * Written by Terry Lee <terry.lee@dataswift.io> 2, 2019
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 const MIN_PASSWORD_STRENGTH = 3; // Integer from 0-4, see https://github.com/dropbox/zxcvbn for more info
 const ERROR_MESSAGES = {
@@ -30,7 +31,7 @@ export class HatClaimNewPasswordComponent implements OnInit {
   @Input() hatDomain: string;
   @Output() password = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(@Inject(APP_CONFIG) private config: AppConfig) { }
 
   ngOnInit() {}
 

@@ -6,10 +6,11 @@
  * Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 4, 2017
  */
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../core/services/auth.service';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 const MIN_PASSWORD_STRENGTH = 3; // Integer from 0-4, see https://github.com/dropbox/zxcvbn for more info
 const ERROR_MESSAGES = {
@@ -36,7 +37,8 @@ export class PasswordChangeComponent implements OnInit {
   public errorType: string;
 
   constructor(private route: ActivatedRoute,
-              private authSvc: AuthService) { }
+              private authSvc: AuthService,
+              @Inject(APP_CONFIG) private config: AppConfig) { }
 
   ngOnInit() {
     this.route.params.subscribe((routeParams) => {

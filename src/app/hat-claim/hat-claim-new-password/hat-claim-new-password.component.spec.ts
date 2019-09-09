@@ -16,6 +16,7 @@ import { CustomAngularMaterialModule } from '../../core/custom-angular-material.
 import { HatClaimNewPasswordComponent } from './hat-claim-new-password.component';
 import { PasswordStrengthIndicatorComponent
 } from '../../shared/components/password-strength-indicator/password-strength-indicator.component';
+import { APP_CONFIG } from '../../app.config';
 
 describe('HatClaimNewPasswordComponent', () => {
   let component: HatClaimNewPasswordComponent;
@@ -27,6 +28,7 @@ describe('HatClaimNewPasswordComponent', () => {
       declarations: [ HatClaimNewPasswordComponent, PasswordStrengthIndicatorComponent ],
       providers: [
         { provide: AuthService, useValue: {} },
+        { provide: APP_CONFIG, useValue: { links: {}}},
         { provide: ActivatedRoute, useValue: { params: of({}) } }
       ]
     })

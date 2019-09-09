@@ -11,6 +11,12 @@ import { environment } from '../environments/environment';
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
+const externalLinks = {
+  bestPractices: 'https://docs.dataswift.io/why/security-best-practice',
+  termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
+  privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf'
+};
+
 export class AppConfig {
   version: string;
   name: string;
@@ -19,6 +25,7 @@ export class AppConfig {
   supportedDomains: string[];
   native: boolean;
   protocol: string;
+  links: { bestPractices: string; privacyPolicy: string; termsOfService: string; };
   dex: { name: string; url: string; pathPrefix: string; };
   databuyer: { name: string; url: string; pathPrefix: string; };
   facebook: { shareUrl: string; };
@@ -45,6 +52,11 @@ export const configuration: AppConfig = {
     name: 'Dex',
     url: 'https://dex.hubofallthings.com',
     pathPrefix: '/api/v2'
+  },
+  links: {
+    bestPractices: externalLinks.bestPractices,
+    termsOfService: externalLinks.termsOfService,
+    privacyPolicy: externalLinks.privacyPolicy
   },
   databuyer: {
     name: 'DataBuyer',
@@ -88,31 +100,31 @@ export const configuration: AppConfig = {
 
   settingsMenu: [
     { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change',
-      description: 'Profile description' },
+      description: '' },
 
     { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@dataswift.io',
-      description: 'Profile description' },
+      description: '' },
 
-    { display: 'Terms of Service', icon: 'keyboard_arrow_right',
-      link: 'terms-of-service',
-      description: 'Profile description' },
+    { display: 'Terms of Service', icon: 'exit_to_app',
+      link: externalLinks.termsOfService,
+      description: '' },
 
-    { display: 'Privacy policy', icon: 'keyboard_arrow_right',
-      link: 'privacy-policy',
-      description: 'Profile description' },
+    { display: 'Privacy policy', icon: 'exit_to_app',
+      link: externalLinks.privacyPolicy,
+      description: '' },
 
     { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org',
-      description: 'Profile description' },
+      description: '' },
 
-    { display: 'Your HAT functionality level is 4 (learn more)', icon: 'keyboard_arrow_right',
-      link: 'privacy-policy',
-      description: 'Profile description' }
+    { display: 'Your HAT functionality level is 4 (learn more)', icon: 'exit_to_app',
+      link: externalLinks.privacyPolicy,
+      description: '' }
   ],
   settingsPrivateDataMenu: [
     { display: 'Profile', icon: 'keyboard_arrow_right', link: '/datastore',
-      description: 'Profile description' },
+      description: '' },
 
     { display: 'Data Debits', icon: 'keyboard_arrow_right', link: '/data-debit',
-      description: 'Profile description' },
+      description: '' },
   ]
 };

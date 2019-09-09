@@ -11,7 +11,6 @@ import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
   styleUrls: ['./hat-claim.component.scss']
 })
 export class HatClaimComponent implements OnInit {
-
   public loading = false;
   public step = 1;
   private claimForm: HatClaimRequest;
