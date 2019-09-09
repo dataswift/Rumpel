@@ -27,7 +27,9 @@ import { SystemStatusService } from '../../services/system-status.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild(MatMenuTrigger) accountMenuBtn: MatMenuTrigger;
+  // @ViewChild(MatMenuTrigger) accountMenuBtn: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger, { static: true }) accountMenuBtn!: MatMenuTrigger;
+
   @Output() clickNotifications = new EventEmitter<string>();
   @Output() menuToggle = new EventEmitter<string>();
   public hatDomain: string;

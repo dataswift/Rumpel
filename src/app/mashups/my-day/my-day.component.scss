@@ -50,7 +50,7 @@
     font-size: 14px;
   }
 
-  /deep/ .mat-datepicker-toggle .mat-button-wrapper {
+  ::ng-deep .mat-datepicker-toggle .mat-button-wrapper {
     color: $app-mid-tone;
   }
 

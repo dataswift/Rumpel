@@ -91,7 +91,7 @@
     line-height: 1.57;
     margin: auto;
 
-    /deep/ a {
+    ::ng-deep a {
       color: $app-dark-tone;
       text-decoration: underline;
     }

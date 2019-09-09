@@ -267,11 +267,11 @@
   }
 }
 
-/deep/ .mat-menu-panel {
+::ng-deep .mat-menu-panel {
   max-width: none;
 }
 
-/deep/ .mat-tab-header {
+::ng-deep .mat-tab-header {
   width: intrinsic;
   margin: 30px auto;
   border-bottom: none;

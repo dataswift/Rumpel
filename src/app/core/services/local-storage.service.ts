@@ -13,7 +13,7 @@ export class LocalStorageService {
   constructor(private store: Store) {}
 
   public setItem<T>(key: string, payload: T, maxAge: number) {
-    const value: HatCache<T> = {value: payload, date: addMinutes(new Date(), maxAge) };
+    const value: HatCache<T> = { value: payload, date: addMinutes(new Date(), maxAge) };
     this.syncWithLocalStorage(key, value);
     this.store.setItem(key, value);
   }

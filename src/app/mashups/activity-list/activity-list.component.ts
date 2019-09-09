@@ -27,7 +27,7 @@ export class ActivityListComponent implements AfterViewInit, OnInit, OnChanges {
   @Output() timeSelected = new EventEmitter<string>();
   @Output() locationSelected: EventEmitter<{ lat: number; long: number; }> = new EventEmitter<{ lat: number; long: number; }>();
 
-  @ViewChild('activityList') activityListEl: ElementRef;
+  @ViewChild('activityList', { static: true }) activityListEl: ElementRef;
 
   public moment: Moment = moment();
   public today = moment().format('YYYY-MM-DD');

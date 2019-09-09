@@ -15,7 +15,7 @@
   flex-wrap: wrap;
 }
 
-:host /deep/ {
+:host ::ng-deep {
   .scroll-mask {
     height: 290px;
     width: 100%;

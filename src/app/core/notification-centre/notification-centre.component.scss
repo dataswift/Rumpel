@@ -88,7 +88,7 @@
             max-width: 120px;
         }
 
-        /deep/ p{
+        ::ng-deep p{
           margin-bottom: 0px;
           text-overflow: ellipsis;
           display: inline-block;

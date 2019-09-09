@@ -14,7 +14,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
   styleUrls: ['./hat-claim-details.component.scss']
 })
 export class HatClaimDetailsComponent implements OnInit, OnChanges {
-  @Input('email')
+  @Input()
   public email: string;
 
   constructor() { }

@@ -96,7 +96,7 @@
     flex-grow: 2;
   }
 
-  /deep/ {
+  ::ng-deep {
     .mat-checkbox-label {
       color: $app-dark-tone;
       letter-spacing: 0.25px;

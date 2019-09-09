@@ -4,11 +4,11 @@ import { AuthService } from './auth.service';
 import { HatApiService } from './hat-api.service';
 import { BrowserStorageService } from '../../services/browser-storage.service';
 import { APP_CONFIG } from '../../app.config';
-import { CookieService } from 'angular2-cookie/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpBackendClient } from './http-backend-client.service';
 import { HatSetupCacheService } from '../../user/hat-setup-login/hat-setup-cache.service';
 import { CacheService } from './cache.service';
+import { CookieService } from 'ngx-cookie-service';
 
 describe('AuthService', () => {
   beforeEach(() => {

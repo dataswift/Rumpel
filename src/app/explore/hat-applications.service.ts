@@ -11,8 +11,9 @@ import { CacheService } from '../core/services/cache.service';
 @Injectable()
 export class HatApplicationsService {
   private hatUrl: string;
-  private readonly applicationKey = 'applications';
-  private applicationMaxAge = 20; // in minutes
+  readonly applicationKey = 'applications';
+  readonly applicationMaxAge = 20; // in minutes
+  readonly applicationMaxAgeShort = 1; // in minutes
   private _dataplugs$: ReplaySubject<HatApplication[]> = <ReplaySubject<HatApplication[]>>new ReplaySubject(1);
 
   constructor(private authSvc: AuthService,
@@ -37,7 +38,17 @@ export class HatApplicationsService {
   }
 
   getAppList(): Observable<HatApplication[]> {
-    return this.cacheSvc.get<HatApplication[]>(this.applicationKey, this.hatSvc.getApplicationList(), this.applicationMaxAge);
+    return this.cacheSvc.get<HatApplication[]>(this.applicationKey, this.getApplicationLisApi(), this.applicationMaxAge, true);
+  }
+
+  getApplicationLisApi(): Observable<HatApplication[]> {
+    return this.hatSvc.getApplicationList().pipe(tap(
+      apps => {
+        const hasStatus = this.applicationListHasStatus(apps, ['fetching']);
+
+        this.cacheSvc.store(this.applicationKey, apps, hasStatus ? this.applicationMaxAgeShort : this.applicationMaxAge);
+      }
+    ));
   }
 
   getApplicationDetails(application: string): Observable<HatApplication> {
@@ -65,9 +76,9 @@ export class HatApplicationsService {
 
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     const redirectUrl = setup.url || setup.iosUrl || '';
+    const redirectRumpel = window.location.href.replace('#', '%23');
 
-    return `https://${this.hatUrl}/#/hatlogin?name=${id}&fallback=https://${this.hatUrl}/%23/feed
-    &redirect=${redirectUrl}%3Fredirect=https://${this.hatUrl}/%23/feed`;
+    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}%3Fredirect=${redirectRumpel}`;
   }
 
   getAppStatus(app: HatApplication): 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update' {
@@ -83,6 +94,17 @@ export class HatApplicationsService {
     } else {
       return 'untouched';
     }
+  }
+  applicationListHasStatus(apps: HatApplication[], status: string[]): boolean {
+    for (const app of apps) {
+      const appStatus = this.getAppStatus(app);
+      if (status.indexOf(appStatus) !== -1) {
+
+        return true;
+      }
+    }
+
+    return false;
   }
 
   get dataplugs$(): Observable<HatApplication[]> {

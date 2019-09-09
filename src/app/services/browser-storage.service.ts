@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'angular2-cookie/core';
+import { CookieService } from 'ngx-cookie-service';
 
 const TOKEN_NAME = 'token';
 
@@ -34,7 +34,7 @@ export class BrowserStorageService {
   }
 
   constructor(private cookieSvc: CookieService) {
-    cookieSvc.remove('lastLoginPHATA'); // Some old cookie cleanup TODO: remove in the future
+    cookieSvc.delete('lastLoginPHATA'); // Some old cookie cleanup TODO: remove in the future
 
     this.sessionStoreAvailable = BrowserStorageService.testSessionStorage();
     this.localStoreAvailable = BrowserStorageService.testLocalStorage();
@@ -50,14 +50,14 @@ export class BrowserStorageService {
 
   setAuthToken(token: string) {
     if (this.remember) {
-      this.cookieSvc.put(TOKEN_NAME, token);
+      this.cookieSvc.set(TOKEN_NAME, token);
     } else if (this.sessionStoreAvailable) {
       sessionStorage.setItem(TOKEN_NAME, token);
     }
   }
 
   removeAuthToken(): void {
-    this.cookieSvc.remove(TOKEN_NAME);
+    this.cookieSvc.delete(TOKEN_NAME);
     window.sessionStorage.removeItem(TOKEN_NAME);
   }
 

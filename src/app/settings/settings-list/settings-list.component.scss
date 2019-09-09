@@ -20,7 +20,7 @@ mat-list {
   font-size: 16px;
 }
 
-/deep/ mat-list-item {
+::ng-deep mat-list-item {
   background: white;
   letter-spacing: 0.5px;
 

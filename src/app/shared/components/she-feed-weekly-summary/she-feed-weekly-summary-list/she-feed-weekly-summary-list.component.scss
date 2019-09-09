@@ -47,7 +47,7 @@ mat-list {
   text-align: end;
 }
 
-/deep/ .weekly-summary-mat-list-item {
+::ng-deep .weekly-summary-mat-list-item {
   background: white;
   letter-spacing: 0.5px;
   height:initial !important;

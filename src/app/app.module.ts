@@ -41,7 +41,6 @@ import { InfoBoxComponent } from './core/info-box/info-box.component';
 import { MapBoxComponent } from './core/map-box/map-box.component';
 import { FileUploadComponent } from './core/file-upload/file-upload.component';
 
-import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
 import { BrowserStorageService } from './services/browser-storage.service';
 import { HatApiService } from './core/services/hat-api.service';
@@ -59,13 +58,11 @@ import { WINDOW_PROVIDERS } from './core/services/global.service';
 import { ToolsModule } from './tools/tools.module';
 import { ReactiveWebStorageModule } from './core/services/reactive-webstorage.module';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { CookieService } from 'ngx-cookie-service';
 
 
 export const storageKeys = ['system-status', 'applications', 'tools', 'phata-structure'];
 
-export function cookieServiceFactory() {
-  return new CookieService();
-}
 
 @NgModule({
   declarations: [
@@ -103,10 +100,10 @@ export function cookieServiceFactory() {
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: configuration },
-    { provide: CookieService, useFactory: cookieServiceFactory },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
     NativeGuard,
+    CookieService,
     HatApiService, // Supersedes original HAT API service
     StaticDataService,
     SystemStatusService,

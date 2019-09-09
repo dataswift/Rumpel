@@ -23,9 +23,9 @@ import { SheFeedScrollingService } from './she-feed-scrolling.service';
   styleUrls: ['./she-feed.component.scss']
 })
 export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
-  @ViewChild('feedContainer') feedContainer: ElementRef;
+  @ViewChild('feedContainer', { static: true }) feedContainer: ElementRef;
   @ViewChildren('daySeparator', { read: ElementRef }) dateSeparators: QueryList<ElementRef>;
-  @ViewChild(DaterangepickerDirective) pickerDirective: DaterangepickerDirective;
+  @ViewChild(DaterangepickerDirective, { static: true }) pickerDirective: DaterangepickerDirective;
 
   public feed$: Observable<{ day: string; data: SheFeed[]; }[] >;
   public feedArray: DayGroupedSheFeed[];
@@ -181,7 +181,7 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
    */
   refreshFeedData() {
     // initialize the feed arrays
-    this.sheFeedSvc.clear();
+    // this.sheFeedSvc.clear();
     this.feedSlicedArray = null;
     this.feedArray = null;
     this.feed$ = null;
