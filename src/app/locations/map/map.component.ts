@@ -68,19 +68,12 @@ export class MapComponent implements OnInit, OnChanges {
       }
     });
 
-    // @ts-ignore
     this.facebookPin = new SourceIcon({ iconUrl: '/assets/images/pins/facebook.png' });
-    // @ts-ignore
     this.twitterPin = new SourceIcon({ iconUrl: '/assets/images/pins/twitter.png' });
-    // @ts-ignore
     this.fitbitPin = new SourceIcon({ iconUrl: '/assets/images/pins/fitbit.png' });
-    // @ts-ignore
     this.googlePin = new SourceIcon({ iconUrl: '/assets/images/pins/google-calendar.png' });
-    // @ts-ignore
     this.spotifyPin = new SourceIcon({ iconUrl: '/assets/images/pins/spotify.png' });
-    // @ts-ignore
     this.notablesv1Pin = new SourceIcon({ iconUrl: '/assets/images/pins/notables.png' });
-    // @ts-ignore
     this.iOSPin = new SourceIcon({ iconUrl: '/assets/images/pins/locations.png' });
 
     // WHY
