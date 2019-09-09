@@ -31,17 +31,22 @@ export class HatApplicationsService {
   getApplicationList(kind: string = null): Observable<HatApplication[]> {
     if (kind) {
       return this.getAppList().pipe(
-        map((apps: HatApplication[]) => apps.filter((app: HatApplication) => app.application.kind.kind === kind)));
+        map((apps: HatApplication[]) => {
+          if (apps && apps.length > 0) {
+            return apps.filter((app: HatApplication) => app.application.kind.kind === kind)
+
+          }
+        }));
     } else {
       return this.getAppList();
     }
   }
 
   getAppList(): Observable<HatApplication[]> {
-    return this.cacheSvc.get<HatApplication[]>(this.applicationKey, this.getApplicationLisApi(), this.applicationMaxAge, true);
+    return this.cacheSvc.get<HatApplication[]>(this.applicationKey, this.getApplicationListApi(), this.applicationMaxAge, true);
   }
 
-  getApplicationLisApi(): Observable<HatApplication[]> {
+  getApplicationListApi(): Observable<HatApplication[]> {
     return this.hatSvc.getApplicationList().pipe(tap(
       apps => {
         const hasStatus = this.applicationListHasStatus(apps, ['fetching']);
@@ -53,7 +58,12 @@ export class HatApplicationsService {
 
   getApplicationDetails(application: string): Observable<HatApplication> {
     return this.getAppList()
-      .pipe(map((apps: HatApplication[]) => apps.filter(app => app.application.id === application)[0]));
+      .pipe(map((apps: HatApplication[]) => {
+          if (apps && apps.length > 0) {
+            return apps.filter(app => app.application.id === application)[0]
+          }
+        }
+      ));
   }
 
   getApplicationData(endpoint: string, since: number | string, until: number | string): Observable<SheFeed[]> {
