@@ -49,7 +49,7 @@ export class PrivateSpaceComponent implements OnInit {
   }
 
   closeSideNav(event): void {
-    if (this.isSmallScreen()) {
+    if (this.isSmallScreen() && this.sideNav) {
       this.sideNav.close();
     }
   }
