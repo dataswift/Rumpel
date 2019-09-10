@@ -76,8 +76,10 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
       if ((feed.length < 15) && !this.dataFetched) {
         this.currentMonthStep += 3;
         this.monthStep = 3;
-        if (feed.length === 0 && this.currentMonthStep > 11) {
+        if (this.currentMonthStep > 12) {
           this.dataFetched = true;
+          this.feedScrollingInit = false;
+          this.initialiseScrollingService(feed);
 
           return;
         } else {
@@ -85,18 +87,7 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
 
       } else {
-        if (!this.feedScrollingInit) {
-          this.feedScrollingInit = true;
-          this.todayIndex = feed.findIndex((value) => value.day === this.today);
-
-          this.sheFeedScrollingSvc.init(this.todayIndex, feed.length);
-          const feedInitIndexes = this.sheFeedScrollingSvc.getFeedInitIndexes();
-
-          this.feedSlicedArray = feed.slice(feedInitIndexes.startDate , feedInitIndexes.endDate + 1);
-        } else {
-          this.sheFeedScrollingSvc.setFeedLength(feed.length);
-          this.pushMoreItems();
-        }
+        this.initialiseScrollingService(feed);
 
         return;
       }
@@ -110,6 +101,25 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
    */
   onScrollDown() {
     if (!this.filteredData) {
+      this.pushMoreItems();
+    }
+  }
+
+  /**
+   * Initialise the feed array with the first data and setting up
+   * the scrolling service with the indexes and the feed length.
+   */
+  initialiseScrollingService(feed: DayGroupedSheFeed[]) {
+    if (!this.feedScrollingInit) {
+      this.feedScrollingInit = true;
+      this.todayIndex = feed.findIndex((value) => value.day === this.today);
+
+      this.sheFeedScrollingSvc.init(this.todayIndex, feed.length);
+      const feedInitIndexes = this.sheFeedScrollingSvc.getFeedInitIndexes();
+
+      this.feedSlicedArray = feed.slice(feedInitIndexes.startDate , feedInitIndexes.endDate + 1);
+    } else {
+      this.sheFeedScrollingSvc.setFeedLength(feed.length);
       this.pushMoreItems();
     }
   }
@@ -141,6 +151,8 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     if (scrollingDownIndexes.startDate >= this.feedArray.length) {
       if (this.extraDataAttempts <= this.extraDataMonthLimit) {
+        console.log('load more scroll extra data', this.extraDataAttempts);
+
         this.loadMoreData()
       } else {
         console.log('no more data')
