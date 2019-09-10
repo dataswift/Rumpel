@@ -38,5 +38,5 @@
   text-align: center;
   letter-spacing: 0.6px;
   @include text-rumpel-variant($app-dark-tone);
-  @include text-rumpel-size(0, 0, 20px, 1.4, bold);
+  @include text-rumpel-size(0, 0, 18px, 1.4, bold);
 }

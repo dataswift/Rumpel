@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2017 - 2019 DataSwift Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 1, 2017
+ * Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 1, 2017
  */
 
 import { NgModule } from '@angular/core';
@@ -41,7 +41,6 @@ import { InfoBoxComponent } from './core/info-box/info-box.component';
 import { MapBoxComponent } from './core/map-box/map-box.component';
 import { FileUploadComponent } from './core/file-upload/file-upload.component';
 
-import { CookieService } from 'angular2-cookie/core';
 import { UserModule } from './user/user.module';
 import { BrowserStorageService } from './services/browser-storage.service';
 import { HatApiService } from './core/services/hat-api.service';
@@ -59,13 +58,11 @@ import { WINDOW_PROVIDERS } from './core/services/global.service';
 import { ToolsModule } from './tools/tools.module';
 import { ReactiveWebStorageModule } from './core/services/reactive-webstorage.module';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
+import { CookieService } from 'ngx-cookie-service';
 
 
 export const storageKeys = ['system-status', 'applications', 'tools', 'phata-structure'];
 
-export function cookieServiceFactory() {
-  return new CookieService();
-}
 
 @NgModule({
   declarations: [
@@ -103,10 +100,10 @@ export function cookieServiceFactory() {
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: APP_CONFIG, useValue: configuration },
-    { provide: CookieService, useFactory: cookieServiceFactory },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
     NativeGuard,
+    CookieService,
     HatApiService, // Supersedes original HAT API service
     StaticDataService,
     SystemStatusService,

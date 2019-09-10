@@ -50,7 +50,7 @@
     color: $app-dark-tone;
     text-align: right;
 
-    /deep/ a {
+    ::ng-deep a {
       color: inherit;
       text-decoration: underline;
     }

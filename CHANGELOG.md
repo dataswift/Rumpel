@@ -51,7 +51,7 @@ Please use query parameter "token" instead.
 * Notables service - brand new interface components to support interaction with Notables. View, create, edit and share your notables within the HAT ecosystem and third party platforms
 * Fully reworked data mashups interface
 * Step-by-step introduction guide to the main Rumpel features
-* Adds notifications centre for the important HATDeX team messages and social activity reports
+* Adds notifications centre for the important dataswift team messages and social activity reports
 
 ### Updates
 

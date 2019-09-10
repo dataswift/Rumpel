@@ -1,15 +1,16 @@
 /*
- * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2017 - 2019 DataSwift Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+ * Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 4, 2017
  */
 
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../core/services/auth.service';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 const MIN_PASSWORD_STRENGTH = 3; // Integer from 0-4, see https://github.com/dropbox/zxcvbn for more info
 const ERROR_MESSAGES = {
@@ -24,7 +25,7 @@ const ERROR_MESSAGES = {
   styleUrls: ['./password-change.component.scss']
 })
 export class PasswordChangeComponent implements OnInit {
-  @ViewChild('currentPass') currentPass: ElementRef;
+  @ViewChild('currentPass', { static: true }) currentPass: ElementRef;
   public resetToken: string;
   public successMessage: string;
   public passwordStrength: any;
@@ -36,7 +37,8 @@ export class PasswordChangeComponent implements OnInit {
   public errorType: string;
 
   constructor(private route: ActivatedRoute,
-              private authSvc: AuthService) { }
+              private authSvc: AuthService,
+              @Inject(APP_CONFIG) public config: AppConfig) { }
 
   ngOnInit() {
     this.route.params.subscribe((routeParams) => {

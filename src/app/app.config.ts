@@ -1,15 +1,21 @@
 /*
- * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2016 - 2019 DataSwift Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+ * Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 2016
  */
 
 import { InjectionToken } from '@angular/core';
 import { environment } from '../environments/environment';
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
+
+const externalLinks = {
+  bestPractices: 'https://docs.dataswift.io/why/security-best-practice',
+  termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
+  privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf'
+};
 
 export class AppConfig {
   version: string;
@@ -19,6 +25,7 @@ export class AppConfig {
   supportedDomains: string[];
   native: boolean;
   protocol: string;
+  links: { bestPractices: string; privacyPolicy: string; termsOfService: string; };
   dex: { name: string; url: string; pathPrefix: string; };
   databuyer: { name: string; url: string; pathPrefix: string; };
   facebook: { shareUrl: string; };
@@ -34,7 +41,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.8.1.6',
+  version: '3.8.2.0',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
@@ -45,6 +52,11 @@ export const configuration: AppConfig = {
     name: 'Dex',
     url: 'https://dex.hubofallthings.com',
     pathPrefix: '/api/v2'
+  },
+  links: {
+    bestPractices: externalLinks.bestPractices,
+    termsOfService: externalLinks.termsOfService,
+    privacyPolicy: externalLinks.privacyPolicy
   },
   databuyer: {
     name: 'DataBuyer',
@@ -88,31 +100,31 @@ export const configuration: AppConfig = {
 
   settingsMenu: [
     { display: 'Change password', icon: 'keyboard_arrow_right', link: '/user/password/change',
-      description: 'Profile description' },
+      description: '' },
 
-    { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@HATDeX.org',
-      description: 'Profile description' },
+    { display: 'Tech support', icon: 'exit_to_app', link: 'mailto:contact@dataswift.io',
+      description: '' },
 
-    { display: 'Terms of Service', icon: 'keyboard_arrow_right',
-      link: 'terms-of-service',
-      description: 'Profile description' },
+    { display: 'Terms of Service', icon: 'exit_to_app',
+      link: externalLinks.termsOfService,
+      description: '' },
 
-    { display: 'Privacy policy', icon: 'keyboard_arrow_right',
-      link: 'privacy-policy',
-      description: 'Profile description' },
+    { display: 'Privacy policy', icon: 'exit_to_app',
+      link: externalLinks.privacyPolicy,
+      description: '' },
 
     { display: 'Join the HAT Community', icon: 'exit_to_app', link: 'https://www.hatcommunity.org',
-      description: 'Profile description' },
+      description: '' },
 
-    { display: 'Your HAT functionality level is 4 (learn more)', icon: 'keyboard_arrow_right',
-      link: 'privacy-policy',
-      description: 'Profile description' }
+    { display: 'Your HAT functionality level is 4 (learn more)', icon: 'exit_to_app',
+      link: externalLinks.privacyPolicy,
+      description: '' }
   ],
   settingsPrivateDataMenu: [
     { display: 'Profile', icon: 'keyboard_arrow_right', link: '/datastore',
-      description: 'Profile description' },
+      description: '' },
 
     { display: 'Data Debits', icon: 'keyboard_arrow_right', link: '/data-debit',
-      description: 'Profile description' },
+      description: '' },
   ]
 };

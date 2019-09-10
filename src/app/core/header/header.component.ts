@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2016 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2016 - 2019 DataSwift Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016
+ * Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 2016
  */
 
 import { Component, OnInit, Output, EventEmitter, Inject, ViewChild } from '@angular/core';
@@ -27,7 +27,9 @@ import { SystemStatusService } from '../../services/system-status.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @ViewChild(MatMenuTrigger) accountMenuBtn: MatMenuTrigger;
+  // @ViewChild(MatMenuTrigger) accountMenuBtn: MatMenuTrigger;
+  @ViewChild(MatMenuTrigger, { static: true }) accountMenuBtn!: MatMenuTrigger;
+
   @Output() clickNotifications = new EventEmitter<string>();
   @Output() menuToggle = new EventEmitter<string>();
   public hatDomain: string;
@@ -98,7 +100,7 @@ export class HeaderComponent implements OnInit {
       title: 'Help',
       icon: 'assets/images/help.svg',
       message: `HATs are distributed systems and being private also means no one will know if you have a problem.<br><br>
-      If you have an issue with your HAT or this dashboard, please report it <a href="mailto:contact@HATDeX.org?subject=Support%20for%20`
+      If you have an issue with your HAT or this dashboard, please report it <a href="mailto:contact@dataswift.io?subject=Support%20for%20`
       + window.location.hostname + `">here</a>`
     });
   }

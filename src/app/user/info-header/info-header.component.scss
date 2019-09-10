@@ -12,7 +12,7 @@
     display: flex;
     align-items: center;
 
-    /deep/ {
+    ::ng-deep {
       .header-logo {
         margin: 0 40px;
       }

@@ -8,7 +8,7 @@ import { SheFeed } from '../../../she/she-feed.interface';
 })
 export class SheFeedItemComponent implements OnInit, AfterViewInit {
   @Input() feedItem: SheFeed;
-  @ViewChild('cardContent') content: ElementRef;
+  @ViewChild('cardContent', { static: true }) content: ElementRef;
   public expanded = false;
   public overflowing = false;
 

@@ -1,9 +1,9 @@
 <!--
-  ~ Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+  ~ Copyright (C) 2017 - 2019 DataSwift Ltd - All Rights Reserved
   ~ This Source Code Form is subject to the terms of the Mozilla Public
   ~ License, v. 2.0. If a copy of the MPL was not distributed with this
   ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
-  ~ Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+  ~ Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 4, 2017
   -->
 
 <ng-container *ngIf="hatApp || errorMessage else loading">
@@ -92,7 +92,7 @@
           <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)" class="primary-action">Confirm</button>
         </div>
         <p class="hmi-id-text">HMI ID: {{hatApp.application.id}}-v{{hatApp.application.info.version}}</p>
-        <p class="tos-text">By pressing ‘Confirm’ I agree to HAT Data Exchange Ltd
+        <p class="tos-text">By pressing ‘Confirm’ I agree to DataSwift Ltd
           <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c540dc4e4966bf470e0d5fd/1549012420957/hat+owner+terms+of+service+-+10_1_19+-+v2.3+%281%29.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>
           and the permissions laid out above.</p>
       </div>
