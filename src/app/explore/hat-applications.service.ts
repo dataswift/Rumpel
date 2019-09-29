@@ -14,7 +14,6 @@ export class HatApplicationsService {
   readonly applicationKey = 'applications';
   readonly applicationMaxAge = 20; // in minutes
   readonly applicationMaxAgeShort = 1; // in minutes
-
   private _dataplugs$: ReplaySubject<HatApplication[]> = <ReplaySubject<HatApplication[]>>new ReplaySubject(1);
 
   constructor(private authSvc: AuthService,
@@ -32,17 +31,22 @@ export class HatApplicationsService {
   getApplicationList(kind: string = null): Observable<HatApplication[]> {
     if (kind) {
       return this.getAppList().pipe(
-        map((apps: HatApplication[]) => apps.filter((app: HatApplication) => app.application.kind.kind === kind)));
+        map((apps: HatApplication[]) => {
+          if (apps && apps.length > 0) {
+            return apps.filter((app: HatApplication) => app.application.kind.kind === kind)
+
+          }
+        }));
     } else {
       return this.getAppList();
     }
   }
 
   getAppList(): Observable<HatApplication[]> {
-    return this.cacheSvc.get<HatApplication[]>(this.applicationKey, this.getApplicationLisApi(), this.applicationMaxAge, true);
+    return this.cacheSvc.get<HatApplication[]>(this.applicationKey, this.getApplicationListApi(), this.applicationMaxAge, true);
   }
 
-  getApplicationLisApi(): Observable<HatApplication[]> {
+  getApplicationListApi(): Observable<HatApplication[]> {
     return this.hatSvc.getApplicationList().pipe(tap(
       apps => {
         const hasStatus = this.applicationListHasStatus(apps, ['fetching']);
@@ -54,7 +58,12 @@ export class HatApplicationsService {
 
   getApplicationDetails(application: string): Observable<HatApplication> {
     return this.getAppList()
-      .pipe(map((apps: HatApplication[]) => apps.filter(app => app.application.id === application)[0]));
+      .pipe(map((apps: HatApplication[]) => {
+          if (apps && apps.length > 0) {
+            return apps.filter(app => app.application.id === application)[0]
+          }
+        }
+      ));
   }
 
   getApplicationData(endpoint: string, since: number | string, until: number | string): Observable<SheFeed[]> {
@@ -79,7 +88,7 @@ export class HatApplicationsService {
     const redirectUrl = setup.url || setup.iosUrl || '';
     const redirectRumpel = window.location.href.replace('#', '%23');
 
-    return `https://${this.hatUrl}/#/hatlogin?name=${id}&redirect=${redirectUrl}%3Fredirect=${redirectRumpel}`;
+    return `https://${this.hatUrl}/#/hatlogin?name=${id}&fallback=${redirectRumpel}&redirect=${redirectUrl}%3Fredirect=${redirectRumpel}`;
   }
 
   getAppStatus(app: HatApplication): 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update' {

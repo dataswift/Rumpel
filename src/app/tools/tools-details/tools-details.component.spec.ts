@@ -22,8 +22,8 @@ const TOOL_MOCK: HatTool = {
       'markdown': '',
       'html': ''
     },
-    'termsUrl': 'https://hatdex.org/terms-of-service-hat-owner-agreement',
-    'supportContact': 'contact@hatdex.org',
+    'termsUrl': 'https://dataswift.io/terms-of-service-hat-owner-agreement',
+    'supportContact': 'contact@dataswift.io',
     'graphics': {
       'banner': {
         'normal': ''
@@ -43,9 +43,9 @@ const TOOL_MOCK: HatTool = {
     'dataPreviewEndpoint': '/she/feed/she/activity-records'
   },
   'developer': {
-    'id': 'hatdex',
-    'name': 'HAT Data Exchange Ltd',
-    'url': 'https://hatdex.org',
+    'id': 'dataswift',
+    'name': 'DataSwift Ltd',
+    'url': 'https://dataswift.io',
     'country': 'United Kingdom'
   },
   'trigger': {

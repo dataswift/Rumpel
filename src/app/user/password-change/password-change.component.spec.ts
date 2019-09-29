@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2017 - 2019 DataSwift Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 4, 2017
+ * Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 4, 2017
  */
 
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -16,6 +16,7 @@ import { of } from 'rxjs';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { PasswordStrengthIndicatorComponent
 } from '../../shared/components/password-strength-indicator/password-strength-indicator.component';
+import { APP_CONFIG } from '../../app.config';
 
 describe('PasswordChangeComponent', () => {
   let component: PasswordChangeComponent;
@@ -27,6 +28,7 @@ describe('PasswordChangeComponent', () => {
       declarations: [ PasswordChangeComponent, PasswordStrengthIndicatorComponent ],
       providers: [
         { provide: AuthService, useValue: {} },
+        { provide: APP_CONFIG, useValue: { links: {} }},
         { provide: ActivatedRoute, useValue: { params: of({}) } }
       ]
     })

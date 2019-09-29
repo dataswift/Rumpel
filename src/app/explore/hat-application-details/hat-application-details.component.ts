@@ -78,6 +78,7 @@ export class HatApplicationDetailsComponent implements OnInit {
   generateHatLoginLink(id: string, setup: HatApplicationSetup): string {
     return this.hatAppSvc.generateHatLoginLink(id, setup);
   }
+
   clearCache(): boolean {
     this.hatAppSvc.clearApplicationCache();
 

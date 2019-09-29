@@ -11,7 +11,6 @@ import { HatClaimRequest } from '../../shared/interfaces/hat-claim.interface';
   styleUrls: ['./hat-claim.component.scss']
 })
 export class HatClaimComponent implements OnInit {
-
   public loading = false;
   public step = 1;
   private claimForm: HatClaimRequest;
@@ -25,10 +24,11 @@ export class HatClaimComponent implements OnInit {
   public password: string;
   public optins: string[];
 
-  @ViewChild(HatClaimNewPasswordComponent)
-  private hatClaimNewPasswordComponent: HatClaimNewPasswordComponent;
+  @ViewChild(HatClaimNewPasswordComponent, { static: true })
+  private hatClaimNewPasswordComponent!: HatClaimNewPasswordComponent;
 
-  @ViewChild(HatClaimSubscriptionsComponent)
+
+  @ViewChild(HatClaimSubscriptionsComponent, { static: true })
   private hatClaimSubscriptionsComponent: HatClaimSubscriptionsComponent;
 
   constructor(private route: ActivatedRoute,

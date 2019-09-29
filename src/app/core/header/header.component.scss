@@ -1,9 +1,9 @@
 /*
- * Copyright (C) 2016 - 2017 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2016 - 2017 - 2019 DataSwift Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Augustinas Markevicius <augustinas.markevicius@hatdex.org> 2016 - 2017
+ * Written by Augustinas Markevicius <augustinas.markevicius@dataswift.io> 2016 - 2017
  */
 
 @import "../../style/branding";
@@ -21,7 +21,7 @@
     padding: 1em;
   }
 
-  /deep/ .mat-button-wrapper {
+  ::ng-deep .mat-button-wrapper {
     color: white;
     display: flex;
     justify-content: center;
@@ -38,7 +38,7 @@
   }
 }
 
-/deep/ .mat-menu-panel .mat-menu-content {
+::ng-deep .mat-menu-panel .mat-menu-content {
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -162,15 +162,15 @@
       line-height: 1.38;
     }
 
-    /deep/ .mat-progress-bar-fill::after {
+    ::ng-deep .mat-progress-bar-fill::after {
       background-color: #1E457C;
     }
 
-    /deep/ .mat-progress-bar-buffer {
+    ::ng-deep .mat-progress-bar-buffer {
       background: #E4E8EB;
     }
 
-    /deep/ .mat-progress-bar {
+    ::ng-deep .mat-progress-bar {
       border-radius: 2px;
       margin: 8px auto;
     }

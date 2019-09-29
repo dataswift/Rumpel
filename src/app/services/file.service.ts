@@ -18,6 +18,10 @@ export class FileService {
     return this._file$.asObservable();
   }
 
+  destroyFile(): void {
+    this._file$ = <ReplaySubject<FileMetadataRes>>new ReplaySubject(1);
+  }
+
   setFileReader(file: File): void {
     this.fileReader = new FileReader();
     const fileMetadata: FileMetadataReq = {

@@ -1,12 +1,13 @@
 /*
- * Copyright (C) 2019 HAT Data Exchange Ltd - All Rights Reserved
+ * Copyright (C) 2019 DataSwift Ltd - All Rights Reserved
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
- * Written by Terry Lee <terry.lee@hatdex.org> 2, 2019
+ * Written by Terry Lee <terry.lee@dataswift.io> 2, 2019
  */
 
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { APP_CONFIG, AppConfig } from '../../app.config';
 
 const MIN_PASSWORD_STRENGTH = 3; // Integer from 0-4, see https://github.com/dropbox/zxcvbn for more info
 const ERROR_MESSAGES = {
@@ -30,7 +31,7 @@ export class HatClaimNewPasswordComponent implements OnInit {
   @Input() hatDomain: string;
   @Output() password = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(@Inject(APP_CONFIG) public config: AppConfig) { }
 
   ngOnInit() {}
 
