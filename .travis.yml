@@ -45,6 +45,7 @@ jobs:
       after_success:
         - mv ./dist/runtime.*.js ./dist/runtime.bundle.js
         - mv ./dist/polyfills.*.js ./dist/polyfills.bundle.js
+        - mv ./dist/polyfills-es5.*.js ./dist/polyfills-es5.bundle.js
         - mv ./dist/main.*.js ./dist/main.bundle.js
         - mv ./dist/styles.*.css ./dist/styles.bundle.css
       deploy:
@@ -68,6 +69,7 @@ jobs:
       after_success:
         - mv ./dist/runtime.*.js ./dist/runtime.bundle.js
         - mv ./dist/polyfills.*.js ./dist/polyfills.bundle.js
+        - mv ./dist/polyfills-es5.*.js ./dist/polyfills-es5.bundle.js
         - mv ./dist/main.*.js ./dist/main.bundle.js
         - mv ./dist/styles.*.css ./dist/styles.bundle.css
       deploy:

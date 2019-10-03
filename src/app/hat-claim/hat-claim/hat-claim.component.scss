@@ -1,6 +1,23 @@
 @import "../../style/branding";
 @import "../../style/rumpel-mixins";
 
+.rum-error-message {
+  padding: 15px 30px;
+  background-color: rgba(228, 81, 81, 0.2);
+  border-radius: 2px;
+  border-bottom: solid 1px #e45151;
+  color: #e45151;
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.4px;
+
+  &-icon {
+    margin-right: 17px;
+    vertical-align: middle;
+  }
+}
+
 .user-actions {
   position: fixed;
   bottom: 0;

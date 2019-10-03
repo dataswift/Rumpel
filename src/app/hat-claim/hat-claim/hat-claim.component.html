@@ -1,4 +1,11 @@
 <ng-container *ngIf="!loading else loadingScreen">
+  <ng-container *ngIf="errorMessage">
+    <div class="rum-error-message">
+      <mat-icon class="rum-error-message-icon">warning</mat-icon>
+      {{errorMessage}}
+    </div>
+  </ng-container>
+
   <ng-container [ngSwitch]="step">
     <ng-container *ngSwitchCase="1">
       <rum-hat-claim-details [email]="email"></rum-hat-claim-details>
@@ -14,7 +21,7 @@
       </rum-hat-claim-new-password>
     </ng-container>
     <ng-container *ngSwitchCase="4">
-      <rum-hat-claim-subscriptions></rum-hat-claim-subscriptions>
+      <rum-hat-claim-subscriptions (newsletterOptins)="handleOptinsUpdate($event)"></rum-hat-claim-subscriptions>
     </ng-container>
     <ng-container *ngSwitchCase="5">
       <rum-hat-claim-confirmation></rum-hat-claim-confirmation>

@@ -6,7 +6,7 @@
  * Written by Terry Lee <terry.lee@dataswift.io> 2, 2019
  */
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'rum-hat-claim-subscriptions',
@@ -14,12 +14,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hat-claim-subscriptions.component.scss']
 })
 export class HatClaimSubscriptionsComponent implements OnInit {
+
+  @Output() newsletterOptins = new EventEmitter<string[]>();
+
   public hatName: string;
   public hatDomain: string;
 
-  public subscribeMadhatters: boolean;
-  public subscribeHatMonthly: boolean;
-  public subscribeHCF: boolean;
+  public optins: { madhatters: boolean; hatMonthly: boolean; hcf: boolean };
 
   constructor() { }
 
@@ -29,24 +30,23 @@ export class HatClaimSubscriptionsComponent implements OnInit {
     this.hatName = host.substring(0, host.indexOf('.'));
     this.hatDomain = host.substring(host.indexOf('.'));
 
-    this.subscribeMadhatters = false;
-    this.subscribeHatMonthly = false;
-    this.subscribeHCF = false;
+    this.optins = { madhatters: false, hatMonthly: false, hcf: false };
   }
 
-  buildOptins(): string[] {
+
+  buildOptins(): void {
     const optins: string[] = [];
 
-    if (this.subscribeMadhatters) {
+    if (this.optins.madhatters) {
       optins.push('MadHATTERS');
     }
-    if (this.subscribeHatMonthly) {
+    if (this.optins.hatMonthly) {
       optins.push('HAT Monthly');
     }
-    if (this.subscribeHCF) {
+    if (this.optins.hcf) {
       optins.push('HCF');
     }
 
-    return optins;
+    this.newsletterOptins.emit(optins);
   }
 }
