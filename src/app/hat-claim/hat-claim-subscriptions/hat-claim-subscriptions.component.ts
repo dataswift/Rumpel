@@ -31,6 +31,7 @@ export class HatClaimSubscriptionsComponent implements OnInit {
     this.hatDomain = host.substring(host.indexOf('.'));
 
     this.optins = { madhatters: false, hatMonthly: false, hcf: false };
+    this.buildOptins();
   }
 
 
