@@ -15,7 +15,7 @@ export class HatClaimService {
       catchError((err) => {
         console.log('Error response from HAT API: ', err);
 
-        return throwError(new Error('Request failed'));
+        return throwError(new Error(err.error.cause));
       })
     );
   }

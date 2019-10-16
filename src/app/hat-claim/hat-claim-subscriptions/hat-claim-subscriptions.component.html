@@ -21,12 +21,12 @@
     </div>
   </div>
 
-  <div class="subscription-list">
-    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="subscribeMadhatters" color="primary">MadHATTERs (Tech news with an attitude)</mat-checkbox>
+  <div class="subscription-list" (click)="buildOptins()">
+    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="optins.madhatters" color="primary">MadHATTERs (Tech news with an attitude)</mat-checkbox>
     <br />
-    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="subscribeHatMonthly" color="primary">Monthly Updates</mat-checkbox>
+    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="optins.hatMonthly" color="primary">Monthly Updates</mat-checkbox>
     <br />
-    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="subscribeHCF" color="primary">HAT Ecosystem updates from the Foundation</mat-checkbox>
+    <mat-checkbox class="remember-me-checkbox" [(ngModel)]="optins.hcf" color="primary">HAT Ecosystem updates from the Foundation</mat-checkbox>
   </div>
 
   <div class="f-g">

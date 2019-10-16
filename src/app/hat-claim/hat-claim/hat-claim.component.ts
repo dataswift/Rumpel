@@ -23,6 +23,7 @@ export class HatClaimComponent implements OnInit {
 
   public password: string;
   public optins: string[];
+  public errorMessage: string;
 
   @ViewChild(HatClaimNewPasswordComponent, { static: true })
   private hatClaimNewPasswordComponent!: HatClaimNewPasswordComponent;
@@ -55,7 +56,6 @@ export class HatClaimComponent implements OnInit {
         this.step++;
       }
     } else if (this.step === 4) {
-      this.optins = this.hatClaimSubscriptionsComponent.buildOptins();
       this.step++;
     } else if (this.step === 5) {
       this.handleSubmission();
@@ -66,6 +66,10 @@ export class HatClaimComponent implements OnInit {
     } else {
       // TODO: Display error
     }
+  }
+
+  handleOptinsUpdate(optins: string[]): void {
+    this.optins = optins;
   }
 
   previousStep(): void {
@@ -85,7 +89,7 @@ export class HatClaimComponent implements OnInit {
     const hatClaimRequest: HatClaimRequest = this.buildClaimRequest();
     this.hatClaimSvc.submitHatClaim(this.claimToken, hatClaimRequest).subscribe(_ => {
       this.step++;
-    });
+    }, error => this.errorMessage = error);
   }
 
   goToLogin(): void {
