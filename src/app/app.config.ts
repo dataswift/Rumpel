@@ -41,11 +41,11 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.8.2.2',
+  version: '3.8.2.3',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
-  supportedDomains: ['.hubofallthings.net', '.hubat.net', '.hat.direct', 'dataswift.me', '.dataswift.dev'],
+  supportedDomains: ['.hubofallthings.net', '.hubat.net', '.hat.direct', '.dataswift.me', '.dataswift.dev'],
   native: environment.native,
   protocol: environment.protocol,
   dex: {
