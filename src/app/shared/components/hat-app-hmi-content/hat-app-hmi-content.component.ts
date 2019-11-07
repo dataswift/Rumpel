@@ -18,17 +18,17 @@ export class HatAppHmiContentComponent implements OnInit {
     return roles.map(role => {
       switch (role.role) {
         case 'namespaceread':
-          return `<b>Read</b> data from the ${role.detail} namespace.`;
+          return `Read data from the ${role.detail} folder.`;
         case 'namespacewrite':
-          return `<b>Write</b> data into the ${role.detail} namespace.`;
+          return `Write data into the ${role.detail} folder.`;
         case 'managefiles':
-          return `Manage files on ${role.detail} namespace.`;
+          return `Manage files in ${role.detail} folder.`;
         case 'applicationmanage':
-          return `The app needs to be able to manage ${role.detail} app.`;
+          return `Manage ${role.detail} application.`;
         case 'applicationlist':
-          return 'The app needs to be able to list other available applications.';
+          return `List other applications' statuses.`;
         case 'datadebit':
-          return `Create data debit ${role.detail}.`;
+          return `Establish a data debit named ${role.detail}.`;
         case 'owner':
           return 'This is a Z class app that enables the HAT owner to view, search, browse and organise their HAT data.';
         default:

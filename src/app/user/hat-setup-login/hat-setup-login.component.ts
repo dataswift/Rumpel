@@ -205,7 +205,7 @@ export class HatSetupLoginComponent implements OnInit {
 
   handleShowPermissions(): void {
     const dialogRef = this.dialog.open(HatAppHmiComponent, {
-      data: { title: 'HAT Microserver Instructions', apps: [this.hatApp, ...this.dependencyApps] }
+      data: { title: 'HAT Microserver Instructions', apps: [...this.dependencyApps, this.hatApp] }
     });
   }
 

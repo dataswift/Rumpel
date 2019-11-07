@@ -10,10 +10,6 @@
   <ng-container *ngIf="hatApp">
     <div class="content-wrapper">
       <section class="drp-explainer">
-        <div class="drp-logo-wrapper">
-          <img src="/assets/images/HATDataRights_200.png" class="drp-logo" height="100" width="100" />
-        </div>
-
         <h3 class="section-heading" style="margin: 32px auto;">{{hatAddress}}</h3>
 
         <ng-container *ngIf="hatExists; else hatNotExists">
@@ -28,19 +24,59 @@
 
       <div class="section-divider"></div>
 
+      <div class="drp-logo-wrapper">
+        <img src="/assets/images/HATDataRights_200.png" class="drp-logo" height="100" width="100" alt="HAT Data rights"/>
+      </div>
+
+      <section class="permissions-section" *ngIf="dependencyApps && dependencyApps.length > 0">
+        <h3 class="section-heading">Setting up the data plug</h3>
+        <p class="section-text">The data plug enables you to copy data from different places on the internet into your HAT PDA.</p>
+
+        <mat-card *ngFor="let depApp of dependencyApps">
+          <div class="app-card-img-wrapper" [style.background-color]="depApp.application.info.primaryColor">
+            <img src="/assets/images/data-plug-lego-icon.png" alt="Data plug"/>
+          </div>
+
+          <mat-card-content>
+            <h5 class="card-heading">{{depApp.application.info.name}}</h5>
+          </mat-card-content>
+        </mat-card>
+      </section>
+
+      <ng-container *ngIf="hatApp.application.setup.dependencies || (hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle)">
+        <section class="permissions-section" style="text-align: center;">
+          <p class="section-text">The app and the data plug will have permission to take actions in your HAT.</p>
+          <button role="button" class="link-button" (click)="handleShowPermissions()">Review permissions.</button>
+        </section>
+      </ng-container>
+
       <section class="permissions-section">
-        <h4 class="section-heading">You agree that {{hatApp.application.info.name}} by {{hatApp.application.developer.name}} will be able to:</h4>
+        <div class="hmi-data-share-wrapper">
+          <img class="data-share-icon" src="/assets/images/data-share.svg" alt="data share" />
+          <img class="data-share-logo" [src]="hatApp.application.info.graphics.logo.normal" alt="data share" />
+        </div>
+        <h3 class="section-heading">Your data will be shared with {{hatApp.application.info.name}}</h3>
+
+        <p class="section-text">You are giving the app permission to:</p>
 
         <div class="data-access-summary" *ngIf="hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle">
-          <mat-expansion-panel *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
+          <mat-expansion-panel>
             <mat-expansion-panel-header>
-              <mat-panel-title class="expandable-card-title">Use {{endpoint.title}} data</mat-panel-title>
+              <mat-panel-title class="expandable-card-title">Use your data</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <mat-panel-description>
-              <ul class="card-list">
-                <li *ngFor="let field of endpoint.fields">{{field}}</li>
-              </ul>
+            <mat-panel-description class="hmi-data-debit-panel-description">
+              <div>The app will be able to use the following:</div> <br />
+              <div *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
+                <div>
+                  <div>
+                    {{endpoint.title}} data
+                  </div>
+                  <ul class="card-list">
+                    <li *ngFor="let field of endpoint.fields">{{field}}</li>
+                  </ul>
+                </div>
+              </div>
             </mat-panel-description>
           </mat-expansion-panel>
         </div>
@@ -48,7 +84,7 @@
         <mat-card>
           <ng-container *ngIf="hatApp.application.setup.dependencies || (hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle); else noExtraDataPermissions">
             <mat-card-content>
-              <h5 class="card-heading">Why it needs the data?</h5>
+              <h5 class="card-heading">Purpose of data usage</h5>
               <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
             </mat-card-content>
           </ng-container>
@@ -62,28 +98,32 @@
         </mat-card>
       </section>
 
-      <section class="permissions-section" *ngIf="dependencyApps && dependencyApps.length > 0">
-        <h5 class="section-heading">Additional data plugs have to be setup for this app:</h5>
+      <section class="permissions-section" *ngIf="hatApp.application.info.rating">
+        <h3 class="section-heading">Make sure you trust App</h3>
+        <p class="section-text">
+          Find out how {{hatApp.application.info.name}} will handle your data
+          by reviewing its terms of service and privacy policies. You can always view this contract and remove access to this app in your HAT App Settings under Data Debits.
+        </p>
 
-        <mat-card *ngFor="let depApp of dependencyApps">
-          <div class="card-img-wrapper">
-            <img [src]="depApp.application.info.graphics.logo.normal" class="card-img" [alt]="depApp.application.info.name" />
+        <div class="app-logo-container">
+          <div class="app-logo-wrapper">
+            <img [src]="hatApp.application.info.graphics.logo.normal" alt="Application logo" class="img img-responsive app-logo" />
           </div>
-          <mat-card-content>
-            <h5 class="card-heading">{{depApp.application.info.name}}</h5>
-            <p class="card-text">This data plug enables you to claim your data from {{depApp.application.info.name}} into your HAT.</p>
-          </mat-card-content>
-        </mat-card>
+
+          <div class="app-rating-wrapper">
+            <div class="app-rating">
+              <span class="app-rating-highlighted">{{hatApp.application.info.rating.score}}</span>
+            </div>
+          </div>
+
+          <div class="app-details-header-headline">
+            This app is rated {{hatApp.application.info.rating.score}}
+          </div>
+          <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="app-link" rel="noopener noreferrer">Learn more</a>
+        </div>
       </section>
-
-      <ng-container *ngIf="hatApp.application.setup.dependencies || (hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle)">
-        <section class="permissions-section" style="text-align: center;">
-          <p class="section-text">The apps above will have permission to take actions in your HAT.</p>
-          <button role="button" class="link-button" (click)="handleShowPermissions()">Show permissions</button>
-
-        </section>
-      </ng-container>
     </div>
+
 
     <div class="sticky-action-panel">
       <div class="sticky-action-panel-content">
@@ -92,9 +132,11 @@
           <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)" class="primary-action">Confirm</button>
         </div>
         <p class="hmi-id-text">HMI ID: {{hatApp.application.id}}-v{{hatApp.application.info.version}}</p>
-        <p class="tos-text">By pressing ‘Confirm’ I agree to DataSwift Ltd
-          <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c540dc4e4966bf470e0d5fd/1549012420957/hat+owner+terms+of+service+-+10_1_19+-+v2.3+%281%29.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>
-          and the permissions laid out above.</p>
+        <p class="tos-text">By pressing ‘Confirm’ I agree to Dataswift Ltd
+          <a href="https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf" target="_blank" style="color: #6297b1;">Privacy Policy</a>
+          and the HAT
+          <a href="https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>
+          </p>
       </div>
     </div>
   </ng-container>
