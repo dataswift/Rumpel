@@ -26,12 +26,9 @@ import { SheFeedItemComponent } from './components/she-feed-item/she-feed-item.c
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { DatetimePipe } from './pipes/datetime.pipe';
 import { GraphicPageHeaderComponent } from './components/graphic-page-header/graphic-page-header.component';
-import { HatApplicationPermissionsComponent } from './components/hat-application-permissions/hat-application-permissions.component';
 import { HatAppUpdateNotesComponent } from './components/hat-app-update-notes/hat-app-update-notes.component';
 import { ListCardComponent } from './components/list-card/list-card.component';
-import { HatAppHmiComponent } from './components/hat-app-hmi/hat-app-hmi.component';
 import { PasswordStrengthIndicatorComponent } from './components/password-strength-indicator/password-strength-indicator.component';
-import { HatAppHmiContentComponent } from './components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { MarkdownViewComponent } from './components/markdown-view/markdown-view.component';
 import { SheFeedWeeklySummaryModule } from './components/she-feed-weekly-summary/she-feed-weekly-summary.module';
 
@@ -49,12 +46,9 @@ import { SheFeedWeeklySummaryModule } from './components/she-feed-weekly-summary
                   SheFeedItemComponent,
                   DatetimePipe,
                   GraphicPageHeaderComponent,
-                  HatApplicationPermissionsComponent,
                   HatAppUpdateNotesComponent,
                   ListCardComponent,
-                  HatAppHmiComponent,
                   PasswordStrengthIndicatorComponent,
-                  HatAppHmiContentComponent,
                   MarkdownViewComponent
   ],
 
@@ -64,8 +58,8 @@ import { SheFeedWeeklySummaryModule } from './components/she-feed-weekly-summary
              TreeViewComponent,
              OutsideClickDirective, StickDirective, SpinnerComponent, GraphicPageHeaderComponent,
              CommonModule, RouterModule, NotableComponent, LocationNotableComponent, PresignImgUrlPipe, PageHeaderComponent,
-             UnbundlePipe, SheFeedItemComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent,
-             ListCardComponent, PasswordStrengthIndicatorComponent, HatAppHmiContentComponent, SheFeedWeeklySummaryModule,
+             UnbundlePipe, SheFeedItemComponent, HatAppUpdateNotesComponent,
+             ListCardComponent, PasswordStrengthIndicatorComponent, SheFeedWeeklySummaryModule,
   ]
 })
 export class SharedModule {}

@@ -1,11 +1,9 @@
-@import '../../../style/branding';
-@import '../../../style/rumpel-mixins';
+@import '../../style/branding';
+@import '../../style/rumpel-mixins';
 
 .content-wrapper {
   @include flex-container(column);
-
-  //overflow: scroll;
-  margin-bottom: 142px;
+  padding-top: 24px;
 }
 
 .title-section {
@@ -15,87 +13,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .app-logo-wrapper {
-    display: inline-block;
-    background-color: white;
-    padding: 6px;
-    border-radius: 50%;
-    margin: auto;
-    margin-top: 50px;
-
-    .app-logo {
-      border-radius: 50%;
-    }
-  }
-
-  .app-rating-wrapper {
-    position: relative;
-    margin-top: -20px;
-    background-color: white;
-    padding: 6px;
-    border-radius: 4px;
-
-    &:before {
-      content: " ";
-      position: absolute;
-      top: -10px;
-      left: 5px;
-      border: solid transparent;
-      border-width: 5px 35px;
-      border-bottom-color: white;
-      border-radius: 4px;
-    }
-
-    .app-rating {
-      position: relative;
-      background-color: #dfc586;
-      font-size: 12px;
-      color: white;
-      text-align: center;
-      width: 70px;
-      padding: 2px 0;
-
-      &:before {
-        content: " ";
-        position: absolute;
-        top: -10px;
-        left: 0;
-        border: solid transparent;
-        border-width: 5px 35px;
-        border-bottom-color: #dfc586;
-      }
-
-      &-highlighted {
-        font-weight: bold;
-      }
-
-      &-italicized {
-        font-style: italic;
-      }
-    }
-  }
+  margin-top: 45px;
 
   .title-section-heading {
     color: $app-dark-tone;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
-  }
-
-  .title-section-text {
-    color: $hat-body-text;
-    font-size: 13px;
-    line-height: 1.38;
-    width: 80%;
-    margin: auto;
-  }
-
-  .title-section-text-rating {
-    margin-top: 10px;
-    color: $hat-body-text;
-    font-size: 13px;
-    line-height: 1.38;
-    font-style: italic;
   }
 
   .title-section-text-link {
@@ -179,7 +102,7 @@
 
   ::ng-deep mat-expansion-panel {
     &:not([class*=mat-elevation-z]) {
-      box-shadow: none !important;
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12) !important;
     }
 
     &:first-child {
@@ -196,14 +119,22 @@
       border-bottom: 1px solid #eeeeee;
     }
 
-    &:not(:first-child) {
-      margin-top: 10px;
-    }
+    //&:not(:first-child) {
+    //}
+    margin-top: 16px;
+
 
     &-header {
+      height: 55px !important;
       &:hover {
         background-color: white !important;
       }
+    }
+
+    &-header.mat-expanded {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
 
     .expandable-card-title {
@@ -213,4 +144,17 @@
       letter-spacing: 0.5px;
     }
   }
+}
+
+.title-section-text {
+  color: $hat-body-text;
+  width: 80%;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  margin: auto;
 }

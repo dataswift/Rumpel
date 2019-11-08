@@ -1,0 +1,28 @@
+<div class="content-wrapper" *ngIf="app">
+  <img height="80" width="80" src="/assets/images/HATDataRights_200.png" alt="HAT Data rights logo" />
+
+  <section class="title-section">
+
+    <h3 class="title-section-heading">{{app.info.name}} wants to access your HAT PDA</h3>
+
+  </section>
+
+  <section class="permissions-section">
+    <p class="title-section-text">You are giving {{app.info.name}} the following permissions:</p>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="expandable-card-title">Write access to folders.</mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-panel-description style="flex-direction: column">
+        <h5 class="card-heading">The app will be able to:</h5>
+        <rum-hmi-permissions-list [app]="app"></rum-hmi-permissions-list>
+      </mat-panel-description>
+    </mat-expansion-panel>
+  </section>
+
+  <rum-hmi-data-debit [app]="app"></rum-hmi-data-debit>
+
+  <rum-hmi-rating [app]="app"></rum-hmi-rating>
+</div>

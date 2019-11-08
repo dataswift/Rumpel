@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HatApplicationContent } from '../../../explore/hat-application.interface';
 
 @Component({
-  selector: 'rum-hat-application-permissions',
-  templateUrl: './hat-application-permissions.component.html',
-  styleUrls: ['./hat-application-permissions.component.scss']
+  selector: 'rum-hmi-rating',
+  templateUrl: './hmi-rating.component.html',
+  styleUrls: ['./hmi-rating.component.scss']
 })
-export class HatApplicationPermissionsComponent implements OnInit {
+export class HmiRatingComponent implements OnInit {
   @Input() app: HatApplicationContent;
 
   constructor() { }

@@ -1,12 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HatApplicationPermissionsComponent } from './hat-application-permissions.component';
-import { CustomAngularMaterialModule } from '../../../core/custom-angular-material.module';
-import { UnbundlePipe } from '../../pipes/unbundle.pipe';
-import { HatApplicationContent } from '../../../explore/hat-application.interface';
-import { HatAppHmiContentComponent } from '../hat-app-hmi-content/hat-app-hmi-content.component';
-import { SafeHtmlPipe } from '../../pipes';
+import { HmiBaasContentComponent } from './hmi-baas-content.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
+import { HmiDataDebitComponent } from '../hmi-shared-components/hmi-data-debit/hmi-data-debit.component';
+import { HmiRatingComponent } from '../hmi-shared-components/hmi-rating/hmi-rating.component';
+import { HatApplicationContent } from '../../explore/hat-application.interface';
+import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
+import { HmiPermissionsListComponent } from '../hmi-permissions-list/hmi-permissions-list.component';
+import { HmiPermissionsDialogComponent } from '../hmi-permissions-dialog/hmi-permissions-dialog.component';
+import { SafeHtmlPipe } from '../../shared/pipes';
 
 const APP_DATA_MOCK: HatApplicationContent = {
   'id': 'notables',
@@ -234,20 +237,22 @@ const APP_DATA_MOCK: HatApplicationContent = {
   }
 };
 
-describe('HatApplicationPermissionsComponent', () => {
-  let component: HatApplicationPermissionsComponent;
-  let fixture: ComponentFixture<HatApplicationPermissionsComponent>;
+describe('HmiBaasContentComponent', () => {
+  let component: HmiBaasContentComponent;
+  let fixture: ComponentFixture<HmiBaasContentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule, NoopAnimationsModule ],
-      declarations: [ HatApplicationPermissionsComponent, UnbundlePipe, HatAppHmiContentComponent, SafeHtmlPipe ]
+      declarations: [ HmiBaasContentComponent, HmiDataDebitComponent, HmiRatingComponent,
+        HmiPermissionsListComponent, HmiPermissionsDialogComponent, UnbundlePipe, SafeHtmlPipe, UnbundlePipe,
+      ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HatApplicationPermissionsComponent);
+    fixture = TestBed.createComponent(HmiBaasContentComponent);
     component = fixture.componentInstance;
     component.app = APP_DATA_MOCK;
     fixture.detectChanges();

@@ -19,12 +19,14 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
 import { InfoHeaderComponent } from './info-header/info-header.component';
 import { HatSetupLoginComponent } from './hat-setup-login/hat-setup-login.component';
 import { HatSetupCacheService } from './hat-setup-login/hat-setup-cache.service';
+import { HmiModule } from '../hmi/hmi.module';
 
 @NgModule({
   imports: [
     SharedModule,
     FormsModule,
-    CustomAngularMaterialModule
+    CustomAngularMaterialModule,
+    HmiModule
   ],
   declarations: [
     LoginNativeComponent,

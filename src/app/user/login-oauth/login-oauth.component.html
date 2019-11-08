@@ -13,14 +13,28 @@
     </ng-container>
 
     <ng-template #appPermissions>
-      <rum-hat-application-permissions [app]="hatApp.application"></rum-hat-application-permissions>
+      <rum-hmi-baas-content [app]="hatApp.application"></rum-hmi-baas-content>
     </ng-template>
 
-
-    <div class="user-actions">
-      <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)">Agree</button>
-      <button mat-flat-button role="link" (click)="declineTerms()">Cancel</button>
+    <div class="sticky-action-panel">
+      <div class="sticky-action-panel-content">
+        <div class="action-buttons">
+          <button mat-flat-button role="button" (click)="declineTerms()" class="secondary-action">Cancel</button>
+          <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)" class="primary-action">Confirm</button>
+        </div>
+        <p class="hmi-id-text">HMI ID: {{hatApp.application.id}}-v{{hatApp.application.info.version}}</p>
+        <p class="tos-text">By pressing ‘Confirm’ I agree to Dataswift Ltd
+          <a href="https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf" target="_blank" style="color: #6297b1;">Privacy Policy</a>
+          and the HAT
+          <a href="https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>
+        </p>
+      </div>
     </div>
+
+<!--    <div class="user-actions">-->
+<!--      <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)">Agree</button>-->
+<!--      <button mat-flat-button role="link" (click)="declineTerms()">Cancel</button>-->
+<!--    </div>-->
   </ng-container>
 
   <ng-container *ngIf="errorMessage">

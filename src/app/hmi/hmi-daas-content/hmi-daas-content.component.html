@@ -1,0 +1,5 @@
+<div class="content-wrapper" *ngIf="app">
+  <rum-hmi-data-plug [app]="app" [dependencyApps]="dependencyApps"></rum-hmi-data-plug>
+  <rum-hmi-data-debit [app]="app.application"></rum-hmi-data-debit>
+  <rum-hmi-rating [app]="app.application"></rum-hmi-rating>
+</div>

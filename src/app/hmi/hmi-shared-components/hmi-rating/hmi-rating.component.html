@@ -1,0 +1,26 @@
+<section class="hmi-rating-section">
+  <h3 class="hmi-rating-section-heading" style="margin-bottom: 20px">Make sure you trust {{app.info.name}}</h3>
+
+  <p class="hmi-rating-section-text">Find out how {{app.info.name}} will handle your data
+    by reviewing its terms of service and privacy policies. You can always view this
+    contract and remove access to this app in your HAT App Settings under Data Debits.
+  </p>
+
+  <div class="app-logo-wrapper">
+    <img src="{{app.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" alt="Application logo" />
+  </div>
+
+  <ng-container *ngIf="app.info.rating && app.info.rating.score">
+    <div class="app-rating-wrapper">
+      <div class="app-rating">
+        <span class="app-rating-highlighted">{{app.info.rating.score}}</span>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="app.info.rating && app.info.rating.score">
+    <p class="hmi-rating-section-text">This app is rated {{app.info.rating.score}}<br>
+      <a href="https://www.hatcommunity.org/hat-dex-rating" target="_blank" class="hmi-rating-section-text-link">Learn more</a>
+    </p>
+  </ng-container>
+</section>

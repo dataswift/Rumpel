@@ -6,12 +6,14 @@ import { HatApplicationListComponent } from './hat-application-list/hat-applicat
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { HatApplicationDetailsComponent } from './hat-application-details/hat-application-details.component';
 import { HatAppDetailsPermissionsComponent } from './hat-app-details-permissions/hat-app-details-permissions.component';
+import { HmiModule } from '../hmi/hmi.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    CustomAngularMaterialModule
+    CustomAngularMaterialModule,
+    HmiModule
   ],
   declarations: [
     HatApplicationListComponent,

@@ -52,13 +52,13 @@ import { ExploreModule } from './explore/explore.module';
 import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
 import { HatClaimModule } from './hat-claim/hat-claim.module';
-import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.component';
 import { SystemStatusService } from './services/system-status.service';
 import { WINDOW_PROVIDERS } from './core/services/global.service';
 import { ToolsModule } from './tools/tools.module';
 import { ReactiveWebStorageModule } from './core/services/reactive-webstorage.module';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { CookieService } from 'ngx-cookie-service';
+import { HmiModule } from './hmi/hmi.module';
 
 
 export const storageKeys = ['system-status', 'applications', 'tools', 'phata-structure'];
@@ -90,12 +90,12 @@ export const storageKeys = ['system-status', 'applications', 'tools', 'phata-str
     HatClaimModule,
     SettingsModule,
     ToolsModule,
+    HmiModule,
     ReactiveWebStorageModule.setLocalStorageKeys(storageKeys),
     NgxDaterangepickerMd.forRoot()
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent,
-    HatAppHmiComponent
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

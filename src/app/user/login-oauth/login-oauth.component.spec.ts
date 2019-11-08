@@ -15,12 +15,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
 // tslint:disable-next-line:max-line-length
-import { HatApplicationPermissionsComponent } from '../../shared/components/hat-application-permissions/hat-application-permissions.component';
 import { HatAppUpdateNotesComponent } from '../../shared/components/hat-app-update-notes/hat-app-update-notes.component';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
-import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { SafeHtmlPipe } from '../../shared/pipes';
 import { CacheService } from '../../core/services/cache.service';
+import { HmiBaasContentComponent } from '../../hmi/hmi-baas-content/hmi-baas-content.component';
+import { HmiPermissionsListComponent } from '../../hmi/hmi-permissions-list/hmi-permissions-list.component';
+import { HmiDataPlugComponent } from '../../hmi/hmi-shared-components/hmi-data-plug/hmi-data-plug.component';
+import { HmiDataDebitComponent } from '../../hmi/hmi-shared-components/hmi-data-debit/hmi-data-debit.component';
+import { HmiRatingComponent } from '../../hmi/hmi-shared-components/hmi-rating/hmi-rating.component';
 
 describe('LoginOauthComponent', () => {
   let component: LoginOauthComponent;
@@ -30,8 +33,9 @@ describe('LoginOauthComponent', () => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule ],
       declarations: [
-        LoginOauthComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent, UnbundlePipe,
-        MarkdownToHtmlPipe, HatAppHmiContentComponent, SafeHtmlPipe ],
+        LoginOauthComponent, HatAppUpdateNotesComponent, UnbundlePipe, HmiDataPlugComponent, HmiDataDebitComponent,
+        MarkdownToHtmlPipe, HmiBaasContentComponent, SafeHtmlPipe, HmiPermissionsListComponent, HmiRatingComponent,
+      ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },
