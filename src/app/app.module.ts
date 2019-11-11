@@ -48,7 +48,6 @@ import { StaticDataService } from './services/static-data.service';
 import { ExploreModule } from './explore/explore.module';
 import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
-import { HatClaimModule } from './hat-claim/hat-claim.module';
 import { SystemStatusService } from './services/system-status.service';
 import { WINDOW_PROVIDERS } from './core/services/global.service';
 import { ToolsModule } from './tools/tools.module';
@@ -81,7 +80,6 @@ export const storageKeys = ['system-status', 'applications', 'tools', 'phata-str
     SheModule,
     CoreModule,
     AppRoutingModule,
-    HatClaimModule,
     SettingsModule,
     ToolsModule,
     HmiModule,
