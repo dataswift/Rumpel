@@ -7,27 +7,25 @@
 
   <p class="section-text">You are giving the app permission to:</p>
 
-  <div class="data-access-summary">
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title class="expandable-card-title">Use your data</mat-panel-title>
-      </mat-expansion-panel-header>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expandable-card-title">Use your data</mat-panel-title>
+    </mat-expansion-panel-header>
 
-      <mat-panel-description class="hmi-data-debit-panel-description">
-        <div>The app will be able to use the following:</div> <br />
-        <div *ngFor="let endpoint of app.permissions.dataRequired.bundle.bundle | unbundle">
+    <mat-panel-description class="hmi-data-debit-panel-description">
+      <div>The app will be able to use the following:</div> <br />
+      <div *ngFor="let endpoint of app.permissions.dataRequired.bundle.bundle | unbundle">
+        <div>
           <div>
-            <div>
-              {{endpoint.title}} data
-            </div>
-            <ul class="card-list">
-              <li *ngFor="let field of endpoint.fields">{{field}}</li>
-            </ul>
+            {{endpoint.title}} data
           </div>
+          <ul class="card-list">
+            <li *ngFor="let field of endpoint.fields">{{field}}</li>
+          </ul>
         </div>
-      </mat-panel-description>
-    </mat-expansion-panel>
-  </div>
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel>
 
   <mat-card>
     <ng-container *ngIf="app.setup.dependencies || (app.permissions.dataRequired && app.permissions.dataRequired.bundle); else noExtraDataPermissions">

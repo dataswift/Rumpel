@@ -14,6 +14,7 @@ import { HmiDaasContentComponent } from './hmi-daas-content/hmi-daas-content.com
     SharedModule,
     CustomAngularMaterialModule
   ],
+  entryComponents: [HmiPermissionsDialogComponent],
   declarations: [
     HmiBaasContentComponent,
     HmiPermissionsListComponent,

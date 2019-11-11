@@ -18,7 +18,7 @@
 
   <ng-container *ngIf="app.application.setup.dependencies || (app.application.permissions.dataRequired && app.application.permissions.dataRequired.bundle)">
     <section style="text-align: center;">
-      <p class="section-text">The app and the data plug will have permission to take actions in your HAT.</p>
+      <p class="section-text" style="display: inline">The app and the data plug will have permission to take <br /> actions in your HAT.</p>
       <button role="button" class="link-button" (click)="handleShowPermissions()">Show permissions.</button>
     </section>
   </ng-container>

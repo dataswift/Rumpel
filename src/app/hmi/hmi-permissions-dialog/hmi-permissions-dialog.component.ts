@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { HatApplication } from '../../explore/hat-application.interface';
 
 @Component({
-  selector: 'rum-hat-app-hmi',
+  selector: 'rum-hmi-permissions-dialog',
   templateUrl: './hmi-permissions-dialog.component.html',
   styleUrls: ['./hmi-permissions-dialog.component.scss']
 })

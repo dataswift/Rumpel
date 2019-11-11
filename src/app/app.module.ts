@@ -16,9 +16,6 @@ import { CoreModule } from './core/core.module';
 import { DataManagementModule } from './data-management/data-management.module';
 import { SharedModule } from './shared/shared.module';
 import { LocationsModule } from './locations/locations.module';
-import { SocialModule } from './social/social.module';
-import { FitbitModule } from './fitbit/fitbit.module';
-import { MonzoModule } from './monzo/monzo.module';
 import { PublicPagesModule } from './public-pages/public-pages.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
@@ -76,9 +73,6 @@ export const storageKeys = ['system-status', 'applications', 'tools', 'phata-str
     LocationsModule,
     FormsModule,
     UserModule,
-    SocialModule,
-    FitbitModule,
-    MonzoModule,
     DataManagementModule,
     PublicPagesModule,
     NotablesModule,

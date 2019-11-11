@@ -2,20 +2,11 @@
 
 .hmi-data-debit-section {
   max-width: 500px;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  margin-top: 45px;
-  padding-left: 21px;
-  padding-right: 21px;
-
-  @media (min-width: 501px) {
-    width: 500px;
-  }
-
-  @media (max-width: 500px) {
-    width: 100%;
-  }
+  align-items: center;
+  margin: 45px auto 20px;
+  width: 100%;
 
   .section-heading {
     color: $app-dark-tone;
@@ -114,6 +105,7 @@
     display: flex;
     align-items: center;
     padding: 18px 24px;
+    width: 100%;
 
     .card-img-wrapper {
       margin-right: 20px;

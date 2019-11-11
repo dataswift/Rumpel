@@ -3,21 +3,11 @@
 .hmi-rating-section {
   text-align: center;
   max-width: 500px;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 45px;
-  padding-left: 21px;
-  padding-right: 21px;
-
-  @media (min-width: 501px) {
-    width: 500px;
-  }
-
-  @media (max-width: 500px) {
-    width: 100%;
-  }
+  margin: 45px auto 20px;
+  width: 100%;
 
   .hmi-rating-section-heading {
     color: $app-dark-tone;

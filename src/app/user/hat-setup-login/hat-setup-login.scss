@@ -11,9 +11,8 @@
 
 .content-wrapper {
   @include flex-container(column);
-  //overflow: scroll;
   margin-bottom: 20px;
-  padding: 0 10px;
+  padding: 24px 21px;
   background-color: #f6f6f6;
 }
 
