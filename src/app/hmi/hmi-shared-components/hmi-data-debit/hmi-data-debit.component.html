@@ -1,7 +1,7 @@
 <section class="hmi-data-debit-section" *ngIf="app.permissions.dataRequired && app.permissions.dataRequired.bundle">
   <div class="hmi-data-share-wrapper">
     <img class="data-share-icon" src="/assets/images/data-share.svg" alt="data share" />
-    <img class="data-share-logo" [src]="app.info.graphics.logo.normal" alt="data share" />
+    <img class="data-share-logo" [src]="app.info.graphics.logo.normal || '/assets/images/app-logo-placeholder.svg'" alt="data share" />
   </div>
   <h3 class="section-heading">Your data will be shared with {{app.info.name}}</h3>
 

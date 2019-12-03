@@ -7,7 +7,7 @@
   </p>
 
   <div class="app-logo-wrapper">
-    <img src="{{app.info.graphics.logo.normal}}" class="app-logo" height="100" width="100" alt="Application logo" />
+    <img src="{{app.info.graphics.logo.normal || '/assets/images/app-logo-placeholder.svg'}}" class="app-logo" height="100" width="100" alt="Application logo" />
   </div>
 
   <ng-container *ngIf="app.info.rating && app.info.rating.score">
