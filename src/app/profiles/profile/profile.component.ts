@@ -94,7 +94,6 @@ export class ProfileComponent implements OnInit {
 
     this.fileSvc.file$.subscribe((fileMetadata: FileMetadataRes) => {
       setTimeout(() => {
-        console.log('filemetadata', fileMetadata);
         this.values.photo.avatar = `https://${this.hatDomain}/api/v2/files/content/${fileMetadata.fileId}`;
         this.submitForm();
       });

@@ -151,12 +151,9 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     if (scrollingDownIndexes.startDate >= this.feedArray.length) {
       if (this.extraDataAttempts <= this.extraDataMonthLimit) {
-        console.log('load more scroll extra data', this.extraDataAttempts);
-
         this.loadMoreData()
-      } else {
-        console.log('no more data')
       }
+
       this.extraDataAttempts += this.extraDataMonthSteps;
     } else {
       const a = this.feedArray.slice(scrollingDownIndexes.startDate , scrollingDownIndexes.endDate + 1);
