@@ -52,10 +52,19 @@
       border-bottom: 1px solid #eeeeee;
     }
 
+    margin-top: 16px;
+
     &-header {
+      height: 55px !important;
       &:hover {
         background-color: white !important;
       }
+    }
+
+    &-header.mat-expanded {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
 
     .expandable-card-title {
@@ -86,6 +95,7 @@
 
 
   .hmi-data-debit-panel-description {
+    padding-top: 16px;
     display: flex;
     flex-direction: column;
     color: #9a9a9a;

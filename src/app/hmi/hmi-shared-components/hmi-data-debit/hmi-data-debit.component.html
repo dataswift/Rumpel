@@ -3,9 +3,11 @@
     <img class="data-share-icon" src="/assets/images/data-share.svg" alt="data share" />
     <img class="data-share-logo" [src]="app.info.graphics.logo.normal || '/assets/images/app-logo-placeholder.svg'" alt="data share" />
   </div>
-  <h3 class="section-heading">Your data will be shared with {{app.info.name}}</h3>
+  <h3 class="section-heading" *ngIf="permissionScreen">Your data has been shared with {{app.info.name}}</h3>
+  <h3 class="section-heading" *ngIf="!permissionScreen">Your data will be shared with {{app.info.name}}</h3>
 
-  <p class="section-text">You are giving the app permission to:</p>
+  <p class="section-text" *ngIf="permissionScreen">You have given the app permission to:</p>
+  <p class="section-text" *ngIf="!permissionScreen">You are giving the app permission to:</p>
 
   <mat-expansion-panel>
     <mat-expansion-panel-header>
@@ -13,7 +15,9 @@
     </mat-expansion-panel-header>
 
     <mat-panel-description class="hmi-data-debit-panel-description">
-      <div>The app will be able to use the following:</div> <br />
+      <div *ngIf="permissionScreen">The app is able to use the following:</div>
+      <div *ngIf="!permissionScreen">The app will be able to use the following:</div>
+      <br />
       <div *ngFor="let endpoint of app.permissions.dataRequired.bundle.bundle | unbundle">
         <div>
           <div>

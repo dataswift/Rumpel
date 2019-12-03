@@ -8,6 +8,7 @@ import { HatApplicationContent } from '../../../explore/hat-application.interfac
 })
 export class HmiDataDebitComponent implements OnInit {
   @Input() app: HatApplicationContent;
+  @Input() permissionScreen: boolean;
 
   constructor() { }
 

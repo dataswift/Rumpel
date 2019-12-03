@@ -2,25 +2,29 @@
   <img height="80" width="80" src="/assets/images/HATDataRights_200.png" alt="HAT Data rights logo" />
 
   <section class="title-section">
-    <h3 class="title-section-heading">{{app.info.name}} wants to access your HAT PDA</h3>
+    <h3 class="title-section-heading" *ngIf="permissionScreen">You have given {{app.info.name}} access to your HAT PDA</h3>
+    <h3 class="title-section-heading" *ngIf="!permissionScreen">{{app.info.name}} wants to access your HAT PDA</h3>
   </section>
 
   <section class="permissions-section">
-    <p class="title-section-text">You are giving {{app.info.name}} the following permissions:</p>
+    <p class="title-section-text" *ngIf="permissionScreen">You gave the {{app.info.name}} the following permissions:</p>
+    <p class="title-section-text" *ngIf="!permissionScreen">You are giving {{app.info.name}} the following permissions:</p>
 
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title class="expandable-card-title">Write access to folders.</mat-panel-title>
       </mat-expansion-panel-header>
 
-      <mat-panel-description style="flex-direction: column">
-        <h5 class="card-heading">The app will be able to:</h5>
+      <mat-panel-description class="hmi-baas-panel-description">
+        <div class="card-heading" *ngIf="permissionScreen">The app is able to:</div>
+        <div class="card-heading" *ngIf="!permissionScreen">The app will be able to:</div>
+
         <rum-hmi-permissions-list [app]="app"></rum-hmi-permissions-list>
       </mat-panel-description>
     </mat-expansion-panel>
   </section>
 
-  <rum-hmi-data-debit [app]="app"></rum-hmi-data-debit>
+  <rum-hmi-data-debit [app]="app" [permissionScreen]="permissionScreen"></rum-hmi-data-debit>
 
   <rum-hmi-rating [app]="app"></rum-hmi-rating>
 </div>
