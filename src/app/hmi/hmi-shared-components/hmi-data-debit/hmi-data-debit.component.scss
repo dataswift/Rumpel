@@ -1,0 +1,163 @@
+@import '../../../style/branding';
+
+.hmi-data-debit-section {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 45px auto 20px;
+  width: 100%;
+
+  .section-heading {
+    color: $app-dark-tone;
+    font-size: 18px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.56;
+    letter-spacing: 0.4px;
+    text-align: center;
+    margin: 32px auto;
+  }
+
+  .section-text {
+    color: $hat-body-text;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+  }
+
+  ::ng-deep mat-expansion-panel {
+    width: 100%;
+
+    &:not([class*=mat-elevation-z]) {
+      box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12) !important;
+    }
+
+    &:first-child {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    &-header {
+      &:hover {
+        background-color: white !important;
+      }
+    }
+
+    .expandable-card-title {
+      color: $app-dark-tone;
+      font-weight: bold;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .hmi-data-share-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 24px;
+
+    .data-share-logo {
+      height: 48px;
+      width: 48px;
+      border-radius: 50px;
+    }
+
+    .data-share-icon {
+      margin-right: 2px;
+      height: 48px;
+    }
+  }
+
+
+  .hmi-data-debit-panel-description {
+    display: flex;
+    flex-direction: column;
+    color: #9a9a9a;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+  }
+
+  .mat-card {
+    margin: 16px 0;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.12);
+    min-height: 80px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 18px 24px;
+    width: 100%;
+
+    .card-img-wrapper {
+      margin-right: 20px;
+
+      .card-img {
+        max-width: 40px;
+        border-radius: 50%;
+      }
+
+      &-expanded {
+        align-self: flex-start;
+      }
+    }
+
+    .card-heading {
+      color: $app-dark-tone;
+      font-weight: bold;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      //text-transform: capitalize;
+    }
+
+    .card-subheading {
+      font-weight: bold;
+      margin-top: 0;
+    }
+
+    .card-text {
+      letter-spacing: normal;
+      color: $hat-body-text;
+      font-size: 13px;
+      height: auto;
+      overflow: hidden;
+
+      &-expanded {
+        height: auto;
+      }
+    }
+
+    .card-list {
+      margin-bottom: 0;
+      padding-left: 16px;
+    }
+
+    .card-expansion-toggle {
+      position: absolute;
+      bottom: 8px;
+      right: 16px;
+      color: $app-accent-color;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+    }
+  }
+}

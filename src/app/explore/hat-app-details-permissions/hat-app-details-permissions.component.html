@@ -1,11 +1,7 @@
 <ng-container *ngIf="hatApp$ | async as app">
-  <rum-hat-application-permissions [app]="app.application"></rum-hat-application-permissions>
+  <rum-hmi-baas-content [app]="app.application"></rum-hmi-baas-content>
 
   <div class="user-actions">
-
-    <div class="data-rights-logo-wrapper">
-      <img src="/assets/images/HATDataRights_200.png" class="drp-logo" height="100" width="100" />
-    </div>
     <button mat-flat-button role="button" (click)="navigateBack()">Okay</button>
   </div>
 </ng-container>

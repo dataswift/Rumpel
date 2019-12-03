@@ -11,9 +11,8 @@
 
 .content-wrapper {
   @include flex-container(column);
-  //overflow: scroll;
-  margin-bottom: 150px;
-  padding: 0 10px;
+  margin-bottom: 20px;
+  padding: 24px 21px;
   background-color: #f6f6f6;
 }
 
@@ -54,10 +53,6 @@
 }
 
 .sticky-action-panel {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background-color: $hat-background-color;
 
   &-content {
@@ -110,7 +105,15 @@
   .hmi-id-text {
     margin-top: 24px;
     margin-bottom: 16px;
-    font-weight: bold;
+    font-size: 11px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.8px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #9a9a9a;
   }
 }
 
@@ -148,221 +151,31 @@
 
 .section-heading {
   color: $app-dark-tone;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  letter-spacing: 0.6px;
-  margin: 16px auto;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.56;
+  letter-spacing: 0.4px;
+  text-align: center;
+  margin: 32px auto;
 }
 
 .section-text {
   color: $hat-body-text;
   font-size: 14px;
-  line-height: 1.38;
-  letter-spacing: 0.3px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
 }
 
 .section-divider {
-  width: 100%;
-  max-width: 500px;
+  width: 50%;
+  max-width: 300px;
   margin: 40px auto;
   padding: 0 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.section-heading {
-  color: $app-dark-tone;
-  font-weight: bold;
-  font-size: 16px;
-  letter-spacing: 0.5px;
-  padding: 0 24px;
-}
-
-.app-information {
-  text-align: center;
-  max-width: 500px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .app-logo-wrapper {
-    display: inline-block;
-    background-color: white;
-    padding: 6px;
-    border-radius: 50%;
-    margin: auto;
-
-    .app-logo {
-      border-radius: 50%;
-    }
-  }
-
-  .app-rating-wrapper {
-    position: relative;
-    margin-top: -20px;
-    background-color: white;
-    padding: 6px;
-    border-radius: 4px;
-
-    &:before {
-      content: " ";
-      position: absolute;
-      top: -10px;
-      left: 5px;
-      border: solid transparent;
-      border-width: 5px 35px;
-      border-bottom-color: white;
-      border-radius: 4px;
-    }
-
-    .app-rating {
-      position: relative;
-      background-color: #dfc586;
-      font-size: 12px;
-      color: white;
-      text-align: center;
-      width: 70px;
-      padding: 2px 0;
-      letter-spacing: 2px;
-
-      &:before {
-        content: " ";
-        position: absolute;
-        top: -10px;
-        left: 0;
-        border: solid transparent;
-        border-width: 5px 35px;
-        border-bottom-color: #dfc586;
-      }
-
-      &-highlighted {
-        font-weight: bold;
-      }
-
-      &-italicized {
-        font-style: italic;
-      }
-    }
-  }
-
-  .title-section-text-link {
-    font-style: normal;
-    color: $app-accent-color;
-  }
-}
-
-.permissions-section {
-  padding: 10px 0;
-  width: 100%;
-  max-width: 500px;
-
-  .section-header {
-    color: $text-dark;
-    font-size: 13px;
-    text-transform: uppercase;
-  }
-
-  .mat-card {
-    margin: 10px 0;
-    box-shadow: none;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    padding: 18px 24px;
-
-    .card-img-wrapper {
-      margin-right: 20px;
-
-      .card-img {
-        max-width: 40px;
-        border-radius: 50%;
-      }
-
-      &-expanded {
-        align-self: flex-start;
-      }
-    }
-
-    .card-heading {
-      color: $app-dark-tone;
-      font-weight: bold;
-      font-size: 14px;
-      letter-spacing: 0.5px;
-      //text-transform: capitalize;
-    }
-
-    .card-subheading {
-      font-weight: bold;
-      margin-top: 0;
-    }
-
-    .card-text {
-      letter-spacing: normal;
-      color: $hat-body-text;
-      font-size: 13px;
-      height: auto;
-      overflow: hidden;
-
-      &-expanded {
-        height: auto;
-      }
-    }
-
-    .card-list {
-      margin-bottom: 0;
-      padding-left: 16px;
-    }
-
-    .card-expansion-toggle {
-      position: absolute;
-      bottom: 8px;
-      right: 16px;
-      color: $app-accent-color;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: bold;
-    }
-  }
-}
-
-::ng-deep mat-expansion-panel {
-  &:not([class*=mat-elevation-z]) {
-    box-shadow: none !important;
-  }
-
-  &:first-child {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-  }
-
-  &:last-child {
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid #eeeeee;
-  }
-
-  &-header {
-    &:hover {
-      background-color: white !important;
-    }
-  }
-
-  .expandable-card-title {
-    color: $app-dark-tone;
-    font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-  }
-}
-
-.link-button {
-  border: none;
-  background: transparent;
-  color: $app-accent-color;
-  font-weight: 500;
-  font-size: 14px;
-  margin-bottom: 20px;
 }

@@ -16,9 +16,6 @@ import { CoreModule } from './core/core.module';
 import { DataManagementModule } from './data-management/data-management.module';
 import { SharedModule } from './shared/shared.module';
 import { LocationsModule } from './locations/locations.module';
-import { SocialModule } from './social/social.module';
-import { FitbitModule } from './fitbit/fitbit.module';
-import { MonzoModule } from './monzo/monzo.module';
 import { PublicPagesModule } from './public-pages/public-pages.module';
 import { NotablesModule } from './notables/notables.module';
 import { MashupsModule } from './mashups/mashups.module';
@@ -51,14 +48,13 @@ import { StaticDataService } from './services/static-data.service';
 import { ExploreModule } from './explore/explore.module';
 import { AuthInterceptor } from './core/services/auth-interceptor';
 import { SheModule } from './she/she.module';
-import { HatClaimModule } from './hat-claim/hat-claim.module';
-import { HatAppHmiComponent } from './shared/components/hat-app-hmi/hat-app-hmi.component';
 import { SystemStatusService } from './services/system-status.service';
 import { WINDOW_PROVIDERS } from './core/services/global.service';
 import { ToolsModule } from './tools/tools.module';
 import { ReactiveWebStorageModule } from './core/services/reactive-webstorage.module';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { CookieService } from 'ngx-cookie-service';
+import { HmiModule } from './hmi/hmi.module';
 
 
 export const storageKeys = ['system-status', 'applications', 'tools', 'phata-structure'];
@@ -76,9 +72,6 @@ export const storageKeys = ['system-status', 'applications', 'tools', 'phata-str
     LocationsModule,
     FormsModule,
     UserModule,
-    SocialModule,
-    FitbitModule,
-    MonzoModule,
     DataManagementModule,
     PublicPagesModule,
     NotablesModule,
@@ -87,15 +80,14 @@ export const storageKeys = ['system-status', 'applications', 'tools', 'phata-str
     SheModule,
     CoreModule,
     AppRoutingModule,
-    HatClaimModule,
     SettingsModule,
     ToolsModule,
+    HmiModule,
     ReactiveWebStorageModule.setLocalStorageKeys(storageKeys),
     NgxDaterangepickerMd.forRoot()
   ],
   bootstrap: [ AppRootComponent ],
   entryComponents: [ DialogBoxComponent, ConfirmBoxComponent, InfoBoxComponent, MapBoxComponent, FileUploadComponent,
-    HatAppHmiComponent
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

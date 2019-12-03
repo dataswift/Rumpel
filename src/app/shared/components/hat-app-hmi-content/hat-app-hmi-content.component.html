@@ -1,7 +1,0 @@
-<ng-container *ngIf="appContent">
-  <ul class="instruction-list">
-    <li *ngFor="let text of processPermissionRoles(appContent.permissions.rolesGranted)"
-        [innerHtml]="text | safeHtml" class="list-item">
-    </li>
-  </ul>
-</ng-container>

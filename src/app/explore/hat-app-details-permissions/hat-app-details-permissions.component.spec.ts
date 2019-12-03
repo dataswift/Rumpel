@@ -3,16 +3,19 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { HatAppDetailsPermissionsComponent } from './hat-app-details-permissions.component';
 // tslint:disable-next-line:max-line-length
-import { HatApplicationPermissionsComponent } from '../../shared/components/hat-application-permissions/hat-application-permissions.component';
 import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
 import { ActivatedRoute } from '@angular/router';
 import { HatApplicationsService } from '../hat-applications.service';
 import { Location } from '@angular/common';
 import { of } from 'rxjs';
 import { HatApplication } from '../hat-application.interface';
-import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { SafeHtmlPipe } from '../../shared/pipes';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HmiBaasContentComponent } from '../../hmi/hmi-baas-content/hmi-baas-content.component';
+import { HmiPermissionsListComponent } from '../../hmi/hmi-permissions-list/hmi-permissions-list.component';
+import { HmiDataDebitComponent } from '../../hmi/hmi-shared-components/hmi-data-debit/hmi-data-debit.component';
+import { HmiRatingComponent } from '../../hmi/hmi-shared-components/hmi-rating/hmi-rating.component';
+import { HmiDataPlugComponent } from '../../hmi/hmi-shared-components/hmi-data-plug/hmi-data-plug.component';
 
 const HAT_APPLICATION_MOCK: HatApplication = {
   'application': {
@@ -254,9 +257,12 @@ describe('HatAppDetailsPermissionsComponent', () => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule, NoopAnimationsModule ],
       declarations: [ HatAppDetailsPermissionsComponent,
-        HatApplicationPermissionsComponent,
+        HmiBaasContentComponent,
+        HmiPermissionsListComponent,
+        HmiDataDebitComponent,
+        HmiRatingComponent,
+        HmiDataPlugComponent,
         UnbundlePipe,
-        HatAppHmiContentComponent,
         SafeHtmlPipe
       ],
       providers: [

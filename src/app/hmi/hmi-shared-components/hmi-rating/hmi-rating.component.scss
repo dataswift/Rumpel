@@ -1,20 +1,33 @@
 @import '../../../style/branding';
-@import '../../../style/rumpel-mixins';
 
-.content-wrapper {
-  @include flex-container(column);
-}
-
-.title-section {
+.hmi-rating-section {
   text-align: center;
   max-width: 500px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-bottom: solid 1px #e0e0e0;
-  margin-bottom: 30px;
-  padding: 0 30px 30px 30px;
+  margin: 45px auto 20px;
+  width: 100%;
+
+  .hmi-rating-section-heading {
+    color: $app-dark-tone;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .hmi-rating-section-text {
+    margin-top: 10px;
+    color: $hat-body-text;
+    font-size: 13px;
+    line-height: 1.38;
+    font-style: italic;
+  }
+
+  .hmi-rating-section-text-link {
+    font-weight: bold;
+    font-style: normal;
+    color: $app-accent-color;
+  }
 
   .app-logo-wrapper {
     display: inline-block;
@@ -22,7 +35,7 @@
     padding: 6px;
     border-radius: 50%;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 18px;
 
     .app-logo {
       border-radius: 50%;
@@ -76,58 +89,4 @@
     }
   }
 
-  .title-section-heading {
-    color: $app-dark-tone;
-    font-size: 24px;
-    font-weight: bold;
-    margin: 20px 0;
-  }
-
-  .title-section-text {
-    color: $app-dark-tone;
-    font-size: 14px;
-    line-height: 1.57;
-    margin: auto;
-
-    ::ng-deep a {
-      color: $app-dark-tone;
-      text-decoration: underline;
-    }
-  }
-}
-
-.update-notes-section {
-  padding: 10px 30px;
-  width: 100%;
-  max-width: 500px;
-
-  .section-header {
-    color: $app-dark-tone;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 30px;
-  }
-
-  .app-update-notes {
-    list-style-type: none;
-    padding: 0;
-
-    &-item {
-      display: flex;
-      margin: 15px 0;
-
-      &-icon {
-        font-size: 20px;
-        color: $app-accent-color;
-        margin-right: 10px;
-      }
-
-      &-content {
-        text-align: justify;
-        color: $app-dark-tone;
-        font-size: 14px;
-        line-height: 1.57;
-      }
-    }
-  }
 }

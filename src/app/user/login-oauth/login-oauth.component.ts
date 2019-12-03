@@ -103,7 +103,11 @@ export class LoginOauthComponent implements OnInit {
       this.authSvc.logout();
       this.router.navigate([this.route.snapshot.queryParams['fallback']]);
     } else {
-      window.location.href = this.route.snapshot.queryParams['fallback'];
+      const fallback = this.route.snapshot.queryParams['fallback'];
+
+      if (fallback) {
+        window.location.href = fallback;
+      }
     }
   }
 
