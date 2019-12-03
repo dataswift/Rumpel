@@ -15,7 +15,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { UnbundlePipe } from '../../shared/pipes/unbundle.pipe';
 // tslint:disable-next-line:max-line-length
-import { HatApplicationPermissionsComponent } from '../../shared/components/hat-application-permissions/hat-application-permissions.component';
 import { HatAppUpdateNotesComponent } from '../../shared/components/hat-app-update-notes/hat-app-update-notes.component';
 import { MarkdownToHtmlPipe } from '../../shared/pipes/markdown-to-html.pipe';
 import { HatApiService } from '../../core/services/hat-api.service';
@@ -24,9 +23,13 @@ import { HatApplication } from '../../explore/hat-application.interface';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { WINDOW } from '../../core/services/global.service';
-import { HatAppHmiContentComponent } from '../../shared/components/hat-app-hmi-content/hat-app-hmi-content.component';
 import { SafeHtmlPipe } from '../../shared/pipes';
 import { HatSetupCacheService } from './hat-setup-cache.service';
+import { HmiDaasContentComponent } from '../../hmi/hmi-daas-content/hmi-daas-content.component';
+import { HmiPermissionsListComponent } from '../../hmi/hmi-permissions-list/hmi-permissions-list.component';
+import { HmiDataPlugComponent } from '../../hmi/hmi-shared-components/hmi-data-plug/hmi-data-plug.component';
+import { HmiDataDebitComponent } from '../../hmi/hmi-shared-components/hmi-data-debit/hmi-data-debit.component';
+import { HmiRatingComponent } from '../../hmi/hmi-shared-components/hmi-rating/hmi-rating.component';
 
 const PARENT_APPLICATION_MOCK: HatApplication = {
   'application': {
@@ -568,8 +571,9 @@ describe('HatSetupLoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [ CustomAngularMaterialModule, BrowserAnimationsModule ],
       declarations: [
-        HatSetupLoginComponent, HatApplicationPermissionsComponent, HatAppUpdateNotesComponent, UnbundlePipe,
-        MarkdownToHtmlPipe, HatAppHmiContentComponent, SafeHtmlPipe ],
+        HatSetupLoginComponent, HatAppUpdateNotesComponent, UnbundlePipe, HmiDataPlugComponent, HmiDataDebitComponent,
+        MarkdownToHtmlPipe, HmiDaasContentComponent, SafeHtmlPipe, HmiPermissionsListComponent, HmiRatingComponent
+      ],
       providers: [
         { provide: APP_CONFIG, useValue: {} },
         { provide: WINDOW, useValue: { location: { href: 'http://test.com' }} },

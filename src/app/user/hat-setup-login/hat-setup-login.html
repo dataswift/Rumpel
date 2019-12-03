@@ -10,10 +10,6 @@
   <ng-container *ngIf="hatApp">
     <div class="content-wrapper">
       <section class="drp-explainer">
-        <div class="drp-logo-wrapper">
-          <img src="/assets/images/HATDataRights_200.png" class="drp-logo" height="100" width="100" />
-        </div>
-
         <h3 class="section-heading" style="margin: 32px auto;">{{hatAddress}}</h3>
 
         <ng-container *ngIf="hatExists; else hatNotExists">
@@ -28,61 +24,7 @@
 
       <div class="section-divider"></div>
 
-      <section class="permissions-section">
-        <h4 class="section-heading">You agree that {{hatApp.application.info.name}} by {{hatApp.application.developer.name}} will be able to:</h4>
-
-        <div class="data-access-summary" *ngIf="hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle">
-          <mat-expansion-panel *ngFor="let endpoint of hatApp.application.permissions.dataRequired.bundle.bundle | unbundle">
-            <mat-expansion-panel-header>
-              <mat-panel-title class="expandable-card-title">Use {{endpoint.title}} data</mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <mat-panel-description>
-              <ul class="card-list">
-                <li *ngFor="let field of endpoint.fields">{{field}}</li>
-              </ul>
-            </mat-panel-description>
-          </mat-expansion-panel>
-        </div>
-
-        <mat-card>
-          <ng-container *ngIf="hatApp.application.setup.dependencies || (hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle); else noExtraDataPermissions">
-            <mat-card-content>
-              <h5 class="card-heading">Why it needs the data?</h5>
-              <p class="card-text">{{hatApp.application.info.dataUsePurpose}}</p>
-            </mat-card-content>
-          </ng-container>
-
-          <ng-template #noExtraDataPermissions>
-            <mat-card-content>
-              <h5 class="card-heading">Take actions in your HAT</h5>
-              <rum-hat-app-hmi-content [appContent]="hatApp.application"></rum-hat-app-hmi-content>
-            </mat-card-content>
-          </ng-template>
-        </mat-card>
-      </section>
-
-      <section class="permissions-section" *ngIf="dependencyApps && dependencyApps.length > 0">
-        <h5 class="section-heading">Additional data plugs have to be setup for this app:</h5>
-
-        <mat-card *ngFor="let depApp of dependencyApps">
-          <div class="card-img-wrapper">
-            <img [src]="depApp.application.info.graphics.logo.normal" class="card-img" [alt]="depApp.application.info.name" />
-          </div>
-          <mat-card-content>
-            <h5 class="card-heading">{{depApp.application.info.name}}</h5>
-            <p class="card-text">This data plug enables you to claim your data from {{depApp.application.info.name}} into your HAT.</p>
-          </mat-card-content>
-        </mat-card>
-      </section>
-
-      <ng-container *ngIf="hatApp.application.setup.dependencies || (hatApp.application.permissions.dataRequired && hatApp.application.permissions.dataRequired.bundle)">
-        <section class="permissions-section" style="text-align: center;">
-          <p class="section-text">The apps above will have permission to take actions in your HAT.</p>
-          <button role="button" class="link-button" (click)="handleShowPermissions()">Show permissions</button>
-
-        </section>
-      </ng-container>
+      <rum-hmi-daas-content [app]="hatApp" [dependencyApps]="dependencyApps"></rum-hmi-daas-content>
     </div>
 
     <div class="sticky-action-panel">
@@ -92,9 +34,11 @@
           <button mat-flat-button role="button" (click)="agreeTerms(hatApp.application.id)" class="primary-action">Confirm</button>
         </div>
         <p class="hmi-id-text">HMI ID: {{hatApp.application.id}}-v{{hatApp.application.info.version}}</p>
-        <p class="tos-text">By pressing ‘Confirm’ I agree to DataSwift Ltd
-          <a href="https://static1.squarespace.com/static/5a71ebc8b1ffb68777ca627a/t/5c540dc4e4966bf470e0d5fd/1549012420957/hat+owner+terms+of+service+-+10_1_19+-+v2.3+%281%29.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>
-          and the permissions laid out above.</p>
+        <p class="tos-text">By pressing ‘Confirm’ I agree to Dataswift Ltd
+          <a href="https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf" target="_blank" style="color: #6297b1;">Privacy Policy</a>
+          and the HAT
+          <a href="https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf" target="_blank" style="color: #6297b1;">Terms of Service</a>
+          </p>
       </div>
     </div>
   </ng-container>

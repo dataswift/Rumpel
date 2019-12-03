@@ -15,14 +15,13 @@ import { CustomAngularMaterialModule } from '../core/custom-angular-material.mod
 import { TileProfileComponent } from './tile-profile/tile-profile.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PrivacyToggleHelperComponent } from './privacy-toggle-helper/privacy-toggle-helper.component';
-import { TileHeroComponent } from '../dashboard/tile-hero/tile-hero.component';
 
 import { ProfilesService } from './profiles.service';
 
 @NgModule({
     imports: [ SharedModule, FormsModule, ReactiveFormsModule, CustomAngularMaterialModule ],
-    declarations: [ TileProfileComponent, ProfileComponent, PrivacyToggleHelperComponent, TileHeroComponent ],
+    declarations: [ TileProfileComponent, ProfileComponent, PrivacyToggleHelperComponent ],
     providers: [ ProfilesService ],
-    exports: [ TileProfileComponent, TileHeroComponent ]
+    exports: [ TileProfileComponent ]
 })
 export class ProfilesModule {}

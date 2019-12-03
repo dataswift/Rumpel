@@ -12,10 +12,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CustomAngularMaterialModule } from '../../core/custom-angular-material.module';
 import { ActivityListComponent } from './activity-list.component';
 import { LocationNotableComponent } from '../../shared/components/location-notable/location-notable.component';
-import { LocationFbPostComponent } from '../../social/location-fb-post/location-fb-post.component';
-import { FitbitMyDayComponent } from '../../fitbit/fitbit-my-day/fitbit-my-day.component';
-import { MonzoMyDayComponent } from '../../monzo/monzo-my-day/monzo-my-day.component';
-import { LocationTweetComponent } from '../../social/location-tweet/location-tweet.component';
 import { LimitContentPipe } from '../../shared/pipes/limit-content.pipe';
 import { MomentPipe } from '../../shared/pipes/moment.pipe';
 import { SafeHtmlPipe } from '../../shared/pipes/safe-html.pipe';
@@ -34,10 +30,6 @@ describe('ActivityListComponent', () => {
       declarations: [
         ActivityListComponent,
         LocationNotableComponent,
-        LocationFbPostComponent,
-        FitbitMyDayComponent,
-        MonzoMyDayComponent,
-        LocationTweetComponent,
         LimitContentPipe,
         MomentPipe,
         SafeHtmlPipe,

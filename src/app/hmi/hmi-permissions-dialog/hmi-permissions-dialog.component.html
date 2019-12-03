@@ -1,0 +1,12 @@
+<h3 mat-dialog-title [style.text-align]="'center'">{{data.title}}</h3>
+
+<div mat-dialog-content>
+  <div class="app-hmi-dialog-list" *ngFor="let app of data.apps">
+    <h4 class="app-section-title">{{app.application.info.name}} {{mapApplicationKind(app.application.kind.kind)}} will be able to:</h4>
+    <rum-hmi-permissions-list [app]="app.application"></rum-hmi-permissions-list>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>OK</button>
+</div>
