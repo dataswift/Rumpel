@@ -66,9 +66,6 @@ export class HatSetupLoginComponent implements OnInit {
                 this.buildRedirect(parentApp);
                 this.hatCacheSvc.clearCache();
               } else if (parentAppIsReady) {
-                console.log('parent app: ' + parentApp);
-                console.log('dependency apps: ' + dependencyApps);
-
                 this.setupAppDependencies(dependencyApps);
               } else {
                 this.hatApp = parentApp;

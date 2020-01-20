@@ -41,7 +41,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.8.3',
+  version: '3.8.3.1',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,
