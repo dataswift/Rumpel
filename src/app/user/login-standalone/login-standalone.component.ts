@@ -11,7 +11,7 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./login-standalone.component.scss']
 })
 export class LoginStandaloneComponent implements OnInit {
-  @ViewChild(MatExpansionPanel, { static: true }) domainSelector: MatExpansionPanel;
+  @ViewChild(MatExpansionPanel, { static: false }) domainSelector: MatExpansionPanel;
 
   private redirectPath: string;
   public hatName: string;
