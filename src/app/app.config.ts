@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
 
 const externalLinks = {
-  bestPractices: 'https://docs.dataswift.io/why/security-best-practice',
+  bestPractices: 'https://docs.dataswift.io/technology/why/security-best-practice',
   termsOfService: 'https://cdn.dataswift.io/legal/hat-owner-terms-of-service.pdf',
   privacyPolicy: 'https://cdn.dataswift.io/legal/dataswift-privacy-policy.pdf'
 };
@@ -41,7 +41,7 @@ export class AppConfig {
 }
 
 export const configuration: AppConfig = {
-  version: '3.8.3.1',
+  version: '3.8.3.2',
   name: environment.appName,
   tokenApp: environment.tokenName,
   tokenExpiryTime: 3,

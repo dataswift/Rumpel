@@ -31,7 +31,7 @@ const URL_REGEX = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9
   styleUrls: ['profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  @ViewChild('birdthdayDatepicker', { static: true }) birthdayPicker: MatDatepicker<any>;
+  @ViewChild('birdthdayDatepicker', { static: false }) birthdayPicker: MatDatepicker<any>;
   public values: Profile;
   public share: ProfileSharingConfig;
   public profilePhoto: any;

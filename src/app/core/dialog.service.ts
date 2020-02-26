@@ -46,7 +46,6 @@ export class DialogService {
     componentRef.instance['destroy'] = () => {
       this.activeInstances--;
       componentRef.destroy();
-      console.log('destroy', this.activeInstances);
     };
 
     componentRef$.next(componentRef);
