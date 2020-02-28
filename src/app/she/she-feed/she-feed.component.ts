@@ -23,9 +23,9 @@ import { SheFeedScrollingService } from './she-feed-scrolling.service';
   styleUrls: ['./she-feed.component.scss']
 })
 export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
-  @ViewChild('feedContainer', { static: true }) feedContainer: ElementRef;
+  @ViewChild('feedContainer', { static: false }) feedContainer: ElementRef;
   @ViewChildren('daySeparator', { read: ElementRef }) dateSeparators: QueryList<ElementRef>;
-  @ViewChild(DaterangepickerDirective, { static: true }) pickerDirective: DaterangepickerDirective;
+  @ViewChild(DaterangepickerDirective, { static: false }) pickerDirective: DaterangepickerDirective;
 
   public feed$: Observable<{ day: string; data: SheFeed[]; }[] >;
   public feedArray: DayGroupedSheFeed[];
@@ -151,12 +151,9 @@ export class SheFeedComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     if (scrollingDownIndexes.startDate >= this.feedArray.length) {
       if (this.extraDataAttempts <= this.extraDataMonthLimit) {
-        console.log('load more scroll extra data', this.extraDataAttempts);
-
         this.loadMoreData()
-      } else {
-        console.log('no more data')
       }
+
       this.extraDataAttempts += this.extraDataMonthSteps;
     } else {
       const a = this.feedArray.slice(scrollingDownIndexes.startDate , scrollingDownIndexes.endDate + 1);

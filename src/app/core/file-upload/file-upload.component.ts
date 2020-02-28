@@ -44,7 +44,6 @@ export class FileUploadComponent implements OnInit {
   }
 
   hideUI() {
-    console.log('hide UI');
     this.animateIn = false;
 
     setTimeout(() => {

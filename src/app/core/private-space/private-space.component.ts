@@ -14,7 +14,7 @@ const SMALL_SCREEN_BREAKPOINT = 720;
   styleUrls: ['./private-space.component.scss']
 })
 export class PrivateSpaceComponent implements OnInit {
-  @ViewChild('sideNav', { static: true }) sideNav!: MatSidenav;
+  @ViewChild('sideNav', { static: false }) sideNav!: MatSidenav;
 
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_SCREEN_BREAKPOINT}px)`);
 

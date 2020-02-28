@@ -8,6 +8,7 @@ import { HatApplicationContent } from '../../explore/hat-application.interface';
 })
 export class HmiBaasContentComponent implements OnInit {
   @Input() app: HatApplicationContent;
+  @Input() permissionScreen: boolean;
 
   constructor() { }
 

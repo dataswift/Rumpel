@@ -1,6 +1,6 @@
 {
   "name": "Rumpel",
-  "version": "3.8.3",
+  "version": "3.8.4",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
@@ -72,5 +72,8 @@
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "~3.5.3"
+  },
+  "peerDependencies": {
+    "handlebars": "^4.7.3"
   }
 }
