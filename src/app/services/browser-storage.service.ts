@@ -57,7 +57,8 @@ export class BrowserStorageService {
   }
 
   removeAuthToken(): void {
-    this.cookieSvc.delete(TOKEN_NAME);
+    this.cookieSvc.delete(TOKEN_NAME, null, null, true, 'Strict');
+
     window.sessionStorage.removeItem(TOKEN_NAME);
   }
 

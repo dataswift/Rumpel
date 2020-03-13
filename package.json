@@ -39,7 +39,7 @@
     "moment": "^2.24.0",
     "ngx-clipboard": "^11.1.9",
     "ngx-cookie": "^4.1.2",
-    "ngx-cookie-service": "^3.0.0",
+    "ngx-cookie-service": "^3.0.2",
     "ngx-daterangepicker-material": "^2.1.0",
     "ngx-infinite-scroll": "^7.1.0",
     "pouchdb-browser": "^6.3.4",
