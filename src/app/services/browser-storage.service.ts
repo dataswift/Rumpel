@@ -50,14 +50,15 @@ export class BrowserStorageService {
 
   setAuthToken(token: string) {
     if (this.remember) {
-      this.cookieSvc.set(TOKEN_NAME, token);
+      this.cookieSvc.set(TOKEN_NAME, token, null, null, null, true, 'Strict');
     } else if (this.sessionStoreAvailable) {
       sessionStorage.setItem(TOKEN_NAME, token);
     }
   }
 
   removeAuthToken(): void {
-    this.cookieSvc.delete(TOKEN_NAME);
+    this.cookieSvc.delete(TOKEN_NAME, null, null, true, 'Strict');
+
     window.sessionStorage.removeItem(TOKEN_NAME);
   }
 
