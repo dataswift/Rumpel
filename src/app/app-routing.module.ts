@@ -42,10 +42,7 @@ import { ToolsDetailsComponent } from './tools/tools-details/tools-details.compo
     RouterModule.forRoot([
       { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
       { path: 'public/profile', component: PublicProfileComponent, canActivate: [NativeGuard] },
-      { path: 'hatlogin', component: LoginOauthComponent, canActivate: [NativeGuard, AuthGuard] },
-      { path: 'hat-setup-login', component: HatSetupLoginComponent, canActivate: [NativeGuard, AuthGuard] },
       { path: 'data-debit/:id/quick-confirm', component: DataDebitQuickConfirmComponent, canActivate: [NativeGuard, AuthGuard] },
-      { path: 'user/login', component: LoginNativeComponent, canActivate: [NativeGuard] },
       { path: 'user/login/start', component: LoginStandaloneComponent },
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
@@ -80,7 +77,6 @@ import { ToolsDetailsComponent } from './tools/tools-details/tools-details.compo
           { path: 'settings', component: SettingsPageComponent },
           { path: 'settings/:termsId', component: MarkdownViewComponent },
         ]},
-      { path: 'user/password/recover', component: PasswordRecoverComponent, canActivate: [NativeGuard] },
       { path: 'user/password/change/:resetToken', component: PasswordChangeComponent, canActivate: [NativeGuard] },
       { path: 'user/password', component: PrivateSpaceComponent, canActivate: [NativeGuard],
         children: [

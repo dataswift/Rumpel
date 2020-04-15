@@ -27,6 +27,7 @@ export class PublicProfileComponent implements OnInit {
   public notables: HatRecord<any>[];
   public hatName: string;
   public hatDomain: string;
+  public origin: string;
 
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private hatSvc: HatApiService,
@@ -40,6 +41,7 @@ export class PublicProfileComponent implements OnInit {
       this.notables = data.notables;
     });
 
+    this.origin = window.location.origin;
     const host = window.location.hostname;
 
     this.hatName = host.substring(0, host.indexOf('.'));
