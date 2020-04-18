@@ -8,6 +8,7 @@ export class BrowserStorageService {
   private remember = false;
   private sessionStoreAvailable = false;
   private localStoreAvailable = false;
+  private secure = location.protocol === 'https:';
 
   static testSessionStorage(): boolean {
     const test = 'test';
@@ -50,14 +51,14 @@ export class BrowserStorageService {
 
   setAuthToken(token: string) {
     if (this.remember) {
-      this.cookieSvc.set(TOKEN_NAME, token, null, null, null, true, 'Strict');
+      this.cookieSvc.set(TOKEN_NAME, token, null, null, null, this.secure, 'Strict');
     } else if (this.sessionStoreAvailable) {
       sessionStorage.setItem(TOKEN_NAME, token);
     }
   }
 
   removeAuthToken(): void {
-    this.cookieSvc.delete(TOKEN_NAME, null, null, true, 'Strict');
+    this.cookieSvc.delete(TOKEN_NAME, null, null, this.secure, 'Strict');
 
     window.sessionStorage.removeItem(TOKEN_NAME);
   }
