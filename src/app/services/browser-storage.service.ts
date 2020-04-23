@@ -41,7 +41,7 @@ export class BrowserStorageService {
 
     this.sessionStoreAvailable = BrowserStorageService.testSessionStorage();
     this.localStoreAvailable = BrowserStorageService.testLocalStorage();
-    this.secure = window.location.protocol === 'https:'
+    this.secure = window.location.protocol === 'https:';
   }
 
   set rememberMe(remember: boolean) {
