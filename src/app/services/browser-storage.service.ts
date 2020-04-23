@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 
 const TOKEN_NAME = 'token';
+const TOKEN_EXPIRES_LEEWAY = 3 * 864e+5;
 
 @Injectable()
 export class BrowserStorageService {
   private remember = false;
   private sessionStoreAvailable = false;
   private localStoreAvailable = false;
+  private secure = false;
 
   static testSessionStorage(): boolean {
     const test = 'test';
@@ -38,6 +40,7 @@ export class BrowserStorageService {
 
     this.sessionStoreAvailable = BrowserStorageService.testSessionStorage();
     this.localStoreAvailable = BrowserStorageService.testLocalStorage();
+    this.secure = window.location.protocol === 'https:'
   }
 
   set rememberMe(remember: boolean) {
@@ -50,14 +53,16 @@ export class BrowserStorageService {
 
   setAuthToken(token: string) {
     if (this.remember) {
-      this.cookieSvc.set(TOKEN_NAME, token, null, null, null, true, 'Strict');
+      const cookieExpirationDate = new Date(new Date().getTime() + TOKEN_EXPIRES_LEEWAY);
+
+      this.cookieSvc.set(TOKEN_NAME, token, cookieExpirationDate, null, null, this.secure, 'Strict');
     } else if (this.sessionStoreAvailable) {
       sessionStorage.setItem(TOKEN_NAME, token);
     }
   }
 
   removeAuthToken(): void {
-    this.cookieSvc.delete(TOKEN_NAME, null, null, true, 'Strict');
+    this.cookieSvc.delete(TOKEN_NAME, null, null, this.secure, 'Strict');
 
     window.sessionStorage.removeItem(TOKEN_NAME);
   }
