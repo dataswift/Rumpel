@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { configuration } from '../app.config';
 
 const TOKEN_NAME = 'token';
-const TOKEN_EXPIRES_LEEWAY = 3 * 864e+5;
+const TOKEN_EXPIRATION_LEEWAY = configuration.tokenExpiryTime * 864e+5; // 3 Days
 
 @Injectable()
 export class BrowserStorageService {
@@ -53,7 +54,7 @@ export class BrowserStorageService {
 
   setAuthToken(token: string) {
     if (this.remember) {
-      const cookieExpirationDate = new Date(new Date().getTime() + TOKEN_EXPIRES_LEEWAY);
+      const cookieExpirationDate = new Date(new Date().getTime() + TOKEN_EXPIRATION_LEEWAY);
 
       this.cookieSvc.set(TOKEN_NAME, token, cookieExpirationDate, null, null, this.secure, 'Strict');
     } else if (this.sessionStoreAvailable) {
