@@ -47,8 +47,8 @@ export class StaticDataService {
       })));
   }
 
-  fetchSheStaticInfo(source: string): Observable<Array<Array<any>>> {
-    return this.hat.getSheStaticProfileRecords(source)
+  fetchSheStaticInfo(dataPreviewEndpoint: string): Observable<Array<Array<any>>> {
+    return this.hat.getSheStaticProfileRecords(dataPreviewEndpoint)
       .pipe(map((rawData: SheStaticProfile<string[][]>[]) => rawData.map(record => {
         return toPairs(record.values);
       })));
