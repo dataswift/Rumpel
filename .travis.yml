@@ -54,7 +54,7 @@ jobs:
             secure: "aYAZ3yHcDcisfFPZHnK+jGIczKFQTyRkWqwrjimUQRErCHeqlhh8m9fST9gLUx7RaqI2rXoF68mxAL2bITSCOq+jvio8tjDbpeOOsdeWYFZFDXfP6l3I/Wixa8adFJ3W2ZHCbJsx/0IoTIPcu+jWUagwzPkbzGyda5yz4kHWqg8q1u7WCDRRRyEbjqjejw9Uz0UDxwhEJ1JcT4itKgef+AWEPr7cb3e0x+9ooyHBQw7diWvRJsMguALZZTtasPmozm6kHkBzE3eSfc38JuoOjZe0XRW6mvHtsMZRAUlduwUtWRIGsFAGayUM4PoCEHJoBnDX6vwMSxhcapRmLXflUftNjV5/nCjc2r18QhGpeE6Z5JYv1ciQ+fmoMbkPWsGMX27JuALLo+1s5tD+h76YtMwlI4Oe5gU0Pf3U7mYbc1ryAOHRiDY+vbKV7UVZ33ahJ6LsUcZpba/fsNvIiXECT1KxQ4AsU/dyrNU9fhUGcGUw9hKWzECATDQoOp5aKLoUJQh1mNyXFPQfDHytl3PZvxZ/WtCHz9usE8EWmkvgzbQaTi7NOf2fVEsAKzCfqz8xcIBypB6FEo9AgNGaz+DjD0NPOGSxZenYcTZQi0XvOGh9NeBj0XOJccUlbdVnHWwlgI09XeTt3wNMe16mW7C9L31GDzCxBSNTVznA1AflQAQ="
           secret_access_key:
             secure: "Z7kDTM8kK3ER9qtmD3r2hiZnG+aSSjkBChHBwlBjcj6OhHkZeb0TIrHtEKIChfPsRixFAZ/nNSIn1ztlYRDvHUtUO/vhxEbsmYYXSz4hESlRm6BqwLLiein6S4LWebtHaD6N0r+DoQXQOLvE/0FvfvK8k4ZRNKQXK9go8iJSiz6yNHFwYgCvruy9UCeitjAXWgMoxbFvJVKLWlZsFG7YBzznTD1dZGufCVUwSwRnk0uxQesY7B98Lwvgq3TCXXoHk6VyzlYbc2abrPLMamMF/MA/AJuI6rZI/jN+28wI0zC/NIoxe/GVgeV4FBNbdIz2+TTJhfT5LGRkmrpfOB/sw1+N8WlMw6SZLSsi6qZQJHufmyZO8P8T3ybRR5t4NsLBzWYm/gfA1TqA1WZuLn/yZ66tuFB9j4zhTmJvW73UgKrsvx8KdYzd0eVO0t+ut118cCzClQOsXSiRXetE72Q8fpBt3sV1Y4ZKhjo/v5Gg/t0e5ZrStshHDyk7XVcEJzzi7LwhQIjzG+tkKdD4Hm/WWnLH9b1NUI1YCLSUOoP25vUIOwhLHuVtCkGOHcQpsaISJncfKGyvUnstR8kFrWT61xe16Yke9Pji38X71dlnGKE7DbUnxCPzn9QkCprySnw01ZHMfw7CINfk3Y//X+71bxsujqeMi1vonCUOfK52+gA="
-          bucket: frontend-build-artifacts
+          bucket: dswift-hat-sandbox-frontend-build-artifacts
           local-dir: dist
           upload-dir: sandbox
           acl: private
@@ -79,7 +79,7 @@ jobs:
             secure: "aYAZ3yHcDcisfFPZHnK+jGIczKFQTyRkWqwrjimUQRErCHeqlhh8m9fST9gLUx7RaqI2rXoF68mxAL2bITSCOq+jvio8tjDbpeOOsdeWYFZFDXfP6l3I/Wixa8adFJ3W2ZHCbJsx/0IoTIPcu+jWUagwzPkbzGyda5yz4kHWqg8q1u7WCDRRRyEbjqjejw9Uz0UDxwhEJ1JcT4itKgef+AWEPr7cb3e0x+9ooyHBQw7diWvRJsMguALZZTtasPmozm6kHkBzE3eSfc38JuoOjZe0XRW6mvHtsMZRAUlduwUtWRIGsFAGayUM4PoCEHJoBnDX6vwMSxhcapRmLXflUftNjV5/nCjc2r18QhGpeE6Z5JYv1ciQ+fmoMbkPWsGMX27JuALLo+1s5tD+h76YtMwlI4Oe5gU0Pf3U7mYbc1ryAOHRiDY+vbKV7UVZ33ahJ6LsUcZpba/fsNvIiXECT1KxQ4AsU/dyrNU9fhUGcGUw9hKWzECATDQoOp5aKLoUJQh1mNyXFPQfDHytl3PZvxZ/WtCHz9usE8EWmkvgzbQaTi7NOf2fVEsAKzCfqz8xcIBypB6FEo9AgNGaz+DjD0NPOGSxZenYcTZQi0XvOGh9NeBj0XOJccUlbdVnHWwlgI09XeTt3wNMe16mW7C9L31GDzCxBSNTVznA1AflQAQ="
           secret_access_key:
             secure: "Z7kDTM8kK3ER9qtmD3r2hiZnG+aSSjkBChHBwlBjcj6OhHkZeb0TIrHtEKIChfPsRixFAZ/nNSIn1ztlYRDvHUtUO/vhxEbsmYYXSz4hESlRm6BqwLLiein6S4LWebtHaD6N0r+DoQXQOLvE/0FvfvK8k4ZRNKQXK9go8iJSiz6yNHFwYgCvruy9UCeitjAXWgMoxbFvJVKLWlZsFG7YBzznTD1dZGufCVUwSwRnk0uxQesY7B98Lwvgq3TCXXoHk6VyzlYbc2abrPLMamMF/MA/AJuI6rZI/jN+28wI0zC/NIoxe/GVgeV4FBNbdIz2+TTJhfT5LGRkmrpfOB/sw1+N8WlMw6SZLSsi6qZQJHufmyZO8P8T3ybRR5t4NsLBzWYm/gfA1TqA1WZuLn/yZ66tuFB9j4zhTmJvW73UgKrsvx8KdYzd0eVO0t+ut118cCzClQOsXSiRXetE72Q8fpBt3sV1Y4ZKhjo/v5Gg/t0e5ZrStshHDyk7XVcEJzzi7LwhQIjzG+tkKdD4Hm/WWnLH9b1NUI1YCLSUOoP25vUIOwhLHuVtCkGOHcQpsaISJncfKGyvUnstR8kFrWT61xe16Yke9Pji38X71dlnGKE7DbUnxCPzn9QkCprySnw01ZHMfw7CINfk3Y//X+71bxsujqeMi1vonCUOfK52+gA="
-          bucket: frontend-build-artifacts
+          bucket: dswift-hat-sandbox-frontend-build-artifacts
           local-dir: dist
           upload-dir: live
           acl: private
