@@ -45,6 +45,7 @@ export class HatApplicationDetailsComponent implements OnInit {
 
           const { name, url, country } = app.application.developer;
           const { version, termsUrl, supportContact } = app.application.info;
+          const staticDataEndpoint = app.application.status.staticDataPreviewEndpoint || `she/static/${app.application.id}/profile`;
 
           this.appInformation = [
             ['provider', name],
@@ -55,7 +56,8 @@ export class HatApplicationDetailsComponent implements OnInit {
             ['terms and conditions', termsUrl],
             ['support email', supportContact]
           ];
-          this.staticData$ = this.staticDataSvc.fetchSheStaticInfo(app.application.id).pipe(
+
+          this.staticData$ = this.staticDataSvc.fetchSheStaticInfo(staticDataEndpoint).pipe(
             tap(() => {
              if (app.application.status && app.application.status.dataPreviewEndpoint && app.mostRecentData) {
                const defaultUntil = parse(app.mostRecentData);
