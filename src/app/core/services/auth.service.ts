@@ -6,13 +6,11 @@ import { HatApiService } from './hat-api.service';
 import { ReplaySubject, Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../../user/user.interface';
-import { HatApplication } from '../../explore/hat-application.interface';
 
 import * as parse from 'date-fns/parse';
 import * as isFuture from 'date-fns/is_future';
 import * as addDays from 'date-fns/add_days';
 import { HttpResponse } from '@angular/common/http';
-import { HatSetupCacheService } from '../../user/hat-setup-login/hat-setup-cache.service';
 import { CacheService } from './cache.service';
 
 declare const httpProtocol: string;
@@ -30,7 +28,6 @@ export class AuthService {
   constructor(@Inject(APP_CONFIG) private config: AppConfig,
               private storageSvc: BrowserStorageService,
               private hatSvc: HatApiService,
-              private hatCacheSvc: HatSetupCacheService,
               private cacheSvc: CacheService) {
 
     const previouslySavedToken = this.storageSvc.getAuthToken();
@@ -89,69 +86,12 @@ export class AuthService {
       });
   }
 
-  getApplicationDetails(name: string, redirect: string = '/'): Observable<HatApplication> {
-    return this.hatSvc.getApplicationById(name)
-      .pipe(map((hatApp: HatApplication) => {
-        // const redirectUrlIsValid = redirect === hatApp.application.setup.url ||
-        //                            redirect === hatApp.application.setup.iosUrl; // TODO: add support for Android
-
-        const redirectUrlIsValid = true;
-
-        if (redirectUrlIsValid) {
-          return hatApp;
-        } else {
-          throw new Error('Redirect URL does not match registered value');
-        }
-      }));
-  }
-
-  getApplicationsByIds(parentAppId: string):
-    Observable<(HatApplication | HatApplication[])[]> {
-    return  this.hatSvc.getApplicationHmi(parentAppId)
-      .pipe(map((apps: HatApplication[]) => {
-        const parentApp = apps.find(app => app.application.id === parentAppId);
-
-        if (!parentApp || parentApp.application.kind.kind !== 'App') {
-          throw new Error('application_id_not_found ');
-        }
-
-        const parentDependencies = parentApp.application.setup.dependencies || [];
-
-        this.hatCacheSvc.storeApplicationData([parentApp]);
-        this.hatCacheSvc.storeApplicationData(apps.filter(app => parentDependencies.indexOf(app.application.id) > -1));
-
-        return [ parentApp, apps.filter(app => parentDependencies.indexOf(app.application.id) > -1) ];
-      }));
-  }
-
-  isRedirectUrlValid(redirect: string, app: HatApplication): boolean {
-    const setup = app.application.setup;
-
-    return [setup.url, setup.iosUrl, setup.androidUrl, setup.testingUrl].includes(decodeURI(redirect));
-  }
-
-  hatLogin(name: string, redirect: string): Observable<string> {
-    return this.hatSvc.legacyHatLogin(name, redirect);
-  }
-
-  appLogin(name: string): Observable<string> {
-    return this.hatSvc.getApplicationTokenNew(name);
-  }
-
-  recoverPassword(email: string): Observable<any> {
-    return this.hatSvc.recoverPassword({ email: email });
-  }
-
   changePassword(oldPassword: string, newPassword: string): Observable<any> {
     return this.hatSvc.changePassword({ password: oldPassword, newPassword: newPassword });
   }
 
   resetPassword(resetToken: string, newPassword: string): Observable<any> {
     return this.hatSvc.resetPassword(resetToken, { newPassword: newPassword });
-  }
-
-  setupApplication(name: string): Observable<HatApplication> {
-    return this.hatSvc.setupApplication(name);
   }
 
   domainRegistered(domain: string): Observable<boolean> {
