@@ -11,11 +11,9 @@ import { RouterModule } from '@angular/router';
 
 import { AboutComponent } from './core/about/about.component';
 import { AuthGuard } from './auth.guard';
-import { LoginOauthComponent } from './user/login-oauth/login-oauth.component';
 import { NativeGuard } from './native-guard.service';
 import { PublicProfileComponent } from './public-pages/public-profile/public-profile.component';
 import { PrivateSpaceComponent } from './core/private-space/private-space.component';
-import { LoginNativeComponent } from './user/login-native/login-native.component';
 import { LoginStandaloneComponent } from './user/login-standalone/login-standalone.component';
 
 // Standalone modules
@@ -23,14 +21,12 @@ import { LoginStandaloneComponent } from './user/login-standalone/login-standalo
 import { ProfileComponent } from './profiles/profile/profile.component';
 import { SheFeedComponent } from './she/she-feed/she-feed.component';
 import { MyDayComponent } from './mashups/my-day/my-day.component';
-import { PasswordRecoverComponent } from './user/password-recover/password-recover.component';
 import { PasswordChangeComponent } from './user/password-change/password-change.component';
 import { HatApplicationListComponent } from './explore/hat-application-list/hat-application-list.component';
 import { HatApplicationDetailsComponent } from './explore/hat-application-details/hat-application-details.component';
 import { HatAppDetailsPermissionsComponent } from './explore/hat-app-details-permissions/hat-app-details-permissions.component';
 import { DataDebitListComponent } from './data-management/data-debit-list/data-debit-list.component';
 import { DataDebitDetailsComponent } from './data-management/data-debit-details/data-debit-details.component';
-import { HatSetupLoginComponent } from './user/hat-setup-login/hat-setup-login.component';
 import { DataDebitQuickConfirmComponent } from './data-management/data-debit-quick-confirm/data-debit-quick-confirm.component';
 import { SettingsPageComponent } from './settings/settings-page/settings-page.component';
 import { MarkdownViewComponent } from './shared/components/markdown-view/markdown-view.component';
@@ -42,10 +38,7 @@ import { ToolsDetailsComponent } from './tools/tools-details/tools-details.compo
     RouterModule.forRoot([
       { path: '', redirectTo: 'public/profile', pathMatch: 'full' },
       { path: 'public/profile', component: PublicProfileComponent, canActivate: [NativeGuard] },
-      { path: 'hatlogin', component: LoginOauthComponent, canActivate: [NativeGuard, AuthGuard] },
-      { path: 'hat-setup-login', component: HatSetupLoginComponent, canActivate: [NativeGuard, AuthGuard] },
       { path: 'data-debit/:id/quick-confirm', component: DataDebitQuickConfirmComponent, canActivate: [NativeGuard, AuthGuard] },
-      { path: 'user/login', component: LoginNativeComponent, canActivate: [NativeGuard] },
       { path: 'user/login/start', component: LoginStandaloneComponent },
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
@@ -80,7 +73,6 @@ import { ToolsDetailsComponent } from './tools/tools-details/tools-details.compo
           { path: 'settings', component: SettingsPageComponent },
           { path: 'settings/:termsId', component: MarkdownViewComponent },
         ]},
-      { path: 'user/password/recover', component: PasswordRecoverComponent, canActivate: [NativeGuard] },
       { path: 'user/password/change/:resetToken', component: PasswordChangeComponent, canActivate: [NativeGuard] },
       { path: 'user/password', component: PrivateSpaceComponent, canActivate: [NativeGuard],
         children: [

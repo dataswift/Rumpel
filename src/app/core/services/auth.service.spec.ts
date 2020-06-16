@@ -6,7 +6,6 @@ import { BrowserStorageService } from '../../services/browser-storage.service';
 import { APP_CONFIG } from '../../app.config';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpBackendClient } from './http-backend-client.service';
-import { HatSetupCacheService } from '../../user/hat-setup-login/hat-setup-cache.service';
 import { CacheService } from './cache.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -20,7 +19,6 @@ describe('AuthService', () => {
         BrowserStorageService,
         HttpBackendClient,
         CookieService,
-        HatSetupCacheService,
         { provide: CacheService, useValue: { } },
         { provide: APP_CONFIG, useValue: { name: '' } }
       ]
