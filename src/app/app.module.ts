@@ -55,6 +55,7 @@ import { ReactiveWebStorageModule } from './core/services/reactive-webstorage.mo
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { CookieService } from 'ngx-cookie-service';
 import { HmiModule } from './hmi/hmi.module';
+import { RedirectGuard } from './redirect.guard';
 
 
 export const storageKeys = ['system-status', 'applications', 'tools', 'phata-structure'];
@@ -95,6 +96,7 @@ export const storageKeys = ['system-status', 'applications', 'tools', 'phata-str
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthGuard,
     NativeGuard,
+    RedirectGuard,
     CookieService,
     HatApiService, // Supersedes original HAT API service
     StaticDataService,
