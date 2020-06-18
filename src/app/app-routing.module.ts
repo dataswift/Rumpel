@@ -32,6 +32,7 @@ import { SettingsPageComponent } from './settings/settings-page/settings-page.co
 import { MarkdownViewComponent } from './shared/components/markdown-view/markdown-view.component';
 import { ToolsListComponent } from './tools/tools-list/tools-list.component';
 import { ToolsDetailsComponent } from './tools/tools-details/tools-details.component';
+import { RedirectGuard } from './redirect.guard';
 
 @NgModule({
   imports: [
@@ -40,6 +41,11 @@ import { ToolsDetailsComponent } from './tools/tools-details/tools-details.compo
       { path: 'public/profile', component: PublicProfileComponent, canActivate: [NativeGuard] },
       { path: 'data-debit/:id/quick-confirm', component: DataDebitQuickConfirmComponent, canActivate: [NativeGuard, AuthGuard] },
       { path: 'user/login/start', component: LoginStandaloneComponent },
+      { path: 'hatlogin', component: RedirectGuard, canActivate: [RedirectGuard] },
+      { path: 'hat-setup-login', component: RedirectGuard, canActivate: [RedirectGuard] },
+      { path: 'user/login', component: RedirectGuard, canActivate: [RedirectGuard] },
+      { path: 'user/password/recover', component: RedirectGuard, canActivate: [RedirectGuard] },
+
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
           { path: 'feed', component: SheFeedComponent }
