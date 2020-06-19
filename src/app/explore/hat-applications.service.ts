@@ -88,7 +88,8 @@ export class HatApplicationsService {
     const redirectUrl = setup.url || setup.iosUrl || '';
     const redirectRumpel = window.location.href.replace('#', '%23');
 
-    return `https://${this.hatUrl}/#/hatlogin?name=${id}&fallback=${redirectRumpel}&redirect=${redirectUrl}%3Fredirect=${redirectRumpel}`;
+    // tslint:disable-next-line:max-line-length
+    return `https://${this.hatUrl}/hatlogin?application_id=${id}&fallback=${redirectRumpel}&redirect_uri=${redirectUrl}%3Fredirect=${redirectRumpel}`;
   }
 
   getAppStatus(app: HatApplication): 'goto' | 'running' | 'fetching' | 'failing' | 'untouched' | 'update' {

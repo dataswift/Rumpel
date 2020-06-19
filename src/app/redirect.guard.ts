@@ -9,7 +9,16 @@ export class RedirectGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    window.location.href = window.location.href.replace('%23', '#').replace('/#', '');
+    const hash = window.location.hash;
+    let path = '';
+
+    if (hash.startsWith('#')) {
+      path = hash.substring(1);
+    } else if (hash.startsWith('%23')) {
+      path = hash.substring(3)
+    }
+
+    window.location.href =  window.location.origin + path;
 
     return false;
   }
