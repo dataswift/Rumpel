@@ -21,6 +21,7 @@ import { HatApplication } from '../../explore/hat-application.interface';
 export class SideMenuComponent implements OnInit {
   @Output() close = new EventEmitter<string>();
   private windowRef: any;
+  private locationOrigin = '';
 
   // hack: uiState service needs to be injected before Auth component,
   // so that it can subscribe for Auth observable in time.
@@ -28,6 +29,7 @@ export class SideMenuComponent implements OnInit {
   constructor(@Inject(APP_CONFIG) private config: AppConfig) {}
 
   ngOnInit() {
+    this.locationOrigin = window.location.origin;
   }
 
   get mainMenu(): Array<any> {
