@@ -48,10 +48,6 @@ import { RedirectGuard } from './redirect.guard';
 
       { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
         children: [
-          { path: 'feed', component: SheFeedComponent }
-        ]},
-      { path: '', component: PrivateSpaceComponent, canActivate: [AuthGuard],
-        children: [
           { path: 'data-debit', component: DataDebitListComponent },
           { path: 'data-debit/:id', component: DataDebitDetailsComponent }
         ]},

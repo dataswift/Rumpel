@@ -13,15 +13,28 @@
   <ul class="center">
     <li *ngFor="let item of mainMenu; let i = index">
       <div class="wrapper">
-        <a [routerLink]="[item.link]" (click)="close.emit('Close menu')"
-           routerLinkActive="rum-sidenav-item-selected"
-           [matTooltip]="item.description"
-           [matTooltipClass]="'rum-tooltip-content'"
-           [matTooltipShowDelay]="500"
-           [matTooltipPosition]="'right'">
-          <mat-icon class="icon">{{item.icon}}</mat-icon>
-          {{item.display}}
-        </a>
+        <ng-container *ngIf="item.external">
+          <a href="{{locationOrigin + item.link}}" (click)="close.emit('Close menu')"
+             routerLinkActive="rum-sidenav-item-selected"
+             [matTooltip]="item.description"
+             [matTooltipClass]="'rum-tooltip-content'"
+             [matTooltipShowDelay]="500"
+             [matTooltipPosition]="'right'">
+            <mat-icon class="icon">{{item.icon}}</mat-icon>
+            {{item.display}}
+          </a>
+        </ng-container>
+        <ng-container *ngIf="!item.external">
+          <a [routerLink]="[item.link]" (click)="close.emit('Close menu')"
+             routerLinkActive="rum-sidenav-item-selected"
+             [matTooltip]="item.description"
+             [matTooltipClass]="'rum-tooltip-content'"
+             [matTooltipShowDelay]="500"
+             [matTooltipPosition]="'right'">
+            <mat-icon class="icon">{{item.icon}}</mat-icon>
+            {{item.display}}
+          </a>
+        </ng-container>
       </div>
     </li>
   </ul>
