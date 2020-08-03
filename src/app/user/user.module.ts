@@ -10,15 +10,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
-import { LoginNativeComponent } from './login-native/login-native.component';
-import { PasswordRecoverComponent } from './password-recover/password-recover.component';
 import { PasswordChangeComponent } from './password-change/password-change.component';
 import { LoginStandaloneComponent } from './login-standalone/login-standalone.component';
-import { LoginOauthComponent } from './login-oauth/login-oauth.component';
 import { CustomAngularMaterialModule } from '../core/custom-angular-material.module';
 import { InfoHeaderComponent } from './info-header/info-header.component';
-import { HatSetupLoginComponent } from './hat-setup-login/hat-setup-login.component';
-import { HatSetupCacheService } from './hat-setup-login/hat-setup-cache.service';
 import { HmiModule } from '../hmi/hmi.module';
 
 @NgModule({
@@ -29,14 +24,9 @@ import { HmiModule } from '../hmi/hmi.module';
     HmiModule
   ],
   declarations: [
-    LoginNativeComponent,
-    PasswordRecoverComponent,
     PasswordChangeComponent,
     LoginStandaloneComponent,
-    LoginOauthComponent,
-    HatSetupLoginComponent,
     InfoHeaderComponent],
-  providers: [ HatSetupCacheService ],
-  exports: [ LoginOauthComponent, LoginNativeComponent, LoginStandaloneComponent, HatSetupLoginComponent ]
+  exports: [ LoginStandaloneComponent ]
 })
 export class UserModule {}
